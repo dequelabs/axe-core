@@ -1,9 +1,9 @@
-describe('axe.utils.getSelector', function() {
+describe('axe.utils.getSelector', function () {
   'use strict';
-  before(function() {
+  before(function () {
     axe.setup();
   });
-  it('should work on namespaced elements', function() {
+  it('should work on namespaced elements', function () {
     var fixture = document.querySelector('#fixture');
     var node = fixture.firstElementChild;
     var sel = axe.utils.getSelector(node);

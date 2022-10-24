@@ -1,7 +1,14 @@
 {
   "description": "color-contrast test",
   "rule": "color-contrast",
-  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail6"], ["#fail7"]],
+  "violations": [
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"],
+    ["#fail6"],
+    ["#fail7"],
+    ["#fail8"]
+  ],
   "passes": [
     ["#pass1"],
     ["#pass2"],
@@ -12,7 +19,10 @@
     ["#pass7 > input"],
     ["#pass8"],
     ["#text-shadow-fg-pass"],
-    ["#pass9"]
+    ["#pass9"],
+    ["#pass10"],
+    ["#pass11"],
+    ["#pass12"]
   ],
   "incomplete": [
     ["#canttell1"],
@@ -34,6 +44,7 @@
     ["#canttell17"],
     ["#canttell18"],
     ["#canttell19"],
-    ["#canttell20"]
+    ["#canttell20"],
+    ["#canttell21"]
   ]
 }

@@ -1,0 +1,18 @@
+{
+  "id": "target-offset",
+  "evaluate": "target-offset-evaluate",
+  "options": {
+    "minOffset": 24
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "incomplete": {
+        "default": "Element with negative tabindex has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px). Is this a target?",
+        "nonTabbableNeighbor": "Target has insufficient offset from a neighbor with negative tabindex (${data.closestOffset}px should be at least ${data.minOffset}px). Is the neighbor a target?"
+      }
+    }
+  }
+}

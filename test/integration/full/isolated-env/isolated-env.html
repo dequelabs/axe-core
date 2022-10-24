@@ -4,7 +4,7 @@
     <title>all rules test</title>
     <meta charset="utf8" />
     <meta http-equiv="refresh" content="foo" />
-    <meta name="viewport" content="maximum-scale=2;" />
+    <meta name="viewport" content="maximum-scale=2" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -52,7 +52,7 @@
         </div>
         <audio id="caption"><track kind="captions" /></audio>
         <input autocomplete="username" />
-        <p id="fail1" style="line-height: 1.5 !important;">Banana error</p>
+        <p id="fail1" style="line-height: 1.5 !important">Banana error</p>
         <p><blink>text</blink></p>
         <button id="text">Name</button>
         <dl>
@@ -79,11 +79,14 @@
           <title>I am a circle</title>
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
-        <div lang="en"></div>
-        <object title="This object has text"></object>
+        <div lang="en">English</div>
+        <object
+          title="This object has text"
+          data="data:text/html,Object%20content"
+        ></object>
         <li role="presentation" aria-label="My Heading">Hello</li>
         <div role="img" aria-label="blah"></div>
-        <div style="overflow-y: scroll; height: 5px;">
+        <div style="overflow-y: scroll; height: 5px">
           <input type="text" />
         </div>
         <select aria-label="foo"></select>
@@ -101,6 +104,11 @@
         <span id="pass1"></span>
         <button id="pass2"></button>
         <div aria-labelledby="fail1 pass1 pass2"></div>
+        <audio
+          id="incomplete1"
+          src="/test/assets/moon-speech.mp3"
+          autoplay="true"
+        ></audio>
       </main>
       <footer></footer>
 
@@ -115,6 +123,7 @@
         src="frames/focusable.html"
         tabindex="-1"
       ></iframe>
+      <p>Paragraph with a <a href="#">link</a>.</p>
     </div>
     <div id="mocha"></div>
     <script src="/test/testutils.js"></script>

@@ -1,0 +1,68 @@
+name: Update generated files
+
+on:
+  push:
+    branches:
+      - develop
+
+env:
+  BRANCH_NAME: sync-generated-files
+
+jobs:
+  update_genereated_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Check for changes
+        id: changes
+        run: |
+          changes=$(git status --porcelain)
+          # see https://unix.stackexchange.com/a/509498
+          echo $changes | grep . && echo "Changes detected" || echo "No changes"
+          echo ::set-output name=changes::"$changes"
+
+      - name: Check branch exists
+        id: branchExists
+        if: steps.changes.outputs.changes
+        run: |
+          exists=$(git ls-remote --heads origin $BRANCH_NAME)
+          echo $exists | grep . && echo "Branch '$BRANCH_NAME' already exists on remote" || echo "Branch does not exists in remote"
+          echo ::set-output name=exists::"$exists"
+
+      - name: Create pull request
+        if: ${{ steps.changes.outputs.changes && !steps.branchExists.outputs.exists }}
+        run: |
+          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git checkout -b $BRANCH_NAME
+          git commit -m "chore: sync generated files"
+          git push origin $BRANCH_NAME
+          gh pr create --base develop --head $BRANCH_NAME --title "chore: sync generated files" --body ""
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update pull request
+        if: ${{ steps.changes.outputs.changes && steps.branchExists.outputs.exists }}
+        run: |
+          git reset HEAD --hard
+          git checkout $BRANCH_NAME
+          npm run build
+          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "chore: sync generated files"
+          git push origin $BRANCH_NAME
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

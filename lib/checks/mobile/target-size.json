@@ -1,0 +1,26 @@
+{
+  "id": "target-size",
+  "evaluate": "target-size-evaluate",
+  "options": {
+    "minSize": 24
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": {
+        "default": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "obscured": "Control is ignored because it is fully obscured and thus not clickable"
+      },
+      "fail": {
+        "default": "Target has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "partiallyObscured": "Target has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Element with negative tabindex has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "contentOverflow": "Element size could not be accurately determined due to overflow content",
+        "partiallyObscured": "Element with negative tabindex has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?"
+      }
+    }
+  }
+}

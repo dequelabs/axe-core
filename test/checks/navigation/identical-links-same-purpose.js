@@ -1,4 +1,4 @@
-describe('identical-links-same-purpose tests', function() {
+describe('identical-links-same-purpose tests', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,13 +7,13 @@ describe('identical-links-same-purpose tests', function() {
   var checkContext = axe.testUtils.MockCheckContext();
   var options = {};
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
     axe._tree = undefined;
   });
 
-  it('returns undefined for native link with `href` but no accessible name', function() {
+  it('returns undefined for native link with `href` but no accessible name', function () {
     var vNode = queryFixture('<a id="target" href="/home/#/foo"></a>');
     var actual = check.evaluate.call(
       checkContext,
@@ -25,7 +25,7 @@ describe('identical-links-same-purpose tests', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('returns undefined when ARIA link that has no accessible name', function() {
+  it('returns undefined when ARIA link that has no accessible name', function () {
     var vNode = queryFixture('<span role="link" id="target"></span>');
     var actual = check.evaluate.call(
       checkContext,
@@ -37,7 +37,7 @@ describe('identical-links-same-purpose tests', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('returns undefined when ARIA link has only any combination of unicode (emoji, punctuations, nonBmp) characters as accessible name', function() {
+  it('returns undefined when ARIA link has only any combination of unicode (emoji, punctuations, nonBmp) characters as accessible name', function () {
     var vNode = queryFixture(
       '<button id="target" role="link">☀️!!!₨   </button>'
     );
@@ -51,7 +51,7 @@ describe('identical-links-same-purpose tests', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('returns true for native links with `href` and accessible name', function() {
+  it('returns true for native links with `href` and accessible name', function () {
     var vNode = queryFixture('<a id="target" href="/home/#/foo">Pass 1</a>');
     var actual = check.evaluate.call(
       checkContext,
@@ -66,7 +66,7 @@ describe('identical-links-same-purpose tests', function() {
     assert.equal(checkContext._data.urlProps.pathname, '/home/');
   });
 
-  it('returns true for ARIA links has accessible name (AREA with `MAP` which is used in `IMG`)', function() {
+  it('returns true for ARIA links has accessible name (AREA with `MAP` which is used in `IMG`)', function () {
     var vNode = queryFixture(
       '<map name="infographic">' +
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -85,7 +85,7 @@ describe('identical-links-same-purpose tests', function() {
     assert.isFalse(!!checkContext._data.resource);
   });
 
-  it('returns true for native links with `href` and accessible name (that also has emoji, nonBmp and punctuation characters)', function() {
+  it('returns true for native links with `href` and accessible name (that also has emoji, nonBmp and punctuation characters)', function () {
     var vNode = queryFixture(
       '<a id="target" href="/contact/foo.html">The ☀️ is orange, the ◓ is white.</a>'
     );

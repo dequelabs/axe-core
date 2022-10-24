@@ -1,4 +1,4 @@
-describe('async rule test', function() {
+describe('async rule test', function () {
   'use strict';
   var results;
 
@@ -6,7 +6,7 @@ describe('async rule test', function() {
     /*eslint indent: 0*/
     var check = this;
     var done = check.async();
-    setTimeout(function() {
+    setTimeout(function () {
       var dataOut = node.getAttribute('data-out');
       check.data(dataOut);
       switch (dataOut) {
@@ -22,7 +22,7 @@ describe('async rule test', function() {
     }, 10);
   }
 
-  before(function(done) {
+  before(function (done) {
     axe.configure({
       rules: [
         {
@@ -57,23 +57,23 @@ describe('async rule test', function() {
       ]
     });
 
-    axe.run({ runOnly: { type: 'rule', values: ['my-async'] } }, function(
-      err,
-      r
-    ) {
-      assert.isNull(err);
-      results = r;
-      done();
-    });
+    axe.run(
+      { runOnly: { type: 'rule', values: ['my-async'] } },
+      function (err, r) {
+        assert.isNull(err);
+        results = r;
+        done();
+      }
+    );
   });
 
-  describe('violations', function() {
-    it('should find 1', function() {
+  describe('violations', function () {
+    it('should find 1', function () {
       assert.lengthOf(results.violations, 1);
       assert.lengthOf(results.violations[0].nodes, 1);
     });
 
-    it('should find #violation', function() {
+    it('should find #violation', function () {
       assert.equal(
         results.violations[0].nodes[0].any[0].message,
         'failed with false'
@@ -82,13 +82,13 @@ describe('async rule test', function() {
     });
   });
 
-  describe('passes', function() {
-    it('should find 1', function() {
+  describe('passes', function () {
+    it('should find 1', function () {
       assert.lengthOf(results.passes, 1);
       assert.lengthOf(results.passes[0].nodes, 1);
     });
 
-    it('should find #pass', function() {
+    it('should find #pass', function () {
       assert.equal(
         results.passes[0].nodes[0].any[0].message,
         'passed with true'
@@ -97,13 +97,13 @@ describe('async rule test', function() {
     });
   });
 
-  describe('incomplete', function() {
-    it('should find 1', function() {
+  describe('incomplete', function () {
+    it('should find 1', function () {
       assert.lengthOf(results.incomplete, 1);
       assert.lengthOf(results.incomplete[0].nodes, 1);
     });
 
-    it('should find #incomplete', function() {
+    it('should find #incomplete', function () {
       assert.equal(
         results.incomplete[0].nodes[0].any[0].message,
         'incomplete with undefined'

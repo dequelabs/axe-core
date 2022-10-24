@@ -1,17 +1,12 @@
 {
   "id": "meta-refresh",
-  "selector": "meta[http-equiv=\"refresh\"]",
+  "selector": "meta[http-equiv=\"refresh\"][content]",
   "excludeHidden": false,
-  "tags": [
-    "cat.time-and-media",
-    "wcag2a",
-    "wcag221",
-    "wcag224",
-    "wcag325"
-  ],
+  "tags": ["cat.time-and-media", "wcag2a", "wcag221"],
+  "actIds": ["bc659a", "bisz58"],
   "metadata": {
-    "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
-    "help": "Timed refresh must not exist"
+    "description": "Ensures <meta http-equiv=\"refresh\"> is not used for delayed refresh",
+    "help": "Delayed refresh under 20 hours must not be used"
   },
   "all": [],
   "any": ["meta-refresh"],

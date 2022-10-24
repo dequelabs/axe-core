@@ -3,12 +3,12 @@
   "selector": "a[href], [role=link]",
   "matches": "link-in-text-block-matches",
   "excludeHidden": false,
-  "tags": ["cat.color", "experimental", "wcag2a", "wcag141"],
+  "tags": ["cat.color", "wcag2a", "wcag141"],
   "metadata": {
     "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
     "help": "Links must be distinguishable without relying on color"
   },
-  "all": ["link-in-text-block"],
-  "any": [],
+  "all": [],
+  "any": ["link-in-text-block", "link-in-text-block-style"],
   "none": []
 }

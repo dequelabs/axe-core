@@ -1,5 +1,5 @@
-describe('input-image-alt virtual-rule', function() {
-  it('should pass for alt', function() {
+describe('input-image-alt virtual-rule', function () {
+  it('should pass for alt', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -13,7 +13,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for aria-label', function() {
+  it('should pass for aria-label', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -27,7 +27,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -41,7 +41,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
@@ -54,7 +54,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when alt is missing', function() {
+  it('should fail when alt is missing', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -67,7 +67,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when alt is empty', function() {
+  it('should fail when alt is empty', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -81,7 +81,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function() {
+  it('should fail when aria-label is empty', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {
@@ -95,7 +95,7 @@ describe('input-image-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var results = axe.runVirtualRule('input-image-alt', {
       nodeName: 'input',
       attributes: {

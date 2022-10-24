@@ -1,4 +1,4 @@
-describe('helpers.incompleteFallbackMessage', function() {
+describe('helpers.incompleteFallbackMessage', function () {
   'use strict';
 
   it('returns a non-empty string by default', function () {
@@ -7,7 +7,7 @@ describe('helpers.incompleteFallbackMessage', function() {
     assert.notEqual(summary, '');
   });
 
-  it('should return a string', function() {
+  it('should return a string', function () {
     axe._load({
       messages: {},
       rules: [],
@@ -19,7 +19,7 @@ describe('helpers.incompleteFallbackMessage', function() {
     assert.equal(summary, 'Dogs are the best');
   });
 
-  it('should handle doT.js template function', function() {
+  it('should handle doT.js template function', function () {
     axe._load({
       messages: {},
       rules: [],

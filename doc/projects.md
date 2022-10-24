@@ -56,3 +56,6 @@ Add your project/integration to this file and submit a pull request.
 1. [vue-axe](https://github.com/vue-a11y/vue-axe-next)
 1. [a11y-sitechecker](https://github.com/forsti0506/a11y-sitechecker)
 1. [Parcel](https://parcel.io)
+1. [mitm-play](https://github.com/mitmplay/mitm-play)
+1. [Sitebulb](https://sitebulb.com/hints/accessibility/)
+1. [Webatool](https://github.com/balajihambeere/webatool)

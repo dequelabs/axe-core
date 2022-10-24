@@ -1,16 +1,16 @@
-describe('Configure Options', function() {
+describe('Configure Options', function () {
   'use strict';
 
   var target = document.querySelector('#target');
 
-  afterEach(function() {
+  afterEach(function () {
     axe.reset();
     target.innerHTML = '';
   });
 
-  describe('Check', function() {
-    describe('aria-allowed-attr', function() {
-      it('should allow an attribute supplied in options', function(done) {
+  describe('Check', function () {
+    describe('aria-allowed-attr', function () {
+      it('should allow an attribute supplied in options', function (done) {
         target.setAttribute('role', 'separator');
         target.setAttribute('aria-valuenow', '0');
 
@@ -30,14 +30,14 @@ describe('Configure Options', function() {
               values: ['aria-allowed-attr']
             }
           },
-          function(error, results) {
+          function (error, results) {
             assert.lengthOf(results.violations, 0, 'violations');
             done();
           }
         );
       });
 
-      it('should not normalize external check options', function(done) {
+      it('should not normalize external check options', function (done) {
         target.setAttribute('lang', 'en');
 
         axe.configure({
@@ -87,7 +87,7 @@ describe('Configure Options', function() {
               values: ['dylang']
             }
           },
-          function(err, results) {
+          function (err, results) {
             try {
               assert.isNull(err);
               assert.lengthOf(results.violations, 1, 'violations');
@@ -100,8 +100,8 @@ describe('Configure Options', function() {
       });
     });
 
-    describe('aria-required-attr', function() {
-      it('should report unique attributes when supplied from options', function(done) {
+    describe('aria-required-attr', function () {
+      it('should report unique attributes when supplied from options', function (done) {
         target.setAttribute('role', 'slider');
         axe.configure({
           checks: [
@@ -119,7 +119,7 @@ describe('Configure Options', function() {
               values: ['aria-required-attr']
             }
           },
-          function(error, results) {
+          function (error, results) {
             assert.lengthOf(results.violations, 1, 'violations');
             assert.sameMembers(results.violations[0].nodes[0].any[0].data, [
               'aria-snuggles'
@@ -131,8 +131,8 @@ describe('Configure Options', function() {
     });
   });
 
-  describe('disableOtherRules', function() {
-    it('disables rules that are not in the `rules` array', function(done) {
+  describe('disableOtherRules', function () {
+    it('disables rules that are not in the `rules` array', function (done) {
       axe.configure({
         disableOtherRules: true,
         rules: [
@@ -147,7 +147,7 @@ describe('Configure Options', function() {
         ]
       });
 
-      axe.run(function(error, results) {
+      axe.run(function (error, results) {
         assert.isNull(error);
         assert.lengthOf(results.passes, 1, 'passes');
         assert.equal(results.passes[0].id, 'html-has-lang');
@@ -160,9 +160,9 @@ describe('Configure Options', function() {
     });
   });
 
-  describe('noHtml', function() {
+  describe('noHtml', function () {
     var captureError = axe.testUtils.captureError;
-    it('prevents html property on nodes', function(done) {
+    it('prevents html property on nodes', function (done) {
       target.setAttribute('role', 'slider');
       axe.configure({
         noHtml: true,
@@ -181,7 +181,7 @@ describe('Configure Options', function() {
             values: ['aria-required-attr']
           }
         },
-        captureError(function(error, results) {
+        captureError(function (error, results) {
           assert.isNull(error);
           assert.isNull(results.violations[0].nodes[0].html);
           done();
@@ -189,7 +189,7 @@ describe('Configure Options', function() {
       );
     });
 
-    it('prevents html property on nodes from iframes', function(done) {
+    it('prevents html property on nodes from iframes', function (done) {
       var config = {
         noHtml: true,
         rules: [
@@ -204,7 +204,7 @@ describe('Configure Options', function() {
 
       var iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/context.html';
-      iframe.onload = function() {
+      iframe.onload = function () {
         axe.configure(config);
 
         axe.run(
@@ -215,7 +215,7 @@ describe('Configure Options', function() {
               values: ['div#target']
             }
           },
-          captureError(function(error, results) {
+          captureError(function (error, results) {
             assert.isNull(error);
             assert.deepEqual(results.passes[0].nodes[0].target, [
               'iframe',
@@ -229,7 +229,7 @@ describe('Configure Options', function() {
       target.appendChild(iframe);
     });
 
-    it('prevents html property in postMesage', function(done) {
+    it('prevents html property in postMesage', function (done) {
       var config = {
         noHtml: true,
         rules: [
@@ -244,7 +244,7 @@ describe('Configure Options', function() {
 
       var iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/noHtml-config.html';
-      iframe.onload = function() {
+      iframe.onload = function () {
         axe.configure(config);
 
         axe.run('#target', {
@@ -256,7 +256,7 @@ describe('Configure Options', function() {
       };
       target.appendChild(iframe);
 
-      window.addEventListener('message', function(e) {
+      window.addEventListener('message', function (e) {
         var data = JSON.parse(e.data);
         if (Array.isArray(data.payload)) {
           try {

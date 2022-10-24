@@ -1,0 +1,45 @@
+<table id="pass1">
+  <th>Hello</th>
+  <td>World</td>
+</table>
+
+<table id="pass2" role="grid">
+  <th id="p2h">Hello</th>
+  <td headers="p2h">World</td>
+</table>
+
+<table id="pass3" role="treegrid">
+  <th id="p3h1">Hello</th>
+  <th id="p3h2">Hello</th>
+  <td headers="p3h1 p3h2">World</td>
+</table>
+
+<table id="pass4" role="treegrid">
+  <th id="p4h">Hello</th>
+  <td id="self" headers="self" hidden>World</td>
+</table>
+
+<table id="fail1">
+  <th id="f1h1">Hello</th>
+  <td headers="f1h1 non-existing">World</td>
+</table>
+
+<table id="fail2" role="table">
+  <td id="self" headers="self">World</td>
+</table>
+
+<table id="fail3" role="none" tabindex="0">
+  <td id="self" headers="self">World</td>
+</table>
+
+<table id="inapplicable1" role="none">
+  <td id="self" headers="self">World</td>
+</table>
+
+<table id="inapplicable2" role="presentation">
+  <td id="self" headers="self">World</td>
+</table>
+
+<table id="inapplicable3" role="region">
+  <td id="self" headers="self">World</td>
+</table>

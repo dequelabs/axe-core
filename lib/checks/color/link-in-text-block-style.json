@@ -1,0 +1,11 @@
+{
+  "id": "link-in-text-block-style",
+  "evaluate": "link-in-text-block-style-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Links can be distinguished from surrounding text by visual styling",
+      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+    }
+  }
+}

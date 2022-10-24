@@ -38,32 +38,32 @@ function makeNonuniqueLongAttributes(fixture) {
   return node;
 }
 
-describe('axe.utils.getSelector', function() {
+describe('axe.utils.getSelector', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
     axe._selectorData = undefined;
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.getSelector);
   });
 
-  it('throws if axe._selectorData is undefined', function() {
-    assert.throws(function() {
+  it('throws if axe._selectorData is undefined', function () {
+    assert.throws(function () {
       var node = document.createElement('div');
       fixture.appendChild(node);
       axe.utils.getSelector(node);
     });
   });
 
-  it('should generate a unique CSS selector', function() {
+  it('should generate a unique CSS selector', function () {
     var node = document.createElement('div');
     fixtureSetup(node);
     var sel = axe.utils.getSelector(node);
@@ -73,7 +73,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should still work if an element has nothing but whitespace as a className', function() {
+  it('should still work if an element has nothing but whitespace as a className', function () {
     var node = document.createElement('div');
     node.className = '    ';
     fixtureSetup(node);
@@ -84,7 +84,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should handle special characters in IDs', function() {
+  it('should handle special characters in IDs', function () {
     var node = document.createElement('div');
     node.id = 'monkeys#are.animals\\ok';
     fixtureSetup(node);
@@ -94,7 +94,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should handle special characters in classNames', function() {
+  it('should handle special characters in classNames', function () {
     var node = document.createElement('div');
     node.className = '.  bb-required';
     fixtureSetup(node);
@@ -104,7 +104,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should be able to fall back to positional selectors', function() {
+  it('should be able to fall back to positional selectors', function () {
     var node, expected;
     var nodes = [];
     for (var i = 0; i < 10; i++) {
@@ -120,7 +120,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], expected);
   });
 
-  it('should use a unique ID', function() {
+  it('should use a unique ID', function () {
     var node = document.createElement('div');
     node.id = 'monkeys';
     fixtureSetup(node);
@@ -134,7 +134,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should not use ids if they are not unique', function() {
+  it('should not use ids if they are not unique', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
     node1.id = 'monkeys';
@@ -149,7 +149,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use classes if available and unique', function() {
+  it('should use classes if available and unique', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
     node1.className = 'monkeys simian';
@@ -165,7 +165,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use classes if more unique than the tag', function() {
+  it('should use classes if more unique than the tag', function () {
     var node1 = document.createElement('p');
     var node2 = document.createElement('p');
     node1.className = 'monkeys simian cats';
@@ -180,7 +180,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should NOT use classes if they are more common than the tag', function() {
+  it('should NOT use classes if they are more common than the tag', function () {
     var node1 = document.createElement('p');
     var node2 = document.createElement('p');
     node1.className = 'dogs cats';
@@ -197,7 +197,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use the most unique class', function() {
+  it('should use the most unique class', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
     node1.className = 'dogs';
@@ -212,7 +212,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use the most unique class and not the unique attribute', function() {
+  it('should use the most unique class and not the unique attribute', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
 
@@ -230,7 +230,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use only a single unique attribute', function() {
+  it('should use only a single unique attribute', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
 
@@ -248,7 +248,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use three uncommon but not unique features', function() {
+  it('should use three uncommon but not unique features', function () {
     var node1 = document.createElement('div');
     node1.setAttribute('data-axe', 'hello');
     node1.setAttribute('data-thing', 'hello');
@@ -278,7 +278,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use only three uncommon but not unique features', function() {
+  it('should use only three uncommon but not unique features', function () {
     var node1 = document.createElement('div');
     node1.setAttribute('data-axe', 'hello');
     node1.setAttribute('data-thing', 'hello');
@@ -295,11 +295,11 @@ describe('axe.utils.getSelector', function() {
     var sel = axe.utils.getSelector(node2);
     var parts = sel.split('.');
     parts = parts
-      .reduce(function(val, item) {
+      .reduce(function (val, item) {
         var its = item.split('[');
         return val.concat(its);
       }, [])
-      .filter(function(item) {
+      .filter(function (item) {
         return item !== '';
       });
     assert.equal(parts.length, 3);
@@ -309,7 +309,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use only three uncommon but not unique classes', function() {
+  it('should use only three uncommon but not unique classes', function () {
     var node1 = document.createElement('div');
     var node2 = document.createElement('div');
     node1.className = 'thing thang thug thick';
@@ -319,11 +319,11 @@ describe('axe.utils.getSelector', function() {
     var sel = axe.utils.getSelector(node2);
     var parts = sel.split('.');
     parts = parts
-      .reduce(function(val, item) {
+      .reduce(function (val, item) {
         var its = item.split('[');
         return val.concat(its);
       }, [])
-      .filter(function(item) {
+      .filter(function (item) {
         return item !== '';
       });
     assert.equal(parts.length, 3);
@@ -333,7 +333,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should use only three uncommon but not unique attributes', function() {
+  it('should use only three uncommon but not unique attributes', function () {
     var node1 = document.createElement('div');
     node1.setAttribute('data-axe', 'hello');
     node1.setAttribute('data-thug', 'hello');
@@ -350,11 +350,11 @@ describe('axe.utils.getSelector', function() {
     var sel = axe.utils.getSelector(node2);
     var parts = sel.split('.');
     parts = parts
-      .reduce(function(val, item) {
+      .reduce(function (val, item) {
         var its = item.split('[');
         return val.concat(its);
       }, [])
-      .filter(function(item) {
+      .filter(function (item) {
         return item !== '';
       });
     assert.equal(parts.length, 4);
@@ -364,14 +364,14 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should not use long attributes', function() {
+  it('should not use long attributes', function () {
     var node = makeNonuniqueLongAttributes(fixture);
     fixtureSetup();
     var sel = axe.utils.getSelector(node, {});
     assert.isTrue(sel.indexOf('data-att') === -1);
   });
 
-  it('should use :root when not unique html element', function() {
+  it('should use :root when not unique html element', function () {
     var node = document.createElement('html');
     node.setAttribute('lang', 'en');
     fixtureSetup(node);
@@ -380,7 +380,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(sel, ':root');
   });
 
-  it('should use position if classes are not unique', function() {
+  it('should use position if classes are not unique', function () {
     var node1 = document.createElement('div');
     node1.className = 'monkeys simian';
 
@@ -397,7 +397,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node2);
   });
 
-  it('should work on the documentElement', function() {
+  it('should work on the documentElement', function () {
     fixtureSetup();
 
     var sel = axe.utils.getSelector(document.documentElement);
@@ -406,7 +406,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], document.documentElement);
   });
 
-  it('should work on the documentElement with classes', function() {
+  it('should work on the documentElement with classes', function () {
     var orig = document.documentElement.className;
     document.documentElement.className = 'stuff and other things';
     fixtureSetup();
@@ -418,7 +418,7 @@ describe('axe.utils.getSelector', function() {
     document.documentElement.className = orig;
   });
 
-  it('should work on the body', function() {
+  it('should work on the body', function () {
     fixtureSetup();
     var sel = axe.utils.getSelector(document.body);
     var result = document.querySelectorAll(sel);
@@ -427,7 +427,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], document.body);
   });
 
-  it('should work on namespaced elements', function() {
+  it('should work on namespaced elements', function () {
     fixtureSetup('<hx:include>Hello</hx:include>');
     var node = fixture.firstChild;
 
@@ -437,7 +437,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should work on complex namespaced elements', function() {
+  it('should work on complex namespaced elements', function () {
     fixtureSetup(
       '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">' +
         '<m:mi>x</m:mi>' +
@@ -454,7 +454,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(result[0], node);
   });
 
-  it('should not use ignored attributes', function() {
+  it('should not use ignored attributes', function () {
     var node = document.createElement('div');
     var ignoredAttributes = [
       'style',
@@ -473,7 +473,7 @@ describe('axe.utils.getSelector', function() {
       'aria-pressed',
       'aria-valuenow'
     ];
-    ignoredAttributes.forEach(function(att) {
+    ignoredAttributes.forEach(function (att) {
       node.setAttribute(att, 'true');
     });
     fixtureSetup(node);
@@ -481,7 +481,7 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(axe.utils.getSelector(node).indexOf('[') === -1);
   });
 
-  it('should use href and src attributes, shortened', function() {
+  it('should use href and src attributes, shortened', function () {
     var link1 = document.createElement('a');
     link1.setAttribute('href', '//deque.com/thang/');
 
@@ -498,7 +498,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(axe.utils.getSelector(img2), 'img[src$="logo.png"]');
   });
 
-  it('should escape href attributes', function() {
+  it('should escape href attributes', function () {
     var link1 = document.createElement('a');
     link1.setAttribute('href', '//deque.com/about/');
 
@@ -512,7 +512,7 @@ describe('axe.utils.getSelector', function() {
     );
   });
 
-  it('should not URL encode or token escape href attribute', function() {
+  it('should not URL encode or token escape href attribute', function () {
     var link1 = document.createElement('a');
     link1.setAttribute('href', '3 Seater');
 
@@ -525,7 +525,7 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(axe.utils.matchesSelector(link2, expected));
   });
 
-  it('should escape certain special characters in attribute', function() {
+  it('should escape certain special characters in attribute', function () {
     var div1 = document.createElement('div');
     div1.setAttribute('data-thing', 'foobar');
 
@@ -538,7 +538,7 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
-  it('should escape newline characters in attribute', function() {
+  it('should escape newline characters in attribute', function () {
     var div1 = document.createElement('div');
     div1.setAttribute('data-thing', 'foobar');
 
@@ -551,7 +551,7 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
-  it('should not generate universal selectors', function() {
+  it('should not generate universal selectors', function () {
     var node = document.createElement('div');
     node.setAttribute('role', 'menuitem');
     fixtureSetup(node);
@@ -559,7 +559,7 @@ describe('axe.utils.getSelector', function() {
     assert.equal(axe.utils.getSelector(node), 'div[role="menuitem"]');
   });
 
-  it('should work correctly when a URL attribute cannot be shortened', function() {
+  it('should work correctly when a URL attribute cannot be shortened', function () {
     var href1 = 'mars2.html?a=be_bold';
     var node1 = document.createElement('a');
     node1.setAttribute('href', href1);
@@ -577,7 +577,7 @@ describe('axe.utils.getSelector', function() {
   // to specifically test this
   (shadowSupported ? it : xit)(
     'no options: should work with shadow DOM',
-    function() {
+    function () {
       var shadEl;
       fixture.innerHTML = '<div></div>';
       makeShadowTreeGetSelector(fixture.firstChild);
@@ -595,7 +595,7 @@ describe('axe.utils.getSelector', function() {
   // to specifically test this
   (shadowSupported ? it : xit)(
     'toRoot: should work with shadow DOM',
-    function() {
+    function () {
       var shadEl;
       fixture.innerHTML = '<div></div>';
       makeShadowTreeGetSelector(fixture.firstChild);
@@ -610,7 +610,7 @@ describe('axe.utils.getSelector', function() {
     }
   );
 
-  it('should correctly calculate unique selector when no discernable features', function() {
+  it('should correctly calculate unique selector when no discernable features', function () {
     var node = makeNonunique(fixture);
     fixtureSetup();
 
@@ -619,7 +619,7 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(mine === node);
   });
 
-  it('should not traverse further up than required when no discernable features', function() {
+  it('should not traverse further up than required when no discernable features', function () {
     var node = makeNonunique(fixture);
     fixtureSetup();
 
@@ -630,12 +630,12 @@ describe('axe.utils.getSelector', function() {
     assert.isTrue(test === top);
   });
 
-  it('should not error if fragment is no longer in the DOM', function() {
+  it('should not error if fragment is no longer in the DOM', function () {
     var fragment = document.createDocumentFragment();
     var node = document.createElement('div');
     fragment.appendChild(node);
     fixtureSetup();
-    assert.doesNotThrow(function() {
+    assert.doesNotThrow(function () {
       axe.utils.getSelector(node);
     });
   });

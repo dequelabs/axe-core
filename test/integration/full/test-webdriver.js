@@ -10,7 +10,7 @@ var args = process.argv.slice(2);
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
 var browser = 'chrome';
-args.forEach(function(arg) {
+args.forEach(function (arg) {
   // pattern: browsers=Chrome
   var parts = arg.split('=');
   if (parts[0] === 'browser') {
@@ -24,9 +24,9 @@ args.forEach(function(arg) {
 function collectTestResults(driver) {
   // inject a script that waits half a second
   return driver
-    .executeAsyncScript(function() {
+    .executeAsyncScript(function () {
       var callback = arguments[arguments.length - 1];
-      setTimeout(function() {
+      setTimeout(function () {
         if (!window.mocha) {
           callback('mocha-missing;' + window.location.href);
         }
@@ -34,7 +34,7 @@ function collectTestResults(driver) {
         callback(window.mochaResults);
       }, 500);
     })
-    .then(function(result) {
+    .then(function (result) {
       // If there are no results, listen a little longer
       if (typeof result === 'string' && result.includes('mocha-missing')) {
         throw new Error(
@@ -64,14 +64,14 @@ function runTestUrls(driver, isMobile, urls, errors) {
     driver
       .get(url)
       // Get results
-      .then(function() {
+      .then(function () {
         return Promise.all([
           driver.getCapabilities(),
           collectTestResults(driver)
         ]);
       })
       // And process them
-      .then(function(promiseResults) {
+      .then(function (promiseResults) {
         var capabilities = promiseResults[0];
         var result = promiseResults[1];
         var browserName =
@@ -80,7 +80,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         console.log(url + ' [' + browserName + ']');
 
         // Remember the errors
-        (result.reports || []).forEach(function(err) {
+        (result.reports || []).forEach(function (err) {
           console.log(err.message);
           err.url = url;
           err.browser = browserName;
@@ -101,7 +101,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         );
         console.log();
       })
-      .then(function() {
+      .then(function () {
         // Start the next job, if any
         if (urls.length > 0) {
           return runTestUrls(driver, isMobile, urls, errors);
@@ -117,6 +117,9 @@ function runTestUrls(driver, isMobile, urls, errors) {
  * Build web driver depends whether REMOTE_SELENIUM_URL is set
  */
 function buildWebDriver(browser) {
+  // Pinned to selenium-webdriver@4.3.0
+  // https://github.com/SeleniumHQ/selenium/pull/10796/files#diff-6c87d95a2288e92e15a6bb17710c763c01c2290e679beb26220858f3218b6a62L260
+
   var capabilities;
   var mobileBrowser = browser.split('-mobile');
 
@@ -192,7 +195,7 @@ function start(options) {
       'test/integration/full/**/*.{html,xhtml}',
       '!**/frames/**/*.{html,xhtml}'
     ])
-    .map(function(url) {
+    .map(function (url) {
       return 'http://localhost:9876/' + url;
     });
 
@@ -223,22 +226,16 @@ function start(options) {
     return process.exit();
   }
 
-  // Give driver timeout options for scripts
-  driver
-    .manage()
-    .timeouts()
-    .setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
-  // allow to wait for page load implicitly
-  driver
-    .manage()
-    .timeouts()
-    .implicitlyWait(50000);
+  driver.manage().setTimeouts({
+    pageLoad: 50000,
+    script: !isMobile ? 60000 * 5 : 60000 * 10
+  });
 
   // Test all pages
   runTestUrls(driver, isMobile, testUrls)
-    .then(function(testErrors) {
+    .then(function (testErrors) {
       // log each error and abort
-      testErrors.forEach(function(err) {
+      testErrors.forEach(function (err) {
         console.log();
         console.log('URL: ' + err.url);
         console.log('Browser: ' + err.browser);
@@ -252,7 +249,7 @@ function start(options) {
 
       // catch any potential problems
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
       process.exit(1);
     });

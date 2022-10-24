@@ -1,0 +1,15 @@
+{
+  "id": "meta-refresh-no-exceptions",
+  "evaluate": "meta-refresh-evaluate",
+  "options": {
+    "minDelay": 72000,
+    "maxDelay": false
+  },
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "<meta> tag does not immediately refresh the page",
+      "fail": "<meta> tag forces timed refresh of page"
+    }
+  }
+}

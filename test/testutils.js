@@ -35,8 +35,8 @@ function verifyIsNoneCheck(check) {
   }
 }
 
-axe._audit.rules.forEach(function(rule) {
-  rule.none.forEach(function(check) {
+axe._audit.rules.forEach(function (rule) {
+  rule.none.forEach(function (check) {
     check = check.id || check;
     if (noneChecks.indexOf(check) === -1) {
       noneChecks.push(check);
@@ -44,7 +44,7 @@ axe._audit.rules.forEach(function(rule) {
   });
 });
 
-axe._audit.rules.forEach(function(rule) {
+axe._audit.rules.forEach(function (rule) {
   rule.any.forEach(verifyIsNoneCheck);
   rule.all.forEach(verifyIsNoneCheck);
 });
@@ -54,7 +54,7 @@ axe._audit.rules.forEach(function(rule) {
  *
  * @return Object
  */
-testUtils.MockCheckContext = function() {
+testUtils.MockCheckContext = function () {
   'use strict';
   return {
     _relatedNodes: [],
@@ -62,20 +62,20 @@ testUtils.MockCheckContext = function() {
     // When using this.async() in a check, assign a function to _onAsync
     // to catch the response.
     _onAsync: null,
-    async: function() {
+    async: function () {
       var self = this;
-      return function(result) {
+      return function (result) {
         // throws if _onAsync isn't set
         self._onAsync(result, self);
       };
     },
-    data: function(d) {
+    data: function (d) {
       this._data = d;
     },
-    relatedNodes: function(nodes) {
+    relatedNodes: function (nodes) {
       this._relatedNodes = Array.isArray(nodes) ? nodes : [nodes];
     },
-    reset: function() {
+    reset: function () {
       this._data = null;
       this._relatedNodes = [];
       this._onAsync = null;
@@ -89,7 +89,7 @@ testUtils.MockCheckContext = function() {
  * @param HTMLDocumentElement		The document of the current context
  * @return Object
  */
-testUtils.shadowSupport = (function(document) {
+testUtils.shadowSupport = (function (document) {
   'use strict';
   var v0 =
       document.body && typeof document.body.createShadowRoot === 'function',
@@ -109,7 +109,7 @@ testUtils.shadowSupport = (function(document) {
  * Return the fixture element
  * @return HTMLElement
  */
-testUtils.getFixture = function() {
+testUtils.getFixture = function () {
   'use strict';
   return fixture;
 };
@@ -119,7 +119,7 @@ testUtils.getFixture = function() {
  * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
  * @return HTMLElement
  */
-testUtils.injectIntoFixture = function(content) {
+testUtils.injectIntoFixture = function (content) {
   'use strict';
   if (typeof content !== 'undefined') {
     fixture.innerHTML = '';
@@ -130,7 +130,7 @@ testUtils.injectIntoFixture = function(content) {
   } else if (content instanceof Node) {
     fixture.appendChild(content);
   } else if (Array.isArray(content)) {
-    content.forEach(function(node) {
+    content.forEach(function (node) {
       fixture.appendChild(node);
     });
   }
@@ -145,7 +145,7 @@ testUtils.injectIntoFixture = function(content) {
  * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
  * @return HTMLElement
  */
-testUtils.fixtureSetup = function(content) {
+testUtils.fixtureSetup = function (content) {
   'use strict';
   testUtils.injectIntoFixture(content);
   axe.teardown();
@@ -160,7 +160,7 @@ testUtils.fixtureSetup = function(content) {
  * @param String				Target for the check, CSS selector (default: '#target')
  * @return Array
  */
-testUtils.checkSetup = function(content, options, target) {
+testUtils.checkSetup = function (content, options, target) {
   'use strict';
   // Normalize the params
   if (typeof options !== 'object') {
@@ -183,19 +183,16 @@ testUtils.checkSetup = function(content, options, target) {
 };
 
 /**
- * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
- * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+ * Create a shadow DOM tree on #shadow and setup axe for it, returning #target
  *
  * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
  * @param Node|String 	Stuff to go into the shadow boundary (html or node)
- * @param Object				Options argument for the check (optional, default: {})
  * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
- * @return Array
+ * @return VirtualNode
  */
-testUtils.shadowCheckSetup = function(
+testUtils.queryShadowFixture = function (
   content,
   shadowContent,
-  options,
   targetSelector
 ) {
   'use strict';
@@ -203,11 +200,6 @@ testUtils.shadowCheckSetup = function(
   // Normalize target, allow it to be the provided string or use '#target' to query composed tree
   if (typeof targetSelector !== 'string') {
     targetSelector = '#target';
-  }
-
-  // Normalize the object params
-  if (typeof options !== 'object') {
-    options = {};
   }
 
   var fixture = testUtils.injectIntoFixture(content);
@@ -237,7 +229,34 @@ testUtils.shadowCheckSetup = function(
 
   // query the composed tree AFTER shadowDOM has been attached
   axe.setup(fixture);
-  var node = axe.utils.getNodeFromTree(targetCandidate);
+  return axe.utils.getNodeFromTree(targetCandidate);
+};
+
+/**
+ * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
+ * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+ *
+ * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
+ * @param Node|String 	Stuff to go into the shadow boundary (html or node)
+ * @param Object				Options argument for the check (optional, default: {})
+ * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+ * @return Array
+ */
+testUtils.shadowCheckSetup = function (
+  content,
+  shadowContent,
+  options,
+  targetSelector
+) {
+  // Normalize the object params
+  if (typeof options !== 'object') {
+    options = {};
+  }
+  var node = testUtils.queryShadowFixture(
+    content,
+    shadowContent,
+    targetSelector
+  );
   return [node.actualNode, options, node];
 };
 
@@ -246,7 +265,7 @@ testUtils.shadowCheckSetup = function(
  * @param Node   Stuff to go in the flat tree
  * @returns vNode[]
  */
-testUtils.flatTreeSetup = function(content) {
+testUtils.flatTreeSetup = function (content) {
   axe._tree = axe.utils.getFlattenedTree(content);
   return axe._tree;
 };
@@ -256,10 +275,12 @@ testUtils.flatTreeSetup = function(content) {
  *
  * @param Object				Window to wait for (optional)
  * @param function			Callback, called once resolved
+ * @param function      Callback, called once rejected
  */
-testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
+testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb, errCb) {
   'use strict';
   if (typeof win === 'function') {
+    errCb = cb;
     cb = win;
     win = window;
   }
@@ -267,7 +288,7 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
   var q = axe.utils.queue();
 
   // Wait for page load
-  q.defer(function(resolve) {
+  q.defer(function (resolve) {
     if (document.readyState === 'complete') {
       resolve();
     } else {
@@ -276,16 +297,20 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
   });
 
   // Wait for all frames to be loaded
-  Array.from(document.querySelectorAll('iframe')).forEach(function(frame) {
-    q.defer(function(resolve) {
+  Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
+    q.defer(function (resolve) {
       return awaitNestedLoad(frame.contentWindow, resolve);
     });
   });
 
   // Complete (don't pass the args on to the callback)
-  q.then(function() {
+  q.then(function () {
     cb();
   });
+
+  if (errCb) {
+    q.catch(errCb);
+  }
 };
 
 /**
@@ -303,7 +328,7 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
   var doc = rootNode ? rootNode : document;
   var q = axe.utils.queue();
   if (data.href) {
-    q.defer(function(resolve, reject) {
+    q.defer(function (resolve, reject) {
       var link = doc.createElement('link');
       link.rel = 'stylesheet';
       link.href = data.href;
@@ -313,18 +338,18 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
       if (data.mediaPrint) {
         link.media = 'print';
       }
-      link.onload = function() {
-        setTimeout(function() {
+      link.onload = function () {
+        setTimeout(function () {
           resolve();
         });
       };
-      link.onerror = function() {
+      link.onerror = function () {
         reject();
       };
       doc.head.appendChild(link);
     });
   } else {
-    q.defer(function(resolve) {
+    q.defer(function (resolve) {
       var style = doc.createElement('style');
       if (data.id) {
         style.id = data.id;
@@ -332,7 +357,7 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
       style.type = 'text/css';
       style.appendChild(doc.createTextNode(data.text));
       doc.head.appendChild(style);
-      setTimeout(function() {
+      setTimeout(function () {
         resolve();
       }, 100); // -> note: gives firefox to load (document.stylesheets), other browsers are fine.
     });
@@ -348,7 +373,7 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
  */
 testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
   var q = axe.utils.queue();
-  sheets.forEach(function(data) {
+  sheets.forEach(function (data) {
     q.defer(axe.testUtils.addStyleSheet(data, rootNode));
   });
   return q;
@@ -361,8 +386,8 @@ testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
  */
 testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
   var q = axe.utils.queue();
-  sheets.forEach(function(data) {
-    q.defer(function(resolve, reject) {
+  sheets.forEach(function (data) {
+    q.defer(function (resolve, reject) {
       var node = document.getElementById(data.id);
       if (!node || !node.parentNode) {
         reject();
@@ -416,28 +441,46 @@ testUtils.assertStylesheet = function assertStylesheet(
   }
 };
 
-/*
+/**
  * Injecting content into a fixture and return queried element within fixture
  *
- * @param {String|Node} content to go into the fixture (html or DOM node)
- * @return HTMLElement
+ * @param {String|Node} html - content to go into the fixture (html or DOM node)
+ * @param {String} [query=#target] - the CSS selector query to find target DOM node
+ * @return {VirtualNode}
  */
 testUtils.queryFixture = function queryFixture(html, query) {
+  query = query || '#target';
   var rootNode = testUtils.fixtureSetup(html);
-  return axe.utils.querySelectorAll(rootNode, query || '#target')[0];
+  var vNode = axe.utils.querySelectorAll(rootNode, query)[0];
+  assert.exists(
+    vNode,
+    'Node does not exist in query `' +
+      query +
+      '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter. If you do not intend on querying the fixture for #target, consider using `axe.testUtils.fixtureSetup()` instead.'
+  );
+  return vNode;
 };
 
 /**
  * Return the checks evaluate method and apply default options
- * @param {String} checkId - ID of the check
- * @return Function
+ * @param {string} checkId - ID of the check
+ * @param {} testOptions - Options for the test
+ * @returns {evaluateWrapper} evaluateWrapper - Check evaluation wrapper
  */
 testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
   var check = checks[checkId];
   testOptions = testOptions || {};
 
-  return function evaluateWrapper(node, options, virtualNode, context) {
+  /**
+   * Wraps a check for evaluation using .call()
+   * @param {HTMLElement} node
+   * @param {*} options
+   * @param {VirtualNode} virtualNode
+   * @param {Context} context
+   */
+  var evaluateWrapper = function (node, options, virtualNode, context) {
     var opts = check.getOptions(options);
+
     var result = check.evaluate.call(this, node, opts, virtualNode, context);
 
     // ensure that every result has a corresponding message
@@ -513,22 +556,13 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
 
     return result;
   };
+  return evaluateWrapper;
 };
-
-/**
- * Test function for detecting IE11 user agent string
- *
- * @param {Object} navigator The navigator object of the current browser
- * @return {boolean}
- */
-testUtils.isIE11 = (function isIE11(navigator) {
-  return navigator.userAgent.indexOf('Trident/7') !== -1;
-})(navigator);
 
 axe.testUtils = testUtils;
 
 if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
-  beforeEach(function() {
+  beforeEach(function () {
     // reset from axe._load overriding
     checks = originalChecks;
     axe._audit = originalAudit;
@@ -536,7 +570,7 @@ if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
     commons = axe.commons = originalCommons;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.teardown();
     fixture.innerHTML = '';
 
@@ -557,7 +591,7 @@ if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
 }
 
 testUtils.captureError = function captureError(cb, errorHandler) {
-  return function() {
+  return function () {
     try {
       cb.apply(null, arguments);
     } catch (e) {
@@ -577,7 +611,7 @@ testUtils.runPartialRecursive = function runPartialRecursive(
   var frameContexts = axe.utils.getFrameContexts(context);
   var promiseResults = [axe.runPartial(context, options)];
 
-  frameContexts.forEach(function(c) {
+  frameContexts.forEach(function (c) {
     var frame = testUtils.shadowQuerySelector(c.frameSelector, win.document);
     var frameWin = frame.contentWindow;
     var frameResults = testUtils.runPartialRecursive(
@@ -594,7 +628,7 @@ testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
   var elm;
   doc = doc || document;
   axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector];
-  axeSelector.forEach(function(selectorStr) {
+  axeSelector.forEach(function (selectorStr) {
     elm = doc && doc.querySelector(selectorStr);
     doc = elm && elm.shadowRoot;
   });

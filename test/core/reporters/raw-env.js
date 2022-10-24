@@ -1,4 +1,4 @@
-describe('reporters - raw-env', function() {
+describe('reporters - raw-env', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -11,7 +11,7 @@ describe('reporters - raw-env', function() {
 
   var runResults;
 
-  beforeEach(function() {
+  beforeEach(function () {
     runResults = [
       {
         id: 'gimmeLabel',
@@ -111,12 +111,12 @@ describe('reporters - raw-env', function() {
     axe._cache.set('selectorData', {});
   });
 
-  after(function() {
+  after(function () {
     fixture.innerHTML = '';
   });
 
-  it('should serialize DqElements (#1195)', function() {
-    axe.getReporter('rawEnv')(runResults, {}, function(results) {
+  it('should serialize DqElements (#1195)', function () {
+    axe.getReporter('rawEnv')(runResults, {}, function (results) {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
         for (var j = 0; j < result.passes.length; j++) {
@@ -127,8 +127,8 @@ describe('reporters - raw-env', function() {
     });
   });
 
-  it('should pass env object', function() {
-    axe.getReporter('rawEnv')(runResults, {}, function(results) {
+  it('should pass env object', function () {
+    axe.getReporter('rawEnv')(runResults, {}, function (results) {
       assert.isDefined(results.env);
       assert.isDefined(results.env.url);
       assert.isDefined(results.env.timestamp);
@@ -140,9 +140,13 @@ describe('reporters - raw-env', function() {
   it('uses the environmentData option instead of environment data if specified', function () {
     var environmentData = {
       myReporter: 'hello world'
-    }
-    axe.getReporter('rawEnv')(runResults, { environmentData: environmentData }, function(results) {
-      assert.deepEqual(results.env, environmentData);
-    });
+    };
+    axe.getReporter('rawEnv')(
+      runResults,
+      { environmentData: environmentData },
+      function (results) {
+        assert.deepEqual(results.env, environmentData);
+      }
+    );
   });
 });

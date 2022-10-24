@@ -1,24 +1,24 @@
-describe('aria-hidden-focus-matches', function() {
+describe('aria-hidden-focus-matches', function () {
   'use strict';
 
   var rule;
   var queryFixture = axe.testUtils.queryFixture;
 
-  beforeEach(function() {
+  beforeEach(function () {
     rule = axe.utils.getRule('aria-hidden-focus');
   });
 
-  it('is a function', function() {
+  it('is a function', function () {
     assert.isFunction(rule.matches);
   });
 
-  it('return true when there is no parent with aria-hidden', function() {
+  it('return true when there is no parent with aria-hidden', function () {
     var vNode = queryFixture('<div id="target">' + '</div>');
     var actual = rule.matches(vNode.actualNode);
     assert.isTrue(actual);
   });
 
-  it('return false when has a parent element with aria-hidden', function() {
+  it('return false when has a parent element with aria-hidden', function () {
     var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div id="target" aria-hidden="true">' +
@@ -29,7 +29,7 @@ describe('aria-hidden-focus-matches', function() {
     assert.isFalse(actual);
   });
 
-  it('return false when has any parent element with aria-hidden', function() {
+  it('return false when has any parent element with aria-hidden', function () {
     var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div>' +
@@ -42,7 +42,7 @@ describe('aria-hidden-focus-matches', function() {
     assert.isFalse(actual);
   });
 
-  it('return false when has any parent element with aria-hidden', function() {
+  it('return false when has any parent element with aria-hidden', function () {
     var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div aria-hidden="true">' +

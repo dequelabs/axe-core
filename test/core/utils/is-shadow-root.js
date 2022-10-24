@@ -1,7 +1,7 @@
 var fixture = document.getElementById('fixture');
 var shadowSupport = axe.testUtils.shadowSupport;
 
-describe('axe.utils.isShadowRoot', function() {
+describe('axe.utils.isShadowRoot', function () {
   'use strict';
 
   function createStyle(box) {
@@ -15,35 +15,35 @@ describe('axe.utils.isShadowRoot', function() {
 
   var isShadowRoot = axe.utils.isShadowRoot;
 
-  it('returns false if the node has no shadowRoot', function() {
+  it('returns false if the node has no shadowRoot', function () {
     assert.isFalse(isShadowRoot({ nodeName: 'DIV', shadowRoot: undefined }));
   });
-  it('returns true if the native element allows shadow DOM', function() {
+  it('returns true if the native element allows shadow DOM', function () {
     assert.isTrue(isShadowRoot({ nodeName: 'DIV', shadowRoot: {} }));
     assert.isTrue(isShadowRoot({ nodeName: 'H1', shadowRoot: {} }));
     assert.isTrue(isShadowRoot({ nodeName: 'ASIDE', shadowRoot: {} }));
   });
-  it('returns true if a custom element with shadowRoot', function() {
+  it('returns true if a custom element with shadowRoot', function () {
     assert.isTrue(isShadowRoot({ nodeName: 'X-BUTTON', shadowRoot: {} }));
     assert.isTrue(
       isShadowRoot({ nodeName: 'T1000-SCHWARZENEGGER', shadowRoot: {} })
     );
   });
-  it('returns true if an invalid custom element with shadowRoot', function() {
+  it('returns true if an invalid custom element with shadowRoot', function () {
     assert.isFalse(isShadowRoot({ nodeName: '0-BUZZ', shadowRoot: {} }));
     assert.isFalse(isShadowRoot({ nodeName: '--ELM--', shadowRoot: {} }));
   });
-  it('returns false if the native element does not allow shadow DOM', function() {
+  it('returns false if the native element does not allow shadow DOM', function () {
     assert.isFalse(isShadowRoot({ nodeName: 'IFRAME', shadowRoot: {} }));
     assert.isFalse(isShadowRoot({ nodeName: 'STRONG', shadowRoot: {} }));
   });
 
   if (shadowSupport.v1) {
-    describe('shadow DOM v1', function() {
-      afterEach(function() {
+    describe('shadow DOM v1', function () {
+      afterEach(function () {
         fixture.innerHTML = '';
       });
-      beforeEach(function() {
+      beforeEach(function () {
         function createStoryGroup(className, slotName) {
           var group = document.createElement('div');
           group.className = className;
@@ -74,7 +74,7 @@ describe('axe.utils.isShadowRoot', function() {
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
-      it('should support shadow DOM v1', function() {
+      it('should support shadow DOM v1', function () {
         assert.isDefined(fixture.firstChild.shadowRoot);
       });
     });

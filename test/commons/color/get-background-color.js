@@ -1,4 +1,4 @@
-describe('color.getBackgroundColor', function() {
+describe('color.getBackgroundColor', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,12 +7,12 @@ describe('color.getBackgroundColor', function() {
   var origBodyBg;
   var origHtmlBg;
 
-  before(function() {
+  before(function () {
     origBodyBg = document.body.style.background;
     origHtmlBg = document.documentElement.style.background;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     document.body.style.background = origBodyBg;
     document.documentElement.style.background = origHtmlBg;
 
@@ -20,7 +20,7 @@ describe('color.getBackgroundColor', function() {
     axe._tree = undefined;
   });
 
-  it('should return the blended color if it has no background set', function() {
+  it('should return the blended color if it has no background set', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px;">' +
@@ -38,7 +38,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should return the blended color if it is transparent and positioned', function() {
+  it('should return the blended color if it is transparent and positioned', function () {
     fixture.innerHTML =
       '<div style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
       'width: 90px; background-color: #000080;">' +
@@ -63,7 +63,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target, pos]);
   });
 
-  it('should do alpha blending from the back forward', function() {
+  it('should do alpha blending from the back forward', function () {
     fixture.innerHTML =
       '<div id="under" style="height: 20px; width: 15px; background-color: #800000;">' +
       '<div id="transparent" style="height: 20px; width: 15px; background-color: rgba(0, 0, 0, 0);">' +
@@ -82,7 +82,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target, under]);
   });
 
-  it('should only look at what is underneath original element when blended and positioned', function() {
+  it('should only look at what is underneath original element when blended and positioned', function () {
     fixture.innerHTML =
       '<div style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
       'width: 90px; background-color: #000080;">' +
@@ -109,7 +109,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target, under]);
   });
 
-  it('should return the proper blended color if it has alpha set', function() {
+  it('should return the proper blended color if it has alpha set', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px; background-color: rgba(0, 128, 0, 0.5);">' +
@@ -127,7 +127,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target, parent]);
   });
 
-  it('should return the blended color if it has opacity set', function() {
+  it('should return the blended color if it has opacity set', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px; opacity: 0.5; background-color: green;">' +
@@ -145,7 +145,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target, parent]);
   });
 
-  it('should return null if containing parent has a background image and is non-opaque', function() {
+  it('should return null if containing parent has a background image and is non-opaque', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px;' +
       'background-color: #800000; background-image: url(image.png);">' +
@@ -161,7 +161,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
   });
 
-  it('should return white if transparency goes all the way up to document', function() {
+  it('should return white if transparency goes all the way up to document', function () {
     fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
     var target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
@@ -173,7 +173,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(actual.alpha, expected.alpha);
   });
 
-  it('should return null if there is a background image', function() {
+  it('should return null if there is a background image', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px; background-color: green; background-image: url(image.png);">' +
@@ -187,7 +187,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
   });
 
-  it('should return null if something non-opaque is obscuring it', function() {
+  it('should return null if something non-opaque is obscuring it', function () {
     fixture.innerHTML =
       '<div style="width:100%; height: 100px; background: #000"></div>' +
       '<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -200,7 +200,7 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should return null if something non-opaque is obscuring it, scrolled out of view', function() {
+  it('should return null if something non-opaque is obscuring it, scrolled out of view', function () {
     fixture.innerHTML =
       '<div style="height: 1em; overflow: auto; position: relative;">' +
       '  <div style="background: rgba(0, 255, 255, 0.7); ' +
@@ -215,7 +215,7 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should return an actual if something opaque is obscuring it', function() {
+  it('should return an actual if something opaque is obscuring it', function () {
     fixture.innerHTML =
       '<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
       '<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -228,7 +228,7 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should return the bgcolor if it is solid', function() {
+  it('should return the bgcolor if it is solid', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px; background-color: red;">' +
       '<div id="target" style="height: 20px; width: 15px; background-color: green;">' +
@@ -245,7 +245,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [target]);
   });
 
-  it('should return a bgcolor for a multiline inline element fully covering the background', function() {
+  it('should return a bgcolor for a multiline inline element fully covering the background', function () {
     fixture.innerHTML =
       '<div style="position:relative;">' +
       '<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:200px;"></div>' +
@@ -262,7 +262,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(Math.round(actual.green), 0);
   });
 
-  it('should return null if a multiline inline element does not fully cover background', function() {
+  it('should return null if a multiline inline element does not fully cover background', function () {
     fixture.innerHTML =
       '<div style="position:relative;">' +
       '<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:20px;"></div>' +
@@ -280,7 +280,7 @@ describe('color.getBackgroundColor', function() {
     );
   });
 
-  it('should return an actual if an absolutely positioned element does not cover background', function() {
+  it('should return an actual if an absolutely positioned element does not cover background', function () {
     fixture.innerHTML =
       '<div style="background-color:black; height:20px; position:relative;">' +
       '<div style="color:#333; position:absolute; top:21px;" id="target">Text</div>' +
@@ -295,7 +295,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(Math.round(actual.green), 255);
   });
 
-  it('should return null if an absolutely positioned element partially obsures background', function() {
+  it('should return null if an absolutely positioned element partially obsures background', function () {
     fixture.innerHTML =
       '<div style="height:40px; position:relative;">' +
       '<div style="background-color:black; height:20px;"></div>' +
@@ -313,7 +313,7 @@ describe('color.getBackgroundColor', function() {
     );
   });
 
-  it('should count a TR as a background element for TD', function() {
+  it('should count a TR as a background element for TD', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -335,7 +335,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should count a TR as a background element for TH', function() {
+  it('should count a TR as a background element for TH', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -357,7 +357,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should count a TR as a background element for a child element', function() {
+  it('should count a TR as a background element for a child element', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -379,7 +379,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should count a THEAD as a background element for a child element', function() {
+  it('should count a THEAD as a background element for a child element', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -401,7 +401,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should count a TBODY as a background element for a child element', function() {
+  it('should count a TBODY as a background element for a child element', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -423,7 +423,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should count a TFOOT as a background element for a child element', function() {
+  it('should count a TFOOT as a background element for a child element', function () {
     fixture.innerHTML =
       '<div style="background-color:#007acc;">' +
       '<table style="width:100%">' +
@@ -445,7 +445,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it("should ignore TR elements that don't overlap", function() {
+  it("should ignore TR elements that don't overlap", function () {
     fixture.innerHTML =
       '<table style="position:relative; width:100%;">' +
       '<tr style="background-color:black; height:10px; width:100%;" id="parent">' +
@@ -464,7 +464,7 @@ describe('color.getBackgroundColor', function() {
     assert.notEqual(bgNodes, [parent]);
   });
 
-  it('should count an implicit label as a background element', function() {
+  it('should count an implicit label as a background element', function () {
     fixture.innerHTML =
       '<label id="target" style="background-color: #000;">My label' +
       '<input type="text">' +
@@ -484,7 +484,7 @@ describe('color.getBackgroundColor', function() {
     fixture.innerHTML =
       '<div style="height: 1em; overflow:auto; background: cyan">' +
       '  <br>' +
-      '  <b id="target">Text <i style="display: inline-block">'+
+      '  <b id="target">Text <i style="display: inline-block">' +
       '    <s><img width="100" height="16"></s>' +
       '  </i></b>' +
       '</div>';
@@ -514,7 +514,7 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should ignore inline ancestors of non-overlapping elements', function() {
+  it('should ignore inline ancestors of non-overlapping elements', function () {
     fixture.innerHTML =
       '<div style="position:relative;">' +
       '<label style="background-color:black;" id="parent">Label' +
@@ -533,7 +533,7 @@ describe('color.getBackgroundColor', function() {
     assert.notEqual(bgNodes, [parent]);
   });
 
-  it('should handle multiple ancestors of the same name', function() {
+  it('should handle multiple ancestors of the same name', function () {
     fixture.innerHTML =
       '<div style="background-color: #007acc;">' +
       '<table style="width: 100%;">' +
@@ -559,7 +559,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should use hierarchical DOM traversal if possible', function() {
+  it('should use hierarchical DOM traversal if possible', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; ' +
       ' background-color: white;">' +
@@ -582,7 +582,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should ignore 0-height elements', function() {
+  it('should ignore 0-height elements', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; ' +
       'background-color: white; position: relative; z-index: 5">' +
@@ -603,7 +603,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('should use visual traversal when needed', function() {
+  it('should use visual traversal when needed', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; ' +
       ' background-color: white; position: relative; z-index: 5">' +
@@ -627,7 +627,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return null when encountering background images during visual traversal', function() {
+  it('should return null when encountering background images during visual traversal', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; ' +
       ' background-color: white; position: relative; z-index: 5"> ' +
@@ -647,7 +647,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
   });
 
-  it('should return null when encountering image nodes during visual traversal', function() {
+  it('should return null when encountering image nodes during visual traversal', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; ' +
       ' background-color: white; position: relative; z-index: 5"> ' +
@@ -667,7 +667,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
   });
 
-  it('returns elements with negative z-index', function() {
+  it('returns elements with negative z-index', function () {
     fixture.innerHTML =
       '<div id="sibling" ' +
       'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
@@ -687,7 +687,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('returns negative z-index elements when body has a background', function() {
+  it('returns negative z-index elements when body has a background', function () {
     fixture.innerHTML =
       '<div id="sibling" ' +
       'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
@@ -708,7 +708,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return null for negative z-index element when html and body have a background', function() {
+  it('should return null for negative z-index element when html and body have a background', function () {
     fixture.innerHTML =
       '<div style="width: 200px; height: 200px;"></div>' +
       '<div id="target" ' +
@@ -725,7 +725,7 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should return background color for inline elements that do not fit the viewport', function() {
+  it('should return background color for inline elements that do not fit the viewport', function () {
     var html = '';
     for (var i = 0; i < 300; i++) {
       html += 'foo<br />';
@@ -741,7 +741,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return the body bgColor when content does not overlap', function() {
+  it('should return the body bgColor when content does not overlap', function () {
     fixture.innerHTML =
       '<div style="height: 20px; width: 30px; background-color: red;">' +
       '<div id="target" style="height:20px; top: 25px; width: 45px; position:absolute;">Text' +
@@ -756,7 +756,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, 1, 0);
   });
 
-  it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function() {
+  it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function () {
     fixture.innerHTML =
       '<div id="target" style="position: relative; top: 2px; height: 10px;">Text</div>';
 
@@ -780,7 +780,7 @@ describe('color.getBackgroundColor', function() {
     document.body.style.margin = originalMargin;
   });
 
-  it('should return the html canvas bgColor when element content does not overlap with body', function() {
+  it('should return the html canvas bgColor when element content does not overlap with body', function () {
     fixture.innerHTML =
       '<div id="target" style="position: relative; top: 2px;">Text</div>';
 
@@ -802,28 +802,31 @@ describe('color.getBackgroundColor', function() {
     document.body.style.height = originalHeight;
   });
 
-  (shadowSupported ? it : xit)('finds colors in shadow boundaries', function() {
-    fixture.innerHTML = '<div id="container"></div>';
-    var container = fixture.querySelector('#container');
-    var shadow = container.attachShadow({ mode: 'open' });
-    shadow.innerHTML =
-      '<div style="background-color: black;">' +
-      '<span id="shadowTarget" style="color: #ccc;">Text</span>' +
-      '</div>';
-    axe.testUtils.flatTreeSetup(fixture);
+  (shadowSupported ? it : xit)(
+    'finds colors in shadow boundaries',
+    function () {
+      fixture.innerHTML = '<div id="container"></div>';
+      var container = fixture.querySelector('#container');
+      var shadow = container.attachShadow({ mode: 'open' });
+      shadow.innerHTML =
+        '<div style="background-color: black;">' +
+        '<span id="shadowTarget" style="color: #ccc;">Text</span>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
 
-    var target = shadow.querySelector('#shadowTarget');
-    var actual = axe.commons.color.getBackgroundColor(target, []);
+      var target = shadow.querySelector('#shadowTarget');
+      var actual = axe.commons.color.getBackgroundColor(target, []);
 
-    assert.closeTo(actual.red, 0, 0);
-    assert.closeTo(actual.green, 0, 0);
-    assert.closeTo(actual.blue, 0, 0);
-    assert.closeTo(actual.alpha, 1, 0);
-  });
+      assert.closeTo(actual.red, 0, 0);
+      assert.closeTo(actual.green, 0, 0);
+      assert.closeTo(actual.blue, 0, 0);
+      assert.closeTo(actual.alpha, 1, 0);
+    }
+  );
 
   (shadowSupported ? it : xit)(
     'finds colors across shadow boundaries',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:black;"></div>';
       var container = fixture.querySelector('#container');
@@ -844,7 +847,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'should count an implicit label as a background element inside shadow dom',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="container"></div>';
       var container = fixture.querySelector('#container');
       var shadow = container.attachShadow({ mode: 'open' });
@@ -865,7 +868,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'finds colors for absolutely positioned elements across shadow boundaries',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:black; height:20px; position:relative;"></div>';
       var container = fixture.querySelector('#container');
@@ -886,7 +889,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'finds a color for absolutely positioned content when background is in shadow dom',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="elm1" style="width:10em; height:0; position:absolute;"></div>' +
         '<div id="elm2" style="color:green; position:absolute;">Text</div>';
@@ -907,7 +910,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'finds colors for content rendered across multiple shadow boundaries',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div style="position:relative;"><div id="elm1" style="width:10em;"></div>' +
         '<div id="elm2"></div></div>';
@@ -936,7 +939,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'finds colors for multiline elements across shadow boundaries',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:black; height:40px;"></div>';
       var container = fixture.querySelector('#container');
@@ -955,7 +958,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? xit : xit)(
     'returns null for multiline elements not fully covering parents across shadow boundaries',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:black; height:20px;"></div>';
       var container = fixture.querySelector('#container');
@@ -971,7 +974,7 @@ describe('color.getBackgroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'returns a color for slotted content',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="container"></div>';
       var div = fixture.querySelector('#container');
       div.innerHTML = '<a href="">Link</a>';
@@ -987,7 +990,7 @@ describe('color.getBackgroundColor', function() {
     }
   );
 
-  it('should return the text-shadow mixed in with the background', function() {
+  it('should return the text-shadow mixed in with the background', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 1em">foo' +
@@ -1007,7 +1010,7 @@ describe('color.getBackgroundColor', function() {
     assert.deepEqual(bgNodes, [parent]);
   });
 
-  it('ignores thin text-shadows', function() {
+  it('ignores thin text-shadows', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px; background-color: #000;">' +
       '<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 0.05em">foo' +
@@ -1023,7 +1026,7 @@ describe('color.getBackgroundColor', function() {
     assert.equal(actual.alpha, 1);
   });
 
-  it('ignores text-shadows thinner than shadowOutlineEmMax', function() {
+  it('ignores text-shadows thinner than shadowOutlineEmMax', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px; background-color: #800000;">' +
       '<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 1em, green 0 0 0.5em">foo' +
@@ -1041,8 +1044,8 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  describe('body and document', function() {
-    it('returns the body background', function() {
+  describe('body and document', function () {
+    it('returns the body background', function () {
       fixture.innerHTML = '<div id="target">elm</div>';
       document.body.style.background = '#F00';
 
@@ -1059,7 +1062,7 @@ describe('color.getBackgroundColor', function() {
       assert.closeTo(actual.alpha, expected.alpha, 0.1);
     });
 
-    it('returns the body background even when the body is MUCH larger than the screen', function() {
+    it('returns the body background even when the body is MUCH larger than the screen', function () {
       fixture.innerHTML = '<div id="target" style="height:20000px;">elm</div>';
       document.body.style.background = '#F00';
 
@@ -1076,7 +1079,7 @@ describe('color.getBackgroundColor', function() {
       assert.closeTo(actual.alpha, expected.alpha, 0.1);
     });
 
-    it('returns the html background', function() {
+    it('returns the html background', function () {
       fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
       document.documentElement.style.background = '#0F0';
 
@@ -1093,7 +1096,7 @@ describe('color.getBackgroundColor', function() {
       assert.closeTo(actual.alpha, expected.alpha, 0.1);
     });
 
-    it('returns the html background when body does not cover the element', function() {
+    it('returns the html background when body does not cover the element', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; top: 1000px;">elm<input></div>';
       document.documentElement.style.background = '#0F0';
@@ -1112,7 +1115,7 @@ describe('color.getBackgroundColor', function() {
       assert.closeTo(actual.alpha, expected.alpha, 0.1);
     });
 
-    it('returns the body background when body does cover the element', function() {
+    it('returns the body background when body does cover the element', function () {
       fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
       document.documentElement.style.background = '#0F0';
       document.body.style.background = '#00F';
@@ -1130,7 +1133,7 @@ describe('color.getBackgroundColor', function() {
       assert.closeTo(actual.alpha, expected.alpha, 0.1);
     });
 
-    it('returns both the html and body background if the body has alpha', function() {
+    it('returns both the html and body background if the body has alpha', function () {
       fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
       document.documentElement.style.background = '#0F0';
       document.body.style.background = 'rgba(0, 0, 255, 0.5)';

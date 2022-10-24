@@ -1,4 +1,4 @@
-describe('landmark-unique-matches', function() {
+describe('landmark-unique-matches', function () {
   'use strict';
   var rule;
   var fixture;
@@ -13,20 +13,20 @@ describe('landmark-unique-matches', function() {
   ];
   var headerFooterElements = ['header', 'footer'];
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
     rule = axe.utils.getRule('landmark-unique');
   });
 
-  it('should not match because not a landmark', function() {
+  it('should not match because not a landmark', function () {
     axeFixtureSetup('<h1>some heading</h1>');
     var node = fixture.querySelector('h1');
     var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  it('should pass because is a landmark', function() {
+  it('should pass because is a landmark', function () {
     axeFixtureSetup('<div role="banner">some banner</div>');
     var node = fixture.querySelector('div');
     fixture.appendChild(node);
@@ -34,7 +34,7 @@ describe('landmark-unique-matches', function() {
     assert.isTrue(rule.matches(node, virtualNode));
   });
 
-  it('should not match because landmark is hidden', function() {
+  it('should not match because landmark is hidden', function () {
     axeFixtureSetup('<div role="banner">some banner</div>');
     var node = fixture.querySelector('div');
     node.style.display = 'none';
@@ -43,13 +43,13 @@ describe('landmark-unique-matches', function() {
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  describe('form and section elements must have accessible names to be matched', function() {
+  describe('form and section elements must have accessible names to be matched', function () {
     var sectionFormElements = ['section', 'form'];
 
-    sectionFormElements.forEach(function(elementType) {
+    sectionFormElements.forEach(function (elementType) {
       it(
         'should match because it is a ' + elementType + ' with a label',
-        function() {
+        function () {
           axeFixtureSetup(
             '<' +
               elementType +
@@ -67,7 +67,7 @@ describe('landmark-unique-matches', function() {
 
       it(
         'should not match because it is a ' + elementType + ' without a label',
-        function() {
+        function () {
           axeFixtureSetup(
             '<' +
               elementType +
@@ -85,15 +85,15 @@ describe('landmark-unique-matches', function() {
     });
   });
 
-  describe('header/footers should only match when not inside the excluded descendants', function() {
-    headerFooterElements.forEach(function(elementType) {
-      excludedDescendantsForHeadersFooters.forEach(function(exclusionType) {
+  describe('header/footers should only match when not inside the excluded descendants', function () {
+    headerFooterElements.forEach(function (elementType) {
+      excludedDescendantsForHeadersFooters.forEach(function (exclusionType) {
         it(
           'should not match because ' +
             elementType +
             ' is contained inside an ' +
             exclusionType,
-          function() {
+          function () {
             axeFixtureSetup(
               '<' +
                 exclusionType +
@@ -116,7 +116,7 @@ describe('landmark-unique-matches', function() {
         'should match because ' +
           elementType +
           ' is not contained inside the excluded descendants',
-        function() {
+        function () {
           axeFixtureSetup(
             '<' + elementType + '>an element</' + elementType + '>'
           );
@@ -129,7 +129,7 @@ describe('landmark-unique-matches', function() {
   });
 
   if (shadowSupport) {
-    it('return true for landmarks contained within shadow dom', function() {
+    it('return true for landmarks contained within shadow dom', function () {
       var container = document.createElement('div');
       var shadow = container.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<footer></footer>';
@@ -139,24 +139,24 @@ describe('landmark-unique-matches', function() {
       assert.isTrue(rule.matches(vNode.actualNode, vNode));
     });
 
-    describe('header/footers should only match when not inside the excluded descendants within shadow dom', function() {
+    describe('header/footers should only match when not inside the excluded descendants within shadow dom', function () {
       var container;
       var shadow;
 
-      beforeEach(function() {
+      beforeEach(function () {
         container = document.createElement('div');
         shadow = container.attachShadow({ mode: 'open' });
       });
 
-      headerFooterElements.forEach(function(elementType) {
-        excludedDescendantsForHeadersFooters.forEach(function(exclusionType) {
+      headerFooterElements.forEach(function (elementType) {
+        excludedDescendantsForHeadersFooters.forEach(function (exclusionType) {
           it(
             'should not match because ' +
               elementType +
               ' is contained inside an ' +
               exclusionType +
               '',
-            function() {
+            function () {
               shadow.innerHTML =
                 '<' +
                 exclusionType +
@@ -182,7 +182,7 @@ describe('landmark-unique-matches', function() {
           'should match because ' +
             elementType +
             ' is not contained inside the excluded descendants',
-          function() {
+          function () {
             shadow.innerHTML =
               '<' + elementType + '>an element</' + elementType + '>';
             axeFixtureSetup(container);

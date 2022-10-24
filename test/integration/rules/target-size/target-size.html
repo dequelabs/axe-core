@@ -1,0 +1,175 @@
+<style>
+  /* Ensure sufficient space between tests */
+  p {
+    margin: 30px;
+  }
+  img {
+    vertical-align: bottom;
+  }
+</style>
+
+<!-- These fall on top of the elements immediately below it 
+this should not effect their outcome -->
+<p style="position: fixed">
+  <a href="#" id="pass-fixed">Wide link</a>
+  <a href="#" id="fail-fixed">x</a>
+</p>
+
+<p>
+  <button id="pass1" style="display: inline-block; margin-right: 20px">
+    x
+  </button>
+  <select id="pass2">
+    <option>opt 1</option>
+    <option>opt 2</option>
+  </select>
+  <textarea id="pass3" tabindex="-1">
+    Test elements with tabindex="-1".
+  </textarea>
+</p>
+
+<!-- Nested controls-->
+<p>
+  <a
+    role="link"
+    aria-label="play"
+    tabindex="0"
+    style="display: inline-block"
+    id="pass4"
+  >
+    <button
+      style="margin: 1px; line-height: 20px"
+      id="inapplicable7"
+      tabindex="-1"
+    >
+      Play
+    </button>
+  </a>
+</p>
+
+<p>
+  <a role="link" tabindex="0" id="pass5">
+    Wide link <button id="fail7">y</button>
+  </a>
+</p>
+
+<!-- Failed examples -->
+<p>
+  <button id="fail1">x</button
+  ><span role="button" tabindex="0" id="fail2">x</span>
+</p>
+
+<ul>
+  <li><a href="#" id="fail3">Item1</a></li>
+  <li><a href="#" id="fail4">Item2</a></li>
+</ul>
+
+<p>
+  <input type="checkbox" id="fail5" /><input type="checkbox" id="fail6" /><input
+    type="text"
+    id="pass-adjacent"
+  />
+</p>
+
+<!-- Incomplete examples -->
+<ul>
+  <li><a href="#" tabindex="-1" id="incomplete1">Item1</a></li>
+  <li><a href="#" tabindex="-1" id="incomplete2">Item2</a></li>
+</ul>
+
+<p>
+  <a href="#" id="incomplete3" tabindex="-1">x</a>
+  <a href="#" id="pass6" tabindex="-1">Wide link</a>
+</p>
+
+<p>
+  <a href="#" id="incomplete4" tabindex="-1">abc</a>
+  <a
+    href="#"
+    id="pass7"
+    tabindex="-1"
+    style="display: inline-block; margin-left: -1em"
+    >Wide link</a
+  >
+  <a
+    href="#"
+    id="pass8"
+    tabindex="-1"
+    style="display: inline-block; margin-left: -1em"
+    >Wide link</a
+  >
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the left and right -->
+  <a href="#" id="incomplete5"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M1"
+      style="float: left"
+    />
+  </a>
+  <a href="#" id="incomplete6"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M4"
+      style="position: absolute"
+    />
+  </a>
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the top and bottom -->
+  <a href="#" id="incomplete7">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M3"
+    />
+  </a>
+  <br />
+  <a href="#" id="incomplete8" style="display: inline-block; height: 18px">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M2"
+    />
+  </a>
+</p>
+
+<!-- Inapplicable -->
+<p>
+  The quick <a href="#" id="inapplicable1">brown</a><br />
+  fox jumped <a href="#" id="inapplicable2">over</a> the lazy dog.
+</p>
+<ul>
+  <li>Inapplicable <a href="#" id="inapplicable3">Item 1</a></li>
+  <li>Inapplicable <a href="#" id="inapplicable4">Item 2</a></li>
+</ul>
+
+<svg>
+  <a href="#" id="inapplicable5"><text y="15">Hello</text></a>
+  <circle
+    tabindex="0"
+    role="button"
+    cx="50"
+    cy="50"
+    r="40"
+    stroke="black"
+    stroke-width="3"
+    fill="red"
+  />
+</svg>
+
+<img usemap="#imagemap" src="#" alt="" />
+<map name="imagemap">
+  <area id="inapplicable6" shape="circle" coords="75 75 75" href="#" />
+</map>

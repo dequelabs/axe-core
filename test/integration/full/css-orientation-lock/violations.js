@@ -1,38 +1,37 @@
-describe('css-orientation-lock violations test', function() {
+describe('css-orientation-lock violations test', function () {
   'use strict';
 
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   var styleSheets = [
     {
-      href:
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+      href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
     },
     {
       href: 'violations.css'
     }
   ];
 
-  before(function(done) {
+  before(function (done) {
     axe.testUtils
       .addStyleSheets(styleSheets)
-      .then(function() {
+      .then(function () {
         done();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         done(new Error('Could not load stylesheets for testing. ' + error));
       });
   });
 
   function assertViolatedSelectors(relatedNodes, violatedSelectors) {
-    relatedNodes.forEach(function(node) {
+    relatedNodes.forEach(function (node) {
       var target = node.target[0];
       var className = Array.isArray(target) ? target.reverse()[0] : target;
       assert.isTrue(violatedSelectors.indexOf(className) !== -1);
     });
   }
 
-  it('returns VIOLATIONS if preload is set to TRUE', function(done) {
+  it('returns VIOLATIONS if preload is set to TRUE', function (done) {
     // the sheets included in the html, have styles for transform and rotate, hence the violation
     axe.run(
       {
@@ -41,7 +40,7 @@ describe('css-orientation-lock violations test', function() {
           values: ['css-orientation-lock']
         }
       },
-      function(err, res) {
+      function (err, res) {
         assert.isNull(err);
         assert.isDefined(res);
 
@@ -68,7 +67,7 @@ describe('css-orientation-lock violations test', function() {
 
   (shadowSupported ? it : xit)(
     'returns VIOLATIONS whilst also accommodating shadowDOM styles',
-    function(done) {
+    function (done) {
       var fixture = document.getElementById('shadow-fixture');
       var shadow = fixture.attachShadow({ mode: 'open' });
       shadow.innerHTML =
@@ -83,7 +82,7 @@ describe('css-orientation-lock violations test', function() {
             values: ['css-orientation-lock']
           }
         },
-        function(err, res) {
+        function (err, res) {
           assert.isNull(err);
           assert.isDefined(res);
 

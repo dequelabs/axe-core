@@ -1,5 +1,6 @@
 {
   "rule": "presentation-role-conflict",
   "description": "presentation-role-conflict tests",
-  "violations": [["#violation1"], ["#violation2"]]
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]]
 }

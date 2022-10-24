@@ -1,5 +1,5 @@
 /* global xit */
-describe('hidden content', function() {
+describe('hidden content', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,13 +7,13 @@ describe('hidden content', function() {
   var checkSetup = axe.testUtils.checkSetup;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
     axe._tree = undefined;
   });
 
-  it('should return undefined with display:none and children', function() {
+  it('should return undefined with display:none and children', function () {
     var params = checkSetup(
       '<div id="target" style="display: none;"><p>Some paragraph text.</p></div>'
     );
@@ -24,7 +24,7 @@ describe('hidden content', function() {
     );
   });
 
-  it('should return undefined with visibility:hidden and children', function() {
+  it('should return undefined with visibility:hidden and children', function () {
     var params = checkSetup(
       '<div id="target" style="visibility: hidden;"><p>Some paragraph text.</p></div>'
     );
@@ -35,7 +35,7 @@ describe('hidden content', function() {
     );
   });
 
-  it('should return true with visibility:hidden and parent with visibility:hidden', function() {
+  it('should return true with visibility:hidden and parent with visibility:hidden', function () {
     var params = checkSetup(
       '<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>'
     );
@@ -46,7 +46,7 @@ describe('hidden content', function() {
     );
   });
 
-  it('should return true with aria-hidden and no content', function() {
+  it('should return true with aria-hidden and no content', function () {
     var params = checkSetup(
       '<span id="target" class="icon" aria-hidden="true"></span>'
     );
@@ -57,7 +57,7 @@ describe('hidden content', function() {
     );
   });
 
-  it('should skip whitelisted elements', function() {
+  it('should skip whitelisted elements', function () {
     var node = document.querySelector('head');
     axe.testUtils.flatTreeSetup(document.documentElement);
     var virtualNode = axe.utils.getNodeFromTree(node);
@@ -70,7 +70,7 @@ describe('hidden content', function() {
     );
   });
 
-  (shadowSupport ? it : xit)('works on elements in a shadow DOM', function() {
+  (shadowSupport ? it : xit)('works on elements in a shadow DOM', function () {
     fixture.innerHTML = '<div id="shadow"> <div id="content">text</div> </div>';
     var shadowRoot = document
       .getElementById('shadow')

@@ -1,7 +1,9 @@
+var execSync = require('child_process').execSync;
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-babel');
@@ -14,13 +16,13 @@ module.exports = function(grunt) {
 
   var langs;
   if (grunt.option('lang')) {
-    langs = (grunt.option('lang') || '').split(/[,;]/g).map(function(lang) {
+    langs = (grunt.option('lang') || '').split(/[,;]/g).map(function (lang) {
       lang = lang.trim();
       return lang !== 'en' ? '.' + lang : '';
     });
   } else if (grunt.option('all-lang')) {
     var localeFiles = require('fs').readdirSync('./locales');
-    langs = localeFiles.map(function(file) {
+    langs = localeFiles.map(function (file) {
       return '.' + file.replace('.json', '');
     });
     langs.unshift(''); // Add default
@@ -29,7 +31,7 @@ module.exports = function(grunt) {
   }
 
   // run tests only for affected files instead of all tests
-  grunt.event.on('watch', function(action, filepath) {
+  grunt.event.on('watch', function (action, filepath) {
     grunt.config.set('watch.file', filepath);
   });
 
@@ -80,7 +82,7 @@ module.exports = function(grunt) {
           process: true
         },
         coreFiles: ['tmp/core/index.js', 'tmp/core/**/*.js'],
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: [
               'lib/intro.stub',
@@ -136,7 +138,7 @@ module.exports = function(grunt) {
         options: {
           tags: grunt.option('tags')
         },
-        files: langs.map(function(lang) {
+        files: langs.map(function (lang) {
           return {
             src: [''],
             dest: {
@@ -148,6 +150,13 @@ module.exports = function(grunt) {
       }
     },
     'add-locale': {
+      template: {
+        options: {
+          lang: 'xyz'
+        },
+        src: ['tmp/core/core.js'],
+        dest: './locales/_template.json'
+      },
       newLang: {
         options: {
           lang: grunt.option('lang')
@@ -177,7 +186,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       beautify: {
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: ['<%= concat.engine.files[' + i + '].dest %>'],
             dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -199,7 +208,7 @@ module.exports = function(grunt) {
         }
       },
       minify: {
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: ['<%= concat.engine.files[' + i + '].dest %>'],
             dest: './axe' + lang + '.min.js'
@@ -224,7 +233,7 @@ module.exports = function(grunt) {
       axe: {
         options: { spawn: false },
         files: ['lib/**/*', 'Gruntfile.js'],
-        tasks: ['build', 'notify', 'test']
+        tasks: ['build', 'prettier', 'notify', 'test']
       },
       tests: {
         options: { spawn: false },
@@ -242,14 +251,23 @@ module.exports = function(grunt) {
     },
     bytesize: {
       all: {
-        src: langs.map(function(lang) {
+        src: langs.map(function (lang) {
           return ['./axe' + lang + '.js', './axe' + lang + '.min.js'];
         })
       }
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
+  grunt.registerTask('prettier', '', function () {
+    const results = execSync('npm run postbuild');
+    grunt.log.writeln(results);
+  });
+
+  grunt.registerTask('translate', [
+    'validate',
+    'esbuild',
+    'add-locale:newLang'
+  ]);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
@@ -260,6 +278,8 @@ module.exports = function(grunt) {
     'concat:engine',
     'uglify',
     'aria-supported',
+    'add-locale:template',
+    'prettier',
     'bytesize'
   ]);
   grunt.registerTask('default', ['build']);

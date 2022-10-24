@@ -5,19 +5,13 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: circleci/node:16.13-browsers
+    - image: cimg/node:16.14-browsers
 
 unix_nightly_box: &unix_nightly_box
   docker:
     - image: cimg/node:lts-browsers
 
-win_box: &win_box
-  executor:
-    name: win/default
-    shell: bash.exe
-
 orbs:
-  win: circleci/windows@2.2.0
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.1.0
 
@@ -30,18 +24,13 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
       - v9-cache-unix-{{ checksum "package-lock.json" }}
       - v9-cache-unix-
 
-restore_dependency_cache_win: &restore_dependency_cache_win
-  restore_cache:
-    keys:
-      - v9-cache-win-{{ checksum "package-lock.json" }}
-      - v9-cache-win-
-
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -49,18 +38,6 @@ jobs:
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
-  dependencies_win:
-    <<: *defaults
-    <<: *win_box
-    steps:
-      - checkout
-      - <<: *set_npm_auth
-      - <<: *restore_dependency_cache_win
-      - run: npm ci
-      - save_cache:
-          key: v9-cache-win-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
@@ -78,37 +55,24 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
       - run: npm run test:integration:firefox
-
-  # Run the test suite in IE in windows
-  test_win:
-    <<: *defaults
-    <<: *win_box
-    steps:
-      - checkout
-      # npm i or restore cache
-      - <<: *restore_dependency_cache_win
-      - run: npm run build
-      - run: npm run test -- --browsers IE
-      # install selenium
-      - run: |
-          choco install selenium-ie-driver --version 3.141.5
-          export PATH=/c/tools/selenium:$PATH
-          echo $PATH
-      - run: npm run test:integration:ie
 
   # Run examples under `doc/examples`
   test_examples:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:examples
 
@@ -117,8 +81,10 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:act
 
@@ -127,8 +93,10 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:apg
 
@@ -137,8 +105,10 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:locales
 
@@ -147,8 +117,10 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:virtual-rules
 
@@ -184,7 +156,7 @@ jobs:
       # install ACT rules
       # install first as for some reason installing a single package
       # also re-installs all repo dependencies as well
-      - run: npm install act-rules/act-rules.github.io#master
+      - run: npm install w3c/wcag-act-rules#main
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:act
@@ -299,7 +271,6 @@ workflows:
     jobs:
       # install deps
       - dependencies_unix
-      - dependencies_win
       # Run linting
       - lint:
           requires:
@@ -308,10 +279,6 @@ workflows:
       - test_unix:
           requires:
             - lint
-      # Run IE/ Windows test on all commits
-      - test_win:
-          requires:
-            - dependencies_win
       - test_examples:
           requires:
             - test_unix
@@ -341,7 +308,6 @@ workflows:
           type: approval
           requires:
             - test_unix
-            - test_win
             - test_examples
             - test_locales
             - test_virtual_rules
@@ -399,7 +365,7 @@ workflows:
     triggers:
       - schedule:
           # run at 00:00 UTC every day
-          cron: "0 0 * * *"
+          cron: '0 0 * * *'
           filters:
             branches:
               only:

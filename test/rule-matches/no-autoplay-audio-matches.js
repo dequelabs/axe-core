@@ -1,4 +1,4 @@
-describe('no-autoplay-audio-matches', function() {
+describe('no-autoplay-audio-matches', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,45 +6,45 @@ describe('no-autoplay-audio-matches', function() {
   var preloadOptions = { preload: { assets: ['media'] } };
   var rule;
 
-  beforeEach(function() {
+  beforeEach(function () {
     rule = axe.utils.getRule('no-autoplay-audio');
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns false for <audio> element that has no src attribute', function(done) {
+  it('returns false for <audio> element that has no src attribute', function (done) {
     var vNode = queryFixture('<audio id="target"></audio>');
-    axe.utils.preload(preloadOptions).then(function() {
+    axe.utils.preload(preloadOptions).then(function () {
       var actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();
     });
   });
 
-  it('returns false for <video> element that is paused', function(done) {
+  it('returns false for <video> element that is paused', function (done) {
     var vNode = queryFixture(
       '<video id="target" autoplay="true" paused="true">' +
         '<source src="/test/assets/video.webm" type="video/webm" />' +
         '<source src="/test/assets/video.mp4" type="video/mp4" />' +
         '</video>'
     );
-    axe.utils.preload(preloadOptions).then(function() {
+    axe.utils.preload(preloadOptions).then(function () {
       var actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();
     });
   });
 
-  it('returns false for <video> element that is muted', function(done) {
+  it('returns false for <video> element that is muted', function (done) {
     var vNode = queryFixture(
       '<video id="target" autoplay="true" muted="true">' +
         '<source src="/test/assets/video.webm" type="video/webm" />' +
         '<source src="/test/assets/video.mp4" type="video/mp4" />' +
         '</video>'
     );
-    axe.utils.preload(preloadOptions).then(function() {
+    axe.utils.preload(preloadOptions).then(function () {
       var actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();

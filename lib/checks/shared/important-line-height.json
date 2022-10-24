@@ -1,0 +1,17 @@
+{
+  "id": "important-line-height",
+  "evaluate": "inline-style-property-evaluate",
+  "options": {
+    "multiLineOnly": true,
+    "cssProperty": "line-height",
+    "minValue": 1.5,
+    "normalValue": 1
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
+      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    }
+  }
+}

@@ -1,38 +1,38 @@
 /* global Promise */
-describe('Audit', function() {
+describe('Audit', function () {
   'use strict';
 
   var Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
   var a, getFlattenedTree;
-  var isNotCalled = function(err) {
+  var isNotCalled = function (err) {
     throw err || new Error('Reject should not be called');
   };
-  var noop = function() {};
+  var noop = function () {};
 
   var mockChecks = [
     {
       id: 'positive1-check1',
-      evaluate: function() {
+      evaluate: function () {
         return true;
       }
     },
     {
       id: 'positive2-check1',
-      evaluate: function() {
+      evaluate: function () {
         return true;
       }
     },
     {
       id: 'negative1-check1',
-      evaluate: function() {
+      evaluate: function () {
         return true;
       }
     },
     {
       id: 'positive3-check1',
-      evaluate: function() {
+      evaluate: function () {
         return true;
       }
     }
@@ -74,42 +74,42 @@ describe('Audit', function() {
   var origAuditRun;
   var origAxeUtilsPreload;
 
-  beforeEach(function() {
+  beforeEach(function () {
     a = new Audit();
-    mockRules.forEach(function(r) {
+    mockRules.forEach(function (r) {
       a.addRule(r);
     });
-    mockChecks.forEach(function(c) {
+    mockChecks.forEach(function (c) {
       a.addCheck(c);
     });
     origAuditRun = a.run;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
     axe._selectCache = undefined;
     a.run = origAuditRun;
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(Audit);
   });
 
-  describe('defaults', function() {
-    it('should set noHtml', function() {
+  describe('defaults', function () {
+    it('should set noHtml', function () {
       var audit = new Audit();
       assert.isFalse(audit.noHtml);
     });
 
-    it('should set allowedOrigins', function() {
+    it('should set allowedOrigins', function () {
       var audit = new Audit();
       assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 
-  describe('Audit#_constructHelpUrls', function() {
-    it('should create default help URLS', function() {
+  describe('Audit#_constructHelpUrls', function () {
+    it('should create default help URLS', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -126,7 +126,7 @@ describe('Audit', function() {
           '/target?application=axeAPI'
       });
     });
-    it('should use changed branding', function() {
+    it('should use changed branding', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -144,7 +144,7 @@ describe('Audit', function() {
           '/target?application=axeAPI'
       });
     });
-    it('should use changed application', function() {
+    it('should use changed application', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -163,7 +163,7 @@ describe('Audit', function() {
       });
     });
 
-    it('does not override helpUrls of different products', function() {
+    it('does not override helpUrls of different products', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target1',
@@ -207,7 +207,7 @@ describe('Audit', function() {
           '/target2?application=axeAPI'
       );
     });
-    it('understands prerelease type version numbers', function() {
+    it('understands prerelease type version numbers', function () {
       var tempVersion = axe.version;
       var audit = new Audit();
       audit.addRule({
@@ -226,7 +226,7 @@ describe('Audit', function() {
       );
     });
 
-    it('matches major release versions', function() {
+    it('matches major release versions', function () {
       var tempVersion = axe.version;
       var audit = new Audit();
       audit.addRule({
@@ -244,7 +244,7 @@ describe('Audit', function() {
         'https://dequeuniversity.com/rules/axe/1.0/target?application=axeAPI'
       );
     });
-    it('sets the lang query if locale has been set', function() {
+    it('sets the lang query if locale has been set', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -266,8 +266,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#setBranding', function() {
-    it('should change the brand', function() {
+  describe('Audit#setBranding', function () {
+    it('should change the brand', function () {
       var audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
@@ -277,7 +277,7 @@ describe('Audit', function() {
       assert.equal(audit.brand, 'thing');
       assert.equal(audit.application, 'axeAPI');
     });
-    it('should change the application', function() {
+    it('should change the application', function () {
       var audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
@@ -287,7 +287,7 @@ describe('Audit', function() {
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
     });
-    it('should change the application when passed a string', function() {
+    it('should change the application when passed a string', function () {
       var audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
@@ -295,7 +295,7 @@ describe('Audit', function() {
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
     });
-    it('should call _constructHelpUrls', function() {
+    it('should call _constructHelpUrls', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -314,7 +314,7 @@ describe('Audit', function() {
           '/target?application=thing'
       });
     });
-    it('should call _constructHelpUrls even when nothing changed', function() {
+    it('should call _constructHelpUrls even when nothing changed', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -331,7 +331,7 @@ describe('Audit', function() {
           '/target?application=axeAPI'
       });
     });
-    it('should not replace custom set branding', function() {
+    it('should not replace custom set branding', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -357,8 +357,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#addRule', function() {
-    it('should override existing rule', function() {
+  describe('Audit#addRule', function () {
+    it('should override existing rule', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -378,7 +378,7 @@ describe('Audit', function() {
       assert.equal(audit.rules[0].selector, 'fred');
       assert.equal(audit.rules[0].matches(), 'hello');
     });
-    it('should otherwise push new rule', function() {
+    it('should otherwise push new rule', function () {
       var audit = new Audit();
       audit.addRule({
         id: 'target',
@@ -399,8 +399,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#resetRulesAndChecks', function() {
-    it('should override newly created check', function() {
+  describe('Audit#resetRulesAndChecks', function () {
+    it('should override newly created check', function () {
       var audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
@@ -412,7 +412,7 @@ describe('Audit', function() {
       audit.resetRulesAndChecks();
       assert.equal(audit.checks.target, undefined);
     });
-    it('should reset locale', function() {
+    it('should reset locale', function () {
       var audit = new Audit();
       assert.equal(audit.lang, 'en');
       audit.applyLocale({
@@ -422,7 +422,7 @@ describe('Audit', function() {
       audit.resetRulesAndChecks();
       assert.equal(audit.lang, 'en');
     });
-    it('should reset brand', function() {
+    it('should reset brand', function () {
       var audit = new Audit();
       assert.equal(audit.brand, 'axe');
       audit.setBranding({
@@ -432,7 +432,7 @@ describe('Audit', function() {
       audit.resetRulesAndChecks();
       assert.equal(audit.brand, 'axe');
     });
-    it('should reset brand application', function() {
+    it('should reset brand application', function () {
       var audit = new Audit();
       assert.equal(audit.application, 'axeAPI');
       audit.setBranding({
@@ -442,7 +442,7 @@ describe('Audit', function() {
       audit.resetRulesAndChecks();
       assert.equal(audit.application, 'axeAPI');
     });
-    it('should reset brand tagExlcude', function() {
+    it('should reset brand tagExlcude', function () {
       axe._load({});
       assert.deepEqual(axe._audit.tagExclude, ['experimental']);
       axe.configure({
@@ -452,14 +452,14 @@ describe('Audit', function() {
       assert.deepEqual(axe._audit.tagExclude, ['experimental']);
     });
 
-    it('should reset noHtml', function() {
+    it('should reset noHtml', function () {
       var audit = new Audit();
       audit.noHtml = true;
       audit.resetRulesAndChecks();
       assert.isFalse(audit.noHtml);
     });
 
-    it('should reset allowedOrigins', function() {
+    it('should reset allowedOrigins', function () {
       var audit = new Audit();
       audit.allowedOrigins = ['hello'];
       audit.resetRulesAndChecks();
@@ -467,8 +467,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#addCheck', function() {
-    it('should create a new check', function() {
+  describe('Audit#addCheck', function () {
+    it('should create a new check', function () {
       var audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
@@ -478,7 +478,7 @@ describe('Audit', function() {
       assert.ok(audit.checks.target);
       assert.deepEqual(audit.checks.target.options, { value: 'jane' });
     });
-    it('should configure the metadata, if passed', function() {
+    it('should configure the metadata, if passed', function () {
       var audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
@@ -488,9 +488,9 @@ describe('Audit', function() {
       assert.ok(audit.checks.target);
       assert.equal(audit.data.checks.target.guy, 'bob');
     });
-    it('should reconfigure existing check', function() {
+    it('should reconfigure existing check', function () {
       var audit = new Audit();
-      var myTest = function() {};
+      var myTest = function () {};
       audit.addCheck({
         id: 'target',
         evaluate: myTest,
@@ -507,7 +507,7 @@ describe('Audit', function() {
       assert.equal(audit.checks.target.evaluate, myTest);
       assert.deepEqual(audit.checks.target.options, { value: 'fred' });
     });
-    it('should not turn messages into a function', function() {
+    it('should not turn messages into a function', function () {
       var audit = new Audit();
       var spec = {
         id: 'target',
@@ -525,7 +525,7 @@ describe('Audit', function() {
       assert.equal(audit.data.checks.target.messages.fail, 'it failed');
     });
 
-    it('should turn function strings into a function', function() {
+    it('should turn function strings into a function', function () {
       var audit = new Audit();
       var spec = {
         id: 'target',
@@ -544,8 +544,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#setAllowedOrigins', function() {
-    it('should set allowedOrigins', function() {
+  describe('Audit#setAllowedOrigins', function () {
+    it('should set allowedOrigins', function () {
       var audit = new Audit();
       audit.setAllowedOrigins([
         'https://deque.com',
@@ -557,7 +557,7 @@ describe('Audit', function() {
       ]);
     });
 
-    it('should normalize <same_origin>', function() {
+    it('should normalize <same_origin>', function () {
       var audit = new Audit();
       audit.setAllowedOrigins(['<same_origin>', 'https://deque.com']);
       assert.deepEqual(audit.allowedOrigins, [
@@ -566,7 +566,7 @@ describe('Audit', function() {
       ]);
     });
 
-    it('should normalize <unsafe_all_origins>', function() {
+    it('should normalize <unsafe_all_origins>', function () {
       var audit = new Audit();
       audit.setAllowedOrigins([
         'https://deque.com',
@@ -577,8 +577,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#run', function() {
-    it('should run all the rules', function(done) {
+  describe('Audit#run', function () {
+    it('should run all the rules', function (done) {
       fixture.innerHTML =
         '<input aria-label="monkeys" type="text">' +
         '<div id="monkeys">bananas</div>' +
@@ -588,7 +588,7 @@ describe('Audit', function() {
       a.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {},
-        function(results) {
+        function (results) {
           var expected = [
             {
               id: 'positive1',
@@ -621,7 +621,7 @@ describe('Audit', function() {
           ];
 
           var out = results[0].nodes[0].node.source;
-          results.forEach(function(res) {
+          results.forEach(function (res) {
             // attribute order is a pain in the lower back in IE, so we're not
             // comparing nodes. Check.run and Rule.run do this.
             res.nodes = '...other tests cover this...';
@@ -638,7 +638,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should not run rules disabled by the options', function(done) {
+    it('should not run rules disabled by the options', function (done) {
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {
@@ -648,7 +648,7 @@ describe('Audit', function() {
             }
           }
         },
-        function(results) {
+        function (results) {
           assert.equal(results.length, 3);
           done();
         },
@@ -656,7 +656,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should ensure audit.run recieves preload options', function(done) {
+    it('should ensure audit.run recieves preload options', function (done) {
       fixture.innerHTML = '<input aria-label="yo" type="text">';
 
       var audit = new Audit();
@@ -664,12 +664,12 @@ describe('Audit', function() {
         id: 'preload1',
         selector: '*'
       });
-      audit.run = function(context, options, resolve, reject) {
+      audit.run = function (context, options, resolve, reject) {
         var randomRule = this.rules[0];
         randomRule.run(
           context,
           options,
-          function(ruleResult) {
+          function (ruleResult) {
             ruleResult.OPTIONS_PASSED = options;
             resolve([ruleResult]);
           },
@@ -687,7 +687,7 @@ describe('Audit', function() {
         {
           preload: preloadOptions
         },
-        function(res) {
+        function (res) {
           assert.isDefined(res);
 
           assert.lengthOf(res, 1);
@@ -706,7 +706,7 @@ describe('Audit', function() {
       );
     });
 
-    it.skip('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+    it.skip('should run rules (that do not need preload) and preload assets simultaneously', function (done) {
       /**
        * Note:
        * overriding and resolving both check and preload with a delay,
@@ -722,12 +722,12 @@ describe('Audit', function() {
       var preloadOverrideInvoked = false;
 
       // override preload method
-      axe.utils.preload = function(options) {
+      axe.utils.preload = function (options) {
         preloadInvokedTime = new Date();
         preloadOverrideInvoked = true;
 
-        return new Promise(function(res, rej) {
-          setTimeout(function() {
+        return new Promise(function (res, rej) {
+          setTimeout(function () {
             res(true);
           }, 2000);
         });
@@ -743,11 +743,11 @@ describe('Audit', function() {
       });
       audit.addCheck({
         id: 'no-preload-check',
-        evaluate: function(node, options, vNode, context) {
+        evaluate: function (node, options, vNode, context) {
           noPreloadCheckedInvokedTime = new Date();
           noPreloadRuleCheckEvaluateInvoked = true;
           var ready = this.async();
-          setTimeout(function() {
+          setTimeout(function () {
             ready(true);
           }, 1000);
         }
@@ -773,7 +773,7 @@ describe('Audit', function() {
         {
           preload: preloadOptions
         },
-        function(results) {
+        function (results) {
           assert.isDefined(results);
           // assert that check was invoked for rule(s)
           assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
@@ -797,7 +797,7 @@ describe('Audit', function() {
       );
     });
 
-    it.skip('should pass assets from preload to rule check that needs assets as context', function(done) {
+    it.skip('should pass assets from preload to rule check that needs assets as context', function (done) {
       fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
       var yesPreloadRuleCheckEvaluateInvoked = false;
@@ -807,7 +807,7 @@ describe('Audit', function() {
         data: 'you got it!'
       };
       // override preload method
-      axe.utils.preload = function(options) {
+      axe.utils.preload = function (options) {
         preloadOverrideInvoked = true;
         return Promise.resolve({
           cssom: preloadData
@@ -830,7 +830,7 @@ describe('Audit', function() {
       });
       audit.addCheck({
         id: 'yes-preload-check',
-        evaluate: function(node, options, vNode, context) {
+        evaluate: function (node, options, vNode, context) {
           yesPreloadRuleCheckEvaluateInvoked = true;
           this.data(context);
           return true;
@@ -847,7 +847,7 @@ describe('Audit', function() {
         {
           preload: preloadOptions
         },
-        function(results) {
+        function (results) {
           assert.isDefined(results);
           // assert that check was invoked for rule(s)
           assert.isTrue(yesPreloadRuleCheckEvaluateInvoked);
@@ -855,7 +855,7 @@ describe('Audit', function() {
           assert.isTrue(preloadOverrideInvoked);
 
           // assert preload data that was passed to check
-          var ruleResult = results.filter(function(r) {
+          var ruleResult = results.filter(function (r) {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           var checkResult = ruleResult.nodes[0].any[0];
@@ -871,7 +871,7 @@ describe('Audit', function() {
       );
     });
 
-    it.skip('should continue to run rules and return result when preload is rejected', function(done) {
+    it.skip('should continue to run rules and return result when preload is rejected', function (done) {
       fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
       var preloadOverrideInvoked = false;
@@ -880,7 +880,7 @@ describe('Audit', function() {
         'Boom! Things went terribly wrong! (But this was intended in this test)';
 
       // override preload method
-      axe.utils.preload = function(options) {
+      axe.utils.preload = function (options) {
         preloadOverrideInvoked = true;
         return Promise.reject(rejectionMsg);
       };
@@ -901,7 +901,7 @@ describe('Audit', function() {
       });
       audit.addCheck({
         id: 'yes-preload-check',
-        evaluate: function(node, options, vNode, context) {
+        evaluate: function (node, options, vNode, context) {
           preloadNeededCheckInvoked = true;
           this.data(context);
           return true;
@@ -918,7 +918,7 @@ describe('Audit', function() {
         {
           preload: preloadOptions
         },
-        function(results) {
+        function (results) {
           assert.isDefined(results);
           // assert preload was invoked
           assert.isTrue(preloadOverrideInvoked);
@@ -929,7 +929,7 @@ describe('Audit', function() {
           // assert that because preload failed
           // cssom was not populated on context of repective check
           assert.isTrue(preloadNeededCheckInvoked);
-          var ruleResult = results.filter(function(r) {
+          var ruleResult = results.filter(function (r) {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           var checkResult = ruleResult.nodes[0].any[0];
@@ -942,7 +942,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should continue to run rules and return result when axios time(s)out and rejects preload', function(done) {
+    it('should continue to run rules and return result when axios time(s)out and rejects preload', function (done) {
       fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
       // there is no stubbing here,
@@ -965,7 +965,7 @@ describe('Audit', function() {
       });
       audit.addCheck({
         id: 'yes-preload-check',
-        evaluate: function(node, options, vNode, context) {
+        evaluate: function (node, options, vNode, context) {
           preloadNeededCheckInvoked = true;
           this.data(context);
           return true;
@@ -983,7 +983,7 @@ describe('Audit', function() {
         {
           preload: preloadOptions
         },
-        function(results) {
+        function (results) {
           assert.isDefined(results);
           // assert that both rules ran, although preload failed
           assert.lengthOf(results, 2);
@@ -991,7 +991,7 @@ describe('Audit', function() {
           // assert that because preload failed
           // cssom was not populated on context of repective check
           assert.isTrue(preloadNeededCheckInvoked);
-          var ruleResult = results.filter(function(r) {
+          var ruleResult = results.filter(function (r) {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           var checkResult = ruleResult.nodes[0].any[0];
@@ -1004,16 +1004,16 @@ describe('Audit', function() {
       );
     });
 
-    it.skip('should assign an empty array to axe._selectCache', function(done) {
+    it.skip('should assign an empty array to axe._selectCache', function (done) {
       var saved = axe.utils.ruleShouldRun;
-      axe.utils.ruleShouldRun = function() {
+      axe.utils.ruleShouldRun = function () {
         assert.equal(axe._selectCache.length, 0);
         return false;
       };
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {},
-        function() {
+        function () {
           axe.utils.ruleShouldRun = saved;
           done();
         },
@@ -1021,13 +1021,13 @@ describe('Audit', function() {
       );
     });
 
-    it('should clear axe._selectCache', function(done) {
+    it('should clear axe._selectCache', function (done) {
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {
           rules: {}
         },
-        function() {
+        function () {
           assert.isTrue(typeof axe._selectCache === 'undefined');
           done();
         },
@@ -1035,7 +1035,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should not run rules disabled by the configuration', function(done) {
+    it('should not run rules disabled by the configuration', function (done) {
       var a = new Audit();
       var success = true;
       a.rules.push(
@@ -1046,7 +1046,7 @@ describe('Audit', function() {
           any: [
             {
               id: 'positive1-check1',
-              evaluate: function() {
+              evaluate: function () {
                 success = false;
               }
             }
@@ -1056,7 +1056,7 @@ describe('Audit', function() {
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {},
-        function() {
+        function () {
           assert.ok(success);
           done();
         },
@@ -1064,7 +1064,7 @@ describe('Audit', function() {
       );
     });
 
-    it("should call the rule's run function", function(done) {
+    it("should call the rule's run function", function (done) {
       var targetRule = mockRules[mockRules.length - 1],
         rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
         called = false,
@@ -1072,14 +1072,14 @@ describe('Audit', function() {
 
       fixture.innerHTML = '<a href="#">link</a>';
       orig = rule.run;
-      rule.run = function(node, options, callback) {
+      rule.run = function (node, options, callback) {
         called = true;
         callback({});
       };
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {},
-        function() {
+        function () {
           assert.isTrue(called);
           rule.run = orig;
           done();
@@ -1088,7 +1088,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should pass the option to the run function', function(done) {
+    it('should pass the option to the run function', function (done) {
       var targetRule = mockRules[mockRules.length - 1],
         rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
         passed = false,
@@ -1097,7 +1097,7 @@ describe('Audit', function() {
 
       fixture.innerHTML = '<a href="#">link</a>';
       orig = rule.run;
-      rule.run = function(node, o, callback) {
+      rule.run = function (node, o, callback) {
         assert.deepEqual(o, options);
         passed = true;
         callback({});
@@ -1107,7 +1107,7 @@ describe('Audit', function() {
       a.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         options,
-        function() {
+        function () {
           assert.ok(passed);
           rule.run = orig;
           done();
@@ -1116,14 +1116,14 @@ describe('Audit', function() {
       );
     });
 
-    it('should skip pageLevel rules if context is not set to entire page', function() {
+    it('should skip pageLevel rules if context is not set to entire page', function () {
       var audit = new Audit();
 
       audit.rules.push(
         new Rule({
           pageLevel: true,
           enabled: true,
-          evaluate: function() {
+          evaluate: function () {
             assert.ok(false, 'Should not run');
           }
         })
@@ -1135,14 +1135,14 @@ describe('Audit', function() {
           page: false
         },
         {},
-        function(results) {
+        function (results) {
           assert.deepEqual(results, []);
         },
         isNotCalled
       );
     });
 
-    it('catches errors and passes them as a cantTell result', function(done) {
+    it('catches errors and passes them as a cantTell result', function (done) {
       var err = new Error('Launch the super sheep!');
       a.addRule({
         id: 'throw1',
@@ -1155,7 +1155,7 @@ describe('Audit', function() {
       });
       a.addCheck({
         id: 'throw1-check1',
-        evaluate: function() {
+        evaluate: function () {
           throw err;
         }
       });
@@ -1169,7 +1169,7 @@ describe('Audit', function() {
             values: ['throw1']
           }
         },
-        function(results) {
+        function (results) {
           assert.lengthOf(results, 1);
           assert.equal(results[0].result, 'cantTell');
           assert.equal(results[0].message, err.message);
@@ -1181,7 +1181,7 @@ describe('Audit', function() {
       );
     });
 
-    it('should not halt if errors occur', function(done) {
+    it('should not halt if errors occur', function (done) {
       a.addRule({
         id: 'throw1',
         selector: '*',
@@ -1193,7 +1193,7 @@ describe('Audit', function() {
       });
       a.addCheck({
         id: 'throw1-check1',
-        evaluate: function() {
+        evaluate: function () {
           throw new Error('Launch the super sheep!');
         }
       });
@@ -1205,14 +1205,14 @@ describe('Audit', function() {
             values: ['throw1', 'positive1']
           }
         },
-        function() {
+        function () {
           done();
         },
         isNotCalled
       );
     });
 
-    it('should run audit.normalizeOptions to ensure valid input', function() {
+    it('should run audit.normalizeOptions to ensure valid input', function () {
       fixture.innerHTML =
         '<input type="text" aria-label="monkeys">' +
         '<div id="monkeys">bananas</div>' +
@@ -1220,7 +1220,7 @@ describe('Audit', function() {
         '<blink>FAIL ME</blink>';
       var checked = 'options not validated';
 
-      a.normalizeOptions = function() {
+      a.normalizeOptions = function () {
         checked = 'options validated';
       };
 
@@ -1233,7 +1233,7 @@ describe('Audit', function() {
       assert.equal(checked, 'options validated');
     });
 
-    it('should halt if an error occurs when debug is set', function(done) {
+    it('should halt if an error occurs when debug is set', function (done) {
       a.addRule({
         id: 'throw1',
         selector: '*',
@@ -1245,7 +1245,7 @@ describe('Audit', function() {
       });
       a.addCheck({
         id: 'throw1-check1',
-        evaluate: function() {
+        evaluate: function () {
           throw new Error('Launch the super sheep!');
         }
       });
@@ -1263,7 +1263,7 @@ describe('Audit', function() {
           }
         },
         noop,
-        function(err) {
+        function (err) {
           assert.equal(err.message, 'Launch the super sheep!');
           done();
         }
@@ -1271,8 +1271,8 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#after', function() {
-    it('should run Rule#after on any rule whose result is passed in', function() {
+  describe('Audit#after', function () {
+    it('should run Rule#after on any rule whose result is passed in', function () {
       /*eslint no-unused-vars:0*/
       var audit = new Audit();
       var success = false;
@@ -1291,7 +1291,7 @@ describe('Audit', function() {
         })
       );
 
-      audit.rules[0].after = function(res, opts) {
+      audit.rules[0].after = function (res, opts) {
         assert.equal(res, results[0]);
         assert.deepEqual(opts, options);
         success = true;
@@ -1301,16 +1301,16 @@ describe('Audit', function() {
     });
   });
 
-  describe('Audit#normalizeOptions', function() {
+  describe('Audit#normalizeOptions', function () {
     var axeLog;
-    beforeEach(function() {
+    beforeEach(function () {
       axeLog = axe.log;
     });
-    afterEach(function() {
+    afterEach(function () {
       axe.log = axeLog;
     });
 
-    it('returns the options object when it is valid', function() {
+    it('returns the options object when it is valid', function () {
       var opt = {
         runOnly: {
           type: 'rule',
@@ -1323,7 +1323,7 @@ describe('Audit', function() {
       assert(a.normalizeOptions(opt), opt);
     });
 
-    it('allows `value` as alternative to `values`', function() {
+    it('allows `value` as alternative to `values`', function () {
       var opt = {
         runOnly: {
           type: 'rule',
@@ -1335,7 +1335,7 @@ describe('Audit', function() {
       assert.isUndefined(out.runOnly.value);
     });
 
-    it('allows type: rules as an alternative to type: rule', function() {
+    it('allows type: rules as an alternative to type: rule', function () {
       var opt = {
         runOnly: {
           type: 'rules',
@@ -1345,7 +1345,7 @@ describe('Audit', function() {
       assert(a.normalizeOptions(opt).runOnly.type, 'rule');
     });
 
-    it('allows type: tags as an alternative to type: tag', function() {
+    it('allows type: tags as an alternative to type: tag', function () {
       var opt = {
         runOnly: {
           type: 'tags',
@@ -1355,7 +1355,7 @@ describe('Audit', function() {
       assert(a.normalizeOptions(opt).runOnly.type, 'tag');
     });
 
-    it('allows type: undefined as an alternative to type: tag', function() {
+    it('allows type: undefined as an alternative to type: tag', function () {
       var opt = {
         runOnly: {
           values: ['positive']
@@ -1364,44 +1364,44 @@ describe('Audit', function() {
       assert(a.normalizeOptions(opt).runOnly.type, 'tag');
     });
 
-    it('allows runOnly as an array as an alternative to type: tag', function() {
+    it('allows runOnly as an array as an alternative to type: tag', function () {
       var opt = { runOnly: ['positive', 'negative'] };
       var out = a.normalizeOptions(opt);
       assert(out.runOnly.type, 'tag');
       assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
     });
 
-    it('allows runOnly as an array as an alternative to type: rule', function() {
+    it('allows runOnly as an array as an alternative to type: rule', function () {
       var opt = { runOnly: ['positive1', 'negative1'] };
       var out = a.normalizeOptions(opt);
       assert(out.runOnly.type, 'rule');
       assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
     });
 
-    it('allows runOnly as a string as an alternative to an array', function() {
+    it('allows runOnly as a string as an alternative to an array', function () {
       var opt = { runOnly: 'positive1' };
       var out = a.normalizeOptions(opt);
       assert(out.runOnly.type, 'rule');
       assert.deepEqual(out.runOnly.values, ['positive1']);
     });
 
-    it('throws an error if runOnly contains both rules and tags', function() {
-      assert.throws(function() {
+    it('throws an error if runOnly contains both rules and tags', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           runOnly: ['positive', 'negative1']
         });
       });
     });
 
-    it('defaults runOnly to type: tag', function() {
+    it('defaults runOnly to type: tag', function () {
       var opt = { runOnly: ['fakeTag'] };
       var out = a.normalizeOptions(opt);
       assert(out.runOnly.type, 'tag');
       assert.deepEqual(out.runOnly.values, ['fakeTag']);
     });
 
-    it('throws an error runOnly.values not an array', function() {
-      assert.throws(function() {
+    it('throws an error runOnly.values not an array', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           runOnly: {
             type: 'rule',
@@ -1411,8 +1411,8 @@ describe('Audit', function() {
       });
     });
 
-    it('throws an error runOnly.values an empty', function() {
-      assert.throws(function() {
+    it('throws an error runOnly.values an empty', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           runOnly: {
             type: 'rule',
@@ -1422,8 +1422,8 @@ describe('Audit', function() {
       });
     });
 
-    it('throws an error runOnly.type is unknown', function() {
-      assert.throws(function() {
+    it('throws an error runOnly.type is unknown', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           runOnly: {
             type: 'something-else',
@@ -1433,8 +1433,8 @@ describe('Audit', function() {
       });
     });
 
-    it('throws an error when option.runOnly has an unknown rule', function() {
-      assert.throws(function() {
+    it('throws an error when option.runOnly has an unknown rule', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           runOnly: {
             type: 'rule',
@@ -1444,8 +1444,8 @@ describe('Audit', function() {
       });
     });
 
-    it("doesn't throw an error when option.runOnly has an unknown tag", function() {
-      assert.doesNotThrow(function() {
+    it("doesn't throw an error when option.runOnly has an unknown tag", function () {
+      assert.doesNotThrow(function () {
         a.normalizeOptions({
           runOnly: {
             type: 'tags',
@@ -1455,8 +1455,8 @@ describe('Audit', function() {
       });
     });
 
-    it('throws an error when option.rules has an unknown rule', function() {
-      assert.throws(function() {
+    it('throws an error when option.rules has an unknown rule', function () {
+      assert.throws(function () {
         a.normalizeOptions({
           rules: {
             fakeRule: { enabled: false }
@@ -1465,9 +1465,9 @@ describe('Audit', function() {
       });
     });
 
-    it('logs an issue when a tag is unknown', function() {
+    it('logs an issue when a tag is unknown', function () {
       var message = '';
-      axe.log = function(m) {
+      axe.log = function (m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1479,9 +1479,9 @@ describe('Audit', function() {
       assert.include(message, 'Could not find tags');
     });
 
-    it('logs no issues for unknown WCAG level tags', function() {
+    it('logs no issues for unknown WCAG level tags', function () {
       var message = '';
-      axe.log = function(m) {
+      axe.log = function (m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1493,9 +1493,9 @@ describe('Audit', function() {
       assert.isEmpty(message);
     });
 
-    it('logs an issue when a tag is unknown, together with a wcag level tag', function() {
+    it('logs an issue when a tag is unknown, together with a wcag level tag', function () {
       var message = '';
-      axe.log = function(m) {
+      axe.log = function (m) {
         message = m;
       };
       a.normalizeOptions({

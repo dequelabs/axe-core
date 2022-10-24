@@ -250,6 +250,7 @@ declare namespace axe {
     help: string;
     helpUrl: string;
     tags: string[];
+    actIds?: string[];
   }
   interface SerialDqElement {
     source: string;

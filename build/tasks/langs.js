@@ -1,7 +1,7 @@
 /*eslint-env node */
 'use strict';
 var http = require('http');
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   function getLine(data, start) {
     var len = data.length;
     var index = start;
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask(
     'langs',
     'Task for generating commons language codes from IANA registry',
-    function() {
+    function () {
       var done = this.async();
       var ianaLangsURL =
         'http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry';
@@ -66,24 +66,24 @@ module.exports = function(grunt) {
       }
       var check = this.data.check;
       var langs = [];
-      new Promise(function(resolve, reject) {
+      new Promise(function (resolve, reject) {
         var data = '';
         http
-          .get(ianaLangsURL, function(res) {
+          .get(ianaLangsURL, function (res) {
             res
-              .on('data', function(chunk) {
+              .on('data', function (chunk) {
                 data += chunk;
               })
-              .on('end', function() {
+              .on('end', function () {
                 resolve(data);
               });
           })
-          .on('error', function(e) {
+          .on('error', function (e) {
             grunt.log.error('Got error: ' + e.message);
             reject(false);
           });
       })
-        .then(function(data) {
+        .then(function (data) {
           var entry = getEntry(data, 0);
           var pos = entry.used;
           while (true) {
@@ -100,10 +100,10 @@ module.exports = function(grunt) {
           }
           generateOutput(langs, check);
         })
-        .then(function() {
+        .then(function () {
           done();
         })
-        .catch(function(result) {
+        .catch(function (result) {
           done(result);
         });
     }

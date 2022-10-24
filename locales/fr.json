@@ -436,7 +436,7 @@
       "pass": "Les valeurs d’aria-level sont valides",
       "incomplete": "Les valeurs d’aria-level supérieures à 6 ne sont pas supportées par toutes les combinaisons de navigateurs et de lecteurs d’écrans"
     },
-    "aria-prohibited-attr":{
+    "aria-prohibited-attr": {
       "pass": "L’attribut ARIA est autorisé",
       "fail": "L’attribut ARIA ne peut pas être utilisé, ajoutez un attribut role ou utilisez un élément différent : ${data.values}",
       "incomplete": "L’attribut ARIA n’est pas bien supporté sur l’élément et le contenu texte sera utilisé à la place : ${data.values}"
