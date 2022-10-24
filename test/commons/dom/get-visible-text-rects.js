@@ -106,4 +106,18 @@ describe('dom.getVisibleTextRects', () => {
 
     assertRectsEqual(actual, expected);
   });
+
+  it('does not return rects outside overflows', () => {
+    fixtureSetup(`
+      <div style="overflow: hidden; height: 50px;">
+        <div style="overflow: hidden; height: 25px">
+          <span id="target">Hello<br/>World<br/>Goodbye<br/>World</span>
+        </div>
+      </div>
+    `);
+    const node = fixture.querySelector('#target');
+    const actual = getVisibleTextRects(node);
+
+    assert.lengthOf(actual, 2);
+  });
 });
