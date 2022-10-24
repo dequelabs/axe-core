@@ -60,6 +60,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
+      - run: npm run sri-validate
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
       - run: npm run test:integration:firefox
