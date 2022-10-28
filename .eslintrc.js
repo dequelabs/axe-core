@@ -104,20 +104,9 @@ module.exports = {
       }
     },
     {
-      // do not access global window properties without going through window
+      // polyfills are mostly copy-pasted from sources so we don't control their styling
       files: ['lib/core/utils/pollyfills.js'],
-      parserOptions: {
-        sourceType: 'module'
-      },
-      env: {
-        es6: true
-      },
-      globals: {
-        window: true,
-        document: true
-      },
       rules: {
-        // polyfills are mostly copy-pasted from sources so we don't control their styling
         'func-names': 0,
         'no-bitwise': 0,
         curly: 0,
