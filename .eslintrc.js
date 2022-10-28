@@ -70,13 +70,13 @@ module.exports = {
   },
   overrides: [
     {
+      // do not access global window properties without going through window
       files: ['lib/**/*.js'],
       excludedFiles: ['lib/core/reporters/**/*.js', 'lib/**/*-after.js'],
       parserOptions: {
         sourceType: 'module'
       },
       env: {
-        browser: true,
         es6: true
       },
       globals: {
@@ -101,6 +101,27 @@ module.exports = {
         'func-names': [2, 'as-needed'],
         'prefer-const': 2,
         'no-use-before-define': 'off'
+      }
+    },
+    {
+      // do not access global window properties without going through window
+      files: ['lib/core/utils/pollyfills.js'],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      env: {
+        es6: true
+      },
+      globals: {
+        window: true,
+        document: true
+      },
+      rules: {
+        // polyfills are mostly copy-pasted from sources so we don't control their styling
+        'func-names': 0,
+        'no-bitwise': 0,
+        curly: 0,
+        eqeqeq: 0
       }
     },
     {
