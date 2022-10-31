@@ -1,6 +1,5 @@
 # defaults
 node_modules
-npm-shrinkwrap.json
 doc/examples/*/package-lock.json
 .DS_Store
 .idea
