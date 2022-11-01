@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.5.1](https://github.com/dequelabs/axe-core/compare/v4.5.0...v4.5.1) (2022-11-01)
+
+### Bug Fixes
+
+- allow axe to run in certain configurations of jsdom ([#3755](https://github.com/dequelabs/axe-core/issues/3755)) ([b74c5d4](https://github.com/dequelabs/axe-core/commit/b74c5d41c4041554c9dd1c00dfd6387cb069d1a5))
+- prevent crash on jsdom when preloading CSSOM ([#3754](https://github.com/dequelabs/axe-core/issues/3754)) ([b1f0c6b](https://github.com/dequelabs/axe-core/commit/b1f0c6bba2debc6c6a106412da530975cd4ade24))
+
 ## [4.5.0](https://github.com/dequelabs/axe-core/compare/v4.4.3...v4.5.0) (2022-10-17)
 
 ### Features
