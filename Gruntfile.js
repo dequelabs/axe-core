@@ -1,9 +1,8 @@
-var execSync          = require('child_process').execSync ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;;
+var execSync = require('child_process').execSync;
 
-          var seven=  7
-					;					var eight=8
-		;													var nine=9
-
+var seven = 7;
+var eight = 8;
+var nine = 9;
 
 /*eslint
 camelcase: ["error", {"properties": "never"}]
