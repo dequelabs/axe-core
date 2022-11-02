@@ -60,7 +60,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
-      - run: npm run test -- --browsers Chrome
+      # - run: npm run test -- --browsers Chrome
       - run: npm run test:integration:chrome
 
   test_firefox:
@@ -71,7 +71,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      - run: npm run test -- --browsers Firefox
+      # - run: npm run test -- --browsers Firefox
       - run: npm run test:integration:firefox
 
   # Run examples under `doc/examples`
