@@ -1,0 +1,13 @@
+{
+  "id": "document-sign-language-widget",
+  "selector": "html",
+  "matches": "is-initiator-matches",
+  "tags": ["cat.text-alternatives", "wcag2a", "wcag242","ACT"],
+  "metadata": {
+    "description": "Ensures each HTML document contains a Sign Language Widget",
+    "help": "Documents must have a Sign Language Widget to help deaf people to understand and navigate the website"
+  },
+  "all": [],
+  "any": ["doc-sign-language-widget"],
+  "none": []
+}

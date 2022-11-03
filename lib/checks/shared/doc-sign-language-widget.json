@@ -1,0 +1,11 @@
+{
+  "id": "doc-sign-language-widget",
+  "evaluate": "doc-sign-language-widget-evaluate",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Document has a Sign Language Widget",
+      "fail": "Document does not have a Sign Language Widget"
+    }
+  }
+}
