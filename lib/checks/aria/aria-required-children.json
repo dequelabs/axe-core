@@ -8,6 +8,8 @@
       "grid",
       "list",
       "listbox",
+      "menu",
+      "menubar",
       "table",
       "tablist",
       "tree",
