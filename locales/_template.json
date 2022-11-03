@@ -133,6 +133,10 @@
       "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
       "help": "<dt> and <dd> elements must be contained by a <dl>"
     },
+    "document-sign-language-widget": {
+      "description": "Ensures each HTML document contains a Sign Language Widget",
+      "help": "Documents must have a Sign Language Widget to help deaf people to understand and navigate the website"
+    },
     "document-title": {
       "description": "Ensures each HTML document contains a non-empty <title> element",
       "help": "Documents must have <title> element to aid in navigation"
@@ -927,6 +931,10 @@
     "doc-has-title": {
       "pass": "Document has a non-empty <title> element",
       "fail": "Document does not have a non-empty <title> element"
+    },
+    "doc-sign-language-widget": {
+      "pass": "Document has a Sign Language Widget",
+      "fail": "Document does not have a Sign Language Widget"
     },
     "exists": {
       "pass": "Element does not exist",
