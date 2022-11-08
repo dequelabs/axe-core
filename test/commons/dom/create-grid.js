@@ -4,13 +4,18 @@ describe('create-grid', function () {
   var fixture;
   var createGrid = axe.commons.dom.createGrid;
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var gridSize = axe.constants.gridSize;
 
   function findPositions(grid, vNode) {
     var positions = [];
+
     grid.cells.forEach(function (rowCells, rowIndex) {
       rowCells.forEach(function (cells, colIndex) {
         if (cells.includes(vNode)) {
-          positions.push({ x: rowIndex, y: colIndex });
+          positions.push({
+            x: colIndex + rowCells._negativeIndex,
+            y: rowIndex + grid.cells._negativeIndex
+          });
         }
       });
     });
@@ -49,8 +54,8 @@ describe('create-grid', function () {
     var positions = findPositions(fixture._grid, fixture.children[0]);
     assert.deepEqual(positions, [
       { x: 0, y: 0 },
-      { x: 0, y: 1 },
       { x: 1, y: 0 },
+      { x: 0, y: 1 },
       { x: 1, y: 1 }
     ]);
   });
@@ -87,7 +92,44 @@ describe('create-grid', function () {
       );
       createGrid();
       var position = findPositions(fixture._grid, fixture.children[0]);
-      assert.deepEqual(position, [{ x: 0, y: 0 }]);
+      assert.deepEqual(position, [
+        { x: 0, y: -1 },
+        { x: 0, y: 0 }
+      ]);
+    });
+  });
+
+  describe('when scrolled', () => {
+    before(() => {
+      document.body.setAttribute('style', 'margin: 0');
+    });
+
+    after(() => {
+      document.body.removeAttribute('style');
+    });
+
+    it('adds elements scrolled out of view', function () {
+      const gridScroll = 2;
+      fixture =
+        fixtureSetup(`<div id="scroller" style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll">
+          <div style="height: ${gridSize}px">T1</div>
+          <div style="height: ${gridSize}px">T2</div>
+          <div style="height: ${gridSize}px">T3</div>
+          <div style="height: ${gridSize}px">T4</div>
+          <div style="height: ${gridSize}px">T5</div>
+        </div>`);
+      const scroller = fixture.children[0];
+      scroller.actualNode.scroll(0, gridSize * gridScroll);
+      const childElms = scroller.children.filter(
+        ({ props }) => props.nodeName === 'div'
+      );
+
+      createGrid();
+      childElms.forEach((child, index) => {
+        assert.isDefined(child._grid, `Expect child ${index} to be defined`);
+        var position = findPositions(child._grid, child);
+        assert.deepEqual(position, [{ x: 0, y: index - gridScroll }]);
+      });
     });
   });
 
@@ -141,7 +183,7 @@ describe('create-grid', function () {
       var position = findPositions(vOverflow._subGrid, vSpan);
       assert.deepEqual(position, [
         { x: 0, y: 0 },
-        { x: 1, y: 0 }
+        { x: 0, y: 1 }
       ]);
     });
   });
