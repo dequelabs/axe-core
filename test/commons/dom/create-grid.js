@@ -8,16 +8,10 @@ describe('create-grid', function () {
 
   function findPositions(grid, vNode) {
     var positions = [];
-
-    grid.cells.forEach(function (rowCells, rowIndex) {
-      rowCells.forEach(function (cells, colIndex) {
-        if (cells.includes(vNode)) {
-          positions.push({
-            x: colIndex + rowCells._negativeIndex,
-            y: rowIndex + grid.cells._negativeIndex
-          });
-        }
-      });
+    grid.loopGridPosition(grid.boundaries, (cell, position) => {
+      if (cell.includes(vNode)) {
+        positions.push(position);
+      }
     });
     return positions;
   }
@@ -41,7 +35,7 @@ describe('create-grid', function () {
     fixture = fixtureSetup('<span>Hello world</span>');
     createGrid();
     var positions = findPositions(fixture._grid, fixture.children[0]);
-    assert.deepEqual(positions, [{ x: 0, y: 0 }]);
+    assert.deepEqual(positions, [{ col: 0, row: 0 }]);
   });
 
   it('adds large elements to multiple cell', function () {
@@ -53,10 +47,10 @@ describe('create-grid', function () {
 
     var positions = findPositions(fixture._grid, fixture.children[0]);
     assert.deepEqual(positions, [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 0, y: 1 },
-      { x: 1, y: 1 }
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 0, row: 1 },
+      { col: 1, row: 1 }
     ]);
   });
 
@@ -93,8 +87,8 @@ describe('create-grid', function () {
       createGrid();
       var position = findPositions(fixture._grid, fixture.children[0]);
       assert.deepEqual(position, [
-        { x: 0, y: -1 },
-        { x: 0, y: 0 }
+        { col: 0, row: -1 },
+        { col: 0, row: 0 }
       ]);
     });
   });
@@ -128,7 +122,7 @@ describe('create-grid', function () {
       childElms.forEach((child, index) => {
         assert.isDefined(child._grid, `Expect child ${index} to be defined`);
         var position = findPositions(child._grid, child);
-        assert.deepEqual(position, [{ x: 0, y: index - gridScroll }]);
+        assert.deepEqual(position, [{ col: 0, row: index - gridScroll }]);
       });
     });
   });
@@ -182,8 +176,8 @@ describe('create-grid', function () {
       var vSpan = vOverflow.children[0];
       var position = findPositions(vOverflow._subGrid, vSpan);
       assert.deepEqual(position, [
-        { x: 0, y: 0 },
-        { x: 0, y: 1 }
+        { col: 0, row: 0 },
+        { col: 0, row: 1 }
       ]);
     });
   });
