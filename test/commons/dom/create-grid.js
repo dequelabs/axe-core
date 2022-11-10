@@ -102,15 +102,15 @@ describe('create-grid', function () {
       document.body.removeAttribute('style');
     });
 
-    it('adds elements scrolled out of view', function () {
+    it('adds elements vertically scrolled out of view', function () {
       const gridScroll = 2;
       fixture =
         fixtureSetup(`<div id="scroller" style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll">
-          <div style="height: ${gridSize}px">T1</div>
-          <div style="height: ${gridSize}px">T2</div>
-          <div style="height: ${gridSize}px">T3</div>
-          <div style="height: ${gridSize}px">T4</div>
-          <div style="height: ${gridSize}px">T5</div>
+          <div style="height: ${gridSize}px">V1</div>
+          <div style="height: ${gridSize}px">V2</div>
+          <div style="height: ${gridSize}px">V3</div>
+          <div style="height: ${gridSize}px">V4</div>
+          <div style="height: ${gridSize}px">V5</div>
         </div>`);
       const scroller = fixture.children[0];
       scroller.actualNode.scroll(0, gridSize * gridScroll);
@@ -123,6 +123,32 @@ describe('create-grid', function () {
         assert.isDefined(child._grid, `Expect child ${index} to be defined`);
         var position = findPositions(child._grid, child);
         assert.deepEqual(position, [{ col: 0, row: index - gridScroll }]);
+      });
+    });
+
+    it('adds elements horizontally scrolled out of view', function () {
+      const gridScroll = 2;
+      fixture =
+        fixtureSetup(`<div id="scroller" style="width: ${gridSize}px; overflow: scroll">
+        <div style="width: ${gridSize * 6}px;">
+          <div style="width: ${gridSize}px; float: left;">H1</div>
+          <div style="width: ${gridSize}px; float: left;">H2</div>
+          <div style="width: ${gridSize}px; float: left;">H3</div>
+          <div style="width: ${gridSize}px; float: left;">H4</div>
+          <div style="width: ${gridSize}px; float: left;">H5</div>
+        </div>
+      </div>`);
+      const scroller = fixture.children[0];
+      scroller.actualNode.scroll(gridSize * gridScroll, 0);
+      const childElms = scroller.children[0].children.filter(
+        ({ props }) => props.nodeName === 'span'
+      );
+
+      createGrid();
+      childElms.forEach((child, index) => {
+        assert.isDefined(child._grid, `Expect child ${index} to be defined`);
+        var position = findPositions(child._grid, child);
+        assert.deepEqual(position, [{ col: index - gridScroll, row: 0 }]);
       });
     });
   });
