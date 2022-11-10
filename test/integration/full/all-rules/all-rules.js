@@ -7,7 +7,7 @@ describe('all rules test', () => {
     });
   });
 
-  it('should run all rules', async () => {
+  it('should run all rules', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
