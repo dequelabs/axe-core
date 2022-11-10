@@ -19,7 +19,7 @@ describe('isPointInRect', () => {
     assert.isFalse(isPointInRect(point, rect));
   });
 
-  it('returns false when the point is vertically outside the rect', () => {
+  it('returns false when the point is horizontally outside the rect', () => {
     const rect = new DOMRect(10, 20, 10, 20);
     const point = new DOMPoint(25, 30);
     assert.isFalse(isPointInRect(point, rect));
