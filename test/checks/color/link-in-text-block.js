@@ -303,5 +303,55 @@ describe('link-in-text-block', function () {
       );
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
     });
+
+    it('should return the proper values stored in data (fgContrast)', function () {
+      fixture.innerHTML =
+        '<div> <span style="display:block; color: #100" id="parent">' +
+        ' <p style="display:inline"><a href="" id="link">' +
+        '    link text ' +
+        ' </a> inside block </p> inside block' +
+        '</span> outside block </div>';
+
+      axe.testUtils.flatTreeSetup(fixture);
+      var linkElm = document.getElementById('link');
+
+      axe.testUtils
+        .getCheckEvaluate('link-in-text-block')
+        .call(checkContext, linkElm);
+
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'fgContrast',
+        contrastRatio: 2.18,
+        requiredContrastRatio: 3,
+        nodeColor: '#0000ee',
+        parentColor: '#110000'
+      });
+    });
+
+    it('should return the proper values stored in data (bgContrast)', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: 'black',
+          backgroundColor: '#F0F0F0'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'bgContrast',
+        contrastRatio: 1.13,
+        requiredContrastRatio: 3,
+        nodeBackgroundColor: '#ffffff',
+        parentBackgroundColor: '#f0f0f0'
+      });
+    });
   });
 });

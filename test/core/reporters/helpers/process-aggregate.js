@@ -1,6 +1,7 @@
 describe('helpers.processAggregate', function () {
   'use strict';
   var results, options;
+  const helpers = axe._thisWillBeDeletedDoNotUse.helpers;
 
   beforeEach(function () {
     results = [
@@ -11,10 +12,10 @@ describe('helpers.processAggregate', function () {
             result: 'passed',
             node: {
               element: document.createElement('div'),
-              selector: 'header > .thing',
+              selector: ['header > .thing'],
               source: '<div class="thing">Thing</div>',
-              xpath: '/header/div[@class="thing"]',
-              ancestry: 'html > body > header > div'
+              xpath: ['/header/div[@class="thing"]'],
+              ancestry: ['html > body > header > div']
             },
             any: [
               {
@@ -22,10 +23,10 @@ describe('helpers.processAggregate', function () {
                 relatedNodes: [
                   {
                     element: document.createElement('div'),
-                    selector: 'footer > .thing',
+                    selector: ['footer > .thing'],
                     source: '<div class="thing">Thing</div>',
-                    xpath: '/footer/div[@class="thing"]',
-                    ancestry: 'html > body > footer > div'
+                    xpath: ['/footer/div[@class="thing"]'],
+                    ancestry: ['html > body > footer > div']
                   }
                 ]
               }
@@ -37,10 +38,10 @@ describe('helpers.processAggregate', function () {
             result: 'passed',
             node: {
               element: document.createElement('div'),
-              selector: 'main > .thing',
+              selector: ['main > .thing'],
               source: '<div class="thing">Thing</div>',
-              xpath: '/main/div[@class="thing"]',
-              ancestry: 'html > body > main > div'
+              xpath: ['/main/div[@class="thing"]'],
+              ancestry: ['html > body > main > div']
             },
             any: [
               {
@@ -48,10 +49,10 @@ describe('helpers.processAggregate', function () {
                 relatedNodes: [
                   {
                     element: document.createElement('div'),
-                    selector: 'footer > .thing',
+                    selector: ['footer > .thing'],
                     source: '<div class="thing">Thing</div>',
-                    xpath: '/footer/div[@class="thing"]',
-                    ancestry: 'html > body > footer > div'
+                    xpath: ['/footer/div[@class="thing"]'],
+                    ancestry: ['html > body > footer > div']
                   }
                 ]
               }
@@ -70,10 +71,10 @@ describe('helpers.processAggregate', function () {
           {
             result: 'failed',
             node: {
-              selector: '#dopel',
-              source: '<input id="dopel"/>',
+              selector: ['#dopel'],
+              source: ['<input id="dopel"/>'],
               xpath: '/main/input[@id="dopel"]',
-              ancestry: 'html > body > main > input:nth-child(1)',
+              ancestry: ['html > body > main > input:nth-child(1)'],
               fromFrame: true
             },
             any: [
@@ -83,9 +84,9 @@ describe('helpers.processAggregate', function () {
                   {
                     element: document.createElement('input'),
                     selector: '#dopel',
-                    source: '<input id="dopel"/>',
-                    xpath: '/main/input[@id="dopel"]',
-                    ancestry: 'html > body > main > input:nth-child(2)',
+                    source: ['<input id="dopel"/>'],
+                    xpath: ['/main/input[@id="dopel"]'],
+                    ancestry: ['html > body > main > input:nth-child(2)'],
                     fromFrame: true
                   }
                 ]
@@ -97,10 +98,10 @@ describe('helpers.processAggregate', function () {
           {
             result: 'failed',
             node: {
-              selector: '#dopell',
+              selector: ['#dopell'],
               source: '<input id="dopell"/>',
-              xpath: '/header/input[@id="dopell"]',
-              ancestry: 'html > body > main > input:nth-child(1)',
+              xpath: ['/header/input[@id="dopell"]'],
+              ancestry: ['html > body > main > input:nth-child(1)'],
               fromFrame: true
             },
             any: [
@@ -109,10 +110,10 @@ describe('helpers.processAggregate', function () {
                 relatedNodes: [
                   {
                     element: document.createElement('input'),
-                    selector: '#dopell',
+                    selector: ['#dopell'],
                     source: '<input id="dopell"/>',
-                    xpath: '/header/input[@id="dopell"]',
-                    ancestry: 'html > body > main > input:nth-child(2)',
+                    xpath: ['/header/input[@id="dopell"]'],
+                    ancestry: ['html > body > main > input:nth-child(2)'],
                     fromFrame: true
                   }
                 ]
@@ -155,6 +156,24 @@ describe('helpers.processAggregate', function () {
       return r.id === 'passed-rule';
     });
     assert.isUndefined(ruleResult.nodes[0].node);
+  });
+
+  it('handles when a relatedNode is undefined', () => {
+    // Add undefined to failed-rule
+    results[1].violations[0].any[0].relatedNodes.unshift(undefined);
+    const resultObject = helpers.processAggregate(results, {
+      xpath: true,
+      elementRef: true,
+      ancestry: true
+    });
+    const { relatedNodes } = resultObject.violations[0].nodes[0].any[0];
+    assert.deepEqual(relatedNodes[0], {
+      html: 'Undefined',
+      target: [':root'],
+      ancestry: [':root'],
+      xpath: ['/'],
+      element: null
+    });
   });
 
   describe('`options` argument', function () {
