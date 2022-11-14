@@ -1,15 +1,15 @@
 /* global xit */
-describe('dom.getComposedParent', function() {
+describe('dom.getComposedParent', function () {
   'use strict';
   var getComposedParent = axe.commons.dom.getComposedParent;
   var fixture = document.getElementById('fixture');
   var shadowSupport = axe.testUtils.shadowSupport.v1;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns the parentNode normally', function() {
+  it('returns the parentNode normally', function () {
     fixture.innerHTML = '<div id="parent"><div id="target"></div></div>';
 
     var actual = getComposedParent(document.getElementById('target'));
@@ -17,13 +17,13 @@ describe('dom.getComposedParent', function() {
     assert.equal(actual, document.getElementById('parent'));
   });
 
-  it('returns null from the documentElement', function() {
+  it('returns null from the documentElement', function () {
     assert.isNull(getComposedParent(document.documentElement));
   });
 
   (shadowSupport ? it : xit)(
     'skip the slot node for slotted content',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="shadow"><div id="target"></div></div>';
       var shadowRoot = document
         .getElementById('shadow')
@@ -39,7 +39,7 @@ describe('dom.getComposedParent', function() {
 
   (shadowSupport ? it : xit)(
     'understands explicitly slotted nodes',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="shadow"><div id="target" slot="bar"></div></div>';
       var shadowRoot = document
@@ -59,7 +59,7 @@ describe('dom.getComposedParent', function() {
 
   (shadowSupport ? it : xit)(
     'returns elements within a shadow tree',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="shadow"> content </div>';
       var shadowRoot = document
         .getElementById('shadow')
@@ -75,7 +75,7 @@ describe('dom.getComposedParent', function() {
 
   (shadowSupport ? it : xit)(
     'returns the host when it reaches the shadow root',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="parent"> content </div>';
       var shadowRoot = document
         .getElementById('parent')

@@ -50,7 +50,7 @@ Changes to files in the [full integration test directory](../test/integration/fu
 
 To run all tests from the command line you can run `npm test`, which will run all unit and integration tests using headless Chrome. Having axe built and up-to-date is required in order to run tests. If you update files inside the [lib directory](../lib) you will need to rebuild axe before running tests.
 
-You can scope which set of tests to run through various npm scripts: 
+You can scope which set of tests to run through various npm scripts:
 
 - `npm run test:unit:core` - Run only [core tests](../test/core/)
 - `npm run test:unit:commons` - Run only [commons tests](../test/commons/)
@@ -71,7 +71,7 @@ There are also a set of tests that are not considered unit tests that you can ru
 
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
-If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can also navigate to the newly opened page using any supported browser. 
+If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can also navigate to the newly opened page using any supported browser.
 
 You can scope which set of tests to debug by passing the `testDirs` argument. Supported values are:
 
@@ -187,7 +187,7 @@ The after function must return an `Array` of CheckResults, due to this, it is a 
 
 ```js
 var uniqueIds = [];
-return results.filter(function(r) {
+return results.filter(function (r) {
   if (uniqueIds.indexOf(r.data) === -1) {
     uniqueIds.push(r.data);
     return true;
@@ -409,17 +409,17 @@ Create a check context for mocking and resetting data and relatedNodes in tests.
 #### Synopsis
 
 ```js
-describe('region', function() {
+describe('region', function () {
   var fixture = document.getElementById('fixture');
 
   var checkContext = new axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return true when all content is inside the region', function() {
+  it('should return true when all content is inside the region', function () {
     assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._relatedNodes.length, 0);
   });
@@ -451,7 +451,7 @@ Provides an API for determining Shadow DOM v0 and v1 support in tests. For examp
 ```js
 (axe.testUtils.shadowSupport.v1 ? it : xit)(
   'should test Shadow tree content',
-  function() {
+  function () {
     // The rest of the shadow DOM test
   }
 );
@@ -476,7 +476,7 @@ it(
   'should return true if there is only one ' +
     type +
     ' element with the same name',
-  function() {
+  function () {
     axe.testUtils.fixtureSetup(
       '<input type="' +
         type +
@@ -507,7 +507,7 @@ Create check arguments.
 #### Synopsis
 
 ```js
-it('should return true when all content is inside the region', function() {
+it('should return true when all content is inside the region', function () {
   var checkArgs = checkSetup(
     '<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>'
   );

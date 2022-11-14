@@ -1,0 +1,13 @@
+name: Formatter
+
+on: [pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Prettify the code
+        uses: creyD/prettier_action@v4.2
+        with:
+          prettier_options: '--write .'

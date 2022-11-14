@@ -1,4 +1,4 @@
-describe('reporters - v2', function() {
+describe('reporters - v2', function () {
   'use strict';
   var runResults,
     _results = [
@@ -85,7 +85,7 @@ describe('reporters - v2', function() {
         ]
       }
     ];
-  beforeEach(function() {
+  beforeEach(function () {
     runResults = JSON.parse(JSON.stringify(_results));
     axe._load({
       messages: {},
@@ -94,12 +94,12 @@ describe('reporters - v2', function() {
     });
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe._audit = null;
   });
 
-  it('should merge the runRules results into violations and passes', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should merge the runRules results into violations and passes', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.isObject(results);
       assert.isArray(results.violations);
       assert.lengthOf(results.violations, 1);
@@ -107,26 +107,26 @@ describe('reporters - v2', function() {
       assert.lengthOf(results.passes, 1);
     });
   });
-  it('should add the rule id to the rule result', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the rule id to the rule result', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.equal(results.violations[0].id, 'idkStuff');
       assert.equal(results.passes[0].id, 'gimmeLabel');
     });
   });
-  it('should add tags to the rule result', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add tags to the rule result', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.deepEqual(results.violations[0].tags, ['tag2']);
       assert.deepEqual(results.passes[0].tags, ['tag1']);
     });
   });
-  it('should add the rule help to the rule result', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the rule help to the rule result', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.isNotOk(results.violations[0].helpUrl);
       assert.equal(results.passes[0].helpUrl, 'things');
     });
   });
-  it('should add the html to the node data', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the html to the node data', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.ok(results.violations[0].nodes);
       assert.equal(results.violations[0].nodes.length, 1);
       assert.equal(
@@ -136,8 +136,8 @@ describe('reporters - v2', function() {
       assert.equal(results.passes[0].nodes[0].html, '<minkey>chimp</minky>');
     });
   });
-  it('should add the target selector array to the node data', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the target selector array to the node data', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.ok(results.violations[0].nodes);
       assert.equal(results.violations[0].nodes.length, 1);
       assert.deepEqual(results.violations[0].nodes[0].target, [
@@ -147,22 +147,22 @@ describe('reporters - v2', function() {
       ]);
     });
   });
-  it('should add the description to the rule result', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the description to the rule result', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.equal(results.violations[0].description, 'something more nifty');
       assert.equal(results.passes[0].description, 'something nifty');
     });
   });
-  it('should add the impact to the rule result', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add the impact to the rule result', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.equal(results.violations[0].impact, 'cats');
       assert.equal(results.violations[0].nodes[0].impact, 'cats');
       assert.isNotOk(results.passes[0].impact);
       assert.isNotOk(results.passes[0].nodes[0].impact);
     });
   });
-  it('should map relatedNodes', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should map relatedNodes', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);
       assert.equal(
         results.violations[0].nodes[0].all[0].relatedNodes[0].target,
@@ -184,29 +184,33 @@ describe('reporters - v2', function() {
       );
     });
   });
-  it('should add environment data', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add environment data', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.isDefined(results.url);
       assert.isDefined(results.timestamp);
       assert.isDefined(results.testEnvironment);
       assert.isDefined(results.testRunner);
     });
   });
-  it('should add toolOptions property', function() {
-    axe.getReporter('v2')(runResults, {}, function(results) {
+  it('should add toolOptions property', function () {
+    axe.getReporter('v2')(runResults, {}, function (results) {
       assert.isDefined(results.toolOptions);
     });
   });
   it('uses the environmentData option instead of environment data if specified', function () {
     var environmentData = {
       myReporter: 'hello world'
-    }
-    axe.getReporter('v2')(runResults, { environmentData: environmentData }, function(results) {
-      assert.equal(results.myReporter, 'hello world');
-      assert.isUndefined(results.url);
-      assert.isUndefined(results.timestamp);
-      assert.isUndefined(results.testEnvironment);
-      assert.isUndefined(results.testRunner);
-    });
+    };
+    axe.getReporter('v2')(
+      runResults,
+      { environmentData: environmentData },
+      function (results) {
+        assert.equal(results.myReporter, 'hello world');
+        assert.isUndefined(results.url);
+        assert.isUndefined(results.timestamp);
+        assert.isUndefined(results.testEnvironment);
+        assert.isUndefined(results.testRunner);
+      }
+    );
   });
 });

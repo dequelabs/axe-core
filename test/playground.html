@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <title>O hai</title>
+  <title>Axe Playground</title>
+  <!-- The playground is used for quick local host axe-core during development -->
 
-  <div class="foo" id="foo">foo</div>
+  <main>
+    <h1>Hello World</h1>
+  </main>
 
   <script src="/axe.js"></script>
+  <script src="/test/testutils.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
-        console.log(res.violations);
-        res.incomplete.forEach(function(issue) {
-          console.log(issue);
-        });
-      });
-    });
+    axe.testUtils.awaitNestedLoad(
+      window,
+      () => {
+        axe.run(
+          {
+            runOnly: 'color-contrast',
+            elementRef: true
+          },
+          (err, results) => {
+            console.log(err || results);
+          }
+        );
+      },
+      err => console.error(err)
+    );
   </script>
 </html>

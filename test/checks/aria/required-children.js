@@ -426,7 +426,7 @@ describe('aria-required-children', function () {
     });
 
     it('should not throw when options is incorrect', function () {
-      var params = checkSetup('<div role="menu" id="target"></div>');
+      var params = checkSetup('<div role="row" id="target"></div>');
 
       // Options: (incorrect)
       params[1] = ['menu'];

@@ -3,7 +3,17 @@
   p {
     margin: 30px;
   }
+  img {
+    vertical-align: bottom;
+  }
 </style>
+
+<!-- These fall on top of the elements immediately below it 
+this should not effect their outcome -->
+<p style="position: fixed">
+  <a href="#" id="pass-fixed">Wide link</a>
+  <a href="#" id="fail-fixed">x</a>
+</p>
 
 <p>
   <button id="pass1" style="display: inline-block; margin-right: 20px">
@@ -59,6 +69,80 @@
     type="text"
     id="pass-adjacent"
   />
+</p>
+
+<!-- Incomplete examples -->
+<ul>
+  <li><a href="#" tabindex="-1" id="incomplete1">Item1</a></li>
+  <li><a href="#" tabindex="-1" id="incomplete2">Item2</a></li>
+</ul>
+
+<p>
+  <a href="#" id="incomplete3" tabindex="-1">x</a>
+  <a href="#" id="pass6" tabindex="-1">Wide link</a>
+</p>
+
+<p>
+  <a href="#" id="incomplete4" tabindex="-1">abc</a>
+  <a
+    href="#"
+    id="pass7"
+    tabindex="-1"
+    style="display: inline-block; margin-left: -1em"
+    >Wide link</a
+  >
+  <a
+    href="#"
+    id="pass8"
+    tabindex="-1"
+    style="display: inline-block; margin-left: -1em"
+    >Wide link</a
+  >
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the left and right -->
+  <a href="#" id="incomplete5"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M1"
+      style="float: left"
+    />
+  </a>
+  <a href="#" id="incomplete6"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M4"
+      style="position: absolute"
+    />
+  </a>
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the top and bottom -->
+  <a href="#" id="incomplete7">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M3"
+    />
+  </a>
+  <br />
+  <a href="#" id="incomplete8" style="display: inline-block; height: 18px">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M2"
+    />
+  </a>
 </p>
 
 <!-- Inapplicable -->

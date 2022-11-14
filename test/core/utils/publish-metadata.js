@@ -1,15 +1,15 @@
-describe('axe.utils.publishMetaData', function() {
+describe('axe.utils.publishMetaData', function () {
   'use strict';
 
-  afterEach(function() {
+  afterEach(function () {
     axe._audit = null;
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.publishMetaData);
   });
 
-  it('should pull data from rules from axe._audit.data', function() {
+  it('should pull data from rules from axe._audit.data', function () {
     var expected = {
       foo: 'bar',
       bob: 'loblaw'
@@ -34,7 +34,7 @@ describe('axe.utils.publishMetaData', function() {
     assert.equal(result.bob, expected.bob);
   });
 
-  it('should pull data from checks from axe._audit.data', function() {
+  it('should pull data from checks from axe._audit.data', function () {
     var expected = {
       foo: 'bar',
       bob: 'loblaw'
@@ -68,13 +68,13 @@ describe('axe.utils.publishMetaData', function() {
     assert.equal(result.nodes[0].any[0].bar, expected.bar);
   });
 
-  it('should execute messages', function() {
+  it('should execute messages', function () {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -82,30 +82,30 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               }
             }
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               }
             }
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               }
             }
@@ -215,13 +215,13 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should return default incomplete message with no reason specified by the check', function() {
+  it('should return default incomplete message with no reason specified by the check', function () {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -229,10 +229,10 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -245,10 +245,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -261,10 +261,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -343,16 +343,16 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should fall back to a generic message if incomplete object fails', function() {
+  it('should fall back to a generic message if incomplete object fails', function () {
     axe._load({
       rules: [],
       data: {
-        incompleteFallbackMessage: function() {
+        incompleteFallbackMessage: function () {
           return 'Dogs are the best';
         },
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -360,10 +360,10 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               },
               incomplete: {}
@@ -371,10 +371,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               },
               incomplete: {}
@@ -382,10 +382,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               },
               incomplete: {}
@@ -459,13 +459,13 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should handle incomplete reasons', function() {
+  it('should handle incomplete reasons', function () {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -473,10 +473,10 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -489,10 +489,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -505,10 +505,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -599,13 +599,13 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should handle incomplete reasons with backwards compatibility', function() {
+  it('should handle incomplete reasons with backwards compatibility', function () {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -613,10 +613,10 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -629,10 +629,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -645,10 +645,10 @@ describe('axe.utils.publishMetaData', function() {
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -763,30 +763,30 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should not modify base configuration', function() {
+  it('should not modify base configuration', function () {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
         },
         checks: {
           'cats-PASS': {
-            failureMessage: function() {
+            failureMessage: function () {
               return 'cats-check';
             }
           },
           'cats-ANY': {
-            failureMessage: function() {
+            failureMessage: function () {
               return 'cats-check2';
             }
           },
           'cats-ALL': {
-            failureMessage: function() {
+            failureMessage: function () {
               return 'cats-check2';
             }
           }
@@ -824,7 +824,7 @@ describe('axe.utils.publishMetaData', function() {
     assert.isNotNull(axe._audit.data.checks['cats-ALL'].failureMessage);
   });
 
-  it('should pull tags off rule object', function() {
+  it('should pull tags off rule object', function () {
     var expected = {
       foo: 'bar',
       bob: 'loblaw'
@@ -862,8 +862,8 @@ describe('axe.utils.publishMetaData', function() {
     assert.deepEqual(result.tags, ['hai']);
   });
 
-  describe('non-doT syntax', function() {
-    it('should process ${data} syntax', function() {
+  describe('non-doT syntax', function () {
+    it('should process ${data} syntax', function () {
       axe._load({
         rules: [],
         data: {
@@ -922,7 +922,7 @@ describe('axe.utils.publishMetaData', function() {
       });
     });
 
-    it('should return default incomplete message with no reason specified by the check', function() {
+    it('should return default incomplete message with no reason specified by the check', function () {
       axe._load({
         rules: [],
         data: {
@@ -1036,7 +1036,7 @@ describe('axe.utils.publishMetaData', function() {
       });
     });
 
-    it('should fall back to a generic message if incomplete object fails', function() {
+    it('should fall back to a generic message if incomplete object fails', function () {
       axe._load({
         rules: [],
         data: {
@@ -1137,7 +1137,7 @@ describe('axe.utils.publishMetaData', function() {
     });
   });
 
-  it('should use fail message for rules with "reviewOnFaill: true"', function() {
+  it('should use fail message for rules with "reviewOnFaill: true"', function () {
     axe._load({
       rules: [
         {
@@ -1148,7 +1148,7 @@ describe('axe.utils.publishMetaData', function() {
       data: {
         rules: {
           cats: {
-            help: function() {
+            help: function () {
               return 'cats-rule';
             }
           }
@@ -1156,30 +1156,30 @@ describe('axe.utils.publishMetaData', function() {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-NONE';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-NONE';
               }
             }
           },
           'cats-ANY': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ANY';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ANY';
               }
             }
           },
           'cats-ALL': {
             messages: {
-              fail: function() {
+              fail: function () {
                 return 'fail-ALL';
               },
-              pass: function() {
+              pass: function () {
                 return 'pass-ALL';
               }
             }

@@ -1,16 +1,16 @@
-describe('invalidrole', function() {
+describe('invalidrole', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return true if applied to an empty role', function() {
+  it('should return true if applied to an empty role', function () {
     var virtualNode = queryFixture('<div id="target" role="">Contents</div>');
     assert.isTrue(
       checks.invalidrole.evaluate.call(
@@ -23,7 +23,7 @@ describe('invalidrole', function() {
     assert.deepEqual(checkContext._data, ['']);
   });
 
-  it('should return true if applied to a nonsensical role', function() {
+  it('should return true if applied to a nonsensical role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="foo">Contents</div>'
     );
@@ -38,7 +38,7 @@ describe('invalidrole', function() {
     assert.deepEqual(checkContext._data, ['foo']);
   });
 
-  it('should return false if applied to a concrete role', function() {
+  it('should return false if applied to a concrete role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert">Contents</div>'
     );
@@ -53,7 +53,7 @@ describe('invalidrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return false if applied to an abstract role', function() {
+  it('should return false if applied to an abstract role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="widget">Contents</div>'
     );
@@ -68,7 +68,7 @@ describe('invalidrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return false if applied to multiple valid roles', function() {
+  it('should return false if applied to multiple valid roles', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert button">Contents</div>'
     );
@@ -83,7 +83,7 @@ describe('invalidrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return false if atleast one role is valid', function() {
+  it('should return false if atleast one role is valid', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert button foo bar">Contents</div>'
     );
@@ -97,7 +97,7 @@ describe('invalidrole', function() {
     );
   });
 
-  it('should return true if all roles are invalid', function() {
+  it('should return true if all roles are invalid', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="foo bar">Contents</div>'
     );

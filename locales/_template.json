@@ -303,7 +303,7 @@
     },
     "meta-viewport": {
       "description": "Ensures <meta name=\"viewport\"> does not disable text scaling and zooming",
-      "help": "Zooming and scaling should not be disabled"
+      "help": "Zooming and scaling must not be disabled"
     },
     "nested-interactive": {
       "description": "Ensures interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies",
@@ -326,8 +326,8 @@
       "help": "Page should contain a level-one heading"
     },
     "presentation-role-conflict": {
-      "description": "Flags elements whose role is none or presentation and which cause the role conflict resolution to trigger.",
-      "help": "Elements of role none or presentation should be flagged"
+      "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
+      "help": "Ensure elements marked as presentational are consistently ignored"
     },
     "region": {
       "description": "Ensures all page content is contained by landmarks",
@@ -782,15 +782,12 @@
       }
     },
     "only-dlitems": {
-      "pass": "List element only has direct children that are allowed inside <dt> or <dd> elements",
-      "fail": "List element has direct children that are not allowed inside <dt> or <dd> elements"
+      "pass": "dl element only has direct children that are allowed inside; <dt>, <dd>, or <div> elements",
+      "fail": "dl element has direct children that are not allowed: ${data.values}"
     },
     "only-listitems": {
       "pass": "List element only has direct children that are allowed inside <li> elements",
-      "fail": {
-        "default": "List element has direct children that are not allowed inside <li> elements",
-        "roleNotValid": "List element has direct children with a role that is not allowed: ${data.roles}"
-      }
+      "fail": "List element has direct children that are not allowed: ${data.values}"
     },
     "structured-dlitems": {
       "pass": "When not empty, element has both <dt> and <dd> elements",
@@ -825,7 +822,11 @@
     },
     "target-offset": {
       "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
-      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)"
+      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "incomplete": {
+        "default": "Element with negative tabindex has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px). Is this a target?",
+        "nonTabbableNeighbor": "Target has insufficient offset from a neighbor with negative tabindex (${data.closestOffset}px should be at least ${data.minOffset}px). Is the neighbor a target?"
+      }
     },
     "target-size": {
       "pass": {
@@ -833,8 +834,14 @@
         "obscured": "Control is ignored because it is fully obscured and thus not clickable"
       },
       "fail": {
-        "default": "Element has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "partiallyObscured": "Element has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+        "default": "Target has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "partiallyObscured": "Target has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Element with negative tabindex has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "contentOverflow": "Element size could not be accurately determined due to overflow content",
+        "partiallyObscured": "Element with negative tabindex has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?"
       }
     },
     "header-present": {

@@ -1,6 +1,6 @@
-describe('helpers.failureSummary', function() {
+describe('helpers.failureSummary', function () {
   'use strict';
-  beforeEach(function() {
+  beforeEach(function () {
     axe._load({
       messages: {},
       rules: [],
@@ -48,7 +48,7 @@ describe('helpers.failureSummary', function() {
     });
   });
 
-  it('should concatenate none and all', function() {
+  it('should concatenate none and all', function () {
     var summary = helpers.failureSummary({
       result: 'failed',
       any: [],
@@ -73,7 +73,7 @@ describe('helpers.failureSummary', function() {
     assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n');
   });
 
-  it('should return a list of ANYs if none return true', function() {
+  it('should return a list of ANYs if none return true', function () {
     var summary = helpers.failureSummary({
       result: 'failed',
       any: [
@@ -97,7 +97,7 @@ describe('helpers.failureSummary', function() {
     assert.equal(summary, 'Fix any of the following: \n 1\n 2\n 3\n');
   });
 
-  it('should concatenate anys', function() {
+  it('should concatenate anys', function () {
     var summary = helpers.failureSummary({
       result: 'failed',
       any: [

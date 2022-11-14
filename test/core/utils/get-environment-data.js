@@ -1,13 +1,13 @@
-describe('utils.getEnvironmentData', function() {
+describe('utils.getEnvironmentData', function () {
   'use strict';
   var __audit;
   var getEnvironmentData = axe.utils.getEnvironmentData;
-  before(function() {
+  before(function () {
     __audit = axe._audit;
     axe._audit = { brand: 'Deque' };
   });
 
-  after(function() {
+  after(function () {
     axe._audit = __audit;
   });
 
@@ -17,25 +17,25 @@ describe('utils.getEnvironmentData', function() {
         name: 'axe-core',
         version: axe.version
       }
-    }
-    var output = getEnvironmentData(input)
+    };
+    var output = getEnvironmentData(input);
     assert.equal(input, output);
-  })
+  });
 
-  it('should return a `testEngine` property', function() {
+  it('should return a `testEngine` property', function () {
     var data = getEnvironmentData();
     assert.isObject(data.testEngine);
     assert.equal(data.testEngine.name, 'axe-core');
     assert.equal(data.testEngine.version, axe.version);
   });
 
-  it('should return a `testRunner` property', function() {
+  it('should return a `testRunner` property', function () {
     var data = getEnvironmentData();
     assert.isObject(data.testRunner);
     assert.equal(data.testRunner.name, axe._audit.brand);
   });
 
-  it('should return a `testEnvironment` property', function() {
+  it('should return a `testEnvironment` property', function () {
     var data = getEnvironmentData();
     assert.isObject(data.testEnvironment);
     assert.ok(data.testEnvironment.userAgent);
@@ -45,12 +45,12 @@ describe('utils.getEnvironmentData', function() {
     assert.isNotNull(data.testEnvironment.orientationType);
   });
 
-  it('should return a `timestamp` property`', function() {
+  it('should return a `timestamp` property`', function () {
     var data = getEnvironmentData();
     assert.isDefined(data.timestamp);
   });
 
-  it('should return a `url` property', function() {
+  it('should return a `url` property', function () {
     var data = getEnvironmentData();
     assert.isDefined(data.url);
   });
@@ -58,7 +58,7 @@ describe('utils.getEnvironmentData', function() {
   // TODO: remove or update test once we are testing axe-core in jsdom and
   // other supported environments as what this is testing should be done in
   // those environment tests
-  it('gets data from the `win` parameter when passed', function() {
+  it('gets data from the `win` parameter when passed', function () {
     var data = getEnvironmentData(null, {
       screen: {
         orientation: {

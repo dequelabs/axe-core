@@ -1,9 +1,9 @@
-describe('meta-refresh-no-exceptions pass', function() {
+describe('meta-refresh-no-exceptions pass', function () {
   'use strict';
 
-  it('should pass', function(done) {
-    axe.run({ runOnly: 'meta-refresh-no-exceptions' }, function(err, results) {
-      console.log(results)
+  it('should pass', function (done) {
+    axe.run({ runOnly: 'meta-refresh-no-exceptions' }, function (err, results) {
+      console.log(results);
       try {
         assert.isNull(err);
         assert.lengthOf(results.violations, 0, 'violations');

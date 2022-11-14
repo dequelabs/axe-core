@@ -35,6 +35,7 @@
   - [target-size](#target-size)
   - [region](#region)
   - [inline-style-property](#inline-style-property)
+  - [invalid-children](#invalid-children)
 
 ## How Checks Work
 
@@ -526,3 +527,13 @@ This evaluate method is used in the following checks. Default vary between check
 | `normalValue`    | The value to use when `normal` is set, defaults to `0`                        |
 
 If `minValue` and `maxValue` are both undefined, the check returns `false` if the property is used with !important. If done along with `noImportant: true`, the check returns false if the property is set at all in the style attribute.
+
+### invalid-children
+
+This evaluation method is used in the `list` and `definition-list` rule to determine whether its child nodes are allowed.
+
+| Option           | Description                                                                         |
+| ---------------- | :---------------------------------------------------------------------------------- |
+| `validNodeNames` | Nodes without role allowed as children                                              |
+| `validRoles`     | Roles allowed on child elements                                                     |
+| `divGroups`      | Whether the child nodes can be grouped in a div without any role (false by default) |

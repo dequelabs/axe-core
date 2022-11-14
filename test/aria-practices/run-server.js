@@ -10,7 +10,7 @@ const getWebdriver = () => {
   return webdriver;
 };
 
-const connectToChromeDriver = (port) => {
+const connectToChromeDriver = port => {
   let socket;
   return new Promise((resolve, reject) => {
     // Give up after 1s
@@ -31,7 +31,7 @@ const connectToChromeDriver = (port) => {
     );
 
     // Fail on error
-    socket.once('error', (err) => {
+    socket.once('error', err => {
       clearTimeout(timer);
       socket.destroy();
       return reject(err);
@@ -39,5 +39,5 @@ const connectToChromeDriver = (port) => {
   });
 };
 
-module.exports.getWebdriver = getWebdriver
-module.exports.connectToChromeDriver = connectToChromeDriver
+module.exports.getWebdriver = getWebdriver;
+module.exports.connectToChromeDriver = connectToChromeDriver;

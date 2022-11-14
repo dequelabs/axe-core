@@ -1,4 +1,4 @@
-describe('axe.utils.aggregateResult', function() {
+describe('axe.utils.aggregateResult', function () {
   'use strict';
 
   var results,
@@ -148,11 +148,11 @@ describe('axe.utils.aggregateResult', function() {
       }
     ];
 
-  beforeEach(function() {
+  beforeEach(function () {
     results = JSON.parse(JSON.stringify(_results));
   });
 
-  it('creates an object with arrays as properties for each result', function() {
+  it('creates an object with arrays as properties for each result', function () {
     var resultObject = axe.utils.aggregateResult(results);
 
     assert.isArray(resultObject.passes);
@@ -161,7 +161,7 @@ describe('axe.utils.aggregateResult', function() {
     assert.isArray(resultObject.inapplicable);
   });
 
-  it('copies failures and passes to their respective arrays on the result object', function() {
+  it('copies failures and passes to their respective arrays on the result object', function () {
     // insert 1 pass and 1 fail
     var input = [results[0], results[1]];
     var resultObject = axe.utils.aggregateResult(input);
@@ -180,7 +180,7 @@ describe('axe.utils.aggregateResult', function() {
     assert.notEqual(resultObject.violations[0].nodes, input[1].violations);
   });
 
-  it('creates a duplicate of the result for each outcome it has', function() {
+  it('creates a duplicate of the result for each outcome it has', function () {
     // insert 1 fail, containing a pass, a fail and a cantTell result
     var input = [results[2]];
     var resultObject = axe.utils.aggregateResult(input);
@@ -196,7 +196,7 @@ describe('axe.utils.aggregateResult', function() {
     assert.deepEqual(resultObject.incomplete[0].nodes, input[0].incomplete);
   });
 
-  it('moves inapplicable results only to the inapplicable array', function() {
+  it('moves inapplicable results only to the inapplicable array', function () {
     // insert 1 fail, containing a pass, a fail and a cantTell result
     var input = [results[3]];
     var resultObject = axe.utils.aggregateResult(input);

@@ -1,10 +1,10 @@
-describe('table.isColumnHeader', function() {
+describe('table.isColumnHeader', function () {
   'use strict';
 
   var table = axe.commons.table;
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixtureSetup(
       '<table>' +
         '<tr>' +
@@ -23,22 +23,22 @@ describe('table.isColumnHeader', function() {
     );
   });
 
-  it('returns false if not a column header', function() {
+  it('returns false if not a column header', function () {
     var cell = document.querySelector('#cell1');
     assert.isFalse(table.isColumnHeader(cell));
   });
 
-  it('returns true if scope="auto"', function() {
+  it('returns true if scope="auto"', function () {
     var cell = document.querySelector('#ch1');
     assert.isTrue(table.isColumnHeader(cell));
   });
 
-  it('returns true if scope="col"', function() {
+  it('returns true if scope="col"', function () {
     var cell = document.querySelector('#ch2');
     assert.isTrue(table.isColumnHeader(cell));
   });
 
-  it('returns false if scope="row"', function() {
+  it('returns false if scope="row"', function () {
     var cell = document.querySelector('#rh2');
     assert.isFalse(table.isColumnHeader(cell));
   });

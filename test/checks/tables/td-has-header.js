@@ -1,17 +1,17 @@
-describe('td-has-header', function() {
+describe('td-has-header', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var shadowSupport = axe.testUtils.shadowSupport.v1;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
     axe._tree = null;
   });
 
-  it('should not be fooled by rowspan and colspan', function() {
+  it('should not be fooled by rowspan and colspan', function () {
     fixture.innerHTML =
       '<table>' +
       '<thead>' +
@@ -47,7 +47,7 @@ describe('td-has-header', function() {
     assert.equal(checkContext._relatedNodes.length, 4);
   });
 
-  it('should return true each non-empty cell has a row header', function() {
+  it('should return true each non-empty cell has a row header', function () {
     fixture.innerHTML =
       '<table>' + '  <tr> <th>hi</th> <td>hello</td> </tr>' + '</table>';
 
@@ -58,7 +58,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true each non-empty cell has a column header', function() {
+  it('should return true each non-empty cell has a column header', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th>hi</th> <th>hello</th> </tr>' +
@@ -72,7 +72,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true each non-empty cell has aria-label', function() {
+  it('should return true each non-empty cell has aria-label', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td aria-label="one">hi</td> <td aria-label="two">hello</td> </tr>' +
@@ -86,7 +86,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true each non-empty cell has aria-labelledby', function() {
+  it('should return true each non-empty cell has aria-labelledby', function () {
     fixture.innerHTML =
       '<div id="one">one</div><div id="two">two</div>' +
       '<table>' +
@@ -101,7 +101,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true each non-empty cell has a headers attribute', function() {
+  it('should return true each non-empty cell has a headers attribute', function () {
     // This will fail under td-headers-attr because the headers must be inside the table
     fixture.innerHTML =
       '<div id="one">one</div><div id="two">two</div>' +
@@ -117,7 +117,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true there is at least one non-empty header', function() {
+  it('should return true there is at least one non-empty header', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th>hi</th> <th>hello</th> </tr>' +
@@ -131,7 +131,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true if the only data cells are empty', function() {
+  it('should return true if the only data cells are empty', function () {
     fixture.innerHTML =
       '<table>' + '  <tr> <td></td> <td></td> </tr>' + '</table>';
 
@@ -142,7 +142,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return false if a cell has no headers', function() {
+  it('should return false if a cell has no headers', function () {
     fixture.innerHTML =
       '<table>' + '  <tr> <td>hi</td> <td>hello</td> </tr>' + '</table>';
 
@@ -158,7 +158,7 @@ describe('td-has-header', function() {
     ]);
   });
 
-  it('should return false if a cell has no headers - complex table', function() {
+  it('should return false if a cell has no headers - complex table', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td colspan="3">Psuedo-Caption</td> </tr>' +
@@ -179,7 +179,7 @@ describe('td-has-header', function() {
     ]);
   });
 
-  it('should return true if the headers element is empty', function() {
+  it('should return true if the headers element is empty', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th>Hello</th> <td headers="">goodbye</td> </tr>' +
@@ -193,7 +193,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return true if the headers element refers to non-existing elements', function() {
+  it('should return true if the headers element refers to non-existing elements', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th>Hello</th> <td headers="beatles">goodbye</td> </tr>' +
@@ -207,7 +207,7 @@ describe('td-has-header', function() {
     );
   });
 
-  it('should return false if all headers are empty', function() {
+  it('should return false if all headers are empty', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th></th> <th></th> </tr>' +
@@ -221,7 +221,7 @@ describe('td-has-header', function() {
     );
   });
 
-  (shadowSupport ? it : xit)('recognizes shadow tree content', function() {
+  (shadowSupport ? it : xit)('recognizes shadow tree content', function () {
     fixture.innerHTML = '<div id="shadow"> <b>header</b> </div>';
     var shadow = fixture
       .querySelector('#shadow')

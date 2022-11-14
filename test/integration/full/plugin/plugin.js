@@ -1,15 +1,15 @@
-describe('plugin test', function() {
-  it('should register the plugin', function() {
+describe('plugin test', function () {
+  it('should register the plugin', function () {
     axe.registerPlugin({
       id: 'doStuff',
-      run: function(id, action, options, callback) {
+      run: function (id, action, options, callback) {
         var frames;
         var q = axe.utils.queue();
         var that = this;
         frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-        frames.forEach(function(frame) {
-          q.defer(function(done) {
+        frames.forEach(function (frame) {
+          q.defer(function (done) {
             axe.utils.sendCommandToFrame(
               frame,
               {
@@ -18,7 +18,7 @@ describe('plugin test', function() {
                 parameter: id,
                 action: action
               },
-              function() {
+              function () {
                 done();
               }
             );
@@ -26,7 +26,7 @@ describe('plugin test', function() {
         });
 
         if (!options.context.length) {
-          q.defer(function(done) {
+          q.defer(function (done) {
             that._registry[id][action].call(
               that._registry[id],
               document,
@@ -40,7 +40,7 @@ describe('plugin test', function() {
       commands: [
         {
           id: 'run-doStuff',
-          callback: function(data, callback) {
+          callback: function (data, callback) {
             return axe.plugins.doStuff.run(
               data.parameter,
               data.action,
@@ -55,23 +55,23 @@ describe('plugin test', function() {
     assert.isOk(axe.plugins.doStuff);
   });
 
-  it('should add plugin instance', function() {
+  it('should add plugin instance', function () {
     var highlight = {
       id: 'highlight',
-      highlighter: function(node) {
+      highlighter: function (node) {
         node.style.backgroundColor = 'yellow';
         this._node = node;
       },
-      run: function(contextNode, options, done) {
+      run: function (contextNode, options, done) {
         var that = this;
         Array.prototype.slice
           .call(contextNode.querySelectorAll(options.selector))
-          .forEach(function(node) {
+          .forEach(function (node) {
             that.highlighter(node, options);
           });
         done();
       },
-      cleanup: function(done) {
+      cleanup: function (done) {
         this._node.style.backgroundColor = '';
         done();
       }
@@ -81,7 +81,7 @@ describe('plugin test', function() {
     assert.equal(axe.plugins.doStuff._registry.highlight, highlight);
   });
 
-  it('should run the plugin', function(done) {
+  it('should run the plugin', function (done) {
     var h1 = document.querySelector('.my-heading');
 
     axe.plugins.doStuff.run(
@@ -91,14 +91,14 @@ describe('plugin test', function() {
         selector: '.my-heading',
         context: []
       },
-      function() {
+      function () {
         assert.equal(h1.style.backgroundColor, 'yellow');
         done();
       }
     );
   });
 
-  it('should cleanup the plugin', function() {
+  it('should cleanup the plugin', function () {
     var h1 = document.querySelector('.my-heading');
 
     axe.cleanup();
