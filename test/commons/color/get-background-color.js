@@ -1082,12 +1082,14 @@ describe('color.getBackgroundColor', function () {
     it('returns the html background', function () {
       fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
       document.documentElement.style.background = '#0F0';
+      document.body.setAttribute('style', 'background: unset');
 
       axe.testUtils.flatTreeSetup(fixture);
       var actual = axe.commons.color.getBackgroundColor(
         document.getElementById('target'),
         []
       );
+      document.body.removeAttribute('style');
       var expected = new axe.commons.color.Color(0, 255, 0, 1);
 
       assert.closeTo(actual.red, expected.red, 0.5);
