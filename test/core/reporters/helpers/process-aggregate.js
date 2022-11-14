@@ -157,6 +157,17 @@ describe('helpers.processAggregate', function () {
     assert.isUndefined(ruleResult.nodes[0].node);
   });
 
+  it('handles when a relatedNode is undefined', () => {
+    // Add undefined to failed-rule
+    results[1].violations[0].any[0].relatedNodes.unshift(undefined);
+    const resultObject = helpers.processAggregate(results, {});
+    const { relatedNodes } = resultObject.violations[0].nodes[0].any[0];
+    assert.deepEqual(relatedNodes[0], {
+      html: 'Undefined',
+      target: ':root'
+    });
+  });
+
   describe('`options` argument', function () {
     describe('`resultTypes` option', function () {
       it('should reduce the unwanted result types to 1 in the `resultObject`', function () {
