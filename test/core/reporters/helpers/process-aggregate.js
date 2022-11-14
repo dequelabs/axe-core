@@ -160,11 +160,18 @@ describe('helpers.processAggregate', function () {
   it('handles when a relatedNode is undefined', () => {
     // Add undefined to failed-rule
     results[1].violations[0].any[0].relatedNodes.unshift(undefined);
-    const resultObject = helpers.processAggregate(results, {});
+    const resultObject = helpers.processAggregate(results, {
+      xpath: true,
+      elementRef: true,
+      ancestry: true
+    });
     const { relatedNodes } = resultObject.violations[0].nodes[0].any[0];
     assert.deepEqual(relatedNodes[0], {
       html: 'Undefined',
-      target: ':root'
+      target: ':root',
+      ancestry: ':root',
+      xpath: '/',
+      element: null
     });
   });
 
