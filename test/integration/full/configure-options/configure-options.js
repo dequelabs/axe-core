@@ -2,6 +2,7 @@ describe('Configure Options', function () {
   'use strict';
 
   var target = document.querySelector('#target');
+  var captureError = axe.testUtils.captureError;
 
   afterEach(function () {
     axe.reset();
@@ -30,10 +31,10 @@ describe('Configure Options', function () {
               values: ['aria-allowed-attr']
             }
           },
-          function (error, results) {
+          captureError(function (error, results) {
             assert.lengthOf(results.violations, 0, 'violations');
             done();
-          }
+          }, done)
         );
       });
 
@@ -87,15 +88,11 @@ describe('Configure Options', function () {
               values: ['dylang']
             }
           },
-          function (err, results) {
-            try {
-              assert.isNull(err);
-              assert.lengthOf(results.violations, 1, 'violations');
-              done();
-            } catch (e) {
-              done(e);
-            }
-          }
+          captureError(function (err, results) {
+            assert.isNull(err);
+            assert.lengthOf(results.violations, 1, 'violations');
+            done();
+          }, done)
         );
       });
     });
@@ -119,13 +116,14 @@ describe('Configure Options', function () {
               values: ['aria-required-attr']
             }
           },
-          function (error, results) {
+          captureError(function (error, results) {
             assert.lengthOf(results.violations, 1, 'violations');
-            assert.sameMembers(results.violations[0].nodes[0].any[0].data, [
-              'aria-snuggles'
-            ]);
+            assert.sameMembers(
+              results.violations[0].nodes[0].any[0].data.values,
+              ['aria-snuggles']
+            );
             done();
-          }
+          }, done)
         );
       });
     });
@@ -147,21 +145,22 @@ describe('Configure Options', function () {
         ]
       });
 
-      axe.run(function (error, results) {
-        assert.isNull(error);
-        assert.lengthOf(results.passes, 1, 'passes');
-        assert.equal(results.passes[0].id, 'html-has-lang');
+      axe.run(
+        captureError(function (error, results) {
+          assert.isNull(error);
+          assert.lengthOf(results.passes, 1, 'passes');
+          assert.equal(results.passes[0].id, 'html-has-lang');
 
-        assert.lengthOf(results.violations, 0, 'violations');
-        assert.lengthOf(results.incomplete, 0, 'incomplete');
-        assert.lengthOf(results.inapplicable, 0, 'inapplicable');
-        done();
-      });
+          assert.lengthOf(results.violations, 0, 'violations');
+          assert.lengthOf(results.incomplete, 0, 'incomplete');
+          assert.lengthOf(results.inapplicable, 0, 'inapplicable');
+          done();
+        }, done)
+      );
     });
   });
 
   describe('noHtml', function () {
-    var captureError = axe.testUtils.captureError;
     it('prevents html property on nodes', function (done) {
       target.setAttribute('role', 'slider');
       axe.configure({
