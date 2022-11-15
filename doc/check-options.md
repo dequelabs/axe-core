@@ -341,9 +341,9 @@ th</code></pre>
 
 ### label-content-name-mismatch
 
-| Option               | Default | Description                                                                                                                                                               |
-| -------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pixelThreshold`     | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
+| Option                | Default | Description                                                                                                                                                               |
+| --------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pixelThreshold`      | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
 | `occurrenceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
 
 ### has-lang
