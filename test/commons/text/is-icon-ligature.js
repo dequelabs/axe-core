@@ -213,7 +213,7 @@ describe('text.isIconLigature', function () {
     );
   });
 
-  describe('occuranceThreshold', function () {
+  describe('occurrenceThreshold', function () {
     (fontApiSupport ? it : it.skip)(
       'should change the number of times a font is seen before returning',
       function () {
