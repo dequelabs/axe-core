@@ -23,7 +23,7 @@ const testCaseJsonPath = path.resolve(
 const addr = `http://localhost:${serverPort}/WAI/content-assets/wcag-act-rules/`;
 const testCaseJson = require(testCaseJsonPath);
 
-module.exports = ({ id, title, axeRules }) => {
+module.exports = ({ id, title, axeRules, skipTests = [] }) => {
   describe(`${title} (${id})`, function () {
     let driver, server;
     const testcases = testCaseJson.testcases.filter(
@@ -64,7 +64,10 @@ module.exports = ({ id, title, axeRules }) => {
     });
 
     testcases.forEach(testcase => {
-      const shouldRun = testcase.relativePath.match(/\.(xhtml|html?)$/);
+      const shouldRun =
+        testcase.relativePath.match(/\.(xhtml|html?)$/) &&
+        !skipTests.includes(testcase.testcaseId);
+
       (shouldRun ? it : xit)(testcase.testcaseTitle, async () => {
         await driver.get(`${addr}/${testcase.relativePath}`);
 
