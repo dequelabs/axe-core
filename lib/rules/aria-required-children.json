@@ -3,7 +3,7 @@
   "selector": "[role]",
   "matches": "aria-required-children-matches",
   "tags": ["cat.aria", "wcag2a", "wcag131"],
-  "actIds": ["bc4a75"],
+  "actIds": ["bc4a75", "ff89c9"],
   "metadata": {
     "description": "Ensures elements with an ARIA role that require child roles contain them",
     "help": "Certain ARIA roles must contain particular children"
