@@ -5,7 +5,9 @@
     ["#violation1"],
     ["#violation2"],
     ["#violation3"],
-    ["#violation4"]
+    ["#violation4"],
+    ["#violation5"],
+    ["#comboboxWithOwns"]
   ],
   "passes": [
     ["#pass1"],
@@ -19,6 +21,7 @@
     ["#pass9"],
     ["#pass10"],
     ["#pass11"],
-    ["#comboboxWithOwns"]
+    ["#pass12"],
+    ["#pass13"]
   ]
 }
