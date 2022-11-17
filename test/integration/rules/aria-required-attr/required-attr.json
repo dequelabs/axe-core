@@ -7,6 +7,7 @@
     ["#violation3"],
     ["#violation4"],
     ["#violation5"],
+    ["#violation6"],
     ["#comboboxWithOwns"]
   ],
   "passes": [
