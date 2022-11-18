@@ -76,10 +76,17 @@ module.exports = ({ id, title, axeRules, skipTests = [] }) => {
         const results = await builder.analyze();
 
         if (testcase.expected !== 'failed') {
-          assert.lengthOf(results.violations, 0, 'Expected 0 violations');
+          assert.lengthOf(
+            results.violations,
+            0,
+            `Expected 0 violations for testcase ${testcase.testcaseId}`
+          );
         } else {
           var issues = results.violations[0] || results.incomplete[0];
-          assert.isDefined(issues, 'Expected violations or incomplete');
+          assert.isDefined(
+            issues,
+            `Expected violations or incomplete for testcase ${testcase.testcaseId}`
+          );
           assert.isAtLeast(issues.nodes.length, 1);
         }
       });
