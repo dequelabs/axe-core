@@ -43,8 +43,8 @@ describe('findNearbyElms', () => {
   describe('on the edge', () => {
     beforeEach(() => {
       fixture = fixtureSetup(
-        '<div id="n0" style="position: fixed; top:-30px; height: 60px">0</div>' +
-          '<div id="n1" style="position: fixed; top:-30px; height: 30px">1</div>' +
+        '<div id="n0" style="position: fixed; top:-31px; height: 60px">0</div>' +
+          '<div id="n1" style="position: fixed; top:-31px; height: 30px">1</div>' +
           '<div id="n2" style="position: fixed; top:0; height: 30px">2</div>'
       );
     });

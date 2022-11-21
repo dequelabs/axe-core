@@ -21,7 +21,7 @@ describe('aria-required-parent', function () {
         .getCheckEvaluate('aria-required-parent')
         .apply(checkContext, params)
     );
-    assert.deepEqual(checkContext._data, ['list', 'group']);
+    assert.deepEqual(checkContext._data, ['list']);
   });
 
   (shadowSupported ? it : xit)(
@@ -44,7 +44,7 @@ describe('aria-required-parent', function () {
           .getCheckEvaluate('aria-required-parent')
           .apply(checkContext, params)
       );
-      assert.deepEqual(checkContext._data, ['list', 'group']);
+      assert.deepEqual(checkContext._data, ['list']);
     }
   );
 
@@ -70,7 +70,7 @@ describe('aria-required-parent', function () {
         .getCheckEvaluate('aria-required-parent')
         .apply(checkContext, params)
     );
-    assert.deepEqual(checkContext._data, ['list', 'group']);
+    assert.deepEqual(checkContext._data, ['list']);
   });
 
   it('should pass when required parent is present in an aria-owns context', function () {
@@ -165,13 +165,13 @@ describe('aria-required-parent', function () {
   describe('group with ownGroupRoles', function () {
     it('should pass when the role and grand parent role is in ownGroupRoles', function () {
       var params = checkSetup(
-        '<div role="list">' +
-          '<div role="listitem">' +
+        '<div role="tree">' +
+          '<div role="treeitem">' +
           '<div role="group">' +
-          '<div role="listitem" id="target">' +
+          '<div role="treeitem" id="target">' +
           '</div></div></div></div>',
         {
-          ownGroupRoles: ['listitem']
+          ownGroupRoles: ['treeitem']
         }
       );
 
@@ -245,7 +245,7 @@ describe('aria-required-parent', function () {
 
   it('should pass for multiple group and presentational roles', function () {
     var params = checkSetup(
-      '<div role="list"><div role="none"><div role="group"><div role="none"><div role="group"><div role="listitem" id="target">Nothing here.</div></div></div></div></div></div>'
+      '<div role="tree"><div role="none"><div role="group"><div role="none"><div role="group"><div role="treeitem" id="target">Nothing here.</div></div></div></div></div></div>'
     );
     assert.isTrue(
       axe.testUtils

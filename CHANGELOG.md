@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.5.2](https://github.com/dequelabs/axe-core/compare/v4.5.1...v4.5.2) (2022-11-14)
+
+### Bug Fixes
+
+- **aria-required-children:** allow menu and menubar to be empty ([#3770](https://github.com/dequelabs/axe-core/issues/3770)) ([d11aed8](https://github.com/dequelabs/axe-core/commit/d11aed8a04968674ff872cf832cea9252023490e))
+- **create-grid:** include elements scrolled out of view in the grid ([#3773](https://github.com/dequelabs/axe-core/issues/3773)) ([a563263](https://github.com/dequelabs/axe-core/commit/a5632631c72f52a5cf38a955052f28b1a931f07c))
+- do not warn when using webpack ([#3777](https://github.com/dequelabs/axe-core/issues/3777)) ([d6cef9a](https://github.com/dequelabs/axe-core/commit/d6cef9a83152256966b259881521c159b0cf21a8))
+- **link-in-text-block:** don't match style or script text ([#3775](https://github.com/dequelabs/axe-core/issues/3775)) ([ab877f9](https://github.com/dequelabs/axe-core/commit/ab877f9d709205c2dadffc656f82dc631b66687b))
+- prevent undefined relatedNodes from halting axe ([#3778](https://github.com/dequelabs/axe-core/issues/3778)) ([efefb18](https://github.com/dequelabs/axe-core/commit/efefb18f720590369a97c2937331f4e2e33ef6a5))
+
+### [4.5.1](https://github.com/dequelabs/axe-core/compare/v4.5.0...v4.5.1) (2022-11-01)
+
+### Bug Fixes
+
+- allow axe to run in certain configurations of jsdom ([#3755](https://github.com/dequelabs/axe-core/issues/3755)) ([b74c5d4](https://github.com/dequelabs/axe-core/commit/b74c5d41c4041554c9dd1c00dfd6387cb069d1a5))
+- prevent crash on jsdom when preloading CSSOM ([#3754](https://github.com/dequelabs/axe-core/issues/3754)) ([b1f0c6b](https://github.com/dequelabs/axe-core/commit/b1f0c6bba2debc6c6a106412da530975cd4ade24))
+
 ## [4.5.0](https://github.com/dequelabs/axe-core/compare/v4.4.3...v4.5.0) (2022-10-17)
 
 ### Features

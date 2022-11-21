@@ -4,15 +4,14 @@ describe('create-grid', function () {
   var fixture;
   var createGrid = axe.commons.dom.createGrid;
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var gridSize = axe.constants.gridSize;
 
   function findPositions(grid, vNode) {
     var positions = [];
-    grid.cells.forEach(function (rowCells, rowIndex) {
-      rowCells.forEach(function (cells, colIndex) {
-        if (cells.includes(vNode)) {
-          positions.push({ x: rowIndex, y: colIndex });
-        }
-      });
+    grid.loopGridPosition(grid.boundaries, (cell, position) => {
+      if (cell.includes(vNode)) {
+        positions.push(position);
+      }
     });
     return positions;
   }
@@ -36,7 +35,7 @@ describe('create-grid', function () {
     fixture = fixtureSetup('<span>Hello world</span>');
     createGrid();
     var positions = findPositions(fixture._grid, fixture.children[0]);
-    assert.deepEqual(positions, [{ x: 0, y: 0 }]);
+    assert.deepEqual(positions, [{ col: 0, row: 0 }]);
   });
 
   it('adds large elements to multiple cell', function () {
@@ -48,10 +47,10 @@ describe('create-grid', function () {
 
     var positions = findPositions(fixture._grid, fixture.children[0]);
     assert.deepEqual(positions, [
-      { x: 0, y: 0 },
-      { x: 0, y: 1 },
-      { x: 1, y: 0 },
-      { x: 1, y: 1 }
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 0, row: 1 },
+      { col: 1, row: 1 }
     ]);
   });
 
@@ -87,7 +86,70 @@ describe('create-grid', function () {
       );
       createGrid();
       var position = findPositions(fixture._grid, fixture.children[0]);
-      assert.deepEqual(position, [{ x: 0, y: 0 }]);
+      assert.deepEqual(position, [
+        { col: 0, row: -1 },
+        { col: 0, row: 0 }
+      ]);
+    });
+  });
+
+  describe('when scrolled', () => {
+    before(() => {
+      document.body.setAttribute('style', 'margin: 0');
+    });
+
+    after(() => {
+      document.body.removeAttribute('style');
+    });
+
+    it('adds elements vertically scrolled out of view', function () {
+      const gridScroll = 2;
+      fixture =
+        fixtureSetup(`<div id="scroller" style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll">
+          <div style="height: ${gridSize}px">V1</div>
+          <div style="height: ${gridSize}px">V2</div>
+          <div style="height: ${gridSize}px">V3</div>
+          <div style="height: ${gridSize}px">V4</div>
+          <div style="height: ${gridSize}px">V5</div>
+        </div>`);
+      const scroller = fixture.children[0];
+      scroller.actualNode.scroll(0, gridSize * gridScroll);
+      const childElms = scroller.children.filter(
+        ({ props }) => props.nodeName === 'div'
+      );
+
+      createGrid();
+      childElms.forEach((child, index) => {
+        assert.isDefined(child._grid, `Expect child ${index} to be defined`);
+        var position = findPositions(child._grid, child);
+        assert.deepEqual(position, [{ col: 0, row: index - gridScroll }]);
+      });
+    });
+
+    it('adds elements horizontally scrolled out of view', function () {
+      const gridScroll = 2;
+      fixture =
+        fixtureSetup(`<div id="scroller" style="width: ${gridSize}px; overflow: scroll">
+        <div style="width: ${gridSize * 6}px;">
+          <div style="width: ${gridSize}px; float: left;">H1</div>
+          <div style="width: ${gridSize}px; float: left;">H2</div>
+          <div style="width: ${gridSize}px; float: left;">H3</div>
+          <div style="width: ${gridSize}px; float: left;">H4</div>
+          <div style="width: ${gridSize}px; float: left;">H5</div>
+        </div>
+      </div>`);
+      const scroller = fixture.children[0];
+      scroller.actualNode.scroll(gridSize * gridScroll, 0);
+      const childElms = scroller.children[0].children.filter(
+        ({ props }) => props.nodeName === 'span'
+      );
+
+      createGrid();
+      childElms.forEach((child, index) => {
+        assert.isDefined(child._grid, `Expect child ${index} to be defined`);
+        var position = findPositions(child._grid, child);
+        assert.deepEqual(position, [{ col: index - gridScroll, row: 0 }]);
+      });
     });
   });
 
@@ -140,8 +202,8 @@ describe('create-grid', function () {
       var vSpan = vOverflow.children[0];
       var position = findPositions(vOverflow._subGrid, vSpan);
       assert.deepEqual(position, [
-        { x: 0, y: 0 },
-        { x: 1, y: 0 }
+        { col: 0, row: 0 },
+        { col: 0, row: 1 }
       ]);
     });
   });
