@@ -66,20 +66,29 @@ describe('color.getForegroundColor', () => {
   });
 
   describe('text-stroke', () => {
-    it('ignores stroke when equal to minimum', () => {
+    it('ignores stroke when equal to 0', () => {
       const target = queryFixture(
         '<div style="color: rgb(0 0 128); -webkit-text-stroke: 0 #CCC" id="target"></div>'
       ).actualNode;
-      const options = { minTextStroke: 0 };
+      const options = { textStrokeEmMin: 0 };
       const fgColor = getForegroundColor(target, null, null, options);
       assertSameColor(fgColor, new Color(0, 0, 128));
     });
 
-    it('uses stroke color when thicker than the minimum', () => {
+    it('ignores stroke when less then the minimum', () => {
+      const target = queryFixture(
+        '<div style="color: rgb(0 0 128); -webkit-text-stroke: 0.1em #CCC" id="target"></div>'
+      ).actualNode;
+      const options = { textStrokeEmMin: 0.2 };
+      const fgColor = getForegroundColor(target, null, null, options);
+      assertSameColor(fgColor, new Color(0, 0, 128));
+    });
+
+    it('uses stroke color when thicker equal to the minimum', () => {
       const target = queryFixture(
         '<div style="color: #CCC; -webkit-text-stroke: 0.2em rgb(0 0 128);" id="target"></div>'
       ).actualNode;
-      const options = { minTextStroke: 0.1 };
+      const options = { textStrokeEmMin: 0.2 };
       const fgColor = getForegroundColor(target, null, null, options);
       assertSameColor(fgColor, new Color(0, 0, 128));
     });
@@ -88,7 +97,7 @@ describe('color.getForegroundColor', () => {
       const target = queryFixture(
         '<div style="color: rgb(0 0 55); -webkit-text-stroke: 0.2em rgb(0 0 255 / 50%);" id="target"></div>'
       ).actualNode;
-      const options = { minTextStroke: 0.1 };
+      const options = { textStrokeEmMin: 0.1 };
       const fgColor = getForegroundColor(target, null, null, options);
       assertSameColor(fgColor, new Color(0, 0, 155), 0.8);
     });
