@@ -1,45 +1,15 @@
-name: Semantic PR Title
+name: Semantic PR title
 
 on:
   pull_request:
     types:
       - opened
-      - synchronize
+      - reopened
       - edited
+      - synchronize
 
 jobs:
-  validate:
+  semantic-pr-title:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR title
-        uses: actions/github-script@v6
-        env:
-          TITLE: ${{ github.event.pull_request.title }}
-        with:
-          script: |
-            const { TITLE } = process.env
-            const types = [
-              'feat',
-              'fix',
-              'perf',
-              'style',
-              'docs',
-              'refactor',
-              'test',
-              'build',
-              'ci',
-              'chore',
-              'Merge',
-              'Revert',
-              'Release'
-            ]
-            console.log('Validating PR title: "%s"', TITLE)
-            for (const type of types) {
-              if (TITLE.startsWith(type)) {
-                console.log('Title matches conventional commits (type: "%s").', type)
-                return
-              }
-            }
-            const error = new Error('PR title does not follow conventional commits.\n\nPlease refer to https://www.conventionalcommits.org/en/v1.0.0')
-            error.stack = [] // Clean the error stack, it's useless here.
-            throw error
+      - uses: dequelabs/semantic-pr-title@v1
