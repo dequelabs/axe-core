@@ -1,4 +1,3 @@
-
 /* calls a stylesheet, from which this stylesheet was called (cyclic references) */
 
 @import 'cyclic-import-1.css';

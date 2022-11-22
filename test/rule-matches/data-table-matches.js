@@ -1,23 +1,23 @@
-describe('data-table-matches', function() {
+describe('data-table-matches', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var fixtureSetup = axe.testUtils.fixtureSetup;
   var rule;
 
-  beforeEach(function() {
+  beforeEach(function () {
     rule = axe.utils.getRule('th-has-data-cells');
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('is a function', function() {
+  it('is a function', function () {
     assert.isFunction(rule.matches);
   });
 
-  it('should return false if table has role="presentation"', function() {
+  it('should return false if table has role="presentation"', function () {
     fixtureSetup(
       '<table role="presentation" id="target">' +
         '  <tr> <th>hi</th> <td></td> </tr>' +
@@ -29,7 +29,7 @@ describe('data-table-matches', function() {
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
-  it('should return false if table has role="none"', function() {
+  it('should return false if table has role="none"', function () {
     fixtureSetup(
       '<table role="none" id="target">' +
         '  <tr> <th>hi</th> <td></td> </tr>' +
@@ -41,7 +41,7 @@ describe('data-table-matches', function() {
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
-  it('should return true if table is a data table', function() {
+  it('should return true if table is a data table', function () {
     fixtureSetup(
       '<table id="target">' +
         '	<caption>Table caption</caption>' +

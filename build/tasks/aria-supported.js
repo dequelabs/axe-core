@@ -5,11 +5,11 @@ const { roles, aria: props } = require('aria-query');
 const mdTable = require('markdown-table');
 const format = require('../shared/format');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'aria-supported',
     'Task for generating a diff of supported aria roles and properties.',
-    function() {
+    function () {
       /**
        * NOTE:
        * `axe` has to be dynamically required at this stage,

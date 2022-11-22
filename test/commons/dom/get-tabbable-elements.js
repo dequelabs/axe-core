@@ -1,4 +1,4 @@
-describe('dom.getTabbableElements', function() {
+describe('dom.getTabbableElements', function () {
   'use strict';
 
   var queryFixture = axe.testUtils.queryFixture;
@@ -6,7 +6,7 @@ describe('dom.getTabbableElements', function() {
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var getTabbableElementsFn = axe.commons.dom.getTabbableElements;
 
-  it('returns tabbable elms when node contains tabbable element', function() {
+  it('returns tabbable elms when node contains tabbable element', function () {
     var virtualNode = queryFixture(
       '<div id="target">' +
         '<label>Enter description:' +
@@ -19,7 +19,7 @@ describe('dom.getTabbableElements', function() {
     assert.equal(actual[0].actualNode.nodeName.toUpperCase(), 'TEXTAREA');
   });
 
-  it('returns empty [] when element does not contains tabbable element (using tabindex to take element out of tab-order)', function() {
+  it('returns empty [] when element does not contains tabbable element (using tabindex to take element out of tab-order)', function () {
     var virtualNode = queryFixture(
       '<div id="target">' + '<input tabindex="-1">' + '</div>'
     );
@@ -27,7 +27,7 @@ describe('dom.getTabbableElements', function() {
     assert.lengthOf(actual, 0);
   });
 
-  it('returns empty [] when element contains disabled (tabbable) element', function() {
+  it('returns empty [] when element contains disabled (tabbable) element', function () {
     var virtualNode = queryFixture(
       '<div id="target">' + '<button disabled>Submit Me</button>' + '</div>'
     );
@@ -35,7 +35,7 @@ describe('dom.getTabbableElements', function() {
     assert.lengthOf(actual, 0);
   });
 
-  it('returns empty [] when element does not contain tabbable element', function() {
+  it('returns empty [] when element does not contain tabbable element', function () {
     var virtualNode = queryFixture(
       '<div id="target">' + '<p>Some text</p>' + '</div>'
     );
@@ -45,7 +45,7 @@ describe('dom.getTabbableElements', function() {
 
   (shadowSupported ? it : xit)(
     'returns tabbable elms when element contains tabbable element inside shadowDOM',
-    function() {
+    function () {
       var fixture = injectIntoFixture('<div id="target"></div>`');
       var node = fixture.querySelector('#target');
       var shadow = node.attachShadow({ mode: 'open' });
@@ -61,7 +61,7 @@ describe('dom.getTabbableElements', function() {
 
   (shadowSupported ? it : xit)(
     'returns empty [] when element contains disabled (tabbable) element inside shadowDOM',
-    function() {
+    function () {
       var fixture = injectIntoFixture('<div id="target"></div>`');
       var node = fixture.querySelector('#target');
       var shadow = node.attachShadow({ mode: 'open' });
@@ -76,7 +76,7 @@ describe('dom.getTabbableElements', function() {
 
   (shadowSupported ? it : xit)(
     'returns empty [] when element does not contain tabbable element inside shadowDOM',
-    function() {
+    function () {
       var fixture = injectIntoFixture('<div id="target"></div>`');
       var node = fixture.querySelector('#target');
       var shadow = node.attachShadow({ mode: 'open' });

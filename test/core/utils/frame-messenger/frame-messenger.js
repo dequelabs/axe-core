@@ -1,4 +1,4 @@
-describe('frame-messenger', function() {
+describe('frame-messenger', function () {
   var fixture,
     axeVersion,
     axeApplication,
@@ -10,7 +10,7 @@ describe('frame-messenger', function() {
   var postMessage = window.postMessage;
   var captureError = axe.testUtils.captureError;
 
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
     axeLog = axe.log;
@@ -18,7 +18,7 @@ describe('frame-messenger', function() {
 
     frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       frameWin = frame.contentWindow;
       frameSubscribe = frameWin.axe.utils.respondable.subscribe;
       done();
@@ -29,7 +29,7 @@ describe('frame-messenger', function() {
     fixture.appendChild(frame);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
     axe.log = axeLog;
@@ -37,18 +37,18 @@ describe('frame-messenger', function() {
     window.postMessage = postMessage;
   });
 
-  it('can be subscribed to', function(done) {
-    frameSubscribe('greeting', function() {
+  it('can be subscribed to', function (done) {
+    frameSubscribe('greeting', function () {
       done();
     });
     respondable(frameWin, 'greeting', 'hello');
   });
 
-  it('forwards the message', function(done) {
+  it('forwards the message', function (done) {
     var expected = { hello: 'world' };
     frameSubscribe(
       'greeting',
-      captureError(function(actual) {
+      captureError(function (actual) {
         assert.deepEqual(actual, expected);
         done();
       }, done)
@@ -56,10 +56,10 @@ describe('frame-messenger', function() {
     respondable(frameWin, 'greeting', expected);
   });
 
-  it('passes a truthy keepalive value', function(done) {
+  it('passes a truthy keepalive value', function (done) {
     frameSubscribe(
       'greeting',
-      captureError(function(_, keepalive) {
+      captureError(function (_, keepalive) {
         assert.isTrue(keepalive);
         done();
       }, done)
@@ -67,10 +67,10 @@ describe('frame-messenger', function() {
     respondable(frameWin, 'greeting', 'hello', 'truthy');
   });
 
-  it('passes a falsy keepalive value', function(done) {
+  it('passes a falsy keepalive value', function (done) {
     frameSubscribe(
       'greeting',
-      captureError(function(_, keepalive) {
+      captureError(function (_, keepalive) {
         assert.isFalse(keepalive);
         done();
       }, done)
@@ -78,16 +78,16 @@ describe('frame-messenger', function() {
     respondable(frameWin, 'greeting', 'hello', 0);
   });
 
-  it('can not publish to a parent frame', function(done) {
+  it('can not publish to a parent frame', function (done) {
     var isCalled = false;
-    axe.utils.respondable.subscribe('greeting', function() {
+    axe.utils.respondable.subscribe('greeting', function () {
       isCalled = true;
     });
-    assert.throws(function() {
+    assert.throws(function () {
       frameWin.axe.utils.respondable(window, 'greeting', 'hello', 0);
     });
     setTimeout(
-      captureError(function() {
+      captureError(function () {
         assert.isFalse(isCalled);
         done();
       }, done),
@@ -95,7 +95,7 @@ describe('frame-messenger', function() {
     );
   });
 
-  it('does not expose private methods', function() {
+  it('does not expose private methods', function () {
     var methods = Object.keys(respondable).sort();
     assert.deepEqual(
       methods,
@@ -103,11 +103,11 @@ describe('frame-messenger', function() {
     );
   });
 
-  it('passes serialized information only', function(done) {
+  it('passes serialized information only', function (done) {
     var div = document.createElement('div');
     frameSubscribe(
       'greeting',
-      captureError(function(message) {
+      captureError(function (message) {
         assert.deepEqual(message, {});
         done();
       }, done)
@@ -116,7 +116,7 @@ describe('frame-messenger', function() {
     respondable(frameWin, 'greeting', div);
   });
 
-  it('posts message to allowed origins', function() {
+  it('posts message to allowed origins', function () {
     axe.configure({
       allowedOrigins: [window.location.origin, 'http://customOrigin.com']
     });
@@ -129,7 +129,7 @@ describe('frame-messenger', function() {
     assert.deepEqual(spy.secondCall.args[1], 'http://customOrigin.com');
   });
 
-  it('posts message to allowed origins using <same_origin>', function() {
+  it('posts message to allowed origins using <same_origin>', function () {
     axe.configure({
       allowedOrigins: ['<same_origin>']
     });
@@ -141,7 +141,7 @@ describe('frame-messenger', function() {
     assert.deepEqual(spy.firstCall.args[1], window.location.origin);
   });
 
-  it('posts message to allowed origins using <unsafe_all_origins>', function() {
+  it('posts message to allowed origins using <unsafe_all_origins>', function () {
     axe.configure({
       allowedOrigins: ['http://customOrigin.com', '<unsafe_all_origins>']
     });
@@ -153,7 +153,7 @@ describe('frame-messenger', function() {
     assert.equal(spy.firstCall.args[1], '*');
   });
 
-  it('does not post message if no allowed origins', function() {
+  it('does not post message if no allowed origins', function () {
     axe.configure({
       allowedOrigins: []
     });
@@ -163,7 +163,7 @@ describe('frame-messenger', function() {
     assert.isFalse(spy.called);
   });
 
-  it('does not post message if no allowed origins', function() {
+  it('does not post message if no allowed origins', function () {
     axe._audit.allowedOrigins = null;
     var spy = sinon.spy(frameWin, 'postMessage');
     var posted = respondable(frameWin, 'greeting');
@@ -171,7 +171,7 @@ describe('frame-messenger', function() {
     assert.isFalse(spy.called);
   });
 
-  it('does not post message if allowed origins is empty', function() {
+  it('does not post message if allowed origins is empty', function () {
     axe.configure({
       allowedOrigins: []
     });
@@ -181,27 +181,27 @@ describe('frame-messenger', function() {
     assert.isFalse(spy.called);
   });
 
-  it('throws error if origin is invalid', function() {
+  it('throws error if origin is invalid', function () {
     axe.configure({
       allowedOrigins: ['foo.com']
     });
-    assert.throws(function() {
+    assert.throws(function () {
       respondable(frameWin, 'greeting');
     }, 'allowedOrigins value "foo.com" is not a valid origin');
   });
 
-  it('does not log error if message is null', function(done) {
+  it('does not log error if message is null', function (done) {
     axe.configure({
       allowedOrigins: ['<unsafe_all_origins>']
     });
     var called = false;
-    frameWin.axe.log = function() {
+    frameWin.axe.log = function () {
       called = true;
     };
 
     frameWin.postMessage(null, '*');
 
-    setTimeout(function() {
+    setTimeout(function () {
       try {
         assert.isFalse(called);
         done();
@@ -211,14 +211,14 @@ describe('frame-messenger', function() {
     }, 500);
   });
 
-  describe('isInFrame', function() {
-    it('is false for the page window', function() {
+  describe('isInFrame', function () {
+    it('is false for the page window', function () {
       var frameRespondable = frameWin.axe.utils.respondable;
       assert.isFalse(respondable.isInFrame());
       assert.isFalse(frameRespondable.isInFrame(window));
     });
 
-    it('is true for iframes', function() {
+    it('is true for iframes', function () {
       var frameRespondable = frameWin.axe.utils.respondable;
       assert.isTrue(frameRespondable.isInFrame());
       assert.isTrue(respondable.isInFrame(frameWin));

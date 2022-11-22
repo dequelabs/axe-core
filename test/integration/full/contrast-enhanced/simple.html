@@ -23,21 +23,71 @@
 
   <body>
     <div id="fixture">
-      <div style="background: #ffffff; color: #000000;">Pass (Regular size text, 21:1)</div>
-      <div style="background: #ffffff; color: #556666;">Fail (Regular size text, 6:1)</div>
-      <div style="background: #ffffff; color: #556000;">Fail (Regular size text, 6.9:1)</div>
-      <div style="background: #ffffff; color: #555e00;">Pass (Regular size text, 7:1)</div>
-      
-      <div style="background: #ffffff; color: #118488; font-size: 18pt;">Fail (Large text, 4.487:1)</div>
-      <div style="background: #ffffff; color: #048488; font-size: 18pt;">Pass (Large text, 4.5:1)</div>
-      <div style="background: #ffffff; color: #048488; font-size: 17.9pt;">Fail (Large text, but not quite large enough, 4.5:1)</div>
-      
-      <div style="background: #ffffff; color: #118488; font-size: 14pt; font-weight: bold;">Fail (Bold text, 4.487:1)</div>
-      <div style="background: #ffffff; color: #048488; font-size: 14pt; font-weight: bold;">Pass (Bold text, 4.5:1)</div>
-      <div style="background: #ffffff; color: #048488; font-size: 13.9pt; font-weight: bold;">Fail (Bold text, but not quite large enough, 4.5:1)</div>
-      <div style="background: #ffffff; color: #048488; font-size: 14pt; font-weight: 699;">Fail (Bold text, but not quite bold enough, 4.5:1)</div>
+      <div style="background: #ffffff; color: #000000">
+        Pass (Regular size text, 21:1)
+      </div>
+      <div style="background: #ffffff; color: #556666">
+        Fail (Regular size text, 6:1)
+      </div>
+      <div style="background: #ffffff; color: #556000">
+        Fail (Regular size text, 6.9:1)
+      </div>
+      <div style="background: #ffffff; color: #555e00">
+        Pass (Regular size text, 7:1)
+      </div>
+
+      <div style="background: #ffffff; color: #118488; font-size: 18pt">
+        Fail (Large text, 4.487:1)
+      </div>
+      <div style="background: #ffffff; color: #048488; font-size: 18pt">
+        Pass (Large text, 4.5:1)
+      </div>
+      <div style="background: #ffffff; color: #048488; font-size: 17.9pt">
+        Fail (Large text, but not quite large enough, 4.5:1)
+      </div>
+
+      <div
+        style="
+          background: #ffffff;
+          color: #118488;
+          font-size: 14pt;
+          font-weight: bold;
+        "
+      >
+        Fail (Bold text, 4.487:1)
+      </div>
+      <div
+        style="
+          background: #ffffff;
+          color: #048488;
+          font-size: 14pt;
+          font-weight: bold;
+        "
+      >
+        Pass (Bold text, 4.5:1)
+      </div>
+      <div
+        style="
+          background: #ffffff;
+          color: #048488;
+          font-size: 13.9pt;
+          font-weight: bold;
+        "
+      >
+        Fail (Bold text, but not quite large enough, 4.5:1)
+      </div>
+      <div
+        style="
+          background: #ffffff;
+          color: #048488;
+          font-size: 14pt;
+          font-weight: 699;
+        "
+      >
+        Fail (Bold text, but not quite bold enough, 4.5:1)
+      </div>
     </div>
-    
+
     <script src="/test/testutils.js"></script>
     <script src="simple.js"></script>
     <script src="/test/integration/adapter.js"></script>

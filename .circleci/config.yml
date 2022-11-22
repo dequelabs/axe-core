@@ -51,7 +51,7 @@ jobs:
       - run: npm run eslint
 
   # Run the test suite.
-  test_unix:
+  test_chrome:
     <<: *defaults
     <<: *unix_box
     steps:
@@ -60,8 +60,18 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
-      - run: npm run test -- --browsers Chrome,Firefox
+      - run: npm run test -- --browsers Chrome
       - run: npm run test:integration:chrome
+
+  test_firefox:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test -- --browsers Firefox
       - run: npm run test:integration:firefox
 
   # Run examples under `doc/examples`
@@ -276,38 +286,41 @@ workflows:
           requires:
             - dependencies_unix
       # Run tests on all commits, but after installing dependencies
-      - test_unix:
+      - test_chrome:
           requires:
             - lint
+      - test_firefox:
+          requires:
+            - test_chrome
       - test_examples:
           requires:
-            - test_unix
+            - test_chrome
       - test_act:
           requires:
-            - test_unix
+            - test_chrome
       - test_aria_practices:
           requires:
-            - test_unix
+            - test_chrome
       - test_locales:
           requires:
-            - test_unix
+            - test_chrome
       - test_virtual_rules:
           requires:
-            - test_unix
+            - test_chrome
       - build_api_docs:
           requires:
-            - test_unix
+            - test_chrome
       - test_rule_help_version:
           requires:
-            - test_unix
+            - test_chrome
       - test_node:
           requires:
-            - test_unix
+            - test_chrome
       # Hold for approval
       - hold:
           type: approval
           requires:
-            - test_unix
+            - test_chrome
             - test_examples
             - test_locales
             - test_virtual_rules
@@ -322,7 +335,8 @@ workflows:
       - next_release:
           requires:
             - dependencies_unix
-            - test_unix
+            - test_chrome
+            - test_firefox
             - test_examples
             - test_locales
             - test_virtual_rules
@@ -334,7 +348,8 @@ workflows:
       - release:
           requires:
             - dependencies_unix
-            - test_unix
+            - test_chrome
+            - test_firefox
             - test_examples
             - test_locales
             - test_virtual_rules
@@ -365,7 +380,7 @@ workflows:
     triggers:
       - schedule:
           # run at 00:00 UTC every day
-          cron: "0 0 * * *"
+          cron: '0 0 * * *'
           filters:
             branches:
               only:

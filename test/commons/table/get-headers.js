@@ -1,4 +1,4 @@
-describe('table.getHeaders', function() {
+describe('table.getHeaders', function () {
   'use strict';
   function $id(id) {
     return document.getElementById(id);
@@ -6,12 +6,12 @@ describe('table.getHeaders', function() {
 
   var fixture = $id('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
   });
 
-  it('should work with scope=auto', function() {
+  it('should work with scope=auto', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><th id="t1">1</th><th>2</th></tr>' +
@@ -27,7 +27,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should work with scope set', function() {
+  it('should work with scope set', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><th scope="col" id="t1">1</th><th scope="col">2</th></tr>' +
@@ -43,7 +43,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should find multiple column headers', function() {
+  it('should find multiple column headers', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><th scope="col" id="t1">1</th><th scope="col">2</th></tr>' +
@@ -61,7 +61,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should find multiple row headers', function() {
+  it('should find multiple row headers', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><th scope="col">1</th><th scope="col" id="t1">2</th></tr>' +
@@ -78,7 +78,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle colspans', function() {
+  it('should handle colspans', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><th scope="col">1</th><th scope="col" id="t1">2</th></tr>' +
@@ -91,7 +91,7 @@ describe('table.getHeaders', function() {
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
-  it('should handle rowspans', function() {
+  it('should handle rowspans', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td rowspan="2"></td><th scope="col">1</th><th scope="col" id="t1">2</th></tr>' +
@@ -107,7 +107,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle rowspan=0', function() {
+  it('should handle rowspan=0', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td rowspan="0"></td><th scope="col">1</th><th scope="col" id="t1">2</th></tr>' +
@@ -123,7 +123,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle headers attribute', function() {
+  it('should handle headers attribute', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td id="t1">t1</td><td id="t2">t2</td></tr>' +
@@ -140,7 +140,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle empty headers attribute', function() {
+  it('should handle empty headers attribute', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr>' +
@@ -159,7 +159,7 @@ describe('table.getHeaders', function() {
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
-  it('should handle non-existent headers attribute', function() {
+  it('should handle non-existent headers attribute', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr>' +
@@ -178,7 +178,7 @@ describe('table.getHeaders', function() {
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
-  it('should work with tables that have inconsistent columns', function() {
+  it('should work with tables that have inconsistent columns', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td id="t1">t1</td><td id="t2">t2</td></tr>' +
@@ -191,7 +191,7 @@ describe('table.getHeaders', function() {
     assert.deepEqual(axe.commons.table.getHeaders(target), []);
   });
 
-  it('should handle multiple headers with colspan', function() {
+  it('should handle multiple headers with colspan', function () {
     fixture.innerHTML =
       '<table>' +
       '<thead>' +
@@ -215,7 +215,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle multiple headers with rowspan', function() {
+  it('should handle multiple headers with rowspan', function () {
     fixture.innerHTML =
       '<table>' +
       '<tbody>' +
@@ -236,7 +236,7 @@ describe('table.getHeaders', function() {
     ]);
   });
 
-  it('should handle negative colspan', function() {
+  it('should handle negative colspan', function () {
     fixture.innerHTML =
       '<table>' +
       '<thead>' +
@@ -257,7 +257,7 @@ describe('table.getHeaders', function() {
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
-  it('should handle negative rowspan', function() {
+  it('should handle negative rowspan', function () {
     fixture.innerHTML =
       '<table>' +
       '<tbody>' +

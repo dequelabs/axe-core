@@ -8,11 +8,11 @@ function toTitleCase(str) {
   });
 }
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'metadata-function-map',
     'Task to generate the metadata-function-map file',
-    function() {
+    function () {
       const files = grunt.task.current.data.files;
 
       files.forEach(file => {

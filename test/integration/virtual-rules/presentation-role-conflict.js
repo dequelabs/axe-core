@@ -1,4 +1,19 @@
 describe('presentation-role-conflict virtual-rule', function () {
+  it('fails img[alt=""] with aria-label', function () {
+    var node = new axe.SerialVirtualNode({
+      nodeName: 'img',
+      attributes: {
+        alt: '',
+        'aria-label': 'foobar'
+      }
+    });
+
+    var results = axe.runVirtualRule('presentation-role-conflict', node);
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail when role is presentation and aria-label is present', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'li',

@@ -1,7 +1,7 @@
-describe('color.Color', function() {
+describe('color.Color', function () {
   'use strict';
 
-  it('should give sensible results for WCAG compliance', function() {
+  it('should give sensible results for WCAG compliance', function () {
     var black = new axe.commons.color.Color(0, 0, 0, 1);
     var white = new axe.commons.color.Color(255, 255, 255, 1);
     var gray = new axe.commons.color.Color(128, 128, 128, 1);
@@ -55,7 +55,7 @@ describe('color.Color', function() {
     );
   });
 
-  it('should count 1-1 ratios as visually hidden', function() {
+  it('should count 1-1 ratios as visually hidden', function () {
     var black = new axe.commons.color.Color(0, 0, 0, 1);
 
     assert.isFalse(

@@ -1,21 +1,21 @@
-describe('landmark-is-unique', function() {
+describe('landmark-is-unique', function () {
   'use strict';
 
   var checkContext = new axe.testUtils.MockCheckContext();
   var fixture;
   var axeFixtureSetup;
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('should return true, with correct role and no accessible text', function() {
+  it('should return true, with correct role and no accessible text', function () {
     axeFixtureSetup('<div role="main">test</div>');
     var node = fixture.querySelector('div');
     var expectedData = {
@@ -33,7 +33,7 @@ describe('landmark-is-unique', function() {
     assert.deepEqual(checkContext._relatedNodes, [node]);
   });
 
-  it('should return true, with correct role and the accessible text lowercased', function() {
+  it('should return true, with correct role and the accessible text lowercased', function () {
     axeFixtureSetup('<div role="main" aria-label="TEST text">test</div>');
     var node = fixture.querySelector('div');
     var expectedData = {

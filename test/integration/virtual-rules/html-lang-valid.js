@@ -1,5 +1,5 @@
-describe('html-lang-valid virtual-rule', function() {
-  it('is inapplicable without lang or xml:lang', function() {
+describe('html-lang-valid virtual-rule', function () {
+  it('is inapplicable without lang or xml:lang', function () {
     // Error caught by html-has-lang instead
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
@@ -12,12 +12,12 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-	it('is inapplicable with empty lang or xml:lang', function() {
+  it('is inapplicable with empty lang or xml:lang', function () {
     // Error caught by html-has-lang instead
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
-        'lang': '',
+        lang: ''
       }
     });
 
@@ -27,7 +27,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass with a valid lang', function() {
+  it('should pass with a valid lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
@@ -40,7 +40,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass with a valid xml:lang', function() {
+  it('should pass with a valid xml:lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
@@ -53,7 +53,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for both lang and xml:lang', function() {
+  it('should pass for both lang and xml:lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
@@ -67,7 +67,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail with an invalid lang', function() {
+  it('should fail with an invalid lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
@@ -80,7 +80,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail with an invalid xml:lang', function() {
+  it('should fail with an invalid xml:lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
       attributes: {
@@ -93,7 +93,7 @@ describe('html-lang-valid virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail with an invalid lang, and explicitly no children', function() {
+  it('should fail with an invalid lang, and explicitly no children', function () {
     var html = new axe.SerialVirtualNode({
       nodeName: 'html',
       attributes: {
@@ -101,7 +101,7 @@ describe('html-lang-valid virtual-rule', function() {
       }
     });
     html.children = [];
-    
+
     var results = axe.runVirtualRule('html-lang-valid', html);
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);

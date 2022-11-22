@@ -1,16 +1,16 @@
-describe('dom.shadowElementsFromPoint', function() {
+describe('dom.shadowElementsFromPoint', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
-  afterEach(function() {
+  afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
   });
 
   (shadowSupported ? it : xit)(
     'should return an array from inside and outside of shadow dom',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:#000;position:relative;"></div>';
       var container = fixture.querySelector('#container');
@@ -45,14 +45,14 @@ describe('dom.shadowElementsFromPoint', function() {
     }
   );
 
-  it('does not throw when elementsFromPoints returns null', function() {
+  it('does not throw when elementsFromPoints returns null', function () {
     var mockDocument = {
-      elementsFromPoint: function() {
+      elementsFromPoint: function () {
         return null;
       }
     };
     var out;
-    assert.doesNotThrow(function() {
+    assert.doesNotThrow(function () {
       out = axe.commons.dom.shadowElementsFromPoint(10, 10, mockDocument);
     });
     assert.deepEqual(out, []);

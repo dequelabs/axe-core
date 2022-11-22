@@ -10,5 +10,5 @@ jobs:
       - uses: dequelabs/action-sync-branches@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-title: "chore: merge master into develop"
+          pr-title: 'chore: merge master into develop'
           pr-reviewers: straker,WilcoFiers,stephenmathieson

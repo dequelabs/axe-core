@@ -1,17 +1,22 @@
 <div id="pass1" style="background-color: white; color: black">
   This is a pass.
 </div>
-<div id="pass2" style="background-color: gray; color: white; font-size: 40px;">
+<div id="pass2" style="background-color: gray; color: white; font-size: 40px">
   This is a pass.
 </div>
 <div
   id="pass3"
-  style="background-color: gray; color: white; font-size: 20px; font-weight: bold"
+  style="
+    background-color: gray;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+  "
 >
   This is a pass.
 </div>
 
-<div style="background-color: black;">
+<div style="background-color: black">
   <div
     style="color: transparent; text-shadow: 0 0 0 white"
     id="text-shadow-fg-pass"
@@ -20,23 +25,23 @@
   </div>
 </div>
 
-<div id="fail1" style="background-color: gray; color: white; font-size: 20px;">
+<div id="fail1" style="background-color: gray; color: white; font-size: 20px">
   This is a fail.<b id="pass4">But this is a pass.</b>
 </div>
 
-<div style="background-color: black;">
+<div style="background-color: black">
   <div
-    style="background-color: rgba(255, 255, 255, 0.1); color: white;"
+    style="background-color: rgba(255, 255, 255, 0.1); color: white"
     id="pass5"
   >
     Pass.
   </div>
 </div>
 
-<div style="position:relative; height: 40px;">
-  <label style="background-color:black; color: white;" id="pass7">
+<div style="position: relative; height: 40px">
+  <label style="background-color: black; color: white" id="pass7">
     Label
-    <input style="position:absolute; top:20px;" />
+    <input style="position: absolute; top: 20px" />
   </label>
 </div>
 
@@ -47,13 +52,10 @@
   Hello world
 </div>
 
-<div id="fail2" style="background-color: gray; color: white; font-size: 8px;">
+<div id="fail2" style="background-color: gray; color: white; font-size: 8px">
   This is a fail.
 </div>
-<div
-  id="fail3"
-  style="background-color: yellow; color: white; font-size: 40px;"
->
+<div id="fail3" style="background-color: yellow; color: white; font-size: 40px">
   This is a fail.
 </div>
 
@@ -65,7 +67,7 @@
 
 <div
   id="fail7"
-  style="color: #000; background: #777; text-shadow: black 0 0 .2em"
+  style="color: #000; background: #777; text-shadow: black 0 0 0.2em"
 >
   Hello world
 </div>
@@ -99,7 +101,13 @@
 
 <div
   id="ignore6"
-  style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;"
+  style="
+    color: yellow;
+    width: 100px;
+    overflow: hidden;
+    text-indent: 200px;
+    background-color: white;
+  "
 >
   text
 </div>
@@ -122,44 +130,63 @@
 </label>
 
 <div
-  style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)"
+  style="
+    background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7);
+  "
 >
   <div style="color: white" id="canttell1">Background image</div>
 </div>
 
-<div style="height:40px; position: relative;">
+<div style="height: 40px; position: relative">
   <div
-    style="background-color: white; height: 60px; width: 40px;border: 1px solid;"
+    style="
+      background-color: white;
+      height: 60px;
+      width: 40px;
+      border: 1px solid;
+    "
   >
     <div
       id="canttell2"
-      style="color: white; height: 40px; width: 60px; border: 1px solid red;"
+      style="color: white; height: 40px; width: 60px; border: 1px solid red"
     >
       Outside parent
     </div>
   </div>
 </div>
 
-<div style="background-color: white; height: 60px; width: 40px;">
-  <div id="canttell3" style="color: white; height: 40px; width: 60px;">
+<div style="background-color: white; height: 60px; width: 40px">
+  <div id="canttell3" style="color: white; height: 40px; width: 60px">
     Background overlap
   </div>
 </div>
 
 <div
-  style="background-color: white; height: 60px; width: 80px; border:1px solid;position: relative;"
+  style="
+    background-color: white;
+    height: 60px;
+    width: 80px;
+    border: 1px solid;
+    position: relative;
+  "
 >
   <div
     id="canttell4"
-    style="color: white; height: 40px; width: 60px; border:1px solid red;"
+    style="color: white; height: 40px; width: 60px; border: 1px solid red"
   >
     Element overlap
   </div>
   <div
-    style="position: absolute; top: 0; width: 60px; height: 40px;background-color: #000"
+    style="
+      position: absolute;
+      top: 0;
+      width: 60px;
+      height: 40px;
+      background-color: #000;
+    "
   ></div>
 </div>
-<div style="background-color: white;">
+<div style="background-color: white">
   <div
     style="background-color: rgba(255, 255, 255, 0.1); color: white"
     id="canttell5"
@@ -228,8 +255,8 @@
   text
 </div>
 
-<div style="background-color: white; height: 60px; width: 80px;">
-  <div id="canttell18" style="color: white; height: 40px; width: 60px;">Hi</div>
+<div style="background-color: white; height: 60px; width: 80px">
+  <div id="canttell18" style="color: white; height: 40px; width: 60px">Hi</div>
 </div>
 
 <div
@@ -237,14 +264,14 @@
 >
   <div
     id="canttell19"
-    style="margin-left: 80px; color: white; height: 80px; width: 90px;"
+    style="margin-left: 80px; color: white; height: 80px; width: 90px"
   >
     Hi
   </div>
 </div>
 
-<div style="background-color: #FFF;">
-  <div id="canttell20" style="color:#DDD;">
+<div style="background-color: #fff">
+  <div id="canttell20" style="color: #ddd">
     &#x20A0; &#x20A1; &#x20A2; &#x20A3;
   </div>
 </div>
@@ -256,7 +283,13 @@
 </div>
 
 <p
-  style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 200px; background-color: #FFF"
+  style="
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 200px;
+    background-color: #fff;
+  "
 >
   <span id="pass9" style="color: #000">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et sollicitudin
@@ -273,3 +306,31 @@
     felis ante non libero.
   </span>
 </p>
+
+<div
+  id="text-container"
+  style="overflow: hidden; background-color: teal; height: 30px; width: 200px"
+>
+  <span id="fail8" style="color: grey"
+    >this is a span with some text inside of it</span
+  >
+  <span id="canttell21" style="color: grey"
+    >this is a span with some text inside of it</span
+  >
+  <span id="ignore8" style="color: grey"
+    >this is a span with some text inside of it</span
+  >
+  <span id="ignore9" style="color: grey"
+    >this is a span with some text inside of it</span
+  >
+</div>
+
+<details>
+  <summary id="pass10">Summary</summary>
+  <span id="ignore10">Some text</span>
+</details>
+
+<details open>
+  <summary id="pass11">Summary</summary>
+  <span id="pass12">Some text</span>
+</details>

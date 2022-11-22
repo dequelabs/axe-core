@@ -1,5 +1,5 @@
-describe('select-name virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('select-name virtual-rule', function () {
+  it('should pass for aria-label', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -12,7 +12,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -25,7 +25,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for implicit label', function() {
+  it('should pass for implicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select'
     });
@@ -47,7 +47,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for explicit label', function() {
+  it('should incomplete for explicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
@@ -62,7 +62,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -75,7 +75,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation when disabled', function() {
+  it('should pass for role=presentation when disabled', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -89,7 +89,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none when disabled', function() {
+  it('should pass for role=none when disabled', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -103,7 +103,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for both missing aria-label and implicit label', function() {
+  it('should incomplete for both missing aria-label and implicit label', function () {
     var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
@@ -116,7 +116,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail when aria-label contains only whitespace and no implicit label', function() {
+  it('should fail when aria-label contains only whitespace and no implicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
@@ -132,7 +132,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty and no implicit label', function() {
+  it('should fail when aria-label is empty and no implicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
@@ -148,7 +148,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty and no implicit label', function() {
+  it('should fail when title is empty and no implicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
@@ -164,7 +164,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation', function() {
+  it('should pass for role=presentation', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
@@ -180,7 +180,7 @@ describe('select-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none', function() {
+  it('should pass for role=none', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {

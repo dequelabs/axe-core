@@ -11,10 +11,10 @@ module.exports = function build(grunt, options, commons, callback) {
 
   function parseObject(src) {
     var files = grunt.file.expand(src);
-    return files.map(function(file) {
+    return files.map(function (file) {
       var json = grunt.file.readJSON(file);
       var dirname = path.dirname(file);
-      Object.keys(templates).forEach(function(templateName) {
+      Object.keys(templates).forEach(function (templateName) {
         if (json[templateName] && json[templateName].endsWith('.js')) {
           json[templateName] = path.resolve(dirname, json[templateName]);
           if (options.getFiles) {

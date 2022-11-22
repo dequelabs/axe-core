@@ -1,5 +1,5 @@
 /*global mocha, console */
-(function() {
+(function () {
   'use strict';
 
   if (!mocha || !mocha.reporter || !mocha.reporter('base')) {
@@ -7,22 +7,22 @@
   }
 
   var Base = mocha.reporter('base')._reporter;
-  mocha.reporter(function(runner) {
+  mocha.reporter(function (runner) {
     Base.call(this, runner);
     var passes = 0;
     var failures = 0;
 
-    runner.on('pass', function(test) {
+    runner.on('pass', function (test) {
       passes++;
       console.log('pass: %s', test.fullTitle());
     });
 
-    runner.on('fail', function(test, err) {
+    runner.on('fail', function (test, err) {
       failures++;
       console.error('fail: %s -- error: %s', test.fullTitle(), err.message);
     });
 
-    runner.on('end', function() {
+    runner.on('end', function () {
       console.log('end: %d/%d', passes, passes + failures);
       var mochaFixture = document.getElementById('mocha');
       if (mochaFixture) {

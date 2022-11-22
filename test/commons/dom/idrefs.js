@@ -15,17 +15,17 @@ function makeShadowTreeIDR(node) {
   div.appendChild(createContentIDR());
 }
 
-describe('dom.idrefs', function() {
+describe('dom.idrefs', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should find referenced nodes by ID', function() {
+  it('should find referenced nodes by ID', function () {
     fixture.innerHTML =
       '<div aria-cats="target1 target2" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';
@@ -45,7 +45,7 @@ describe('dom.idrefs', function() {
 
   (shadowSupported ? it : xit)(
     'should find only referenced nodes within the current root: shadow DOM',
-    function() {
+    function () {
       // shadow DOM v1 - note: v0 is compatible with this code, so no need
       // to specifically test this
       fixture.innerHTML = '<div target="target"><div id="target"></div></div>';
@@ -63,7 +63,7 @@ describe('dom.idrefs', function() {
 
   (shadowSupported ? it : xit)(
     'should find only referenced nodes within the current root: document',
-    function() {
+    function () {
       // shadow DOM v1 - note: v0 is compatible with this code, so no need
       // to specifically test this
       fixture.innerHTML =
@@ -80,7 +80,7 @@ describe('dom.idrefs', function() {
     }
   );
 
-  it('should insert null if a reference is not found', function() {
+  it('should insert null if a reference is not found', function () {
     fixture.innerHTML =
       '<div aria-cats="target1 target2 target3" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';
@@ -99,7 +99,7 @@ describe('dom.idrefs', function() {
     );
   });
 
-  it('should not fail when extra whitespace is used', function() {
+  it('should not fail when extra whitespace is used', function () {
     fixture.innerHTML =
       '<div aria-cats="    \ttarget1 \n  target2  target3 \n\t" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';

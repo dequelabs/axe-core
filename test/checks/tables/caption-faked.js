@@ -1,18 +1,18 @@
-describe('caption-faked', function() {
+describe('caption-faked', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
   var captionFaked;
-  beforeEach(function() {
+  beforeEach(function () {
     captionFaked = checks['caption-faked'];
   });
 
-  it('returns true if the first row has multiple cells', function() {
+  it('returns true if the first row has multiple cells', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td></td> <td></td> </tr>' +
@@ -23,7 +23,7 @@ describe('caption-faked', function() {
     assert.isTrue(captionFaked.evaluate(node));
   });
 
-  it('returns true if the table has only one column', function() {
+  it('returns true if the table has only one column', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td></td> </tr>' +
@@ -34,7 +34,7 @@ describe('caption-faked', function() {
     assert.isTrue(captionFaked.evaluate(node));
   });
 
-  it('returns true if the table has only one <tr>', function() {
+  it('returns true if the table has only one <tr>', function () {
     fixture.innerHTML =
       '<table>' +
       // Accessibility: Expect the unexpected
@@ -45,7 +45,7 @@ describe('caption-faked', function() {
     assert.isTrue(captionFaked.evaluate(node));
   });
 
-  it('returns true if the first column does not span the entire table', function() {
+  it('returns true if the first column does not span the entire table', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td></td> </tr>' +
@@ -56,7 +56,7 @@ describe('caption-faked', function() {
     assert.isTrue(captionFaked.evaluate(node));
   });
 
-  it('returns false if the first is only a single td', function() {
+  it('returns false if the first is only a single td', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <td colspan="2"></td> </tr>' +
@@ -67,7 +67,7 @@ describe('caption-faked', function() {
     assert.isFalse(captionFaked.evaluate(node));
   });
 
-  it('returns false if the first is only a single th', function() {
+  it('returns false if the first is only a single th', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th colspan="2"></th> </tr>' +

@@ -1,5 +1,5 @@
-describe('valid-lang virtual-rule', function() {
-  it('should pass for valid lang value', function() {
+describe('valid-lang virtual-rule', function () {
+  it('should pass for valid lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -14,7 +14,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for valid xml:lang value', function() {
+  it('should pass for valid xml:lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -29,7 +29,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for valid L10N lang value', function() {
+  it('should pass for valid L10N lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -44,7 +44,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for valid L10N xml:lang value', function() {
+  it('should pass for valid L10N xml:lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -59,7 +59,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for invalid lang value', function() {
+  it('should fail for invalid lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -74,7 +74,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for invalid L10N xml:lang value', function() {
+  it('should fail for invalid L10N xml:lang value', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -89,7 +89,7 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should not apply for html element', function() {
+  it('should not apply for html element', function () {
     var node = {
       nodeName: 'html',
       attributes: {

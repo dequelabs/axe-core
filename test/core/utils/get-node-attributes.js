@@ -1,7 +1,7 @@
-describe('axe.utils.getNodeAttributes', function() {
+describe('axe.utils.getNodeAttributes', function () {
   'use strict';
 
-  it('should return the list of attributes', function() {
+  it('should return the list of attributes', function () {
     var node = document.createElement('div');
     node.setAttribute('class', 'foo bar');
     var actual = axe.utils.getNodeAttributes(node);
@@ -10,7 +10,7 @@ describe('axe.utils.getNodeAttributes', function() {
     assert.equal(actual[0].name, 'class');
   });
 
-  it('should return the list of attributes when the DOM is clobbered', function() {
+  it('should return the list of attributes when the DOM is clobbered', function () {
     var node = document.createElement('form');
     node.setAttribute('id', '123');
     node.innerHTML = '<select name="attributes"></select>';
