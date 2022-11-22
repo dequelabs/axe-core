@@ -3,17 +3,12 @@
   "selector": "[role]",
   "matches": "no-empty-role-matches",
   "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "actIds": ["674b10"],
   "metadata": {
     "description": "Ensures all elements with a role attribute use a valid value",
     "help": "ARIA roles used must conform to valid values"
   },
   "all": [],
   "any": [],
-  "none": [
-    "fallbackrole",
-    "invalidrole",
-    "abstractrole",
-    "unsupportedrole",
-    "deprecatedrole"
-  ]
+  "none": ["invalidrole", "abstractrole", "unsupportedrole", "deprecatedrole"]
 }

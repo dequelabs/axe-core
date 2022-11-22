@@ -2,7 +2,7 @@
   "id": "aria-valid-attr-value",
   "matches": "aria-has-attr-matches",
   "tags": ["cat.aria", "wcag2a", "wcag412"],
-  "actIds": ["5c01ea", "c487ae"],
+  "actIds": ["6a7281"],
   "metadata": {
     "description": "Ensures all ARIA attributes have valid values",
     "help": "ARIA attributes must conform to valid values"

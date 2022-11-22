@@ -1,111 +1,121 @@
-describe('dom.isVisualContent', function() {
+describe('dom.isVisualContent', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
+  var queryFixture = axe.testUtils.queryFixture;
+  var isVisualContent = axe.commons.dom.isVisualContent;
 
-  afterEach(function() {
-    document.getElementById('fixture').innerHTML = '';
+  afterEach(function () {
+    fixture.innerHTML = '';
   });
 
-  describe('isVisualContent', function() {
-    it('should return true for img', function() {
-      fixture.innerHTML = '<img src="">';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+  describe('isVisualContent', function () {
+    it('should return true for img', function () {
+      var virtualNode = queryFixture('<img src="" id="target">');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for iframe', function() {
-      fixture.innerHTML = '<iframe src=""></iframe>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for iframe', function () {
+      var virtualNode = queryFixture('<iframe src="" id="target"></iframe>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for object', function() {
-      fixture.innerHTML = '<object data=""></object>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for object', function () {
+      var virtualNode = queryFixture('<object data="" id="target"></object>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for video', function() {
-      fixture.innerHTML = '<video src=""></video>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for video', function () {
+      var virtualNode = queryFixture('<video src="" id="target"></video>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for audio', function() {
-      fixture.innerHTML = '<audio src=""></audio>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for audio', function () {
+      var virtualNode = queryFixture('<audio src="" id="target"></audio>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for canvas', function() {
-      fixture.innerHTML = '<canvas></canvas>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for canvas', function () {
+      var virtualNode = queryFixture('<canvas id="target"></canvas>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for svg', function() {
-      fixture.innerHTML = '<svg></svg>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for svg', function () {
+      var virtualNode = queryFixture('<svg id="target"></svg>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for math', function() {
-      fixture.innerHTML = '<math></math>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for math', function () {
+      var virtualNode = queryFixture('<math id="target"></math>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for button', function() {
-      fixture.innerHTML = '<button></button>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for button', function () {
+      var virtualNode = queryFixture('<button id="target"></button>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for select', function() {
-      fixture.innerHTML = '<select></select>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for select', function () {
+      var virtualNode = queryFixture('<select id="target"></select>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for textarea', function() {
-      fixture.innerHTML = '<textarea></textarea>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for textarea', function () {
+      var virtualNode = queryFixture('<textarea id="target"></textarea>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for keygen', function() {
-      fixture.innerHTML = '<keygen>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for keygen', function () {
+      var virtualNode = queryFixture('<keygen id="target"></keygen');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for progress', function() {
-      fixture.innerHTML = '<progress></progress>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for progress', function () {
+      var virtualNode = queryFixture('<progress id="target"></progress>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for meter', function() {
-      fixture.innerHTML = '<meter></meter>';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for meter', function () {
+      var virtualNode = queryFixture('<meter id="target"></meter>');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for non-hidden input', function() {
-      fixture.innerHTML = '<input type="text">';
-      assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return true for non-hidden input', function () {
+      var virtualNode = queryFixture('<input type="text" id="target">');
+      assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for elements with a visual aria role', function() {
-      fixture.innerHTML =
-        '<span role="img"></span>' +
-        '<span role="checkbox"></span>' +
-        '<span role="radio"></span>' +
-        '<span role="range"></span>' +
-        '<span role="slider"></span>' +
-        '<span role="spinbutton"></span>' +
-        '<span role="textbox"></span>';
+    it('should return true for elements with a visual aria role', function () {
+      var virtualNode = queryFixture(
+        '<div id="target">' +
+          '<span role="img"></span>' +
+          '<span role="checkbox"></span>' +
+          '<span role="radio"></span>' +
+          '<span role="meter"></span>' +
+          '<span role="progressbar"></span>' +
+          '<span role="scrollbar"></span>' +
+          '<span role="slider"></span>' +
+          '<span role="spinbutton"></span>' +
+          '<span role="textbox"></span>' +
+          '</div>'
+      );
 
-      for (var i = 0; i < fixture.children.length; i++) {
-        assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[i]));
+      for (var i = 0; i < virtualNode.children.length; i++) {
+        assert.isTrue(
+          isVisualContent(virtualNode.children[i]),
+          'for role ' + virtualNode.children[i].attr('role')
+        );
       }
     });
 
-    it('should return false for hidden input', function() {
-      fixture.innerHTML = '<input type="hidden">';
-      assert.isFalse(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return false for hidden input', function () {
+      var virtualNode = queryFixture('<input type="hidden" id="target">');
+      assert.isFalse(isVisualContent(virtualNode));
     });
 
-    it('should return false for p', function() {
-      fixture.innerHTML = '<p>Paragraph!</p>';
-      assert.isFalse(axe.commons.dom.isVisualContent(fixture.children[0]));
+    it('should return false for p', function () {
+      var virtualNode = queryFixture('<p id="target">Paragraph!</p>');
+      assert.isFalse(isVisualContent(virtualNode));
     });
   });
 });

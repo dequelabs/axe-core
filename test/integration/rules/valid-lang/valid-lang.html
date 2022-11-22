@@ -9,3 +9,18 @@
 <p xml:lang="gibberish-US" id="fail2">Not English</p>
 <p xml:lang="en-US" lang="gibberish-US" id="fail3">Mix</p>
 <p lang=" " id="fail4">English</p>
+
+<p lang="invalid" id="pass7"><!-- ignore --></p>
+<p lang="invalid" id="pass8"><img alt="" /></p>
+<p lang="invalid" id="pass9">
+  <span lang="en" id="pass10">English</span>
+</p>
+<p lang="hidden" id="pass11">
+  <span hidden>English</span>
+</p>
+
+<article lang="english" id="fail5">
+  <p aria-hidden="true">
+    They wandered into a strange Tiki bar on the edge of the small beach town.
+  </p>
+</article>

@@ -2,9 +2,10 @@
   "id": "identical-links-same-purpose",
   "selector": "a[href], area[href], [role=\"link\"]",
   "excludeHidden": false,
+  "enabled": false,
   "matches": "identical-links-same-purpose-matches",
   "tags": ["cat.semantics", "wcag2aaa", "wcag249"],
-  "actIds": ["b20e66", "fd3a94"],
+  "actIds": ["b20e66"],
   "metadata": {
     "description": "Ensure that links with the same accessible name serve a similar purpose",
     "help": "Links with the same name must have a similar purpose"

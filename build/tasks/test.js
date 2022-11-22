@@ -4,11 +4,11 @@ const chalk = require('chalk');
 /*eslint-env node */
 ('use strict');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'test',
     'This task runs unit tests based on which file was changed',
-    function() {
+    function () {
       const testFile = this.data.testFile;
       console.log(`${chalk.green('>>')} File "${testFile}"`);
 

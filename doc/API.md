@@ -153,7 +153,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "wcag412",
       "section508",
       "section508.22.a"
-    ]
+    ],
+    actIds: ['c487ae']
   },
   {
     description: "Ensures ARIA attributes are allowed for an element's role",
@@ -734,7 +735,7 @@ Each object returned in these arrays have the following properties:
 In this example, we will pass the selector for the entire document, pass no options, which means all enabled rules will be run, and have a simple callback function that logs the entire results object to the console log:
 
 ```js
-axe.run(document, function(err, results) {
+axe.run(document, function (err, results) {
   if (err) throw err;
   console.log(results);
 });
@@ -798,7 +799,7 @@ axe.run(
       'p-as-heading': { enabled: true }
     }
   },
-  function(err, results) {
+  function (err, results) {
     if (err) throw err;
     console.log(results);
   }

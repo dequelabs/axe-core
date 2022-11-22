@@ -1,14 +1,20 @@
 {
   "id": "link-in-text-block",
   "evaluate": "link-in-text-block-evaluate",
+  "options": {
+    "requiredContrastRatio": 3
+  },
   "metadata": {
     "impact": "serious",
     "messages": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
-      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
+      "fail": {
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+      },
       "incomplete": {
-        "default": "Unable to determine contrast ratio",
-        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
+        "default": "Element's foreground contrast ratio could not be determined",
+        "bgContrast": "Element's background contrast ratio could not be determined",
         "bgImage": "Element's contrast ratio could not be determined due to a background image",
         "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
         "imgNode": "Element's contrast ratio could not be determined because element contains an image node",

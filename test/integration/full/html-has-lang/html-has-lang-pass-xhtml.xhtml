@@ -1,33 +1,38 @@
 <!DOCTYPE html>
-<html lang="klingon" xml:lang="klingon" id="pass1" xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>html-has-lang test</title>
-		<meta charset="utf8" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="/node_modules/mocha/mocha.css"
-		/>
-		<script src="/node_modules/mocha/mocha.js"></script>
-		<script src="/node_modules/chai/chai.js"></script>
-		<script src="/axe.js"></script>
-		<script>
-			mocha.setup({
-				timeout: 10000,
-				ui: 'bdd'
-			});
-			var assert = chai.assert;
-		</script>
-	</head>
+<html
+  lang="klingon"
+  xml:lang="klingon"
+  id="pass1"
+  xmlns="http://www.w3.org/1999/xhtml"
+>
+  <head>
+    <title>html-has-lang test</title>
+    <meta charset="utf8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
 
-	<body>
-		<!--
+  <body>
+    <!--
 			Note:
 			This rule excludes `iframe`, uses matches "window-is-top.js"
 		-->
-		<div id="mocha"></div>
-		<script src="/test/testutils.js"></script>
-		<script src="html-has-lang-pass-xhtml.js"></script>
-		<script src="/test/integration/adapter.js"></script>
-	</body>
+    <div id="mocha"></div>
+    <script src="/test/testutils.js"></script>
+    <script src="html-has-lang-pass-xhtml.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
 </html>

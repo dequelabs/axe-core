@@ -1,4 +1,4 @@
-describe('table.isDataCell', function() {
+describe('table.isDataCell', function () {
   'use strict';
   function $id(id) {
     return document.getElementById(id);
@@ -6,11 +6,11 @@ describe('table.isDataCell', function() {
 
   var fixture = $id('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should work with TH', function() {
+  it('should work with TH', function () {
     fixture.innerHTML =
       '<table>' + '<tr><th id="target">1</th></tr>' + '</table>';
 
@@ -19,7 +19,7 @@ describe('table.isDataCell', function() {
     assert.isFalse(axe.commons.table.isDataCell(target));
   });
 
-  it('should work with TD', function() {
+  it('should work with TD', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td id="target">1</td></tr>' + '</table>';
 
@@ -28,7 +28,7 @@ describe('table.isDataCell', function() {
     assert.isTrue(axe.commons.table.isDataCell(target));
   });
 
-  it('should work with empty TD', function() {
+  it('should work with empty TD', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td id="target"></td></tr>' + '</table>';
 
@@ -37,7 +37,7 @@ describe('table.isDataCell', function() {
     assert.isFalse(axe.commons.table.isDataCell(target));
   });
 
-  it('should ignore TDs with a valid role other than (grid)cell', function() {
+  it('should ignore TDs with a valid role other than (grid)cell', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td id="target1" role="columnheader">heading</td></tr>' +
@@ -53,7 +53,7 @@ describe('table.isDataCell', function() {
     assert.isFalse(axe.commons.table.isDataCell(target3));
   });
 
-  it('should return true for elements with role="(grid)cell"', function() {
+  it('should return true for elements with role="(grid)cell"', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><th id="target1" role="cell">heading</th></tr>' +
@@ -66,7 +66,7 @@ describe('table.isDataCell', function() {
     assert.isTrue(axe.commons.table.isDataCell(target2));
   });
 
-  it('should ignore invalid roles', function() {
+  it('should ignore invalid roles', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td id="target1" role="foobar">heading</td></tr>' +
@@ -79,7 +79,7 @@ describe('table.isDataCell', function() {
     assert.isFalse(axe.commons.table.isDataCell(target2));
   });
 
-  it('should ignore abstract roles', function() {
+  it('should ignore abstract roles', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td id="target1" role="section">heading</td></tr>' +

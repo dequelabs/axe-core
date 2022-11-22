@@ -1,122 +1,120 @@
-describe('aria-required-attr', function() {
-  'use strict';
+describe('aria-required-attr', () => {
+  const { queryFixture, checkSetup } = axe.testUtils;
+  const checkContext = axe.testUtils.MockCheckContext();
+  const requiredAttrCheck =
+    axe.testUtils.getCheckEvaluate('aria-required-attr');
 
-  var queryFixture = axe.testUtils.queryFixture;
-  var checkContext = axe.testUtils.MockCheckContext();
-  var options = undefined;
-
-  afterEach(function() {
+  afterEach(() => {
     checkContext.reset();
-    axe.reset();
   });
 
-  it('should detect missing attributes', function() {
-    var vNode = queryFixture('<div id="target" role="switch" tabindex="1">');
-
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-attr')
-        .call(checkContext, vNode.actualNode, options, vNode)
+  it('returns true for valid attributes', () => {
+    const params = checkSetup(
+      '<div id="target" role="switch" tabindex="1" aria-checked="false">'
     );
-    assert.deepEqual(checkContext._data, ['aria-checked']);
-  });
-
-  it('should return true if there is no role', function() {
-    var vNode = queryFixture('<div id="target">');
-
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-attr')
-        .call(checkContext, vNode.actualNode, options, vNode)
-    );
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
     assert.isNull(checkContext._data);
   });
 
-  it('should pass aria-valuenow if element has value property', function() {
-    var vNode = queryFixture('<input id="target" type="range" role="slider">');
-
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-attr')
-        .call(checkContext, vNode.actualNode, options, vNode)
-    );
+  it('returns false for missing attributes', () => {
+    const params = checkSetup('<div id="target" role="switch" tabindex="1">');
+    assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['aria-checked']);
   });
 
-  it('should pass aria-checkbox if element has checked property', function() {
-    var vNode = queryFixture(
+  it('returns false for null attributes', () => {
+    const params = checkSetup(
+      '<div id="target" role="switch" tabindex="1" aria-checked>'
+    );
+    assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['aria-checked']);
+  });
+
+  it('returns false for empty attributes', () => {
+    const params = checkSetup(
+      '<div id="target" role="switch" tabindex="1" aria-checked="">'
+    );
+    assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['aria-checked']);
+  });
+
+  it('returns true if there is no role', () => {
+    const params = checkSetup('<div id="target"></div>');
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
+    assert.isNull(checkContext._data);
+  });
+
+  it('passes aria-valuenow if element has value property', () => {
+    const params = checkSetup('<input id="target" type="range" role="slider">');
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
+  });
+
+  it('passes aria-checkbox if element has checked property', () => {
+    const params = checkSetup(
       '<input id="target" type="checkbox" role="switch">'
     );
-
-    assert.isTrue(
-      checks['aria-required-attr'].evaluate.call(
-        checkContext,
-        vNode.actualNode,
-        options,
-        vNode
-      )
-    );
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
   });
 
-  describe('combobox special case', function() {
-    it('should pass comboboxes that have aria-expanded="false"', function() {
-      var vNode = queryFixture(
+  describe('separator', () => {
+    it('fails a focusable separator', () => {
+      const params = checkSetup(
+        '<div id="target" role="separator" tabindex="0"></div>'
+      );
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+    });
+
+    it('passes a non-focusable separator', () => {
+      const params = checkSetup('<div id="target" role="separator"></div>');
+      assert.isTrue(requiredAttrCheck.apply(checkContext, params));
+    });
+  });
+
+  describe('combobox', () => {
+    it('passes comboboxes that have aria-expanded="false"', () => {
+      const params = checkSetup(
         '<div id="target" role="combobox" aria-expanded="false"></div>'
       );
-
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
+      assert.isTrue(requiredAttrCheck.apply(checkContext, params));
     });
 
-    it('should pass comboboxes that have aria-owns and aria-expanded', function() {
-      var vNode = queryFixture(
+    it('fails comboboxes without aria-controls and with an invalid aria-expanded', () => {
+      const params = checkSetup(
+        '<div id="target" role="combobox" aria-expanded="invalid-value"></div>'
+      );
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+    });
+
+    it('fails comboboxes that has aria-owns without aria-controls', () => {
+      const params = checkSetup(
         '<div id="target" role="combobox" aria-expanded="true" aria-owns="ownedchild"></div>'
       );
-
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
     });
 
-    it('should pass comboboxes that have aria-controls and aria-expanded', function() {
-      var vNode = queryFixture(
+    it('passes comboboxes that have aria-controls and aria-expanded', () => {
+      const params = checkSetup(
         '<div id="target" role="combobox" aria-expanded="true" aria-controls="test"></div>'
       );
 
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
+      assert.isTrue(requiredAttrCheck.apply(checkContext, params));
     });
 
-    it('should fail comboboxes that have no required attributes', function() {
-      var vNode = queryFixture('<div id="target" role="combobox"></div>');
+    it('fails comboboxes that have no required attributes', () => {
+      const params = checkSetup('<div id="target" role="combobox"></div>');
 
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
     });
 
-    it('should fail comboboxes that have aria-expanded only', function() {
-      var vNode = queryFixture(
+    it('fails comboboxes that have aria-expanded only', () => {
+      const params = checkSetup(
         '<div id="target" role="combobox" aria-expanded="true"></div>'
       );
 
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
     });
 
-    it('should report missing of multiple attributes correctly', function() {
+    it('reports missing of multiple attributes correctly', () => {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -127,20 +125,16 @@ describe('aria-required-attr', function() {
         }
       });
 
-      var vNode = queryFixture(
-        '<div id="target" role="combobox" aria-expanded="false"></div>'
+      const params = checkSetup(
+        '<div id="target" role="combobox" aria-expanded="true"></div>'
       );
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
-      assert.deepEqual(checkContext._data, ['aria-label']);
+      assert.isFalse(requiredAttrCheck.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, ['aria-label', 'aria-controls']);
     });
   });
 
-  describe('options', function() {
-    it('should require provided attribute names for a role', function() {
+  describe('options', () => {
+    it('requires provided attribute names for a role', () => {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -151,14 +145,12 @@ describe('aria-required-attr', function() {
         }
       });
 
-      var vNode = queryFixture('<div role="mccheddarton" id="target"></div>');
-      var options = {
+      const vNode = queryFixture('<div role="mccheddarton" id="target"></div>');
+      const options = {
         mccheddarton: ['aria-snuggles']
       };
       assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
+        requiredAttrCheck.call(checkContext, vNode.actualNode, options, vNode)
       );
       assert.deepEqual(checkContext._data, ['aria-snuggles', 'aria-valuemax']);
     });

@@ -1,27 +1,26 @@
-describe('dom.getElementStack', function() {
+describe('dom.getElementStack', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var getElementStack = axe.commons.dom.getElementStack;
-  var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   function mapToIDs(stack) {
     return stack
-      .map(function(node) {
+      .map(function (node) {
         return node.id;
       })
-      .filter(function(id) {
+      .filter(function (id) {
         return !!id;
       });
   }
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  describe('stack order', function() {
-    it('should return stack in DOM order of non-positioned elements', function() {
+  describe('stack order', function () {
+    it('should return stack in DOM order of non-positioned elements', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2">' +
@@ -34,7 +33,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
     });
 
-    it('should not return elements outside of the stack', function() {
+    it('should not return elements outside of the stack', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2">' +
@@ -48,7 +47,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
     });
 
-    it('should return stack in DOM order of non-positioned elements with z-index', function() {
+    it('should return stack in DOM order of non-positioned elements with z-index', function () {
       fixture.innerHTML =
         '<div id="1" style=";width:40px;height:40px;">' +
         '<div id="target" style="width:40px;height:40px;z-index:100">hello world</div>' +
@@ -65,7 +64,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['3', '2', 'target', '1', 'fixture']);
     });
 
-    it('should should handle positioned elements without z-index', function() {
+    it('should should handle positioned elements without z-index', function () {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_without_z-index
       fixture.innerHTML =
         '<div id="1" style="width:40px;height:40px;position:absolute;top:0;">' +
@@ -84,7 +83,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['4', '3', '2', '1', 'target', 'fixture']);
     });
 
-    it('should handle floating and positioned elements without z-index', function() {
+    it('should handle floating and positioned elements without z-index', function () {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_and_float
       fixture.innerHTML =
         '<div id="1" style="width:40px;height:40px;position:absolute;top:0;">' +
@@ -101,7 +100,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['4', '1', '2', 'target', 'fixture']);
     });
 
-    it('should handle floating parent elements', function() {
+    it('should handle floating parent elements', function () {
       fixture.innerHTML =
         '<div id="1" style="float: left; background: #000000; color: #fff;">' +
         '<div id="2"><span id="target">whole picture</span></div>' +
@@ -116,7 +115,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', '4', '3', 'fixture']);
     });
 
-    it('should handle z-index positioned elements in the same stacking context', function() {
+    it('should handle z-index positioned elements in the same stacking context', function () {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_context_example_1
       fixture.innerHTML =
         '<div id="target" style="width:40px;height:40px;position:relative;">' +
@@ -144,7 +143,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['4', '2', '3', 'target', 'fixture']);
     });
 
-    it('should handle z-index positioned elements in different stacking contexts', function() {
+    it('should handle z-index positioned elements in different stacking contexts', function () {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_context_example_2
       fixture.innerHTML =
         '<div id="target" style="width:40px;height:40px;position:relative;">' +
@@ -172,7 +171,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['2', '4', '3', 'target', 'fixture']);
     });
 
-    it('should handle complex stacking context', function() {
+    it('should handle complex stacking context', function () {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
       fixture.innerHTML =
         '<div id="1" style="position:absolute;top:0;left:0;width:40px;height:40px;z-index:5;">' +
@@ -212,7 +211,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['1', '4', 'target', '5', '3', '2']);
     });
 
-    it('should correctly order children of position elements without z-index', function() {
+    it('should correctly order children of position elements without z-index', function () {
       fixture.innerHTML =
         '<div id="1" style="position:relative;width:40px;height:40px;">' +
         '<div id="target" style="width:40px;height:40px;"></div>' +
@@ -223,7 +222,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
-    it('should correctly order children of position elements with z-index', function() {
+    it('should correctly order children of position elements with z-index', function () {
       fixture.innerHTML =
         '<div id="1" style="position:relative;width:40px;height:40px;z-index:1">' +
         '<div id="target" style="width:40px;height:40px;"></div>' +
@@ -234,7 +233,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
-    it('should handle modals on top of the stack', function() {
+    it('should handle modals on top of the stack', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2">' +
@@ -248,7 +247,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
     });
 
-    it('should handle "pointer-events:none"', function() {
+    it('should handle "pointer-events:none"', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2">' +
@@ -262,7 +261,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
     });
 
-    it('should return elements left out by document.elementsFromPoint', function() {
+    it('should return elements left out by document.elementsFromPoint', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2">' +
@@ -275,7 +274,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
 
-    it('should not return elements that do not fully cover the target', function() {
+    it('should not return elements that do not fully cover the target', function () {
       fixture.innerHTML =
         '<div id="1" style="position:relative;">' +
         '<div id="2" style="position:absolute;width:300px;height:19px;"></div>' +
@@ -287,7 +286,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
-    it('should not return parent elements that do not fully cover the target', function() {
+    it('should not return parent elements that do not fully cover the target', function () {
       fixture.innerHTML =
         '<div id="1" style="height:20px;position:relative;">' +
         '<div id="target" style="position:absolute;top:21px;">Text</div>' +
@@ -298,7 +297,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target']);
     });
 
-    it('should return elements that partially cover the target', function() {
+    it('should return elements that partially cover the target', function () {
       fixture.innerHTML =
         '<div id="1" style="height:40px;position:relative;">' +
         '<div id="2" style="height:20px;"></div>' +
@@ -310,7 +309,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
     });
 
-    it('should handle negative z-index', function() {
+    it('should handle negative z-index', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="position:relative;z-index:-10">' +
@@ -323,7 +322,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['1', 'fixture', 'target', '2']);
     });
 
-    it('should not add hidden elements', function() {
+    it('should not add hidden elements', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="position: absolute; display: none;">Some text</div>' +
@@ -337,7 +336,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
-    it('should correctly position children of positioned parents', function() {
+    it('should correctly position children of positioned parents', function () {
       fixture.innerHTML =
         '<div id="1" style="position: relative; padding: 60px 0;">Some text</div>' +
         '<section id="2" style="position: relative; padding: 60px 0;">' +
@@ -351,7 +350,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '3', '1', 'fixture']);
     });
 
-    it('should correctly position siblings with positioned children correctly', function() {
+    it('should correctly position siblings with positioned children correctly', function () {
       fixture.innerHTML =
         '<div id="1">Some text</div>' +
         '<div id="2" style="position: absolute; top: 0; left: 0;">Some text</div>' +
@@ -367,7 +366,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['4', 'target', '5', '3', '2', '1', 'fixture']);
     });
 
-    it('should correctly position children of float elements with position elements', function() {
+    it('should correctly position children of float elements with position elements', function () {
       fixture.innerHTML =
         '<div id="1" style="width: 50px; height: 50px; position: relative;">' +
         '<div id="2" style="width: 50px; height: 50px; float: left;">' +
@@ -385,7 +384,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['5', 'target', '4', '3', '2', '1', 'fixture']);
     });
 
-    it('should return empty array for hidden elements', function() {
+    it('should return empty array for hidden elements', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="position: absolute; display: none">' +
@@ -399,7 +398,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, []);
     });
 
-    it('should return empty array for children of 0 height scrollable regions', function() {
+    it('should return empty array for children of 0 height scrollable regions', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="overflow: scroll; height: 0">' +
@@ -413,13 +412,13 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, []);
     });
 
-    it('should throw error if element midpoint-x exceeds the grid', function() {
+    it('should throw error if element midpoint-x exceeds the grid', function () {
       fixture.innerHTML = '<div id="target">Hello World</div>';
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
       var vNode = axe.utils.getNodeFromTree(target);
       Object.defineProperty(vNode, 'boundingClientRect', {
-        get: function() {
+        get: function () {
           return {
             left: 0,
             top: 10,
@@ -428,18 +427,18 @@ describe('dom.getElementStack', function() {
           };
         }
       });
-      assert.throws(function() {
+      assert.throws(function () {
         getElementStack(target);
       }, 'Element midpoint exceeds the grid bounds');
     });
 
-    it('should throw error if element midpoint-y exceeds the grid', function() {
+    it('should throw error if element midpoint-y exceeds the grid', function () {
       fixture.innerHTML = '<div id="target">Hello World</div>';
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
       var vNode = axe.utils.getNodeFromTree(target);
       Object.defineProperty(vNode, 'boundingClientRect', {
-        get: function() {
+        get: function () {
           return {
             left: 0,
             top: 10,
@@ -448,31 +447,41 @@ describe('dom.getElementStack', function() {
           };
         }
       });
-      assert.throws(function() {
+      assert.throws(function () {
         getElementStack(target);
       }, 'Element midpoint exceeds the grid bounds');
     });
 
+    it('should ignore element which exactly overlaps midpoint of target element', function () {
+      fixture.innerHTML =
+        '<div id="target" style="width: 100%; height: 50px;">' +
+        '<h4 id="1" style="margin: 0; width: 100%; height: 25px;">Foo</h4>' +
+        'Bar' +
+        '</div>';
+
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', 'fixture']);
+    });
+
     // IE11 either only supports clip paths defined by url() or not at all,
     // MDN and caniuse.com give different results...
-    (isIE11 ? it.skip : it)(
-      'should not add hidden elements using clip-path',
-      function() {
-        fixture.innerHTML =
-          '<main id="1">' +
-          '<div id="2" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);">Some text</div>' +
-          '<span id="target">Hello World</span>' +
-          '</main>';
-        axe.testUtils.flatTreeSetup(fixture);
-        var target = fixture.querySelector('#target');
-        var stack = mapToIDs(getElementStack(target));
-        assert.deepEqual(stack, ['target', '1', 'fixture']);
-      }
-    );
+    it('should not add hidden elements using clip-path', function () {
+      fixture.innerHTML =
+        '<main id="1">' +
+        '<div id="2" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);">Some text</div>' +
+        '<span id="target">Hello World</span>' +
+        '</main>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '1', 'fixture']);
+    });
 
     (shadowSupported ? it : xit)(
       'should sort shadow dom elements correctly',
-      function() {
+      function () {
         fixture.innerHTML = '<div id="container"></div>';
         var container = fixture.querySelector('#container');
         var shadow = container.attachShadow({ mode: 'open' });
@@ -487,7 +496,7 @@ describe('dom.getElementStack', function() {
 
     (shadowSupported ? it : xit)(
       'should sort nested shadow dom elements correctly',
-      function() {
+      function () {
         fixture.innerHTML = '<div id="container"></div>';
         var container = fixture.querySelector('#container');
         var shadow = container.attachShadow({ mode: 'open' });
@@ -512,7 +521,7 @@ describe('dom.getElementStack', function() {
 
     (shadowSupported ? it : xit)(
       'should sort positioned shadow elements correctly',
-      function() {
+      function () {
         fixture.innerHTML = '<div id="container"></div>';
         var container = fixture.querySelector('#container');
         var shadow = container.attachShadow({ mode: 'open' });
@@ -538,7 +547,7 @@ describe('dom.getElementStack', function() {
 
     (shadowSupported ? it : xit)(
       'should sort shadow elements with different trees correctly',
-      function() {
+      function () {
         fixture.innerHTML =
           '<div id="container1"></div><div id="container2"  style="position: absolute; top: 0;">';
         var container1 = fixture.querySelector('#container1');
@@ -563,16 +572,16 @@ describe('dom.getElementStack', function() {
     );
   });
 
-  describe('scroll regions', function() {
+  describe('scroll regions', function () {
     var origHeight = document.documentElement.style.height;
     var origOverflow = document.documentElement.style.overflowY;
 
-    afterEach(function() {
+    afterEach(function () {
       document.documentElement.style.height = origHeight;
       document.documentElement.style.overflowY = origOverflow;
     });
 
-    it('should return stack of scroll regions', function() {
+    it('should return stack of scroll regions', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="overflow:auto">' +
@@ -587,7 +596,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
 
-    it('should return stack when scroll region is larger than parent', function() {
+    it('should return stack when scroll region is larger than parent', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="overflow:auto;height:40px">' +
@@ -602,7 +611,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
 
-    it('should return stack of recursive scroll regions', function() {
+    it('should return stack of recursive scroll regions', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="overflow:auto;height:40px">' +
@@ -621,7 +630,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '5', '4', '3', '2', '1', 'fixture']);
     });
 
-    it('should handle html as a scroll region', function() {
+    it('should handle html as a scroll region', function () {
       fixture.innerHTML =
         '<main id="1">' +
         '<div id="2" style="overflow:auto">' +
@@ -638,7 +647,7 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
 
-    it('should use correct scroll region parent', function() {
+    it('should use correct scroll region parent', function () {
       fixture.innerHTML =
         '<div id="1" style="overflow: scroll; height: 50px;">' +
         '<div id="2" style="overflow: scroll; height: 100px;">' +

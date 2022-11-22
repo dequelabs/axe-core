@@ -1,19 +1,19 @@
-describe('document.elementsFromPoint pollyfills', function() {
+describe('document.elementsFromPoint pollyfills', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
   });
 
-  it('ensures document.elementsFromPoint is always there', function() {
+  it('ensures document.elementsFromPoint is always there', function () {
     assert.isFunction(document.elementsFromPoint);
   });
 
-  it('returns document.elementsFromPoint if it is set', function() {
+  it('returns document.elementsFromPoint if it is set', function () {
     var orig = document.elementsFromPoint;
-    document.elementsFromPoint = function() {
+    document.elementsFromPoint = function () {
       return 123;
     };
 
@@ -22,12 +22,12 @@ describe('document.elementsFromPoint pollyfills', function() {
     document.elementsFromPoint = orig;
   });
 
-  it('returns document.msElementsFromPoint if elementsFromPoint is undefined', function() {
+  it('returns document.msElementsFromPoint if elementsFromPoint is undefined', function () {
     var orig = document.elementsFromPoint;
     var msOrig = document.msElementsFromPoint;
 
     document.elementsFromPoint = undefined;
-    document.msElementsFromPoint = function() {
+    document.msElementsFromPoint = function () {
       return 123;
     };
 
@@ -38,7 +38,7 @@ describe('document.elementsFromPoint pollyfills', function() {
     document.msElementsFromPoint = msOrig;
   });
 
-  it('returns the pollyfill no native function is available', function() {
+  it('returns the pollyfill no native function is available', function () {
     var orig = document.elementsFromPoint;
     var msOrig = document.msElementsFromPoint;
 
@@ -52,9 +52,9 @@ describe('document.elementsFromPoint pollyfills', function() {
     document.msElementsFromPoint = msOrig;
   });
 
-  describe('pollyfill function', function() {
+  describe('pollyfill function', function () {
     var orig, msOrig;
-    before(function() {
+    before(function () {
       orig = document.elementsFromPoint;
       msOrig = document.msElementsFromPoint;
 
@@ -64,12 +64,12 @@ describe('document.elementsFromPoint pollyfills', function() {
       document.elementsFromPoint = axe.utils.pollyfillElementsFromPoint();
     });
 
-    after(function() {
+    after(function () {
       document.elementsFromPoint = orig;
       document.msElementsFromPoint = msOrig;
     });
 
-    it('should return positioned elements properly', function() {
+    it('should return positioned elements properly', function () {
       fixture.innerHTML =
         '<div id="container" style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
         'width: 90px; background-color: rgba(0, 128, 0, 0.5);">' +
@@ -94,7 +94,7 @@ describe('document.elementsFromPoint pollyfills', function() {
       assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
     });
 
-    it('should return inline elements properly', function() {
+    it('should return inline elements properly', function () {
       fixture.innerHTML =
         '<div id="container" style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
         'width: 90px; background-color: rgba(0, 128, 0, 0.5);">' +
@@ -119,7 +119,7 @@ describe('document.elementsFromPoint pollyfills', function() {
       assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
     });
 
-    it('should return normal flow elements properly', function() {
+    it('should return normal flow elements properly', function () {
       fixture.innerHTML =
         '<div id="parent" style="background-color: rgba(0, 128, 0, 0.5); height: 40px; width: 30px;">' +
         '<div id="target" style="background-color: rgba(0, 128, 0, 0.5); height: 20px; width: 15px;">' +
@@ -137,7 +137,7 @@ describe('document.elementsFromPoint pollyfills', function() {
       assert.deepEqual(visualParents.slice(0, 3), [target, parent, fixture]);
     });
 
-    it('returns elements with negative z-index after the body', function() {
+    it('returns elements with negative z-index after the body', function () {
       fixture.innerHTML =
         '<div id="target" style="z-index:-1; position:absolute;">Target!</div>' +
         '<div id="sibling">Some text</div>';

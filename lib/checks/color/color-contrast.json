@@ -22,7 +22,10 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Element has sufficient color contrast of ${data.contrastRatio}",
+      "pass": {
+        "default": "Element has sufficient color contrast of ${data.contrastRatio}",
+        "hidden": "Element is hidden"
+      },
       "fail": {
         "default": "Element has insufficient color contrast of ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Expected contrast ratio of ${data.expectedContrastRatio}",
         "fgOnShadowColor": "Element has insufficient color contrast of ${data.contrastRatio} between the foreground and shadow color (foreground color: ${data.fgColor}, text-shadow color: ${data.shadowColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Expected contrast ratio of ${data.expectedContrastRatio}",

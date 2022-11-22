@@ -1,13 +1,13 @@
 //@todo better coverage
-describe('dom.getElementCoordinates', function() {
+describe('dom.getElementCoordinates', function () {
   'use strict';
   var fixture = document.getElementById('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should calculate bounding box based on element position', function() {
+  it('should calculate bounding box based on element position', function () {
     var el, coords;
 
     fixture.innerHTML =
@@ -31,7 +31,7 @@ describe('dom.getElementCoordinates', function() {
     assert.equal(Math.round(coords.top), -1);
   });
 
-  it('should take into account scroll offsets', function() {
+  it('should take into account scroll offsets', function () {
     var el,
       coords,
       offset = axe.commons.dom.getScrollOffset(window.document);

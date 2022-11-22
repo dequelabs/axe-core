@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf8" />
+    <title>Meta-refresh pass 1</title>
+    <!-- "-10" is not valid, this will be ignored -->
+    <meta http-equiv="refresh" content="-10 https://deque.com/" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="meta-refresh-pass.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>

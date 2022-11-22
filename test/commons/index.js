@@ -1,7 +1,7 @@
-describe('axe.commons', function() {
+describe('axe.commons', function () {
   'use strict';
 
-  it('should export public api', function() {
+  it('should export public api', function () {
     assert.exists(axe.commons.aria);
     assert.exists(axe.commons.color);
     assert.exists(axe.commons.dom);

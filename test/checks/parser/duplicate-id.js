@@ -1,4 +1,4 @@
-describe('duplicate-id', function() {
+describe('duplicate-id', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,12 +6,12 @@ describe('duplicate-id', function() {
 
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return true if there is only one element with an ID', function() {
+  it('should return true if there is only one element with an ID', function () {
     fixture.innerHTML = '<div id="target"></div>';
     var node = fixture.querySelector('#target');
     assert.isTrue(
@@ -21,7 +21,7 @@ describe('duplicate-id', function() {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
-  it('should return false if there are multiple elements with an ID', function() {
+  it('should return false if there are multiple elements with an ID', function () {
     fixture.innerHTML = '<div id="target"></div><div id="target"></div>';
     var node = fixture.querySelector('#target');
     assert.isFalse(
@@ -31,7 +31,7 @@ describe('duplicate-id', function() {
     assert.deepEqual(checkContext._relatedNodes, [node.nextSibling]);
   });
 
-  it('should return remove duplicates', function() {
+  it('should return remove duplicates', function () {
     assert.deepEqual(
       checks['duplicate-id'].after([
         { data: 'a' },
@@ -42,7 +42,7 @@ describe('duplicate-id', function() {
     );
   });
 
-  it('should ignore empty ids', function() {
+  it('should ignore empty ids', function () {
     fixture.innerHTML =
       '<div data-testelm="1" id=""></div><div data-testelm="2"  id=""></div>';
     var node = fixture.querySelector('[data-testelm="1"]');
@@ -52,7 +52,7 @@ describe('duplicate-id', function() {
     );
   });
 
-  it('should allow overwrote ids', function() {
+  it('should allow overwrote ids', function () {
     fixture.innerHTML =
       '<form data-testelm="1" id="target"><label>mylabel' +
       '<input name="id">' +
@@ -66,7 +66,7 @@ describe('duplicate-id', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should find duplicate IDs in the same shadow DOM',
-    function() {
+    function () {
       var div = document.createElement('div');
       div.id = 'target';
       var shadow = div.attachShadow({ mode: 'open' });
@@ -84,7 +84,7 @@ describe('duplicate-id', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should ignore duplicate IDs if they are in different document roots',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.id = 'target';
       var shadow = node.attachShadow({ mode: 'open' });
@@ -100,7 +100,7 @@ describe('duplicate-id', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should ignore same IDs outside shadow trees',
-    function() {
+    function () {
       var div = document.createElement('div');
       div.id = 'target';
       var shadow = div.attachShadow({ mode: 'open' });
@@ -117,7 +117,7 @@ describe('duplicate-id', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should compare slotted content with the light DOM',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.id = 'target';
       node.innerHTML = '<p id="target">text</p>';

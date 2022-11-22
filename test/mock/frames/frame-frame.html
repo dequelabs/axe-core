@@ -15,7 +15,7 @@
         checks: [
           {
             id: 'html',
-            evaluate: function() {
+            evaluate: function () {
               return true;
             }
           }
@@ -26,20 +26,20 @@
     <script>
       axe.registerPlugin({
         id: 'multi',
-        run: function(id, action, options, callback) {
+        run: function (id, action, options, callback) {
           this._registry[id][action].call(
             this._registry[id],
             options,
             callback
           );
         },
-        add: function(impl) {
+        add: function (impl) {
           this._registry[impl.id] = impl;
         },
         commands: [
           {
             id: 'run-multi',
-            callback: function(data, callback) {
+            callback: function (data, callback) {
               return axe.plugins.multi.run(
                 data.parameter,
                 data.action,
@@ -52,7 +52,7 @@
       });
       axe.plugins.multi.add({
         id: 'hideall',
-        run: function(options, callback) {
+        run: function (options, callback) {
           var frames;
           var q = axe.utils.queue();
 
@@ -60,8 +60,8 @@
             document.querySelectorAll('iframe, frame')
           );
           if (frames.length) {
-            frames.forEach(function(frame) {
-              q.defer(function(done) {
+            frames.forEach(function (frame) {
+              q.defer(function (done) {
                 axe.utils.sendCommandToFrame(
                   frame,
                   {
@@ -75,14 +75,14 @@
               });
             });
           }
-          q.defer(function(done) {
+          q.defer(function (done) {
             // implementation
             done('ola!');
           });
-          q.then(function(data) {
+          q.then(function (data) {
             // done with all the frames
             var results = [];
-            data.forEach(function(datum) {
+            data.forEach(function (datum) {
               if (datum) {
                 results = results.concat(datum);
               }

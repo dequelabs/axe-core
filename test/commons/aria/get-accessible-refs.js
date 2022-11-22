@@ -1,4 +1,4 @@
-describe('aria.getAccessibleRefs', function() {
+describe('aria.getAccessibleRefs', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -13,22 +13,22 @@ describe('aria.getAccessibleRefs', function() {
     });
   }
 
-  before(function() {
+  before(function () {
     axe._load({});
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe.reset();
   });
 
-  it('returns empty array by default', function() {
+  it('returns empty array by default', function () {
     fixture.innerHTML = '<div id="foo"><div>';
     var node = document.getElementById('foo');
     assert.lengthOf(getAccessibleRefs(node), 0);
   });
 
-  it('returns array of nodes for IDs used in aria IDREF attributes', function() {
+  it('returns array of nodes for IDs used in aria IDREF attributes', function () {
     setLookup({ 'aria-foo': { type: 'idref' } });
     fixture.innerHTML = '<div id="ref" aria-foo="foo"></div><i id="foo"></i>';
     var node = document.getElementById('foo');
@@ -36,7 +36,7 @@ describe('aria.getAccessibleRefs', function() {
     assert.deepEqual(getAccessibleRefs(node), [ref]);
   });
 
-  it('returns array of nodes for IDs used in aria IDREFS attributes', function() {
+  it('returns array of nodes for IDs used in aria IDREFS attributes', function () {
     setLookup({ 'aria-bar': { type: 'idrefs' } });
     fixture.innerHTML =
       '<div id="ref" aria-bar="foo bar"></div><i id="foo"></i><b id="bar"></b>';
@@ -48,7 +48,7 @@ describe('aria.getAccessibleRefs', function() {
     assert.deepEqual(getAccessibleRefs(node2), [ref]);
   });
 
-  it('returns array of nodes for IDs used in label[for] attributes', function() {
+  it('returns array of nodes for IDs used in label[for] attributes', function () {
     setLookup({ 'aria-foo': { type: 'idref' } });
     fixture.innerHTML = '<label id="ref" for="baz">baz</label><input id="baz">';
     var node = document.getElementById('baz');
@@ -56,7 +56,7 @@ describe('aria.getAccessibleRefs', function() {
     assert.deepEqual(getAccessibleRefs(node), [ref]);
   });
 
-  it('returns all nodes used in aria IDREF attributes', function() {
+  it('returns all nodes used in aria IDREF attributes', function () {
     setLookup({ 'aria-bar': { type: 'idrefs' } });
     fixture.innerHTML =
       '<div id="ref1" aria-bar="foo"><div id="ref2" aria-bar="foo"></div><i id="foo"></i>';
@@ -68,19 +68,19 @@ describe('aria.getAccessibleRefs', function() {
     assert.deepEqual(getAccessibleRefs(node), [ref1, ref2]);
   });
 
-  it('does not break on a custom .children property', function() {
+  it('does not break on a custom .children property', function () {
     setLookup({ 'aria-foo': { type: 'idref' } });
     fixture.innerHTML = '<div id="ref" aria-foo="foo"></div><i id="foo"></i>';
     var node = document.getElementById('foo');
     var ref = document.getElementById('ref');
-    
+
     Object.defineProperty(node, 'children', {
       value: ['#ref']
     });
     assert.deepEqual(getAccessibleRefs(node), [ref]);
   });
 
-  (shadowSupport ? it : xit)('works inside shadow DOM', function() {
+  (shadowSupport ? it : xit)('works inside shadow DOM', function () {
     setLookup({ 'aria-bar': { type: 'idref' } });
     fixture.innerHTML = '<div id="foo"></div>';
 
@@ -94,7 +94,7 @@ describe('aria.getAccessibleRefs', function() {
 
   (shadowSupport ? it : xit)(
     'returns empty array for IDREFs inside shadow DOM',
-    function() {
+    function () {
       setLookup({ 'aria-foo': { type: 'idrefs' } });
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
       var node1 = document.getElementById('foo');
@@ -110,7 +110,7 @@ describe('aria.getAccessibleRefs', function() {
 
   (shadowSupport ? it : xit)(
     'returns empty array for IDREFs outside shadow DOM',
-    function() {
+    function () {
       setLookup({ 'aria-bar': { type: 'idref' } });
       fixture.innerHTML =
         '<div id="foo" aria-bar="bar"><div aria-bar="bar"></div></div>';
@@ -125,7 +125,7 @@ describe('aria.getAccessibleRefs', function() {
     }
   );
 
-  (shadowSupport ? it : xit)('separates IDREFs by roots', function() {
+  (shadowSupport ? it : xit)('separates IDREFs by roots', function () {
     setLookup({ 'aria-bar': { type: 'idref' } });
     fixture.innerHTML =
       '<div id="foo"></div><div id="outside" aria-bar="foo"></div><div id="shadow"></div>';

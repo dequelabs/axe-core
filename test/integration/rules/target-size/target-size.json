@@ -1,0 +1,36 @@
+{
+  "description": "target-size test",
+  "rule": "target-size",
+  "violations": [
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"],
+    ["#fail4"],
+    ["#fail5"],
+    ["#fail6"],
+    ["#fail7"],
+    ["#fail-fixed"]
+  ],
+  "passes": [
+    ["#pass1"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass5"],
+    ["#pass6"],
+    ["#pass7"],
+    ["#pass8"],
+    ["#pass-adjacent"],
+    ["#pass-fixed"]
+  ],
+  "incomplete": [
+    ["#incomplete1"],
+    ["#incomplete2"],
+    ["#incomplete3"],
+    ["#incomplete4"],
+    ["#incomplete5"],
+    ["#incomplete6"],
+    ["#incomplete7"],
+    ["#incomplete8"]
+  ]
+}

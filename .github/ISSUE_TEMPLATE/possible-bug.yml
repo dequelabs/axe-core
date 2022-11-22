@@ -1,0 +1,52 @@
+name: Report an issue
+description: Report a bug or an issue that you've encountered.
+labels: ['ungroomed']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue to one of our products. Please provide all necessary information to reproduce the issue. Without adequate details, your issue may be closed without investigation.
+
+        Issues can be reported for axe-core, [axe Extension](https://www.deque.com/axe/browser-extensions/), and [axe Linter](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). If you're having an issue with one of our npm integrations (e.g. `@axe-core/webdriverjs`), please open an issue in https://github.com/dequelabs/axe-core-npm.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which product did you encounter the issue?
+      options:
+        - axe-core
+        - axe Extension
+        - axe Linter
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Product Version
+      description: For axe-core use `axe.version`. For axe Extension go to the settings screen in the extension. For axe Linter look at the installed extension list for the version.
+  - type: checkboxes
+    id: latest-axe
+    attributes:
+      label: Latest Version
+      options:
+        - label: I have tested the issue with the latest version of the product
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Please include a description of the issue and a page or code snippet where it can be reproduced.
+      value: |
+        #### Expectation
+        Describe what you expected the product to do.
+
+        #### Actual
+        Describe what the product actually does.
+
+        #### How to Reproduce
+        Provide a code sample or link to a webpage that reproduces the issue. Without this, your issue may be closed without investigation.
+
+        #### Additional context
+        Any thing else we should know about the issue?
+    validations:
+      required: true

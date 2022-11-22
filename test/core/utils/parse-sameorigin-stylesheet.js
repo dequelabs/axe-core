@@ -1,4 +1,4 @@
-describe('axe.utils.parseSameOriginStylesheet', function() {
+describe('axe.utils.parseSameOriginStylesheet', function () {
   'use strict';
 
   var stylesForPage;
@@ -19,29 +19,29 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
   var dynamicDoc;
   var convertDataToStylesheet;
 
-  beforeEach(function() {
+  beforeEach(function () {
     dynamicDoc = document.implementation.createHTMLDocument(
       'Dynamic document for testing axe.utils.parseSameOriginStylesheet'
     );
     convertDataToStylesheet = axe.utils.getStyleSheetFactory(dynamicDoc);
   });
 
-  afterEach(function(done) {
+  afterEach(function (done) {
     dynamicDoc = undefined;
     convertDataToStylesheet = undefined;
-    axe.testUtils.removeStyleSheets(stylesForPage).then(function() {
+    axe.testUtils.removeStyleSheets(stylesForPage).then(function () {
       done();
       stylesForPage = undefined;
     });
   });
 
-  it('returns empty results when given sheet has no cssRules', function(done) {
+  it('returns empty results when given sheet has no cssRules', function (done) {
     // add style that has no styles
     stylesForPage = [styleSheets.emptyStyleTag];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function() {
+    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function(sheet) {
+      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
         return sheet.ownerNode.id === styleSheets.emptyStyleTag.id;
       })[0];
       // parse sheet
@@ -61,7 +61,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
           importedUrls,
           false
         )
-        .then(function(data) {
+        .then(function (data) {
           assert.isDefined(data);
           assert.isDefined(data.sheet);
           assert.equal(data.isCrossOrigin, isCrossOriginRequest);
@@ -73,13 +73,13 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
     });
   });
 
-  it('returns @import rule specified in the stylesheet', function(done) {
+  it('returns @import rule specified in the stylesheet', function (done) {
     // add style that has @import style
     stylesForPage = [styleSheets.styleTagWithOneImport];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function() {
+    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function(sheet) {
+      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
         return sheet.ownerNode.id === styleSheets.styleTagWithOneImport.id;
       })[0];
       // parse sheet
@@ -99,7 +99,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
           importedUrls,
           false
         )
-        .then(function(data) {
+        .then(function (data) {
           assert.isDefined(data);
 
           var parsedImportData = data[0];
@@ -119,13 +119,13 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
     });
   });
 
-  it('returns inline style specified in the stylesheet', function(done) {
+  it('returns inline style specified in the stylesheet', function (done) {
     // add style that has @import style
     stylesForPage = [styleSheets.inlineStyle];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function() {
+    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function(sheet) {
+      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
         return sheet.ownerNode.id === styleSheets.inlineStyle.id;
       })[0];
       // parse sheet
@@ -145,7 +145,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
           importedUrls,
           false
         )
-        .then(function(data) {
+        .then(function (data) {
           assert.isDefined(data);
           assert.isDefined(data.sheet);
           assert.equal(data.isCrossOrigin, isCrossOriginRequest);

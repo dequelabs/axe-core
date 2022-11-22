@@ -1,12 +1,10 @@
 <!-- ///////////////// -->
 <!-- Pass -->
 <!-- ///////////////// -->
-<p id="pass1" aria-hidden="true">
-  Some text
-</p>
+<p id="pass1" aria-hidden="true">Some text</p>
 
 <div id="pass2" aria-hidden="true">
-  <a href="/" style="display:none">Link</a>
+  <a href="/" style="display: none">Link</a>
 </div>
 
 <div id="pass3" aria-hidden="true">
@@ -33,7 +31,7 @@
 <!-- Fail -->
 <!-- ///////////////// -->
 <div id="violation1" aria-hidden="true">
-  <a href="/" style="position:absolute; top:-999em">Link</a>
+  <a href="/" style="position: absolute; top: -999em">Link</a>
 </div>
 
 <div id="violation2" aria-hidden="true">
@@ -71,4 +69,26 @@
 
 <div id="violation7" aria-hidden="true">
   <a href="">foo</a><button>bar</button>
+</div>
+
+<!-- ///////////////// -->
+<!-- Incomplete -->
+<!-- ///////////////// -->
+<div>
+  <div
+    id="incomplete1"
+    aria-hidden="true"
+    tabindex="0"
+    style="pointer-events: none; position: fixed"
+  ></div>
+  <div class="test-div">
+    <button>hello</button>
+  </div>
+  <div
+    id="incomplete2"
+    aria-hidden="true"
+    tabindex="0"
+    data-is-visible="true"
+    style="pointer-events: none; position: fixed"
+  ></div>
 </div>

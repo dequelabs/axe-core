@@ -78,9 +78,9 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Google Chrome v42 and above
 - Mozilla Firefox v38 and above
 - Apple Safari v7 and above
-- Internet Explorer v11
+- Internet Explorer v11 (DEPRECATED)
 
-Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
+Support means that we will fix bugs and attempt to test each browser regularly. Only Chrome and Firefox are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
@@ -103,9 +103,9 @@ or equivalently:
 
 `npm run build -- --lang=nl`
 
-This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of langages to the `--lang` flag, like `--lang=nl,ja`.
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of languages to the `--lang` flag, like `--lang=nl,ja`.
 
-To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. Alternatively, you could copy `./locales/_template.json`. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
@@ -127,8 +127,7 @@ axe.configure({
       },
       'aria-errormessage': {
         // Note: doT (https://github.com/olado/dot) templates are supported here.
-        fail:
-          'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+        fail: 'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
       }
       // ...
     }
@@ -145,8 +144,10 @@ Axe-core supports the following locales. Do note that since locales are contribu
 - Dutch
 - French
 - German
+- Hebrew
 - Japanese
 - Korean
+- Norwegian (Bokmål)
 - Polish
 - Portuguese (Brazilian)
 - Spanish

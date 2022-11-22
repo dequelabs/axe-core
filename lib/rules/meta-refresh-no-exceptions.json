@@ -1,0 +1,15 @@
+{
+  "id": "meta-refresh-no-exceptions",
+  "selector": "meta[http-equiv=\"refresh\"][content]",
+  "excludeHidden": false,
+  "enabled": false,
+  "tags": ["cat.time-and-media", "wcag2aaa", "wcag224", "wcag325"],
+  "actIds": ["bisz58"],
+  "metadata": {
+    "description": "Ensures <meta http-equiv=\"refresh\"> is not used for delayed refresh",
+    "help": "Delayed refresh must not be used"
+  },
+  "all": [],
+  "any": ["meta-refresh-no-exceptions"],
+  "none": []
+}

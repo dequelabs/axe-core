@@ -1,9 +1,9 @@
-describe('color.Color', function() {
+describe('color.Color', function () {
   'use strict';
   var Color = axe.commons.color.Color;
 
-  describe('parseColorFnString', function() {
-    it('should set values properly via RGB', function() {
+  describe('parseColorFnString', function () {
+    it('should set values properly via RGB', function () {
       var c = new Color();
       c.parseColorFnString('rgb(17, 34,  51)');
       assert.equal(c.red, 17);
@@ -12,7 +12,7 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 1);
     });
 
-    it('should set values properly via RGBA', function() {
+    it('should set values properly via RGBA', function () {
       var c = new Color();
       c.parseColorFnString('rgba(17, 34,51,  0.2)');
       assert.equal(c.red, 17);
@@ -21,7 +21,7 @@ describe('color.Color', function() {
       assert.closeTo(c.alpha, 0.2, 0.01);
     });
 
-    it('allows decimal values, with and without the integer', function() {
+    it('allows decimal values, with and without the integer', function () {
       var c = new Color();
       c.parseColorFnString('rgba(.1, 23.4, 56.7,  .89)');
       assert.closeTo(c.red, 0.1, 0.01);
@@ -30,7 +30,7 @@ describe('color.Color', function() {
       assert.closeTo(c.alpha, 0.89, 0.01);
     });
 
-    it('allows percentages', function() {
+    it('allows percentages', function () {
       var c = new Color();
       c.parseColorFnString('rgba(100%, 100%, 0%, 50%)');
       assert.equal(c.red, 255);
@@ -39,7 +39,7 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 0.5);
     });
 
-    it('allows exponent numbers', function() {
+    it('allows exponent numbers', function () {
       var c = new Color();
       c.parseColorFnString('rgb(2e0, 2e1, 2e2)');
       assert.equal(c.red, 2);
@@ -48,7 +48,7 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 1);
     });
 
-    it('supports space separated notation', function() {
+    it('supports space separated notation', function () {
       var c = new Color();
       c.parseColorFnString('rgba(255 128 0 / 50%)');
       assert.equal(c.red, 255);
@@ -57,7 +57,7 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 0.5);
     });
 
-    it('allows alpha values in rgb()', function() {
+    it('allows alpha values in rgb()', function () {
       var c = new Color();
       c.parseColorFnString('rgb(255 128 0 / 50%)');
       assert.equal(c.red, 255);
@@ -66,8 +66,8 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 0.5);
     });
 
-    describe('with hsl(a)', function() {
-      it('allows hsl', function() {
+    describe('with hsl(a)', function () {
+      it('allows hsl', function () {
         var c = new Color();
         c.parseColorFnString('hsl(160, 40%, 50%)');
         assert.equal(c.red, 77);
@@ -76,7 +76,7 @@ describe('color.Color', function() {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows hsla', function() {
+      it('allows hsla', function () {
         var c = new Color();
         c.parseColorFnString('hsla(160, 40%, 50%, .5)');
         assert.equal(c.red, 77);
@@ -85,7 +85,7 @@ describe('color.Color', function() {
         assert.equal(c.alpha, 0.5);
       });
 
-      it('allows hsl with space notation', function() {
+      it('allows hsl with space notation', function () {
         var c = new Color();
         c.parseColorFnString('hsl(160 40% 50% / 5%)');
         assert.equal(c.red, 77);
@@ -94,7 +94,7 @@ describe('color.Color', function() {
         assert.equal(c.alpha, 0.05);
       });
 
-      it('supports deg on hue', function() {
+      it('supports deg on hue', function () {
         var c = new Color();
         c.parseColorFnString('hsl(160deg, 40%, 50%)');
         assert.equal(c.red, 77);
@@ -103,7 +103,7 @@ describe('color.Color', function() {
         assert.equal(c.alpha, 1);
       });
 
-      it('supports rad on hue', function() {
+      it('supports rad on hue', function () {
         var c = new Color();
         c.parseColorFnString('hsl(2.8rad, 40%, 50%)');
         assert.equal(c.red, 77);
@@ -112,7 +112,7 @@ describe('color.Color', function() {
         assert.equal(c.alpha, 1);
       });
 
-      it('supports turn on hue', function() {
+      it('supports turn on hue', function () {
         var c = new Color();
         c.parseColorFnString('hsl(0.446turn, 40%, 50%)');
         assert.equal(c.red, 77);
@@ -123,8 +123,8 @@ describe('color.Color', function() {
     });
   });
 
-  describe('parseHexString', function() {
-    it('returns values from a 6 digit hex string', function() {
+  describe('parseHexString', function () {
+    it('returns values from a 6 digit hex string', function () {
       var color = new Color();
       color.parseHexString('#123Abc');
       assert.equal(color.red, 18);
@@ -133,7 +133,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 1);
     });
 
-    it('returns values from a 3 digit hex string', function() {
+    it('returns values from a 3 digit hex string', function () {
       var color = new Color();
       color.parseHexString('#19E');
       assert.equal(color.red, 17);
@@ -142,7 +142,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 1);
     });
 
-    it('returns values from a 8 digit hex string', function() {
+    it('returns values from a 8 digit hex string', function () {
       var color = new Color();
       color.parseHexString('#123ABCde');
       assert.equal(color.red, 18);
@@ -151,7 +151,7 @@ describe('color.Color', function() {
       assert.closeTo(color.alpha, 222 / 255, 0.001);
     });
 
-    it('returns values from a 4 digit hex string', function() {
+    it('returns values from a 4 digit hex string', function () {
       var color = new Color();
       color.parseHexString('#19EC');
       assert.equal(color.red, 17);
@@ -160,10 +160,10 @@ describe('color.Color', function() {
       assert.closeTo(color.alpha, 204 / 255, 0.01);
     });
 
-    it('does nothing when passed an invalid string', function() {
+    it('does nothing when passed an invalid string', function () {
       var color = new Color(1, 2, 3, 0.4);
       var values = ['abcdef', '#abcde', '#XYZ', '#0123456789'];
-      values.forEach(function(val) {
+      values.forEach(function (val) {
         color.parseHexString(val);
         assert.equal(color.red, 1);
         assert.equal(color.green, 2);
@@ -173,8 +173,8 @@ describe('color.Color', function() {
     });
   });
 
-  describe('parseString', function() {
-    it('sets the value of a named color', function() {
+  describe('parseString', function () {
+    it('sets the value of a named color', function () {
       var color = new Color();
       color.parseString('chocolate');
       assert.equal(color.red, 210);
@@ -183,7 +183,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 1);
     });
 
-    it('returns everything on 0 with transparent', function() {
+    it('returns everything on 0 with transparent', function () {
       var color = new Color(255, 255, 255, 1);
       color.parseString('transparent');
       assert.equal(color.red, 0);
@@ -192,7 +192,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 0);
     });
 
-    it('sets hex colors', function() {
+    it('sets hex colors', function () {
       var color = new Color();
       color.parseString('#F00C');
       assert.equal(color.red, 255);
@@ -201,7 +201,7 @@ describe('color.Color', function() {
       assert.closeTo(color.alpha, 204 / 255, 0.01);
     });
 
-    it('sets rgb colors', function() {
+    it('sets rgb colors', function () {
       var color = new Color();
       color.parseString('rgb(10, 20, 30)');
       assert.equal(color.red, 10);
@@ -210,7 +210,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 1);
     });
 
-    it('sets rgba colors', function() {
+    it('sets rgba colors', function () {
       var color = new Color();
       color.parseString('rgba(10, 20, 30, 0.4)');
       assert.equal(color.red, 10);
@@ -219,7 +219,7 @@ describe('color.Color', function() {
       assert.equal(color.alpha, 0.4);
     });
 
-    it('allows hsl', function() {
+    it('allows hsl', function () {
       var c = new Color();
       c.parseString('hsl(160, 40%, 50%)');
       assert.equal(c.red, 77);
@@ -228,7 +228,7 @@ describe('color.Color', function() {
       assert.equal(c.alpha, 1);
     });
 
-    it('allows hsla', function() {
+    it('allows hsla', function () {
       var c = new Color();
       c.parseString('hsla(160, 40%, 50%, .5)');
       assert.equal(c.red, 77);
@@ -238,8 +238,8 @@ describe('color.Color', function() {
     });
   });
 
-  describe('toHexString', function() {
-    it('should return hex values properly', function() {
+  describe('toHexString', function () {
+    it('should return hex values properly', function () {
       var black = new Color(0, 0, 0, 1);
       var white = new Color(255, 255, 255, 1);
       var yellow = new Color(255, 255, 0, 1);
@@ -252,7 +252,7 @@ describe('color.Color', function() {
       assert.equal(blue.toHexString(), '#0000ff');
     });
 
-    it('should return hex values properly when they are non-integery', function() {
+    it('should return hex values properly when they are non-integery', function () {
       var black = new Color(0, 0, 0, 1);
       var white = new Color(255, 255, 255, 0.1);
       var grayish = axe.commons.color.flattenColors(white, black);
@@ -260,8 +260,8 @@ describe('color.Color', function() {
     });
   });
 
-  describe('getRelativeLuminance', function() {
-    it('should calculate luminance sensibly', function() {
+  describe('getRelativeLuminance', function () {
+    it('should calculate luminance sensibly', function () {
       var black = new Color(0, 0, 0, 1);
       var white = new Color(255, 255, 255, 1);
       var yellow = new Color(255, 255, 0, 1);

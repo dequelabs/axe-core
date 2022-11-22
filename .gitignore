@@ -3,7 +3,6 @@ node_modules
 npm-shrinkwrap.json
 doc/examples/*/package-lock.json
 .DS_Store
-.vscode
 .idea
 
 # tmp - `dev` time generated assets
@@ -18,6 +17,8 @@ test/integration/*/index.html
 axe.js
 axe.*.js
 
+# generated src file
+lib/core/base/metadata-function-map.js
 
 # generated jsdoc api docs
 doc/api/*

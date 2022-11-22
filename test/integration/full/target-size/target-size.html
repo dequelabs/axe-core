@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Target-size Test</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <main id="mocha"></main>
+    <style>
+      /* color */
+      .failed.passes {
+        background: blueviolet !important;
+      }
+      .incomplete {
+        background: yellow !important;
+      }
+      .passed.violations {
+        background: blueviolet !important;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      p {
+        font-size: 12px;
+        margin: 1.3em 0 0.3em;
+      }
+      .sample {
+        display: flex;
+      }
+      .sample > div {
+        outline: solid 1px #ddd;
+        padding: 12px 6px;
+        flex-basis: 95px;
+        justify-content: center;
+      }
+      .sample div {
+        position: relative;
+        display: flex;
+      }
+      .sample > div span {
+        box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4),
+          inset 2px 2px 0 rgba(0, 0, 0, 0.4);
+        display: flex;
+        z-index: 1;
+      }
+      .sample p {
+        position: absolute;
+        font-size: 10px;
+        top: -9px;
+        left: 3px;
+        color: #333;
+      }
+      .rnd-50 {
+        border-radius: 50%;
+      }
+      .rnd-0-25 {
+        border-radius: 0 25%;
+      }
+      .rnd-0-50 {
+        border-radius: 0 50%;
+      }
+      .rnd-0-75 {
+        border-radius: 0 75%;
+      }
+      .rnd-0-100 {
+        border-radius: 0 100%;
+      }
+      .rot30 {
+        transform: rotate(-30deg);
+      }
+      .rot45 {
+        transform: rotate(-45deg);
+      }
+
+      svg path {
+        stroke: rgba(0, 0, 0, 0.4);
+        stroke-width: 2px;
+      }
+
+      /* color */
+      .passed {
+        background: linear-gradient(90deg, darkgreen 0%, lightgreen 100%);
+      }
+      .failed {
+        background: linear-gradient(90deg, pink 0%, darkred 100%);
+      }
+
+      /* height */
+      .h1 {
+        height: 6px;
+      }
+      .h2 {
+        height: 12px;
+      }
+      .h3 {
+        height: 18px;
+      }
+      .h4 {
+        height: 24px;
+      }
+      .h6 {
+        height: 36px;
+      }
+      .h7 {
+        height: 42px;
+      }
+      .h8 {
+        height: 48px;
+      }
+      .h10 {
+        height: 60px;
+      }
+      /* With */
+      .w1 {
+        width: 6px;
+      }
+      .w2 {
+        width: 12px;
+      }
+      .w3 {
+        width: 18px;
+      }
+      .w4 {
+        width: 24px;
+      }
+      .w5 {
+        width: 30px;
+      }
+      .w6 {
+        width: 36px;
+      }
+      .w7 {
+        width: 42px;
+      }
+      .w8 {
+        width: 48px;
+      }
+      .w10 {
+        width: 60px;
+      }
+      .w11 {
+        width: 66px;
+      }
+      /* Margins */
+      .m4-n2 {
+        margin-right: -12px;
+      }
+      .m4-n1 {
+        margin-right: -6px;
+      }
+      .mr1 {
+        margin-right: 6px;
+      }
+      .mr2 {
+        margin-right: 12px;
+      }
+      .mr3 {
+        margin-right: 18px;
+      }
+      .mr4 {
+        margin-right: 24px;
+      }
+      .ml-n6 {
+        margin-left: -36px;
+      }
+      .ml-n4 {
+        margin-left: -24px;
+      }
+      .ml-n3 {
+        margin-left: -18px;
+      }
+      .ml-n2 {
+        margin-left: -12px;
+      }
+      .ml-n1 {
+        margin-left: -6px;
+      }
+      .ml1 {
+        margin-left: 6px;
+      }
+      .ml2 {
+        margin-left: 12px;
+      }
+      .ml3 {
+        margin-left: 18px;
+      }
+      .ml4 {
+        margin-left: 24px;
+      }
+      .ml5 {
+        margin-left: 30px;
+      }
+      .ml6 {
+        margin-left: 36px;
+      }
+      .mt-n1 {
+        margin-top: -6px;
+      }
+      .mt1 {
+        margin-top: 6px;
+      }
+      .mt2 {
+        margin-top: 12px;
+      }
+      .mt3 {
+        margin-top: 18px;
+      }
+      .mt4 {
+        margin-top: 24px;
+      }
+      .mt5 {
+        margin-top: 30px;
+      }
+      .mt6 {
+        margin-top: 36px;
+      }
+      .mt8 {
+        margin-top: 48px;
+      }
+      .mb-n1 {
+        margin-bottom: -6px;
+      }
+      .mb1 {
+        margin-bottom: 6px;
+      }
+      .mb2 {
+        margin-bottom: 12px;
+      }
+      .mb3 {
+        margin-bottom: 18px;
+      }
+      .mb4 {
+        margin-bottom: 24px;
+      }
+      .mb5 {
+        margin-bottom: 30px;
+      }
+      .mb6 {
+        margin-bottom: 36px;
+      }
+    </style>
+
+    <p>Examples A1 - A4 all pass.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h4 w4"></span>
+        <span class="passed h4 w4"></span>
+        <span class="passed h4 w4"></span>
+      </div>
+      <div>
+        <span class="passed h3 w4"></span>
+        <span class="passed h3 w4"></span>
+        <span class="passed h3 w4"></span>
+      </div>
+      <div>
+        <span class="passed h2 w4"></span>
+        <span class="passed h2 w4"></span>
+        <span class="passed h2 w4"></span>
+      </div>
+      <div>
+        <span class="passed h1 w4"></span>
+        <span class="passed h1 w4"></span>
+        <span class="passed h1 w4"></span>
+      </div>
+    </section>
+
+    <p>Examples B1 - B3 pass, B4 fails.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w3"></span>
+        <span class="passed h2 w3 ml3 mr3"></span>
+        <span class="passed h2 w3"></span>
+      </div>
+      <div>
+        <span class="passed h2 w3"></span>
+        <span class="passed h2 w3 ml2 mr2"></span>
+        <span class="passed h2 w3"></span>
+      </div>
+      <div>
+        <span class="passed h2 w3"></span>
+        <span class="passed h2 w3 ml1 mr1"></span>
+        <span class="passed h2 w3"></span>
+      </div>
+      <div>
+        <span class="failed h2 w3"></span>
+        <span class="failed h2 w3"></span>
+        <span class="failed h2 w3"></span>
+      </div>
+    </section>
+
+    <p>Examples C1 and C2 pass, C3 and C4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w2"></span>
+        <span class="passed h2 w2 ml3 mr3"></span>
+        <span class="passed h2 w2"></span>
+      </div>
+      <div>
+        <span class="passed h2 w2"></span>
+        <span class="passed h2 w2 ml2 mr2"></span>
+        <span class="passed h2 w2"></span>
+      </div>
+      <div>
+        <span class="failed h2 w2"></span>
+        <span class="failed h2 w2 ml1 mr1"></span>
+        <span class="failed h2 w2"></span>
+      </div>
+      <div>
+        <span class="failed h2 w2"></span>
+        <span class="failed h2 w2"></span>
+        <span class="failed h2 w2"></span>
+      </div>
+    </section>
+
+    <p>Example D1 passes, D2 - D4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w1"></span>
+        <span class="passed h2 w1 ml3 mr3"></span>
+        <span class="passed h2 w1"></span>
+      </div>
+      <div>
+        <span class="failed h2 w1"></span>
+        <span class="failed h2 w1 ml2 mr2"></span>
+        <span class="failed h2 w1"></span>
+      </div>
+      <div>
+        <span class="failed h2 w1"></span>
+        <span class="failed h2 w1 ml1 mr1"></span>
+        <span class="failed h2 w1"></span>
+      </div>
+      <div>
+        <span class="failed h2 w1"></span>
+        <span class="failed h2 w1"></span>
+        <span class="failed h2 w1"></span>
+      </div>
+    </section>
+
+    <p>Example E1 and E2 pass, the two outside elements of E3 and E4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w2"></span>
+        <span class="passed h2 w4 ml3 mr3"></span>
+        <span class="passed h2 w2"></span>
+      </div>
+      <div>
+        <span class="passed h2 w2"></span>
+        <span class="passed h2 w4 ml2 mr2"></span>
+        <span class="passed h2 w2"></span>
+      </div>
+      <div>
+        <span class="failed h2 w2"></span>
+        <span class="passed h2 w4 ml1 mr1"></span>
+        <span class="failed h2 w2"></span>
+      </div>
+      <div>
+        <span class="failed h2 w2"></span>
+        <span class="passed h2 w4"></span>
+        <span class="failed h2 w2"></span>
+      </div>
+    </section>
+
+    <p>Example F1 and F2 pass, the inside element of F3 and F4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w4"></span>
+        <span class="passed h2 w2 ml3 mr3"></span>
+        <span class="passed h2 w4"></span>
+      </div>
+      <div>
+        <span class="passed h2 w4"></span>
+        <span class="passed h2 w2 ml2 mr2"></span>
+        <span class="passed h2 w4"></span>
+      </div>
+      <div>
+        <span class="passed h2 w4"></span>
+        <span class="failed h2 w2 ml1 mr1"></span>
+        <span class="passed h2 w4"></span>
+      </div>
+      <div>
+        <span class="passed h2 w4"></span>
+        <span class="failed h2 w2"></span>
+        <span class="passed h2 w4"></span>
+      </div>
+    </section>
+
+    <p>Example G1 - G3 pass, the outer element of G4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w6 ml4">
+          <span class="passed h4 w4 mt1 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w6 ml3">
+          <span class="passed h4 w4 mt1 ml-n3"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w6 ml2">
+          <span class="passed h4 w4 mt1 ml-n2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h6 w6 ml1">
+          <span class="passed h4 w4 mt1 ml-n1"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example H1 and H2 pass, the outer element of H3 and H4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w10">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10">
+          <span class="passed h4 w4 mt1 ml2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h6 w10">
+          <span class="passed h4 w4 mt1 ml3"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10">
+          <span class="passed h4 w4 mt1 ml1"></span>
+          <span class="passed h4 w4 mt1"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example I1 and I2 pass, I3 and I4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h4 w6 ml6">
+          <span class="passed h2 w6 mt1 ml-n6"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h4 w6 ml4">
+          <span class="passed h2 w6 mt1 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6 ml2">
+          <span class="failed h2 w6 mt1 ml-n2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6">
+          <span class="failed h2 w6 mt1"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example J1 and J2 pass, J3 and J4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h4 w6 ml6">
+          <span class="passed h2 w6 ml-n6"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h4 w6 ml4">
+          <span class="passed h2 w6 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6 ml2">
+          <span class="failed h2 w6 ml-n2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6">
+          <span class="failed h2 w6"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example K1 - K3 pass, the middle element of K4 fails.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h4 w6 ml4">
+          <span class="passed h2 w5 mt1 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h4 w6 ml4">
+          <span class="passed h2 w6 mt1 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6 ml4">
+          <span class="passed h2 w7 mt1 ml-n4"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h4 w6 ml4">
+          <span class="passed h2 w8 mt1 ml-n4"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example L1 and L2 pass, the outer element of L3 and L4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h2 w2 rnd-50"></span>
+        <span class="passed h2 w2 mt4 ml-n2 rnd-50"></span>
+        <span class="passed h2 w2 mt8 ml-n2 rnd-50"></span>
+      </div>
+      <div>
+        <div class="rot30">
+          <span class="passed h2 w2 rnd-50"></span>
+          <span class="passed h2 w2 mt4 ml-n2 rnd-50"></span>
+          <span class="passed h2 w2 mt8 ml-n2 rnd-50"></span>
+        </div>
+      </div>
+      <div>
+        <span class="passed h2 w2 rnd-50"></span>
+        <span class="passed h2 w2 mt3 ml1 rnd-50"></span>
+        <span class="passed h2 w2 mt6 ml1 rnd-50"></span>
+      </div>
+      <div>
+        <span class="failed h2 w2 rnd-50"></span>
+        <span class="failed h2 w2 mt3 rnd-50"></span>
+        <span class="failed h2 w2 mt6 rnd-50"></span>
+      </div>
+    </section>
+
+    <p>Example M1 - M3 pass, the outer element of M4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w6 ml3 rnd-50">
+          <span class="passed h4 w4 mt1 ml-n3"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w6 ml2 rnd-50">
+          <span class="passed h4 w4 mt1 ml-n2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h6 w6 ml1 rnd-50">
+          <span class="passed h4 w4 mt1 ml-n1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h6 w6 ml1 rnd-50">
+          <span class="failed h2 w2 mt2 ml1"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example N1 - N3 pass, the outer element of N4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w10 rnd-50">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10 rnd-50">
+          <span class="passed h4 w4 mt1 ml2"></span>
+        </span>
+      </div>
+      <div>
+        <span class="failed h6 w10 rnd-50">
+          <span class="passed h4 w4 mt1 ml3"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10 rnd-50">
+          <span class="failed h2 w2 mt2 ml4"></span>
+        </span>
+      </div>
+    </section>
+
+    <p>Example O1 and O2 pass, the inner element of O3 and O4 fail.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w6 ml4">
+          <span class="passed h4 w4 mt1 ml-n4"></span>
+        </span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
+      </div>
+      <div>
+        <span class="passed h6 w6 ml3">
+          <span class="passed h4 w4 mt1 ml-n3"></span>
+        </span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
+      </div>
+      <div>
+        <span class="passed h6 w6 ml2">
+          <span class="passed h4 w4 mt1 ml-n2"></span>
+        </span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
+      </div>
+      <div>
+        <span class="failed h6 w6 ml1">
+          <span class="passed h4 w4 mt1 ml-n1"></span>
+        </span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
+      </div>
+    </section>
+
+    <p>Example P.</p>
+    <section class="sample">
+      <div>
+        <span class="passed h6 w10 rnd-0-25">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10 rnd-0-50">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10 rnd-0-75">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+      <div>
+        <span class="passed h6 w10 rnd-0-100">
+          <span class="passed h4 w4 mt1 ml1"></span>
+        </span>
+      </div>
+    </section>
+
+    <script src="/test/testutils.js"></script>
+    <script src="target-size.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-describe('dom.getTextElementStack', function() {
+describe('dom.getTextElementStack', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,19 +6,19 @@ describe('dom.getTextElementStack', function() {
 
   function mapToIDs(stack) {
     return stack
-      .map(function(node) {
+      .map(function (node) {
         return node.id;
       })
-      .filter(function(id) {
+      .filter(function (id) {
         return !!id;
       });
   }
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should return array of client text rects', function() {
+  it('should return array of client text rects', function () {
     fixture.innerHTML =
       '<main id="1">' +
       '<div id="target">' +
@@ -31,7 +31,7 @@ describe('dom.getTextElementStack', function() {
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
-  it('should ignore newline characters', function() {
+  it('should ignore newline characters', function () {
     fixture.innerHTML =
       '<main id="1">' +
       '<div id="target">' +
@@ -45,7 +45,7 @@ describe('dom.getTextElementStack', function() {
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
-  it('should handle truncated text', function() {
+  it('should handle truncated text', function () {
     fixture.innerHTML =
       '<main id="1">' +
       '<div id="target" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100px;">' +
@@ -59,7 +59,7 @@ describe('dom.getTextElementStack', function() {
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
-  it('should handle text that is too large for the container', function() {
+  it('should handle text that is too large for the container', function () {
     fixture.innerHTML =
       '<pre id="1" style="width: 400px; overflow: auto;">' +
       '<span id="target" style="display: flex; width: 400px;">\n\n' +
@@ -72,7 +72,7 @@ describe('dom.getTextElementStack', function() {
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
-  it('should handle text that overflows outside the parent', function() {
+  it('should handle text that overflows outside the parent', function () {
     fixture.innerHTML =
       '<div id="1" style="width: 250px; overflow: hidden">' +
       '<p id="target" style="max-height: 80px; overflow: hidden; line-height: 20px; font-size: 13px;">The Chandni Chowk (Moonlight Square) is one of the oldest and busiest markets in Old Delhi, India. Chandni Chowk is located close to Old Delhi Railway Station. The Red Fort monument is located within the market. It was built in the 17th century by Mughal Emperor of India Shah Jahan and designed by his daughter Jahanara. The market was once divided by canals (now closed) to reflect moonlight and remains one of India\'s largest wholesale markets.</p>' +

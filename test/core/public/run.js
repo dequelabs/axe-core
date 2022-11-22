@@ -1,16 +1,11 @@
-describe('axe.run', function() {
+describe('axe.run', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
-  var noop = function() {};
+  var noop = function () {};
   var origRunRules = axe._runRules;
 
-  // These tests can sometimes be flaky in IE, allow for up to 3 retries
-  if (axe.testUtils.isIE11) {
-    this.retries(3);
-  }
-
-  beforeEach(function() {
+  beforeEach(function () {
     axe._load({
       rules: [
         {
@@ -22,7 +17,7 @@ describe('axe.run', function() {
       checks: [
         {
           id: 'fred',
-          evaluate: function(node) {
+          evaluate: function (node) {
             this.relatedNodes([node]);
             return true;
           }
@@ -31,14 +26,14 @@ describe('axe.run', function() {
     });
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._audit = null;
     axe._runRules = origRunRules;
     axe._running = false;
   });
 
-  it('takes context, options and callback as parameters', function(done) {
+  it('takes context, options and callback as parameters', function (done) {
     fixture.innerHTML = '<div id="t1"></div>';
     var options = {
       runOnly: {
@@ -47,14 +42,14 @@ describe('axe.run', function() {
       }
     };
 
-    axe.run(['#t1'], options, function() {
+    axe.run(['#t1'], options, function () {
       assert.ok(true, 'test completed');
       done();
     });
   });
 
-  it('uses document as content if it is not specified', function(done) {
-    axe._runRules = function(ctxt) {
+  it('uses document as content if it is not specified', function (done) {
+    axe._runRules = function (ctxt) {
       assert.equal(ctxt, document);
       done();
     };
@@ -62,31 +57,31 @@ describe('axe.run', function() {
     axe.run({ someOption: true }, noop);
   });
 
-  it('uses an object as options if it is not specified', function(done) {
-    axe._runRules = function(ctxt, opt) {
+  it('uses an object as options if it is not specified', function (done) {
+    axe._runRules = function (ctxt, opt) {
       assert.isObject(opt);
       done();
     };
     axe.run(document, noop);
   });
 
-  it('does not mutate the options object', function(done) {
+  it('does not mutate the options object', function (done) {
     var options = {};
-    axe.run(options, function() {
+    axe.run(options, function () {
       assert.deepEqual(options, {});
       done();
     });
   });
 
-  it('works with performance logging enabled', function(done) {
-    axe.run(document, { performanceTimer: true }, function(err, result) {
+  it('works with performance logging enabled', function (done) {
+    axe.run(document, { performanceTimer: true }, function (err, result) {
       assert.isObject(result);
       done();
     });
   });
 
-  it('treats objects with include or exclude as the context object', function(done) {
-    axe._runRules = function(ctxt) {
+  it('treats objects with include or exclude as the context object', function (done) {
+    axe._runRules = function (ctxt) {
       assert.deepEqual(ctxt, { include: '#BoggyB' });
       done();
     };
@@ -94,8 +89,8 @@ describe('axe.run', function() {
     axe.run({ include: '#BoggyB' }, noop);
   });
 
-  it('treats objects with neither include or exclude as the option object', function(done) {
-    axe._runRules = function(ctxt, opt) {
+  it('treats objects with neither include or exclude as the option object', function (done) {
+    axe._runRules = function (ctxt, opt) {
       assert.deepEqual(opt.HHG, 'hallelujah');
       done();
     };
@@ -103,61 +98,61 @@ describe('axe.run', function() {
     axe.run({ HHG: 'hallelujah' }, noop);
   });
 
-  it('does not fail if no callback is specified', function(done) {
-    assert.doesNotThrow(function() {
+  it('does not fail if no callback is specified', function (done) {
+    assert.doesNotThrow(function () {
       axe.run(done);
     });
   });
 
-  it('should error if axe is already running', function(done) {
+  it('should error if axe is already running', function (done) {
     axe.run(noop);
-    axe.run(function(err) {
+    axe.run(function (err) {
       assert.isTrue(err.indexOf('Axe is already running') !== -1);
       done();
     });
   });
 
-  describe('callback', function() {
-    it('gives errors to the first argument on the callback', function(done) {
-      axe._runRules = function(ctxt, opt, resolve, reject) {
+  describe('callback', function () {
+    it('gives errors to the first argument on the callback', function (done) {
+      axe._runRules = function (ctxt, opt, resolve, reject) {
         axe._runRules = origRunRules;
         reject('Ninja rope!');
       };
 
-      axe.run({ reporter: 'raw' }, function(err) {
+      axe.run({ reporter: 'raw' }, function (err) {
         assert.equal(err, 'Ninja rope!');
         done();
       });
     });
 
-    it('gives results to the second argument on the callback', function(done) {
-      axe._runRules = function(ctxt, opt, resolve) {
+    it('gives results to the second argument on the callback', function (done) {
+      axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         resolve('MB Bomb', noop);
       };
 
-      axe.run({ reporter: 'raw' }, function(err, result) {
+      axe.run({ reporter: 'raw' }, function (err, result) {
         assert.equal(err, null);
         assert.equal(result, 'MB Bomb');
         done();
       });
     });
 
-    it('does not run the callback twice if it throws', function(done) {
+    it('does not run the callback twice if it throws', function (done) {
       var calls = 0;
-      axe._runRules = function(ctxt, opt, resolve) {
+      axe._runRules = function (ctxt, opt, resolve) {
         resolve([], noop);
       };
 
       var log = axe.log;
-      axe.log = function(e) {
+      axe.log = function (e) {
         assert.equal(e.message, 'err');
         axe.log = log;
       };
-      axe.run(function() {
+      axe.run(function () {
         calls += 1;
         if (calls === 1) {
-          setTimeout(function() {
+          setTimeout(function () {
             assert.equal(calls, 1);
             axe.log = log;
             done();
@@ -167,9 +162,9 @@ describe('axe.run', function() {
       });
     });
 
-    it('is called after cleanup', function(done) {
+    it('is called after cleanup', function (done) {
       var isClean = false;
-      axe._runRules = function(ctxt, opt, resolve) {
+      axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         // Check that cleanup is called before the callback is executed
         resolve('MB Bomb', function cleanup() {
@@ -177,25 +172,25 @@ describe('axe.run', function() {
         });
       };
 
-      axe.run({ reporter: 'raw' }, function() {
+      axe.run({ reporter: 'raw' }, function () {
         assert.isTrue(isClean, 'cleanup must be called first');
         done();
       });
     });
   });
 
-  describe('promise result', function() {
+  describe('promise result', function () {
     /*eslint indent: 0*/
     var promiseIt = window.Promise ? it : it.skip;
 
-    promiseIt('returns an error to catch if axe fails', function(done) {
-      axe._runRules = function(ctxt, opt, resolve, reject) {
+    promiseIt('returns an error to catch if axe fails', function (done) {
+      axe._runRules = function (ctxt, opt, resolve, reject) {
         axe._runRules = origRunRules;
         reject('I surrender!');
       };
 
       var p = axe.run({ reporter: 'raw' });
-      p.then(noop).catch(function(err) {
+      p.then(noop).catch(function (err) {
         assert.equal(err, 'I surrender!');
         done();
       });
@@ -203,14 +198,14 @@ describe('axe.run', function() {
       assert.instanceOf(p, window.Promise);
     });
 
-    promiseIt('returns a promise if no callback was given', function(done) {
-      axe._runRules = function(ctxt, opt, resolve) {
+    promiseIt('returns a promise if no callback was given', function (done) {
+      axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         resolve('World party', noop);
       };
 
       var p = axe.run({ reporter: 'raw' });
-      p.then(function(result) {
+      p.then(function (result) {
         assert.equal(result, 'World party');
         done();
       });
@@ -218,31 +213,31 @@ describe('axe.run', function() {
       assert.instanceOf(p, window.Promise);
     });
 
-    promiseIt('does not error if then() throws', function(done) {
-      axe._runRules = function(ctxt, opt, resolve) {
+    promiseIt('does not error if then() throws', function (done) {
+      axe._runRules = function (ctxt, opt, resolve) {
         resolve([], noop);
       };
 
       axe
         .run()
         .then(
-          function() {
+          function () {
             throw new Error('err');
           },
-          function(e) {
+          function (e) {
             assert.isNotOk(e, 'Caught callback error in the wrong place');
             done();
           }
         )
-        .catch(function(e) {
+        .catch(function (e) {
           assert.equal(e.message, 'err');
           done();
         });
     });
 
-    promiseIt('is called after cleanup', function(done) {
+    promiseIt('is called after cleanup', function (done) {
       var isClean = false;
-      axe._runRules = function(ctxt, opt, resolve) {
+      axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         // Check that cleanup is called before the callback is executed
         resolve('MB Bomb', function cleanup() {
@@ -252,7 +247,7 @@ describe('axe.run', function() {
 
       axe
         .run({ reporter: 'raw' })
-        .then(function() {
+        .then(function () {
           assert(isClean, 'cleanup must be called first');
           done();
         })
@@ -260,9 +255,9 @@ describe('axe.run', function() {
     });
   });
 
-  describe('option reporter', function() {
-    it('sets v1 as the default reporter if audit.reporter is null', function(done) {
-      axe._runRules = function(ctxt, opt) {
+  describe('option reporter', function () {
+    it('sets v1 as the default reporter if audit.reporter is null', function (done) {
+      axe._runRules = function (ctxt, opt) {
         assert.equal(opt.reporter, 'v1');
         axe._runRules = origRunRules;
         done();
@@ -271,8 +266,8 @@ describe('axe.run', function() {
       axe.run(document, noop);
     });
 
-    it('uses the audit.reporter if no reporter is set in options', function(done) {
-      axe._runRules = function(ctxt, opt) {
+    it('uses the audit.reporter if no reporter is set in options', function (done) {
+      axe._runRules = function (ctxt, opt) {
         assert.equal(opt.reporter, 'raw');
         axe._runRules = origRunRules;
         done();
@@ -281,8 +276,8 @@ describe('axe.run', function() {
       axe.run(document, noop);
     });
 
-    it('does not override if another reporter is set', function(done) {
-      axe._runRules = function(ctxt, opt) {
+    it('does not override if another reporter is set', function (done) {
+      axe._runRules = function (ctxt, opt) {
         assert.equal(opt.reporter, 'raw');
         axe._runRules = origRunRules;
         done();
@@ -292,21 +287,21 @@ describe('axe.run', function() {
     });
   });
 
-  describe('option xpath', function() {
-    it('returns no xpath if the xpath option is not set', function(done) {
-      axe.run('#fixture', function(err, result) {
+  describe('option xpath', function () {
+    it('returns no xpath if the xpath option is not set', function (done) {
+      axe.run('#fixture', function (err, result) {
         assert.isUndefined(result.violations[0].nodes[0].xpath);
         done();
       });
     });
 
-    it('returns the xpath if the xpath option is true', function(done) {
+    it('returns the xpath if the xpath option is true', function (done) {
       axe.run(
         '#fixture',
         {
           xpath: true
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].xpath, [
             "/div[@id='fixture']"
           ]);
@@ -315,13 +310,13 @@ describe('axe.run', function() {
       );
     });
 
-    it('returns xpath on related nodes', function(done) {
+    it('returns xpath on related nodes', function (done) {
       axe.run(
         '#fixture',
         {
           xpath: true
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(
             result.violations[0].nodes[0].none[0].relatedNodes[0].xpath,
             ["/div[@id='fixture']"]
@@ -331,14 +326,14 @@ describe('axe.run', function() {
       );
     });
 
-    it('returns the xpath on any reporter', function(done) {
+    it('returns the xpath on any reporter', function (done) {
       axe.run(
         '#fixture',
         {
           xpath: true,
           reporter: 'no-passes'
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].xpath, [
             "/div[@id='fixture']"
           ]);
@@ -348,27 +343,27 @@ describe('axe.run', function() {
     });
   });
 
-  describe('option absolutePaths', function() {
-    it('returns relative paths when falsy', function(done) {
+  describe('option absolutePaths', function () {
+    it('returns relative paths when falsy', function (done) {
       axe.run(
         '#fixture',
         {
           absolutePaths: 0
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].target, ['#fixture']);
           done();
         }
       );
     });
 
-    it('returns absolute paths when truthy', function(done) {
+    it('returns absolute paths when truthy', function (done) {
       axe.run(
         '#fixture',
         {
           absolutePaths: 'yes please'
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].target, [
             'html > body > #fixture'
           ]);
@@ -377,13 +372,13 @@ describe('axe.run', function() {
       );
     });
 
-    it('returns absolute paths on related nodes', function(done) {
+    it('returns absolute paths on related nodes', function (done) {
       axe.run(
         '#fixture',
         {
           absolutePaths: true
         },
-        function(err, result) {
+        function (err, result) {
           assert.deepEqual(
             result.violations[0].nodes[0].none[0].relatedNodes[0].target,
             ['html > body > #fixture']
@@ -395,16 +390,14 @@ describe('axe.run', function() {
   });
 });
 
-describe('axe.run iframes', function() {
+describe('axe.run iframes', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var origRunRules = axe._runRules;
   var captureError = axe.testUtils.captureError;
 
-  this.timeout(1000);
-
-  beforeEach(function() {
+  beforeEach(function () {
     fixture.innerHTML = '<div id="target">Target in top frame</div>';
     axe._load({
       rules: [
@@ -417,7 +410,7 @@ describe('axe.run iframes', function() {
       checks: [
         {
           id: 'fred',
-          evaluate: function() {
+          evaluate: function () {
             return true;
           }
         }
@@ -425,19 +418,19 @@ describe('axe.run iframes', function() {
     });
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._audit = null;
     axe._runRules = origRunRules;
   });
 
-  it('includes iframes by default', function(done) {
+  it('includes iframes by default', function (done) {
     var frame = document.createElement('iframe');
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         {},
-        captureError(function(err, result) {
+        captureError(function (err, result) {
           assert.equal(result.violations.length, 1);
           var violation = result.violations[0];
           assert.equal(
@@ -446,13 +439,13 @@ describe('axe.run iframes', function() {
             'one node for top frame, one for iframe'
           );
           assert.isTrue(
-            violation.nodes.some(function(node) {
+            violation.nodes.some(function (node) {
               return node.target.length === 1 && node.target[0] === '#target';
             }),
             'one result from top frame'
           );
           assert.isTrue(
-            violation.nodes.some(function(node) {
+            violation.nodes.some(function (node) {
               return node.target.length === 2 && node.target[0] === 'iframe';
             }),
             'one result from iframe'
@@ -466,13 +459,13 @@ describe('axe.run iframes', function() {
     fixture.appendChild(frame);
   });
 
-  it('excludes iframes if iframes is false', function(done) {
+  it('excludes iframes if iframes is false', function (done) {
     var frame = document.createElement('iframe');
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         { iframes: false },
-        captureError(function(err, result) {
+        captureError(function (err, result) {
           assert.equal(result.violations.length, 1);
           var violation = result.violations[0];
           assert.equal(violation.nodes.length, 1, 'only top frame');
@@ -487,13 +480,13 @@ describe('axe.run iframes', function() {
     fixture.appendChild(frame);
   });
 
-  it('ignores unexpected messages from non-axe iframes', function(done) {
+  it('ignores unexpected messages from non-axe iframes', function (done) {
     var frame = document.createElement('iframe');
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         {},
-        captureError(function(err, result) {
+        captureError(function (err, result) {
           assert.isNull(err);
           assert.equal(result.violations.length, 1);
           done();
@@ -505,14 +498,14 @@ describe('axe.run iframes', function() {
     fixture.appendChild(frame);
   });
 
-  it('ignores unexpected messages from axe iframes', function(done) {
+  it('ignores unexpected messages from axe iframes', function (done) {
     var frame = document.createElement('iframe');
 
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         {},
-        captureError(function(err, result) {
+        captureError(function (err, result) {
           assert.isNull(err);
           assert.equal(result.violations.length, 1);
           done();

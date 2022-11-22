@@ -1,22 +1,22 @@
-describe('axe.reset', function() {
+describe('axe.reset', function () {
   'use strict';
 
   // var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   var fixture = document.getElementById('fixture');
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._audit = null;
   });
 
-  it('should throw if no audit is configured', function() {
+  it('should throw if no audit is configured', function () {
     assert.throws(
-      function() {
+      function () {
         axe.reset(
-          function() {},
-          function() {}
+          function () {},
+          function () {}
         );
       },
       Error,
@@ -24,7 +24,7 @@ describe('axe.reset', function() {
     );
   });
 
-  it('should restore the default configuration', function() {
+  it('should restore the default configuration', function () {
     axe._load({
       data: {
         rules: {
@@ -77,8 +77,8 @@ describe('axe.reset', function() {
     assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
   });
 
-  describe('when custom locale was provided', function() {
-    beforeEach(function() {
+  describe('when custom locale was provided', function () {
+    beforeEach(function () {
       axe._load({
         data: {
           checks: {
@@ -95,13 +95,13 @@ describe('axe.reset', function() {
         checks: [
           {
             id: 'banana',
-            evaluate: function() {}
+            evaluate: function () {}
           }
         ]
       });
     });
 
-    it('should restore the original locale', function() {
+    it('should restore the original locale', function () {
       axe.configure({
         locale: {
           checks: {
@@ -124,7 +124,7 @@ describe('axe.reset', function() {
     });
   });
 
-  it('should restore standards object', function() {
+  it('should restore standards object', function () {
     axe._load({});
 
     axe.configure({
