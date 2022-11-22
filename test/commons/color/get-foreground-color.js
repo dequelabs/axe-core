@@ -6,8 +6,8 @@ describe('color.getForegroundColor', () => {
     assert.closeTo(actual.red, expected.red, margin);
     assert.closeTo(actual.green, expected.green, margin);
     assert.closeTo(actual.blue, expected.blue, margin);
-    // Reduce the margin for alpha, since it is 100-based, rather than 255-based
-    assert.closeTo(actual.alpha, expected.alpha, margin / 8);
+    // RGB values are 0-255, alpha is 0-1, so divide margin by 255
+    assert.closeTo(actual.alpha, expected.alpha, margin / 255);
   }
 
   afterEach(() => {
