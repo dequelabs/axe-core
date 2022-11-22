@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: dequelabs/semantic-pr-title@v1.0.0
+      - uses: dequelabs/semantic-pr-title@v1
