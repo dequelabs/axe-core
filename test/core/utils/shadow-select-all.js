@@ -76,7 +76,7 @@ describe('utils.shadowSelectAll', () => {
       );
       const root2 = addShadowTree(
         fixture.children[1],
-        '<span></span><span></span>'
+        '<div></div><span></span>'
       );
 
       addShadowTree(root1.children[0], '<a></a>');
@@ -87,7 +87,7 @@ describe('utils.shadowSelectAll', () => {
       const nodeNames = mapNodeName(
         shadowSelectAll(['#fixture > div', 'span', '*'])
       );
-      assert.deepEqual(nodeNames, ['a', 'b', 'i', 's']);
+      assert.deepEqual(nodeNames, ['a', 'b', 's']);
     });
   });
 });
