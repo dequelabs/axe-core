@@ -84,7 +84,7 @@ describe('color.getForegroundColor', () => {
       assertSameColor(fgColor, new Color(0, 0, 128));
     });
 
-    it('uses stroke color when thicker equal to the minimum', () => {
+    it('uses stroke color when thickness is equal to the minimum', () => {
       const target = queryFixture(
         '<div style="color: #CCC; -webkit-text-stroke: 0.2em rgb(0 0 128);" id="target"></div>'
       ).actualNode;
