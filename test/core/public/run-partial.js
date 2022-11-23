@@ -132,7 +132,7 @@ describe('axe.runPartial', function () {
   describe('environmentData', function () {
     it('includes environment data for the initiator', function (done) {
       var context = {
-        include: ['#fixture']
+        include: [['#fixture']]
       };
       axe
         .runPartial(context, { runOnly: 'image-alt' })
@@ -146,7 +146,7 @@ describe('axe.runPartial', function () {
 
     it('is undefined for frames', function (done) {
       var context = {
-        include: ['#fixture'],
+        include: [['#fixture']],
         initiator: false
       };
       axe

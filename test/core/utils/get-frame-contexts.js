@@ -190,13 +190,13 @@ describe('utils.getFrameContexts', function () {
       assert.deepEqual(frameContexts[0].frameContext.include, []);
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
 
-      frameContexts = getFrameContexts({ include: ['#f1'] });
+      frameContexts = getFrameContexts({ include: [['#f1']] });
       assert.lengthOf(frameContexts, 1);
       assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
       assert.deepEqual(frameContexts[0].frameContext.include, []);
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
 
-      frameContexts = getFrameContexts({ exclude: ['#f2'] });
+      frameContexts = getFrameContexts({ exclude: [['#f2']] });
       assert.lengthOf(frameContexts, 1);
       assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
       assert.deepEqual(frameContexts[0].frameContext.include, []);

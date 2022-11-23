@@ -1,43 +1,36 @@
 /*eslint no-unused-vars:0*/
-describe('Context', function () {
-  'use strict';
-
-  var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
+describe('Context', () => {
+  const { Context } = axe._thisWillBeDeletedDoNotUse.base;
+  const fixture = document.getElementById('fixture');
 
   function $id(id) {
     return document.getElementById(id);
   }
 
-  var fixture = document.getElementById('fixture');
-
-  afterEach(function () {
-    fixture.innerHTML = '';
-  });
-
-  it('should not mutate exclude in input', function () {
+  it('should not mutate exclude in input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
-    var context = { exclude: [['iframe', '#foo']] };
+    const context = { exclude: [['iframe', '#foo']] };
     // eslint-disable-next-line no-new
     new Context(context);
     assert.deepEqual(context, { exclude: [['iframe', '#foo']] });
   });
 
-  it('should not mutate its include input', function () {
+  it('should not mutate its include input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
-    var context = { include: [['#foo']] };
+    const context = { include: [['#foo']] };
     // eslint-disable-next-line no-new
     new Context(context);
     assert.deepEqual(context, { include: [['#foo']] });
   });
 
-  it('should not share memory with complex object', function () {
+  it('should not share memory with complex object', () => {
     fixture.innerHTML = '<div id="foo"><a href="">Click me</a></div>';
-    var spec = {
+    const spec = {
       include: [['#foo'], ['a']],
       exclude: [['iframe', '#foo2']],
       size: { width: 100, height: 100 }
     };
-    var context = new Context(spec);
+    const context = new Context(spec);
     assert.notStrictEqual(spec.include, context.include);
     spec.include.forEach(function (_, index) {
       assert.notStrictEqual(spec.include[index], context.include[index]);
@@ -49,24 +42,24 @@ describe('Context', function () {
     assert.notStrictEqual(spec.size, context.size);
   });
 
-  it('should not share memory with simple array', function () {
+  it('should not share memory with simple array', () => {
     fixture.innerHTML = '<div id="foo"></div>';
-    var spec = ['#foo'];
-    var context = new Context(spec);
+    const spec = [['#foo']];
+    const context = new Context(spec);
     assert.notStrictEqual(spec, context.include);
   });
 
-  describe('include', function () {
-    it('should accept a single selector', function () {
+  describe('include', () => {
+    it('should accept a single selector', () => {
       fixture.innerHTML = '<div id="foo"></div>';
-      var result = new Context('#foo');
+      const result = new Context('#foo');
 
       assert.deepEqual([result.include[0].actualNode], [$id('foo')]);
     });
 
-    it('should accept multiple selectors', function () {
+    it('should accept multiple selectors', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-      var result = new Context([['#foo'], ['#bar']]);
+      const result = new Context([['#foo'], ['#bar']]);
 
       assert.deepEqual(
         [result.include[0].actualNode, result.include[1].actualNode],
@@ -74,43 +67,43 @@ describe('Context', function () {
       );
     });
 
-    it('should accept a node reference', function () {
-      var div = document.createElement('div');
+    it('should accept a node reference', () => {
+      const div = document.createElement('div');
       fixture.appendChild(div);
 
-      var result = new Context(div);
+      const result = new Context(div);
 
       assert.deepEqual([result.include[0].actualNode], [div]);
     });
 
-    it('should accept a node reference consisting of nested divs', function () {
-      var div1 = document.createElement('div');
-      var div2 = document.createElement('div');
+    it('should accept a node reference consisting of nested divs', () => {
+      const div1 = document.createElement('div');
+      const div2 = document.createElement('div');
 
       div1.appendChild(div2);
       fixture.appendChild(div1);
 
-      var result = new Context(div1);
+      const result = new Context(div1);
 
       assert.deepEqual([result.include[0].actualNode], [div1]);
     });
 
-    it('should accept a node reference consisting of a form with nested controls', function () {
-      var form = document.createElement('form');
-      var input = document.createElement('input');
+    it('should accept a node reference consisting of a form with nested controls', () => {
+      const form = document.createElement('form');
+      const input = document.createElement('input');
 
       form.appendChild(input);
       fixture.appendChild(form);
 
-      var result = new Context(form);
+      const result = new Context(form);
 
       assert.deepEqual([result.include[0].actualNode], [form]);
     });
 
-    it('should accept an array of node references', function () {
+    it('should accept an array of node references', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
-      var result = new Context([$id('foo'), $id('bar')]);
+      const result = new Context([$id('foo'), $id('bar')]);
 
       assert.deepEqual(
         [result.include[0].actualNode, result.include[1].actualNode],
@@ -118,10 +111,10 @@ describe('Context', function () {
       );
     });
 
-    it('should remove any non-matched reference', function () {
+    it('should remove any non-matched reference', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
-      var result = new Context([['#foo'], ['#baz'], ['#bar']]);
+      const result = new Context([['#foo'], ['#baz'], ['#bar']]);
 
       assert.deepEqual(
         result.include.map(function (n) {
@@ -131,11 +124,11 @@ describe('Context', function () {
       );
     });
 
-    it('should sort the include nodes in document order', function () {
+    it('should sort the include nodes in document order', () => {
       fixture.innerHTML =
         '<div id="foo"><div id="bar"></div></div><div id="baz"></div>';
 
-      var result = new Context([['#foo'], ['#baz'], ['#bar']]);
+      const result = new Context([['#foo'], ['#baz'], ['#bar']]);
 
       assert.deepEqual(
         result.include.map(function (n) {
@@ -145,10 +138,10 @@ describe('Context', function () {
       );
     });
 
-    it('should remove any null reference', function () {
+    it('should remove any null reference', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
-      var result = new Context([$id('foo'), $id('bar'), null]);
+      const result = new Context([$id('foo'), $id('bar'), null]);
 
       assert.deepEqual(
         result.include.map(function (n) {
@@ -158,13 +151,13 @@ describe('Context', function () {
       );
     });
 
-    it('should accept mixed', function () {
+    it('should accept mixed', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-      var div = document.createElement('div');
+      const div = document.createElement('div');
       div.id = 'baz';
       fixture.appendChild(div);
 
-      var result = new Context([['#foo'], ['#bar'], div]);
+      const result = new Context([['#foo'], ['#bar'], div]);
 
       assert.deepEqual(
         result.include.map(function (n) {
@@ -174,17 +167,17 @@ describe('Context', function () {
       );
     });
 
-    it('should support jQuery-like objects', function () {
+    it('should support jQuery-like objects', () => {
       fixture.innerHTML =
         '<div id="foo"></div><div id="bar"></div><div id="baz"></div>';
-      var $test = {
+      const $test = {
         0: $id('foo'),
         1: $id('bar'),
         2: $id('baz'),
         length: 3
       };
 
-      var result = new Context($test);
+      const result = new Context($test);
 
       assert.deepEqual(
         result.include.map(function (n) {
@@ -194,36 +187,36 @@ describe('Context', function () {
       );
     });
 
-    describe('throwing errors', function () {
-      var isInFrame;
+    describe('throwing errors', () => {
+      let isInFrame;
 
-      beforeEach(function () {
+      beforeEach(() => {
         isInFrame = axe.utils.respondable.isInFrame;
       });
-      afterEach(function () {
+      afterEach(() => {
         axe.utils.respondable.isInFrame = isInFrame;
       });
 
-      it('should throw when no elements match the context', function () {
+      it('should throw when no elements match the context', () => {
         fixture.innerHTML = '<div id="foo"></div>';
         assert.throws(
-          function () {
-            var ctxt = new Context('#notAnElement');
+          () => {
+            const ctxt = new Context('#notAnElement');
           },
           Error,
           'No elements found for include in page Context'
         );
       });
 
-      it.skip('should throw when no elements match the context inside a frame', function () {
-        axe.utils.respondable.isInFrame = function () {
+      it.skip('should throw when no elements match the context inside a frame', () => {
+        axe.utils.respondable.isInFrame = () => {
           return true;
         };
 
         fixture.innerHTML = '<div id="foo"></div>';
         assert.throws(
-          function () {
-            var ctxt = new Context('#notAnElement');
+          () => {
+            const ctxt = new Context('#notAnElement');
           },
           Error,
           'No elements found for include in frame Context'
@@ -231,8 +224,8 @@ describe('Context', function () {
       });
     });
 
-    it('should create a flatTree property', function () {
-      var context = new Context({ include: [document] });
+    it('should create a flatTree property', () => {
+      const context = new Context({ include: [document] });
       assert.isArray(context.flatTree);
       assert.isAtLeast(context.flatTree.length, 1);
     });
@@ -240,9 +233,9 @@ describe('Context', function () {
 
   describe('object definition', function () {
     it('should assign include/exclude', function () {
-      var context = new Context({
-        include: ['#fixture'],
-        exclude: ['#mocha']
+      const context = new Context({
+        include: [['#fixture']],
+        exclude: [['#mocha']]
       });
       assert.isNotNull(context);
       assert.hasAllKeys(context, [
@@ -260,10 +253,10 @@ describe('Context', function () {
     });
 
     it('should disregard bad input, non-matching selectors', function () {
-      var flatTree = axe.utils.getFlattenedTree(document);
-      var context = new Context({
-        include: ['#fixture', '#monkeys'],
-        exclude: ['#bananas']
+      const flatTree = axe.utils.getFlattenedTree(document);
+      const context = new Context({
+        include: [['#fixture'], ['#monkeys']],
+        exclude: [['#bananas']]
       });
       assert.isNotNull(context);
       assert.hasAllKeys(context, [
@@ -284,7 +277,7 @@ describe('Context', function () {
     });
 
     it('should disregard bad input (null)', function () {
-      var result = new Context();
+      const result = new Context();
 
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
@@ -298,7 +291,7 @@ describe('Context', function () {
     });
 
     it('should default include to document', function () {
-      var result = new Context({ exclude: ['#fixture'] });
+      const result = new Context({ exclude: [['#fixture']] });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
 
@@ -312,7 +305,7 @@ describe('Context', function () {
     });
 
     it('should default empty include to document', function () {
-      var result = new Context({ include: [], exclude: [] });
+      const result = new Context({ include: [], exclude: [] });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
     });
@@ -320,7 +313,7 @@ describe('Context', function () {
 
   describe('initiator', function () {
     it('should not be clobbered', function () {
-      var result = new Context({
+      const result = new Context({
         initiator: false
       });
       assert.lengthOf(result.include, 1);
@@ -336,10 +329,10 @@ describe('Context', function () {
 
     // document.hasOwnProperty is undefined in Firefox content scripts
     it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function () {
-      var spec = document.implementation.createHTMLDocument('ie is dumb');
+      const spec = document.implementation.createHTMLDocument('ie is dumb');
       spec.hasOwnProperty = undefined;
 
-      var result = new Context(spec);
+      const result = new Context(spec);
 
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, spec.documentElement);
@@ -371,8 +364,8 @@ describe('Context', function () {
       // not that parts within that are excluded
       assert.isTrue(
         new Context({
-          include: [document],
-          exclude: ['#mocha']
+          include: document,
+          exclude: [['#mocha']]
         }).page
       );
     });
@@ -380,26 +373,26 @@ describe('Context', function () {
     it('is false if the context does not include documentElement', function () {
       assert.isFalse(new Context(fixture).page);
       assert.isFalse(new Context('#fixture').page);
-      assert.isFalse(new Context(['#fixture']).page);
-      assert.isFalse(new Context({ include: ['#fixture'] }).page);
+      assert.isFalse(new Context([['#fixture']]).page);
+      assert.isFalse(new Context({ include: [['#fixture']] }).page);
     });
   });
 
   describe('focusable', function () {
     it('should default to true', function () {
-      var result = new Context();
+      const result = new Context();
       assert.isTrue(result.focusable);
     });
 
     it('should use passed in value', function () {
-      var result = new Context({
+      const result = new Context({
         focusable: false
       });
       assert.isFalse(result.focusable);
     });
 
     it('should reject bad values', function () {
-      var result = new Context({
+      const result = new Context({
         focusable: 'hello'
       });
       assert.isTrue(result.focusable);
@@ -408,12 +401,12 @@ describe('Context', function () {
 
   describe('size', function () {
     it('should default to empty object', function () {
-      var result = new Context();
+      const result = new Context();
       assert.deepEqual(result.size, {});
     });
 
     it('should use passed in value', function () {
-      var result = new Context({
+      const result = new Context({
         size: {
           width: 10,
           height: 20
@@ -426,7 +419,7 @@ describe('Context', function () {
     });
 
     it('should reject bad values', function () {
-      var result = new Context({
+      const result = new Context({
         size: 'hello'
       });
       assert.deepEqual(result.size, {});
@@ -435,7 +428,7 @@ describe('Context', function () {
 
   describe('frames', function () {
     function iframeReady(src, context, id, cb, done) {
-      var iframe = document.createElement('iframe');
+      const iframe = document.createElement('iframe');
       iframe.addEventListener('load', function () {
         try {
           cb(iframe);
@@ -456,7 +449,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context('#target');
+          const result = new Context('#target');
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
         },
@@ -471,7 +464,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context('#outer');
+          const result = new Context('#outer');
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
         },
@@ -486,7 +479,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context([['#target', '#foo']]);
+          const result = new Context([['#target', '#foo']]);
           assert.lengthOf(result.frames, 1);
 
           assert.deepEqual(result.frames[0].node, $id('target'));
@@ -504,7 +497,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context({
+          const result = new Context({
             exclude: [['#target', '#foo']]
           });
           assert.lengthOf(result.frames, 1);
@@ -523,7 +516,7 @@ describe('Context', function () {
         $id('fixture'),
         'target',
         function () {
-          var result = new Context();
+          const result = new Context();
           assert.isTrue(result.initiator);
           assert.lengthOf(result.frames, 1);
           assert.isFalse(result.frames[0].initiator);
@@ -539,7 +532,7 @@ describe('Context', function () {
           $id('fixture'),
           'target',
           function () {
-            var result = new Context({
+            const result = new Context({
               exclude: [['#mocha']]
             });
             assert.lengthOf(result.frames, 1);
@@ -555,7 +548,7 @@ describe('Context', function () {
           $id('fixture'),
           'target',
           function () {
-            var result = new Context({
+            const result = new Context({
               include: [['#fixture']]
             });
             assert.lengthOf(result.frames, 1);
@@ -574,7 +567,7 @@ describe('Context', function () {
           'target',
           function (iframe) {
             iframe.tabIndex = '0';
-            var result = new Context();
+            const result = new Context();
             assert.lengthOf(result.frames, 1);
             assert.isTrue(result.frames[0].focusable);
           },
@@ -589,7 +582,7 @@ describe('Context', function () {
           'target',
           function (iframe) {
             iframe.tabIndex = '-1';
-            var result = new Context('#fixture');
+            const result = new Context('#fixture');
             assert.lengthOf(result.frames, 1);
             assert.isFalse(result.frames[0].focusable);
           },
@@ -603,8 +596,8 @@ describe('Context', function () {
           $id('fixture'),
           'target',
           function () {
-            var result = new Context({
-              include: ['#fixture'],
+            const result = new Context({
+              include: [['#fixture']],
               focusable: false
             });
             assert.lengthOf(result.frames, 1);
@@ -624,8 +617,8 @@ describe('Context', function () {
           function (iframe) {
             iframe.width = '100';
             iframe.height = '200';
-            var result = new Context('#fixture');
-            var size = result.frames[0].size;
+            const result = new Context('#fixture');
+            const size = result.frames[0].size;
             assert.closeTo(size.width, 105, 10);
             assert.closeTo(size.height, 205, 10);
           },
@@ -640,8 +633,8 @@ describe('Context', function () {
           'target',
           function (iframe) {
             iframe.setAttribute('style', 'width: 100px; height: 200px');
-            var result = new Context('#fixture');
-            var size = result.frames[0].size;
+            const result = new Context('#fixture');
+            const size = result.frames[0].size;
             assert.closeTo(size.width, 105, 10);
             assert.closeTo(size.height, 205, 10);
           },
@@ -657,7 +650,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context([
+          const result = new Context([
             ['#target', '#foo'],
             ['#target', '#bar']
           ]);
@@ -678,7 +671,7 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var result = new Context([$id('target'), $id('target')]);
+          const result = new Context([$id('target'), $id('target')]);
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
         },
@@ -693,10 +686,10 @@ describe('Context', function () {
         $id('outer'),
         'target',
         function () {
-          var frame = $id('target');
+          const frame = $id('target');
           frame.setAttribute('hidden', 'hidden');
 
-          var result = new Context([$id('target')]);
+          const result = new Context([$id('target')]);
           assert.deepEqual(result.frames, []);
         },
         done
@@ -711,7 +704,7 @@ describe('Context', function () {
         'target',
         function () {
           assert.throws(function () {
-            var ctxt = new Context(['#notAFrame', '#foo']);
+            const ctxt = new Context(['#notAFrame', '#foo']);
           });
         },
         done
