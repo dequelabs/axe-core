@@ -44,7 +44,7 @@ describe('Context', () => {
 
   it('should not share memory with simple array', () => {
     fixture.innerHTML = '<div id="foo"></div>';
-    const spec = ['#foo'];
+    const spec = [['#foo']];
     const context = new Context(spec);
     assert.notStrictEqual(spec, context.include);
   });
@@ -59,7 +59,7 @@ describe('Context', () => {
 
     it('should accept multiple selectors', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-      const result = new Context(['#foo', '#bar']);
+      const result = new Context([['#foo'], ['#bar']]);
 
       assert.deepEqual(
         [result.include[0].actualNode, result.include[1].actualNode],
@@ -234,8 +234,8 @@ describe('Context', () => {
   describe('object definition', function () {
     it('should assign include/exclude', function () {
       const context = new Context({
-        include: ['#fixture'],
-        exclude: ['#mocha']
+        include: [['#fixture']],
+        exclude: [['#mocha']]
       });
       assert.isNotNull(context);
       assert.hasAllKeys(context, [
@@ -255,8 +255,8 @@ describe('Context', () => {
     it('should disregard bad input, non-matching selectors', function () {
       const flatTree = axe.utils.getFlattenedTree(document);
       const context = new Context({
-        include: ['#fixture', '#monkeys'],
-        exclude: ['#bananas']
+        include: [['#fixture'], ['#monkeys']],
+        exclude: [['#bananas']]
       });
       assert.isNotNull(context);
       assert.hasAllKeys(context, [
@@ -291,7 +291,7 @@ describe('Context', () => {
     });
 
     it('should default include to document', function () {
-      const result = new Context({ exclude: ['#fixture'] });
+      const result = new Context({ exclude: [['#fixture']] });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
 
@@ -364,8 +364,8 @@ describe('Context', () => {
       // not that parts within that are excluded
       assert.isTrue(
         new Context({
-          include: [document],
-          exclude: ['#mocha']
+          include: document,
+          exclude: [['#mocha']]
         }).page
       );
     });
@@ -373,8 +373,8 @@ describe('Context', () => {
     it('is false if the context does not include documentElement', function () {
       assert.isFalse(new Context(fixture).page);
       assert.isFalse(new Context('#fixture').page);
-      assert.isFalse(new Context(['#fixture']).page);
-      assert.isFalse(new Context({ include: ['#fixture'] }).page);
+      assert.isFalse(new Context([['#fixture']]).page);
+      assert.isFalse(new Context({ include: [['#fixture']] }).page);
     });
   });
 
@@ -597,7 +597,7 @@ describe('Context', () => {
           'target',
           function () {
             const result = new Context({
-              include: ['#fixture'],
+              include: [['#fixture']],
               focusable: false
             });
             assert.lengthOf(result.frames, 1);
