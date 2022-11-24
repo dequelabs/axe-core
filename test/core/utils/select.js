@@ -1,5 +1,6 @@
 describe('axe.utils.select', function () {
   'use strict';
+  // TODO: Refactor
 
   function $id(id) {
     return document.getElementById(id);
@@ -49,10 +50,11 @@ describe('axe.utils.select', function () {
     it('should exclude', function () {
       fixture.innerHTML =
         '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
+      axe.setup();
 
       var result = axe.utils.select('.bananas', {
-        include: [axe.utils.getFlattenedTree($id('fixture'))[0]],
-        exclude: [axe.utils.getFlattenedTree($id('monkeys'))[0]]
+        include: [axe.utils.getNodeFromTree($id('fixture'))],
+        exclude: [axe.utils.getNodeFromTree($id('monkeys'))]
       });
 
       assert.deepEqual(result, []);
@@ -69,18 +71,18 @@ describe('axe.utils.select', function () {
         '		</div>' +
         '	</div>' +
         '</div>';
+      axe.setup(fixture);
 
       var result = axe.utils.select('.bananas', {
         include: [
-          axe.utils.getFlattenedTree($id('include1'))[0],
-          axe.utils.getFlattenedTree($id('include2'))[0]
+          axe.utils.getNodeFromTree($id('include1')),
+          axe.utils.getNodeFromTree($id('include2'))
         ],
         exclude: [
-          axe.utils.getFlattenedTree($id('exclude1'))[0],
-          axe.utils.getFlattenedTree($id('exclude2'))[0]
+          axe.utils.getNodeFromTree($id('exclude1')),
+          axe.utils.getNodeFromTree($id('exclude2'))
         ]
       });
-
       assert.deepEqual(result, []);
     });
 
@@ -97,16 +99,17 @@ describe('axe.utils.select', function () {
         '		</div>' +
         '	</div>' +
         '</div>';
+      axe.setup();
 
       var result = axe.utils.select('.bananas', {
         include: [
-          axe.utils.getFlattenedTree($id('include3'))[0],
-          axe.utils.getFlattenedTree($id('include2'))[0],
-          axe.utils.getFlattenedTree($id('include1'))[0]
+          axe.utils.getNodeFromTree($id('include3')),
+          axe.utils.getNodeFromTree($id('include2')),
+          axe.utils.getNodeFromTree($id('include1'))
         ],
         exclude: [
-          axe.utils.getFlattenedTree($id('exclude1'))[0],
-          axe.utils.getFlattenedTree($id('exclude2'))[0]
+          axe.utils.getNodeFromTree($id('exclude1')),
+          axe.utils.getNodeFromTree($id('exclude2'))
         ]
       });
 
@@ -131,11 +134,12 @@ describe('axe.utils.select', function () {
     fixture.innerHTML =
       '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
       '<div id="two"><div id="target2" class="bananas"></div></div></div>';
+    axe.setup();
 
     var result = axe.utils.select('.bananas', {
       include: [
-        axe.utils.getFlattenedTree($id('zero'))[0],
-        axe.utils.getFlattenedTree($id('one'))[0]
+        axe.utils.getNodeFromTree($id('zero')),
+        axe.utils.getNodeFromTree($id('one'))
       ]
     });
 

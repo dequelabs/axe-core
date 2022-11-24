@@ -634,3 +634,19 @@ testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
   });
   return elm;
 };
+
+testUtils.createNestedShadowDom = function createFixtureShadowTree(
+  fixture,
+  ...htmlCodes
+) {
+  let htmlCode;
+  while ((htmlCode = htmlCodes.shift())) {
+    fixture.innerHTML += htmlCode;
+    if (htmlCodes.length) {
+      const query = fixture.querySelectorAll('#shadowHost,.shadowHost');
+      fixture = query[query.length - 1];
+      fixture = fixture.attachShadow({ mode: 'open' });
+    }
+  }
+  return fixture.querySelector('#target');
+};
