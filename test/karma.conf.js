@@ -102,6 +102,9 @@ module.exports = function (config) {
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],
+    specReporter: {
+      failFast: true
+    },
     preprocessors: {
       'test/integration/rules/**/*.json': ['integration']
     },
