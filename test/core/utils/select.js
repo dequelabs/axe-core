@@ -13,8 +13,8 @@ describe('axe.utils.select', () => {
 
   describe('selector', () => {
     it('should accept a selector', () => {
-      fixtureSetup('<div id="monkeys"></div>')
-      const context = new Context(document, axe._tree)
+      fixtureSetup('<div id="monkeys"></div>');
+      const context = new Context(document, axe._tree);
       const result = axe.utils.select('#monkeys', context);
       assert.equal(result[0].actualNode, $id('monkeys'));
     });
@@ -34,10 +34,13 @@ describe('axe.utils.select', () => {
       fixtureSetup(
         '<div id="monkeys"><div id="bananas" class="bananas"></div></div>'
       );
-      const context = new Context({
-        include: [['#fixture']],
-        exclude: [['#monkeys']]
-      }, axe._tree);
+      const context = new Context(
+        {
+          include: [['#fixture']],
+          exclude: [['#monkeys']]
+        },
+        axe._tree
+      );
       const result = axe.utils.select('.bananas', context);
       assert.isEmpty(result);
     });
@@ -52,11 +55,15 @@ describe('axe.utils.select', () => {
         			</div>
         		</div>
         	</div>
-        </div>`)
-      const context = new Context({
-        include: [['#include1'], ['#include2']],
-        exclude: [['#exclude1'], ['#exclude2']],
-      }, axe._tree);
+        </div>`
+      );
+      const context = new Context(
+        {
+          include: [['#include1'], ['#include2']],
+          exclude: [['#exclude1'], ['#exclude2']]
+        },
+        axe._tree
+      );
       const result = axe.utils.select('.bananas', context);
       assert.deepEqual(result, []);
     });
@@ -75,10 +82,13 @@ describe('axe.utils.select', () => {
         	</div> 
         </div>`
       );
-      const context = new Context({
-        include: [['#include3'], ['#include2'], ['#include1']],
-        exclude: [['#exclude1'], ['#exclude2']],
-      }, axe._tree);
+      const context = new Context(
+        {
+          include: [['#include3'], ['#include2'], ['#include1']],
+          exclude: [['#exclude1'], ['#exclude2']]
+        },
+        axe._tree
+      );
       const result = axe.utils.select('.bananas', context);
       assert.deepEqual(result[0].actualNode, $id('bananas'));
     });
@@ -88,10 +98,13 @@ describe('axe.utils.select', () => {
     fixtureSetup(
       '<div id="monkeys"><div id="bananas" class="bananas"></div></div>'
     );
-    const context = new Context({
-      include: [['#fixture'], ['#monkeys']]
-    }, axe._tree)
-    
+    const context = new Context(
+      {
+        include: [['#fixture'], ['#monkeys']]
+      },
+      axe._tree
+    );
+
     const result = axe.utils.select('.bananas', context);
     assert.lengthOf(result, 1);
     assert.equal(result[0].actualNode, $id('bananas'));
@@ -100,12 +113,15 @@ describe('axe.utils.select', () => {
   it('should not return duplicates on overlapping includes', () => {
     fixtureSetup(
       '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
-      '<div id="two"><div id="target2" class="bananas"></div></div></div>'
+        '<div id="two"><div id="target2" class="bananas"></div></div></div>'
     );
-    const context = new Context({
-      include: [['#zero'], ['#one']]
-    }, axe._tree)
-    
+    const context = new Context(
+      {
+        include: [['#zero'], ['#one']]
+      },
+      axe._tree
+    );
+
     const result = axe.utils.select('.bananas', context);
     assert.deepEqual(
       result.map(n => n.actualNode),
@@ -117,9 +133,9 @@ describe('axe.utils.select', () => {
   it('should return the cached result if one exists', () => {
     fixtureSetup(
       '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
-      '<div id="two"><div id="target2" class="bananas"></div></div></div>'
+        '<div id="two"><div id="target2" class="bananas"></div></div></div>'
     );
-    
+
     axe._selectCache = [
       {
         selector: '.bananas',
