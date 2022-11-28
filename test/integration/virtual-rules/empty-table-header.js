@@ -1,5 +1,5 @@
 describe('empty-table-header virtual-rule', function () {
-  it('should incomplete when children are missing', function () {
+  it('should fail when children contain no visible text', function () {
     var thNode = new axe.SerialVirtualNode({
       nodeName: 'th'
     });
@@ -8,8 +8,52 @@ describe('empty-table-header virtual-rule', function () {
     var results = axe.runVirtualRule('empty-table-header', thNode);
 
     assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should incomplete when children are missing', function () {
+    var thNode = new axe.SerialVirtualNode({
+      nodeName: 'th'
+    });
+
+    var results = axe.runVirtualRule('empty-table-header', thNode);
+
+    assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
+  });
+
+  it('should fail for role=rowheader', function () {
+    var vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'rowheader'
+      }
+    });
+    vNode.children = [];
+
+    var results = axe.runVirtualRule('empty-table-header', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for role=columnheader', function () {
+    var vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'columnheader'
+      }
+    });
+    vNode.children = [];
+
+    var results = axe.runVirtualRule('empty-table-header', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
   });
 
   it('should pass with a table header', function () {
@@ -134,22 +178,6 @@ describe('empty-table-header virtual-rule', function () {
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
-  it('should fail if table header has no child nodes', function () {
-    var node = new axe.SerialVirtualNode({
-      nodeName: 'th',
-      attributes: {
-        role: 'rowheader'
-      }
-    });
-    node.children = [];
-
-    var results = axe.runVirtualRule('empty-table-header', node);
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 });
