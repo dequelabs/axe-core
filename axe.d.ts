@@ -45,23 +45,44 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  // Selectors within a frame
   type BaseSelector = string;
-  type CrossTreeSelector = BaseSelector | BaseSelector[];
-  type CrossFrameSelector = CrossTreeSelector[];
+  type ShadowDomSelector = BaseSelector[];
+  type CrossTreeSelector = BaseSelector | ShadowDomSelector;
+  type LabelledShadowDomSelector = { fromShadowDom: ShadowDomSelector };
 
-  type ContextObject = {
-    include?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
-    exclude?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
-  };
+  // Cross-frame selectors
+  type FramesSelector = Array<CrossTreeSelector | LabelledShadowDomSelector>;
+  type UnlabelledFrameSelector = CrossTreeSelector[];
+  type LabelledFramesSelector = { fromFrames: FramesSelector };
+  /**
+   * @deprecated Use UnlabelledFrameSelector instead
+   */
+  type CrossFrameSelector = UnlabelledFrameSelector;
 
-  type SerialContextObject = {
-    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-  };
+  // Context options
+  type Selector =
+    | Node
+    | BaseSelector
+    | LabelledShadowDomSelector
+    | LabelledFramesSelector;
+  type SelectorList = Array<Selector | FramesSelector> | NodeList;
+  type ContextObject =
+    | {
+        include: Selector | SelectorList;
+        exclude?: Selector | SelectorList;
+      }
+    | {
+        exclude: Selector | SelectorList;
+      };
+  type ElementContext = Selector | SelectorList | ContextObject;
+
+  interface SerialContextObject {
+    include: UnlabelledFrameSelector[];
+    exclude: UnlabelledFrameSelector[];
+  }
 
   type RunCallback = (error: Error, results: AxeResults) => void;
-
-  type ElementContext = Node | NodeList | string | ContextObject;
 
   interface TestEngine {
     name: string;
@@ -255,9 +276,9 @@ declare namespace axe {
   interface SerialDqElement {
     source: string;
     nodeIndexes: number[];
-    selector: CrossFrameSelector;
+    selector: UnlabelledFrameSelector;
     xpath: string[];
-    ancestry: CrossFrameSelector;
+    ancestry: UnlabelledFrameSelector;
   }
   interface PartialRuleResult {
     id: string;
@@ -273,7 +294,7 @@ declare namespace axe {
   }
   type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
-    frameSelector: CrossTreeSelector;
+    frameSelector: UnlabelledFrameSelector;
     frameContext: SerialContextObject;
   }
   interface Utils {
@@ -282,6 +303,7 @@ declare namespace axe {
       options?: RunOptions
     ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
+    shadowSelectAll: (selector: CrossTreeSelector) => Element[];
   }
   interface EnvironmentData {
     testEngine: TestEngine;
