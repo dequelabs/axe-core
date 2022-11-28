@@ -1,4 +1,3 @@
-/*eslint no-unused-vars:0*/
 describe('axe.runVirtualRule', function () {
   beforeEach(function () {
     axe._load({
@@ -101,7 +100,7 @@ describe('axe.runVirtualRule', function () {
             assert.equal(typeof context, 'object');
             assert.isTrue(Array.isArray(context.include));
             assert.equal(context.include[0], node);
-  
+
             return {
               id: 'aria-roles',
               nodes: []
@@ -109,13 +108,13 @@ describe('axe.runVirtualRule', function () {
           }
         }
       ];
-  
+
       axe.runVirtualRule('aria-roles', node);
     });
-  
+
     it('has all properties a normal context has', () => {
       const contextProps = Object.entries(new Context())
-        .filter(([_, val]) => typeof val !== 'function')
+        .filter(arg => typeof arg[1] !== 'function')
         .map(([key]) => key)
         .sort();
 
@@ -134,8 +133,8 @@ describe('axe.runVirtualRule', function () {
         }
       ];
       axe.runVirtualRule('aria-roles', node);
-    })
-  })
+    });
+  });
 
   it('should pass through options to rule.runSync', function () {
     axe._audit.rules = [
