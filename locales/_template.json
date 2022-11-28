@@ -157,6 +157,10 @@
       "description": "Ensures table headers have discernible text",
       "help": "Table header text should not be empty"
     },
+    "epub-type-has-matching-role": {
+      "description": "Ensure the element has an ARIA role matching its epub:type",
+      "help": "ARIA role should be used in addition to epub:type"
+    },
     "focus-order-semantics": {
       "description": "Ensures elements in the focus order have a role appropriate for interactive content",
       "help": "Elements in the focus order should have an appropriate role"
@@ -262,8 +266,8 @@
       "help": "Document should not have more than one main landmark"
     },
     "landmark-one-main": {
-      "description": "Ensures the document has a main landmark",
-      "help": "Document should have one main landmark"
+      "description": "Ensures the document has a unique main landmark",
+      "help": "Document should have one unique main landmark"
     },
     "landmark-unique": {
       "help": "Ensures landmarks are unique",
@@ -324,6 +328,10 @@
     "page-has-heading-one": {
       "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
       "help": "Page should contain a level-one heading"
+    },
+    "pagebreak-label": {
+      "description": "Ensure page markers have an accessible label",
+      "help": "Page markers must have an accessible label"
     },
     "presentation-role-conflict": {
       "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
@@ -551,6 +559,10 @@
     "is-element-focusable": {
       "pass": "Element is focusable.",
       "fail": "Element is not focusable."
+    },
+    "matching-aria-role": {
+      "pass": "Element has an ARIA role matching its epub:type",
+      "fail": "Element has no ARIA role matching its epub:type"
     },
     "no-implicit-explicit-label": {
       "pass": "There is no mismatch between a <label> and accessible name",

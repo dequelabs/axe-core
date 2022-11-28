@@ -1,0 +1,14 @@
+{
+  "description": "landmark-unique-pass_ tests",
+  "rule": "landmark-unique",
+  "violations": [["#header-notes"], ["#pass-aside-footnote1"]],
+  "passes": [
+    ["#pass-nav-toc"],
+    ["#pass-nav-nav"],
+    ["#pass-nav-pagelist"],
+    ["#pass-nav-pagelist-other"],
+    ["#pass-epi"],
+    ["#pass-biblio"],
+    ["#section-notes"]
+  ]
+}

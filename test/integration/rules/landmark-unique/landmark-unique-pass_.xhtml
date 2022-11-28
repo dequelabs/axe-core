@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub ="http://www.idpf.org/2007/ops" xml:lang="en">
+
+<head>
+    <title>landmark-unique pass test</title>
+    <meta charset="utf8" />
+    <script src="/axe.js"></script>
+    <!-- <script type="javascript">
+        axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+    </script> -->
+</head>
+<body>
+
+    <h1>Loomings</h1>
+    <p>Call me Ishmael.</p>
+    
+<nav
+    epub:type="toc"
+    id="pass-nav-toc"
+    role="doc-toc">1</nav>
+<nav
+    epub:type="landmarks"
+    id="pass-nav-nav"
+    role="navigation">2</nav>
+<nav    
+    epub:type="page-list"
+    id="pass-nav-pagelist"
+    role="doc-pagelist">3</nav>
+<nav    
+    epub:type="page-list"
+    id="pass-nav-pagelist-other"
+    role="doc-pagelist"
+    title="title other">4</nav>
+
+
+    <aside epub:type="epilogue" role="doc-epilogue" id="pass-epi"><p>tmp3</p></aside>
+    <aside epub:type="bibliography" role="doc-bibliography" id="pass-biblio"><p>tmp2</p></aside>
+    <header epub:type="endnotes" role="doc-endnotes" id="header-notes"><p>tmp1</p></header>
+
+    <section epub:type="endnotes" role="doc-endnotes" id="section-notes" title="title-section"><p>tmp3</p></section>
+
+    <div id="ref">n text</div>
+    <main
+    epub:type="endnotes"
+    role="doc-endnotes"
+    data-title="nt1"
+    id="pass-aside-endnotes1">
+    <p>n txt1</p>
+    </main>
+    <footer
+    epub:type="endnotes"
+    role="doc-endnotes"
+    data-aria-label="nt2"
+    data-aria-labelledby="ref"
+    id="pass-aside-endnotes2">
+    <p>n txt2</p>
+    </footer>
+
+<div id="idref">text</div>
+<header
+epub:type="footnote"
+role="doc-footnote"
+data-title="fn1"
+id="pass-aside-footnote1">
+<p>txt1</p>
+</header>
+<aside
+epub:type="footnote"
+role="doc-footnote"
+data-aria-label="fn2"
+data-aria-labelledby="idref"
+id="pass-aside-footnote2">
+<p>txt2</p>
+</aside>
+<footer
+epub:type="footnote"
+role="doc-footnote"
+data-aria-label="fn3"
+data-aria-labelledby="idref"
+id="pass-aside-footnote3">
+<p>txt3</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+
+<head>
+    <title>epub-type-has-matching-role test</title>
+    <meta charset="utf8" />
+    <script src="/axe.js"></script>
+    <!-- <script type="javascript">
+        axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+    </script> -->
+</head>
+<body>
+
+    <h1>Loomings</h1>
+    <p>Call me Ishmael.</p>
+    
+    <section id="sec" epub:type="cover">
+        <img src="image_001.jpg" alt="A beautiful cover" role="doc-cover"/>
+    </section>
+    
+    <!-- Passes: -->
+    <!-- pass #1: non-epub type -->
+    <ol id="pass1" type="1">
+        <li>item 1</li>
+    </ol>
+    <!-- pass #2: type has matching role -->
+    <div id="pass2" epub:type="notice" role="doc-notice">notice</div>
+    <!-- pass #3: type has no defined matching role -->
+    <div id="pass3" epub:type="bridgehead">hello</div>
+    <!-- pass #4-#5: types matching the implicit roles -->
+    <dd id="pass4" epub:type="glossdef">definition</dd>
+    <dfn id="pass6" epub:type="glossterm">definition</dfn>
+    <figure  id="pass5" epub:type="figure"></figure>
+    
+    <!-- Fails: -->
+    <!-- fail #1: missing role -->
+    <div id="fail1" epub:type="notice">notice</div>
+    <!-- fail #2: non-matching role -->
+    <div id="fail2" epub:type="notice" role="doc-tip">notice</div>
+    <!-- fail #3: missing role for a type in a list -->
+    <div id="fail3" epub:type="foo:bar notice">notice</div>
+
+    <nav epub:type="landmarks" id="id-landmarks">
+        <ol>
+        <!-- pass: epub:type/ARIA mapping shouldn't be checked in the landmarks nav -->
+        <li><a id="pass0" href="content.xhtml" epub:type="chapter">content</a></li>
+        </ol>
+    </nav>
+
+    <section id="ok1" role="doc-bibliography" epub:type="bibliography">
+        <ul>
+        <!-- <li id="deprecated1" role="doc-biblioentry"></li> -->
+        <li id="deprecated1_" epub:type="biblioentry"></li>
+        </ul>
+    </section>
+    <section id="ok2" role="doc-bibliography" epub:type="bibliography">
+        <ul>
+        <!-- <li><p id="deprecated2" role="doc-biblioentry"></p></li> -->
+        <li><p id="deprecated2_" epub:type="biblioentry"></p></li>
+        </ul>
+    </section>
+    <section id="ok3" role="doc-endnotes" epub:type="endnotes">
+        <ul>
+        <!-- <li id="deprecated3" role="doc-endnote"></li> -->
+        <li id="deprecated3_" epub:type="endnote"></li>
+        </ul>
+    </section>
+    <section id="ok4" role="doc-endnotes" epub:type="endnotes">
+        <ul>
+        <!-- <li><p id="deprecated4" role="doc-endnote"></p></li> -->
+        <li><p id="deprecated4_" epub:type="endnote"></p></li>
+        </ul>
+    </section>
+                
+</body>
+</html>
