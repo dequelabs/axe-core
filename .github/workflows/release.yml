@@ -1,0 +1,37 @@
+name: Create release candidate
+
+on: [workflow_dispatch]
+
+jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Configure git
+        run: |
+          git config user.name "API Team CI User"
+          git config user.email "aciattestteamci@deque.com"
+      - run: npm ci
+      - run: npm run release
+      - id: get-version
+        run: |
+          Version=$(jq -r .version ./package.json)
+          echo "version=$Version" >>"$GITHUB_OUTPUT"
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          branch: release
+          branch-suffix: timestamp
+          base: develop
+          commit-message: 'chore(release): v${{ steps.get-version.outputs.version }}'
+          title: 'chore: Update axe-core to v${{ steps.get-version.outputs.version }}'
+          body: 'This PR was opened by a robot :robot: :tada:.'
