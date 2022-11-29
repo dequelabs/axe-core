@@ -38,7 +38,7 @@ describe('axe.utils.contains', () => {
     assert.isFalse(axe.utils.contains(node2, node1));
   });
 
-  describe.skip('using fallbacks', () => {
+  describe('using fallbacks', () => {
     it('should first check DOMNode.contains', () => {
       let success = false;
       const node2 = { actualNode: 'not really a node but it doesnt matter' };
@@ -59,41 +59,11 @@ describe('axe.utils.contains', () => {
       assert.isTrue(success);
     });
 
-    it('should fallback to compareDocumentPosition', () => {
-      let success = false;
-      const node2 = { actualNode: 'not really a node but it doesnt matter' };
-      const node1 = {
-        actualNode: {
-          compareDocumentPosition: function (n2) {
-            success = true;
-            assert.deepEqual(n2, node2.actualNode);
-          }
-        }
-      };
-
-      axe.utils.contains(node1, node2);
-      assert.isTrue(success);
-    });
-
-    it('should compareDocumentPosition against bitwise & 16', () => {
-      const node2 = { actualNode: 'not really a node but it doesnt matter' };
-      const node1 = {
-        actualNode: {
-          compareDocumentPosition: () => {
-            return 20;
-          }
-        }
-      };
-
-      assert.isTrue(axe.utils.contains(node1, node2));
-    });
-
     it('should fallback to parent lookup', () => {
       const node1 = {};
       const node2 = {
         parent: node1
       };
-
       assert.isTrue(axe.utils.contains(node1, node2));
     });
   });
@@ -141,12 +111,16 @@ describe('axe.utils.contains', () => {
     });
 
     it('is false when the nodes are in adjacent trees', () => {
-      const section = createNestedShadowDom(
+      createNestedShadowDom(
         fixture,
-        `<section id="target"></section>`
+        '<div id="firstHost" class="shadowHost"></div>',
+        `<img>`
       );
-      createNestedShadowDom(section, `<img>`);
-      createNestedShadowDom(section, `<input>`);
+      createNestedShadowDom(
+        fixture,
+        '<div id="secondHost" class="shadowHost"></div>',
+        `<input>`
+      );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
       const node2 = axe.utils.querySelectorAll(tree, 'input')[0];
@@ -167,16 +141,6 @@ describe('axe.utils.contains', () => {
 
       assert.isTrue(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));
-    });
-
-    it('should work', () => {
-      fixture.innerHTML = '<div class="outer"><div class="inner"></div></div>';
-      const tree = axe.setup(fixture);
-      const inner = axe.utils.querySelectorAll(tree, '.inner')[0];
-      const outer = axe.utils.querySelectorAll(tree, '.outer')[0];
-
-      assert.isTrue(axe.utils.contains(outer, inner));
-      assert.isFalse(axe.utils.contains(inner, outer));
     });
   });
 });
