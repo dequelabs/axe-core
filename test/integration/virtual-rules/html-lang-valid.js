@@ -12,6 +12,21 @@ describe('html-lang-valid virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('is inapplicable with empty lang or xml:lang', function () {
+    // Error caught by html-has-lang instead
+    var results = axe.runVirtualRule('html-lang-valid', {
+      nodeName: 'html',
+      attributes: {
+        lang: ''
+      }
+    });
+
+    assert.lengthOf(results.inapplicable, 1);
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should pass with a valid lang', function () {
     var results = axe.runVirtualRule('html-lang-valid', {
       nodeName: 'html',
