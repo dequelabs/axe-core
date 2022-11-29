@@ -9,7 +9,7 @@ describe('axe.utils.contains', () => {
     assert.isTrue(axe.utils.contains(node1, node2));
   });
 
-  it('is false when the fitst node is a descendant', () => {
+  it('is false when the first node is a descendant', () => {
     const tree = fixtureSetup(`<section> <img> </section>`);
     const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'section')[0];
@@ -30,7 +30,7 @@ describe('axe.utils.contains', () => {
     assert.isTrue(axe.utils.contains(node, node));
   });
 
-  it('is false when the nodes are a cousins', () => {
+  it('is false when the nodes are cousins', () => {
     const tree = fixtureSetup(`<section> <input> </section> <img>`);
     const node1 = axe.utils.querySelectorAll(tree, 'input')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'img')[0];

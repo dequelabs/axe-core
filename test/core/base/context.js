@@ -1038,7 +1038,7 @@ describe('Context', () => {
       assert.isEmpty(result.exclude);
     });
 
-    it('in unlabelled shadow DOM selectors', () => {
+    it('in labelled shadow DOM selectors', () => {
       createNestedShadowDom(
         fixture,
         '<article id="shadowHost"></article>',
