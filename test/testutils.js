@@ -661,6 +661,6 @@ function appendHtml(fixture, htmlCode) {
   tmp.innerHTML = htmlCode;
   // Append to avoid clobbering other shadow trees with innerHTML
   for (const child of tmp.children) {
-    fixture.appendChild(child);
+    fixture.appendChild(child.cloneNode(true));
   }
 }
