@@ -3,7 +3,7 @@
   "evaluate": "label-content-name-mismatch-evaluate",
   "options": {
     "pixelThreshold": 0.1,
-    "occuranceThreshold": 3
+    "occurrenceThreshold": 3
   },
   "metadata": {
     "impact": "serious",
