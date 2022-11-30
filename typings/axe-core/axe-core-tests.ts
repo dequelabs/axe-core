@@ -32,7 +32,11 @@ axe.run(
 export async function runAsync() {
   await axe.run('main'); // Single selector
   await axe.run(['main']); // Array of one selector
-  await axe.run({ include: ['main', document.head] });
+  await axe.run([['main']]); // Selecting in the outer frame
+  // @ts-expect-error // Shadow DOM selectors must be at least 2 items long
+  await axe.run([[['main']]]);
+  await axe.run([[['#app', 'main']]]); // Selecting in the outer frame
+
   await axe.run(document.querySelector('main'));
   await axe.run(document.querySelectorAll('main'));
   // axe.run with frameContext context
@@ -57,6 +61,7 @@ export async function runAsync() {
     include: { fromShadowDom: ['#frame', '#main'] },
     exclude: [
       'footer',
+      document.head,
       { fromFrames: ['#frame', { fromShadowDom: ['#app', '#main'] }] }
     ]
   });
