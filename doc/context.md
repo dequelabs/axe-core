@@ -4,7 +4,7 @@ Axe-core's `context` argument is a powerful tool for controlling precisely which
 
 1. [Test specific elements](#test-specific-elements)
 1. [Test DOM nodes](#test-dom-nodes)
-1. [Excludes elements from test](#exclude-elements-from-test)
+1. [Exclude elements from test](#exclude-elements-from-test)
 1. [Select from prior tests](#select-from-prior-tests)
 1. [Limit frame testing](#limit-frame-testing)
 1. [Limit shadow DOM testing](#limit-shadow-dom-testing)
@@ -62,6 +62,8 @@ const appRoot = document.getElementById('app');
 ReactDOM.createRoot(appRoot).render(MyApp);
 await axe.run(appRoot);
 ```
+
+**Important**: Component testing libraries like [Enzyme](https://enzymejs.github.io/enzyme/) include both a `render` and `shallow` method. Because axe requires a complete render, attached to the DOM tree, it is unable to test components built with `shallow` methods.
 
 ## Exclude Elements from Test
 
@@ -227,19 +229,7 @@ axe.run({
 
 ### Slotted Elements
 
-Axe uses the flattened DOM tree to determine whether an element is included or excluded. Because of this when a shadow DOM node is selected, all descendants inserted through the [`<slot />` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Slot) are also selected. The following example shows how to test the shadow DOM tree of the `#shadowForm element`, starting from the `:root` of the shadow DOM tree, excluding all `<slot>` elements:
-
-```js
-// Test the #shadowForm shadow DOM tree from the :root, skipping any <slot> elements
-axe.run({
-  include: {
-    fromShadowDom: ['#shadowForm', ':root']
-  },
-  exclude: {
-    fromShadowDom: ['#shadowForm', 'slot']
-  }
-});
-```
+Axe uses the flattened DOM tree to determine whether an element is included or excluded. Because of this when a shadow DOM node is selected, all descendants inserted through the [`<slot />` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Slot) are also selected.
 
 ## Combine Shadow DOM and Frame Context
 
