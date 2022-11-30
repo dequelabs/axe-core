@@ -45,16 +45,20 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  // Array of length 2 or greater
+  type MultiArray<T> = [T, T, ...T[]];
+
   // Selectors within a frame
   type BaseSelector = string;
-  type ShadowDomSelector = BaseSelector[];
+
+  type ShadowDomSelector = MultiArray<BaseSelector>;
   type CrossTreeSelector = BaseSelector | ShadowDomSelector;
   type LabelledShadowDomSelector = { fromShadowDom: ShadowDomSelector };
 
   // Cross-frame selectors
   type FramesSelector = Array<CrossTreeSelector | LabelledShadowDomSelector>;
   type UnlabelledFrameSelector = CrossTreeSelector[];
-  type LabelledFramesSelector = { fromFrames: FramesSelector };
+  type LabelledFramesSelector = { fromFrames: MultiArray<FramesSelector[0]> };
   /**
    * @deprecated Use UnlabelledFrameSelector instead
    */
