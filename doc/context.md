@@ -63,7 +63,7 @@ ReactDOM.createRoot(appRoot).render(MyApp);
 await axe.run(appRoot);
 ```
 
-## Exclude elements from test
+## Exclude Elements from Test
 
 There are often areas of a page that as a developer you have no control over. You can tell axe to skip such elements in the test by using an object with the `exclude` property. The `exclude` property accepts all the same properties used before, including CSS selectors and DOM nodes:
 
@@ -84,16 +84,16 @@ const axe = new AxeBuilder({ page });
 axe.exclude('.ad-banner, iframe[src^="youtube.com"]');
 ```
 
-### The `include` property
+### The `include` Property
 
-When axe is passed a CSS selector, or an array of DOM nodes this is treated as an implicit `include`. All examples from [Test specific elements](#test-specific-elements) and [Test DOM nodes](#test-dom-nodes) use this implicit `include`. All of these could be rewritten using an object with the `include` property. The following examples function identically:
+When axe is passed a CSS selector or an array of DOM nodes, this is treated as an implicit `include`. All examples from [Test specific elements](#test-specific-elements) and [Test DOM nodes](#test-dom-nodes) use this implicit `include`. All of these could be rewritten using an object with the `include` property. The following examples function identically:
 
 ```js
 await axe.run('main'); // is the same as:
 await axe.run({ include: 'main' });
 ```
 
-When axe isn't passed an `include` (explicit or not) it uses the `document`. instead:
+When axe isn't passed an `include` (explicit or not), it uses `document` instead:
 
 ```js
 await axe.run({ exclude: '.ad-banner' }); // is the same as:
@@ -105,7 +105,7 @@ await axe.run({
 
 ### Combine `exclude` with `include`
 
-To test specific sections of the page, while skipping parts within that section you can pass an object with an `include` and `exclude` property. `include` tells axe what elements to test, and `exclude` tells axe to skip certain included sections. The following shows how to test the `main` and `footer` elements in a page, except for any `.ad-banner` element:
+To test specific sections of the page while skipping parts within that section, you can pass an object with `include` and `exclude` properties. `include` tells axe what elements to test, and `exclude` tells axe to skip certain included sections. The following shows how to test the `main` and `footer` elements in a page, except for any `.ad-banner` element:
 
 ```js
 await axe.run({
@@ -114,7 +114,7 @@ await axe.run({
 });
 ```
 
-**Note**: When an element is both included and excluded, the selector that matches the nearest ancestor takes priority. I.e. if a node's the grandparent is included, but the parent is excluded, then the node is excluded. If the node's grandparent is excluded, but its parent is included, the node is included.
+**Note**: When an element is both included and excluded, the selector that matches the nearest ancestor takes priority. I.e. if a node's grandparent is included, but the parent is excluded, then the node is excluded. If the node's grandparent is excluded, but its parent is included, the node is included.
 
 ## Select From Prior Tests
 
@@ -137,7 +137,7 @@ await axe.run({ exclude: targets });
 
 ## Limit Frame Testing
 
-To include or exclude specific sections within a frame can be done with a `fromFrames` selector object. This property takes an array of selectors, the first to select the frame element(s) and the last to select the element(s) to include or exclude. The following shows how to test all `form` elements a `#paymentFrame` frame or iframe:
+Including or excluding specific sections within a frame can be done with a `fromFrames` selector object. This property takes an array of selectors: the first to select the frame element(s) and the last to select the element(s) to include or exclude. The following shows how to test all `form` elements a `#paymentFrame` frame or iframe:
 
 ```js
 // Test each <form> inside each #paymentFrame frame or iframe:
@@ -151,7 +151,7 @@ To select elements in nested frames, axe will need a selector for each level of 
 axe.run({ fromFrames: ['iframe#outer', 'iframe#inner', 'form'] });
 ```
 
-The `fromFrames` object can be used as part of an `exclude` or `include` property. It can be by itself, or as part of an array along with other selectors. The following example shows how to exclude all `.ad-banner` elements on the top window, as well as any that are part of the first level of iframes:
+The `fromFrames` object can be used as part of an `exclude` or `include` property. It can be by itself or as part of an array along with other selectors. The following example shows how to exclude all `.ad-banner` elements on the top window, as well as any that are part of the first level of iframes:
 
 ```js
 // Skip any .ad-banner, as well as any .ad-banner inside iframes:
@@ -182,14 +182,14 @@ axe.run({
 
 ## Limit Shadow DOM Testing
 
-To include or exclude specific sections of a [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) tree can be done with a `fromShadowDom` selector object. This works similar to the [`fromFrames` selector](#limit-frame-testing). The `fromShadowDom` property takes an array of strings, the first to select the shadow DOM host element(s) and the last to select the element(s) to include or exclude. The following example shows how to test the `#search` form inside the shadow DOM tree attached to the `.app-header` element:
+Including or excluding specific sections of a [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) tree can be done with a `fromShadowDom` selector object. This works similar to the [`fromFrames` selector](#limit-frame-testing). The `fromShadowDom` property takes an array of strings: the first to select the shadow DOM host element(s) and the last to select the element(s) to include or exclude. The following example shows how to test the `#search` form inside the shadow DOM tree attached to the `.app-header` element:
 
 ```js
 // Test each search form inside each <app-header> shadow DOM tree.
 axe.run({ fromShadowDom: ['.app-header', 'form#search'] });
 ```
 
-To select elements in nested shadow DOM trees, axe will need a selector for each level of nesting. The following shows how to test the `nav` element inside the `.header` element's Shadow DOM tree, inside the `app-root` custom element's shadow DOM tree:
+To select elements in nested shadow DOM trees, axe will need a selector for each level of nesting. The following shows how to test the `#search` element inside the `.header` element's Shadow DOM tree, inside the `app-root` custom element's shadow DOM tree:
 
 ```js
 // Test #search, inside each .header, inside each <app-root>
@@ -225,7 +225,7 @@ axe.run({
 
 **Note**: The `fromShadowDom` property cannot be used on the same object as `include` and `exclude`.
 
-### Slotted elements
+### Slotted Elements
 
 Axe uses the flattened DOM tree to determine whether an element is included or excluded. Because of this when a shadow DOM node is selected, all descendants inserted through the [`<slot />` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Slot) are also selected. The following example shows how to test the shadow DOM tree of the `#shadowForm element`, starting from the `:root` of the shadow DOM tree, excluding all `<slot>` elements:
 
@@ -243,7 +243,7 @@ axe.run({
 
 ## Combine Shadow DOM and Frame Context
 
-To select frames inside shadow DOM trees, or shadow DOM trees inside frames it is possible to use the a [`fromShadowDom`](#limit-shadow-dom-testing) as a selector in the [`fromFrames`](#limit-frame-testing) selector object. The following example shows how to test the `main` element, inside each `iframe`, that is part of the shadow DOM tree of `#appRoot`:
+To select frames inside shadow DOM trees or shadow DOM trees inside frames, it is possible to use [`fromShadowDom`](#limit-shadow-dom-testing) as a selector in the [`fromFrames`](#limit-frame-testing) selector object. The following example shows how to test the `main` element, inside each `iframe` that is part of the shadow DOM tree of `#appRoot`:
 
 ```js
 await axe.run({
@@ -276,15 +276,15 @@ await axe.run({
 
 **Note**: Even though the iframe is inside the shadow DOM tree, the `fromShadowDom` selector object must be part of the `fromFrames` selector. Doing the reverse does not work and will cause an error.
 
-## Implicit Frame And Shadow DOM Selection
+## Implicit Frame and Shadow DOM Selection
 
-In earlier versions of axe, using nested arrays was the only way to include or exclude elements inside iframes. These are still supported in axe, and is how axe works internally. This nested array syntax is used in the `target` property. For example, the following is a possible selector for a `.commentBody` element, in the shadow DOM tree of `#userComments`, inside the `#blog-comments` iframe:
+In earlier versions of axe, using nested arrays was the only way to include or exclude elements inside iframes. These are still supported in axe and is how axe works internally. This nested array syntax is used in the `target` property. For example, the following is a possible selector for a `.commentBody` element, in the shadow DOM tree of `#userComments`, inside the `#blog-comments` iframe:
 
 ```js
 result = await axe.run();
 result.violations[0].nodes[0].target; // ['#blog-comments', ['#userComments', '.commentBody']]
 ```
 
-To pass a `target` property into axe it must be wrapped in another array. This creates three nested arrays. The outer array to allow multiple selectors, the middle array to select into frames, and the inner array, which is optional, to select elements inside shadow DOM trees.
+To pass a `target` property into axe, it must be wrapped in another array. This creates three nested arrays: the outer array to allow multiple selectors, the middle array to select into frames, and the inner array, which is optional, to select elements inside shadow DOM trees.
 
-While this syntax continues to be supported, it is recommended to avoid it, and to use the [fromFrames](#limit-frame-testing) and [fromShadowDom](#limit-shadow-dom-testing) object selectors instead, since these are more clearer and don't need to be wrapped in otherwise empty arrays.
+While this syntax continues to be supported, it is recommended to avoid it and to use the [fromFrames](#limit-frame-testing) and [fromShadowDom](#limit-shadow-dom-testing) object selectors instead since these are clearer and don't need to be wrapped in otherwise empty arrays.

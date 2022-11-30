@@ -325,11 +325,11 @@ By default, `axe.run` will test the entire document. The context object is an op
 1. An object with a `fromFrames` property
 1. An object with a `fromShadowDom` property
 
-Read [context.md](context.md) for details about the context object
+Read [context.md](context.md) for details about the context object.
 
 ###### Context Parameter Examples
 
-1. Test the `#navBar` and all other `nav` elements and its content
+1. Test the `#navBar` and all other `nav` elements and its content.
 
 ```js
 axe.run([`#navBar`, `nav`], (err, results) => {
@@ -337,7 +337,7 @@ axe.run([`#navBar`, `nav`], (err, results) => {
 });
 ```
 
-2. Test everything except `.ad-banner` elements
+2. Test everything except `.ad-banner` elements.
 
 ```js
 axe.run(
@@ -350,7 +350,7 @@ axe.run(
 );
 ```
 
-3. Test the `form` element inside the `#payment` iframe
+3. Test the `form` element inside the `#payment` iframe.
 
 ```js
 axe.run(
@@ -363,7 +363,7 @@ axe.run(
 );
 ```
 
-4. Exclude all `.commentBody` elements in each `.commentsShadowHost` shadow DOM tree
+4. Exclude all `.commentBody` elements in each `.commentsShadowHost` shadow DOM tree.
 
 ```js
 axe.run(
