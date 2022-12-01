@@ -298,7 +298,7 @@ declare namespace axe {
   }
   type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
-    frameSelector: UnlabelledFrameSelector;
+    frameSelector: CrossTreeSelector;
     frameContext: SerialContextObject;
   }
   interface Utils {
