@@ -1,11 +1,17 @@
-/*eslint no-unused-vars:0*/
+/*eslint no-new:0*/
 describe('Context', () => {
   const { Context } = axe._thisWillBeDeletedDoNotUse.base;
+  const { createNestedShadowDom } = axe.testUtils;
   const fixture = document.getElementById('fixture');
 
   function $id(id) {
     return document.getElementById(id);
   }
+  const selectors = elms =>
+    elms.map(elm => {
+      const domNode = elm?.actualNode || elm;
+      return domNode.id ? `#${domNode.id}` : domNode.nodeName.toLowerCase();
+    });
 
   it('should not mutate exclude in input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
@@ -32,11 +38,11 @@ describe('Context', () => {
     };
     const context = new Context(spec);
     assert.notStrictEqual(spec.include, context.include);
-    spec.include.forEach(function (_, index) {
+    spec.include.forEach((_, index) => {
       assert.notStrictEqual(spec.include[index], context.include[index]);
     });
     assert.notStrictEqual(spec.exclude, context.exclude);
-    spec.exclude.forEach(function (_, index) {
+    spec.exclude.forEach((_, index) => {
       assert.notStrictEqual(spec.exclude[index], context.exclude[index]);
     });
     assert.notStrictEqual(spec.size, context.size);
@@ -50,45 +56,70 @@ describe('Context', () => {
   });
 
   describe('include', () => {
-    it('should accept a single selector', () => {
+    it('accepts a single selector', () => {
       fixture.innerHTML = '<div id="foo"></div>';
       const result = new Context('#foo');
-
-      assert.deepEqual([result.include[0].actualNode], [$id('foo')]);
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
     });
 
-    it('should accept multiple selectors', () => {
+    it('accepts frame selectors', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
       const result = new Context([['#foo'], ['#bar']]);
-
-      assert.deepEqual(
-        [result.include[0].actualNode, result.include[1].actualNode],
-        [$id('foo'), $id('bar')]
-      );
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
+      assert.isEmpty(result.exclude);
     });
 
-    it('should accept a node reference', () => {
+    it('accepts an array of strings as selectors', () => {
+      fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
+      const context = new Context(['#foo', '#bar']);
+      assert.deepEqual(selectors(context.include), ['#foo', '#bar']);
+      assert.isEmpty(context.exclude);
+    });
+
+    it('accepts a node reference', () => {
       const div = document.createElement('div');
       fixture.appendChild(div);
-
       const result = new Context(div);
-
       assert.deepEqual([result.include[0].actualNode], [div]);
     });
 
-    it('should accept a node reference consisting of nested divs', () => {
+    it('does not match shadow DOM nodes with light DOM selection', () => {
+      createNestedShadowDom(
+        fixture,
+        `<p id="p1">Light DOM</p>
+        <article id="shadowHost">
+          <p id="p2">Slotted light DOM</p>
+        </article>`,
+        `<section id="shadowHost"> <slot /> </section>
+        <p id="p3">Shadow DOM</p>`
+      );
+      const result = new Context([[['p']]]);
+      assert.deepEqual(selectors(result.include), ['#p1', '#p2']);
+    });
+
+    it('accepts shadow DOM selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<h1 id="target">Hello world</h1>'
+      );
+      const result = new Context([[['#fixture > article', 'section', 'h1']]]);
+      assert.equal(result.include[0].props.id, 'target');
+    });
+
+    it('accepts a node reference consisting of nested divs', () => {
       const div1 = document.createElement('div');
       const div2 = document.createElement('div');
-
       div1.appendChild(div2);
       fixture.appendChild(div1);
 
       const result = new Context(div1);
-
       assert.deepEqual([result.include[0].actualNode], [div1]);
     });
 
-    it('should accept a node reference consisting of a form with nested controls', () => {
+    it('accepts a node reference consisting of a form with nested controls', () => {
       const form = document.createElement('form');
       const input = document.createElement('input');
 
@@ -96,78 +127,48 @@ describe('Context', () => {
       fixture.appendChild(form);
 
       const result = new Context(form);
-
-      assert.deepEqual([result.include[0].actualNode], [form]);
+      assert.deepEqual(result.include[0].actualNode, form);
     });
 
-    it('should accept an array of node references', () => {
+    it('accepts an array of node references', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-
       const result = new Context([$id('foo'), $id('bar')]);
-
       assert.deepEqual(
         [result.include[0].actualNode, result.include[1].actualNode],
         [$id('foo'), $id('bar')]
       );
     });
 
-    it('should remove any non-matched reference', () => {
+    it('removes any non-matched reference', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-
       const result = new Context([['#foo'], ['#baz'], ['#bar']]);
-
-      assert.deepEqual(
-        result.include.map(function (n) {
-          return n.actualNode;
-        }),
-        [$id('foo'), $id('bar')]
-      );
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
     });
 
-    it('should sort the include nodes in document order', () => {
+    it('sorts the include nodes in document order', () => {
       fixture.innerHTML =
         '<div id="foo"><div id="bar"></div></div><div id="baz"></div>';
-
       const result = new Context([['#foo'], ['#baz'], ['#bar']]);
-
-      assert.deepEqual(
-        result.include.map(function (n) {
-          return n.actualNode;
-        }),
-        [$id('foo'), $id('bar'), $id('baz')]
-      );
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar', '#baz']);
     });
 
-    it('should remove any null reference', () => {
+    it('removes any null reference', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
-
       const result = new Context([$id('foo'), $id('bar'), null]);
-
-      assert.deepEqual(
-        result.include.map(function (n) {
-          return n.actualNode;
-        }),
-        [$id('foo'), $id('bar')]
-      );
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
     });
 
-    it('should accept mixed', () => {
+    it('accepts an array of mixed selectors and nodes', () => {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
       const div = document.createElement('div');
       div.id = 'baz';
       fixture.appendChild(div);
 
-      const result = new Context([['#foo'], ['#bar'], div]);
-
-      assert.deepEqual(
-        result.include.map(function (n) {
-          return n.actualNode;
-        }),
-        [$id('foo'), $id('bar'), $id('baz')]
-      );
+      const result = new Context([['#foo'], '#bar', div]);
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar', '#baz']);
     });
 
-    it('should support jQuery-like objects', () => {
+    it('accepts jQuery-like objects', () => {
       fixture.innerHTML =
         '<div id="foo"></div><div id="bar"></div><div id="baz"></div>';
       const $test = {
@@ -178,13 +179,7 @@ describe('Context', () => {
       };
 
       const result = new Context($test);
-
-      assert.deepEqual(
-        result.include.map(function (n) {
-          return n.actualNode;
-        }),
-        [$id('foo'), $id('bar'), $id('baz')]
-      );
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar', '#baz']);
     });
 
     describe('throwing errors', () => {
@@ -201,7 +196,7 @@ describe('Context', () => {
         fixture.innerHTML = '<div id="foo"></div>';
         assert.throws(
           () => {
-            const ctxt = new Context('#notAnElement');
+            new Context('#notAnElement');
           },
           Error,
           'No elements found for include in page Context'
@@ -216,7 +211,7 @@ describe('Context', () => {
         fixture.innerHTML = '<div id="foo"></div>';
         assert.throws(
           () => {
-            const ctxt = new Context('#notAnElement');
+            new Context('#notAnElement');
           },
           Error,
           'No elements found for include in frame Context'
@@ -224,15 +219,15 @@ describe('Context', () => {
       });
     });
 
-    it('should create a flatTree property', () => {
+    it('creates a flatTree property', () => {
       const context = new Context({ include: [document] });
       assert.isArray(context.flatTree);
       assert.isAtLeast(context.flatTree.length, 1);
     });
   });
 
-  describe('object definition', function () {
-    it('should assign include/exclude', function () {
+  describe('object definition', () => {
+    it('should assign include/exclude', () => {
       const context = new Context({
         include: [['#fixture']],
         exclude: [['#mocha']]
@@ -252,7 +247,7 @@ describe('Context', () => {
       assert.isAtLeast(context.flatTree.length, 1);
     });
 
-    it('should disregard bad input, non-matching selectors', function () {
+    it('should disregard bad input, non-matching selectors', () => {
       const flatTree = axe.utils.getFlattenedTree(document);
       const context = new Context({
         include: [['#fixture'], ['#monkeys']],
@@ -276,21 +271,21 @@ describe('Context', () => {
       );
     });
 
-    it('should disregard bad input (null)', function () {
+    it('should disregard bad input (null)', () => {
       const result = new Context();
 
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
 
-      assert.lengthOf(result.exclude, 0);
+      assert.isEmpty(result.exclude);
 
       assert.isTrue(result.initiator);
       assert.isTrue(result.page);
 
-      assert.lengthOf(result.frames, 0);
+      assert.isEmpty(result.frames);
     });
 
-    it('should default include to document', function () {
+    it('should default include to document', () => {
       const result = new Context({ exclude: [['#fixture']] });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
@@ -301,34 +296,50 @@ describe('Context', () => {
       assert.isTrue(result.initiator);
       assert.isTrue(result.page);
 
-      assert.lengthOf(result.frames, 0);
+      assert.isEmpty(result.frames);
     });
 
-    it('should default empty include to document', function () {
+    it('should default empty include to document', () => {
       const result = new Context({ include: [], exclude: [] });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
     });
+
+    it('throws when it has a fromFrames prop', () => {
+      assert.throws(() => {
+        new Context({
+          include: [],
+          fromFrames: ['frame', '#fixture']
+        });
+      });
+    });
+
+    it('throws when it has a fromShadowDom prop', () => {
+      assert.throws(() => {
+        new Context({
+          include: [],
+          fromShadowDom: ['frame', '#fixture']
+        });
+      });
+    });
   });
 
-  describe('initiator', function () {
-    it('should not be clobbered', function () {
+  describe('initiator', () => {
+    it('should not be clobbered', () => {
       const result = new Context({
         initiator: false
       });
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, document.documentElement);
 
-      assert.lengthOf(result.exclude, 0);
-
+      assert.isEmpty(result.exclude);
       assert.isFalse(result.initiator);
       assert.isTrue(result.page);
-
-      assert.lengthOf(result.frames, 0);
+      assert.isEmpty(result.frames);
     });
 
     // document.hasOwnProperty is undefined in Firefox content scripts
-    it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function () {
+    it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', () => {
       const spec = document.implementation.createHTMLDocument('ie is dumb');
       spec.hasOwnProperty = undefined;
 
@@ -337,29 +348,29 @@ describe('Context', () => {
       assert.lengthOf(result.include, 1);
       assert.equal(result.include[0].actualNode, spec.documentElement);
 
-      assert.lengthOf(result.exclude, 0);
+      assert.isEmpty(result.exclude);
 
       assert.isTrue(result.initiator);
       assert.isFalse(result.page);
 
-      assert.lengthOf(result.frames, 0);
+      assert.isEmpty(result.frames);
     });
   });
 
-  describe('page', function () {
-    it('takes the page argument as default', function () {
+  describe('page', () => {
+    it('takes the page argument as default', () => {
       assert.isTrue(new Context({ page: true }).page);
       assert.isFalse(new Context({ page: false }).page);
     });
 
-    it('is true if the document element is included', function () {
+    it('is true if the document element is included', () => {
       assert.isTrue(new Context(document).page);
       assert.isTrue(new Context(document.documentElement).page);
       assert.isTrue(new Context('html').page);
       assert.isTrue(new Context(':root').page);
     });
 
-    it('is true, with exclude used', function () {
+    it('is true, with exclude used', () => {
       // What matters is that the documentElement is included
       // not that parts within that are excluded
       assert.isTrue(
@@ -370,7 +381,7 @@ describe('Context', () => {
       );
     });
 
-    it('is false if the context does not include documentElement', function () {
+    it('is false if the context does not include documentElement', () => {
       assert.isFalse(new Context(fixture).page);
       assert.isFalse(new Context('#fixture').page);
       assert.isFalse(new Context([['#fixture']]).page);
@@ -378,20 +389,20 @@ describe('Context', () => {
     });
   });
 
-  describe('focusable', function () {
-    it('should default to true', function () {
+  describe('focusable', () => {
+    it('should default to true', () => {
       const result = new Context();
       assert.isTrue(result.focusable);
     });
 
-    it('should use passed in value', function () {
+    it('should use passed in value', () => {
       const result = new Context({
         focusable: false
       });
       assert.isFalse(result.focusable);
     });
 
-    it('should reject bad values', function () {
+    it('should reject bad values', () => {
       const result = new Context({
         focusable: 'hello'
       });
@@ -399,13 +410,13 @@ describe('Context', () => {
     });
   });
 
-  describe('size', function () {
-    it('should default to empty object', function () {
+  describe('size', () => {
+    it('should default to empty object', () => {
       const result = new Context();
       assert.deepEqual(result.size, {});
     });
 
-    it('should use passed in value', function () {
+    it('should use passed in value', () => {
       const result = new Context({
         size: {
           width: 10,
@@ -418,7 +429,7 @@ describe('Context', () => {
       });
     });
 
-    it('should reject bad values', function () {
+    it('should reject bad values', () => {
       const result = new Context({
         size: 'hello'
       });
@@ -426,10 +437,10 @@ describe('Context', () => {
     });
   });
 
-  describe('frames', function () {
+  describe('frames', () => {
     function iframeReady(src, context, id, cb, done) {
       const iframe = document.createElement('iframe');
-      iframe.addEventListener('load', function () {
+      iframe.addEventListener('load', () => {
         try {
           cb(iframe);
           done();
@@ -448,7 +459,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context('#target');
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
@@ -463,7 +474,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context('#outer');
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
@@ -478,7 +489,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context([['#target', '#foo']]);
           assert.lengthOf(result.frames, 1);
 
@@ -496,7 +507,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context({
             exclude: [['#target', '#foo']]
           });
@@ -515,7 +526,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('fixture'),
         'target',
-        function () {
+        () => {
           const result = new Context();
           assert.isTrue(result.initiator);
           assert.lengthOf(result.frames, 1);
@@ -525,13 +536,62 @@ describe('Context', () => {
       );
     });
 
-    describe('.page', function () {
+    it('finds frames inside shadow DOM trees', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<iframe id="target" srcdoc="<h1>My iframe page</h1>"></iframe>'
+      );
+      const result = new Context();
+      assert.equal(result.frames[0].node.id, 'target');
+    });
+
+    it('accepts frames inside shadow DOM selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<iframe id="target" srcdoc="<h1>My iframe page</h1>"></iframe>'
+      );
+      const result = new Context([
+        [['#fixture > article', 'section', 'iframe'], ['h1']]
+      ]);
+      assert.equal(result.frames[0].node.id, 'target');
+    });
+
+    it('skips frames excluded with shadow DOM selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<iframe id="target" srcdoc="<h1>My iframe page</h1>"></iframe>'
+      );
+      const result = new Context({
+        exclude: [[['#fixture > article', 'section', 'iframe']]]
+      });
+      assert.isEmpty(result.frames);
+    });
+
+    it('skips frames in excluded shadow trees', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<iframe id="target" srcdoc="<h1>My iframe page</h1>"></iframe>'
+      );
+      const result = new Context({
+        exclude: [[['#fixture > article', 'section']]]
+      });
+      assert.isEmpty(result.frames);
+    });
+
+    describe('.page', () => {
       it('is true if context includes the document element', function (done) {
         iframeReady(
           '../mock/frames/context.html',
           $id('fixture'),
           'target',
-          function () {
+          () => {
             const result = new Context({
               exclude: [['#mocha']]
             });
@@ -547,7 +607,7 @@ describe('Context', () => {
           '../mock/frames/context.html',
           $id('fixture'),
           'target',
-          function () {
+          () => {
             const result = new Context({
               include: [['#fixture']]
             });
@@ -559,7 +619,7 @@ describe('Context', () => {
       });
     });
 
-    describe('.focusable', function () {
+    describe('.focusable', () => {
       it('is true if tabindex is 0', function (done) {
         iframeReady(
           '../mock/frames/context.html',
@@ -595,7 +655,7 @@ describe('Context', () => {
           '../mock/frames/context.html',
           $id('fixture'),
           'target',
-          function () {
+          () => {
             const result = new Context({
               include: [['#fixture']],
               focusable: false
@@ -608,7 +668,7 @@ describe('Context', () => {
       });
     });
 
-    describe('.size', function () {
+    describe('.size', () => {
       it('sets width and height of the frame', function (done) {
         iframeReady(
           '../mock/frames/context.html',
@@ -649,7 +709,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context([
             ['#target', '#foo'],
             ['#target', '#bar']
@@ -670,7 +730,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const result = new Context([$id('target'), $id('target')]);
           assert.lengthOf(result.frames, 1);
           assert.deepEqual(result.frames[0].node, $id('target'));
@@ -685,7 +745,7 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           const frame = $id('target');
           frame.setAttribute('hidden', 'hidden');
 
@@ -702,13 +762,298 @@ describe('Context', () => {
         '../mock/frames/context.html',
         $id('outer'),
         'target',
-        function () {
+        () => {
           assert.throws(function () {
-            const ctxt = new Context(['#notAFrame', '#foo']);
+            new Context(['#notAFrame', '#foo']);
           });
         },
         done
       );
+    });
+  });
+
+  describe('with labelled fame selectors', () => {
+    it('accepts a single labelled selector', () => {
+      fixture.innerHTML = '<div id="foo"></div>';
+      const result = new Context({
+        fromFrames: ['#foo']
+      });
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('accepts multiple labelled selectors', () => {
+      fixture.innerHTML = '<div id="foo"></div><div id="bar"></div>';
+      const result = new Context([
+        { fromFrames: ['#foo'] },
+        { fromFrames: ['#bar'] }
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('accepts labelled selectors on include & exclude', () => {
+      fixture.innerHTML = '<div id="foo"></div><div id="bar"></div>';
+      const result = new Context({
+        include: [{ fromFrames: ['#foo'] }],
+        exclude: { fromFrames: ['#bar'] }
+      });
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.deepEqual(selectors(result.exclude), ['#bar']);
+    });
+
+    it('throws when not passed an array', () => {
+      assert.throws(() => {
+        new Context({ fromFrames: '#fixture' });
+      });
+    });
+
+    it('throws when fromShadowDom is on the same object', () => {
+      assert.throws(() => {
+        new Context({
+          fromFrames: ['#fixture'],
+          fromShadowDom: ['#fixture']
+        });
+      });
+    });
+
+    it('throws when labelled frames are nested', () => {
+      assert.throws(() => {
+        new Context({
+          fromFrames: ['#fixture', { fromFrames: ['#fixture'] }]
+        });
+      });
+    });
+
+    describe('when the selector has length > 1', () => {
+      it('sets the frame, rather than include / exclude', () => {
+        fixture.innerHTML = `<iframe id="foo" srcdoc="
+          <h1>Hello world</h1> <img>
+        "></iframe>`;
+        const result = new Context({
+          include: { fromFrames: ['#foo', 'h1'] },
+          exclude: { fromFrames: ['iframe', 'img'] }
+        });
+        assert.isEmpty(result.include);
+        assert.isEmpty(result.exclude);
+        assert.lengthOf(result.frames, 1);
+      });
+
+      it('creates a context for the frame', () => {
+        fixture.innerHTML = `<iframe id="foo" srcdoc="
+          <h1>Hello world</h1> <img>
+        "></iframe>`;
+        const result = new Context({
+          include: { fromFrames: ['#foo', 'h1'] },
+          exclude: { fromFrames: ['iframe', 'img'] }
+        });
+        const frameContext = result.frames[0];
+        assert.lengthOf(result.frames, 1);
+        assert.deepEqual(frameContext.include, [['h1']]);
+        assert.deepEqual(frameContext.exclude, [['img']]);
+      });
+    });
+  });
+
+  describe('with labelled shadow DOM selectors', () => {
+    it('accepts a single labelled selector', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<h1 id="foo">Heading</h1>'
+      );
+      const result = new Context({
+        fromShadowDom: ['#fixture > article', 'section', 'h1']
+      });
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
+      assert.isEmpty(result.frames);
+    });
+
+    it('accepts multiple labelled selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<div id="foo"></div><div id="bar"></div>'
+      );
+      const result = new Context([
+        { fromShadowDom: ['#fixture > article', 'section', '#foo'] },
+        { fromShadowDom: ['#fixture > article', 'section', '#bar'] }
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
+      assert.isEmpty(result.exclude);
+      assert.isEmpty(result.frames);
+    });
+
+    it('accepts labelled selectors on include & exclude', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<h1 id="foo"></h1><h2 id="bar"></h2>'
+      );
+      const result = new Context({
+        include: [{ fromShadowDom: ['#fixture > article', 'h1'] }],
+        exclude: { fromShadowDom: ['#fixture > article', 'h2'] }
+      });
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.deepEqual(selectors(result.exclude), ['#bar']);
+    });
+
+    it('throws when fromShadowDom does not contain an array', () => {
+      fixture.innerHTML = '<h1>Hello World</h1>';
+      assert.throws(() => {
+        new Context({ fromShadowDom: 'h1' });
+      });
+    });
+
+    it('throws when containing a labelled frame selector', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        `<iframe id="foo" srcdoc="
+          <h1>Hello World</h1>
+        "></iframe>`
+      );
+      assert.throws(() => {
+        new Context({
+          fromShadowDom: [
+            '#fixture > article',
+            { fromFrames: ['iframe', 'h1'] }
+          ]
+        });
+      });
+    });
+
+    it('throws when containing another labelled shadow dom selector', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<div><section id="shadowHost"></section></div>',
+        '<h1 id="foo">Heading</h1>'
+      );
+      assert.throws(() => {
+        new Context({
+          fromShadowDom: [
+            '#fixture > article',
+            { fromShadowDom: ['section', 'h1'] }
+          ]
+        });
+      });
+    });
+
+    describe('nested in a frame selector', () => {
+      it('works for unlabelled frame selectors', () => {
+        createNestedShadowDom(
+          fixture,
+          '<article id="shadowHost"></article>',
+          `<iframe id="foo" srcdoc="
+            <h1>Hello World</h1>
+          "></iframe>`
+        );
+        const result = new Context([
+          [
+            {
+              fromShadowDom: ['#fixture > article', 'iframe']
+            },
+            ['h1']
+          ]
+        ]);
+
+        const frameNodes = result.frames.map(({ node }) => node);
+        assert.deepEqual(selectors(frameNodes), ['#foo']);
+      });
+
+      it('works for labelled frame selectors', () => {
+        createNestedShadowDom(
+          fixture,
+          '<article id="shadowHost"></article>',
+          `<iframe id="foo" srcdoc="
+            <h1>Hello World</h1>
+          "></iframe>`
+        );
+        const result = new Context({
+          fromFrames: [
+            {
+              fromShadowDom: ['#fixture > article', 'iframe']
+            },
+            ['h1']
+          ]
+        });
+        const frameNodes = result.frames.map(({ node }) => node);
+        assert.deepEqual(selectors(frameNodes), ['#foo']);
+      });
+    });
+  });
+
+  describe('ignores bad values', () => {
+    it('passed directly into include', () => {
+      const result = new Context([null, fixture, false, {}]);
+      assert.deepEqual(selectors(result.include), ['#fixture']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('in unlabelled frame selectors', () => {
+      fixture.innerHTML = '<article id="foo"></article>';
+      const result = new Context([
+        [null],
+        ['#fixture > article'],
+        [fixture],
+        [false],
+        [{}]
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('in labelled frame selectors', () => {
+      fixture.innerHTML = '<article id="foo"></article>';
+      const result = new Context([
+        { fromFrames: [null] },
+        { fromFrames: ['#fixture > article'] },
+        { fromFrames: [fixture] },
+        { fromFrames: [false] },
+        { fromFrames: [{}] }
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('in unlabelled shadow DOM selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<h1 id="foo"></h1><h2 id="bar"></h2>'
+      );
+      const result = new Context([
+        [['#fixture > article', null]],
+        [['#fixture > article', 'h1']], // Valid
+        [['#fixture > article', ['h2']]],
+        [['#fixture > article', fixture]],
+        [['#fixture > article', false]],
+        [['#fixture > article', {}]]
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
+    });
+
+    it('in labelled shadow DOM selectors', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        '<h1 id="foo"></h1><h2 id="bar"></h2>'
+      );
+      const result = new Context([
+        { fromShadowDom: ['#fixture > article', null] },
+        { fromShadowDom: ['#fixture > article', 'h1'] }, // valid
+        { fromShadowDom: ['#fixture > article', ['h1']] },
+        { fromShadowDom: ['#fixture > article', fixture] },
+        { fromShadowDom: ['#fixture > article', false] },
+        { fromShadowDom: ['#fixture > article', {}] }
+      ]);
+      assert.deepEqual(selectors(result.include), ['#foo']);
+      assert.isEmpty(result.exclude);
     });
   });
 });

@@ -29,6 +29,43 @@ axe.run(
     console.log(error || results);
   }
 );
+export async function runAsync() {
+  await axe.run('main'); // Single selector
+  await axe.run(['main']); // Array of one selector
+  await axe.run([['main']]); // Selecting in the outer frame
+  // @ts-expect-error // Shadow DOM selectors must be at least 2 items long
+  await axe.run([[['main']]]);
+  await axe.run([[['#app', 'main']]]); // Selecting in the outer frame
+
+  await axe.run(document.querySelector('main'));
+  await axe.run(document.querySelectorAll('main'));
+  // axe.run with frameContext context
+  await axe.run({ fromShadowDom: ['#app', '#main', '#inner'] });
+  // @ts-expect-error // Must be two long:
+  await axe.run({ fromShadowDom: ['#app'] });
+  // @ts-expect-error // Must be two long:
+  await axe.run({ fromFrames: ['#app'] });
+  // axe.run with fromFrames context
+  await axe.run({
+    fromFrames: ['#frame', { fromShadowDom: ['#app', '#main'] }]
+  });
+  // Mixed type array
+  await axe.run([
+    'main',
+    document.head,
+    { fromShadowDom: ['#app', '#header', '#search'] },
+    { fromFrames: ['#frame', '#main'] }
+  ]);
+  // Combined fromFrames & fromContext
+  await axe.run({
+    include: { fromShadowDom: ['#frame', '#main'] },
+    exclude: [
+      'footer',
+      document.head,
+      { fromFrames: ['#frame', { fromShadowDom: ['#app', '#main'] }] }
+    ]
+  });
+}
 axe.run(
   { exclude: [$fixture[0]] },
   {},
