@@ -81,12 +81,28 @@ declare namespace axe {
       };
   type ElementContext = Selector | SelectorList | ContextObject;
 
-  interface SerialContextObject {
+  type SerialSelector =
+    | BaseSelector
+    | LabelledShadowDomSelector
+    | LabelledFramesSelector;
+  type SerialSelectorList = Array<SerialSelector | FramesSelector>;
+
+  type SerialContextObject =
+    | {
+        include: SerialSelector | SerialSelectorList;
+        exclude?: SerialSelector | SerialSelectorList;
+      }
+    | {
+        exclude: SerialSelector | SerialSelectorList;
+        include?: SerialSelector | SerialSelectorList;
+      };
+
+  interface FrameContextObject {
     include: UnlabelledFrameSelector[];
     exclude: UnlabelledFrameSelector[];
   }
 
-  type RunCallback = (error: Error, results: AxeResults) => void;
+  type RunCallback<T = AxeResults> = (error: Error, results: T) => void;
 
   interface TestEngine {
     name: string;
@@ -298,8 +314,8 @@ declare namespace axe {
   }
   type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
-    frameSelector: UnlabelledFrameSelector;
-    frameContext: SerialContextObject;
+    frameSelector: CrossTreeSelector;
+    frameContext: FrameContextObject;
   }
   interface Utils {
     getFrameContexts: (
@@ -339,19 +355,27 @@ declare namespace axe {
    * @param   {RunCallback}    callback Optional The function to invoke when analysis is complete.
    * @returns {Promise<AxeResults>|void} If the callback was not defined, axe will return a Promise.
    */
-  function run(context?: ElementContext): Promise<AxeResults>;
-  function run(options: RunOptions): Promise<AxeResults>;
-  function run(callback: (error: Error, results: AxeResults) => void): void;
-  function run(context: ElementContext, callback: RunCallback): void;
-  function run(options: RunOptions, callback: RunCallback): void;
-  function run(
+  function run<T = AxeResults>(context?: ElementContext): Promise<T>;
+  function run<T = AxeResults>(options: RunOptions): Promise<T>;
+  function run<T = AxeResults>(
+    callback: (error: Error, results: T) => void
+  ): void;
+  function run<T = AxeResults>(
+    context: ElementContext,
+    callback: RunCallback<T>
+  ): void;
+  function run<T = AxeResults>(
+    options: RunOptions,
+    callback: RunCallback<T>
+  ): void;
+  function run<T = AxeResults>(
     context: ElementContext,
     options: RunOptions
-  ): Promise<AxeResults>;
-  function run(
+  ): Promise<T>;
+  function run<T = AxeResults>(
     context: ElementContext,
     options: RunOptions,
-    callback: RunCallback
+    callback: RunCallback<T>
   ): void;
 
   /**
