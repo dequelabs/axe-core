@@ -31,6 +31,8 @@ jobs:
           npm ci
           npm run release
 
+          git push origin "$Branch" --force
+
           Version=$(jq -r .version ./package.json)
           echo "Version: $Version"
 
