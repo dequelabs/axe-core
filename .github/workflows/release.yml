@@ -50,3 +50,5 @@ jobs:
           echo "" >> /tmp/pr.txt
           echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
           hub pull-request --file /tmp/pr.txt --base main
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
