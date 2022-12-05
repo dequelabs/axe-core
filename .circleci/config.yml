@@ -141,6 +141,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: sudo apt-get update -y
       - run: npm run build
       - run:
           name: Install Chrome and ChromeDriver Beta
@@ -377,14 +378,6 @@ workflows:
           requires:
             - release
   nightly:
-    triggers:
-      - schedule:
-          # run at 00:00 UTC every day
-          cron: '0 0 * * *'
-          filters:
-            branches:
-              only:
-                - develop
     jobs:
       - dependencies_unix
       - test_nightly_browsers:
