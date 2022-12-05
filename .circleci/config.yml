@@ -5,7 +5,7 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: cimg/node:16.21-browsers
+    - image: cimg/node:16.18-browsers
 
 unix_nightly_box: &unix_nightly_box
   docker:
