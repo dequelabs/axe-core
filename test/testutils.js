@@ -634,3 +634,33 @@ testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
   });
   return elm;
 };
+
+testUtils.createNestedShadowDom = function createFixtureShadowTree(
+  fixture,
+  ...htmlCodes
+) {
+  if (htmlCodes.length <= 1) {
+    throw new Error(
+      'createNestedShadowDom must contain at least two HTML snippets'
+    );
+  }
+  let htmlCode;
+  while ((htmlCode = htmlCodes.shift())) {
+    appendHtml(fixture, htmlCode);
+    if (htmlCodes.length) {
+      const query = fixture.querySelectorAll('#shadowHost, .shadowHost');
+      fixture = query[query.length - 1];
+      fixture = fixture.attachShadow({ mode: 'open' });
+    }
+  }
+  return fixture.querySelector('#target');
+};
+
+function appendHtml(fixture, htmlCode) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = htmlCode;
+  // Append to avoid clobbering other shadow trees with innerHTML
+  for (const child of tmp.children) {
+    fixture.appendChild(child.cloneNode(true));
+  }
+}
