@@ -33,7 +33,7 @@ jobs:
           Version=$(jq -r .version ./package.json)
           echo "Version: $Version"
 
-          # Stolen from https://github.com/dequelabs/axe-extension/blob/0f22963c4d0a73bf853aa982ade2393e422f002c/scripts/release.sh#L51-L54
+          # Get the additions to the changelog as the commit body and generate the PR url
           ReleaseNotes=$(
             git show \
               --no-color \
