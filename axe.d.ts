@@ -85,7 +85,8 @@ declare namespace axe {
     | BaseSelector
     | LabelledShadowDomSelector
     | LabelledFramesSelector;
-  type SerialSelectorList = Array<SerialSelector | FramesSelector>;
+  type SerialFrameSelector = SerialSelector | FramesSelector;
+  type SerialSelectorList = Array<SerialFrameSelector>;
 
   type SerialContextObject =
     | {
