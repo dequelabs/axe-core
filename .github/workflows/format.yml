@@ -11,12 +11,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           # We must use a personal access token in order for tests to run on the commit this workflow creates.
           token: ${{ secrets.PAT }}
+      - name: Install dependencies
+        run: npm ci
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: |
             ./node_modules
-          key: yarn-workspace-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+          key: npm-workspace-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 16
