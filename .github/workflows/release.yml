@@ -1,6 +1,8 @@
 name: Create release candidate
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  push: # TODO: remove when done testing
 
 jobs:
   create_release:
@@ -15,23 +17,32 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Configure git
+      - name: Run release script and open PR
         run: |
           git config user.name "API Team CI User"
           git config user.email "aciattestteamci@deque.com"
-      - run: npm ci
-      - run: npm run release
-      - id: get-version
-        run: |
+
+          Branch="release-$(date +%Y-%m-%d)"
+          echo "Branch: $Branch"
+          git checkout -b "$Branch"
+
+          npm ci
+          npm run release
+
           Version=$(jq -r .version ./package.json)
-          echo "version=$Version" >>"$GITHUB_OUTPUT"
-      - name: Open PR
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.PAT }}
-          branch: release
-          branch-suffix: timestamp
-          base: develop
-          commit-message: 'chore(release): v${{ steps.get-version.outputs.version }}'
-          title: 'chore: Update axe-core to v${{ steps.get-version.outputs.version }}'
-          body: 'This PR was opened by a robot :robot: :tada:.'
+          echo "Version: $Version"
+
+          # Stolen from https://github.com/dequelabs/axe-extension/blob/0f22963c4d0a73bf853aa982ade2393e422f002c/scripts/release.sh#L51-L54
+          ReleaseNotes=$(
+            git show \
+              --no-color \
+              --no-prefix \
+              --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
+          )
+
+          echo "TESTING chore(release): v$Version" > /tmp/pr.txt
+          echo "" >> /tmp/pr.txt
+          echo "$ReleaseNotes" >> /tmp/pr.txt
+          echo "" >> /tmp/pr.txt
+          echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
+          hub pull-request --file /tmp/pr.txt --base main
