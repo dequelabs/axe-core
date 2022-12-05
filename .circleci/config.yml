@@ -378,6 +378,14 @@ workflows:
           requires:
             - release
   nightly:
+    triggers:
+      - schedule:
+          # run at 00:00 UTC every day
+          cron: '0 0 * * *'
+          filters:
+            branches:
+              only:
+                - develop
     jobs:
       - dependencies_unix
       - test_nightly_browsers:
