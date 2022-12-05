@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/dequelabs/axe-core/compare/v4.5.2...v4.6.0) (2022-12-05)
+
+### Features
+
+- **aria-required-attr:** require aria-controls on combobox and aria-valuenow on focusable separator ([#3786](https://github.com/dequelabs/axe-core/issues/3786)) ([5259e88](https://github.com/dequelabs/axe-core/commit/5259e8842e49d291d35aada0fefecfde3627299f))
+- **checks/label-content-name-mismatch:** deprecate occuranceThreshold option in favor of occurrenceThreshold to fix typo ([#3782](https://github.com/dequelabs/axe-core/issues/3782)) ([5026d65](https://github.com/dequelabs/axe-core/commit/5026d65b5c93ca7ad1e52881fb5379a4a75ed9a1))
+- **commons:** deprecate flattenShadowColors in favor of flattenColors ([#3792](https://github.com/dequelabs/axe-core/issues/3792)) ([af49daf](https://github.com/dequelabs/axe-core/commit/af49dafcde281443823c2d878ce4de23ee573212))
+- **context:** allow selecting shadow DOM nodes ([#3798](https://github.com/dequelabs/axe-core/issues/3798)) ([9e1e31b](https://github.com/dequelabs/axe-core/commit/9e1e31b253398cc2a3e840c7cb9c5527f4e4ba66))
+- **list,listitem:** do not allow group as allowed parent or child ([#3784](https://github.com/dequelabs/axe-core/issues/3784)) ([d1cbf6f](https://github.com/dequelabs/axe-core/commit/d1cbf6fe20a1920649566e521c0c6668efd0d470))
+- **required-attr:** require aria-checked for checkbox-like and radio-like roles ([#3785](https://github.com/dequelabs/axe-core/issues/3785)) ([563e4e9](https://github.com/dequelabs/axe-core/commit/563e4e90facc9b955c1b2395b466cd65d72bf04e))
+- **utils:** new shadowSelectAll utility ([#3796](https://github.com/dequelabs/axe-core/issues/3796)) ([5865462](https://github.com/dequelabs/axe-core/commit/586546261a9523077e1710cecf1751a5e6f172e6))
+
+### Bug Fixes
+
+- **aria-allowed-role:** allow combobox on button, checkbox and combobox on input[type=button] ([#3354](https://github.com/dequelabs/axe-core/issues/3354)) ([ac688c0](https://github.com/dequelabs/axe-core/commit/ac688c04b70d6bcdfa13ac4d7faf824d2bc4af01)), closes [#3353](https://github.com/dequelabs/axe-core/issues/3353)
+- **color-contrast:** consider -webkit-text-stroke & -webkit-text-fill-color ([#3791](https://github.com/dequelabs/axe-core/issues/3791)) ([228daf1](https://github.com/dequelabs/axe-core/commit/228daf153b3c6e45933a2ca8feac765f942663f4))
+- **html-lang-valid:** only run rule when attribute has value ([#3663](https://github.com/dequelabs/axe-core/issues/3663)) ([1a7eecb](https://github.com/dequelabs/axe-core/commit/1a7eecb72c3b1c772392b7c18feee75e0f51dbcb)), closes [#3624](https://github.com/dequelabs/axe-core/issues/3624)
+- **metadata:** Map aria-required-children to ACT rule bc4a75 ([#3790](https://github.com/dequelabs/axe-core/issues/3790)) ([a33a523](https://github.com/dequelabs/axe-core/commit/a33a523eb4dfdc62743d78aab124e74afc98a59e))
+
 ### [4.5.2](https://github.com/dequelabs/axe-core/compare/v4.5.1...v4.5.2) (2022-11-14)
 
 ### Bug Fixes
