@@ -1,8 +1,6 @@
 name: Create release candidate
 
-on:
-  workflow_dispatch:
-  push: # TODO: remove when done testing
+on: [workflow_dispatch]
 
 jobs:
   create_release:
@@ -44,7 +42,7 @@ jobs:
               --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
           )
 
-          echo "TESTING chore(release): v$Version" > /tmp/pr.txt
+          echo "chore(release): v$Version" > /tmp/pr.txt
           echo "" >> /tmp/pr.txt
           echo "$ReleaseNotes" >> /tmp/pr.txt
           echo "" >> /tmp/pr.txt
