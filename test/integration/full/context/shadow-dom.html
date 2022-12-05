@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" id="main">
+  <head>
+    <title>frame exclude test</title>
+    <meta charset="utf8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      const assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <input id="outOfContext1" />
+    <div id="shadowHost">
+      <input id="outOfContext2" />
+    </div>
+
+    <div id="mocha"></div>
+    <script src="/test/testutils.js"></script>
+    <script>
+      const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = `<iframe id="shadowFrame1" src="frames/shadow-frame.html"></iframe>
+        <iframe id="shadowFrame2" src="frames/shadow-frame.html"></iframe>
+        <br>
+        <slot />`;
+    </script>
+
+    <script src="shadow-dom.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
