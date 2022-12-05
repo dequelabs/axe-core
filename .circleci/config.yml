@@ -141,6 +141,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: sudo apt-get update -y
       - run: npm run build
       - run:
           name: Install Chrome and ChromeDriver Beta
