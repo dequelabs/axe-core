@@ -73,6 +73,43 @@ axe.run(
     console.log(error || results);
   }
 );
+
+export async function frameContextTypes() {
+  let { frameContext, frameSelector } = axe.utils.getFrameContexts()[0];
+  await axe.run(frameContext);
+  await axe.runPartial(frameContext, {});
+  axe.utils.shadowSelect(frameSelector);
+}
+
+export async function serialContextType() {
+  // @ts-expect-error
+  const exclude: axe.SerialSelector = document.body;
+  // @ts-expect-error
+  const include: axe.SerialSelectorList = [document.body];
+
+  let serialContext: axe.SerialContextObject;
+  // @ts-expect-error
+  serialContext = {}; // At lease one of the props is required
+  serialContext = { include, exclude };
+  serialContext = { include };
+  serialContext = { exclude };
+  await axe.runPartial(serialContext, {});
+}
+
+export async function customReporters() {
+  type MyReport = { issues: any[] };
+  let report: MyReport;
+
+  report = await axe.run<MyReport>();
+  report = await axe.run<MyReport>(document);
+  report = await axe.run<MyReport>({});
+  report = await axe.run<MyReport>(document, {});
+  axe.run<MyReport>((_, results) => (report = results));
+  axe.run<MyReport>(document, (_, results) => (report = results));
+  axe.run<MyReport>({}, (_, results) => (report = results));
+  axe.run<MyReport>(document, {}, (_, results) => (report = results));
+}
+
 // additional configuration options
 axe.run(context, options, (error: Error, results: axe.AxeResults) => {
   console.log(error || results.passes.length);
