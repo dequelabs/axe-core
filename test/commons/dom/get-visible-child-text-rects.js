@@ -1,5 +1,5 @@
-describe('dom.getVisibleTextRects', () => {
-  const { getVisibleTextRects } = axe.commons.dom;
+describe('dom.getVisibleChildTextRects', () => {
+  const { getVisibleChildTextRects } = axe.commons.dom;
   const { fixtureSetup } = axe.testUtils;
   const fixture = document.querySelector('#fixture');
 
@@ -34,7 +34,7 @@ describe('dom.getVisibleTextRects', () => {
   it('returns the text rect of a node', () => {
     fixtureSetup(`<span>Hello</span>`);
     const node = fixture.firstChild;
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
 
     assertRectsEqual(actual, getClientRects(node));
   });
@@ -42,7 +42,7 @@ describe('dom.getVisibleTextRects', () => {
   it('returns multiple text rects and filters out newlines', () => {
     fixtureSetup(`<span>Hello<br/>World</span>`);
     const node = fixture.firstChild;
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
 
     assertRectsEqual(actual, getClientRects(node));
   });
@@ -50,7 +50,7 @@ describe('dom.getVisibleTextRects', () => {
   it('returns empty array if text rects escape bounds of node', () => {
     fixtureSetup(`<div style="width: 10px;">Hello World</div>`);
     const node = fixture.firstChild;
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
 
     assert.deepEqual(actual, []);
   });
@@ -62,7 +62,7 @@ describe('dom.getVisibleTextRects', () => {
       </div>
     `);
     const node = fixture.querySelector('#target');
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
     const rect = getClientRects(node)[0];
     const expected = new DOMRect(rect.left, rect.top, 10, rect.height);
 
@@ -78,7 +78,7 @@ describe('dom.getVisibleTextRects', () => {
       </div>
     `);
     const node = fixture.querySelector('#target');
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
     const rect = getClientRects(node)[0];
     const expected = new DOMRect(rect.left, rect.top, 10, 10);
 
@@ -92,7 +92,7 @@ describe('dom.getVisibleTextRects', () => {
       </div>
     `);
     const node = fixture.querySelector('#target');
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
     const rects = getClientRects(node);
     const expected = [
       rects[0],
@@ -116,7 +116,7 @@ describe('dom.getVisibleTextRects', () => {
       </div>
     `);
     const node = fixture.querySelector('#target');
-    const actual = getVisibleTextRects(node);
+    const actual = getVisibleChildTextRects(node);
 
     assert.lengthOf(actual, 2);
   });
