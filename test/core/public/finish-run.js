@@ -104,7 +104,7 @@ describe('axe.finishRun', function () {
   it('can report violations results', function (done) {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe
-      .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
+      .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
       .then(function (result) {
         return axe.finishRun([result]);
       })
@@ -122,7 +122,7 @@ describe('axe.finishRun', function () {
     fixture.innerHTML = '<div role="button" aria-label="foo"></div>';
 
     axe
-      .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
+      .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
       .then(function (result) {
         return axe.finishRun([result]);
       })
@@ -141,7 +141,7 @@ describe('axe.finishRun', function () {
 
     axe
       .runPartial(
-        { include: ['#fixture'] },
+        { include: [['#fixture']] },
         { runOnly: 'aria-valid-attr-value' }
       )
       .then(function (result) {
@@ -159,7 +159,7 @@ describe('axe.finishRun', function () {
 
   it('can report inapplicable results', function (done) {
     axe
-      .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
+      .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
       .then(function (result) {
         return axe.finishRun([result]);
       })
@@ -181,18 +181,18 @@ describe('axe.finishRun', function () {
     var allResults = [];
 
     axe
-      .runPartial({ include: ['#pass'] }, { runOnly: 'aria-allowed-attr' })
+      .runPartial({ include: [['#pass']] }, { runOnly: 'aria-allowed-attr' })
       .then(function (results) {
         allResults.push(results);
         return axe.runPartial(
-          { include: ['#fail'] },
+          { include: [['#fail']] },
           { runOnly: 'aria-allowed-attr' }
         );
       })
       .then(function (results) {
         allResults.push(results);
         return axe.runPartial(
-          { include: ['#incomplete'] },
+          { include: [['#incomplete']] },
           { runOnly: 'aria-valid-attr-value' }
         );
       })

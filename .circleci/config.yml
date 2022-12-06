@@ -5,7 +5,7 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: cimg/node:16.14-browsers
+    - image: cimg/node:16.18-browsers
 
 unix_nightly_box: &unix_nightly_box
   docker:
@@ -13,7 +13,7 @@ unix_nightly_box: &unix_nightly_box
 
 orbs:
   puppeteer: threetreeslight/puppeteer@0.1.2
-  browser-tools: circleci/browser-tools@1.1.0
+  browser-tools: circleci/browser-tools@1.4.0
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -141,6 +141,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: sudo apt-get update -y
       - run: npm run build
       - run:
           name: Install Chrome and ChromeDriver Beta

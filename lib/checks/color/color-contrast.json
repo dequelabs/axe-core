@@ -17,7 +17,8 @@
       }
     },
     "pseudoSizeThreshold": 0.25,
-    "shadowOutlineEmMax": 0.2
+    "shadowOutlineEmMax": 0.2,
+    "textStrokeEmMin": 0.03
   },
   "metadata": {
     "impact": "serious",

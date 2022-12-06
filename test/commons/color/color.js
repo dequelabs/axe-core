@@ -2,6 +2,24 @@ describe('color.Color', function () {
   'use strict';
   var Color = axe.commons.color.Color;
 
+  it('can be constructed without alpha', () => {
+    const c1 = new Color(4, 3, 2);
+    assert.equal(c1.red, 4);
+    assert.equal(c1.green, 3);
+    assert.equal(c1.blue, 2);
+    assert.equal(c1.alpha, 1);
+  });
+
+  it('has a toJSON method', () => {
+    const c1 = new Color(255, 128, 0);
+    assert.deepEqual(c1.toJSON(), {
+      red: 255,
+      green: 128,
+      blue: 0,
+      alpha: 1
+    });
+  });
+
   describe('parseColorFnString', function () {
     it('should set values properly via RGB', function () {
       var c = new Color();
