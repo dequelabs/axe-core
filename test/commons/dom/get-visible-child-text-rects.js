@@ -47,12 +47,12 @@ describe('dom.getVisibleChildTextRects', () => {
     assertRectsEqual(actual, getClientRects(node));
   });
 
-  it('returns empty array if text rects escape bounds of node', () => {
+  it('returns the nodes bounding box if text rects escape bounds of node', () => {
     fixtureSetup(`<div style="width: 10px;">Hello World</div>`);
     const node = fixture.firstChild;
     const actual = getVisibleChildTextRects(node);
 
-    assert.deepEqual(actual, []);
+    assert.deepEqual(actual, [node.getBoundingClientRect()]);
   });
 
   it('changes rect size based on overflow of parent', () => {
