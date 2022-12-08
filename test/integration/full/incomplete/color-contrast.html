@@ -24,8 +24,8 @@
       <div
         id="parent"
         style="
-          height: 40px;
-          width: 30px;
+          height: 50px;
+          width: 50px;
           background-color: white;
           position: relative;
           z-index: 5;
@@ -36,17 +36,23 @@
           style="
             position: absolute;
             top: -10px;
-            height: 40px;
-            width: 35px;
+            height: 50px;
+            width: 50px;
             z-index: 15;
           "
         >
-          <img src="some-img.png" width="35" height="40" />
+          <img src="some-img.png" width="50" height="50" />
         </div>
         <div
           id="target"
-          style="position: relative; top: 1px; height: 20px
-			 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"
+          style="
+            position: relative;
+            top: 1px;
+            height: 20px;
+            width: 50px;
+            z-index: 25;
+            background: rgba(0, 125, 0, 0.5);
+          "
         >
           Text
         </div>
@@ -78,6 +84,7 @@
     </div>
 
     <div id="mocha"></div>
+    <script src="/test/integration/no-ui-reporter.js"></script>
     <script src="/test/testutils.js"></script>
     <script src="color-contrast.js"></script>
     <script src="/test/integration/adapter.js"></script>
