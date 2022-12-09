@@ -26,6 +26,7 @@ jobs:
           echo "Branch: $Branch"
           git checkout -b "$Branch"
 
+          npm run ci
           npm run release
 
           git push origin "$Branch" --force
