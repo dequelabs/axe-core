@@ -37,18 +37,13 @@ describe('color-contrast code highlighting test', function () {
   describe('passes', function () {
     it('should find passes', function () {
       assert.lengthOf(results.passes, 1);
-      assert.lengthOf(results.passes[0].nodes, 27);
+      assert.lengthOf(results.passes[0].nodes, 28);
     });
   });
 
   describe('incomplete', function () {
-    it('should find just the code block', function () {
-      assert.lengthOf(results.incomplete, 1);
-      assert.lengthOf(results.incomplete[0].nodes, 1);
-      assert.equal(
-        results.incomplete[0].nodes[0].html,
-        '<code class=" language-html">'
-      );
+    it('should find 0 incomplete', function () {
+      assert.lengthOf(results.incomplete, 0);
     });
   });
 });

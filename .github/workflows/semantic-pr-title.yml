@@ -1,0 +1,15 @@
+name: Semantic PR title
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+jobs:
+  semantic-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dequelabs/semantic-pr-title@v1

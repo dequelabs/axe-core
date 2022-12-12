@@ -1,0 +1,6 @@
+{
+  "description": "color-contrast test",
+  "rule": "color-contrast-enhanced",
+  "violations": [["#fail1"], ["#fail2"]],
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]]
+}

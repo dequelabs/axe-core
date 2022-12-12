@@ -23,7 +23,7 @@ const testCaseJsonPath = path.resolve(
 const addr = `http://localhost:${serverPort}/WAI/content-assets/wcag-act-rules/`;
 const testCaseJson = require(testCaseJsonPath);
 
-module.exports = ({ id, title, axeRules }) => {
+module.exports = ({ id, title, axeRules, skipTests = [] }) => {
   describe(`${title} (${id})`, function () {
     let driver, server;
     const testcases = testCaseJson.testcases.filter(
@@ -64,7 +64,10 @@ module.exports = ({ id, title, axeRules }) => {
     });
 
     testcases.forEach(testcase => {
-      const shouldRun = testcase.relativePath.match(/\.(xhtml|html?)$/);
+      const shouldRun =
+        testcase.relativePath.match(/\.(xhtml|html?)$/) &&
+        !skipTests.includes(testcase.testcaseId);
+
       (shouldRun ? it : xit)(testcase.testcaseTitle, async () => {
         await driver.get(`${addr}/${testcase.relativePath}`);
 
@@ -73,10 +76,17 @@ module.exports = ({ id, title, axeRules }) => {
         const results = await builder.analyze();
 
         if (testcase.expected !== 'failed') {
-          assert.lengthOf(results.violations, 0, 'Expected 0 violations');
+          assert.lengthOf(
+            results.violations,
+            0,
+            `Expected 0 violations for testcase ${testcase.testcaseId}`
+          );
         } else {
           var issues = results.violations[0] || results.incomplete[0];
-          assert.isDefined(issues, 'Expected violations or incomplete');
+          assert.isDefined(
+            issues,
+            `Expected violations or incomplete for testcase ${testcase.testcaseId}`
+          );
           assert.isAtLeast(issues.nodes.length, 1);
         }
       });

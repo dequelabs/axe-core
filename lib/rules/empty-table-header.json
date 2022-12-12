@@ -1,6 +1,6 @@
 {
   "id": "empty-table-header",
-  "selector": "th, [role=\"rowheader\"], [role=\"columnheader\"]",
+  "selector": "th:not([role]), [role=\"rowheader\"], [role=\"columnheader\"]",
   "tags": ["cat.name-role-value", "best-practice"],
   "metadata": {
     "description": "Ensures table headers have discernible text",

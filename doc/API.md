@@ -321,30 +321,28 @@ By default, `axe.run` will test the entire document. The context object is an op
    - Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 1. A NodeList such as returned by `document.querySelectorAll`.
 1. A [CSS selector](./developer-guide.md#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
-1. An include-exclude object (see below)
+1. An object with `exclude` and/or `include` properties
+1. An object with a `fromFrames` property
+1. An object with a `fromShadowDom` property
 
-###### Include-Exclude Object
-
-The include exclude object is a JSON object with two attributes: include and exclude. Either include or exclude is required. If only `exclude` is specified; include will default to the entire `document`.
-
-- A node, or
-- An array of Nodes or an array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
-  - If the nested array contains a single string, that string is the CSS selector
-  - If the nested array contains multiple strings
-    - The last string is the final CSS selector
-    - All other's are the nested structure of iframes inside the document
-
-In most cases, the component arrays will contain only one CSS selector. Multiple CSS selectors are only required if you want to include or exclude regions of a page that are inside iframes (or iframes within iframes within iframes). In this case, the first n-1 selectors are selectors that select the iframe(s) and the nth selector, selects the region(s) within the iframe.
+Read [context.md](context.md) for details about the context object.
 
 ###### Context Parameter Examples
 
-1. Include the first item in the `$fixture` NodeList but exclude its first child
+1. Test the `#navBar` and all other `nav` elements and its content.
+
+```js
+axe.run([`#navBar`, `nav`], (err, results) => {
+  // ...
+});
+```
+
+2. Test everything except `.ad-banner` elements.
 
 ```js
 axe.run(
   {
-    include: $fixture[0],
-    exclude: $fixture[0].firstChild
+    exclude: '.ad-banner'
   },
   (err, results) => {
     // ...
@@ -352,13 +350,12 @@ axe.run(
 );
 ```
 
-2. Include the element with the ID of `fix` but exclude any `div`s within it
+3. Test the `form` element inside the `#payment` iframe.
 
 ```js
 axe.run(
   {
-    include: [['#fix']],
-    exclude: [['#fix div']]
+    fromFrames: ['iframe#payment', 'form']
   },
   (err, results) => {
     // ...
@@ -366,12 +363,14 @@ axe.run(
 );
 ```
 
-3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
+4. Exclude all `.commentBody` elements in each `.commentsShadowHost` shadow DOM tree.
 
 ```js
 axe.run(
   {
-    exclude: [['.exclude1'], ['.exclude2']]
+    exclude: {
+      fromShadowDom: ['.commentsShadowHost', '.commentBody']
+    }
   },
   (err, results) => {
     // ...
@@ -379,48 +378,7 @@ axe.run(
 );
 ```
 
-4. Include the element with the ID of `fix`, within the iframe with id `frame`
-
-```js
-axe.run(
-  {
-    include: [['#frame', '#fix']]
-  },
-  (err, results) => {
-    // ...
-  }
-);
-```
-
-5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
-
-```js
-axe.run(
-  {
-    include: [['#frame1', '#frame2', '#fix']]
-  },
-  (err, results) => {
-    // ...
-  }
-);
-```
-
-6. Include the following:
-
-- The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
-- The element with id `header`
-- All links
-
-```js
-axe.run(
-  {
-    include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
-  },
-  (err, results) => {
-    // ...
-  }
-);
-```
+More details on how to use the context object are described in [context.md](context.md).
 
 ##### Options Parameter
 

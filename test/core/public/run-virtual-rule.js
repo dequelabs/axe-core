@@ -89,25 +89,51 @@ describe('axe.runVirtualRule', function () {
     assert.isTrue(called);
   });
 
-  it('should pass a virtual context to rule.runSync', function () {
-    var node = new axe.SerialVirtualNode({ nodeName: 'div' });
-    axe._audit.rules = [
-      {
-        id: 'aria-roles',
-        runSync: function (context) {
-          assert.equal(typeof context, 'object');
-          assert.isTrue(Array.isArray(context.include));
-          assert.equal(context.include[0], node);
+  describe('context', () => {
+    const { Context } = axe._thisWillBeDeletedDoNotUse.base;
+    it('passes context with vNode included to rule.runSync', function () {
+      var node = new axe.SerialVirtualNode({ nodeName: 'div' });
+      axe._audit.rules = [
+        {
+          id: 'aria-roles',
+          runSync: function (context) {
+            assert.equal(typeof context, 'object');
+            assert.isTrue(Array.isArray(context.include));
+            assert.equal(context.include[0], node);
 
-          return {
-            id: 'aria-roles',
-            nodes: []
-          };
+            return {
+              id: 'aria-roles',
+              nodes: []
+            };
+          }
         }
-      }
-    ];
+      ];
 
-    axe.runVirtualRule('aria-roles', node);
+      axe.runVirtualRule('aria-roles', node);
+    });
+
+    it('has all properties a normal context has', () => {
+      const contextProps = Object.entries(new Context())
+        .filter(arg => typeof arg[1] !== 'function')
+        .map(([key]) => key)
+        .sort();
+
+      var node = new axe.SerialVirtualNode({ nodeName: 'div' });
+      axe._audit.rules = [
+        {
+          id: 'aria-roles',
+          runSync: function (context) {
+            const virtualContextProps = Object.keys(context).sort();
+            assert.deepEqual(virtualContextProps, contextProps);
+            return {
+              id: 'aria-roles',
+              nodes: []
+            };
+          }
+        }
+      ];
+      axe.runVirtualRule('aria-roles', node);
+    });
   });
 
   it('should pass through options to rule.runSync', function () {

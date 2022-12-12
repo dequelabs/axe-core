@@ -7,7 +7,11 @@
     ["#fail3"],
     ["#fail6"],
     ["#fail7"],
-    ["#fail8"]
+    ["#fail8"],
+    ["#fail9"],
+    ["#fail10"],
+    ["#fail11"],
+    ["#fail12"]
   ],
   "passes": [
     ["#pass1"],
@@ -22,7 +26,16 @@
     ["#pass9"],
     ["#pass10"],
     ["#pass11"],
-    ["#pass12"]
+    ["#pass12"],
+    ["#pass13"],
+    ["#pass14"],
+    ["#pass15"],
+    ["#pass16"],
+    ["#pass17"],
+    ["#pass18"],
+    ["#pass19"],
+    ["#pass20"],
+    ["#pass21"]
   ],
   "incomplete": [
     ["#canttell1"],
@@ -44,7 +57,6 @@
     ["#canttell17"],
     ["#canttell18"],
     ["#canttell19"],
-    ["#canttell20"],
-    ["#canttell21"]
+    ["#canttell20"]
   ]
 }

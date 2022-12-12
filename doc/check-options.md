@@ -243,6 +243,7 @@ All checks allow these global options:
 | `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                                                                                                                |
 | `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                                                                                                     |
 | `shadowOutlineEmMax`                                        | `0.1`   | The maximum `blur-radius` value (in ems) of the CSS `text-shadow` property. `blur-radius` values greater than this value will be treated as a background color rather than an outline color. |
+| `textStrokeEmMin`                                           | `0.03`  | The minimum EM width of `-webkit-text-stroke` before axe uses the text stroke color over the actual text color.                                                                              |
 | `pseudoSizeThreshold`                                       | `0.25`  | Minimum area of the pseudo element, relative to the text element, below which it will be ignored for colot contrast.                                                                         |
 | `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                                                                                                       |
 | &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)                                                                                               |
@@ -341,10 +342,10 @@ th</code></pre>
 
 ### label-content-name-mismatch
 
-| Option               | Default | Description                                                                                                                                                               |
-| -------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pixelThreshold`     | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
-| `occuranceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
+| Option                | Default | Description                                                                                                                                                               |
+| --------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pixelThreshold`      | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
+| `occurrenceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
 
 ### has-lang
 

@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.5.2",
+  "version": "4.6.0",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -174,7 +174,7 @@
     "typedarray": "^0.0.6",
     "typescript": "^4.7.4",
     "uglify-js": "^3.16.2",
-    "wcag-act-rules": "github:w3c/wcag-act-rules#a60a4e62f2",
+    "wcag-act-rules": "github:w3c/wcag-act-rules#9416ea6",
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {

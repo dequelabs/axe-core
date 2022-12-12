@@ -309,12 +309,18 @@
 
 <div
   id="text-container"
-  style="overflow: hidden; background-color: teal; height: 30px; width: 200px"
+  style="
+    overflow: hidden;
+    background-color: teal;
+    height: 30px;
+    width: 200px;
+    margin-bottom: 60px;
+  "
 >
   <span id="fail8" style="color: grey"
     >this is a span with some text inside of it</span
   >
-  <span id="canttell21" style="color: grey"
+  <span id="fail9" style="color: grey"
     >this is a span with some text inside of it</span
   >
   <span id="ignore8" style="color: grey"
@@ -334,3 +340,87 @@
   <summary id="pass11">Summary</summary>
   <span id="pass12">Some text</span>
 </details>
+
+<div style="background: #222">
+  <div
+    style="
+      background-color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    "
+  >
+    <span id="pass13"
+      >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.</span
+    >
+  </div>
+</div>
+
+<div style="background-color: #222; height: 40px; width: 100px"></div>
+<div style="margin: -40px 0 40px" id="fail10">Hello world</div>
+
+<div
+  style="
+    overflow: hidden;
+    width: 300px;
+    height: 200px;
+    background: #222;
+    margin-bottom: 150px;
+  "
+>
+  <div style="overflow: hidden; position: relative; left: 100px">
+    <div id="fail11" style="position: relative; top: 100px">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </div>
+  </div>
+</div>
+
+<ul>
+  <li id="pass14">
+    Lorem
+    <ul>
+      <li id="pass15">Ipsum</li>
+    </ul>
+  </li>
+</ul>
+
+<ul style="font-size: 14px; line-height: 1.6em">
+  <li id="pass16">
+    Test
+    <ul>
+      <li></li>
+    </ul>
+  </li>
+
+  <li id="pass17">
+    Lorem <strong id="pass18">ipsum</strong>.
+    <ul>
+      <li></li>
+    </ul>
+  </li>
+</ul>
+
+<label id="pass19"
+  >Do you like peas?
+  <input id="pass20" name="peas" style="width: 100%" />
+</label>
+
+<p style="color: #ccc; -webkit-text-stroke: 0.03em #444" id="pass21">
+  Text-stroke 0.03em
+</p>
+<p style="color: #ccc; -webkit-text-stroke: 0.02em #444" id="fail12">
+  Text-stroke 0.02em
+</p>
