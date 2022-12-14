@@ -326,5 +326,9 @@
   "4.6.0": {
     "axe.js": "sha256-THkPfmokl4bJu3OupcpOt0ndrVCtSuKHPAbmah9KOfI=",
     "axe.min.js": "sha256-14jwyUq9PSLhUTnee2RUaKm1i5z93fVEhUTgPCLzGO0="
+  },
+  "4.6.1": {
+    "axe.js": "sha256-5YoRtLPmXJjZaeVXOVTTPf6DtevHdYBfD4oxaCBDCXw=",
+    "axe.min.js": "sha256-8CV1yJR7ZBS/j8HkUf1OwOEib+WUH+QovSg8xOh9MVI="
   }
 }

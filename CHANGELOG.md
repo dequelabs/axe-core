@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.1](https://github.com/dequelabs/axe-core/compare/v4.6.0...v4.6.1) (2022-12-14)
+
+### Bug Fixes
+
+- **d.ts:** add optional include to ContextObject ([#3830](https://github.com/dequelabs/axe-core/issues/3830)) ([36ed242](https://github.com/dequelabs/axe-core/commit/36ed242ec152d6d9bd05889229c4d37ae25a80c0))
+
 ## [4.6.0](https://github.com/dequelabs/axe-core/compare/v4.5.2...v4.6.0) (2022-12-12)
 
 ### Features
