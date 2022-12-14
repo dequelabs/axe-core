@@ -78,6 +78,7 @@ declare namespace axe {
       }
     | {
         exclude: Selector | SelectorList;
+        include?: Selector | SelectorList;
       };
   type ElementContext = Selector | SelectorList | ContextObject;
 
