@@ -66,6 +66,23 @@ export async function runAsync() {
     ]
   });
 }
+
+let ctxt: axe.ContextObject;
+// @ts-expect-error
+ctxt = {};
+ctxt = { exclude: ['foo'] };
+ctxt.include = ['bard'];
+ctxt = { include: ['foo'] };
+ctxt.exclude = ['bar'];
+
+let serialContext: axe.SerialContextObject;
+// @ts-expect-error
+serialContext = {};
+serialContext = { exclude: ['foo'] };
+serialContext.include = ['bard'];
+serialContext = { include: ['foo'] };
+serialContext.exclude = ['bar'];
+
 axe.run(
   { exclude: [$fixture[0]] },
   {},
