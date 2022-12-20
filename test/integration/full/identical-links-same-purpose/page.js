@@ -1,4 +1,4 @@
-describe('identical-links-same-purpose test', function() {
+describe('identical-links-same-purpose test', function () {
   'use strict';
 
   var config = {
@@ -8,13 +8,13 @@ describe('identical-links-same-purpose test', function() {
     }
   };
 
-  before(function(done) {
+  before(function (done) {
     axe.testUtils.awaitNestedLoad(done);
     axe._tree = undefined;
   });
 
-  it('should find no violations given a selector array', function(done) {
-    axe.run(config, function(err, results) {
+  it('should find no violations given a selector array', function (done) {
+    axe.run(config, function (err, results) {
       assert.isNull(err);
 
       /**

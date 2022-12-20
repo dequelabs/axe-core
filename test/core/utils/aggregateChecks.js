@@ -1,4 +1,4 @@
-describe('axe.utils.aggregateChecks', function() {
+describe('axe.utils.aggregateChecks', function () {
   'use strict';
   var FAIL = axe.constants.FAIL;
   var PASS = axe.constants.PASS;
@@ -8,11 +8,11 @@ describe('axe.utils.aggregateChecks', function() {
   // create an object of check results, padding input with defaults and
   // wrapping arrays where required
   function createTestCheckResults(node) {
-    ['any', 'all', 'none'].forEach(function(type) {
+    ['any', 'all', 'none'].forEach(function (type) {
       if (typeof node[type] === 'undefined') {
         node[type] = [];
       } else if (Array.isArray(node[type])) {
-        node[type] = node[type].map(function(val) {
+        node[type] = node[type].map(function (val) {
           if (typeof val !== 'object') {
             return { result: val };
           } else {
@@ -29,23 +29,23 @@ describe('axe.utils.aggregateChecks', function() {
     return node;
   }
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._load({});
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.aggregateChecks);
   });
 
-  it('Should be `inapplicable` when no results are given', function() {
+  it('Should be `inapplicable` when no results are given', function () {
     var ruleResult = axe.utils.aggregateChecks(createTestCheckResults({}));
 
     assert.equal(ruleResult.result, NA);
   });
 
-  it('sets result  to cantTell when result is not a boolean', function() {
+  it('sets result  to cantTell when result is not a boolean', function () {
     var values = [undefined, null, 0, 'true', {}, NaN];
-    values.forEach(function(value) {
+    values.forEach(function (value) {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [{ result: value }]
@@ -55,7 +55,7 @@ describe('axe.utils.aggregateChecks', function() {
     });
   });
 
-  it('returns impact for fail and canttell', function() {
+  it('returns impact for fail and canttell', function () {
     var failCheck = axe.utils.aggregateChecks(
       createTestCheckResults({
         any: [{ result: false, impact: 'serious' }]
@@ -71,7 +71,7 @@ describe('axe.utils.aggregateChecks', function() {
     assert.equal(canttellCheck.impact, 'moderate');
   });
 
-  it('sets impact to null for pass', function() {
+  it('sets impact to null for pass', function () {
     var passCheck = axe.utils.aggregateChecks(
       createTestCheckResults({
         any: [{ result: true, impact: 'serious' }]
@@ -80,8 +80,8 @@ describe('axe.utils.aggregateChecks', function() {
     assert.isNull(passCheck.impact);
   });
 
-  describe('none', function() {
-    it('gives result FAIL when any is true', function() {
+  describe('none', function () {
+    it('gives result FAIL when any is true', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           none: [false, true, undefined]
@@ -91,7 +91,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, FAIL);
     });
 
-    it('gives result CANTTELL when none is true and any is not a boolean', function() {
+    it('gives result CANTTELL when none is true and any is not a boolean', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           none: [undefined, false]
@@ -100,7 +100,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, CANTTELL);
     });
 
-    it('gives result PASS when all are FALSE', function() {
+    it('gives result PASS when all are FALSE', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           none: [false, false]
@@ -110,8 +110,8 @@ describe('axe.utils.aggregateChecks', function() {
     });
   });
 
-  describe('any', function() {
-    it('gives result PASS when any is true', function() {
+  describe('any', function () {
+    it('gives result PASS when any is true', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [undefined, true]
@@ -120,7 +120,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, PASS);
     });
 
-    it('gives result CANTTELL when none is true and any is not a bool', function() {
+    it('gives result CANTTELL when none is true and any is not a bool', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [undefined, false]
@@ -129,7 +129,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, CANTTELL);
     });
 
-    it('gives result FAIL when all are false', function() {
+    it('gives result FAIL when all are false', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [false, false]
@@ -139,8 +139,8 @@ describe('axe.utils.aggregateChecks', function() {
     });
   });
 
-  describe('all', function() {
-    it('gives result FAIL when any is false', function() {
+  describe('all', function () {
+    it('gives result FAIL when any is false', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           all: [false, true, undefined]
@@ -150,7 +150,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, FAIL);
     });
 
-    it('gives result CANTTELL when none is false and any is not a boolean', function() {
+    it('gives result CANTTELL when none is false and any is not a boolean', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           all: [undefined, true]
@@ -159,7 +159,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, CANTTELL);
     });
 
-    it('gives result PASS when all are true', function() {
+    it('gives result PASS when all are true', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           all: [true, true]
@@ -169,8 +169,8 @@ describe('axe.utils.aggregateChecks', function() {
     });
   });
 
-  describe('combined', function() {
-    it('gives result PASS when all are PASS', function() {
+  describe('combined', function () {
+    it('gives result PASS when all are PASS', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: true,
@@ -182,7 +182,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, PASS);
     });
 
-    it('gives result CANTTELL when none is FAIL and any is CANTTELL', function() {
+    it('gives result CANTTELL when none is FAIL and any is CANTTELL', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: 0,
@@ -193,7 +193,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, CANTTELL);
     });
 
-    it('gives result FAIL when any are FAIL', function() {
+    it('gives result FAIL when any are FAIL', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: 0,
@@ -204,7 +204,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.equal(checkResult.result, FAIL);
     });
 
-    it('ignores fail checks on any, if at least one passed', function() {
+    it('ignores fail checks on any, if at least one passed', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [false, undefined, true], // cantTell
@@ -216,7 +216,7 @@ describe('axe.utils.aggregateChecks', function() {
       assert.lengthOf(checkResult.none, 1);
     });
 
-    it('includes cantTell checks from any if there are no fails', function() {
+    it('includes cantTell checks from any if there are no fails', function () {
       var checkResult = axe.utils.aggregateChecks(
         createTestCheckResults({
           any: [undefined, undefined, false], // cantTell

@@ -4,10 +4,10 @@
     <script>
       window
         .fetch('/axe.js')
-        .then(function(response) {
+        .then(function (response) {
           return response.text();
         })
-        .then(function(axeSource) {
+        .then(function (axeSource) {
           // add axe to the "this" object instead of
           // window so we can ensure window and document
           // do not exist for after and reporter

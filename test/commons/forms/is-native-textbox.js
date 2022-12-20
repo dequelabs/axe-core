@@ -1,9 +1,9 @@
-describe('forms.isNativeTextbox', function() {
+describe('forms.isNativeTextbox', function () {
   'use strict';
   var isNativeTextbox = axe.commons.forms.isNativeTextbox;
   var queryFixture = axe.testUtils.queryFixture;
 
-  it('returns true for a text inputs', function() {
+  it('returns true for a text inputs', function () {
     var textInputs = [
       'date',
       'datetime',
@@ -19,7 +19,7 @@ describe('forms.isNativeTextbox', function() {
       'url',
       'week'
     ];
-    textInputs.forEach(function(type) {
+    textInputs.forEach(function (type) {
       var node = queryFixture('<input id="target" type="' + type + '"/>');
       assert.isTrue(
         isNativeTextbox(node),
@@ -28,12 +28,12 @@ describe('forms.isNativeTextbox', function() {
     });
   });
 
-  it('returns true for a textarea element', function() {
+  it('returns true for a textarea element', function () {
     var node = queryFixture('<textarea id="target"/>');
     assert.isTrue(isNativeTextbox(node));
   });
 
-  it('returns false for non-text inputs', function() {
+  it('returns false for non-text inputs', function () {
     var nonTextInputs = [
       'button',
       'checkbox',
@@ -46,7 +46,7 @@ describe('forms.isNativeTextbox', function() {
       'submit',
       'color'
     ];
-    nonTextInputs.forEach(function(type) {
+    nonTextInputs.forEach(function (type) {
       var node = queryFixture('<input id="target" type="' + type + '"/>');
 
       assert.isFalse(
@@ -56,12 +56,12 @@ describe('forms.isNativeTextbox', function() {
     });
   });
 
-  it('return false for aria textbox elements', function() {
+  it('return false for aria textbox elements', function () {
     var node = queryFixture('<div id="target" role="textbox"></div>');
     assert.isFalse(isNativeTextbox(node));
   });
 
-  it('should ignore type case', function() {
+  it('should ignore type case', function () {
     var node = queryFixture('<input id="target" type="TEXT"/>');
     assert.isTrue(isNativeTextbox(node));
   });

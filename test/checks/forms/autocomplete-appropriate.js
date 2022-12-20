@@ -1,4 +1,4 @@
-describe('autocomplete-appropriate', function() {
+describe('autocomplete-appropriate', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,11 +6,11 @@ describe('autocomplete-appropriate', function() {
   var checkContext = axe.testUtils.MockCheckContext();
   var evaluate = axe.testUtils.getCheckEvaluate('autocomplete-appropriate');
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._tree = undefined;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
@@ -22,8 +22,8 @@ describe('autocomplete-appropriate', function() {
     );
   }
 
-  it('returns true for non-select elements', function() {
-    ['div', 'button', 'select', 'textarea'].forEach(function(tagName) {
+  it('returns true for non-select elements', function () {
+    ['div', 'button', 'select', 'textarea'].forEach(function (tagName) {
       var elm = document.createElement(tagName);
       elm.setAttribute('autocomplete', 'foo');
       elm.setAttribute('type', 'email');
@@ -36,61 +36,61 @@ describe('autocomplete-appropriate', function() {
     });
   });
 
-  it('returns true if the input type is in the map', function() {
+  it('returns true if the input type is in the map', function () {
     var options = { foo: ['url'] };
     var params = autocompleteCheckParams('foo', 'url', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns false if the input type is not in the map', function() {
+  it('returns false if the input type is not in the map', function () {
     var options = { foo: ['url'] };
     var params = autocompleteCheckParams('foo', 'email', options);
     assert.isFalse(evaluate.apply(checkContext, params));
   });
 
-  it('returns true if the input type is text and the term is undefined', function() {
+  it('returns true if the input type is text and the term is undefined', function () {
     var options = {};
     var params = autocompleteCheckParams('foo', 'text', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns true if the input type is tel and the term is off', function() {
+  it('returns true if the input type is tel and the term is off', function () {
     var options = {};
     var params = autocompleteCheckParams('off', 'tel', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns true if the input type is url and the term is on', function() {
+  it('returns true if the input type is url and the term is on', function () {
     var options = {};
     var params = autocompleteCheckParams('on', 'url', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns true if the input type is foobar and the term is undefined', function() {
+  it('returns true if the input type is foobar and the term is undefined', function () {
     var options = {};
     var params = autocompleteCheckParams('foo', 'foobar', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns true if the input type is email and the term is username', function() {
+  it('returns true if the input type is email and the term is username', function () {
     var options = {};
     var params = autocompleteCheckParams('username', 'email', options);
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
-  it('returns false if the input type is text and the term maps to an empty array', function() {
+  it('returns false if the input type is text and the term maps to an empty array', function () {
     var options = { foo: [] };
     var params = autocompleteCheckParams('foo', 'text', options);
     assert.isFalse(evaluate.apply(checkContext, params));
   });
 
-  it('returns false if the input type is month and term is bday-month', function() {
+  it('returns false if the input type is month and term is bday-month', function () {
     var options = {};
     var params = autocompleteCheckParams('bday-month', 'month', options);
     assert.isFalse(evaluate.apply(checkContext, params));
   });
 
-  it('returns false if the input type is MONTH (case-insensitive & sanitized) and term is bday-month', function() {
+  it('returns false if the input type is MONTH (case-insensitive & sanitized) and term is bday-month', function () {
     var options = {};
     var params = autocompleteCheckParams('bday-month', '   MONTH    ', options);
     assert.isFalse(evaluate.apply(checkContext, params));

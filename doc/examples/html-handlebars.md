@@ -16,13 +16,13 @@ function helperItemIterator(items, template) {
   }
   return out;
 }
-Handlebars.registerHelper('violations', function(items) {
+Handlebars.registerHelper('violations', function (items) {
   return helperItemIterator(items, compiledRowTemplate);
 });
-Handlebars.registerHelper('related', function(items) {
+Handlebars.registerHelper('related', function (items) {
   return helperItemIterator(items, compiledRelatedNodeTemplate);
 });
-Handlebars.registerHelper('reasons', function(items) {
+Handlebars.registerHelper('reasons', function (items) {
   return helperItemIterator(items, compiledFailureTemplate);
 });
 
@@ -38,7 +38,7 @@ compiledReasonsTemplate = Handlebars.compile(reasonsTemplate.innerHTML);
 function messageFromRelatedNodes(relatedNodes) {
   var retVal = '';
   if (relatedNodes.length) {
-    var list = relatedNodes.map(function(node) {
+    var list = relatedNodes.map(function (node) {
       return {
         targetArrayString: JSON.stringify(node.target),
         targetString: node.target.join(' ')
@@ -50,7 +50,7 @@ function messageFromRelatedNodes(relatedNodes) {
 }
 
 function messagesFromArray(nodes) {
-  var list = nodes.map(function(failure) {
+  var list = nodes.map(function (failure) {
     return {
       message: failure.message.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
       relatedNodesMessage: messageFromRelatedNodes(failure.relatedNodes)
@@ -83,7 +83,7 @@ function summary(node) {
  */
 
 if (results.violations.length) {
-  var violations = results.violations.map(function(rule, i) {
+  var violations = results.violations.map(function (rule, i) {
     return {
       impact: rule.impact,
       help: rule.help.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
@@ -107,58 +107,42 @@ reasonHtml = summary(node);
 ## The Handlebars Templates
 
 ```handlebars
-<script id="rowTemplate" type="text/x-handlebars-template">
-<tr>
-  <th scope="row" class="help">
-    <a href="javascript:;" class="rule" data-index="{{index}}">
-      {{{help}}}
-    </a>
-  </th>
-  <td scope="row">
-    <a target="_blank" href="{{helpUrl}}">?</a>
-  </td>
+<script id='rowTemplate' type='text/x-handlebars-template'>
+  <tr> <th scope="row" class="help"> <a href="javascript:;" class="rule"
+  data-index="{{index}}">
+  {{{help}}}
+  </a> </th> <td scope="row"> <a target="_blank" href="{{helpUrl}}">?</a> </td>
   <td class="count">
-    {{count}}
-  </td>
-  <td class="impact">
-    {{impact}}
-  </td>
-</tr>
+  {{count}}
+  </td> <td class="impact">
+  {{impact}}
+  </td> </tr>
 </script>
-<script id="tableTemplate" type="text/x-handlebars-template">
-<table>
-  <tr>
-  <th scope="col">Description</th>
-  <th scope="col">Info</th>
-  <th scope="col">Count</th>
-  <th scope="col">Impact</th>
-  </tr>
+<script id='tableTemplate' type='text/x-handlebars-template'>
+  <table> <tr> <th scope="col">Description</th> <th scope="col">Info</th> <th
+  scope="col">Count</th> <th scope="col">Impact</th> </tr>
   {{#violations violationList}}{{/violations}}
-</table>
+  </table>
 </script>
-<script id="relatedListTemplate" type="text/x-handlebars-template">
-<ul>Related Nodes:
+<script id='relatedListTemplate' type='text/x-handlebars-template'>
+  <ul>Related Nodes:
   {{#related relatedNodeList}}{{/related}}
-</ul>
-</script>
-<script id="relatedNodeTemplate" type="text/x-handlebars-template">
-<li>
-  <a href="javascript:;" class="related-node" data-element="{{targetArrayString}}">
-    {{targetString}}
-  </a>
-</li>
-</script>
-<script id="reasonsTemplate" type="text/x-handlebars-template">
-<p class="summary">
-  <ul class="failure-message">
-    {{#reasons reasonsList}}{{/reasons}}
   </ul>
-</p>
 </script>
-<script id="failureTemplate" type="text/x-handlebars-template">
-<li>
+<script id='relatedNodeTemplate' type='text/x-handlebars-template'>
+  <li> <a href="javascript:;" class="related-node" data-element="{{targetArrayString}}">
+  {{targetString}}
+  </a> </li>
+</script>
+<script id='reasonsTemplate' type='text/x-handlebars-template'>
+  <p class="summary"> <ul class="failure-message">
+  {{#reasons reasonsList}}{{/reasons}}
+  </ul> </p>
+</script>
+<script id='failureTemplate' type='text/x-handlebars-template'>
+  <li>
   {{message}}
   {{{relatedNodesMessage}}}
-</li>
+  </li>
 </script>
 ```

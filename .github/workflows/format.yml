@@ -1,0 +1,31 @@
+name: Formatter
+
+on: [pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./node_modules
+          key: npm-workspace-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
+      - name: Prevent workflows from being formatted
+        run: echo ".github" >> .prettierignore
+      - run: npm run fmt
+      # Prevent the prettierignore change from being committed.
+      - run: git checkout .prettierignore
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: ':robot: Automated formatting fixes'

@@ -1,14 +1,14 @@
-describe('aria-allowed-role', function() {
+describe('aria-allowed-role', function () {
   'use strict';
 
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     checkContext.reset();
   });
 
-  it('returns true if given element is an ignoredTag in options', function() {
+  it('returns true if given element is an ignoredTag in options', function () {
     var vNode = queryFixture(
       '<article id="target" role="presentation"></article>'
     );
@@ -23,7 +23,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
+  it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function () {
     var vNode = queryFixture(
       '<table role="grid"><tr id="target" role="row"></tr></table>'
     );
@@ -38,7 +38,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['row']);
   });
 
-  it('returns undefined (needs review) when element is hidden and has unallowed role', function() {
+  it('returns undefined (needs review) when element is hidden and has unallowed role', function () {
     var vNode = queryFixture(
       '<button id="target" type="button" aria-hidden="true"' +
         'role="presentation"></button>'
@@ -49,7 +49,7 @@ describe('aria-allowed-role', function() {
     assert.isUndefined(actual);
   });
 
-  it('returns undefined (needs review) when element is with in hidden parent and has unallowed role', function() {
+  it('returns undefined (needs review) when element is with in hidden parent and has unallowed role', function () {
     var vNode = queryFixture(
       '<div style="display:none">' +
         '<button id="target" class="mm-tabstart" type="button"' +
@@ -62,7 +62,7 @@ describe('aria-allowed-role', function() {
     assert.isUndefined(actual);
   });
 
-  it('returns true when BUTTON has type menu and role as menuitem', function() {
+  it('returns true when BUTTON has type menu and role as menuitem', function () {
     var vNode = queryFixture(
       '<button id="target" type="menu" role="menuitem"></button>'
     );
@@ -73,7 +73,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when img has no alt and role="presentation"', function() {
+  it('returns true when img has no alt and role="presentation"', function () {
     var vNode = queryFixture('<img id="target" role="presentation"/>');
     assert.isTrue(
       axe.testUtils
@@ -83,7 +83,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, null);
   });
 
-  it('returns true when img has no alt and role="none"', function() {
+  it('returns true when img has no alt and role="none"', function () {
     var vNode = queryFixture('<img id="target" role="none"/>');
     assert.isTrue(
       axe.testUtils
@@ -93,7 +93,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, null);
   });
 
-  it('returns true when img has empty alt and role="presentation"', function() {
+  it('returns true when img has empty alt and role="presentation"', function () {
     var vNode = queryFixture('<img id="target" alt="" role="presentation"/>');
     assert.isTrue(
       axe.testUtils
@@ -103,7 +103,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, null);
   });
 
-  it('returns true when img has empty alt and role="none"', function() {
+  it('returns true when img has empty alt and role="none"', function () {
     var vNode = queryFixture('<img id="target" alt="" role="none"/>');
     assert.isTrue(
       axe.testUtils
@@ -113,7 +113,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, null);
   });
 
-  it('returns false when img has alt and role="presentation"', function() {
+  it('returns false when img has alt and role="presentation"', function () {
     var vNode = queryFixture(
       '<img id="target" alt="not empty" role="presentation"/>'
     );
@@ -125,7 +125,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['presentation']);
   });
 
-  it('returns false when img has alt and role="none"', function() {
+  it('returns false when img has alt and role="none"', function () {
     var vNode = queryFixture('<img id="target" alt="not empty" role="none"/>');
     assert.isFalse(
       axe.testUtils
@@ -135,7 +135,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['none']);
   });
 
-  it('returns true when img has aria-label and a valid role, role="button"', function() {
+  it('returns true when img has aria-label and a valid role, role="button"', function () {
     var vNode = queryFixture(
       '<img id="target" aria-label="foo" role="button"/>'
     );
@@ -147,7 +147,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false when img has aria-label and a invalid role, role="alert"', function() {
+  it('returns false when img has aria-label and a invalid role, role="alert"', function () {
     var vNode = queryFixture(
       '<img id="target" aria-label="foo" role="alert"/>'
     );
@@ -159,7 +159,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['alert']);
   });
 
-  it('returns true when img has aria-labelledby and a valid role, role="menuitem"', function() {
+  it('returns true when img has aria-labelledby and a valid role, role="menuitem"', function () {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
         '<img id="target" aria-labelledby="foo" role="menuitem"/>'
@@ -172,7 +172,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false when img has aria-labelledby and a invalid role, role="rowgroup"', function() {
+  it('returns false when img has aria-labelledby and a invalid role, role="rowgroup"', function () {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
         '<img id="target" aria-labelledby="foo" role="rowgroup"/>'
@@ -185,7 +185,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['rowgroup']);
   });
 
-  it('returns true when img has title and a valid role, role="link"', function() {
+  it('returns true when img has title and a valid role, role="link"', function () {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
         '<img id="target" title="foo" role="link"/>'
@@ -198,7 +198,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false when img has title and a invalid role, role="radiogroup"', function() {
+  it('returns false when img has title and a invalid role, role="radiogroup"', function () {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
         '<img id="target" title="foo" role="radiogroup"/>'
@@ -211,7 +211,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['radiogroup']);
   });
 
-  it('returns true when input of type image and no role', function() {
+  it('returns true when input of type image and no role', function () {
     var vNode = queryFixture('<input id="target" type="image"/>');
     assert.isTrue(
       axe.testUtils
@@ -221,7 +221,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns true when INPUT type is checkbox and has aria-pressed attribute', function() {
+  it('returns true when INPUT type is checkbox and has aria-pressed attribute', function () {
     var vNode = queryFixture(
       '<input id="target" type="checkbox" aria-pressed="">'
     );
@@ -232,7 +232,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is text with role combobox', function() {
+  it('returns true when INPUT type is text with role combobox', function () {
     var vNode = queryFixture('<input id="target" type="text" role="combobox">');
     assert.isTrue(
       axe.testUtils
@@ -241,7 +241,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is tel with role combobox', function() {
+  it('returns true when INPUT type is tel with role combobox', function () {
     var vNode = queryFixture('<input id="target" type="tel" role="combobox">');
     assert.isTrue(
       axe.testUtils
@@ -250,7 +250,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is url with role combobox', function() {
+  it('returns true when INPUT type is url with role combobox', function () {
     var vNode = queryFixture('<input id="target" type="url" role="combobox">');
     assert.isTrue(
       axe.testUtils
@@ -259,7 +259,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is search with role combobox', function() {
+  it('returns true when INPUT type is search with role combobox', function () {
     var vNode = queryFixture(
       '<input id="target" type="search" role="combobox">'
     );
@@ -270,7 +270,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is email with role combobox', function() {
+  it('returns true when INPUT type is email with role combobox', function () {
     var vNode = queryFixture(
       '<input id="target" type="email" role="combobox">'
     );
@@ -281,7 +281,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is text with role spinbutton', function() {
+  it('returns true when INPUT type is text with role spinbutton', function () {
     var vNode = queryFixture(
       '<input id="target" type="text" role="spinbutton">'
     );
@@ -292,7 +292,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is number with role spinbutton', function() {
+  it('returns true when INPUT type is number with role spinbutton', function () {
     var vNode = queryFixture(
       '<input id="target" type="number" role="spinbutton">'
     );
@@ -303,7 +303,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is tel with role spinbutton', function() {
+  it('returns true when INPUT type is tel with role spinbutton', function () {
     var vNode = queryFixture(
       '<input id="target" type="tel" role="spinbutton">'
     );
@@ -314,7 +314,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true when INPUT type is text with role searchbox', function() {
+  it('returns true when INPUT type is text with role searchbox', function () {
     var vNode = queryFixture(
       '<input id="target" type="text" role="searchbox">'
     );
@@ -325,7 +325,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns false when a role is set on an element that does not allow any role', function() {
+  it('returns false when a role is set on an element that does not allow any role', function () {
     var vNode = queryFixture('<dd id="target" role="link">');
     assert.isFalse(
       axe.testUtils
@@ -335,7 +335,7 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['link']);
   });
 
-  it('returns true when a role is set on an element that can have any role', function() {
+  it('returns true when a role is set on an element that can have any role', function () {
     var vNode = queryFixture('<div id="target" role="link"></dd>');
     assert.isTrue(
       axe.testUtils
@@ -344,7 +344,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true an <a> without a href to have any role', function() {
+  it('returns true an <a> without a href to have any role', function () {
     var vNode = queryFixture('<a id="target" role="presentation"></a>');
     assert.isTrue(
       axe.testUtils
@@ -353,7 +353,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true <a> with a empty href to have any valid role', function() {
+  it('returns true <a> with a empty href to have any valid role', function () {
     var vNode = queryFixture('<a id="target" role="link" href=""></a>');
     var actual = axe.testUtils
       .getCheckEvaluate('aria-allowed-role')
@@ -361,7 +361,7 @@ describe('aria-allowed-role', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true <img> with a non-empty alt', function() {
+  it('returns true <img> with a non-empty alt', function () {
     var vNode = queryFixture('<img id="target" role="button" alt="some text">');
     assert.isTrue(
       axe.testUtils
@@ -370,7 +370,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('should allow <select> without a multiple and size attribute to have a menu role', function() {
+  it('should allow <select> without a multiple and size attribute to have a menu role', function () {
     var vNode = queryFixture('<select id="target" role="menu">');
     assert.isTrue(
       axe.testUtils
@@ -380,7 +380,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns true custom element <my-navbar> with a role of navigation', function() {
+  it('returns true custom element <my-navbar> with a role of navigation', function () {
     var vNode = queryFixture('<my-navbar id="target" role="navigation">');
     var actual = axe.testUtils
       .getCheckEvaluate('aria-allowed-role')
@@ -389,7 +389,7 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false if a dpub role’s type is not the element’s implicit role', function() {
+  it('returns false if a dpub role’s type is not the element’s implicit role', function () {
     var vNode = queryFixture('<article id="target" role="doc-biblioref">');
     assert.isFalse(
       axe.testUtils
@@ -398,7 +398,7 @@ describe('aria-allowed-role', function() {
     );
   });
 
-  it('returns true if a dpub role’s type is the element’s implicit role', function() {
+  it('returns true if a dpub role’s type is the element’s implicit role', function () {
     var vNode = queryFixture('<a id="target" href="foo" role="doc-biblioref">');
     assert.isTrue(
       axe.testUtils

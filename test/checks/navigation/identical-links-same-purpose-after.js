@@ -1,14 +1,14 @@
-describe('identical-links-same-purpose-after tests', function() {
+describe('identical-links-same-purpose-after tests', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var check = checks['identical-links-same-purpose'];
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns results by clearing relatedNodes after ignoring nodes which has no data (or result is undefined)', function() {
+  it('returns results by clearing relatedNodes after ignoring nodes which has no data (or result is undefined)', function () {
     var nodeOneData = {
       data: null,
       relatedNodes: ['nodeOne'],
@@ -33,7 +33,7 @@ describe('identical-links-same-purpose-after tests', function() {
     assert.equal(result.result, true);
   });
 
-  it('sets results of check result to `undefined` one of the native links do not have `urlProps` (and therefore removed as relatedNode)', function() {
+  it('sets results of check result to `undefined` one of the native links do not have `urlProps` (and therefore removed as relatedNode)', function () {
     var nodeOneData = {
       data: {
         name: 'read more',
@@ -61,7 +61,7 @@ describe('identical-links-same-purpose-after tests', function() {
     assert.equal(result.result, undefined);
   });
 
-  it('sets results of check result to `undefined` if native links do not have same `urlProps` (values are different)', function() {
+  it('sets results of check result to `undefined` if native links do not have same `urlProps` (values are different)', function () {
     var nodeOneData = {
       data: {
         name: 'follow us',
@@ -89,7 +89,7 @@ describe('identical-links-same-purpose-after tests', function() {
     assert.equal(result.result, undefined);
   });
 
-  it('sets results of check result to `undefined` if native links do not have same `urlProps` (keys are different)', function() {
+  it('sets results of check result to `undefined` if native links do not have same `urlProps` (keys are different)', function () {
     var nodeOneData = {
       data: {
         name: 'follow us',
@@ -117,7 +117,7 @@ describe('identical-links-same-purpose-after tests', function() {
     assert.equal(result.result, undefined);
   });
 
-  it('sets results of check result to `true` if native links serve identical purpose', function() {
+  it('sets results of check result to `true` if native links serve identical purpose', function () {
     var nodeOneData = {
       data: {
         name: 'Axe Core',
@@ -146,7 +146,7 @@ describe('identical-links-same-purpose-after tests', function() {
     assert.equal(result.result, true);
   });
 
-  it('sets results of check result to `true` if ARIA links have different accessible names', function() {
+  it('sets results of check result to `true` if ARIA links have different accessible names', function () {
     var nodeOneData = {
       data: {
         name: 'earth',

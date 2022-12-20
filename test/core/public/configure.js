@@ -1,4 +1,4 @@
-describe('axe.configure', function() {
+describe('axe.configure', function () {
   'use strict';
   // var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   // var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
@@ -6,18 +6,18 @@ describe('axe.configure', function() {
   var axeVersion = axe.version;
   var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe.version = axeVersion;
   });
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._audit = null;
   });
 
-  it('should throw if audit is not configured', function() {
+  it('should throw if audit is not configured', function () {
     assert.throws(
-      function() {
+      function () {
         axe.configure({});
       },
       Error,
@@ -25,7 +25,7 @@ describe('axe.configure', function() {
     );
   });
 
-  it("should override an audit's reporter - string", function() {
+  it("should override an audit's reporter - string", function () {
     axe._load({});
     assert.isNull(axe._audit.reporter);
 
@@ -33,13 +33,13 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.reporter, 'v1');
   });
 
-  it('should not allow setting to an un-registered reporter', function() {
+  it('should not allow setting to an un-registered reporter', function () {
     axe._load({ reporter: 'v1' });
     axe.configure({ reporter: 'no-exist-evar-plz' });
     assert.equal(axe._audit.reporter, 'v1');
   });
 
-  it('should allow for addition of rules', function() {
+  it('should allow for addition of rules', function () {
     axe._load({});
     axe.configure({
       rules: [
@@ -59,31 +59,31 @@ describe('axe.configure', function() {
     assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
   });
 
-  it('should throw error if rules property is invalid', function() {
-    assert.throws(function() {
+  it('should throw error if rules property is invalid', function () {
+    assert.throws(function () {
       axe.configure({ rules: 'hello' }),
         TypeError,
         /^Rules property must be an array/;
     });
   });
 
-  it('should throw error if rule is invalid', function() {
-    assert.throws(function() {
+  it('should throw error if rule is invalid', function () {
+    assert.throws(function () {
       axe.configure({ rules: ['hello'] }),
         TypeError,
         /Configured rule "hello" is invalid/;
     });
   });
 
-  it('should throw error if rule does not have an id', function() {
-    assert.throws(function() {
+  it('should throw error if rule does not have an id', function () {
+    assert.throws(function () {
       axe.configure({ rules: [{ foo: 'bar' }] }),
         TypeError,
         /Configured rule "{foo:\"bar\"}" is invalid/;
     });
   });
 
-  it('should call setBranding when passed options', function() {
+  it('should call setBranding when passed options', function () {
     axe._load({});
     axe.configure({
       rules: [
@@ -113,7 +113,7 @@ describe('axe.configure', function() {
     );
   });
 
-  it('sets branding on newly configured rules', function() {
+  it('sets branding on newly configured rules', function () {
     axe._load({});
     axe.configure({
       branding: {
@@ -138,7 +138,7 @@ describe('axe.configure', function() {
     );
   });
 
-  it('should allow for overwriting of rules', function() {
+  it('should allow for overwriting of rules', function () {
     axe._load({
       data: {
         rules: {
@@ -169,7 +169,7 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.data.rules.bob.joe, 'joe');
   });
 
-  it('should allow for the addition of checks', function() {
+  it('should allow for the addition of checks', function () {
     axe._load({});
     axe.configure({
       checks: [
@@ -189,31 +189,31 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.data.checks.bob.joe, 'joe');
   });
 
-  it('should throw error if checks property is invalid', function() {
-    assert.throws(function() {
+  it('should throw error if checks property is invalid', function () {
+    assert.throws(function () {
       axe.configure({ checks: 'hello' }),
         TypeError,
         /^Checks property must be an array/;
     });
   });
 
-  it('should throw error if check is invalid', function() {
-    assert.throws(function() {
+  it('should throw error if check is invalid', function () {
+    assert.throws(function () {
       axe.configure({ checks: ['hello'] }),
         TypeError,
         /Configured check "hello" is invalid/;
     });
   });
 
-  it('should throw error if check does not have an id', function() {
-    assert.throws(function() {
+  it('should throw error if check does not have an id', function () {
+    assert.throws(function () {
       axe.configure({ checks: [{ foo: 'bar' }] }),
         TypeError,
         /Configured check "{foo:\"bar\"}" is invalid/;
     });
   });
 
-  it('should allow for the overwriting of checks', function() {
+  it('should allow for the overwriting of checks', function () {
     axe._load({
       data: {
         checks: {
@@ -245,7 +245,7 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.data.checks.bob.joe, 'joe');
   });
 
-  it('should create an execution context for check messages', function() {
+  it('should create an execution context for check messages', function () {
     axe._load({});
     axe.configure({
       checks: [
@@ -267,7 +267,7 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.data.checks.bob.messages.fail, 'Bob Pete');
   });
 
-  it('overrides the default value of audit.tagExclude', function() {
+  it('overrides the default value of audit.tagExclude', function () {
     axe._load({});
     assert.deepEqual(axe._audit.tagExclude, ['experimental']);
 
@@ -277,7 +277,7 @@ describe('axe.configure', function() {
     assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
   });
 
-  it('disables all untouched rules with disableOtherRules', function() {
+  it('disables all untouched rules with disableOtherRules', function () {
     axe._load({
       rules: [{ id: 'captain-america' }, { id: 'thor' }, { id: 'spider-man' }]
     });
@@ -297,7 +297,7 @@ describe('axe.configure', function() {
     assert.equal(axe._audit.rules[3].enabled, true);
   });
 
-  it("should allow overriding an audit's noHtml", function() {
+  it("should allow overriding an audit's noHtml", function () {
     axe._load({});
     assert.isFalse(axe._audit.noHtml);
 
@@ -305,7 +305,7 @@ describe('axe.configure', function() {
     assert.isTrue(axe._audit.noHtml);
   });
 
-  it("should allow overriding an audit's allowedOrigins", function() {
+  it("should allow overriding an audit's allowedOrigins", function () {
     axe._load({});
     assert.notDeepEqual(axe._audit.allowedOrigins, ['foo']);
 
@@ -313,22 +313,22 @@ describe('axe.configure', function() {
     assert.deepEqual(axe._audit.allowedOrigins, ['foo']);
   });
 
-  it('should throw error if allowedOrigins is not an array', function() {
+  it('should throw error if allowedOrigins is not an array', function () {
     axe._load({});
-    assert.throws(function() {
+    assert.throws(function () {
       axe.configure({ allowedOrigins: 'foo' });
     });
   });
 
-  it("should throw error if the origin is '*'", function() {
+  it("should throw error if the origin is '*'", function () {
     axe._load({});
-    assert.throws(function() {
+    assert.throws(function () {
       axe.configure({ allowedOrigins: ['foo', '*'] });
     });
   });
 
-  describe('given a locale object', function() {
-    beforeEach(function() {
+  describe('given a locale object', function () {
+    beforeEach(function () {
       axe._load({});
 
       axe.configure({
@@ -347,7 +347,7 @@ describe('axe.configure', function() {
         checks: [
           {
             id: 'banana',
-            evaluate: function() {},
+            evaluate: function () {},
             metadata: {
               impact: 'srsly serious',
               messages: {
@@ -365,7 +365,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should update check and rule metadata', function() {
+    it('should update check and rule metadata', function () {
       axe.configure({
         locale: {
           lang: 'lol',
@@ -403,7 +403,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should merge locales (favoring "new")', function() {
+    it('should merge locales (favoring "new")', function () {
       axe.configure({
         locale: {
           lang: 'lol',
@@ -430,7 +430,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('sets the lang property', function() {
+    it('sets the lang property', function () {
       axe.configure({
         locale: {
           lang: 'lol',
@@ -446,7 +446,7 @@ describe('axe.configure', function() {
       assert.equal(axe._audit.lang, 'lol');
     });
 
-    it('should call doT.compile if a messages uses doT syntax', function() {
+    it('should call doT.compile if a messages uses doT syntax', function () {
       axe.configure({
         locale: {
           lang: 'lol',
@@ -467,7 +467,7 @@ describe('axe.configure', function() {
       );
     });
 
-    it('should leave the messages as a string if it does not use doT syntax', function() {
+    it('should leave the messages as a string if it does not use doT syntax', function () {
       axe.configure({
         locale: {
           lang: 'lol',
@@ -486,22 +486,22 @@ describe('axe.configure', function() {
       assert.isTrue(typeof localeData.checks.banana.messages.fail === 'string');
     });
 
-    it('should update failure messages', function() {
+    it('should update failure messages', function () {
       axe._load({
         data: {
           failureSummaries: {
             any: {
-              failureMessage: function() {
+              failureMessage: function () {
                 return 'failed any';
               }
             },
             none: {
-              failureMessage: function() {
+              failureMessage: function () {
                 return 'failed none';
               }
             }
           },
-          incompleteFallbackMessage: function() {
+          incompleteFallbackMessage: function () {
             return 'failed incomplete';
           }
         }
@@ -530,22 +530,22 @@ describe('axe.configure', function() {
       assert.equal(localeData.incompleteFallbackMessage, 'baz');
     });
 
-    it('should merge failure messages', function() {
+    it('should merge failure messages', function () {
       axe._load({
         data: {
           failureSummaries: {
             any: {
-              failureMessage: function() {
+              failureMessage: function () {
                 return 'failed any';
               }
             },
             none: {
-              failureMessage: function() {
+              failureMessage: function () {
                 return 'failed none';
               }
             }
           },
-          incompleteFallbackMessage: function() {
+          incompleteFallbackMessage: function () {
             return 'failed incomplete';
           }
         }
@@ -573,12 +573,12 @@ describe('axe.configure', function() {
       assert.equal(localeData.incompleteFallbackMessage(), 'failed incomplete');
     });
 
-    it('should not strip newline characters from doT template', function() {
+    it('should not strip newline characters from doT template', function () {
       axe._load({
         data: {
           failureSummaries: {
             any: {
-              failureMessage: function() {
+              failureMessage: function () {
                 return 'failed any';
               }
             }
@@ -607,9 +607,9 @@ describe('axe.configure', function() {
       );
     });
 
-    describe('only given checks', function() {
-      it('should not error', function() {
-        assert.doesNotThrow(function() {
+    describe('only given checks', function () {
+      it('should not error', function () {
+        assert.doesNotThrow(function () {
           axe.configure({
             locale: {
               lang: 'lol',
@@ -627,9 +627,9 @@ describe('axe.configure', function() {
       });
     });
 
-    describe('only given rules', function() {
-      it('should not error', function() {
-        assert.doesNotThrow(function() {
+    describe('only given rules', function () {
+      it('should not error', function () {
+        assert.doesNotThrow(function () {
           axe.configure({
             locale: {
               rules: { greeting: { help: 'foo', description: 'bar' } }
@@ -639,13 +639,13 @@ describe('axe.configure', function() {
       });
     });
 
-    describe('check incomplete messages', function() {
-      beforeEach(function() {
+    describe('check incomplete messages', function () {
+      beforeEach(function () {
         axe.configure({
           checks: [
             {
               id: 'panda',
-              evaluate: function() {},
+              evaluate: function () {},
               metadata: {
                 impact: 'yep',
                 messages: {
@@ -659,7 +659,7 @@ describe('axe.configure', function() {
         });
       });
 
-      it('should support strings', function() {
+      it('should support strings', function () {
         axe.configure({
           locale: {
             checks: {
@@ -673,7 +673,7 @@ describe('axe.configure', function() {
         assert.equal(axe._audit.data.checks.panda.messages.incomplete, 'radio');
       });
 
-      it('should shallow-merge objects', function() {
+      it('should shallow-merge objects', function () {
         axe.configure({
           locale: {
             lang: 'lol',
@@ -698,7 +698,7 @@ describe('axe.configure', function() {
     // This test ensures we do not drop additional properties added to
     // checks. See https://github.com/dequelabs/axe-core/pull/1036/files#r207738673
     // for reasoning.
-    it('should keep existing properties on check data', function() {
+    it('should keep existing properties on check data', function () {
       axe.configure({
         checks: [
           {
@@ -733,8 +733,8 @@ describe('axe.configure', function() {
       assert.equal(banana.messages.pass, 'yay banana');
     });
 
-    it('should error when provided an unknown rule id', function() {
-      assert.throws(function() {
+    it('should error when provided an unknown rule id', function () {
+      assert.throws(function () {
         axe.configure({
           locale: {
             rules: { nope: { help: 'helpme' } }
@@ -743,8 +743,8 @@ describe('axe.configure', function() {
       }, /unknown rule: "nope"/);
     });
 
-    it('should error when provided an unknown check id', function() {
-      assert.throws(function() {
+    it('should error when provided an unknown check id', function () {
+      assert.throws(function () {
         axe.configure({
           locale: {
             checks: { nope: { pass: 'helpme' } }
@@ -753,8 +753,8 @@ describe('axe.configure', function() {
       }, /unknown check: "nope"/);
     });
 
-    it('should error when provided an unknown failure summary', function() {
-      assert.throws(function() {
+    it('should error when provided an unknown failure summary', function () {
+      assert.throws(function () {
         axe.configure({
           locale: {
             failureSummaries: {
@@ -765,7 +765,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should set default locale', function() {
+    it('should set default locale', function () {
       assert.isNull(axe._audit._defaultLocale);
       axe.configure({
         locale: {
@@ -780,8 +780,8 @@ describe('axe.configure', function() {
       assert.ok(axe._audit._defaultLocale);
     });
 
-    describe('also given metadata', function() {
-      it('should favor the locale', function() {
+    describe('also given metadata', function () {
+      it('should favor the locale', function () {
         axe.configure({
           locale: {
             lang: 'lol',
@@ -808,9 +808,9 @@ describe('axe.configure', function() {
       });
     });
 
-    describe('after locale has been set', function() {
-      describe('the provided messages', function() {
-        it('should allow for doT templating', function() {
+    describe('after locale has been set', function () {
+      describe('the provided messages', function () {
+        it('should allow for doT templating', function () {
           axe.configure({
             locale: {
               lang: 'foo',
@@ -832,13 +832,13 @@ describe('axe.configure', function() {
     });
   });
 
-  describe('given an axeVersion property', function() {
-    beforeEach(function() {
+  describe('given an axeVersion property', function () {
+    beforeEach(function () {
       axe._load({});
       axe.version = '1.2.3';
     });
 
-    it('should not throw if version matches axe.version', function() {
+    it('should not throw if version matches axe.version', function () {
       assert.doesNotThrow(function fn() {
         axe.configure({
           axeVersion: '1.2.3'
@@ -851,7 +851,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should not throw if patch version is less than axe.version', function() {
+    it('should not throw if patch version is less than axe.version', function () {
       assert.doesNotThrow(function fn() {
         axe.configure({
           axeVersion: '1.2.0'
@@ -859,7 +859,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should not throw if minor version is less than axe.version', function() {
+    it('should not throw if minor version is less than axe.version', function () {
       assert.doesNotThrow(function fn() {
         axe.configure({
           axeVersion: '1.1.9'
@@ -867,7 +867,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should not throw if versions match and axe has a canary version', function() {
+    it('should not throw if versions match and axe has a canary version', function () {
       axe.version = '1.2.3-canary.2664bae';
       assert.doesNotThrow(function fn() {
         axe.configure({
@@ -876,7 +876,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should throw if invalid version', function() {
+    it('should throw if invalid version', function () {
       assert.throws(function fn() {
         axe.configure({
           axeVersion: '2'
@@ -890,7 +890,7 @@ describe('axe.configure', function() {
       }, 'Invalid configured version 2..');
     });
 
-    it('should throw if major version is different than axe.version', function() {
+    it('should throw if major version is different than axe.version', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -909,7 +909,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should throw if minor version is greater than axe.version', function() {
+    it('should throw if minor version is greater than axe.version', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -920,7 +920,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should throw if patch version is greater than axe.version', function() {
+    it('should throw if patch version is greater than axe.version', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -931,7 +931,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should throw if versions match and axeVersion has a canary version', function() {
+    it('should throw if versions match and axeVersion has a canary version', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -942,7 +942,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should throw if versions match and both have a canary version', function() {
+    it('should throw if versions match and both have a canary version', function () {
       axe.version = '1.2.3-canary.2664bae';
       assert.throws(function fn() {
         axe.configure(
@@ -954,7 +954,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should accept ver property as fallback', function() {
+    it('should accept ver property as fallback', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -965,7 +965,7 @@ describe('axe.configure', function() {
       });
     });
 
-    it('should accept axeVersion over ver property', function() {
+    it('should accept axeVersion over ver property', function () {
       assert.throws(function fn() {
         axe.configure(
           {
@@ -978,13 +978,13 @@ describe('axe.configure', function() {
     });
   });
 
-  describe('given a standards object', function() {
-    beforeEach(function() {
+  describe('given a standards object', function () {
+    beforeEach(function () {
       axe._load({});
     });
 
-    describe('ariaAttrs', function() {
-      it('should allow creating new attr', function() {
+    describe('ariaAttrs', function () {
+      it('should allow creating new attr', function () {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -999,7 +999,7 @@ describe('axe.configure', function() {
         assert.equal(ariaAttr.type, 'string');
       });
 
-      it('should override existing attr', function() {
+      it('should override existing attr', function () {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -1026,7 +1026,7 @@ describe('axe.configure', function() {
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
 
-      it('should merge existing attr', function() {
+      it('should merge existing attr', function () {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -1053,7 +1053,7 @@ describe('axe.configure', function() {
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
 
-      it('should override and not merge array', function() {
+      it('should override and not merge array', function () {
         axe.configure({
           standards: {
             ariaAttrs: {

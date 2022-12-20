@@ -1,5 +1,5 @@
-describe('area-alt virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('area-alt virtual-rule', function () {
+  it('should pass for aria-label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -20,7 +20,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -41,7 +41,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for alt', function() {
+  it('should pass for alt', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -62,7 +62,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -86,7 +86,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when alt contains only whitespace', function() {
+  it('should fail when alt contains only whitespace', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -107,7 +107,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function() {
+  it('should fail when aria-label is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });
@@ -128,7 +128,7 @@ describe('area-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'map'
     });

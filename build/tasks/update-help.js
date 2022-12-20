@@ -1,11 +1,11 @@
 /*eslint-env node */
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'update-help',
     'Task for updating Deque University helpUrls based on rule JSON files',
-    function() {
+    function () {
       var options = this.options({
         version: '1.0.0'
       });
@@ -13,8 +13,8 @@ module.exports = function(grunt) {
       v.pop();
       var baseUrl =
         'https://dequeuniversity.com/rules/axe/' + v.join('.') + '/';
-      this.files.forEach(function(f) {
-        f.src.forEach(function(filepath) {
+      this.files.forEach(function (f) {
+        f.src.forEach(function (filepath) {
           var config = grunt.file.readJSON(filepath);
           config.metadata.helpUrl = baseUrl + config.id;
           grunt.file.write(filepath, JSON.stringify(config, null, '  '));

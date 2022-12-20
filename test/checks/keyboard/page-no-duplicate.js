@@ -1,4 +1,4 @@
-describe('page-no-duplicate', function() {
+describe('page-no-duplicate', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -8,20 +8,20 @@ describe('page-no-duplicate', function() {
 
   var check = checks['page-no-duplicate-main'];
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  describe('options.selector', function() {
-    it('throws if there is no selector', function() {
-      assert.throws(function() {
+  describe('options.selector', function () {
+    it('throws if there is no selector', function () {
+      assert.throws(function () {
         var params = checkSetup('<div id="target"></div>', undefined);
         assert.isFalse(check.evaluate.apply(checkContext, params));
       });
     });
 
-    it('should return false if there is more than one element matching the selector', function() {
+    it('should return false if there is more than one element matching the selector', function () {
       var options = { selector: 'main' };
       var params = checkSetup(
         '<div><main id="target"></main><main id="dup"></main></div>',
@@ -35,13 +35,13 @@ describe('page-no-duplicate', function() {
       );
     });
 
-    it('should return true if there is only one element matching the selector', function() {
+    it('should return true if there is only one element matching the selector', function () {
       var options = { selector: 'main' };
       var params = checkSetup('<div role="main" id="target"></div>', options);
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    it('should return true if there are no element matching the selector', function() {
+    it('should return true if there are no element matching the selector', function () {
       var options = { selector: 'footer' };
       var params = checkSetup(
         '<div><main id="target"></main><main></main></div>',
@@ -50,7 +50,7 @@ describe('page-no-duplicate', function() {
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    it('should return true if there is more than one element matching the selector but only one is visible', function() {
+    it('should return true if there is more than one element matching the selector but only one is visible', function () {
       var options = { selector: 'main' };
       var params = checkSetup(
         '<div><main id="target"></main><main id="dup" style="display:none;"></main></div>',
@@ -59,7 +59,7 @@ describe('page-no-duplicate', function() {
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    it('should return true if there is more than one element matching the selector but only one is visible to screenreaders', function() {
+    it('should return true if there is more than one element matching the selector but only one is visible to screenreaders', function () {
       var options = { selector: 'main' };
       var params = checkSetup(
         '<div><main id="target" aria-hidden="true"></main><main id="dup"></main></div>',
@@ -70,7 +70,7 @@ describe('page-no-duplicate', function() {
 
     (shadowSupported ? it : xit)(
       'should return false if there is a second matching element inside the shadow dom',
-      function() {
+      function () {
         var options = { selector: 'main' };
         var div = document.createElement('div');
         div.innerHTML = '<div id="shadow"></div><main id="target"></main>';
@@ -93,7 +93,7 @@ describe('page-no-duplicate', function() {
 
     (shadowSupported ? it : xit)(
       'should return true if there is a second matching element inside the shadow dom but only one is visible to screenreaders',
-      function() {
+      function () {
         var options = { selector: 'main' };
         var div = document.createElement('div');
         div.innerHTML =
@@ -116,8 +116,8 @@ describe('page-no-duplicate', function() {
     );
   });
 
-  describe('option.nativeScopeFilter', function() {
-    it('should ignore element contained in a nativeScopeFilter match', function() {
+  describe('option.nativeScopeFilter', function () {
+    it('should ignore element contained in a nativeScopeFilter match', function () {
       var options = {
         selector: 'footer',
         nativeScopeFilter: 'main'
@@ -131,7 +131,7 @@ describe('page-no-duplicate', function() {
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    it('should not ignore element contained in a nativeScopeFilter match with their roles redefined', function() {
+    it('should not ignore element contained in a nativeScopeFilter match with their roles redefined', function () {
       var options = {
         selector: 'footer, [role="contentinfo"]',
         nativeScopeFilter: 'main'
@@ -145,7 +145,7 @@ describe('page-no-duplicate', function() {
       assert.isFalse(check.evaluate.apply(checkContext, params));
     });
 
-    it('should pass when there are two elements and the first is contained within a nativeSccopeFilter', function() {
+    it('should pass when there are two elements and the first is contained within a nativeSccopeFilter', function () {
       var options = {
         selector: 'footer, [role="contentinfo"]',
         nativeScopeFilter: 'article'
@@ -162,7 +162,7 @@ describe('page-no-duplicate', function() {
 
     (shadowSupported ? it : xit)(
       'elements if its ancestor is outside the shadow DOM tree',
-      function() {
+      function () {
         var options = {
           selector: 'footer',
           nativeScopeFilter: 'header'

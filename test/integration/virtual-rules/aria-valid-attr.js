@@ -1,5 +1,5 @@
-describe('aria-valid-attr virtual-rule', function() {
-  it('should pass for valid aria attrs', function() {
+describe('aria-valid-attr virtual-rule', function () {
+  it('should pass for valid aria attrs', function () {
     var results = axe.runVirtualRule('aria-valid-attr', {
       nodeName: 'button',
       attributes: {
@@ -13,7 +13,7 @@ describe('aria-valid-attr virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for invalid aria attr', function() {
+  it('should fail for invalid aria attr', function () {
     var results = axe.runVirtualRule('aria-valid-attr', {
       nodeName: 'button',
       attributes: {
@@ -27,7 +27,7 @@ describe('aria-valid-attr virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass when configured to accept attribute names', function() {
+  it('should pass when configured to accept attribute names', function () {
     axe.configure({
       checks: [
         {

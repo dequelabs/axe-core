@@ -1,4 +1,4 @@
-describe('axe.utils.aggregateNodeResults', function() {
+describe('axe.utils.aggregateNodeResults', function () {
   'use strict';
   var FAIL = 'failed';
   var PASS = 'passed';
@@ -9,12 +9,12 @@ describe('axe.utils.aggregateNodeResults', function() {
   // wrapping arrays where required
   function createTestResults() {
     var args = [].slice.call(arguments);
-    return args.map(function(node) {
-      ['any', 'all', 'none'].forEach(function(type) {
+    return args.map(function (node) {
+      ['any', 'all', 'none'].forEach(function (type) {
         if (typeof node[type] === 'undefined') {
           node[type] = [];
         } else if (Array.isArray(node[type])) {
-          node[type] = node[type].map(function(val) {
+          node[type] = node[type].map(function (val) {
             if (typeof val !== 'object') {
               return { result: val };
             } else {
@@ -32,20 +32,20 @@ describe('axe.utils.aggregateNodeResults', function() {
     });
   }
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._load({});
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.aggregateNodeResults);
   });
 
-  it('Should be `inapplicable` when no results are given', function() {
+  it('Should be `inapplicable` when no results are given', function () {
     var ruleResult = axe.utils.aggregateNodeResults([]);
     assert.equal(ruleResult.result, INAPPLICABLE);
   });
 
-  it('should assign FAIL to ruleResult over PASS', function() {
+  it('should assign FAIL to ruleResult over PASS', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({ all: false }, { all: true }, { all: true })
     );
@@ -54,7 +54,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.lengthOf(ruleResult.passes, 2);
   });
 
-  it('should assign FAIL to ruleResult over CANTTELL', function() {
+  it('should assign FAIL to ruleResult over CANTTELL', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({ all: false }, { all: 0 }, { all: true })
     );
@@ -64,7 +64,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.lengthOf(ruleResult.passes, 1);
   });
 
-  it('should assign PASS to ruleResult if there are only passing checks', function() {
+  it('should assign PASS to ruleResult if there are only passing checks', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({ all: true }, { all: true }, { all: true })
     );
@@ -73,7 +73,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.lengthOf(ruleResult.violations, 0);
   });
 
-  it('should assign FAIL if there are no passing anys checks', function() {
+  it('should assign FAIL if there are no passing anys checks', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({ any: false }, { any: false }, { any: false })
     );
@@ -82,7 +82,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.lengthOf(ruleResult.passes, 0);
   });
 
-  it('should assign CANTTELL over PASS', function() {
+  it('should assign CANTTELL over PASS', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({ all: true }, { all: 0 }, { all: 0 })
     );
@@ -91,7 +91,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.lengthOf(ruleResult.passes, 1);
   });
 
-  it('should provide impact on incomplete', function() {
+  it('should provide impact on incomplete', function () {
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults({
         none: { result: undefined, impact: 'serious' }
@@ -100,7 +100,7 @@ describe('axe.utils.aggregateNodeResults', function() {
     assert.equal(ruleResult.impact, 'serious');
   });
 
-  it('should raise the highest "raisedMetadata" on failing checks', function() {
+  it('should raise the highest "raisedMetadata" on failing checks', function () {
     /*eslint indent:0 */
     var ruleResult = axe.utils.aggregateNodeResults(
       createTestResults(

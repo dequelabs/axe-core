@@ -1,9 +1,9 @@
-describe('aria-allowed-role virtual-rule', function() {
-  afterEach(function() {
+describe('aria-allowed-role virtual-rule', function () {
+  afterEach(function () {
     axe.reset();
   });
 
-  it('should pass for allowed role', function() {
+  it('should pass for allowed role', function () {
     var results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'div',
       attributes: {
@@ -17,7 +17,7 @@ describe('aria-allowed-role virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for unallowed role', function() {
+  it('should fail for unallowed role', function () {
     var results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',
       attributes: {
@@ -30,7 +30,7 @@ describe('aria-allowed-role virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with ignored option', function() {
+  it('should pass for element with ignored option', function () {
     axe.configure({
       checks: [
         {
@@ -54,7 +54,7 @@ describe('aria-allowed-role virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for hidden element', function() {
+  it('should incomplete for hidden element', function () {
     var results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',
       attributes: {
@@ -68,7 +68,7 @@ describe('aria-allowed-role virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should incomplete for hidden element parent', function() {
+  it('should incomplete for hidden element parent', function () {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'dd',
       attributes: {

@@ -412,4 +412,26 @@ describe('aria.getRole', function () {
       assert.isNull(aria.getRole(node, { noPresentational: true }));
     });
   });
+
+  describe('SerialVirtualNode', function () {
+    it('works with the SerialVirtualNode', function () {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          role: 'button'
+        }
+      });
+      assert.equal(aria.getRole(vNode), 'button');
+    });
+
+    it('does not throw for missing parent in presentational role inheritance', function () {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'li'
+      });
+
+      assert.doesNotThrow(function () {
+        assert.equal(aria.getRole(vNode), 'listitem');
+      });
+    });
+  });
 });

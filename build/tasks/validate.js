@@ -22,7 +22,7 @@ function fileExists(v, o) {
 
 function hasUniqueId() {
   var seen = {};
-  return function(v, o) {
+  return function (v, o) {
     if (!seen[v]) {
       seen[v] = o;
       return true;
@@ -150,7 +150,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function(v) {
+          conform: function (v) {
             if (typeof v === 'string') {
               return true;
             }
@@ -166,7 +166,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function(v) {
+          conform: function (v) {
             if (typeof v === 'string') {
               return true;
             }
@@ -182,7 +182,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function(v) {
+          conform: function (v) {
             if (typeof v === 'string') {
               return true;
             }
@@ -243,13 +243,13 @@ function createSchemas() {
 
 function validateFiles(grunt, files, schema, type) {
   var valid = true;
-  files.forEach(function(f) {
-    f.src.forEach(function(pathArg) {
+  files.forEach(function (f) {
+    f.src.forEach(function (pathArg) {
       var file = grunt.file.readJSON(pathArg);
       file._path = pathArg;
       var result = revalidator(file, schema);
       if (!result.valid) {
-        result.errors.forEach(function(err) {
+        result.errors.forEach(function (err) {
           grunt.log.error(pathArg, err.property + ' ' + err.message);
         });
         valid = false;
@@ -269,11 +269,11 @@ function validateFiles(grunt, files, schema, type) {
   return valid;
 }
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'validate',
     'Task for validating API schema for checks and rules',
-    function() {
+    function () {
       const { type } = this.options();
       const schemas = createSchemas();
       const schema = schemas[type];

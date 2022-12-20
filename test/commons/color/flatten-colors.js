@@ -1,51 +1,63 @@
-describe('color.flattenColors', function() {
-  'use strict';
+describe('color.flattenColors', function () {
+  const { Color, flattenColors } = axe.commons.color;
 
-  it('should flatten colors properly', function() {
-    var halfblack = new axe.commons.color.Color(0, 0, 0, 0.5);
-    var fullblack = new axe.commons.color.Color(0, 0, 0, 1);
-    var transparent = new axe.commons.color.Color(0, 0, 0, 0);
-    var white = new axe.commons.color.Color(255, 255, 255, 1);
-    var gray = new axe.commons.color.Color(128, 128, 128, 1);
-    var halfRed = new axe.commons.color.Color(255, 0, 0, 0.5);
-    var quarterLightGreen = new axe.commons.color.Color(0, 128, 0, 0.25);
+  it('should flatten colors properly', function () {
+    const halfBlack = new Color(0, 0, 0, 0.5);
+    const fullBlack = new Color(0, 0, 0, 1);
+    const transparent = new Color(0, 0, 0, 0);
+    const white = new Color(255, 255, 255, 1);
+    const gray = new Color(128, 128, 128, 1);
+    const halfRed = new Color(255, 0, 0, 0.5);
+    const quarterLightGreen = new Color(0, 128, 0, 0.25);
 
-    var flat = axe.commons.color.flattenColors(halfblack, white);
+    const flat = flattenColors(halfBlack, white);
     assert.equal(flat.red, gray.red);
     assert.equal(flat.green, gray.green);
     assert.equal(flat.blue, gray.blue);
 
-    var flat2 = axe.commons.color.flattenColors(fullblack, white);
-    assert.equal(flat2.red, fullblack.red);
-    assert.equal(flat2.green, fullblack.green);
-    assert.equal(flat2.blue, fullblack.blue);
+    const flat2 = flattenColors(fullBlack, white);
+    assert.equal(flat2.red, fullBlack.red);
+    assert.equal(flat2.green, fullBlack.green);
+    assert.equal(flat2.blue, fullBlack.blue);
 
-    var flat3 = axe.commons.color.flattenColors(transparent, white);
+    const flat3 = flattenColors(transparent, white);
     assert.equal(flat3.red, white.red);
     assert.equal(flat3.green, white.green);
     assert.equal(flat3.blue, white.blue);
 
-    var flat4 = axe.commons.color.flattenColors(halfRed, white);
+    const flat4 = flattenColors(halfRed, white);
     assert.equal(flat4.red, 255);
     assert.equal(flat4.green, 128);
     assert.equal(flat4.blue, 128);
     assert.equal(flat4.alpha, 1);
 
-    var flat5 = axe.commons.color.flattenColors(quarterLightGreen, white);
+    const flat5 = flattenColors(quarterLightGreen, white);
     assert.equal(flat5.red, 191);
     assert.equal(flat5.green, 223);
     assert.equal(flat5.blue, 191);
     assert.equal(flat5.alpha, 1);
 
-    var flat6 = axe.commons.color.flattenColors(quarterLightGreen, halfRed);
+    const flat6 = flattenColors(quarterLightGreen, halfRed);
     assert.equal(flat6.red, 153);
     assert.equal(flat6.green, 51);
     assert.equal(flat6.blue, 0);
     assert.equal(flat6.alpha, 0.625);
   });
+
+  it('handles two colors with alpha:0', () => {
+    const transparent1 = new Color(0, 0, 0, 0);
+    const transparent2 = new Color(255, 255, 255, 0);
+    const transparent3 = flattenColors(transparent1, transparent2);
+    assert.deepEqual(transparent3.toJSON(), {
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0
+    });
+  });
 });
 
-describe('color.flattenColors mix-blend-mode functions', function() {
+describe('color.flattenColors ', function () {
   'use strict';
 
   var colourOne = new axe.commons.color.Color(216, 22, 22, 1);
@@ -54,7 +66,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
   var colourThree = new axe.commons.color.Color(211, 162, 180, 1);
   var colourFour = new axe.commons.color.Color(115, 255, 0, 0.5);
 
-  it('should flatten colors correctly using blend mode: multiply', function() {
+  it('should flatten colors correctly using blend mode: multiply', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -76,7 +88,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: screen', function() {
+  it('should flatten colors correctly using blend mode: screen', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -98,7 +110,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: overlay', function() {
+  it('should flatten colors correctly using blend mode: overlay', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -110,7 +122,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: darken', function() {
+  it('should flatten colors correctly using blend mode: darken', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -132,7 +144,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: lighten', function() {
+  it('should flatten colors correctly using blend mode: lighten', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -154,7 +166,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: color-dodge', function() {
+  it('should flatten colors correctly using blend mode: color-dodge', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -176,7 +188,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: color-burn', function() {
+  it('should flatten colors correctly using blend mode: color-burn', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -198,7 +210,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: hard-light', function() {
+  it('should flatten colors correctly using blend mode: hard-light', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -220,7 +232,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: soft-light', function() {
+  it('should flatten colors correctly using blend mode: soft-light', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -242,7 +254,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: difference', function() {
+  it('should flatten colors correctly using blend mode: difference', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
@@ -264,7 +276,7 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flattenTwo.alpha, 1);
   });
 
-  it('should flatten colors correctly using blend mode: exclusion', function() {
+  it('should flatten colors correctly using blend mode: exclusion', function () {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,

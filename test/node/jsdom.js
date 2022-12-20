@@ -17,27 +17,27 @@ var domStr =
   '</body>' +
   '</html>';
 
-describe('jsdom axe-core', function() {
-  it('should run without setting globals', function() {
+describe('jsdom axe-core', function () {
+  it('should run without setting globals', function () {
     var dom = new jsdom.JSDOM(domStr);
 
     return axe
       .run(dom.window.document.documentElement, {
         rules: { 'color-contrast': { enabled: false } }
       })
-      .then(function(results) {
+      .then(function (results) {
         assert.notEqual(results.violations.length, 0);
       });
   });
 
-  it('should unset globals so it can run with a new set of globals', function() {
+  it('should unset globals so it can run with a new set of globals', function () {
     var dom = new jsdom.JSDOM(domStr);
 
     return axe
       .run(dom.window.document.documentElement, {
         rules: { 'color-contrast': { enabled: false } }
       })
-      .then(function(results) {
+      .then(function (results) {
         assert.notStrictEqual(results.violations.length, 0);
 
         var dom = new jsdom.JSDOM(domStr);
@@ -46,31 +46,31 @@ describe('jsdom axe-core', function() {
           .run(dom.window.document.documentElement, {
             rules: { 'color-contrast': { enabled: false } }
           })
-          .then(function(results) {
+          .then(function (results) {
             assert.notStrictEqual(results.violations.length, 0);
           });
       });
   });
 
-  describe('audit', function() {
+  describe('audit', function () {
     var audit = axe._audit;
 
-    it('should have an empty allowedOrigins', function() {
+    it('should have an empty allowedOrigins', function () {
       // JSDOM does not have window.location, so there is no default origin
       assert.strictEqual(audit.allowedOrigins.length, 0);
     });
   });
 
-  describe('isCurrentPageLink', function() {
+  describe('isCurrentPageLink', function () {
     // because axe only sets the window global when calling axe.run,
     // we'll have to create a custom rule that calls
     // isCurrentPageLink to gain access to the middle of a run with
     // the proper window object
-    afterEach(function() {
+    afterEach(function () {
       axe.teardown();
     });
 
-    it('should return true if url starts with #', function() {
+    it('should return true if url starts with #', function () {
       var dom = new jsdom.JSDOM(domStr);
       var anchor = dom.window.document.getElementById('hash-link');
 
@@ -78,7 +78,7 @@ describe('jsdom axe-core', function() {
         checks: [
           {
             id: 'check-current-page-link',
-            evaluate: function() {
+            evaluate: function () {
               return axe.commons.dom.isCurrentPageLink(anchor) === true;
             }
           }
@@ -95,12 +95,12 @@ describe('jsdom axe-core', function() {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function(results) {
+        .then(function (results) {
           assert.strictEqual(results.passes.length, 1);
         });
     });
 
-    it('should return null for absolute link when url is not set', function() {
+    it('should return null for absolute link when url is not set', function () {
       var dom = new jsdom.JSDOM(domStr);
       var anchor = dom.window.document.getElementById('skip');
 
@@ -108,7 +108,7 @@ describe('jsdom axe-core', function() {
         checks: [
           {
             id: 'check-current-page-link',
-            evaluate: function() {
+            evaluate: function () {
               return axe.commons.dom.isCurrentPageLink(anchor) === null;
             }
           }
@@ -125,12 +125,12 @@ describe('jsdom axe-core', function() {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function(results) {
+        .then(function (results) {
           assert.strictEqual(results.passes.length, 1);
         });
     });
 
-    it('should return true for absolute link when url is set', function() {
+    it('should return true for absolute link when url is set', function () {
       var dom = new jsdom.JSDOM(domStr, { url: 'https://page.com' });
       var anchor = dom.window.document.getElementById('skip');
 
@@ -138,7 +138,7 @@ describe('jsdom axe-core', function() {
         checks: [
           {
             id: 'check-current-page-link',
-            evaluate: function() {
+            evaluate: function () {
               return axe.commons.dom.isCurrentPageLink(anchor) === true;
             }
           }
@@ -155,7 +155,7 @@ describe('jsdom axe-core', function() {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function(results) {
+        .then(function (results) {
           assert.strictEqual(results.passes.length, 1);
         });
     });

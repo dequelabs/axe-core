@@ -1,0 +1,52 @@
+name: Create release candidate
+
+on: [workflow_dispatch]
+
+jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Run release script and open PR
+        run: |
+          git config user.name "API Team CI User"
+          git config user.email "aciattestteamci@deque.com"
+
+          Branch="release-$(date +%Y-%m-%d)"
+          echo "Branch: $Branch"
+          git checkout -b "$Branch"
+
+          npm ci
+          npm run release
+
+          git push origin "$Branch" --force
+
+          Version=$(jq -r .version ./package.json)
+          echo "Version: $Version"
+
+          # Get the additions to the changelog as the commit body and generate the PR url
+          ReleaseNotes=$(
+            git show \
+              --no-color \
+              --no-prefix \
+              --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
+          )
+
+          echo "chore(release): v$Version" > /tmp/pr.txt
+          echo "" >> /tmp/pr.txt
+          echo "$ReleaseNotes" >> /tmp/pr.txt
+          echo "" >> /tmp/pr.txt
+          echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
+          hub pull-request --file /tmp/pr.txt --base master
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}

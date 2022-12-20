@@ -20,13 +20,13 @@
         checks: [
           {
             id: 'undeffed',
-            evaluate: function() {
+            evaluate: function () {
               return undefined;
             }
           },
           {
             id: 'thrower',
-            evaluate: function() {
+            evaluate: function () {
               throw new Error('Check failed to complete');
             }
           }

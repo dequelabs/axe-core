@@ -1,13 +1,13 @@
-describe('table.getCellPosition', function() {
+describe('table.getCellPosition', function () {
   'use strict';
   var fixture = document.getElementById('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
   });
 
-  it('should get x, y coordinates given a cell', function() {
+  it('should get x, y coordinates given a cell', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><td></td><td></td></tr>' +
@@ -24,7 +24,7 @@ describe('table.getCellPosition', function() {
     });
   });
 
-  it('should handle colspans', function() {
+  it('should handle colspans', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><td></td><td></td></tr>' +
@@ -41,7 +41,7 @@ describe('table.getCellPosition', function() {
     });
   });
 
-  it('should handle rowspans', function() {
+  it('should handle rowspans', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td rowspan="2"></td><td></td><td></td></tr>' +
@@ -58,7 +58,7 @@ describe('table.getCellPosition', function() {
     });
   });
 
-  it('should handle rowspans and colspans', function() {
+  it('should handle rowspans and colspans', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td rowspan="2" colspan="2"></td><td></td></tr>' +
@@ -75,7 +75,7 @@ describe('table.getCellPosition', function() {
     });
   });
 
-  it('should handle intermittent empty rows', function() {
+  it('should handle intermittent empty rows', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><td></td><td></td></tr>' +

@@ -10,14 +10,17 @@
     "largeTextPt": 18,
     "contrastRatio": {
       "normal": {
-        "expected": 7
+        "expected": 7,
+        "minThreshold": 4.5
       },
       "large": {
-        "expected": 4.5
+        "expected": 4.5,
+        "minThreshold": 3
       }
     },
     "pseudoSizeThreshold": 0.25,
-    "shadowOutlineEmMax": 0.1
+    "shadowOutlineEmMax": 0.1,
+    "textStrokeEmMin": 0.03
   },
   "metadata": {
     "impact": "serious",

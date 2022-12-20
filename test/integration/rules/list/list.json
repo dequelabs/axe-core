@@ -7,7 +7,9 @@
     ["#divol"],
     ["#mixedol"],
     ["#ulrolledallli"],
-    ["#olrolledallli"]
+    ["#olrolledallli"],
+    ["#ulrolledli"],
+    ["#olrolledli"]
   ],
   "passes": [
     ["#emptyul"],
@@ -17,8 +19,6 @@
     ["#emptyol"],
     ["#scriptemptyol"],
     ["#properol"],
-    ["#scriptproperol"],
-    ["#ulrolledli"],
-    ["#olrolledli"]
+    ["#scriptproperol"]
   ]
 }

@@ -45,23 +45,66 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  // Array of length 2 or greater
+  type MultiArray<T> = [T, T, ...T[]];
+
+  // Selectors within a frame
   type BaseSelector = string;
-  type CrossTreeSelector = BaseSelector | BaseSelector[];
-  type CrossFrameSelector = CrossTreeSelector[];
 
-  type ContextObject = {
-    include?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
-    exclude?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
-  };
+  type ShadowDomSelector = MultiArray<BaseSelector>;
+  type CrossTreeSelector = BaseSelector | ShadowDomSelector;
+  type LabelledShadowDomSelector = { fromShadowDom: ShadowDomSelector };
 
-  type SerialContextObject = {
-    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-  };
+  // Cross-frame selectors
+  type FramesSelector = Array<CrossTreeSelector | LabelledShadowDomSelector>;
+  type UnlabelledFrameSelector = CrossTreeSelector[];
+  type LabelledFramesSelector = { fromFrames: MultiArray<FramesSelector[0]> };
+  /**
+   * @deprecated Use UnlabelledFrameSelector instead
+   */
+  type CrossFrameSelector = UnlabelledFrameSelector;
 
-  type RunCallback = (error: Error, results: AxeResults) => void;
+  // Context options
+  type Selector =
+    | Node
+    | BaseSelector
+    | LabelledShadowDomSelector
+    | LabelledFramesSelector;
+  type SelectorList = Array<Selector | FramesSelector> | NodeList;
+  type ContextObject =
+    | {
+        include: Selector | SelectorList;
+        exclude?: Selector | SelectorList;
+      }
+    | {
+        exclude: Selector | SelectorList;
+        include?: Selector | SelectorList;
+      };
+  type ElementContext = Selector | SelectorList | ContextObject;
 
-  type ElementContext = Node | NodeList | string | ContextObject;
+  type SerialSelector =
+    | BaseSelector
+    | LabelledShadowDomSelector
+    | LabelledFramesSelector;
+  type SerialFrameSelector = SerialSelector | FramesSelector;
+  type SerialSelectorList = Array<SerialFrameSelector>;
+
+  type SerialContextObject =
+    | {
+        include: SerialSelector | SerialSelectorList;
+        exclude?: SerialSelector | SerialSelectorList;
+      }
+    | {
+        exclude: SerialSelector | SerialSelectorList;
+        include?: SerialSelector | SerialSelectorList;
+      };
+
+  interface FrameContextObject {
+    include: UnlabelledFrameSelector[];
+    exclude: UnlabelledFrameSelector[];
+  }
+
+  type RunCallback<T = AxeResults> = (error: Error, results: T) => void;
 
   interface TestEngine {
     name: string;
@@ -255,9 +298,9 @@ declare namespace axe {
   interface SerialDqElement {
     source: string;
     nodeIndexes: number[];
-    selector: CrossFrameSelector;
+    selector: UnlabelledFrameSelector;
     xpath: string[];
-    ancestry: CrossFrameSelector;
+    ancestry: UnlabelledFrameSelector;
   }
   interface PartialRuleResult {
     id: string;
@@ -274,7 +317,7 @@ declare namespace axe {
   type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
     frameSelector: CrossTreeSelector;
-    frameContext: SerialContextObject;
+    frameContext: FrameContextObject;
   }
   interface Utils {
     getFrameContexts: (
@@ -282,6 +325,7 @@ declare namespace axe {
       options?: RunOptions
     ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
+    shadowSelectAll: (selector: CrossTreeSelector) => Element[];
   }
   interface EnvironmentData {
     testEngine: TestEngine;
@@ -313,19 +357,27 @@ declare namespace axe {
    * @param   {RunCallback}    callback Optional The function to invoke when analysis is complete.
    * @returns {Promise<AxeResults>|void} If the callback was not defined, axe will return a Promise.
    */
-  function run(context?: ElementContext): Promise<AxeResults>;
-  function run(options: RunOptions): Promise<AxeResults>;
-  function run(callback: (error: Error, results: AxeResults) => void): void;
-  function run(context: ElementContext, callback: RunCallback): void;
-  function run(options: RunOptions, callback: RunCallback): void;
-  function run(
+  function run<T = AxeResults>(context?: ElementContext): Promise<T>;
+  function run<T = AxeResults>(options: RunOptions): Promise<T>;
+  function run<T = AxeResults>(
+    callback: (error: Error, results: T) => void
+  ): void;
+  function run<T = AxeResults>(
+    context: ElementContext,
+    callback: RunCallback<T>
+  ): void;
+  function run<T = AxeResults>(
+    options: RunOptions,
+    callback: RunCallback<T>
+  ): void;
+  function run<T = AxeResults>(
     context: ElementContext,
     options: RunOptions
-  ): Promise<AxeResults>;
-  function run(
+  ): Promise<T>;
+  function run<T = AxeResults>(
     context: ElementContext,
     options: RunOptions,
-    callback: RunCallback
+    callback: RunCallback<T>
   ): void;
 
   /**

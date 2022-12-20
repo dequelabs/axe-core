@@ -1,14 +1,14 @@
-describe('aria-hidden', function() {
+describe('aria-hidden', function () {
   'use strict';
 
   var checkContext = axe.testUtils.MockCheckContext();
   var body = document.body;
-  afterEach(function() {
+  afterEach(function () {
     checkContext.reset();
     body.removeAttribute('aria-hidden');
   });
 
-  it('should not be present on document.body', function() {
+  it('should not be present on document.body', function () {
     var tree = axe.testUtils.flatTreeSetup(body);
     assert.isTrue(
       axe.testUtils
@@ -17,7 +17,7 @@ describe('aria-hidden', function() {
     );
   });
 
-  it('fails appropriately if aria-hidden=true on document.body', function() {
+  it('fails appropriately if aria-hidden=true on document.body', function () {
     body.setAttribute('aria-hidden', true);
     var tree = axe.testUtils.flatTreeSetup(body);
     assert.isFalse(
@@ -27,7 +27,7 @@ describe('aria-hidden', function() {
     );
   });
 
-  it('passes if aria-hidden=false on document.body', function() {
+  it('passes if aria-hidden=false on document.body', function () {
     body.setAttribute('aria-hidden', 'false');
     var tree = axe.testUtils.flatTreeSetup(body);
     assert.isTrue(

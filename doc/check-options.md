@@ -35,6 +35,7 @@
   - [target-size](#target-size)
   - [region](#region)
   - [inline-style-property](#inline-style-property)
+  - [invalid-children](#invalid-children)
 
 ## How Checks Work
 
@@ -242,6 +243,7 @@ All checks allow these global options:
 | `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                                                                                                                |
 | `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                                                                                                     |
 | `shadowOutlineEmMax`                                        | `0.1`   | The maximum `blur-radius` value (in ems) of the CSS `text-shadow` property. `blur-radius` values greater than this value will be treated as a background color rather than an outline color. |
+| `textStrokeEmMin`                                           | `0.03`  | The minimum EM width of `-webkit-text-stroke` before axe uses the text stroke color over the actual text color.                                                                              |
 | `pseudoSizeThreshold`                                       | `0.25`  | Minimum area of the pseudo element, relative to the text element, below which it will be ignored for colot contrast.                                                                         |
 | `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                                                                                                       |
 | &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)                                                                                               |
@@ -340,10 +342,10 @@ th</code></pre>
 
 ### label-content-name-mismatch
 
-| Option               | Default | Description                                                                                                                                                               |
-| -------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pixelThreshold`     | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
-| `occuranceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
+| Option                | Default | Description                                                                                                                                                               |
+| --------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pixelThreshold`      | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
+| `occurrenceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
 
 ### has-lang
 
@@ -526,3 +528,13 @@ This evaluate method is used in the following checks. Default vary between check
 | `normalValue`    | The value to use when `normal` is set, defaults to `0`                        |
 
 If `minValue` and `maxValue` are both undefined, the check returns `false` if the property is used with !important. If done along with `noImportant: true`, the check returns false if the property is set at all in the style attribute.
+
+### invalid-children
+
+This evaluation method is used in the `list` and `definition-list` rule to determine whether its child nodes are allowed.
+
+| Option           | Description                                                                         |
+| ---------------- | :---------------------------------------------------------------------------------- |
+| `validNodeNames` | Nodes without role allowed as children                                              |
+| `validRoles`     | Roles allowed on child elements                                                     |
+| `divGroups`      | Whether the child nodes can be grouped in a div without any role (false by default) |

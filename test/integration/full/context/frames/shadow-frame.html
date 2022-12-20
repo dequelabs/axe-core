@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shadow frame</title>
+    <script src="/axe.js"></script>
+  </head>
+  <body>
+    <input id="outOfContext3" />
+    <div id="shadowFrameHost">
+      <input id="outOfContext4" />
+    </div>
+    <script>
+      const shadowRoot = shadowFrameHost.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = `<main>
+        <div> <input id="fail" value="fail" /> </div>
+        <aside> <input id="outOfContext5" /> </aside>
+      </main>
+      <slot />`;
+    </script>
+  </body>
+</html>

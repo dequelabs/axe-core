@@ -1,18 +1,18 @@
 /*global window, Promise */
 
-var globby = require('globby');
-var WebDriver = require('selenium-webdriver');
-var chrome = require('selenium-webdriver/chrome');
-var chromedriver = require('chromedriver');
+const globby = require('globby');
+const chrome = require('selenium-webdriver/chrome');
+const firefox = require('selenium-webdriver/firefox');
+const chromedriver = require('chromedriver');
 
-var args = process.argv.slice(2);
+const args = process.argv.slice(2);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
-var browser = 'chrome';
-args.forEach(function(arg) {
+let browser = 'chrome';
+args.forEach(function (arg) {
   // pattern: browsers=Chrome
-  var parts = arg.split('=');
+  const parts = arg.split('=');
   if (parts[0] === 'browser') {
     browser = parts[1].toLowerCase();
   }
@@ -24,9 +24,9 @@ args.forEach(function(arg) {
 function collectTestResults(driver) {
   // inject a script that waits half a second
   return driver
-    .executeAsyncScript(function() {
-      var callback = arguments[arguments.length - 1];
-      setTimeout(function() {
+    .executeAsyncScript(function () {
+      const callback = arguments[arguments.length - 1];
+      setTimeout(function () {
         if (!window.mocha) {
           callback('mocha-missing;' + window.location.href);
         }
@@ -34,7 +34,7 @@ function collectTestResults(driver) {
         callback(window.mochaResults);
       }, 500);
     })
-    .then(function(result) {
+    .then(function (result) {
       // If there are no results, listen a little longer
       if (typeof result === 'string' && result.includes('mocha-missing')) {
         throw new Error(
@@ -57,30 +57,30 @@ function collectTestResults(driver) {
  * Test each URL
  */
 function runTestUrls(driver, isMobile, urls, errors) {
-  var url = urls.shift();
+  const url = urls.shift();
   errors = errors || [];
 
   return (
     driver
       .get(url)
       // Get results
-      .then(function() {
+      .then(function () {
         return Promise.all([
           driver.getCapabilities(),
           collectTestResults(driver)
         ]);
       })
       // And process them
-      .then(function(promiseResults) {
-        var capabilities = promiseResults[0];
-        var result = promiseResults[1];
-        var browserName =
+      .then(function (promiseResults) {
+        const capabilities = promiseResults[0];
+        const result = promiseResults[1];
+        const browserName =
           capabilities.get('browserName') +
           (capabilities.get('mobileEmulationEnabled') ? '-mobile' : '');
         console.log(url + ' [' + browserName + ']');
 
         // Remember the errors
-        (result.reports || []).forEach(function(err) {
+        (result.reports || []).forEach(function (err) {
           console.log(err.message);
           err.url = url;
           err.browser = browserName;
@@ -101,7 +101,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         );
         console.log();
       })
-      .then(function() {
+      .then(function () {
         // Start the next job, if any
         if (urls.length > 0) {
           return runTestUrls(driver, isMobile, urls, errors);
@@ -117,85 +117,50 @@ function runTestUrls(driver, isMobile, urls, errors) {
  * Build web driver depends whether REMOTE_SELENIUM_URL is set
  */
 function buildWebDriver(browser) {
-  // Pinned to selenium-webdriver@4.3.0
-  // https://github.com/SeleniumHQ/selenium/pull/10796/files#diff-6c87d95a2288e92e15a6bb17710c763c01c2290e679beb26220858f3218b6a62L260
-
-  var capabilities;
-  var mobileBrowser = browser.split('-mobile');
-
-  if (mobileBrowser.length > 1) {
-    browser = mobileBrowser[0];
-    capabilities = {
-      browserName: mobileBrowser[0],
-      chromeOptions: {
-        mobileEmulation: {
-          deviceMetrics: {
-            width: 320,
-            height: 568,
-            pixelRatio: 2
-          }
-        }
-      }
-    };
-  }
+  let webdriver;
+  const mobileBrowser = browser.split('-mobile');
 
   // fix chrome DevToolsActivePort file doesn't exist in CricleCI (as well as a
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
-    var service = new chrome.ServiceBuilder(chromedriver.path).build();
-    chrome.setDefaultService(service);
+    const service = new chrome.ServiceBuilder(chromedriver.path).build();
 
-    capabilities = WebDriver.Capabilities.chrome();
-    capabilities.set('chromeOptions', {
-      args: [
+    const options = new chrome.Options()
+      .headless()
+      .addArguments([
         '--no-sandbox',
-        '--headless',
         '--disable-extensions',
         '--disable-dev-shm-usage'
-      ]
-    });
+      ]);
+    webdriver = chrome.Driver.createSession(options, service);
+  } else if (browser === 'firefox') {
+    const options = new firefox.Options().headless();
+    webdriver = firefox.Driver.createSession(options);
   }
-
-  var webdriver = new WebDriver.Builder()
-    .withCapabilities(capabilities)
-    .forBrowser(browser);
 
   if (process.env.REMOTE_SELENIUM_URL) {
     webdriver.usingServer(process.env.REMOTE_SELENIUM_URL);
   }
 
-  // @see https://github.com/SeleniumHQ/selenium/issues/6026
-  if (browser === 'safari') {
-    var safari = require('selenium-webdriver/safari');
-    var server = new safari.ServiceBuilder()
-      .addArguments('--legacy')
-      .build()
-      .start();
-
-    webdriver.usingServer(server);
-  }
-
   return {
-    driver: webdriver.build(),
+    driver: webdriver,
     isMobile: mobileBrowser.length > 1
   };
 }
 
 function start(options) {
-  var driver;
-  var isMobile = false;
   // yes, really, and this isn't documented anywhere either.
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  var testUrls = globby
+  const testUrls = globby
     .sync([
       'test/integration/full/**/*.{html,xhtml}',
       '!**/frames/**/*.{html,xhtml}'
     ])
-    .map(function(url) {
+    .map(function (url) {
       return 'http://localhost:9876/' + url;
     });
 
@@ -214,17 +179,9 @@ function start(options) {
   }
 
   // try to load the browser
-  try {
-    var webDriver = buildWebDriver(options.browser);
-    driver = webDriver.driver;
-    isMobile = webDriver.isMobile;
-    // If load fails, warn user and move to the next task
-  } catch (err) {
-    console.log();
-    console.log(err.message);
-    console.log('Aborted testing using ' + options.browser);
-    return process.exit();
-  }
+  const webDriver = buildWebDriver(options.browser);
+  const driver = webDriver.driver;
+  const isMobile = webDriver.isMobile;
 
   driver.manage().setTimeouts({
     pageLoad: 50000,
@@ -233,9 +190,9 @@ function start(options) {
 
   // Test all pages
   runTestUrls(driver, isMobile, testUrls)
-    .then(function(testErrors) {
+    .then(function (testErrors) {
       // log each error and abort
-      testErrors.forEach(function(err) {
+      testErrors.forEach(function (err) {
         console.log();
         console.log('URL: ' + err.url);
         console.log('Browser: ' + err.browser);
@@ -249,7 +206,7 @@ function start(options) {
 
       // catch any potential problems
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
       process.exit(1);
     });

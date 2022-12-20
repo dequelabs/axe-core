@@ -1,11 +1,11 @@
 const { build } = require('esbuild');
 const path = require('path');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask(
     'esbuild',
     'Task to run the esbuild javascript bundler',
-    function() {
+    function () {
       const done = this.async();
       const files = grunt.task.current.data.files;
 

@@ -1,19 +1,19 @@
-describe('utils.getFrameContexts', function() {
+describe('utils.getFrameContexts', function () {
   var getFrameContexts = axe.utils.getFrameContexts;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var fixture = document.querySelector('#fixture');
 
-  it('returns an empty array if the page has no frames', function() {
+  it('returns an empty array if the page has no frames', function () {
     var frameContext = getFrameContexts();
     assert.isArray(frameContext);
     assert.lengthOf(frameContext, 0);
   });
 
-  it('returns a `frameSelector` for each included frame', function() {
+  it('returns a `frameSelector` for each included frame', function () {
     fixture.innerHTML =
       '<iframe></iframe>' + '<iframe></iframe>' + '<iframe></iframe>';
 
-    var selectors = getFrameContexts().map(function(frameData) {
+    var selectors = getFrameContexts().map(function (frameData) {
       return frameData.frameSelector;
     });
     assert.lengthOf(selectors, 3);
@@ -22,11 +22,11 @@ describe('utils.getFrameContexts', function() {
     assert.include(selectors[2], 'iframe:nth-child(3)');
   });
 
-  it('sets frameContext.initiator to false for each included frame', function() {
+  it('sets frameContext.initiator to false for each included frame', function () {
     fixture.innerHTML =
       '<iframe></iframe>' + '<iframe></iframe>' + '<iframe></iframe>';
 
-    var contexts = getFrameContexts().map(function(frameData) {
+    var contexts = getFrameContexts().map(function (frameData) {
       return frameData.frameContext;
     });
 
@@ -36,13 +36,13 @@ describe('utils.getFrameContexts', function() {
     assert.isFalse(contexts[2].initiator);
   });
 
-  it('sets frameContext.focusable depending on the frame', function() {
+  it('sets frameContext.focusable depending on the frame', function () {
     fixture.innerHTML =
       '<iframe></iframe>' +
       '<iframe tabindex="0"></iframe>' +
       '<iframe tabindex="-1"></iframe>';
 
-    var contexts = getFrameContexts().map(function(frameData) {
+    var contexts = getFrameContexts().map(function (frameData) {
       return frameData.frameContext;
     });
     assert.lengthOf(contexts, 3);
@@ -51,13 +51,13 @@ describe('utils.getFrameContexts', function() {
     assert.isFalse(contexts[2].focusable);
   });
 
-  it('sets frameContext.size based on frame size', function() {
+  it('sets frameContext.size based on frame size', function () {
     fixture.innerHTML =
       '<iframe width="1" height="1"></iframe>' +
       '<iframe width="10" height="10"></iframe>' +
       '<iframe width="100" height="100"></iframe>';
 
-    var frameSize = getFrameContexts().map(function(frameData) {
+    var frameSize = getFrameContexts().map(function (frameData) {
       return frameData.frameContext.size;
     });
     assert.lengthOf(frameSize, 3);
@@ -75,8 +75,8 @@ describe('utils.getFrameContexts', function() {
     });
   });
 
-  describe('include / exclude', function() {
-    it('returns a `frameContext` for each included frame', function() {
+  describe('include / exclude', function () {
+    it('returns a `frameContext` for each included frame', function () {
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' +
         '<iframe id="f2"></iframe>' +
@@ -88,7 +88,7 @@ describe('utils.getFrameContexts', function() {
         ],
         exclude: [['#f3', 'footer']]
       };
-      var contexts = getFrameContexts(context).map(function(frameData) {
+      var contexts = getFrameContexts(context).map(function (frameData) {
         return frameData.frameContext;
       });
 
@@ -101,12 +101,12 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(contexts[2].exclude, [['footer']]);
     });
 
-    it('excludes non-frame contexts', function() {
+    it('excludes non-frame contexts', function () {
       fixture.innerHTML = '<iframe id="f1"></iframe>';
       var context = {
         include: [['#header'], ['a'], ['#f1', 'header']]
       };
-      var contexts = getFrameContexts(context).map(function(frameData) {
+      var contexts = getFrameContexts(context).map(function (frameData) {
         return frameData.frameContext;
       });
 
@@ -115,7 +115,7 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(contexts[0].exclude, []);
     });
 
-    it('mixes contexts if the frame is selected twice', function() {
+    it('mixes contexts if the frame is selected twice', function () {
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
       var context = {
@@ -125,7 +125,7 @@ describe('utils.getFrameContexts', function() {
         ],
         exclude: [['iframe', 'main']]
       };
-      var contexts = getFrameContexts(context).map(function(frameData) {
+      var contexts = getFrameContexts(context).map(function (frameData) {
         return frameData.frameContext;
       });
       assert.lengthOf(contexts, 2);
@@ -135,7 +135,7 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(contexts[1].exclude, [['main']]);
     });
 
-    it('combines include/exclude arrays of frames selected twice', function() {
+    it('combines include/exclude arrays of frames selected twice', function () {
       fixture.innerHTML = '<iframe></iframe>';
       var context = {
         include: [
@@ -147,7 +147,7 @@ describe('utils.getFrameContexts', function() {
           ['iframe', 'footer']
         ]
       };
-      var contexts = getFrameContexts(context).map(function(frameData) {
+      var contexts = getFrameContexts(context).map(function (frameData) {
         return frameData.frameContext;
       });
 
@@ -156,7 +156,7 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(contexts[0].exclude, [['aside'], ['footer']]);
     });
 
-    it('skips excluded frames', function() {
+    it('skips excluded frames', function () {
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' +
         '<iframe id="f2"></iframe>' +
@@ -164,7 +164,7 @@ describe('utils.getFrameContexts', function() {
       var context = {
         exclude: [[['#f2']]]
       };
-      var selectors = getFrameContexts(context).map(function(frameData) {
+      var selectors = getFrameContexts(context).map(function (frameData) {
         return frameData.frameSelector;
       });
       assert.lengthOf(selectors, 2);
@@ -172,7 +172,7 @@ describe('utils.getFrameContexts', function() {
       assert.include(selectors[1], 'iframe:nth-child(3)');
     });
 
-    it('skips frames excluded by a parent', function() {
+    it('skips frames excluded by a parent', function () {
       fixture.innerHTML = '<iframe></iframe>';
       var frameContexts = getFrameContexts({
         exclude: [['#fixture']]
@@ -180,7 +180,7 @@ describe('utils.getFrameContexts', function() {
       assert.lengthOf(frameContexts, 0);
     });
 
-    it('normalizes the context', function() {
+    it('normalizes the context', function () {
       var frameContexts;
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
@@ -190,20 +190,20 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(frameContexts[0].frameContext.include, []);
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
 
-      frameContexts = getFrameContexts({ include: ['#f1'] });
+      frameContexts = getFrameContexts({ include: [['#f1']] });
       assert.lengthOf(frameContexts, 1);
       assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
       assert.deepEqual(frameContexts[0].frameContext.include, []);
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
 
-      frameContexts = getFrameContexts({ exclude: ['#f2'] });
+      frameContexts = getFrameContexts({ exclude: [['#f2']] });
       assert.lengthOf(frameContexts, 1);
       assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
       assert.deepEqual(frameContexts[0].frameContext.include, []);
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
     });
 
-    it('accepts elements', function() {
+    it('accepts elements', function () {
       var frameContexts;
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
@@ -228,7 +228,7 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(frameContexts[0].frameContext.exclude, []);
     });
 
-    it('works with nested frames', function() {
+    it('works with nested frames', function () {
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
       var context = {
@@ -238,7 +238,7 @@ describe('utils.getFrameContexts', function() {
         ],
         exclude: [['#f2', '#f6', '#f7', '#f7', 'main']]
       };
-      var contexts = getFrameContexts(context).map(function(frameData) {
+      var contexts = getFrameContexts(context).map(function (frameData) {
         return frameData.frameContext;
       });
 
@@ -249,7 +249,7 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(contexts[1].exclude, [['#f6', '#f7', '#f7', 'main']]);
     });
 
-    (shadowSupported ? it : xit)('works on iframes in shadow dom', function() {
+    (shadowSupported ? it : xit)('works on iframes in shadow dom', function () {
       fixture.innerHTML = '<div id="shadow"></div>';
       var div = fixture.querySelector('div');
       var shadowRoot = div.attachShadow({ mode: 'open' });
@@ -266,14 +266,14 @@ describe('utils.getFrameContexts', function() {
     });
   });
 
-  describe('options.iframes', function() {
-    it('returns a non-empty array with `iframes: true`', function() {
+  describe('options.iframes', function () {
+    it('returns a non-empty array with `iframes: true`', function () {
       fixture.innerHTML = '<iframe></iframe>';
       var contexts = getFrameContexts({}, { iframes: true });
       assert.lengthOf(contexts, 1);
     });
 
-    it('returns an empty array with `iframes: false`', function() {
+    it('returns an empty array with `iframes: false`', function () {
       fixture.innerHTML = '<iframe></iframe>';
       var contexts = getFrameContexts({}, { iframes: false });
       assert.lengthOf(contexts, 0);
