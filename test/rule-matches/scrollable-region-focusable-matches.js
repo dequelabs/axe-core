@@ -18,66 +18,6 @@ describe('scrollable-region-focusable-matches', function () {
     assert.isFalse(actual);
   });
 
-  it('returns false when the scrollable content is disabled and not focusable', function () {
-    var target = queryFixture(
-      '<select id="target" size="2" name="select" disabled>' +
-        '<option value="First">First</option>' +
-        '<option value="Second">Second</option>' +
-        '<option value="Third">Third</option>' +
-        '</select>'
-    );
-    var actual = rule.matches(target.actualNode, target);
-    assert.isFalse(actual);
-  });
-
-  it('returns false when the scrollable content is disabled="true" and not focusable', function () {
-    var target = queryFixture(
-      '<select id="target" size="2" name="select" disabled="true">' +
-        '<option value="First">First</option>' +
-        '<option value="Second">Second</option>' +
-        '<option value="Third">Third</option>' +
-        '</select>'
-    );
-    var actual = rule.matches(target.actualNode, target);
-    assert.isFalse(actual);
-  });
-
-  it('returns false when the scrollable content is aria-disabled="true" and not focusable', function () {
-    var target = queryFixture(
-      '<select id="target" size="2" name="select" aria-disabled="true">' +
-        '<option value="First">First</option>' +
-        '<option value="Second">Second</option>' +
-        '<option value="Third">Third</option>' +
-        '</select>'
-    );
-    var actual = rule.matches(target.actualNode, target);
-    assert.isFalse(actual);
-  });
-
-  it('returns false when the scrollable parent is disabled one child element has aria-disabled="false"', function () {
-    var target = queryFixture(
-      '<fieldset id="target" disabled style="height: 5px; overflow: auto">' +
-        '<legend>Do you like receiving wrenches?</legend>' +
-        '<input type="checkbox" id="chbx" name="agree" value="Yes!" aria-disabled="false"/>' +
-        '<label for="chbx">Well, yes of course!</label>' +
-        '</fieldset>'
-    );
-    var actual = rule.matches(target.actualNode, target);
-    assert.isFalse(actual);
-  });
-
-  it('returns true when the scrollable content is not disabled and focusable', function () {
-    var target = queryFixture(
-      '<select id="target" size="2" name="select">' +
-        '<option value="First">First</option>' +
-        '<option value="Second">Second</option>' +
-        '<option value="Third">Third</option>' +
-        '</select>'
-    );
-    var actual = rule.matches(target.actualNode, target);
-    assert.isTrue(actual);
-  });
-
   it('returns false when element has no visible children', function () {
     var target = queryFixture(
       '<div id="target" style="height: 200px; width: 200px;">' +
@@ -199,6 +139,66 @@ describe('scrollable-region-focusable-matches', function () {
   it('returns true for combobox with non-valid role', function () {
     var target = queryFixture(
       '<div role="combobox"><ul id="target" role="section" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when the scrollable content is disabled and not focusable', function () {
+    var target = queryFixture(
+      '<select id="target" size="2" name="select" disabled>' +
+        '<option value="First">First</option>' +
+        '<option value="Second">Second</option>' +
+        '<option value="Third">Third</option>' +
+        '</select>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when the scrollable content is disabled="true" and not focusable', function () {
+    var target = queryFixture(
+      '<select id="target" size="2" name="select" disabled="true">' +
+        '<option value="First">First</option>' +
+        '<option value="Second">Second</option>' +
+        '<option value="Third">Third</option>' +
+        '</select>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when the scrollable content is aria-disabled="true" and not focusable', function () {
+    var target = queryFixture(
+      '<select id="target" size="2" name="select" aria-disabled="true">' +
+        '<option value="First">First</option>' +
+        '<option value="Second">Second</option>' +
+        '<option value="Third">Third</option>' +
+        '</select>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when the scrollable parent is disabled one child element has aria-disabled="false"', function () {
+    var target = queryFixture(
+      '<fieldset id="target" disabled style="height: 5px; overflow: auto">' +
+        '<legend>Do you like receiving wrenches?</legend>' +
+        '<input type="checkbox" id="chbx" name="agree" value="Yes!" aria-disabled="false"/>' +
+        '<label for="chbx">Well, yes of course!</label>' +
+        '</fieldset>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when the scrollable content is not disabled and focusable', function () {
+    var target = queryFixture(
+      '<select id="target" size="2" name="select">' +
+        '<option value="First">First</option>' +
+        '<option value="Second">Second</option>' +
+        '<option value="Third">Third</option>' +
+        '</select>'
     );
     var actual = rule.matches(target.actualNode, target);
     assert.isTrue(actual);
