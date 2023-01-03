@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.2](https://github.com/dequelabs/axe-core/compare/v4.6.1...v4.6.2) (2022-12-23)
+
+### Bug Fixes
+
+- **color-contrast:** fix color-contrast check when running in an extension ([#3838](https://github.com/dequelabs/axe-core/issues/3838)) ([31a3e01](https://github.com/dequelabs/axe-core/commit/31a3e01e3df2ff4ab9ae4eebe93c644ce706a200))
+
 ### [4.6.1](https://github.com/dequelabs/axe-core/compare/v4.6.0...v4.6.1) (2022-12-14)
 
 ### Bug Fixes
