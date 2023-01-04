@@ -231,7 +231,7 @@ jobs:
       - run: npm publish --tag=next
 
   # Release a "production" version
-  release:
+  verify_sri:
     <<: *defaults
     <<: *unix_box
     steps:
@@ -240,6 +240,15 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run sri-validate
+
+  # Release a "production" version
+  release:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *set_npm_auth
+      - <<: *restore_dependency_cache_unix
       - run: .circleci/verify-release.sh
       - run: npm publish
 
@@ -317,6 +326,13 @@ workflows:
       - test_node:
           requires:
             - test_chrome
+      # Verify the sir history is correct
+      - verify_sri:
+          requires:
+            - dependencies_unix
+          filters:
+            branches:
+              only: /release-.*/
       # Hold for approval
       - hold:
           type: approval
@@ -328,6 +344,7 @@ workflows:
             - build_api_docs
             - test_rule_help_version
             - test_node
+            - verify_sri
           filters:
             branches:
               only:
@@ -357,6 +374,7 @@ workflows:
             - build_api_docs
             - test_rule_help_version
             - test_node
+            - verify_sri
             - hold
           filters:
             branches:
