@@ -26,7 +26,7 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
 restore_build: &restore_build
   restore_cache:
     keys:
-      - v9-cache-build-{{ pipeline.git.revision }}
+      - v9-cache-build-<< pipeline.git.revision >>
 
 jobs:
   # Fetch and cache dependencies.
@@ -53,7 +53,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - save_cache:
-          key: v9-cache-build-{{ pipeline.git.revision }}
+          key: v9-cache-build-<< pipeline.git.revision >>
           paths:
             - axe.js
 
