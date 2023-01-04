@@ -20,11 +20,13 @@ set_npm_auth: &set_npm_auth
 
 restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
+    name: Restore NPM Cache
     keys:
       - v9-cache-unix-{{ checksum "package-lock.json" }}
 
 restore_build: &restore_build
   restore_cache:
+    name: Restore Axe.js Cache
     keys:
       - v9-cache-build-<< pipeline.git.revision >>
 
@@ -37,6 +39,16 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
+      - <<: *restore_dependency_cache_unix
+      - run:
+          name: Skip Install If Cache Exists
+          command: |
+            if [ -d "node_modules" ]; then
+                echo "node_modules exist"
+                circleci step halt
+            else
+                echo "node_modules does not exist"
+            fi
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
