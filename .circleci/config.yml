@@ -22,7 +22,7 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
     name: Restore NPM Cache
     keys:
-      - v9-cache-unix-{{ checksum "package-lock.json" }}
+      - v9-cache-unix-{{ checksum "package.json" }}
 
 restore_build: &restore_build
   restore_cache:
@@ -52,7 +52,7 @@ jobs:
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
-          key: v9-cache-unix-{{ checksum "package-lock.json" }}
+          key: v9-cache-unix-{{ checksum "package.json" }}
           paths:
             - node_modules
 
