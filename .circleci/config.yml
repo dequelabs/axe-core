@@ -332,7 +332,9 @@ workflows:
             - dependencies_unix
           filters:
             branches:
-              only: /release-.*/
+              only:
+                - /release-*/
+                - master
       # Hold for approval
       - hold:
           type: approval
