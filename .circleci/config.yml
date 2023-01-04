@@ -22,7 +22,7 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
     name: Restore NPM Cache
     keys:
-      - v9-cache-unix-{{ checksum "package.json" }}
+      - v9-cache-unix-{{ checksum "package-lock.json" }}
 
 restore_build: &restore_build
   restore_cache:
@@ -36,9 +36,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
-      - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run:
           name: Skip Install If Cache Exists
@@ -49,10 +47,12 @@ jobs:
             else
                 echo "node_modules does not exist"
             fi
+      - browser-tools/install-browser-tools
+      - <<: *set_npm_auth
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
-          key: v9-cache-unix-{{ checksum "package.json" }}
+          key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
