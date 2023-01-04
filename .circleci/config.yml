@@ -22,7 +22,11 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
     keys:
       - v9-cache-unix-{{ checksum "package-lock.json" }}
-      - v9-cache-unix-
+
+restore_build: &restore_build
+  restore_cache:
+    keys:
+      - v9-cache-build-{{ pipeline.git.revision }}
 
 jobs:
   # Fetch and cache dependencies.
@@ -33,13 +37,25 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache_unix
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+
+  # Build and cache axe.js
+  build_unix:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - save_cache:
+          key: v9-cache-build-{{ pipeline.git.revision }}
+          paths:
+            - axe.js
 
   # Run ESLINT
   lint:
@@ -59,7 +75,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test -- --browsers Chrome
       - run: npm run test:integration:chrome
 
@@ -70,7 +86,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test -- --browsers Firefox
       - run: npm run test:integration:firefox
 
@@ -83,7 +99,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:examples
 
   # Run ACT test cases
@@ -95,7 +111,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:act
 
   # Run ARIA practices test cases
@@ -107,7 +123,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:apg
 
   # Test locale files
@@ -119,7 +135,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:locales
 
   # Test virtual rules
@@ -131,7 +147,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
@@ -142,7 +158,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: sudo apt-get update -y
-      - run: npm run build
+      - <<: *restore_build
       - run:
           name: Install Chrome and ChromeDriver Beta
           command: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
@@ -169,7 +185,7 @@ jobs:
       # also re-installs all repo dependencies as well
       - run: npm install w3c/wcag-act-rules#main
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:act
 
   # Run the test suite for nightly builds.
@@ -185,7 +201,7 @@ jobs:
       # also re-installs all repo dependencies as well
       - run: npm install w3c/aria-practices#main
       - run: npx browser-driver-manager install chromedriver --verbose
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:apg
 
   # Test api docs can be built
@@ -214,7 +230,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run test:node
 
   # Release a "next" version
@@ -225,7 +241,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run next-release
       - run: .circleci/verify-release.sh
       - run: npm publish --tag=next
@@ -238,7 +254,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
-      - run: npm run build
+      - <<: *restore_build
       - run: npm run sri-validate
       - run: .circleci/verify-release.sh
       - run: npm publish
@@ -282,10 +298,13 @@ workflows:
     jobs:
       # install deps
       - dependencies_unix
+      - build_unix:
+          requires:
+            - dependencies_unix
       # Run linting
       - lint:
           requires:
-            - dependencies_unix
+            - build_unix
       # Run tests on all commits, but after installing dependencies
       - test_chrome:
           requires:
@@ -321,8 +340,10 @@ workflows:
       - hold:
           type: approval
           requires:
-            - test_chrome
+            - test_firefox
             - test_examples
+            - test_act
+            - test_aria_practices
             - test_locales
             - test_virtual_rules
             - build_api_docs
@@ -335,28 +356,21 @@ workflows:
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
-            - dependencies_unix
-            - test_chrome
             - test_firefox
             - test_examples
+            - test_act
+            - test_aria_practices
             - test_locales
             - test_virtual_rules
             - build_api_docs
+            - test_rule_help_version
+            - test_node
           filters:
             branches:
               only: develop
       # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
       - release:
           requires:
-            - dependencies_unix
-            - test_chrome
-            - test_firefox
-            - test_examples
-            - test_locales
-            - test_virtual_rules
-            - build_api_docs
-            - test_rule_help_version
-            - test_node
             - hold
           filters:
             branches:
