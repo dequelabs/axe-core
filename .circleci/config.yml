@@ -326,7 +326,7 @@ workflows:
       - test_node:
           requires:
             - test_chrome
-      # Verify the sir history is correct
+      # Verify the sri history is correct
       - verify_sri:
           requires:
             - dependencies_unix
