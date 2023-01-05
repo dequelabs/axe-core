@@ -68,6 +68,7 @@ jobs:
           key: v9-cache-build-<< pipeline.git.revision >>
           paths:
             - axe.js
+            - axe.min.js
 
   # Run ESLINT
   lint:
