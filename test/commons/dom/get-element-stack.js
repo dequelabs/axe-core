@@ -570,6 +570,26 @@ describe('dom.getElementStack', function () {
         ]);
       }
     );
+
+    (shadowSupported ? it : xit)('should sort <slot> elements', () => {
+      fixture.innerHTML =
+        '<div id="container" style="height: 100px;"><p id="target">Slotted text</p></div>';
+      const container = fixture.querySelector('#container');
+      const shadow = container.attachShadow({ mode: 'open' });
+
+      shadow.innerHTML =
+        '<div id="shadowContainer" style="position: absolute;"><slot></slot></div>';
+      axe.testUtils.flatTreeSetup(fixture);
+
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, [
+        'target',
+        'shadowContainer',
+        'container',
+        'fixture'
+      ]);
+    });
   });
 
   describe('scroll regions', function () {
