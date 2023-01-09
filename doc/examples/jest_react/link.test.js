@@ -1,14 +1,17 @@
 import React from 'react';
+import { mount, render } from 'enzyme';
 import axe from 'axe-core';
-import { mountToDoc } from './test-helpers';
 
 import Link from './link';
 
 test('Link has no axe violations', done => {
-  const linkComponent = mountToDoc(
-    <Link page="http://www.axe-core.org">axe website</Link>
+  const fixture = document.createElement('div');
+  document.body.appendChild(fixture);
+
+  const linkComponent = mount(
+    <Link page="http://www.axe-core.org">axe website</Link>,
+    { attachTo: fixture }
   );
-  const linkNode = linkComponent.getDOMNode();
 
   const config = {
     rules: {
@@ -16,7 +19,7 @@ test('Link has no axe violations', done => {
       'link-in-text-block': { enabled: false }
     }
   };
-  axe.run(linkNode, config, (err, { violations }) => {
+  axe.run(fixture, config, (err, { violations }) => {
     expect(err).toBe(null);
     expect(violations).toHaveLength(0);
     done();
