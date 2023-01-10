@@ -5,7 +5,18 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     qunit: {
-      all: ['test/**/*.html']
+      all: ['test/**/*.html'],
+      options: {
+        puppeteer: {
+          ignoreDefaultArgs: true,
+          args: [
+            '--headless',
+            '--disable-web-security',
+            '--allow-file-access-from-files'
+          ]
+        },
+        timeout: 10000
+      }
     }
   });
 };
