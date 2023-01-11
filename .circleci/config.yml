@@ -84,8 +84,8 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
+      - browser-tools/install-browser-tools
       - <<: *restore_dependency_cache_unix
       - run: npx browser-driver-manager install chromedriver --verbose
       - <<: *restore_build
