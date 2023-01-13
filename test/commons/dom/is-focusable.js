@@ -123,6 +123,14 @@ describe('dom.isFocusable', () => {
     assert.isTrue(axe.commons.dom.isFocusable(el));
   });
 
+  it('should return true for a div with a negative tabindex', () => {
+    fixture.innerHTML = '<div id="target" tabindex="-1"></div>';
+    const el = document.getElementById('target');
+    flatTreeSetup(fixture);
+
+    assert.isTrue(axe.commons.dom.isFocusable(el));
+  });
+
   it('should return false for a div with a non-numeric tabindex', () => {
     fixture.innerHTML = '<div id="target" tabindex="x"></div>';
     const el = document.getElementById('target');
