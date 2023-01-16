@@ -562,6 +562,18 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
 axe.testUtils = testUtils;
 
 if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  // prevent setting read-only properties
+  // @see https://github.com/dequelabs/axe-core/issues/3837
+  const readonlyRect = new DOMRectReadOnly();
+  const proto = Object.getPrototypeOf(readonlyRect);
+  ['left', 'right', 'top', 'bottom'].forEach(prop => {
+    Object.defineProperty(proto, prop, {
+      set(value) {
+        throw new TypeError(`setting getter-only property "${prop}"`);
+      }
+    });
+  });
+
   beforeEach(function () {
     // reset from axe._load overriding
     checks = originalChecks;
