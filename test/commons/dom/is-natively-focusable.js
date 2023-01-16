@@ -226,7 +226,7 @@ describe('dom.isNativelyFocusable', () => {
   });
 
   it('should return false for a div with a tabindex with spaces', () => {
-    fixture.innerHTML = '<div id="target" tabindex="0"></div>';
+    fixture.innerHTML = '<div id="target" tabindex="    0     "></div>';
     const el = document.getElementById('target');
     flatTreeSetup(fixture);
 
