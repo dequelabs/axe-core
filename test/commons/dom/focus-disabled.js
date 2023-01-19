@@ -51,6 +51,29 @@ describe('dom.focus-disabled', () => {
     assert.isTrue(focusDisabled(vNode));
   });
 
+  it('returns true for element with inert', () => {
+    const vNode = queryFixture('<button id="target" inert></button>');
+
+    assert.isTrue(focusDisabled(vNode));
+  });
+
+  it('returns true for ancestor with inert', () => {
+    const vNode = queryFixture(
+      '<div inert><div><button id="target"></button></div></div>'
+    );
+
+    assert.isTrue(focusDisabled(vNode));
+  });
+
+  it('returns true for ancestor with inert outside shadow tree', () => {
+    const vNode = queryShadowFixture(
+      '<div inert><div id="shadow"></div></div>',
+      '<input id="target"/>'
+    );
+
+    assert.isTrue(focusDisabled(vNode));
+  });
+
   describe('SerialVirtualNode', () => {
     it('returns false if element is hidden for everyone', () => {
       const vNode = new axe.SerialVirtualNode({

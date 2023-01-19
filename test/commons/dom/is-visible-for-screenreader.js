@@ -62,6 +62,13 @@ describe('dom.isVisibleToScreenReaders', function () {
     assert.isFalse(isVisibleToScreenReaders(vNode));
   });
 
+  it('should return false if `inert` is set', function () {
+    var vNode = queryFixture(
+      '<div id="target" inert>Hidden from screen readers</div>'
+    );
+    assert.isFalse(isVisibleToScreenReaders(vNode));
+  });
+
   it('should return false if `display: none` is set', function () {
     var vNode = queryFixture(
       '<div id="target" style="display: none">Hidden from screen readers</div>'
@@ -224,6 +231,31 @@ describe('dom.isVisibleToScreenReaders', function () {
         nodeName: 'div',
         attributes: {
           'aria-hidden': true
+        }
+      });
+      parentVNode.children = [vNode];
+      vNode.parent = parentVNode;
+      assert.isFalse(isVisibleToScreenReaders(vNode));
+    });
+
+    it('should return false if `inert` is set', function () {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          inert: true
+        }
+      });
+      assert.isFalse(isVisibleToScreenReaders(vNode));
+    });
+
+    it('should return false if `inert` is set on parent', function () {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      var parentVNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          inert: true
         }
       });
       parentVNode.children = [vNode];
