@@ -98,7 +98,7 @@ describe('link-in-text-block', function () {
 
     it('passes the selected node and closest ancestral block element', function () {
       fixture.innerHTML =
-        '<div> <span style="display:block; color: #100" id="parent">' +
+        '<div> <span style="display:block; color: #010" id="parent">' +
         '	<p style="display:inline"><a href="" id="link">' +
         '		 link text ' +
         '	</a> inside block </p> inside block' +
@@ -189,24 +189,6 @@ describe('link-in-text-block', function () {
           .call(checkContext, linkElm)
       );
       assert.equal(checkContext._data.messageKey, 'bgImage');
-      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
-    });
-
-    it('returns false with fgContrast key if nodes have same foreground color and same background color', function () {
-      var linkElm = getLinkElm(
-        {
-          color: 'black'
-        },
-        {
-          color: '#000'
-        }
-      );
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block')
-          .call(checkContext, linkElm)
-      );
-      assert.equal(checkContext._data.messageKey, 'fgContrast');
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
     });
 
@@ -351,6 +333,43 @@ describe('link-in-text-block', function () {
         requiredContrastRatio: 3,
         nodeBackgroundColor: '#ffffff',
         parentBackgroundColor: '#f0f0f0'
+      });
+    });
+
+    describe('options.allowSameColor', () => {
+      it('when true, passes when link and text colors are identical', () => {
+        var linkElm = getLinkElm(
+          {
+            color: 'black'
+          },
+          {
+            color: '#000'
+          }
+        );
+        assert.isTrue(
+          axe.testUtils
+            .getCheckEvaluate('link-in-text-block')
+            .call(checkContext, linkElm, { allowSameColor: true })
+        );
+        assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+      });
+
+      it('when false, fails when link and text colors are identical', () => {
+        var linkElm = getLinkElm(
+          {
+            color: 'black'
+          },
+          {
+            color: '#000'
+          }
+        );
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('link-in-text-block')
+            .call(checkContext, linkElm, { allowSameColor: false })
+        );
+        assert.equal(checkContext._data.messageKey, 'fgContrast');
+        assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
       });
     });
   });

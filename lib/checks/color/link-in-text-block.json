@@ -2,7 +2,8 @@
   "id": "link-in-text-block",
   "evaluate": "link-in-text-block-evaluate",
   "options": {
-    "requiredContrastRatio": 3
+    "requiredContrastRatio": 3,
+    "allowSameColor": true
   },
   "metadata": {
     "impact": "serious",
