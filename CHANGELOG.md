@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/dequelabs/axe-core/compare/v4.6.2...v4.7.0) (2023-01-20)
+
+### Features
+
+- deprecate color.filteredRectStack, color.getRectStack, and dom.visuallyContains ([#3859](https://github.com/dequelabs/axe-core/issues/3859)) ([3be2bad](https://github.com/dequelabs/axe-core/commit/3be2bad2a896e72a92fe70810500fc1ef67b7027))
+- **dom.focusDisabled,dom.isVisibleForScreenreader:** support the inert attribute ([#3857](https://github.com/dequelabs/axe-core/issues/3857)) ([273c971](https://github.com/dequelabs/axe-core/commit/273c97199bd596a288378427becba672b4482678))
+
+### Bug Fixes
+
+- **color-contrast:** correctly compute color contrast of <slot> elements ([#3847](https://github.com/dequelabs/axe-core/issues/3847)) ([4c3a00c](https://github.com/dequelabs/axe-core/commit/4c3a00c7bd6de68b2795be37113a59d804d0a313))
+- **link-in-text-block:** allow links with identical colors ([#3861](https://github.com/dequelabs/axe-core/issues/3861)) ([5f90040](https://github.com/dequelabs/axe-core/commit/5f900402470f925686a0d8b41ac01731492bbd30))
+- **scrollable-region-focusable:** skip native controls ([#3862](https://github.com/dequelabs/axe-core/issues/3862)) ([b0bdefa](https://github.com/dequelabs/axe-core/commit/b0bdefa34b85363e742ff04e319c014fe95f31f7))
+
 ### [4.6.2](https://github.com/dequelabs/axe-core/compare/v4.6.1...v4.6.2) (2022-12-23)
 
 ### Bug Fixes
