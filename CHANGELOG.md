@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.3](https://github.com/dequelabs/axe-core/compare/v4.6.2...v4.6.3) (2023-01-23)
+
+### Bug Fixes
+
+- **aria-required-children:** allow separator in menu(bar) ([#3868](https://github.com/dequelabs/axe-core/issues/3868)) ([46c9499](https://github.com/dequelabs/axe-core/commit/46c9499ff46b2062098c33f2037ab31bff4fb656))
+- **autocomplete-valid:** allow webauthn token ([#3866](https://github.com/dequelabs/axe-core/issues/3866)) ([a3d1b9d](https://github.com/dequelabs/axe-core/commit/a3d1b9dae840e1c6ad096895bbd3bbc19f6836f8))
+- **color-contrast:** correctly compute color contrast of <slot> elements ([#3847](https://github.com/dequelabs/axe-core/issues/3847)) ([844cea1](https://github.com/dequelabs/axe-core/commit/844cea1238ccb30cc1c4d1510f2bb3d4cfbe1706))
+- **color-contrast:** skip ligature icons ([#3867](https://github.com/dequelabs/axe-core/issues/3867)) ([7dfbd9a](https://github.com/dequelabs/axe-core/commit/7dfbd9a1b2c92a8aa289f42635ec93de9aa32d25))
+- **link-in-text-block:** allow links with identical colors ([#3861](https://github.com/dequelabs/axe-core/issues/3861)) ([6761f36](https://github.com/dequelabs/axe-core/commit/6761f36bb7c9a2f05cea75ca88c8e0f199c032df))
+- **scrollable-region-focusable:** skip native controls ([#3862](https://github.com/dequelabs/axe-core/issues/3862)) ([aaf44e9](https://github.com/dequelabs/axe-core/commit/aaf44e908337cbf81c97433f58ec05cd3b3eeded))
+
 ### [4.6.2](https://github.com/dequelabs/axe-core/compare/v4.6.1...v4.6.2) (2022-12-23)
 
 ### Bug Fixes
