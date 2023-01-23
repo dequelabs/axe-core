@@ -906,6 +906,29 @@ describe('color-contrast', function () {
     }
   );
 
+  (shadowSupported ? it : xit)('handles <slot> elements', () => {
+    fixture.innerHTML =
+      '<div id="container" style="height: 100px;"><p id="target" style="color: #333;">Slotted text</p></div>';
+    const container = fixture.querySelector('#container');
+    const shadow = container.attachShadow({ mode: 'open' });
+
+    shadow.innerHTML =
+      '<div id="shadowContainer" style="position: absolute; background: black;"><slot></slot></div>';
+    const shadowContainer = shadow.querySelector('#shadowContainer');
+    axe.testUtils.flatTreeSetup(fixture);
+
+    const target = fixture.querySelector('#target');
+    const vNode = axe.utils.getNodeFromTree(target);
+    const result = contrastEvaluate.call(
+      checkContext,
+      vNode.actualNode,
+      null,
+      vNode
+    );
+    assert.isFalse(result);
+    assert.deepEqual(checkContext._relatedNodes, [shadowContainer]);
+  });
+
   describe('with text-shadow', function () {
     it('passes if thin text shadows have sufficient contrast with the text', function () {
       var params = checkSetup(
