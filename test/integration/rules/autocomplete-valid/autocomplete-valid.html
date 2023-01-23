@@ -25,6 +25,9 @@
 <!-- comma seperated rather than space separated list -->
 <input autocomplete="work,email" id="fail4" />
 
+<!-- webauthn goes at the end -->
+<input autocomplete="webauthn email" id="fail5" />
+
 <!-- Incorrect element -->
 <button autocomplete="username" id="inapplicable1"></button>
 
@@ -161,3 +164,9 @@
 <input autocomplete="enabled" id="pass88" />
 <input autocomplete="undefined" id="pass89" />
 <input autocomplete="null" id="pass90" />
+
+<!-- Webauthn tokens -->
+<input autocomplete="email webauthn" id="pass91" />
+<input autocomplete="section-foo email webauthn" id="pass92" />
+<input autocomplete="section-foo work email webauthn" id="pass93" />
+<input autocomplete="section-foo billing work email webauthn" id="pass94" />
