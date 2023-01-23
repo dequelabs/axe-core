@@ -365,7 +365,7 @@ workflows:
           filters:
             branches:
               only:
-                - /release-*/
+                - /release-.+/
                 - master
       # Hold for approval
       - hold_release:
