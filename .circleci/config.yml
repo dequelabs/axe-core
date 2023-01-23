@@ -278,6 +278,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - <<: *restore_build
       - run: .circleci/verify-release.sh
       - run: npm publish
 
@@ -365,7 +366,7 @@ workflows:
           filters:
             branches:
               only:
-                - /release-*/
+                - /^release-.+/
                 - master
       # Hold for approval
       - hold_release:
