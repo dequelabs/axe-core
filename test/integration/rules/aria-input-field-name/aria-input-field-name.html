@@ -1,6 +1,15 @@
 <!-- PASS -->
 <!-- combobox -->
-<div id="pass1" aria-label="country" role="combobox">England</div>
+<div
+  id="pass1"
+  aria-label="country"
+  role="combobox"
+  aria-expanded="true"
+  aria-controls="inapplicable4"
+>
+  England
+</div>
+
 <!-- listbox -->
 <p id="pass2Label">Select a color:</p>
 <div id="pass2" role="listbox" aria-labelledby="pass2Label">
@@ -105,3 +114,9 @@
 <!--  Explicit label -->
 <label for="canttell2">first name</label>
 <div role="textbox" id="canttell2" aria-label="name"></div>
+
+<!-- Controlled by combobox: -->
+<ul role="listbox" id="inapplicable4">
+  <li role="option">Zebra</li>
+  <li role="option" id="selected_option">Zoom</li>
+</ul>
