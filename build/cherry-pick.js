@@ -45,7 +45,11 @@ let targetVersion = releaseType === 'patch' ? version : `${major}.${minor}.0`;
 
 // get all commits from a branch
 function getCommits(branch) {
-  const stdout = execSync(`git log ${branch || ''} --abbrev-commit`).toString();
+  // all commits are too large for execSync buffer size so we'll just get since the last 3 years
+  const date = new Date(new Date().setFullYear(new Date().getFullYear() - 3));
+  const stdout = execSync(
+    `git log ${branch || ''} --abbrev-commit --since=${date.getFullYear()}`
+  ).toString();
   const allCommits = stdout
     .split(/commit (?=[\w\d]{8}[\n\r])/)
     .filter(commit => !!commit);
