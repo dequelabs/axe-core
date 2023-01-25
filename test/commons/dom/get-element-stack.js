@@ -244,7 +244,7 @@ describe('dom.getElementStack', () => {
       it(`should correctly order "${type}" items with z-index`, () => {
         fixture.innerHTML = `
           <div id="1" style="position:absolute;width:40px;height:40px;z-index:1"></div>
-          <div id="2" style="display: flex">
+          <div id="2" style="display: ${type}">
             <div id="target" style="width:40px;height:40px;z-index:1"></div>
           </div>
         `;
