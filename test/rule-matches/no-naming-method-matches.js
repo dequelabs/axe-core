@@ -69,13 +69,22 @@ describe('no-naming-method-matches', function () {
     assert.isFalse(actual);
   });
 
-  it('returns false for the popup of a role=`combobox`', function () {
+  it('returns false for the listbox popup of a role=`combobox`', function () {
     var vNode = queryFixture(
       '<div role="combobox" aria-controls="target"></div>' +
         '<div id="target" role="listbox"></div>'
     );
     var actual = rule.matches(null, vNode);
     assert.isFalse(actual);
+  });
+
+  it('returns true for the modal popup of a role=`combobox`', function () {
+    var vNode = queryFixture(
+      '<div role="combobox" aria-controls="target"></div>' +
+        '<div id="target" role="modal"></div>'
+    );
+    var actual = rule.matches(null, vNode);
+    assert.isTrue(actual);
   });
 
   it('returns true for a div with role=`button`', function () {
