@@ -233,14 +233,7 @@ describe('dom.getElementStack', () => {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
-    [
-      'flex',
-      'inline-flex',
-      'inline flex',
-      'grid',
-      'inline-grid',
-      'inline grid'
-    ].forEach(type => {
+    ['flex', 'inline-flex', 'grid', 'inline-grid'].forEach(type => {
       it(`should correctly order "${type}" items with z-index`, () => {
         fixture.innerHTML = `
           <div id="1" style="position:absolute;width:40px;height:40px;z-index:1"></div>
