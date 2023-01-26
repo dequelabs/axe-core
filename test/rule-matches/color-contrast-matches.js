@@ -404,6 +404,20 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should not match inert', function () {
+    fixture.innerHTML = '<div inert>hi</div>';
+    var target = fixture.querySelector('div');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should not match a descendant of inert', function () {
+    fixture.innerHTML = '<div inert><span>hi</span></div>';
+    var target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   if (shadowSupport) {
     it('should match a descendant of an element across a shadow boundary', function () {
       fixture.innerHTML =
