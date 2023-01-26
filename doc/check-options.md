@@ -207,6 +207,10 @@ All checks allow these global options:
 
 ### aria-allowed-attr
 
+Previously supported properties `validTreeRowAttrs` is no longer available. `invalidTableRowAttrs` from [aria-conditional-attr](#aria-conditional-attr) instead.
+
+### aria-conditional-attr
+
 <table>
   <thead>
     <tr>
@@ -218,7 +222,7 @@ All checks allow these global options:
   <tbody>
     <tr>
       <td>
-        <code>validTreeRowAttrs</code>
+        <code>invalidTableRowAttrs</code>
       </td>
       <td align="left">
         <pre lang=js><code>[

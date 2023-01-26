@@ -429,6 +429,15 @@
       "pass": "Element has an aria-busy attribute",
       "fail": "Element has no aria-busy=\"true\" attribute"
     },
+    "aria-conditional-attr": {
+      "pass": "ARIA attribute is allowed",
+      "fail": {
+        "checkbox": "The aria-checked attribute must be removed, or be consistent with the native checked state",
+        "checkboxMixed": "aria-checked=\"mixed\" cannot be used on an native HTML checkbox",
+        "rowSingular": "This row attribute is supported with treegrid, but not ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "These row attributes are supported with treegrid, but not ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
       "fail": {
