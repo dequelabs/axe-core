@@ -43,6 +43,14 @@ describe('aria-conditional-attr', () => {
       assert.isNull(checkContext._data);
     });
 
+    it('returns true when the row is not in a table, grid, or treegrid', () => {
+      const params = checkSetup(
+        `<div id="target" role="row" ${treeGridRowProps.join(' ')}></div>`
+      );
+      assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+      assert.isNull(checkContext._data);
+    });
+
     it('returns false when treegrid row props are used on an ARIA table row', () => {
       for (const prop of treeGridRowProps) {
         const params = checkSetup(
