@@ -78,10 +78,10 @@ describe('no-naming-method-matches', function () {
     assert.isFalse(actual);
   });
 
-  it('returns true for the modal popup of a role=`combobox`', function () {
+  it('returns true for the dialog popup of a role=`combobox`', function () {
     var vNode = queryFixture(
       '<div role="combobox" aria-controls="target"></div>' +
-        '<div id="target" role="modal"></div>'
+        '<div id="target" role="dialog"></div>'
     );
     var actual = rule.matches(null, vNode);
     assert.isTrue(actual);
