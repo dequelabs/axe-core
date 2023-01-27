@@ -123,9 +123,9 @@ describe('aria-allowed-attr virtual-rule', function () {
   it('fails when aria-checked is inconsistent with native checkbox state', () => {
     var results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'input',
+      checked: true,
       attributes: {
         type: 'checkbox',
-        checked: 'checked',
         'aria-checked': 'false'
       }
     });
