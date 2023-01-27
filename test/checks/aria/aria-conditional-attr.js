@@ -143,60 +143,123 @@ describe('aria-conditional-attr', () => {
       assert.isNull(checkContext._data);
     });
 
-    it('returns true for checkbox without aria-checked', () => {
-      const params = checkSetup(`<input id="target" type="checkbox">`);
-      assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
-      assert.isNull(checkContext._data);
-    });
-
-    it('returns false for aria-checked="miXed"', () => {
-      const params = checkSetup(
-        `<input id="target" type="checkbox" aria-checked="miXed">`
-      );
-      assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, {
-        messageKey: 'checkboxMixed'
-      });
-    });
-
-    it('returns true when aria-checked matches [checked] state', () => {
-      const validStates = [
-        'aria-checked="True" checked',
-        'aria-checked="false"'
-      ];
-      for (const validState of validStates) {
+    it('returns true for checkbox without aria-checked value', () => {
+      for (const prop of ['', 'aria-checked', 'aria-checked=""']) {
         const params = checkSetup(
-          `<input id="target" type="checkbox" ${validState}>`
+          `<input id="target" type="checkbox" ${prop}>`
         );
         assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
         assert.isNull(checkContext._data);
       }
     });
 
-    it('returns false when aria-checked does not match [checked] state', () => {
-      const validStates = [
-        'aria-checked="false" checked',
-        'aria-checked="true"'
-      ];
-      for (const validState of validStates) {
-        const params = checkSetup(
-          `<input id="target" type="checkbox" ${validState}>`
+    describe('checked state', () => {
+      const fixture = document.querySelector('#fixture');
+
+      it('returns true for aria-checked="true" on a [checked] checkbox', () => {
+        fixture.innerHTML = `<input type="checkbox" aria-checked="true" checked>`;
+        const root = axe.setup(fixture);
+        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+
+        assert.isTrue(
+          ariaConditionalCheck.call(checkContext, null, null, vNode)
         );
-        assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
-        assert.deepEqual(checkContext._data, {
-          messageKey: 'checkbox'
-        });
-      }
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns true for aria-checked="true" on a clicked checkbox', () => {
+        fixture.innerHTML = `<input type="checkbox" aria-checked="true">`;
+        fixture.firstChild.click(); // set checked state
+        const root = axe.setup(fixture);
+        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+
+        assert.isTrue(
+          ariaConditionalCheck.call(checkContext, null, null, vNode)
+        );
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns false for other aria-checked values', () => {
+        for (const prop of ['  ', 'false', 'mixed', 'incorrect', '  true  ']) {
+          const params = checkSetup(
+            `<input type="checkbox" aria-checked="${prop}" checked id="target">`
+          );
+          assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'checkbox',
+            checkState: 'true'
+          });
+        }
+      });
     });
 
-    it('treats incorrect aria-checked values as false', () => {
-      const values = ['', 'nah', 'FALSE'];
-      for (const value of values) {
+    describe('unchecked state', () => {
+      it('returns true for aria-checked="false"', () => {
         const params = checkSetup(
-          `<input id="target" type="checkbox" aria-checked="${value}">`
+          `<input id="target" type="checkbox" aria-checked="false">`
         );
         assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns true for aria-checked with an invalid value', () => {
+        for (const prop of ['  ', 'invalid', 'FALSE', 'nope']) {
+          const params = checkSetup(
+            `<input type="checkbox" aria-checked="${prop}" id="target">`
+          );
+          assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+          assert.isNull(checkContext._data);
+        }
+      });
+
+      it('returns false for other aria-checked values', () => {
+        for (const prop of ['true', 'TRUE', 'mixed', 'MiXeD']) {
+          const params = checkSetup(
+            `<input type="checkbox" aria-checked="${prop}" id="target">`
+          );
+          assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'checkbox',
+            checkState: 'false'
+          });
+        }
+      });
+    });
+
+    describe('indeterminate state', () => {
+      function asIndeterminateVirtualNode(html) {
+        const fixture = document.querySelector('#fixture');
+        fixture.innerHTML = html;
+        fixture.querySelector('input').indeterminate = true;
+        const root = axe.setup(fixture);
+        return axe.utils.querySelectorAll(root, 'input')[0];
       }
+
+      it('returns true for aria-checked="mixed"', () => {
+        const vNode = asIndeterminateVirtualNode(
+          `<input type="checkbox" aria-checked="mixed">`
+        );
+        assert.isTrue(
+          ariaConditionalCheck.call(checkContext, null, null, vNode)
+        );
+      });
+
+      it('returns false for other aria-checked values', () => {
+        it('returns false for other aria-checked values', () => {
+          for (const prop of ['true', 'TRUE', 'false', 'invalid']) {
+            const vNode = asIndeterminateVirtualNode(
+              `<input type="checkbox" aria-checked="${prop}" id="target">`
+            );
+            assert.isFalse(
+              ariaConditionalCheck.call(checkContext, null, null, vNode)
+            );
+            assert.deepEqual(checkContext._data, {
+              messageKey: 'checkbox',
+              checkState: 'mixed'
+            });
+          }
+        });
+      });
     });
   });
 });
