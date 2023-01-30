@@ -31,7 +31,7 @@ describe('dom.isInert', () => {
 
   it('returns false for closed dialog', () => {
     const vNode = queryFixture(`
-      <dialog open><span>Hello</span></dialog>
+      <dialog><span>Hello</span></dialog>
       <div id="target">World</div>
     `);
 
