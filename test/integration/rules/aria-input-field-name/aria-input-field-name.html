@@ -1,6 +1,21 @@
 <!-- PASS -->
 <!-- combobox -->
-<div id="pass1" aria-label="country" role="combobox">England</div>
+<div
+  id="pass1"
+  aria-label="country"
+  role="combobox"
+  aria-expanded="true"
+  aria-controls="inapplicable1"
+>
+  England
+</div>
+
+<!-- Controlled by combobox: -->
+<ul role="listbox" id="inapplicable1">
+  <li role="option">Zebra</li>
+  <li role="option" id="selected_option">Zoom</li>
+</ul>
+
 <!-- listbox -->
 <p id="pass2Label">Select a color:</p>
 <div id="pass2" role="listbox" aria-labelledby="pass2Label">
@@ -87,13 +102,13 @@
 </label>
 
 <!-- INAPPLICABLE -->
-<input id="inapplicable1" />
-<select id="inapplicable2">
+<input id="inapplicable2" />
+<select id="inapplicable3">
   <option value="volvo">Volvo</option>
   <option value="saab">Saab</option>
   <option value="opel">Opel</option>
 </select>
-<textarea id="inapplicable3" title="Label"></textarea>
+<textarea id="inapplicable4" title="Label"></textarea>
 
 <!-- INCOMPLETE -->
 <!-- Implicit label -->
