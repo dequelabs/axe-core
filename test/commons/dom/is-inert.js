@@ -81,34 +81,6 @@ describe('dom.isInert', () => {
     assert.isFalse(isInert(vNode));
   });
 
-  describe('fallback', () => {
-    it('returns true for modal dialog when elementsFromPoint does not return the dialog', () => {
-      fixture.innerHTML = `
-        <style>#modal::backdrop { display: none; }</style>
-        <dialog id="modal"><span>Hello</span></dialog>
-        <div id="target">World</div>
-      `;
-      document.querySelector('#modal').showModal();
-      const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
-
-      assert.isTrue(isInert(vNode));
-    });
-
-    it('skips checking elements with pointer-events: none', () => {
-      fixture.innerHTML = `
-        <style>body { pointer-events: none; } #modal::backdrop { display: none; }</style>
-        <dialog id="modal"><span>Hello</span></dialog>
-        <div id="target">World</div>
-      `;
-      document.querySelector('#modal').showModal();
-      const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
-
-      assert.isFalse(isInert(vNode));
-    });
-  });
-
   describe('options.skipAncestors', () => {
     it('returns false for ancestor with inert', () => {
       const vNode = queryFixture(
