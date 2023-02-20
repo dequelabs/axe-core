@@ -14,34 +14,34 @@ describe('dom.getModalDialog', () => {
     assert.equal(getModalDialog(), vNode);
   });
 
-  it('returns undefined for an opened dialog', () => {
+  it('returns null for an opened dialog', () => {
     fixture.innerHTML = `
       <dialog open><span>Hello</span></dialog>
     `;
     flatTreeSetup(fixture);
 
-    assert.isUndefined(getModalDialog());
+    assert.isNull(getModalDialog());
   });
 
-  it('returns undefined for a closed dialog', () => {
+  it('returns null for a closed dialog', () => {
     fixture.innerHTML = `
       <dialog><span>Hello</span></dialog>
     `;
     flatTreeSetup(fixture);
 
-    assert.isUndefined(getModalDialog());
+    assert.isNull(getModalDialog());
   });
 
-  it('returns undefined when there is no dialog', () => {
+  it('returns null when there is no dialog', () => {
     fixture.innerHTML = `
       <div>World</div>
     `;
     flatTreeSetup(fixture);
 
-    assert.isUndefined(getModalDialog());
+    assert.isNull(getModalDialog());
   });
 
-  it('returns undefined if the modal dialog is not visible', () => {
+  it('returns null if the modal dialog is not visible', () => {
     fixture.innerHTML = `
       <style>dialog[open] { display: none }</style>
       <dialog id="target"><span>Hello</span></dialog>
@@ -49,7 +49,7 @@ describe('dom.getModalDialog', () => {
     document.querySelector('#target').showModal();
     flatTreeSetup(fixture);
 
-    assert.isUndefined(getModalDialog());
+    assert.isNull(getModalDialog());
   });
 
   describe('fallback', () => {
@@ -75,7 +75,7 @@ describe('dom.getModalDialog', () => {
       document.querySelector('#target').showModal();
       flatTreeSetup(fixture);
 
-      assert.isUndefined(getModalDialog());
+      assert.isNull(getModalDialog());
     });
 
     it('takes into account a scrolled page', () => {
@@ -89,6 +89,20 @@ describe('dom.getModalDialog', () => {
         <div id="scroll-target">World</div>
       `;
       document.querySelector('#scroll-target').scrollIntoView();
+      document.querySelector('#target').showModal();
+      const tree = flatTreeSetup(fixture);
+      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+
+      assert.equal(getModalDialog(), vNode);
+    });
+
+    it('returns the modal dialog when two dialogs are open', () => {
+      fixture.innerHTML = `
+        <style>dialog::backdrop { display: none; }</style>
+        <dialog id="not-modal" open><span>Hello</span></dialog>
+        <dialog id="target"><span>Hello</span></dialog>
+        <div>World</div>
+      `;
       document.querySelector('#target').showModal();
       const tree = flatTreeSetup(fixture);
       const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
