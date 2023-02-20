@@ -437,12 +437,15 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
+      - build_unix:
+          requires:
+            - dependencies_unix
       - test_nightly_browsers:
           requires:
-            - dependencies_unix
+            - build_unix
       - test_nightly_act:
           requires:
-            - dependencies_unix
+            - build_unix
       - test_nightly_aria_practices:
           requires:
-            - dependencies_unix
+            - build_unix
