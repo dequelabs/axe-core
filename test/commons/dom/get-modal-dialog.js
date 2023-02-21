@@ -109,5 +109,21 @@ describe('dom.getModalDialog', () => {
 
       assert.equal(getModalDialog(), vNode);
     });
+
+    it('returns the outer modal when a dialog modal contains a non-dialog modal', () => {
+      fixture.innerHTML = `
+        <style>dialog::backdrop { display: none; }</style>
+        <dialog id="target">
+          <span>Hello</span>
+          <dialog open>Open modal</dialog>
+        </dialog>
+        <div>World</div>
+      `;
+      document.querySelector('#target').showModal();
+      const tree = flatTreeSetup(fixture);
+      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+
+      assert.equal(getModalDialog(), vNode);
+    });
   });
 });
