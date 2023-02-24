@@ -106,6 +106,18 @@ describe('valid-scrollable-semantics', function () {
     );
   });
 
+  it('should return true for role=article', function () {
+    var node = document.createElement('div');
+    node.setAttribute('role', 'article');
+    fixture.appendChild(node);
+    flatTreeSetup(fixture);
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('valid-scrollable-semantics')
+        .call(checkContext, node)
+    );
+  });
+
   it('should return true for nav elements', function () {
     var node = document.createElement('nav');
     fixture.appendChild(node);
