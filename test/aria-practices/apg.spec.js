@@ -1,8 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const chromedriver = require('chromedriver');
 const AxeBuilder = require('@axe-core/webdriverjs');
-const { getWebdriver, connectToChromeDriver } = require('./run-server');
+const { getWebdriver } = require('../get-webdriver');
 const { assert } = require('chai');
 const globby = require('globby');
 
@@ -13,7 +12,6 @@ describe('aria-practices', function () {
   const testFiles = filePaths.map(
     fileName => fileName.split('/aria-practices/examples/')[1]
   );
-  const port = 9515;
   const addr = `http://localhost:9876/node_modules/aria-practices/`;
   let driver, axeSource;
   this.timeout(50000);
@@ -22,15 +20,11 @@ describe('aria-practices', function () {
   before(async () => {
     const axePath = require.resolve('../../axe.js');
     axeSource = fs.readFileSync(axePath, 'utf8');
-    chromedriver.start([`--port=${port}`]);
-    await new Promise(r => setTimeout(r, 500));
-    await connectToChromeDriver(port);
     driver = getWebdriver();
   });
 
   after(async () => {
     await driver.close();
-    chromedriver.stop();
   });
 
   const disabledRules = {
