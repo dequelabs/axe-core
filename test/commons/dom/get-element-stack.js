@@ -399,6 +399,25 @@ describe('dom.getElementStack', () => {
       assert.deepEqual(stack, ['5', 'target', '4', '3', '2', '1', 'fixture']);
     });
 
+    it('should correctly position opacity elements and positioned elements', () => {
+      fixture.innerHTML = `
+        <div id="1" style="opacity: 0.9;">
+          <div id="2" style="position: relative; z-index: 2">
+           <h1 id="target">Hello World</h1>
+          </div>
+        </div>
+        <div id="3" style="opacity: 0.8;">
+          <div id="4" style="position: absolute; top: 20px; z-index: -1;">
+            <div id="5" style="height: 40px; width: 100vw; background: red"></div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['5', '4', 'target', '2', '1', 'fixture']);
+    });
+
     it('should return empty array for hidden elements', () => {
       fixture.innerHTML =
         '<main id="1">' +
