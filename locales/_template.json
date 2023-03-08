@@ -114,12 +114,12 @@
       "help": "Page must have means to bypass repeated blocks"
     },
     "color-contrast-enhanced": {
-      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA contrast ratio thresholds",
-      "help": "Elements must have sufficient color contrast"
+      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA enhanced contrast ratio thresholds",
+      "help": "Elements must meet enhanced color contrast ratio thresholds"
     },
     "color-contrast": {
-      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-      "help": "Elements must have sufficient color contrast"
+      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds"
     },
     "css-orientation-lock": {
       "description": "Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations",
