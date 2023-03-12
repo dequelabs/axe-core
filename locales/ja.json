@@ -523,7 +523,7 @@
     },
     "deprecatedrole": {
       "pass": "推奨されていないARIAロールではありません",
-      "fail": "非推奨のロールが使用されています: ${data.values}"
+      "fail": "非推奨のロールが使用されています: ${data}"
     },
     "fallbackrole": {
       "pass": "1つのロール値のみ使用されています",
