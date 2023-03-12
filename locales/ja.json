@@ -290,8 +290,8 @@
       "help": "<marquee>要素は非推奨のため、使用してはなりません"
     },
     "meta-refresh-no-exceptions": {
-      "description": "Ensures <meta http-equiv=\"refresh\"> is not used for delayed refresh",
-      "help": "Delayed refresh must not be used"
+      "description": "<meta http-equiv=\"refresh\">が使用されていないことを確認します",
+      "help": "制限時間のある更新が存在してはなりません"
     },
     "meta-refresh": {
       "description": "<meta http-equiv=\"refresh\">が使用されていないことを確認します",
@@ -374,8 +374,8 @@
       "help": "データテーブルにキャプションをつけるためにデータまたはヘッダーセルを用いるべきではありません"
     },
     "target-size": {
-      "description": "Ensure touch target have sufficient size and space",
-      "help": "All touch targets must be 24px large, or leave sufficient space"
+      "description": "タッチターゲットのサイズとスペースが十分にあることを確認します",
+      "help": "すべてのタッチターゲットは24pxの大きさか、十分なスペースが必要です"
     },
     "td-has-header": {
       "description": "大きなテーブルの空ではないデータセルに1つかそれ以上のテーブルヘッダーが存在することを確認します",
@@ -412,7 +412,7 @@
         "singular": "ARIA属性は許可されていません: ${data.values}",
         "plural": "ARIA属性は許可されていません: ${data.values}"
       },
-      "incomplete": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}"
+      "incomplete": "次の要素のARIA属性が無視されても問題ないことを確認します: ${data.values}"
     },
     "aria-allowed-role": {
       "pass": "ARIAロールは指定された要素に対して許可されています",
@@ -453,16 +453,16 @@
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
       "fail": {
-        "hasRolePlural": "${data.prohibited} attributes cannot be used with role \"${data.role}\".",
-        "hasRoleSingular": "${data.prohibited} attribute cannot be used with role \"${data.role}\".",
-        "noRolePlural": "${data.prohibited} attributes cannot be used on a ${data.nodeName} with no valid role attribute.",
-        "noRoleSingular": "${data.prohibited} attribute cannot be used on a ${data.nodeName} with no valid role attribute."
+        "hasRolePlural": "${data.prohibited} 属性は \"${data.role}\" ロールでは使用できません",
+        "hasRoleSingular": "${data.prohibited} 属性は \"${data.role}\" ロールでは使用できません",
+        "noRolePlural": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では使用できません",
+        "noRoleSingular": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では使用できません"
       },
       "incomplete": {
-        "hasRoleSingular": "${data.prohibited} attribute is not well supported with role \"${data.role}\".",
-        "hasRolePlural": "${data.prohibited} attributes are not well supported with role \"${data.role}\".",
-        "noRoleSingular": "${data.prohibited} attribute is not well supported on a ${data.nodeName} with no valid role attribute.",
-        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute."
+        "hasRoleSingular": "${data.prohibited} 属性はロール \"${data.role}\" では十分にサポートされていません",
+        "hasRolePlural": "${data.prohibited} 属性はロール \"${data.role}\" では十分にサポートされていません",
+        "noRoleSingular": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では十分にサポートされていません",
+        "noRolePlural": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では十分にサポートされていません"
       }
     },
     "aria-required-attr": {
@@ -477,7 +477,7 @@
       "fail": {
         "singular": "必須のARIA子ロールが提供されていません: ${data.values}",
         "plural": "必須のARIA子ロールが提供されていません: ${data.values}",
-        "unallowed": "Element has children which are not allowed (see related nodes)"
+        "unallowed": "要素には許可されていないARIA子ロールがあります (関連ノードを参照)"
       },
       "incomplete": {
         "singular": "ARIAの子ロールを追加することが求められます: ${data.values}",
@@ -508,10 +508,10 @@
       },
       "incomplete": {
         "noId": "ARIA属性で指定されている要素のIDがページ上に存在しません: ${data.needsReview}",
-        "noIdShadow": "ARIA attribute element ID does not exist on the page or is a descendant of a different shadow DOM tree: ${data.needsReview}",
-        "ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
+        "noIdShadow": "ARIA属性で指定されている要素のIDがページ上に存在しないか、別のshadow DOMツリーの小要素です: ${data.needsReview}",
+        "ariaCurrent": "ARIA属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
         "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}",
-        "empty": "ARIA attribute value is ignored while empty: ${data.needsReview}"
+        "empty": "ARIA属性値が空のときは無視されます: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -589,8 +589,8 @@
     },
     "color-contrast": {
       "pass": {
-        "default": "Element has sufficient color contrast of ${data.contrastRatio}",
-        "hidden": "Element is hidden"
+        "default": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+        "hidden": "要素は非表示です"
       },
       "fail": {
         "default": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
@@ -614,14 +614,14 @@
       }
     },
     "link-in-text-block-style": {
-      "pass": "Links can be distinguished from surrounding text by visual styling",
-      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+      "pass": "リンクは視覚的なスタイル設定によって周囲のテキストと区別できます",
+      "fail": "リンクには、周囲のテキストと区別するためのスタイル (下線など) がありません"
     },
     "link-in-text-block": {
       "pass": "リンクは色以外の方法で周囲のテキストと区別できます",
       "fail": {
-        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
-        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+        "fgContrast": "このリンクは、周囲のテキストとの${data.contrastRatio}:1の色のコントラストが不十分です。(最小コントラストは ${data.requiredContrastRatio}:1、リンクテキスト: ${data.nodeColor}、周囲のテキスト: ${data.parentColor})",
+        "bgContrast": "リンクの背景の色コントラストが ${data.contrastRatio} で十分ではありません (最小コントラストは ${data.requiredContrastRatio}:1、リンク背景色: ${data.nodeBackgroundColor}、周囲の背景色: ${data.parentBackgroundColor})"
       },
       "incomplete": {
         "default": "コントラスト比を判定できません",
@@ -824,27 +824,27 @@
       "fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
     },
     "target-offset": {
-      "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
-      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "pass": "ターゲットに最も近い隣接要素からのオフセットが十分にあリます (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
+      "fail": "ターゲットの最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
       "incomplete": {
-        "default": "Element with negative tabindex has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px). Is this a target?",
-        "nonTabbableNeighbor": "Target has insufficient offset from a neighbor with negative tabindex (${data.closestOffset}px should be at least ${data.minOffset}px). Is the neighbor a target?"
+        "default": "tabindexがマイナスの要素において、最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。これがターゲットである要素か確認します",
+        "nonTabbableNeighbor": "ターゲットのtabindexがマイナスの隣接ノードからのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。隣接要素がターゲットか確認します"
       }
     },
     "target-size": {
       "pass": {
-        "default": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "obscured": "Control is ignored because it is fully obscured and thus not clickable"
+        "default": "コントロールには十分なサイズがあります (${data.width} px x ${data.height} pxであり、${data.minSize} px x ${data.minSize} px 以上です)",
+        "obscured": "コントロールは完全に隠されていてクリックできないため無視されます"
       },
       "fail": {
-        "default": "Target has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "partiallyObscured": "Target has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+        "default": "ターゲットのサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)",
+        "partiallyObscured": "ターゲットは部分的に隠れているためサイズが不十分です (最小スペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)"
       },
       "incomplete": {
-        "default": "Element with negative tabindex has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
-        "contentOverflow": "Element size could not be accurately determined due to overflow content",
-        "partiallyObscured": "Element with negative tabindex has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
-        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?"
+        "default": "tabindex がマイナスの要素のサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "contentOverflow": "コンテンツがオーバーフローしたため、要素のサイズを正確に決定できませんでした",
+        "partiallyObscured": "tabindex がマイナスの要素は、部分的に隠れているためサイズが不十分です (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これは tabindex がマイナスの隣接オブジェクトによって部分的に隠されているためです (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。隣接要素がターゲットの要素であることを確認します"
       }
     },
     "header-present": {
@@ -869,8 +869,8 @@
       "fail": "ページにランドマーク領域が存在していません"
     },
     "meta-refresh-no-exceptions": {
-      "pass": "<meta> tag does not immediately refresh the page",
-      "fail": "<meta> tag forces timed refresh of page"
+      "pass": "<meta>タグはすぐにページを更新しません",
+      "fail": "<meta>タグは時限によるページの更新を強制します"
     },
     "meta-refresh": {
       "pass": "<meta>タグはすぐにページを更新しません",
@@ -945,16 +945,16 @@
       "incomplete": "要素に子ノードがあるか判定できません"
     },
     "important-letter-spacing": {
-      "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "pass": "文字間隔（letter-spacing）の属性が '!important' に設定されていない、または最低条件を満たしています",
+      "fail": "文字間隔（letter-spacing）の属性には '!important' を設定しない、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "important-line-height": {
-      "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
-      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "pass": "行間（line-height）に '!important' が設定されていません、または最低条件を満たしています",
+      "fail": "行間（line-height）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "important-word-spacing": {
-      "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "pass": "文字間（word-spacing）に '!important' が設定されていません、または最低条件を満たしています",
+      "fail": "文字間（word-spacing）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "is-on-screen": {
       "pass": "要素が表示されていません",
