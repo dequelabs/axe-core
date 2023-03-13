@@ -2,13 +2,310 @@
 <html lang="en">
   <title>Axe Playground</title>
   <!-- The playground is used for quick local host axe-core during development -->
+  <style>
+    h1 {
+      margin: 0;
+    }
+  </style>
+  <body>
+    <div id="fixture"></div>
+    <!-- <main>
+    <div id="opacityParent" style="opacity: 0.9;">
+      <div id="zIndex" style="position: relative; z-index: 2">
+        <h1 id="target">Hello World</h1>
+      </div>
+    </div>
+    <div id="opacityOos" style="opacity: 0.8;">
+      <div id="absolute" style="position: absolute; top: 6.5px; z-index: -1;">
+        <div id="red" style="height: 40px; width: 100vw; background: red"></div>
+      </div>
+    </div>
+    <h1 style="color: rgb(209,5,5); background-color: rgba(255,51,51)">Hello World</h1>
+  </main> -->
 
-  <main>
-    <h1>Hello World</h1>
-  </main>
+    <div
+      id="parent"
+      style="height: 40px; width: 30px; background-color: #800000"
+    >
+      <div
+        id="target"
+        style="height: 20px; width: 15px; opacity: 0.5; background-color: green"
+      ></div>
+    </div>
+    <div
+      style="
+        position: relative;
+        top: -20px;
+        height: 20px;
+        width: 15px;
+        background: rgba(64, 64, 0, 1);
+      "
+    ></div>
 
-  <script src="/axe.js"></script>
-  <script src="/test/testutils.js"></script>
+    <!-- <div style="float: left">
+    <div style="position: absolute; left: 0; z-index: 1; background: red">
+      <div>Hello World</div>
+    </div>
+  </div>
+  <div style="float: left">
+    <div style="position: absolute; left: 0; z-index: 1; background: blue">
+      <div>Hello World</div>
+    </div>
+  </div>
+  </div> -->
+    <script>
+      // fixture.innerHTML =
+      //     '<main id="1">' +
+      //     '<div id="2" style="position:relative;z-index:-10">' +
+      //     '<p id="target">Hello World</p>' +
+      //     '</div>' +
+      //     '</main>';
+    </script>
+    <script src="/axe.js"></script>
+    <script>
+      axe.setup();
+      // window.elmStack = axe.commons.dom.getElementStack(target);
+
+      const { getNodeFromTree } = axe.utils;
+      const { flattenColors, Color } = axe.commons.color;
+
+      /* instead of storing this as arrays we should store it as a new object called Stack that has parent/child relationship, that way we can navigate the stacks based on the root element and resolve all children before apply parent (opacity)
+
+    [
+      div#red,
+      div#absolute,
+      div#taget,
+      div#z-index
+      div#opacity-parent
+      main,
+      body,
+      html
+    ]
+
+    which has _stackingOrder as
+
+    [
+      [[0.1000000002, #opacityOss], [-1, #absolute]],
+      [[0.1000000002, #opacityOss], [-1, #absolute]],
+      [[0.10000000011, #opacityParent], [2, #zIndex]],
+      [[0.10000000011, #opacityParent], [2, #zIndex]],
+      [[0.10000000011, #opacityParent]],
+      [[0, body]],
+      [[0, body]],
+      [[0, body]]
+    ]
+
+    which then would result in
+
+    [
+      {
+        opacity: 0.8,
+        // no color since not part of elmStack (color: transparent)
+        children: [
+          { color: red },
+          { color: transparent }
+        ]
+      },
+      {
+        opacity: 0.9,
+        color: transparent, // color since part of elmStack
+        children: [
+          { color: transparent },
+          { color: transparent }
+        ]
+      },
+      {
+        opacity: 1,
+        children: [
+          { color: transparent },
+          { color: transparent },
+          { color: transparent }
+        ]
+      }
+    ]
+
+    then when i resolve the stacks i do it in children -> parent order and can apply opacity at the correct time.
+
+    for foregroundcolor i need to save the root vNode so i can figure out which stack the foreground element belongs to
+
+    */
+
+      // window.contexts = getBackgroundColorStack(elmStack)
+
+      /**
+       * Return an array of Colors of each stacking context background color. Follows the painting order spec
+       * @see https://www.w3.org/TR/CSS22/zindex.html#painting-order
+       * @param {Element[]} elmStack
+       * @returns {Color[]} colorStack
+       */
+      function getBackgroundStackingContext(elmStack) {
+        const vNodes = elmStack.map(node => getNodeFromTree(node));
+        const stackingContext = [];
+
+        const contextMap = new Map();
+        vNodes.forEach(vNode => {
+          const stackingOrder = vNode._stackingOrder;
+          for (let i = 0; i < stackingOrder.length; i++) {
+            const { value, vNode: stackVNode } = stackingOrder[i];
+            const parentVNode = stackingOrder[i - 1]?.vNode;
+
+            const context = addToStackingContext(
+              contextMap,
+              stackVNode,
+              parentVNode
+            );
+
+            if (i === 0 && !contextMap.get(stackVNode)) {
+              stackingContext.push(context);
+            }
+            contextMap.set(stackVNode, context);
+          }
+
+          const parentVNode = stackingOrder[stackingOrder.length - 1]?.vNode;
+          const context = addToStackingContext(contextMap, vNode, parentVNode);
+          context.bgColor = getOwnBackgroundColor(vNode);
+        });
+
+        return stackingContext;
+
+        // let stacks = stackingContext.map(flattenStack);
+        // stacks.unshift(new Color(255,255,255,1));
+
+        // return stacks.reduce((bgColor, fgColor) => {
+        //   return flattenColors(fgColor, bgColor);
+        // });
+
+        // elements that are part of the same stacking context
+        // have their backgrounds drawn together in stacking order
+
+        // opacity is applied as a postprocessing operation
+        // after everything has been painted but before
+        // it is blended
+        // @see https://www.w3.org/TR/css-color-3/#transparency
+      }
+
+      function addToStackingContext(contextMap, vNode, parentVNode) {
+        const context = contextMap.get(vNode) ?? {
+          vNode,
+          opacity: parseFloat(
+            vNode?.getComputedStylePropertyValue('opacity') ?? 1
+          ),
+          blendMode: normalizeBlendMode(
+            vNode?.getComputedStylePropertyValue('mix-blend-mode')
+          ),
+          children: []
+        };
+
+        const parentContext = contextMap.get(parentVNode);
+        if (
+          parentContext &&
+          parentVNode !== vNode &&
+          !parentContext.children.includes(context)
+        ) {
+          parentContext.children.push(context);
+        }
+
+        return context;
+      }
+
+      function normalizeBlendMode(blendmode) {
+        return !!blendmode ? blendmode : undefined;
+      }
+
+      function getOwnBackgroundColor(vNode) {
+        const bgColor = new Color();
+        bgColor.parseString(
+          vNode.getComputedStylePropertyValue('background-color')
+        );
+
+        return bgColor;
+      }
+
+      //   function reduceToColor(bgContext, fgContext) {
+      //     let bgColor;
+      //     let fgColor;
+      //     if (bgContext.children?.length) {
+      //       bgColor = bgContext.children.reduce(reduceToColor, bgContext.children[0]);
+      //     }
+
+      //     if (!bgColor) {
+      //       bgColor = bgContext.color ?? new Color(0,0,0,0);
+      //     }
+
+      //     if (fgContext.children?.length) {
+      //       fgColor = fgContext.children.reduce(reduceToColor, fgContext.children[0]);
+      //     }
+
+      //     if (!fgColor) {
+      //       fgColor = fgContext.color ?? new Color(0,0,0,0);
+      //     }
+
+      //     const color = flattenColors(fgColor, bgColor);
+      //     color.alpha *= bgContext.opacity ?? 1;
+
+      //     return color;
+      //   }
+
+      //   function flattenStack(context) {
+      //     const color = context.children.reduce(reduceToColor, context.children[0]);
+      //     color.alpha *= context.opacity ?? 1;
+
+      //     return color;
+      //   }
+
+      // function getBackgroundColorStack(elmStack) {
+      //   const vNodes = elmStack.map(node => getNodeFromTree(node));
+      //   const stackingContexts = [];
+
+      //   const map = new Map();
+      //   vNodes.forEach(vNode => {
+      //     const stackingOrder = vNode._stackingOrder;
+      //     for (let i = 0; i < stackingOrder.length; i++) {
+      //       const value = stackingOrder[i];
+      //       const stackVNode = stackingOrder[i].node;
+      //       const parentStackVNode = stackingOrder[i - 1]?.node;
+
+      //       const context = map.get(stackVNode) ?? {
+      //         opacity: parseFloat(stackVNode?.getComputedStylePropertyValue('opacity') ?? 1),
+      //         children: []
+      //       }
+
+      //       if (parentStackVNode) {
+      //         const parentContext = map.get(parentStackVNode);
+      //         if (!parentContext.children.includes(context)) {
+      //           parentContext.children.unshift(context);
+      //         }
+      //       }
+
+      //       if (i === 0 && !map.get(stackVNode)) {
+      //         stackingContexts.unshift(context);
+      //       }
+      //       map.set(stackVNode, context);
+      //     }
+
+      //     const context = map.get(vNode) ?? {
+      //       opacity: parseFloat(vNode?.getComputedStylePropertyValue('opacity') ?? 1),
+      //       children: []
+      //     }
+
+      //     context.color = getOwnBackgroundColor(vNode);
+
+      //     const parentStackVNode = stackingOrder[stackingOrder.length - 1]?.node;
+      //     const parentContext = map.get(parentStackVNode);
+      //     if (parentStackVNode !== vNode && !parentContext.children.includes(context)) {
+      //       parentContext.children.unshift(context);
+      //     }
+      //   });
+
+      //   let stacks = stackingContexts.map(flattenStack);
+      //   stacks.unshift(new Color(255,255,255,1));
+
+      //   return stacks.reduce((bgColor, fgColor) => {
+      //     return flattenColors(fgColor, bgColor);
+      //   });
+      // }
+    </script>
+    <!-- <script src="/test/testutils.js"></script>
   <script>
     axe.testUtils.awaitNestedLoad(
       window,
@@ -25,5 +322,6 @@
       },
       err => console.error(err)
     );
-  </script>
+  </script> -->
+  </body>
 </html>
