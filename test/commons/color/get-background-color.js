@@ -161,6 +161,24 @@ describe('color.getBackgroundColor', function () {
     assert.equal(actual.alpha, expected.alpha);
   });
 
+  it('should apply opacity from an ancestor not in the element stack', function () {
+    fixture.innerHTML = `
+      <div style="opacity: 0.8;">
+        <div id="parent" style="position: absolute; height: 40px; width: 30px; background-color: rgba(128,0,0,1);">
+          <div id="target" style="height: 20px; width: 15px; background-color: rgba(0,255,0,0.5);"></div>
+        </div>
+      </div>`;
+    var target = fixture.querySelector('#target');
+    var bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    var expected = new axe.commons.color.Color(102, 153, 51, 1);
+    assert.equal(actual.red, expected.red);
+    assert.equal(actual.green, expected.green);
+    assert.equal(actual.blue, expected.blue);
+    assert.equal(actual.alpha, expected.alpha);
+  });
+
   it('should return null if containing parent has a background image and is non-opaque', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px;' +
