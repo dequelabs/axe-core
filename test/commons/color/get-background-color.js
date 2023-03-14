@@ -222,7 +222,6 @@ describe('color.getBackgroundColor', function () {
   });
 
   it('should return null if something non-opaque is obscuring it', function () {
-    // window.DEBUG = true;
     fixture.innerHTML =
       '<div style="width:100%; height: 100px; background: #000"></div>' +
       '<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -838,7 +837,6 @@ describe('color.getBackgroundColor', function () {
   });
 
   it('should apply mix-blend-mode', function () {
-    // window.DEBUG = true;
     fixture.innerHTML = `
       <div style="background-color: rgba(255, 255, 255, 1)">
         <div style="background-color: rgba(0, 128, 0, 0.25)">
