@@ -668,7 +668,7 @@
     },
     "focusable-not-tabbable": {
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
-      "incomplete": "Check if the focusable elements immediately move the focus indicator",
+      "incomplete": "フォーカス可能な要素がすぐにフォーカスインジケータを動かすかどうか確認します",
       "fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
     },
     "frame-focusable-content": {
@@ -827,8 +827,8 @@
       "pass": "ターゲットに最も近い隣接要素からのオフセットが十分にあリます (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
       "fail": "ターゲットの最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
       "incomplete": {
-        "default": "tabindexがマイナスの要素において、最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。これがターゲットである要素か確認します",
-        "nonTabbableNeighbor": "ターゲットのtabindexがマイナスの隣接ノードからのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。隣接要素がターゲットか確認します"
+        "default": "tabindexが負の要素において、最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。これがターゲットである要素か確認します",
+        "nonTabbableNeighbor": "ターゲットのtabindexが負の隣接ノードからのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。隣接要素がターゲットか確認します"
       }
     },
     "target-size": {
@@ -841,10 +841,10 @@
         "partiallyObscured": "ターゲットは部分的に隠れているためサイズが不十分です (最小スペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)"
       },
       "incomplete": {
-        "default": "tabindex がマイナスの要素のサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "default": "tabindex が負の要素のサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
         "contentOverflow": "コンテンツがオーバーフローしたため、要素のサイズを正確に決定できませんでした",
-        "partiallyObscured": "tabindex がマイナスの要素は、部分的に隠れているためサイズが不十分です (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
-        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これは tabindex がマイナスの隣接オブジェクトによって部分的に隠されているためです (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。隣接要素がターゲットの要素であることを確認します"
+        "partiallyObscured": "tabindex が負の要素は、部分的に隠れているためサイズが不十分です (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これは tabindex が負の隣接オブジェクトによって部分的に隠されているためです (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。隣接要素がターゲットの要素であることを確認します"
       }
     },
     "header-present": {
