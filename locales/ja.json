@@ -945,16 +945,16 @@
       "incomplete": "要素に子ノードがあるか判定できません"
     },
     "important-letter-spacing": {
-      "pass": "文字間隔（letter-spacing）の属性が '!important' に設定されていない、または最低条件を満たしています",
-      "fail": "文字間隔（letter-spacing）の属性には '!important' を設定しない、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
+      "pass": "文字の間隔（letter-spacing）の属性が '!important' に設定されていない、または最低条件を満たしています",
+      "fail": "文字の間隔（letter-spacing）の属性には '!important' を設定しない、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "important-line-height": {
       "pass": "行間（line-height）に '!important' が設定されていません、または最低条件を満たしています",
       "fail": "行間（line-height）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "important-word-spacing": {
-      "pass": "文字間（word-spacing）に '!important' が設定されていません、または最低条件を満たしています",
-      "fail": "文字間（word-spacing）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
+      "pass": "単語の間隔（word-spacing）に '!important' が設定されていません、または最低条件を満たしています",
+      "fail": "単語の間隔（word-spacing）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
     },
     "is-on-screen": {
       "pass": "要素が表示されていません",
