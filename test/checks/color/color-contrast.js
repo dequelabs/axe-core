@@ -46,6 +46,7 @@ describe('color-contrast', function () {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
     assert.equal(checkContext._data.bgColor, white.toHexString());
     assert.equal(checkContext._data.fgColor, black.toHexString());
+    assert.equal(checkContext._data.opacity, '1.00');
     assert.equal(checkContext._data.contrastRatio, '21.00');
     assert.equal(checkContext._data.fontWeight, 'bold');
     assert.isAtLeast(parseFloat(checkContext._data.fontSize), 14, 0.5);
@@ -99,6 +100,26 @@ describe('color-contrast', function () {
 
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [params[0]]);
+  });
+
+  it('should return true when there is sufficient contrast with specific opacity', function () {
+    var params = checkSetup(
+      '<div id="parent" style="background-color: white; opacity: 0.95">' +
+        '<span id="target" style="color: #0065b9">Oh Pass City</span>' +
+        '</div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._relatedNodes, []);
+  });
+
+  it('should return false when there is not sufficient contrast because of opacity', function () {
+    var params = checkSetup(
+      '<div id="target" style="color: #0065b9; background-color: white; opacity: 0.85">Oh Fail City</div>'
+    );
+
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._relatedNodes[0], params[0]);
   });
 
   it('should return true when there is sufficient contrast with explicit transparency', function () {
