@@ -1,7 +1,8 @@
 {
   "id": "aria-roledescription",
   "selector": "[aria-roledescription]",
-  "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "tags": ["cat.aria", "wcag2a", "wcag412", "deprecated"],
+  "enabled": false,
   "metadata": {
     "description": "Ensure aria-roledescription is only used on elements with an implicit or explicit role",
     "help": "aria-roledescription must be on elements with a semantic role"
