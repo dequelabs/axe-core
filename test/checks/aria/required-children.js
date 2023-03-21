@@ -157,7 +157,7 @@ describe('aria-required-children', function () {
     )[0];
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
-      values: ['[role=tabpanel]']
+      values: '[role=tabpanel]'
     });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
@@ -178,7 +178,7 @@ describe('aria-required-children', function () {
     )[0];
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
-      values: ['div[aria-live]']
+      values: 'div[aria-live]'
     });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
@@ -196,7 +196,7 @@ describe('aria-required-children', function () {
     var unallowed = axe.utils.querySelectorAll(axe._tree, '[tabindex="0"]')[0];
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
-      values: ['div[tabindex]']
+      values: 'div[tabindex]'
     });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
