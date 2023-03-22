@@ -222,6 +222,34 @@ describe('aria-required-children', () => {
     });
   });
 
+  it('should pass when list has child with aria-hidden', () => {
+    const params = checkSetup(
+      '<div id="target" role="list">' +
+        '<div aria-hidden="true">Ignore item</div>' +
+        '<div role="listitem">List item 1</div>' +
+        '</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should pass when list has child with aria-hidden and is focusable', () => {
+    const params = checkSetup(
+      '<div id="target" role="list">' +
+        '<div aria-hidden="true" tabindex="0">Ignore item</div>' +
+        '<div role="listitem">List item 1</div>' +
+        '</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
   it('should fail when nested child with role row does not have required child role cell', () => {
     const params = checkSetup(
       '<div  role="grid"><div role="row" id="target"><span>Item 1</span></div></div>'
