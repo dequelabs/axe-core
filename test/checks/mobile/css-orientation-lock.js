@@ -302,6 +302,36 @@ describe('css-orientation-lock tests', function () {
     assert.isFalse(actual);
   });
 
+  it('returns false when CSSOM has Orientation CSS media features with rotate property', function () {
+    var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+      cssom: [
+        {
+          shadowId: 'a',
+          root: document,
+          sheet: getSheet(
+            '@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { rotate: 90deg; } }'
+          )
+        }
+      ]
+    });
+    assert.isFalse(actual);
+  });
+
+  it('returns false when CSSOM has Orientation CSS media features with rotate property matrix', function () {
+    var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+      cssom: [
+        {
+          shadowId: 'a',
+          root: document,
+          sheet: getSheet(
+            '@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { rotate: 0 0 1 1.5708rad; } }'
+          )
+        }
+      ]
+    });
+    assert.isFalse(actual);
+  });
+
   // Note:
   // external stylesheets is tested in integration tests
   // shadow DOM is tested in integration tests

@@ -54,10 +54,12 @@ describe('css-orientation-lock violations test', function () {
 
         // assert the relatedNodes
         var checkResult = checkedNode.all[0];
-        assert.lengthOf(checkResult.relatedNodes, 2);
+        assert.lengthOf(checkResult.relatedNodes, 4);
         assertViolatedSelectors(checkResult.relatedNodes, [
           '.someDiv',
-          '.thatDiv'
+          '.thatDiv',
+          '.rotateDiv',
+          '.rotateMatrix'
         ]);
 
         done();
