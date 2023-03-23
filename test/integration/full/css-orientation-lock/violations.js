@@ -41,28 +41,32 @@ describe('css-orientation-lock violations test', function () {
         }
       },
       function (err, res) {
-        assert.isNull(err);
-        assert.isDefined(res);
+        try {
+          assert.isNull(err);
+          assert.isDefined(res);
 
-        // check for violation
-        assert.property(res, 'violations');
-        assert.lengthOf(res.violations, 1);
+          // check for violation
+          assert.property(res, 'violations');
+          assert.lengthOf(res.violations, 1);
 
-        // assert the node
-        var checkedNode = res.violations[0].nodes[0];
-        assert.isTrue(/html/i.test(checkedNode.html));
+          // assert the node
+          var checkedNode = res.violations[0].nodes[0];
+          assert.isTrue(/html/i.test(checkedNode.html));
 
-        // assert the relatedNodes
-        var checkResult = checkedNode.all[0];
-        assert.lengthOf(checkResult.relatedNodes, 4);
-        assertViolatedSelectors(checkResult.relatedNodes, [
-          '.someDiv',
-          '.thatDiv',
-          '.rotateDiv',
-          '.rotateMatrix'
-        ]);
+          // assert the relatedNodes
+          var checkResult = checkedNode.all[0];
+          assert.lengthOf(checkResult.relatedNodes, 4);
+          assertViolatedSelectors(checkResult.relatedNodes, [
+            '.someDiv',
+            '.thatDiv',
+            '.rotateDiv',
+            '.rotateMatrix'
+          ]);
 
-        done();
+          done();
+        } catch (err) {
+          done(err);
+        }
       }
     );
   });
@@ -85,27 +89,33 @@ describe('css-orientation-lock violations test', function () {
           }
         },
         function (err, res) {
-          assert.isNull(err);
-          assert.isDefined(res);
+          try {
+            assert.isNull(err);
+            assert.isDefined(res);
 
-          // check for violation
-          assert.property(res, 'violations');
-          assert.lengthOf(res.violations, 1);
+            // check for violation
+            assert.property(res, 'violations');
+            assert.lengthOf(res.violations, 1);
 
-          // assert the node
-          var checkedNode = res.violations[0].nodes[0];
-          assert.isTrue(/html/i.test(checkedNode.html));
+            // assert the node
+            var checkedNode = res.violations[0].nodes[0];
+            assert.isTrue(/html/i.test(checkedNode.html));
 
-          // assert the relatedNodes
-          var checkResult = checkedNode.all[0];
-          assert.lengthOf(checkResult.relatedNodes, 3);
-          assertViolatedSelectors(checkResult.relatedNodes, [
-            '.someDiv',
-            '.thatDiv',
-            '.shadowDiv'
-          ]);
+            // assert the relatedNodes
+            var checkResult = checkedNode.all[0];
+            assert.lengthOf(checkResult.relatedNodes, 5);
+            assertViolatedSelectors(checkResult.relatedNodes, [
+              '.someDiv',
+              '.thatDiv',
+              '.rotateDiv',
+              '.rotateMatrix',
+              '.shadowDiv'
+            ]);
 
-          done();
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     }
