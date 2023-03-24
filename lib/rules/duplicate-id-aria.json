@@ -3,11 +3,11 @@
   "selector": "[id]",
   "matches": "duplicate-id-aria-matches",
   "excludeHidden": false,
-  "tags": ["cat.parsing", "wcag2a-obsolete", "wcag411", "best-practice"],
+  "tags": ["cat.parsing", "wcag2a", "wcag411"],
   "actIds": ["3ea0c8"],
   "metadata": {
     "description": "Ensures every id attribute value used in ARIA and in labels is unique",
-    "help": "IDs used in ARIA and labels should be unique"
+    "help": "IDs used in ARIA and labels must be unique"
   },
   "all": [],
   "any": ["duplicate-id-aria"],
