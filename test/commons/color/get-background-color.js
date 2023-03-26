@@ -145,6 +145,40 @@ describe('color.getBackgroundColor', function () {
     assert.deepEqual(bgNodes, [target, parent]);
   });
 
+  it('should apply opacity after blending', function () {
+    fixture.innerHTML = `
+      <div id="parent" style="height: 40px; width: 30px; background-color: rgba(128,0,0,1); opacity: 0.8;">
+        <div id="target" style="height: 20px; width: 15px; background-color: rgba(0,255,0,0.5);"></div>
+      </div>`;
+    var target = fixture.querySelector('#target');
+    var bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    var expected = new axe.commons.color.Color(102, 153, 51, 1);
+    assert.equal(actual.red, expected.red);
+    assert.equal(actual.green, expected.green);
+    assert.equal(actual.blue, expected.blue);
+    assert.equal(actual.alpha, expected.alpha);
+  });
+
+  it('should apply opacity from an ancestor not in the element stack', function () {
+    fixture.innerHTML = `
+      <div style="opacity: 0.8;">
+        <div id="parent" style="position: absolute; height: 40px; width: 30px; background-color: rgba(128,0,0,1);">
+          <div id="target" style="height: 20px; width: 15px; background-color: rgba(0,255,0,0.5);"></div>
+        </div>
+      </div>`;
+    var target = fixture.querySelector('#target');
+    var bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    var expected = new axe.commons.color.Color(102, 153, 51, 1);
+    assert.equal(actual.red, expected.red);
+    assert.equal(actual.green, expected.green);
+    assert.equal(actual.blue, expected.blue);
+    assert.equal(actual.alpha, expected.alpha);
+  });
+
   it('should return null if containing parent has a background image and is non-opaque', function () {
     fixture.innerHTML =
       '<div id="parent" style="height: 40px; width: 30px;' +
@@ -800,6 +834,25 @@ describe('color.getBackgroundColor', function () {
     assert.closeTo(actual.alpha, 1, 0);
 
     document.body.style.height = originalHeight;
+  });
+
+  it('should apply mix-blend-mode', function () {
+    fixture.innerHTML = `
+      <div style="background-color: rgba(255, 255, 255, 1)">
+        <div style="background-color: rgba(0, 128, 0, 0.25)">
+          <div id="target" style="background-color: rgba(255, 0, 0, 0.5); mix-blend-mode: exclusion;">exclusion1</div>
+        </div>
+      </div>
+    `;
+
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getBackgroundColor(target, []);
+
+    assert.closeTo(actual.red, 128, 0);
+    assert.closeTo(actual.green, 223, 0);
+    assert.closeTo(actual.blue, 191, 0);
+    assert.closeTo(actual.alpha, 1, 0);
   });
 
   (shadowSupported ? it : xit)(

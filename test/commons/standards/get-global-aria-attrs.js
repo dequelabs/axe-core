@@ -14,10 +14,13 @@ describe('standards.getGlobalAriaAttrs', function () {
     var globalAttrs = getGlobalAriaAttrs();
     assert.deepEqual(globalAttrs, [
       'aria-atomic',
+      'aria-braillelabel',
+      'aria-brailleroledescription',
       'aria-busy',
       'aria-controls',
       'aria-current',
       'aria-describedby',
+      'aria-description',
       'aria-details',
       'aria-disabled',
       'aria-dropeffect',
