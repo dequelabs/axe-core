@@ -332,6 +332,21 @@ describe('css-orientation-lock tests', function () {
     assert.isFalse(actual);
   });
 
+  it('returns false when CSSOM has Orientation CSS media features with transform: rotate and rotate property', function () {
+    var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+      cssom: [
+        {
+          shadowId: 'a',
+          root: document,
+          sheet: getSheet(
+            '@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { rotate: 45deg; transform: rotate(45deg); -webkit-transform: rotate(45deg); } }'
+          )
+        }
+      ]
+    });
+    assert.isFalse(actual);
+  });
+
   // Note:
   // external stylesheets is tested in integration tests
   // shadow DOM is tested in integration tests
