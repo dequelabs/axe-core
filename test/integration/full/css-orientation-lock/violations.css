@@ -2,6 +2,9 @@
   .thatDiv {
     transform: rotate(90deg);
   }
+  .rotateDiv {
+    rotate: 90deg;
+  }
 }
 
 @media screen and (min-width: 10px) and (max-width: 3000px) and (orientation: landscape) {
@@ -10,5 +13,8 @@
   }
   .someDiv {
     transform: matrix3d(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  .rotateMatrix {
+    rotate: 0 0 1 1.5708rad;
   }
 }
