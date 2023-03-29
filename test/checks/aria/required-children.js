@@ -153,7 +153,10 @@ describe('aria-required-children', () => {
       axe._tree,
       '[role="tabpanel"]'
     )[0];
-    assert.deepEqual(checkContext._data, { messageKey: 'unallowed' });
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=tabpanel]'
+    });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
 
@@ -171,7 +174,10 @@ describe('aria-required-children', () => {
       axe._tree,
       '[aria-live="polite"]'
     )[0];
-    assert.deepEqual(checkContext._data, { messageKey: 'unallowed' });
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: 'div[aria-live]'
+    });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
 
@@ -189,8 +195,31 @@ describe('aria-required-children', () => {
       axe._tree,
       '[tabindex="0"]'
     )[0];
-    assert.deepEqual(checkContext._data, { messageKey: 'unallowed' });
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: 'div[tabindex]'
+    });
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
+  });
+
+  it('should remove duplicate unallowed selectors', () => {
+    const params = checkSetup(`
+      <div id="target" role="list">
+        <div role="tabpanel"></div>
+        <div role="listitem">List item 1</div>
+        <div role="tabpanel"></div>
+      </div>
+    `);
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=tabpanel]'
+    });
   });
 
   it('should pass when list has child with aria-hidden', () => {
