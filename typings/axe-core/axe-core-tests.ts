@@ -223,10 +223,22 @@ var spec: axe.Spec = {
       id: 'custom-check',
       evaluate: function () {
         return true;
+      },
+      metadata: {
+        impact: 'minor',
+        messages: {
+          pass: 'yes',
+          fail: 'nope',
+          incomplete: {
+            maybe: 'maybe',
+            or: 'maybe not'
+          }
+        }
       }
     }
   ],
   standards: {
+    ...axe.utils.getStandards(),
     ariaRoles: {
       'custom-role': {
         type: 'widget',
@@ -251,7 +263,13 @@ var spec: axe.Spec = {
   rules: [
     {
       id: 'custom-rule',
-      any: ['custom-check']
+      any: ['custom-check'],
+      metadata: {
+        description: 'custom rule',
+        help: 'different help',
+        helpUrl: 'https://example.com',
+        tags: ['custom']
+      }
     }
   ]
 };
@@ -269,24 +287,6 @@ const rules = axe.getRules();
 rules.forEach(rule => {
   rule.ruleId.substr(1234);
 });
-
-// Plugins
-var pluginSrc: axe.AxePlugin = {
-  id: 'doStuff',
-  run: (data: any, callback: Function) => {
-    callback();
-  },
-  commands: [
-    {
-      id: 'run-doStuff',
-      callback: (data: any, callback: Function) => {
-        axe.plugins['doStuff'].run(data, callback);
-      }
-    }
-  ]
-};
-axe.registerPlugin(pluginSrc);
-axe.cleanup();
 
 axe.configure({
   locale: {
@@ -322,3 +322,41 @@ axe.configure({
     }
   }
 });
+
+// Reporters
+let fooReporter = (
+  results: axe.RawResult[],
+  options: axe.RunOptions,
+  cb: (out: 'foo') => void
+) => {
+  cb('foo');
+};
+
+axe.addReporter<'foo'>('foo', fooReporter, true);
+axe.configure({ reporter: fooReporter });
+fooReporter = axe.getReporter<'foo'>('foo');
+const hasFoo: boolean = axe.hasReporter('foo');
+
+// setup & teardown
+axe.setup();
+axe.setup(document);
+axe.setup(document.createElement('div'));
+axe.teardown();
+
+// Plugins
+var pluginSrc: axe.AxePlugin = {
+  id: 'doStuff',
+  run: (data: any, callback: Function) => {
+    callback();
+  },
+  commands: [
+    {
+      id: 'run-doStuff',
+      callback: (data: any, callback: Function) => {
+        axe.plugins['doStuff'].run(data, callback);
+      }
+    }
+  ]
+};
+axe.registerPlugin(pluginSrc);
+axe.cleanup();

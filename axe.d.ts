@@ -190,12 +190,13 @@ declare namespace axe {
       help: string;
     };
   }
+  interface CheckMessages {
+    pass: string | { [key: string]: string };
+    fail: string | { [key: string]: string };
+    incomplete: string | { [key: string]: string };
+  }
   interface CheckLocale {
-    [key: string]: {
-      pass: string | { [key: string]: string };
-      fail: string | { [key: string]: string };
-      incomplete: string | { [key: string]: string };
-    };
+    [key: string]: CheckMessages;
   }
   interface Locale {
     lang?: string;
@@ -237,7 +238,7 @@ declare namespace axe {
   }
   interface Spec {
     branding?: string | Branding;
-    reporter?: ReporterVersion;
+    reporter?: ReporterVersion | string | AxeReporter;
     checks?: Check[];
     rules?: Rule[];
     standards?: Standards;
@@ -263,6 +264,10 @@ declare namespace axe {
     options?: any;
     matches?: string;
     enabled?: boolean;
+    metadata?: {
+      impact?: ImpactValue;
+      messages?: CheckMessages;
+    };
   }
   interface Rule {
     id: string;
@@ -277,6 +282,7 @@ declare namespace axe {
     tags?: string[];
     matches?: string;
     reviewOnFail?: boolean;
+    metadata?: Omit<RuleMetadata, 'ruleId'>;
   }
   interface AxePlugin {
     id: string;
@@ -319,6 +325,40 @@ declare namespace axe {
     frameSelector: CrossTreeSelector;
     frameContext: FrameContextObject;
   }
+
+  interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
+    any: CheckResult[];
+    all: CheckResult[];
+    none: CheckResult[];
+    impact: ImpactValue | null;
+    result: T;
+  }
+
+  interface RawResult extends Omit<Result, 'nodes'> {
+    inapplicable: [];
+    passes: RawNodeResult<'passed'>[];
+    incomplete: RawNodeResult<'incomplete'>[];
+    violations: RawNodeResult<'failed'>[];
+    pageLevel: boolean;
+    result: 'failed' | 'passed' | 'incomplete' | 'inapplicable';
+  }
+
+  type AxeReporter<T = unknown> = (
+    rawResults: RawResult[],
+    option: RunOptions,
+    callback: (report: T) => void
+  ) => void;
+
+  interface VirtualNode {
+    actualNode?: Node;
+    shadowId?: string;
+    children?: VirtualNode[];
+    parent?: VirtualNode;
+    attr(attr: string): string | null;
+    hasAttr(attr: string): boolean;
+    props: { [key: string]: unknown };
+  }
+
   interface Utils {
     getFrameContexts: (
       context?: ElementContext,
@@ -326,7 +366,9 @@ declare namespace axe {
     ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
+    getStandards(): Required<Standards>;
   }
+
   interface EnvironmentData {
     testEngine: TestEngine;
     testRunner: TestRunner;
@@ -435,6 +477,35 @@ declare namespace axe {
    * Set up alternative frame communication
    */
   function frameMessenger(frameMessenger: FrameMessenger): void;
+
+  /**
+   * Setup axe-core so axe.common functions can work properly.
+   */
+  function setup(node?: Element | Document): VirtualNode;
+
+  /**
+   * Clean up axe-core tree and caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+   */
+  function teardown(): void;
+
+  /**
+   * Check if a reporter is registered
+   */
+  function hasReporter(reporterName: string): boolean;
+
+  /**
+   * Get a reporter based the name it is registered with
+   */
+  function getReporter<T>(reporterName: string): AxeReporter<T>;
+
+  /**
+   * Register a new reporter, optionally setting it as the default
+   */
+  function addReporter<T>(
+    reporterName: string,
+    reporter: AxeReporter<T>,
+    isDefault?: boolean
+  ): void;
 
   // axe.frameMessenger
   type FrameMessenger = {
