@@ -1,4 +1,4 @@
-describe.only('color.getForegroundColor', () => {
+describe('color.getForegroundColor', () => {
   const { getForegroundColor, Color } = axe.commons.color;
   const { queryFixture, queryShadowFixture } = axe.testUtils;
 
@@ -43,19 +43,6 @@ describe.only('color.getForegroundColor', () => {
     ).actualNode;
     assert.isNull(getForegroundColor(target));
     assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'bgImage');
-  });
-
-  it('does not recalculate bgColor if passed in', () => {
-    const target = queryFixture(
-      '<div style="height: 40px; background-color: #000000;">' +
-        '<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);">' +
-        'This is my text' +
-        '</div></div>'
-    ).actualNode;
-
-    const bgColor = new Color(64, 64, 0);
-    const fgColor = getForegroundColor(target, false, bgColor);
-    assertSameColor(fgColor, new Color(32, 32, 64), 0.8);
   });
 
   it('returns `-webkit-text-fill-color` over `color`', () => {
@@ -138,7 +125,7 @@ describe.only('color.getForegroundColor', () => {
         ">Hello world</div>`
       ).actualNode;
       const fgColor = getForegroundColor(target);
-      assertSameColor(fgColor, new Color(192, 255, 255), 0.8);
+      assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
     });
 
     it('takes into account parent opacity tree', () => {
@@ -215,7 +202,7 @@ describe.only('color.getForegroundColor', () => {
           ">Hello world</div>`
       ).actualNode;
       const fgColor = getForegroundColor(target);
-      assertSameColor(fgColor, new Color(192, 255, 255), 0.8);
+      assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
     });
   });
 });

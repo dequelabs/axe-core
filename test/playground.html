@@ -3,210 +3,27 @@
   <title>Axe Playground</title>
   <!-- The playground is used for quick local host axe-core during development -->
 
-  <style>
-    div {
-      font-size: 2rem;
-      height: 2.5rem;
-    }
-  </style>
-
-  <div id="fixture"></div>
-
-  <style>
-#target {
-  color: #fff;
-  background: #00633D;
-  border-color: #00633D;
-  opacity: .65;
-}
-</style>
-<div id="target"><span>Hello</span></div>
-</div>
-
-    <div id="output">Hello World</div>
+  <main>
+    <h1>Hello World</h1>
   </main>
 
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    // fixture.innerHTML = `<div id="target" style="
-    //         color: transparent;
-    //         opacity: 0.5;
-    //         text-shadow: 0 0 0 rgb(0 255 255 / 50%)
-    //       ">Hello world</div>`
-
-  </script>
-  <script>
-    axe.setup();
-    const { Color, flattenColors } = axe.commons.color
-    const vNode = axe.utils.getNodeFromTree(target)
-    const color = axe.commons.color.getForegroundColor(target);
-    // const targetColor = getOwnColor(vNode);
-
-    // const stackingContexts = axe.commons.color.getStackingContext(target);
-    // stackingContexts.forEach(context => addAncestor(context));
-
-    // const context = findContext(stackingContexts, target);
-    // // const colors = getStackingContextSteps(context);
-
-    // const color = flattenColors(
-    //   getForegroundColor(targetColor, context, stackingContexts),
-    //   new Color(255,255,255,1)
-    // );
-
-    output.style.color = color.toHexString()
-    output.style.backgroundColor = axe.commons.color.getBackgroundColor(target).toHexString();
-
-    function getOwnColor(vNode) {
-      const bgColor = new Color();
-      bgColor.parseString(vNode.getComputedStylePropertyValue('color'));
-
-      return bgColor;
-    }
-
-
-    function getForegroundColor(fgColor, context, stackingContexts) {
-      while (context) {
-        if (context.opacity === 1) {
-          context = context.ancestor;
-          continue;
-        }
-
-        let ancestor = context.ancestor || { descendants: stackingContexts };
-
-        let bgColors = ancestor.descendants
-          .slice(0, ancestor.descendants.indexOf(context))
-          .map(axe.commons.color.stackingContextToColor);
-
-        if (!bgColors.length) {
-          fgColor.alpha *= context.opacity;
-          return fgColor;
-        }
-
-        const bgColor = bgColors.reduce((backdrop, source) => {
-          return flattenColors(
-            source.color,
-            backdrop.color instanceof Color ? backdrop.color : backdrop
-          );
-        }, {
-          color: new Color(0,0,0,0),
-          blendMode: 'normal'
-        });
-
-        fgColor = flattenColors(
-          fgColor,
-          bgColor
+    axe.testUtils.awaitNestedLoad(
+      window,
+      () => {
+        axe.run(
+          {
+            runOnly: 'color-contrast',
+            elementRef: true
+          },
+          (err, results) => {
+            console.log(err || results);
+          }
         );
-        fgColor.alpha *= context.opacity;
-
-        if (!context.ancestor) {
-          break;
-        }
-
-        context = ancestor;
-      }
-
-      return fgColor;
-    }
-
-  /********************
-   *
-   ********************/
-  // function getForegroundColorasdf(context) {
-  //     let fgColor = targetColor;
-  //     let ancestorContext = context;
-  //     do {
-  //       ancestorContext = findAncestor(ancestorContext, c => c.opacity !== 1);
-  //       if (ancestorContext) {
-  //         let ancestor = Array.isArray(ancestorContext.ancestor)
-  //           ? ancestorContext.ancestor
-  //           : ancestorContext.ancestor.descendants;
-  //         const bgColor = ancestor
-  //           .slice(0, ancestor.indexOf(context))
-  //           .map(axe.commons.color.stackingContextToColor)
-  //           .concat({
-  //             color: new Color(0,0,0,0),
-  //             blendMode: 'normal'
-  //           })
-  //           .reduce((bgColor, fgColor) => {
-  //             return flattenColors(
-  //               fgColor.color,
-  //               bgColor.color instanceof Color ? bgColor.color : bgColor,
-  //               fgColor.blendMode
-  //             );
-  //           }, {
-  //             color: new Color(0,0,0,0),
-  //             blendMode: 'normal'
-  //           });
-
-  //         fgColor.alpha *= ancestorContext.opacity;
-  //         fgColor = flattenColors(
-  //           fgColor,
-  //           bgColor,
-  //         );
-  //         ancestorContext = ancestorContext.ancestor;
-  //       }
-  //     } while (ancestorContext);
-
-  //     return fgColor;
-  //   }
-
-    // const ancestorContext = findAncestor(context, c => c.opacity !== 1);
-
-    // ancestor = Array.isArray(ancestorContext.ancestor)
-    //   ? ancestorContext.ancestor
-    //   : ancestorContext.ancestor.descendants;
-    // const bgColor = ancestor
-    //   .slice(0, ancestor.indexOf(context))
-    //   .map(axe.commons.color.stackingContextToColor)
-    //   .reduce((bgColor, fgColor) => {
-    //     return flattenColors(
-    //       fgColor.color,
-    //       bgColor.color instanceof Color ? bgColor.color : bgColor,
-    //       fgColor.blendMode
-    //     );
-    //   });
-
-
-
-    function addAncestor(child, parent) {
-      child.ancestor = parent;
-      child.descendants.forEach(node => addAncestor(node, child));
-    }
-
-    function findContext(contexts, node) {
-      for (let i = 0; i < contexts.length; i++) {
-        const context = contexts[i];
-        if (context.vNode?.actualNode === node) return context;
-
-        const found = findContext(context.descendants, node);
-        if (found) return found;
-      }
-    }
-
-    function findAncestor(context, predicate) {
-      let c = context;
-      while (c && !Array.isArray(c)) {
-        if (predicate(c)) return c;
-        c = c.ancestor;
-      }
-    }
-
-
-    // axe.testUtils.awaitNestedLoad(
-    //   window,
-    //   () => {
-    //     axe.run(
-    //       {
-    //         runOnly: 'color-contrast',
-    //         elementRef: true
-    //       },
-    //       (err, results) => {
-    //         console.log(err || results);
-    //       }
-    //     );
-    //   },
-    //   err => console.error(err)
-    // );
+      },
+      err => console.error(err)
+    );
   </script>
 </html>
