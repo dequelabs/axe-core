@@ -116,6 +116,14 @@ describe('color.getForegroundColor', () => {
       assertSameColor(fgColor, new Color(64, 0, 64));
     });
 
+    it('does not apply opacity to node background', () => {
+      const target = queryFixture(
+        '<div id="target" style="color: #fff; background-color: #00633D; opacity: 0.65"><span>Hello World</span></div>'
+      ).actualNode;
+      const fgColor = getForegroundColor(target);
+      assertSameColor(fgColor, new Color(255, 255, 255));
+    });
+
     it('combines opacity with text stroke alpha color', () => {
       const target = queryFixture(
         `<div id="target" style="
