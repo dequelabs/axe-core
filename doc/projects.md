@@ -50,7 +50,7 @@ Add your project/integration to this file and submit a pull request.
 1. [axe-TestCafe](https://github.com/helen-dikareva/axe-testcafe)
 1. [Web Audit University of Nebraska-Lincoln](https://webaudit.unl.edu/)
 1. [Vorlon.js Remote Debugger](https://github.com/MicrosoftDX/Vorlonjs)
-1. [Terra's Webdriver.io Accessibility Service](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md)
+1. [Terra Toolkit](https://github.com/cerner/terra-toolkit)
 1. [axe-sarif-converter](https://github.com/microsoft/axe-sarif-converter)
 1. [Selenium.Axe for .NET](https://github.com/TroyWalshProf/SeleniumAxeDotnet)
 1. [vue-axe](https://github.com/vue-a11y/vue-axe-next)
