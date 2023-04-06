@@ -31,6 +31,7 @@ describe('color.stackingContext', () => {
       assert.deepEqual(stackingContext, [
         {
           vNode,
+          ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
@@ -53,6 +54,7 @@ describe('color.stackingContext', () => {
       assert.deepEqual(stackingContext, [
         {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
@@ -60,6 +62,7 @@ describe('color.stackingContext', () => {
         },
         {
           vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
+          ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
@@ -67,6 +70,7 @@ describe('color.stackingContext', () => {
         },
         {
           vNode,
+          ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
@@ -89,12 +93,14 @@ describe('color.stackingContext', () => {
       assert.deepEqual(stackingContext, [
         {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: [
             {
               vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
+              ancestor: stackingContext[0],
               opacity: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
@@ -102,6 +108,7 @@ describe('color.stackingContext', () => {
             },
             {
               vNode,
+              ancestor: stackingContext[0],
               opacity: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
@@ -122,6 +129,7 @@ describe('color.stackingContext', () => {
       assert.deepEqual(stackingContext, [
         {
           vNode,
+          ancestor: undefined,
           opacity: 0.8,
           bgColor: new Color(255, 0, 0, 0.5),
           blendMode: 'difference',
@@ -143,12 +151,14 @@ describe('color.stackingContext', () => {
       assert.deepEqual(stackingContext, [
         {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          ancestor: undefined,
           opacity: 0.8,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: [
             {
               vNode,
+              ancestor: stackingContext[0],
               opacity: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
