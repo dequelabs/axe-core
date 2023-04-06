@@ -289,6 +289,10 @@
       "description": "<marquee>要素が使用されていないことを確認します",
       "help": "<marquee>要素は非推奨のため、使用してはなりません"
     },
+    "meta-refresh-no-exceptions": {
+      "description": "<meta http-equiv=\"refresh\">が使用されていないことを確認します",
+      "help": "制限時間のある更新が存在してはなりません"
+    },
     "meta-refresh": {
       "description": "<meta http-equiv=\"refresh\">が使用されていないことを確認します",
       "help": "制限時間のある更新が存在してはなりません"
@@ -369,6 +373,10 @@
       "description": "キャプション付きのテーブルが<caption>要素を用いていることを確認します",
       "help": "データテーブルにキャプションをつけるためにデータまたはヘッダーセルを用いるべきではありません"
     },
+    "target-size": {
+      "description": "タッチターゲットのサイズとスペースが十分にあることを確認します",
+      "help": "すべてのタッチターゲットは24pxの大きさか、十分なスペースが必要です"
+    },
     "td-has-header": {
       "description": "大きなテーブルの空ではないデータセルに1つかそれ以上のテーブルヘッダーが存在することを確認します",
       "help": "3×3より大きいテーブルの空ではないtd要素はテーブルヘッダーと関連づいていなければなりません"
@@ -403,7 +411,8 @@
       "fail": {
         "singular": "ARIA属性は許可されていません: ${data.values}",
         "plural": "ARIA属性は許可されていません: ${data.values}"
-      }
+      },
+      "incomplete": "次の要素のARIA属性が無視されても問題ないことを確認します: ${data.values}"
     },
     "aria-allowed-role": {
       "pass": "ARIAロールは指定された要素に対して許可されています",
@@ -415,6 +424,10 @@
         "singular": "ARIA ロール ${data.values} この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります",
         "plural": "ARIA ロール ${data.values} この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
       }
+    },
+    "aria-busy": {
+      "pass": "要素にはaria-busy属性が存在しています",
+      "fail": "要素に aria-busy=\"true\" が設定されていません"
     },
     "aria-errormessage": {
       "pass": "サポートされているaria-errormessageの技術を使用しています",
@@ -439,8 +452,18 @@
     },
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
-      "fail": "ARIA属性は使用できません: ${data.values}",
-      "incomplete": "要素でのARIA属性のサポートが不充分なため、代わりにコンテンツのテキストが用いられます: ${data.values}"
+      "fail": {
+        "hasRolePlural": "${data.prohibited} 属性は \"${data.role}\" ロールでは使用できません",
+        "hasRoleSingular": "${data.prohibited} 属性は \"${data.role}\" ロールでは使用できません",
+        "noRolePlural": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では使用できません",
+        "noRoleSingular": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では使用できません"
+      },
+      "incomplete": {
+        "hasRoleSingular": "${data.prohibited} 属性はロール \"${data.role}\" では十分にサポートされていません",
+        "hasRolePlural": "${data.prohibited} 属性はロール \"${data.role}\" では十分にサポートされていません",
+        "noRoleSingular": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では十分にサポートされていません",
+        "noRolePlural": "${data.prohibited} 属性は、有効なロール属性のない ${data.nodeName} では十分にサポートされていません"
+      }
     },
     "aria-required-attr": {
       "pass": "すべての必須のARIA属性が存在しています",
@@ -453,7 +476,8 @@
       "pass": "必須のARIA子ロールが存在しています",
       "fail": {
         "singular": "必須のARIA子ロールが提供されていません: ${data.values}",
-        "plural": "必須のARIA子ロールが提供されていません: ${data.values}"
+        "plural": "必須のARIA子ロールが提供されていません: ${data.values}",
+        "unallowed": "要素には許可されていないARIA子ロールがあります (関連ノードを参照)"
       },
       "incomplete": {
         "singular": "ARIAの子ロールを追加することが求められます: ${data.values}",
@@ -484,8 +508,10 @@
       },
       "incomplete": {
         "noId": "ARIA属性で指定されている要素のIDがページ上に存在しません: ${data.needsReview}",
-        "ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
-        "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}"
+        "noIdShadow": "ARIA属性で指定されている要素のIDがページ上に存在しないか、別のshadow DOMツリーの小要素です: ${data.needsReview}",
+        "ariaCurrent": "ARIA属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
+        "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}",
+        "empty": "ARIA属性値が空のときは無視されます: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -497,7 +523,7 @@
     },
     "deprecatedrole": {
       "pass": "推奨されていないARIAロールではありません",
-      "fail": "非推奨のロールが使用されています: ${data.values}"
+      "fail": "非推奨のロールが使用されています: ${data}"
     },
     "fallbackrole": {
       "pass": "1つのロール値のみ使用されています",
@@ -562,7 +588,10 @@
       }
     },
     "color-contrast": {
-      "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+      "pass": {
+        "default": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+        "hidden": "要素は非表示です"
+      },
       "fail": {
         "default": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
         "fgOnShadowColor": "要素の前景色と影（text-shadow）の色のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、影（text-shadow）の色: ${data.shadowColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
@@ -584,9 +613,16 @@
         "pseudoContent": "擬似要素のため、要素の背景色を判定することができませんでした"
       }
     },
+    "link-in-text-block-style": {
+      "pass": "リンクは視覚的なスタイル設定によって周囲のテキストと区別できます",
+      "fail": "リンクには、周囲のテキストと区別するためのスタイル (下線など) がありません"
+    },
     "link-in-text-block": {
       "pass": "リンクは色以外の方法で周囲のテキストと区別できます",
-      "fail": "リンクは色以外の方法で周囲のテキストと区別させる必要があります",
+      "fail": {
+        "fgContrast": "このリンクは、周囲のテキストとの${data.contrastRatio}:1の色のコントラストが不十分です。(最小コントラストは ${data.requiredContrastRatio}:1、リンクテキスト: ${data.nodeColor}、周囲のテキスト: ${data.parentColor})",
+        "bgContrast": "リンクの背景の色コントラストが ${data.contrastRatio} で十分ではありません (最小コントラストは ${data.requiredContrastRatio}:1、リンク背景色: ${data.nodeBackgroundColor}、周囲の背景色: ${data.parentBackgroundColor})"
+      },
       "incomplete": {
         "default": "コントラスト比を判定できません",
         "bgContrast": "要素のコントラスト比を判定できません。明確なホバー/フォーカススタイルを確認します",
@@ -614,6 +650,7 @@
     },
     "focusable-disabled": {
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
+      "incomplete": "フォーカス可能な要素がすぐにフォーカスインジケータを動かすかどうか確認します",
       "fail": "フォーカス可能なコンテンツは無効にするか、DOMから削除するべきです"
     },
     "focusable-element": {
@@ -631,6 +668,7 @@
     },
     "focusable-not-tabbable": {
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
+      "incomplete": "フォーカス可能な要素がすぐにフォーカスインジケータを動かすかどうか確認します",
       "fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
     },
     "frame-focusable-content": {
@@ -785,6 +823,30 @@
       "pass": "<meta>タグはモバイルデバイスでの拡大を無効にしません",
       "fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
     },
+    "target-offset": {
+      "pass": "ターゲットに最も近い隣接要素からのオフセットが十分にあリます (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
+      "fail": "ターゲットの最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)",
+      "incomplete": {
+        "default": "tabindexが負の要素において、最も近い隣接要素からのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。これがターゲットである要素か確認します",
+        "nonTabbableNeighbor": "ターゲットのtabindexが負の隣接ノードからのオフセットが不十分です (${data.closestOffset} px は少なくとも ${data.minOffset} px でなければなりません)。隣接要素がターゲットか確認します"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "コントロールには十分なサイズがあります (${data.width} px x ${data.height} pxであり、${data.minSize} px x ${data.minSize} px 以上です)",
+        "obscured": "コントロールは完全に隠されていてクリックできないため無視されます"
+      },
+      "fail": {
+        "default": "ターゲットのサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)",
+        "partiallyObscured": "ターゲットは部分的に隠れているためサイズが不十分です (最小スペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)"
+      },
+      "incomplete": {
+        "default": "tabindex が負の要素のサイズが不十分です (${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "contentOverflow": "コンテンツがオーバーフローしたため、要素のサイズを正確に決定できませんでした",
+        "partiallyObscured": "tabindex が負の要素は、部分的に隠れているためサイズが不十分です (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。これがターゲットの要素であることを確認します",
+        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これは tabindex が負の隣接オブジェクトによって部分的に隠されているためです (最小のスペースは ${data.width} px x ${data.height} pxですが、少なくとも ${data.minSize} px x ${data.minSize} px でなければなりません)。隣接要素がターゲットの要素であることを確認します"
+      }
+    },
     "header-present": {
       "pass": "ページにheaderが存在しています",
       "fail": "ページにheaderが存在していません"
@@ -805,6 +867,10 @@
     "landmark": {
       "pass": "ページにランドマーク領域が存在しています",
       "fail": "ページにランドマーク領域が存在していません"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta>タグはすぐにページを更新しません",
+      "fail": "<meta>タグは時限によるページの更新を強制します"
     },
     "meta-refresh": {
       "pass": "<meta>タグはすぐにページを更新しません",
@@ -878,6 +944,18 @@
       "fail": "要素にスクリーン・リーダーが認識可能なテキストが存在していません",
       "incomplete": "要素に子ノードがあるか判定できません"
     },
+    "important-letter-spacing": {
+      "pass": "文字の間隔（letter-spacing）の属性が '!important' に設定されていない、または最低条件を満たしています",
+      "fail": "文字の間隔（letter-spacing）の属性には '!important' を設定しない、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
+    },
+    "important-line-height": {
+      "pass": "行間（line-height）に '!important' が設定されていません、または最低条件を満たしています",
+      "fail": "行間（line-height）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
+    },
+    "important-word-spacing": {
+      "pass": "単語の間隔（word-spacing）に '!important' が設定されていません、または最低条件を満たしています",
+      "fail": "単語の間隔（word-spacing）には '!important' を使用しないでください、または ${data.minValue} em以上（現在は ${data.value} em）にしてください"
+    },
     "is-on-screen": {
       "pass": "要素が表示されていません",
       "fail": "要素が表示されています"
@@ -923,7 +1001,8 @@
         "default": "要素のデフォルトのセマンティクスはrole=\"none\"またはrole=\"presentation\"で上書きされませんでした",
         "globalAria": "要素にはARIAのグローバル属性が指定されているため、role=\"none\"またはrole=\"presentation\"にはなりません",
         "focusable": "要素がフォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
-        "both": "要素にはARIAのグローバル属性が指定されており、フォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません"
+        "both": "要素にはARIAのグローバル属性が指定されており、フォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
+        "iframe": "${data.nodeName} 要素にプレゼンテーション用のroleを持つ 'title' 属性を使用すると、スクリーンリーダー間で動作が一貫しません"
       }
     },
     "role-none": {
@@ -952,7 +1031,8 @@
     },
     "same-caption-summary": {
       "pass": "summary属性および<caption>のコンテンツは重複していません",
-      "fail": "summary属性および<caption>のコンテンツが同一です"
+      "fail": "summary属性および<caption>のコンテンツが同一です",
+      "incomplete": "<table>にキャプションがあるかどうかを確認できません"
     },
     "scope-value": {
       "pass": "scope属性は正しく使用されています",
