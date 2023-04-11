@@ -256,6 +256,7 @@ describe('aria-conditional-attr', () => {
             messageKey: 'checkbox',
             checkState: 'mixed'
           });
+          axe.teardown(); // Reset for the next iteration
         }
       });
     });
