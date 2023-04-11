@@ -97,7 +97,7 @@ describe('aria-conditional-attr', () => {
       }
     });
 
-    it('returns set messageKey to rowPlural with multiple bad attributes', () => {
+    it('sets messageKey to rowPlural with multiple bad attributes', () => {
       const params = checkSetup(
         `<div role="table">
           <div id="target" role="row" aria-expanded="false" aria-level="1"></div>
@@ -245,20 +245,18 @@ describe('aria-conditional-attr', () => {
       });
 
       it('returns false for other aria-checked values', () => {
-        it('returns false for other aria-checked values', () => {
-          for (const prop of ['true', 'TRUE', 'false', 'invalid']) {
-            const vNode = asIndeterminateVirtualNode(
-              `<input type="checkbox" aria-checked="${prop}" id="target">`
-            );
-            assert.isFalse(
-              ariaConditionalCheck.call(checkContext, null, null, vNode)
-            );
-            assert.deepEqual(checkContext._data, {
-              messageKey: 'checkbox',
-              checkState: 'mixed'
-            });
-          }
-        });
+        for (const prop of ['true', 'TRUE', 'false', 'invalid']) {
+          const vNode = asIndeterminateVirtualNode(
+            `<input type="checkbox" aria-checked="${prop}" id="target">`
+          );
+          assert.isFalse(
+            ariaConditionalCheck.call(checkContext, null, null, vNode)
+          );
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'checkbox',
+            checkState: 'mixed'
+          });
+        }
       });
     });
   });
