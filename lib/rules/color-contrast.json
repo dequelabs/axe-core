@@ -2,7 +2,7 @@
   "id": "color-contrast",
   "matches": "color-contrast-matches",
   "excludeHidden": false,
-  "tags": ["cat.color", "wcag2aa", "wcag143", "ACT"],
+  "tags": ["cat.color", "wcag2aa", "wcag143", "ACT", "TTv5", "TT13.c"],
   "actIds": ["afw4f7", "09o5cg"],
   "metadata": {
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",

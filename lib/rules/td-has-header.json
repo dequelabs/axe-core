@@ -8,7 +8,9 @@
     "wcag2a",
     "wcag131",
     "section508",
-    "section508.22.g"
+    "section508.22.g",
+    "TTv5",
+    "TT14.b"
   ],
   "metadata": {
     "description": "Ensure that each non-empty data cell in a <table> larger than 3 by 3  has one or more table headers",
