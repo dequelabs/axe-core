@@ -2,7 +2,7 @@
 
 ## Release Cadence
 
-Axe-core is used in many of [projects and environments](./projects.md). Not all of these are able to upgrade at a rapid pace. Because of this, updates in axe-core are limited in the following ways. For details on what types of changes can come in these releases see [backward compatibility](./backwards-compatibility-doc.md).
+Axe-core is used in many [projects and environments](./projects.md). Not all of these are able to upgrade at a rapid pace. Because of this, updates in axe-core are limited in the following ways. For details on what types of changes can come in these releases see [backward compatibility](./backwards-compatibility-doc.md).
 
 - **Major releases**: Major axe-core releases likely include breaking changes, and provide opportunities for Deque to remove previously deprecated features. As an absolute minimum, there will be a 12 month period between major releases of axe-core, except if this is necessary for security.
 
