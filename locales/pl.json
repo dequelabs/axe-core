@@ -111,7 +111,7 @@
     },
     "bypass": {
       "description": "Każda strona ma co najmniej jeden mechanizm, który pozwala ominąć nawigację i przejść od razu do treści.",
-      "help": "Strona musi mieć środki do ominięcia powtarzających blocks"
+      "help": "Strona musi mieć środki do ominięcia powtarzających się bloków treści."
     },
     "color-contrast-enhanced": {
       "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AAA.",
