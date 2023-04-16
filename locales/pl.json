@@ -111,14 +111,14 @@
     },
     "bypass": {
       "description": "Każda strona ma co najmniej jeden mechanizm, który pozwala ominąć nawigację i przejść od razu do treści.",
-      "help": "Strona musi mieć środki do ominięcia powtarzających się bloków treści."
-    },
-    "color-contrast": {
-      "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AA.",
-      "help": "Elementy muszą mieć wystarczający kontrast kolorów."
+      "help": "Strona musi mieć środki do ominięcia powtarzających blocks"
     },
     "color-contrast-enhanced": {
       "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AAA.",
+      "help": "Elementy muszą mieć wystarczający kontrast kolorów."
+    },
+    "color-contrast": {
+      "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AA.",
       "help": "Elementy muszą mieć wystarczający kontrast kolorów."
     },
     "css-orientation-lock": {
@@ -289,6 +289,10 @@
       "description": "Elementy <marquee> nie są używane.",
       "help": "Elementy <marquee> są przestarzałe i nie mogą być używane."
     },
+    "meta-refresh-no-exceptions": {
+      "description": "Sprawdź, czy <meta http-equiv=\"refresh\"> nie jest używany do opóźnionego odświeżania",
+      "help": "Nie wolno stosować opóźnionego odświeżania"
+    },
     "meta-refresh": {
       "description": "<meta http-equiv=\"refresh\"> nie jest stosowane.",
       "help": "Automatyczne odświeżenie strony nie może być stosowane."
@@ -322,8 +326,8 @@
       "help": "Strona musi zawierać nagłówek poziomu 1."
     },
     "presentation-role-conflict": {
-      "description": "Elementy z role=none lub role=presentation nie mogą kolidować z innymi rolami.",
-      "help": "Elementy, które mają role=none lub role=presentation, nie mogą kolidować z innymi rolami."
+      "description": "Elementy z [role=\"none\"] lub [role=\"presentation\"] nie mogą kolidować z innymi rolami.",
+      "help": "Elementy, które mają role=\"none\"] lub [role=\"presentation\"], nie mogą kolidować z innymi rolami."
     },
     "region": {
       "description": "Cała treść strony jest objęta przez punkty orientacyjne.",
@@ -369,6 +373,10 @@
       "description": "Tabele używają jako podpisu elementu <caption>.",
       "help": "Komórki danych i nagłówkowe w tabeli danych nie są używane do umieszczania podpisów."
     },
+    "target-size": {
+      "description": "Sprawdź, czy cel dotykowy ma wystarczający rozmiar i przestrzeń wokół.",
+      "help": "Wszystkie cele dotykowe muszą mieć rozmiar 24px lub pozostawiać wystarczającą ilość miejsca wokół."
+    },
     "td-has-header": {
       "description": "Każda niepusta komórka danych w dużej tabeli ma jeden lub więcej nagłówków tabeli.",
       "help": "Wszystkie niepuste elementy td w tabelach danych większych niż 3 na 3 mają skojarzony nagłówek tabeli."
@@ -386,8 +394,8 @@
       "help": "Atrybuty lang muszą mieć poprawną wartość."
     },
     "video-caption": {
-      "description": "Elementy <video> mają napisy rozszerzone.",
-      "help": "Elementy <video> muszą mieć napisy rozszerzone."
+      "description": "Elementy <video> mają napisy rozszerzone dla niesłyszących.",
+      "help": "Elementy <video> muszą mieć napisy rozszerzone dla niesłyszących."
     }
   },
   "checks": {
@@ -403,7 +411,8 @@
       "fail": {
         "singular": "Atrybut ARIA nie jest dozwolony: ${data.values}.",
         "plural": ": Atrybuty ARIA nie są dozwolone: ${data.values}."
-      }
+      },
+      "incomplete": "Sprawdź, czy nie ma problemu, jeśli atrybut ARIA jest ignorowany w tym elemencie: ${data.values}"
     },
     "aria-allowed-role": {
       "pass": "Rola ARIA jest dozwolona dla danego elementu.",
@@ -416,25 +425,45 @@
         "plural": ": Role ARIA ${data.values} muszą być usunięte, gdy element jest widoczny, ponieważ nie są one dozwolone dla elementu."
       }
     },
+    "aria-busy": {
+      "pass": "Element ma atrybut aria-busy",
+      "fail": "Element używa aria-busy=\"true\" podczas pokazywania ładowania"
+    },
     "aria-errormessage": {
       "pass": "Istnieje aria-errormessage oraz elementy referencyjne widoczne dla czytników ekranowych, które wykorzystują wspieraną technikę aria-errormessage.",
       "fail": {
         "singular": "Wartość aria-errormessage `${data.values}` musi używać techniki ogłoszenia wiadomości (np. aria-live, aria-describedby, role=alert, etc.).",
-        "plural": "Wartości aria-errormessage `${data.values}` muszą używać techniki ogłoszenia wiadomości (np. aria-live, aria-describedby, role=alert, etc.)."
+        "plural": "Wartości aria-errormessage `${data.values}` muszą używać techniki ogłoszenia wiadomości (np. aria-live, aria-describedby, role=alert, etc.).",
+        "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
         "singular": "Upewnij się, że wartość aria-errormessage `${data.values}` odnosi się do istniejącego elementu.",
-        "plural": "Upewnij się, że wartości aria-errormessage `${data.values}` odnoszą się do istniejących elementów."
+        "plural": "Upewnij się, że wartości aria-errormessage `${data.values}` odnoszą się do istniejących elementów.",
+        "idrefs": "unable to determine if aria-errormessage element exists on the page: ${data.values}"
       }
     },
     "aria-hidden-body": {
-      "pass": "Nie ma żadnego atrybutu aria-hidden w elemencie <body> dokumentu.",
-      "fail": "Atrybutu aria-hidden=true nie może być w elemencie <body> dokumentu."
+      "pass": "Nie ma żadnego atrybutu aria-hidden w elemencie body dokumentu.",
+      "fail": "Atrybutu aria-hidden=true nie może być w elemencie body dokumentu."
+    },
+    "aria-level": {
+      "pass": "aria-level ma poprawną wartość",
+      "incomplete": "Wartości aria-level większe niż 6 nie są obsługiwane we wszystkich kombinacjach czytników ekranu i przeglądarek"
     },
     "aria-prohibited-attr": {
       "pass": "Atrybut ARIA jest dozwolony",
-      "fail": "Atrybut ARIA nie może być użyty, dodaj atrybut role lub użyj innego elementu: ${data.values}",
-      "incomplete": "Atrybut ARIA nie jest dobrze obsługiwany w elemencie i zamiast niego zostanie użyta treść tekstowa: ${data.values}"
+      "fail": {
+        "hasRolePlural": "Atrybuty ${data.prohibited} nie mogą być używane z rolą \"${data.role}\".",
+        "hasRoleSingular": "Atrybut ${data.prohibited} nie może być użyty z rolą \"${data.role}\".",
+        "noRolePlural": "Atrybuty ${data.prohibited} nie mogą być używane w ${data.nodeName} bez poprawnego atrybutu roli.",
+        "noRoleSingular": "Atrybut ${data.prohibited} nie może być użyty w ${data.nodeName} bez poprawnego atrybutu roli."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Atrybut ${data.prohibited} nie jest dobrze obsługiwany przez rolę \"${data.role}\".",
+        "hasRolePlural": "Atrybuty ${data.prohibited} nie są dobrze obsługiwane przez role \"${data.role}\".",
+        "noRoleSingular": "Atrybut ${data.prohibited} nie jest dobrze obsługiwany przez ${data.nodeName} bez poprawnego atrybutu roli.",
+        "noRolePlural": "Atrybuty ${data.prohibited} nie są dobrze obsługiwane przez ${data.nodeName} bez poprawnego atrybutu roli."
+      }
     },
     "aria-required-attr": {
       "pass": "Wszystkie wymagane atrybuty ARIA istnieją.",
@@ -447,7 +476,8 @@
       "pass": "Wymagane dzieci ARIA istnieją.",
       "fail": {
         "singular": "Wymagana rola dziecka ARIA nie istnieje: ${data.values}.",
-        "plural": "Wymagane role dzieci ARIA nie istnieją: ${data.values}."
+        "plural": "Wymagane role dzieci ARIA nie istnieją: ${data.values",
+        "unallowed": "Element ma dzieci, które nie są dozwolone: ${data.values}"
       },
       "incomplete": {
         "singular": "Należy dodać oczekiwaną rolę dziecka ARIA: ${data.values}.",
@@ -473,12 +503,15 @@
     "aria-valid-attr-value": {
       "pass": "Wartości atrybutu ARIA są poprawne.",
       "fail": {
-        "singular": "Niepoprawna wartość atrybutu ARIA: ${data.values}.",
-        "plural": "Niepoprawne wartości atrybutu ARIA: ${data.values}."
+        "singular": "Niepoprawna wartość atrybutu ARIA: ${data.values}",
+        "plural": "Niepoprawne wartości atrybutu ARIA: ${data.values}"
       },
       "incomplete": {
-        "noId": "Identyfikator elementu atrybutu ARIA nie istnieje na stronie: ${data.needsReview}.",
-        "ariaCurrent": "Wartość atrybutu ARIA jest niepoprawna i będzie traktowana jako aria-current=true: ${data.needsReview}."
+        "noId": "Identyfikator elementu atrybutu ARIA nie istnieje na stronie: ${data.needsReview}",
+        "noIdShadow": "ID elementu atrybutu ARIA nie istnieje na stronie lub jest potomkiem innego drzewa shadow DOM: ${data.needsReview}",
+        "ariaCurrent": "Wartość atrybutu ARIA jest niepoprawna i będzie traktowana jako \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Nie można określić, czy atrybut ARIA element ID istnieje na stronie: ${data.needsReview}",
+        "empty": "Wartość atrybutu ARIA jest ignorowana, gdy jest pusty: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -488,9 +521,14 @@
         "plural": "Niepoprawne nazwy atrybutów ARIA: ${data.values}."
       }
     },
+    "deprecatedrole": {
+      "pass": "Rola ARIA nie jest przestarzała",
+      "fail": "Użyta rola jest przestarzała: ${data}"
+    },
     "fallbackrole": {
       "pass": "Użyto tylko jednej wartości roli.",
-      "fail": "Użyj tylko jednej wartości roli, ponieważ role rezerwowe nie są obsługiwane w starszych przeglądarkach."
+      "fail": "Użyj tylko jednej wartości roli, ponieważ role rezerwowe nie są obsługiwane w starszych przeglądarkach.",
+      "incomplete": "Używaj tylko roli 'presentation' lub 'none', ponieważ są one synonimami."
     },
     "has-global-aria-attribute": {
       "pass": {
@@ -515,8 +553,8 @@
       "fail": "Element nie przyjmuje fokusu."
     },
     "no-implicit-explicit-label": {
-      "pass": "Nie ma rozbieżności między <label> a dostępną nazwą.",
-      "incomplete": "Sprawdź, czy <label> nie musi być częścią nazwy pola ARIA ${data}."
+      "pass": "Nie ma rozbieżności między label a dostępną nazwą.",
+      "incomplete": "Sprawdź, czy label nie musi być częścią nazwy pola ARIA ${data}."
     },
     "unsupportedrole": {
       "pass": "Rola ARIA jest obsługiwana.",
@@ -526,9 +564,13 @@
       "pass": "Element w porządku otrzymywania fokusu ma poprawną semantykę.",
       "fail": "Element w porządku otrzymywania fokusu ma niepoprawną semantykę."
     },
-    "color-contrast": {
-      "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}.",
-      "fail": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu:  ${data.expectedContrastRatio}.",
+    "color-contrast-enhanced": {
+      "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}",
+      "fail": {
+        "default": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia (foreground color: ${data.fgColor}, text-shadow color: ${data.shadowColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem cienia a kolorem tła (text-shadow color: ${data.shadowColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
+      },
       "incomplete": {
         "default": "Nie można określić współczynnika kontrastu.",
         "bgImage": "Nie można określić koloru tła elementu, ponieważ element ma obraz tła.",
@@ -545,9 +587,16 @@
         "pseudoContent": "Nie można określić koloru tła elementu, ponieważ jest to pseudoelement."
       }
     },
-    "color-contrast-enhanced": {
-      "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}.",
-      "fail": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu:  ${data.expectedContrastRatio}.",
+    "color-contrast": {
+      "pass": {
+        "default": "Element ma wystarczający kontrast kolorów  ${data.contrastRatio}",
+        "hidden": "Element jest ukryty"
+      },
+      "fail": {
+        "default": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia (foreground color: ${data.fgColor}, text-shadow color: ${data.shadowColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów: of ${data.contrastRatio} pomiędzy kolorem cienia a kolorem tła (text-shadow color: ${data.shadowColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
+      },
       "incomplete": {
         "default": "Nie można określić współczynnika kontrastu.",
         "bgImage": "Nie można określić koloru tła elementu, ponieważ element ma obraz tła.",
@@ -563,10 +612,17 @@
         "nonBmp": "Treść elementu zawiera tylko znaki nietekstowe.",
         "pseudoContent": "Nie można określić koloru tła elementu, ponieważ jest to pseudoelement."
       }
+    },
+    "link-in-text-block-style": {
+      "pass": "Łącza mogą być odróżnione od otaczającego je tekstu poprzez wizualną stylizację",
+      "fail": "Łącza nie ma żadnej stylizacji (np. podkreślenia), która odróżniałaby go od otoczającego tekstu"
     },
     "link-in-text-block": {
       "pass": "Łącza można odróżnić od otaczającego je tekstu w inny sposób niż za pomocą koloru.",
-      "fail": "Łącza muszą być odróżnione od otaczającego je tekstu w inny sposób niż za pomocą koloru.",
+      "fail": {
+        "fgContrast": "Łącze ma niewystarczający kontrast kolorów ${data.contrastRatio}:1 z otaczającym go tekstem. (Minimalny kontrast to: ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, otaczający tekst: ${data.parentColor})",
+        "bgContrast": "Tło łącza ma niewystarczający kontrast kolorów ${data.contrastRatio} (Minimalny kontrast to:  ${data.requiredContrastRatio}:1, kolor tła łącza: ${data.nodeBackgroundColor}, otaczający kolor tła: ${data.parentBackgroundColor})"
+      },
       "incomplete": {
         "default": "Nie można określić współczynnika kontrastu.",
         "bgContrast": "Nie można określić współczynnika kontrastu elementu. Sprawdź, czy nie ma odrębnego stylu stanów hover/fokus.",
@@ -594,6 +650,7 @@
     },
     "focusable-disabled": {
       "pass": "W elemencie nie ma elementów przyjmujących fokus.",
+      "incomplete": "Sprawdź, czy elementy, na których można ustawić fokus, natychmiast otrzymują wskaźnik fokusu",
       "fail": "Treść z możliwością ustawiania fokusu powinna być wyłączona lub usunięta z DOM."
     },
     "focusable-element": {
@@ -611,6 +668,7 @@
     },
     "focusable-not-tabbable": {
       "pass": "Nie ma elementów przyjmujących fokus wewnątrz elementu.",
+      "incomplete": "Sprawdź, czy elementy, na których można ustawić fokus, natychmiast otrzymują wskaźnik fokusu",
       "fail": "Treść przyjmująca fokus powinna mieć tabindex=-1 lub być usunięta z DOM."
     },
     "frame-focusable-content": {
@@ -624,7 +682,10 @@
     },
     "no-focusable-content": {
       "pass": "Element nie ma potomków przyjmujących fokus",
-      "fail": "Element ma elementy potomne przyjmujące fokus",
+      "fail": {
+        "default": "Element ma elementy potomne przyjmujące fokus",
+        "notHidden": "Użycie ujemnego tabindeksu na elemencie wewnątrz interaktywnej kontrolki nie uniemożliwia technologiom pomocniczym skupienia uwagi na elemencie (nawet z 'aria-hidden=true')"
+      },
       "incomplete": "Nie można ustalić, czy element ma elementy potomne"
     },
     "page-has-heading-one": {
@@ -656,35 +717,35 @@
       "fail": "Element ma atrybut alt zawierający tylko znak spacji, który nie przez wszystkie czytniki ekranu jest ignorowany ."
     },
     "duplicate-img-label": {
-      "pass": "Element nie powiela tekstu istniejącego w atrybucie alt elementu <img>.",
-      "fail": "Element powiela tekst istniejący w atrybucie alt elementu <img>."
+      "pass": "Element nie powiela tekstu istniejącego w atrybucie alt elementu img.",
+      "fail": "Element powiela tekst istniejący w atrybucie alt elementu img."
     },
     "explicit-label": {
-      "pass": "Element formularza ma jawnie określoną <label>.",
-      "fail": "Element formularza nie ma jawnie określonej <label>.",
-      "incomplete": "Nie można określić, czy element formularza ma jawnie określoną <label>."
+      "pass": "Element formularza ma jawnie określoną label.",
+      "fail": "Element formularza nie ma jawnie określonej label.",
+      "incomplete": "Nie można określić, czy element formularza ma jawnie określoną label."
     },
     "help-same-as-label": {
       "pass": "Tekst pomocy (title lub aria-describedby) nie powiela tekstu etykiety.",
       "fail": "Tekst pomocy (title lub aria-describedby) jest taki sam jak tekst etykiety."
     },
     "hidden-explicit-label": {
-      "pass": "Element formularza ma widoczną jednoznaczną <label>.",
-      "fail": "Element formularza ma jednoznaczną <label>, która jest ukryta.",
-      "incomplete": "Nie można określić, czy element formularza ma jednoznaczną ukrytą etykietę (<label>)."
+      "pass": "Element formularza ma widoczną jednoznaczną etykietę label.",
+      "fail": "Element formularza ma jednoznaczną etykietę label, która jest ukryta.",
+      "incomplete": "Nie można określić, czy element formularza ma jednoznaczną ukrytą etykietę (label)."
     },
     "implicit-label": {
-      "pass": "Element formularza ma dorozumianą etykietę (jest owinięty w <label>).",
-      "fail": "Element formularza nie ma dorozumianej etykiety (nie jest owinięty w <label>).",
-      "incomplete": "Nie można określić, czy element formularza ma dorozumianą etykietę (jest owinięty w <label>)."
+      "pass": "Element formularza ma dorozumianą etykietę (jest owinięty w label).",
+      "fail": "Element formularza nie ma dorozumianej etykiety (nie jest owinięty w label).",
+      "incomplete": "Nie można określić, czy element formularza ma dorozumianą etykietę (jest owinięty w label)."
     },
     "label-content-name-mismatch": {
       "pass": "Widoczny tekst elementu jest częścią dostępnej nazwy elementu.",
       "fail": "Tekst wewnątrz elementu nie jest częścią dostępnej nazwy."
     },
     "multiple-label": {
-      "pass": "Pole formularza nie ma wielu <label>.",
-      "incomplete": "Technologie wspomagające nie obsługują wystarczająco dobrze wielu elementów <label>. Upewnij się, że pierwsza etykieta zawiera wszystkie niezbędne informacje."
+      "pass": "Pole formularza nie ma wielu label.",
+      "incomplete": "Technologie wspomagające nie obsługują wystarczająco dobrze wielu elementów label. Upewnij się, że pierwsza etykieta zawiera wszystkie niezbędne informacje."
     },
     "title-only": {
       "pass": "Element formularza nie używa wyłącznie atrybutu title jako swojej etykiety.",
@@ -695,10 +756,10 @@
       "fail": "Punkt orientacyjny musi mieć unikalną aria-label, aria-labelledby lub title, aby był rozpoznawalny."
     },
     "has-lang": {
-      "pass": "Element <html> ma atrybut lang.",
+      "pass": "Element html ma atrybut lang.",
       "fail": {
         "noXHTML": "Atrybut xml:lang nie jest poprawny na stronach HTML, użyj atrybutu lang.",
-        "noLang": "Element <html> nie ma atrybutu lang."
+        "noLang": "Element html nie ma atrybutu lang."
       }
     },
     "valid-lang": {
@@ -710,30 +771,30 @@
       "fail": "Atrybuty lang i xml:lang nie mają tego samego języka podstawowego."
     },
     "dlitem": {
-      "pass": "Element listy opisowej ma element nadrzędny <dl>.",
-      "fail": "Pozycja listy opisowej nie ma elementu nadrzędnego <dl>."
+      "pass": "Element listy opisowej ma element nadrzędny dl.",
+      "fail": "Pozycja listy opisowej nie ma elementu nadrzędnego dl."
     },
     "listitem": {
-      "pass": "Element listy ma <ul>, <ol> lub role=\"list\" jako bezpośredni element rodzicielski.",
+      "pass": "Element listy ma ul, ol lub role=\"list\" jako bezpośredni element rodzicielski.",
       "fail": {
-        "default": "Element listy nie ma nadrzędnego elementu <ul> lub <ol>.",
-        "roleNotValid": "Element listy nie ma nadrzędnego elementu <ul>, <ol>, ani nadrzędnego elementu z role=\"list\"."
+        "default": "Element listy nie ma nadrzędnego elementu ul lub ol.",
+        "roleNotValid": "Element listy nie ma nadrzędnego elementu ul, ol, ani nadrzędnego elementu z role=\"list\"."
       }
     },
     "only-dlitems": {
-      "pass": "Element <dl>  ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci) elementy <dt> lub <dd> .",
+      "pass": "Element dl ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci) elementy dt lub dd.",
       "fail": "Element listy ma wewnątrz bezpośrednie elementy dzieci, które nie są dozwolone wewnątrz listy opisowej."
     },
     "only-listitems": {
-      "pass": "Element lista ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci) elementy <li>.",
+      "pass": "Element lista ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci) elementy li.",
       "fail": {
-        "default": "Element lista ma niedozwolone bezpośrednie elementy potomne (dzieci), poza elementami <li>.",
+        "default": "Element lista ma niedozwolone bezpośrednie elementy potomne (dzieci), poza elementami li.",
         "roleNotValid": "Element lista ma bezpośrednie elementy potomne (dzieci) z rolą, która nie jest dozwolona: ${data.role}."
       }
     },
     "structured-dlitems": {
-      "pass": "Gdy elemet <dl> nie jest pusty,  ma zarówno elementy <dt>, jak i <dd>.",
-      "fail": "Element nie jest pusty, ale nie ma co najmniej jednego elementu <dt>, po którym następuje co najmniej jeden element <dd>."
+      "pass": "Gdy elemet dl nie jest pusty,  ma zarówno elementy dt, jak i dd.",
+      "fail": "Element nie jest pusty, ale nie ma co najmniej jednego elementu dt, po którym następuje co najmniej jeden element dd."
     },
     "caption": {
       "pass": "Element multimedialny ma ścieżkę z napisami rozszerzonymi.",
@@ -762,13 +823,38 @@
       "pass": "Znacznik <meta> nie wyłącza powiększania na urządzeniach przenośnych.",
       "fail": "${data} w znaczniku <meta> wyłącza powiększanie na urządzeniach przenośnych."
     },
+    "target-offset": {
+      "pass": "Cel ma wystarczające odsunięcie od swojego najbliższego sąsiada: (${data.closestOffset}px, które powinno wynosić co najmniej ${data.minOffset}px)",
+      "fail": "Cel ma niewystarczające odsunięcie od najbliższego sąsiada: (${data.closestOffset}px, które powinno wynosić co najmniej ${data.minOffset}px)",
+      "incomplete": {
+        "default": "Element z ujemnym tabindeksem ma niewystarczające odsunięcie od najbliższego sąsiada: (${data.closestOffset}px, które powinno wynosić co najmniej${data.minOffset}px). Czy to jest cel?",
+        "nonTabbableNeighbor": "Cel ma niewystarczające odsunięcie od sąsiada z ujemnym tabindeksem: (${data.closestOffset}px, które powinno wynosić co najmniej ${data.minOffset}px). Czy sąsiad jest celem?"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Kontrolka ma wystarczający rozmiar (${data.width}px na ${data.height}px, który powinnien wynosić co najmniej ${data.minSize}px na ${data.minSize}px)",
+        "obscured": "Kontrolka jest ignorowana, ponieważ jest całkowicie zasłonięta i nie można jej kliknąć."
+      },
+      "fail": {
+        "default": "Cel ma niewystarczający rozmiar (${data.width}px na ${data.height}px, który powinnien wynosić co najmniej ${data.minSize}px na ${data.minSize}px)",
+        "partiallyObscured": "Cel ma niewystarczający rozmiar, ponieważ jest częściowo przesłonięty (najmniejsza przestrzeń to ${data.width}px na ${data.height}px, powinna wynosić ${data.minSize}px na ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Element z ujemnym tabindeksem ma niewystarczający rozmiar (${data.width}px na ${data.height}px, powinnien wynosić co najmniej ${data.minSize}px na ${data.minSize}px). Czy to jest cel?",
+        "contentOverflow": "Rozmiar elementu nie mógł być dokładnie określony z powodu przepełnienia zawartości",
+        "partiallyObscured": "Element z ujemnym tabindeksem ma niewystarczający rozmiar, ponieważ jest częściowo przesłonięty (najmniejsza przestrzeń to ${data.width}px na ${data.height}px, powinna wynosić co najmniej ${data.minSize}px na ${data.minSize}px). Czy to jest cel?",
+        "partiallyObscuredNonTabbable": "Cel ma niewystarczający rozmiar, ponieważ jest częściowo przesłonięty przez sąsiada o ujemnym tabindeksie (najmniejsza przestrzeń to ${data.width}px na ${data.height}px, powinna wynosić co najmniej ${data.minSize}px na ${data.minSize}px). Czy sąsiad jest celem?"
+      }
+    },
     "header-present": {
       "pass": "Strona ma nagłówek.",
       "fail": "Strona nie ma nagłówka."
     },
     "heading-order": {
       "pass": "Kolejność nagłówków jest poprawna.",
-      "fail": "Kolejność nagłówków jest niepoprawna."
+      "fail": "Kolejność nagłówków jest niepoprawna.",
+      "incomplete": "Nie można określić poprzedniego nagłówka"
     },
     "identical-links-same-purpose": {
       "pass": "Nie ma żadnych innych łączy o tej samej nazwie, które kierują na inny adres URL.",
@@ -782,13 +868,18 @@
       "pass": "Strona ma punkt orientacyjny (obszar kluczowy).",
       "fail": "Strona nie ma żadnego punktu orientacyjnego (obszaru kluczowego)."
     },
+    "meta-refresh-no-exceptions": {
+      "pass": "Znacznik <meta> nie powoduje natychmiastowego odświeżenia strony",
+      "fail": "Znacznik <meta> tag wymusza czasowe odświeżenie strony"
+    },
     "meta-refresh": {
       "pass": "Znacznik <meta> nie odświeża od razu strony.",
       "fail": "Znacznik <meta> wymusza odświeżenie strony."
     },
     "p-as-heading": {
       "pass": "Elementy <p> nie są stylizowane na nagłówki.",
-      "fail": "Zamiast stylizowanych na nagłówki elementów p muszą być używane nagłówki semantyczne."
+      "fail": "Zamiast stylizowanych na nagłówki elementów p muszą być używane nagłówki semantyczne.",
+      "incomplete": "Nie można określić, czy elementy <p> są stylizowane jako nagłówki"
     },
     "region": {
       "pass": "Cała treść strony jest zawarta w obszarach kluczowych.",
@@ -853,6 +944,18 @@
       "fail": "Element nie ma tekstu, który jest widoczny dla czytników ekranu.",
       "incomplete": "Nie można określić, czy element ma elementy dzieci."
     },
+    "important-letter-spacing": {
+      "pass": "Odstępy między literami (letter-spacing) w atrybucie style nie są ustawione na !important, lub spełniają minimum",
+      "fail": "Odstępy między literami w atrybucie style nie mogą używać !important, lub muszą mieć ${data.minValue}em (aktualnie: ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "line-height w atrybucie style nie są ustawione na !important, lub spełniają minimum",
+      "fail": "line-height w atrybucie style nie mogą używać !important, lub muszą mieć ${data.minValue}em (aktualnie: ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "Odstępy miedzy wyrazami (word-spacing) w atrybucie style nie są ustawione na !important, lub spełniają minimum",
+      "fail": "Odstępy miedzy wyrazami (word-spacing) w atrybucie style nie mogą używać !important, lub muszą mieć ${data.minValue}em (aktualnie: ${data.value}em)"
+    },
     "is-on-screen": {
       "pass": "Element nie jest widoczny.",
       "fail": "Element jest widoczny."
@@ -898,7 +1001,8 @@
         "default": "Domyślna semantyka elementu nie została nadpisana przez role=\"none\" ani role=\"presentation\".",
         "globalAria": "Rola elementu nie jest prezentacyjna, ponieważ ma on ogólny atrybut ARIA.",
         "focusable": "Rola elementu nie jest prezentacyjna, ponieważ może on przyjmować fokus.",
-        "both": "Rola elementu nie jest prezentacyjna, ponieważ ma on ogólny atrybut ARIA i może przyjmować fokus."
+        "both": "Rola elementu nie jest prezentacyjna, ponieważ ma on ogólny atrybut ARIA i może przyjmować fokus.",
+        "iframe": "Użycie atrybutu \"title\" na elemencie ${data.nodeName} z rolą prezentacyjną zachowuje się niespójnie pomiędzy czytnikami ekranu."
       }
     },
     "role-none": {
