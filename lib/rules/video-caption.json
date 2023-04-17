@@ -6,7 +6,9 @@
     "wcag2a",
     "wcag122",
     "section508",
-    "section508.22.a"
+    "section508.22.a",
+    "TTv5",
+    "TT17.a"
   ],
   "actIds": ["eac66b"],
   "metadata": {

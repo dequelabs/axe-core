@@ -9,7 +9,9 @@
     "wcag2a",
     "wcag241",
     "section508",
-    "section508.22.o"
+    "section508.22.o",
+    "TTv5",
+    "TT9.a"
   ],
   "actIds": ["cf77f2", "047fe0", "b40fd1", "3e12e1", "ye5d6e"],
   "metadata": {
