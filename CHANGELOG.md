@@ -13,7 +13,6 @@ All notable changes to this project will be documented in this file. See [standa
 - deprecate color.filteredRectStack, color.getRectStack, and dom.visuallyContains ([#3859](https://github.com/dequelabs/axe-core/issues/3859)) ([3be2bad](https://github.com/dequelabs/axe-core/commit/3be2bad2a896e72a92fe70810500fc1ef67b7027))
 - **dom.focusDisabled,dom.isVisibleForScreenreader:** support the inert attribute ([#3857](https://github.com/dequelabs/axe-core/issues/3857)) ([273c971](https://github.com/dequelabs/axe-core/commit/273c97199bd596a288378427becba672b4482678))
 - **metadata:** add Trusted Tester tag ([#3986](https://github.com/dequelabs/axe-core/issues/3986)) ([1f6a2a6](https://github.com/dequelabs/axe-core/commit/1f6a2a68ac10c770091741b328de7efb2ccc6687))
-- **rules:** deprecate duplicate-id and duplicate-id-active ([#3957](https://github.com/dequelabs/axe-core/issues/3957)) ([04a4b5e](https://github.com/dequelabs/axe-core/commit/04a4b5e75825fdb5d41ca1c4eb0c895f44d15115))
 - support the dialog element ([#3902](https://github.com/dequelabs/axe-core/issues/3902)) ([d4522cd](https://github.com/dequelabs/axe-core/commit/d4522cdd7a90018336098f9b2119e353bd5a71ee))
 
 ### Bug Fixes
