@@ -7,7 +7,9 @@
     "wcag2a",
     "wcag412",
     "section508",
-    "section508.22.i"
+    "section508.22.i",
+    "TTv5",
+    "TT12.c"
   ],
   "actIds": ["cae760"],
   "metadata": {

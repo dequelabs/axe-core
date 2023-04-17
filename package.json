@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.6.3",
+  "version": "4.7.0",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -83,14 +83,14 @@
     "test:unit:integration": "npm run test:unit -- testDirs=integration",
     "test:unit:virtual-rules": "npm run test:unit -- testDirs=virtual-rules",
     "integration": "node test/integration/full/test-webdriver.js",
-    "integration:apg": "mocha test/aria-practices/*.spec.js",
+    "integration:apg": "mocha --fail-zero test/aria-practices/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
     "integration:firefox": "npm run integration -- browser=Firefox",
     "test:integration": "npm run test:integration:chrome",
     "test:integration:chrome": "start-server-and-test 9876 integration:chrome",
     "test:integration:firefox": "start-server-and-test 9876 integration:firefox",
     "test:examples": "node ./doc/examples/test-examples",
-    "test:act": "mocha test/act-rules/*.spec.js",
+    "test:act": "mocha --fail-zero test/act-rules/*.spec.js",
     "test:apg": "start-server-and-test 9876 integration:apg",
     "test:locales": "mocha test/test-locales.js",
     "test:virtual-rules": "mocha test/test-virtual-rules.js",
@@ -115,7 +115,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime-corejs3": "^7.20.7",
     "@deque/dot": "^1.1.5",
-    "aria-practices": "github:w3c/aria-practices#edbf534",
+    "aria-practices": "github:w3c/aria-practices#ce0336bd82d7d3651abcbde86af644197ddbc629",
     "aria-query": "^5.1.3",
     "browser-driver-manager": "1.0.4",
     "chai": "^4.3.7",
@@ -174,7 +174,7 @@
     "typedarray": "^0.0.7",
     "typescript": "^4.9.4",
     "uglify-js": "^3.17.4",
-    "wcag-act-rules": "github:w3c/wcag-act-rules#9416ea6",
+    "wcag-act-rules": "github:w3c/wcag-act-rules#2341a1b",
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {

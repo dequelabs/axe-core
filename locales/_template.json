@@ -114,12 +114,12 @@
       "help": "Page must have means to bypass repeated blocks"
     },
     "color-contrast-enhanced": {
-      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA contrast ratio thresholds",
-      "help": "Elements must have sufficient color contrast"
+      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA enhanced contrast ratio thresholds",
+      "help": "Elements must meet enhanced color contrast ratio thresholds"
     },
     "color-contrast": {
-      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-      "help": "Elements must have sufficient color contrast"
+      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds"
     },
     "css-orientation-lock": {
       "description": "Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations",
@@ -427,7 +427,7 @@
     },
     "aria-busy": {
       "pass": "Element has an aria-busy attribute",
-      "fail": "Element has no aria-busy=\"true\" attribute"
+      "fail": "Element uses aria-busy=\"true\" while showing a loader"
     },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
@@ -477,7 +477,7 @@
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
-        "unallowed": "Element has children which are not allowed (see related nodes)"
+        "unallowed": "Element has children which are not allowed: ${data.values}"
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",

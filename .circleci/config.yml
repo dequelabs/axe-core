@@ -327,42 +327,42 @@ workflows:
       # Run linting
       - lint:
           requires:
-            - build_unix
+            - dependencies_unix
       # Run tests on all commits, but after installing dependencies
       - test_chrome:
           requires:
-            - lint
+            - build_unix
       - test_firefox:
           requires:
-            - test_chrome
+            - build_unix
       - test_examples:
           requires:
-            - test_chrome
+            - build_unix
       - test_act:
           requires:
-            - test_chrome
+            - build_unix
       - test_aria_practices:
           requires:
-            - test_chrome
+            - build_unix
       - test_locales:
           requires:
-            - test_chrome
+            - build_unix
       - test_virtual_rules:
           requires:
-            - test_chrome
+            - build_unix
       - build_api_docs:
           requires:
-            - test_chrome
+            - build_unix
       - test_rule_help_version:
           requires:
-            - test_chrome
+            - build_unix
       - test_node:
           requires:
-            - test_chrome
+            - build_unix
       # Verify the sri history is correct
       - verify_sri:
           requires:
-            - dependencies_unix
+            - build_unix
           filters:
             branches:
               only:
@@ -372,6 +372,7 @@ workflows:
       - hold_release:
           type: approval
           requires:
+            - test_chrome
             - test_firefox
             - test_examples
             - test_act
@@ -389,6 +390,7 @@ workflows:
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
+            - test_chrome
             - test_firefox
             - test_examples
             - test_act
@@ -435,12 +437,15 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
+      - build_unix:
+          requires:
+            - dependencies_unix
       - test_nightly_browsers:
           requires:
-            - dependencies_unix
+            - build_unix
       - test_nightly_act:
           requires:
-            - dependencies_unix
+            - build_unix
       - test_nightly_aria_practices:
           requires:
-            - dependencies_unix
+            - build_unix

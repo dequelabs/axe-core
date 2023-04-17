@@ -2,7 +2,7 @@
   "id": "frame-title-unique",
   "selector": "frame[title], iframe[title]",
   "matches": "frame-title-has-text-matches",
-  "tags": ["cat.text-alternatives", "wcag412", "wcag2a"],
+  "tags": ["cat.text-alternatives", "wcag412", "wcag2a", "TTv5", "TT12.c"],
   "actIds": ["4b1c6c"],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
