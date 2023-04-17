@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/dequelabs/axe-core/compare/v4.6.3...v4.7.0) (2023-04-17)
+
+### Features
+
+- **aria-roledescription:** deprecate rule ([#3948](https://github.com/dequelabs/axe-core/issues/3948)) ([1913a9e](https://github.com/dequelabs/axe-core/commit/1913a9eaf0e669927c57d56710053303cda193f8))
+- **aria-roles:** deprecate the ARIA directory role ([#3952](https://github.com/dequelabs/axe-core/issues/3952)) ([893fdd0](https://github.com/dequelabs/axe-core/commit/893fdd0901f9218d9add39c16b2e6b77227fbdcd))
+- **d.ts:** setup/teardown, reporters & metadata definitions ([#3966](https://github.com/dequelabs/axe-core/issues/3966)) ([78264ee](https://github.com/dequelabs/axe-core/commit/78264ee663d528bc3fbfc9ea7dbba180259f01af))
+- deprecate bower ([#3889](https://github.com/dequelabs/axe-core/issues/3889)) ([651d811](https://github.com/dequelabs/axe-core/commit/651d811f0f1d1dfc5ab899568eaeb83931011f34))
+- deprecate color.filteredRectStack, color.getRectStack, and dom.visuallyContains ([#3859](https://github.com/dequelabs/axe-core/issues/3859)) ([3be2bad](https://github.com/dequelabs/axe-core/commit/3be2bad2a896e72a92fe70810500fc1ef67b7027))
+- **dom.focusDisabled,dom.isVisibleForScreenreader:** support the inert attribute ([#3857](https://github.com/dequelabs/axe-core/issues/3857)) ([273c971](https://github.com/dequelabs/axe-core/commit/273c97199bd596a288378427becba672b4482678))
+- **metadata:** add Trusted Tester tag ([#3986](https://github.com/dequelabs/axe-core/issues/3986)) ([1f6a2a6](https://github.com/dequelabs/axe-core/commit/1f6a2a68ac10c770091741b328de7efb2ccc6687))
+- **rules:** deprecate duplicate-id and duplicate-id-active ([#3957](https://github.com/dequelabs/axe-core/issues/3957)) ([04a4b5e](https://github.com/dequelabs/axe-core/commit/04a4b5e75825fdb5d41ca1c4eb0c895f44d15115))
+- support the dialog element ([#3902](https://github.com/dequelabs/axe-core/issues/3902)) ([d4522cd](https://github.com/dequelabs/axe-core/commit/d4522cdd7a90018336098f9b2119e353bd5a71ee))
+
+### Bug Fixes
+
+- **aria-allowed-attrs:** allow aria-description and aria-braille\* attrs ([#3956](https://github.com/dequelabs/axe-core/issues/3956)) ([2842395](https://github.com/dequelabs/axe-core/commit/2842395f9a8990f670e7025749ff8301b68a15ae))
+- **aria-input-field-name:** skip combobox popups ([#3886](https://github.com/dequelabs/axe-core/issues/3886)) ([3dcdd42](https://github.com/dequelabs/axe-core/commit/3dcdd42d9ce52817d0931aa4fea1ec2b1fc9d650))
+- **aria-required-children:** allow separator in menu(bar) ([#3868](https://github.com/dequelabs/axe-core/issues/3868)) ([ec9f507](https://github.com/dequelabs/axe-core/commit/ec9f50708a233acfa4f9b851618077d6637e6582))
+- **aria-required-children:** do not fail for children with aria-hidden ([#3949](https://github.com/dequelabs/axe-core/issues/3949)) ([8714d6b](https://github.com/dequelabs/axe-core/commit/8714d6ba6debec93d095f5f12385d92c55b0d4b3))
+- **aria-required-children:** list elements that are not allowed ([#3951](https://github.com/dequelabs/axe-core/issues/3951)) ([cce7586](https://github.com/dequelabs/axe-core/commit/cce75869be032006dc505a2af853886943973319))
+- **autocomplete-valid:** allow webauthn token ([#3866](https://github.com/dequelabs/axe-core/issues/3866)) ([fd3010f](https://github.com/dequelabs/axe-core/commit/fd3010ff74eb677d4a84198bb1ca314d54393cb7))
+- **color-contrast:** correcly apply opacity to foreground color ([#3973](https://github.com/dequelabs/axe-core/issues/3973)) ([d7db279](https://github.com/dequelabs/axe-core/commit/d7db279549c443c1e2f43a6b33ebee0968c64325))
+- **color-contrast:** correctly calculate contrast of flex/grid items with z-index ([#3884](https://github.com/dequelabs/axe-core/issues/3884)) ([cef96be](https://github.com/dequelabs/axe-core/commit/cef96be6740657047031c2019908822f957e6c63))
+- **color-contrast:** correctly compute background color for elements with opacity ([#3944](https://github.com/dequelabs/axe-core/issues/3944)) ([c051fe8](https://github.com/dequelabs/axe-core/commit/c051fe851fb5eaa75e6dc0205c4db5e75d80f3a4)), closes [#3932](https://github.com/dequelabs/axe-core/issues/3932)
+- **color-contrast:** correctly compute color contrast of <slot> elements ([#3847](https://github.com/dequelabs/axe-core/issues/3847)) ([4c3a00c](https://github.com/dequelabs/axe-core/commit/4c3a00c7bd6de68b2795be37113a59d804d0a313))
+- **color-contrast:** do not check contrast on elemets that are inerted ([#3894](https://github.com/dequelabs/axe-core/issues/3894)) ([da19946](https://github.com/dequelabs/axe-core/commit/da19946db610c3ab8898431645274a8a76d61a33))
+- **color-contrast:** skip ligature icons ([#3867](https://github.com/dequelabs/axe-core/issues/3867)) ([9486288](https://github.com/dequelabs/axe-core/commit/948628894e3119e7f6ad45a230fbee23ffe64ef2))
+- **create-grid:** correctly compute stack order for non-positioned stacking contexts ([#3930](https://github.com/dequelabs/axe-core/issues/3930)) ([8db2c24](https://github.com/dequelabs/axe-core/commit/8db2c2492d55a903b7903ed71f8b792e58dc2e8c)), closes [#3932](https://github.com/dequelabs/axe-core/issues/3932)
+- **css-orientation-lock:** support the css rotate property ([#3958](https://github.com/dequelabs/axe-core/issues/3958)) ([c51f8bf](https://github.com/dequelabs/axe-core/commit/c51f8bfea87b57c269e509f88d64855368a25493))
+- **focus-order-semantics:** Add ARIA role article to list of valid roles for scrollable regions ([#3927](https://github.com/dequelabs/axe-core/issues/3927)) ([f029271](https://github.com/dequelabs/axe-core/commit/f0292714b94a1483f4148f3ca7206897cfb21318))
+- **is-icon-ligature:** prevent canvas2d warning willReadFrequently ([#3931](https://github.com/dequelabs/axe-core/issues/3931)) ([b3c52bb](https://github.com/dequelabs/axe-core/commit/b3c52bbb6eccda67dabcbf4183d7c201a227a0ac))
+- **link-in-text-block:** allow links with identical colors ([#3861](https://github.com/dequelabs/axe-core/issues/3861)) ([5f90040](https://github.com/dequelabs/axe-core/commit/5f900402470f925686a0d8b41ac01731492bbd30))
+- **respondable:** work with CDP `Page.setDocumentContent` ([#3921](https://github.com/dequelabs/axe-core/issues/3921)) ([66f23e5](https://github.com/dequelabs/axe-core/commit/66f23e59b6deddd3b95035545d622d761abe5825))
+- **scrollable-region-focusable:** change impact to serious ([#3959](https://github.com/dequelabs/axe-core/issues/3959)) ([e3a5c21](https://github.com/dequelabs/axe-core/commit/e3a5c211fe007736d98a16d69995318c2c651f2d))
+- **scrollable-region-focusable:** skip native controls ([#3862](https://github.com/dequelabs/axe-core/issues/3862)) ([b0bdefa](https://github.com/dequelabs/axe-core/commit/b0bdefa34b85363e742ff04e319c014fe95f31f7))
+
 ### [4.6.3](https://github.com/dequelabs/axe-core/compare/v4.6.2...v4.6.3) (2023-01-23)
 
 ### Bug Fixes
