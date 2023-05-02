@@ -1,0 +1,23 @@
+{
+  "id": "aria-conditional-attr",
+  "evaluate": "aria-conditional-attr-evaluate",
+  "options": {
+    "invalidTableRowAttrs": [
+      "aria-posinset",
+      "aria-setsize",
+      "aria-expanded",
+      "aria-level"
+    ]
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "ARIA attribute is allowed",
+      "fail": {
+        "checkbox": "Remove aria-checked, or set it to \"${data.checkState}\" to match the real checkbox state",
+        "rowSingular": "This attribute is supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "These attributes are supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    }
+  }
+}
