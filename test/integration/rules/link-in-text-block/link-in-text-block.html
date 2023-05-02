@@ -149,3 +149,21 @@
     Link test</a
   >
 </p>
+
+<style>
+  #incomplete-pseudo-before {
+    text-decoration: none;
+    position: relative;
+  }
+  #incomplete-pseudo-before:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: purple;
+    bottom: 2px;
+  }
+</style>
+<p id="pseudo">
+  Lorem <a href="#" id="incomplete-pseudo-before">ipsum</a> dolor sit.
+</p>
