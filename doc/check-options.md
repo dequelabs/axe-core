@@ -363,7 +363,6 @@ th</code></pre>
 | Option       | Default                                                      | Description                               |
 | ------------ | :----------------------------------------------------------- | :---------------------------------------- |
 | `attributes` | <pre lang=js>['lang', 'xml:lang']</pre>                      | Attributes to check for valid lang values |
-| `value`      | [Array of all valid langs](../lib/core/utils/valid-langs.js) | List of valid lang values                 |
 
 ### frame-tested
 
