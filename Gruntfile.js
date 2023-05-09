@@ -165,11 +165,6 @@ module.exports = function (grunt) {
         dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
       }
     },
-    langs: {
-      generate: {
-        check: 'lib/commons/utils/valid-langs'
-      }
-    },
     validate: {
       check: {
         options: {

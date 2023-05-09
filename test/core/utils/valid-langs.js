@@ -34,18 +34,4 @@ describe('axe.utils.isValidLang', function () {
       assert.isFalse(axe.utils.isValidLang('123'));
     });
   });
-
-  describe('validLangs', function () {
-    it('should return an array of langs', function () {
-      assert.isTrue(Array.isArray(axe.utils.validLangs()));
-    });
-
-    it('should include valid langs', function () {
-      var langs = axe.utils.validLangs();
-      assert.isTrue(langs.indexOf('aaa') !== -1);
-      assert.isTrue(langs.indexOf('aa') !== -1);
-      assert.isTrue(langs.indexOf('en') !== -1);
-      assert.isTrue(langs.indexOf('zzj') !== -1);
-    });
-  });
 });
