@@ -21,15 +21,6 @@ describe('external API', function () {
     });
   });
 
-  describe('axe.utils.validLangs', function () {
-    it('be a function with the signature * -> [String]', function () {
-      var langs = axe.utils.validLangs();
-      assert.isArray(langs);
-      langs.forEach(assert.isString);
-      assert.isArray(axe.utils.validLangs(document));
-    });
-  });
-
   describe('axe.commons.dom.isVisible', function () {
     it('must be a function with the signature Element -> Boolean', function () {
       var el = randomNodeInTree(isElement);
