@@ -360,9 +360,9 @@ th</code></pre>
 
 ### valid-lang
 
-| Option       | Default                                                      | Description                               |
-| ------------ | :----------------------------------------------------------- | :---------------------------------------- |
-| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre>                      | Attributes to check for valid lang values |
+| Option       | Default                                 | Description                               |
+| ------------ | :-------------------------------------- | :---------------------------------------- |
+| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre> | Attributes to check for valid lang values |
 
 ### frame-tested
 
