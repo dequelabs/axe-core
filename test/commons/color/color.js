@@ -152,7 +152,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows alpha', () => {
+      it('allows alpha values', () => {
         const c = new Color();
         c.parseColorFnString('hwb(160, 40%, 50% / 50%)');
         assert.equal(c.red, 102);
@@ -181,7 +181,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows alpha', () => {
+      it('allows alpha values', () => {
         const c = new Color();
         c.parseColorFnString('lab(66.26 -37.50 8.58 / 50%)');
         assert.equal(c.red, 77);
@@ -201,7 +201,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows alpha', () => {
+      it('allows alpha values', () => {
         const c = new Color();
         c.parseColorFnString('lch(66.26 38.47 167.1 / 50%)');
         assert.equal(c.red, 77);
@@ -221,7 +221,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows alpha', () => {
+      it('allows alpha values', () => {
         const c = new Color();
         c.parseColorFnString('oklab(0.697 -0.107 0.023 / 50%)');
         assert.equal(c.red, 77);
@@ -241,7 +241,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
-      it('allows alpha', () => {
+      it('allows alpha values', () => {
         const c = new Color();
         c.parseColorFnString('oklch(0.6967 0.109 167.711 / 50%)');
         assert.equal(c.red, 77);
