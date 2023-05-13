@@ -3,6 +3,9 @@ describe('aria-required-children', () => {
   const shadowSupported = axe.testUtils.shadowSupport.v1;
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
+  const requiredChildrenCheck = axe.testUtils.getCheckEvaluate(
+    'aria-required-children'
+  );
 
   afterEach(() => {
     fixture.innerHTML = '';
@@ -15,11 +18,7 @@ describe('aria-required-children', () => {
       '<div role="list" id="target"><p>Nothing here.</p></div>'
     );
 
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
     assert.deepEqual(checkContext._data, ['listitem']);
   });
 
@@ -36,11 +35,7 @@ describe('aria-required-children', () => {
       const virtualTarget = axe.utils.getNodeFromTree(target);
 
       const params = [target, undefined, virtualTarget];
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
       assert.deepEqual(checkContext._data, ['listitem']);
     }
   );
@@ -50,11 +45,7 @@ describe('aria-required-children', () => {
       '<div role="grid" id="target"><p>Nothing here.</p></div>'
     );
 
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
     assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
   });
 
@@ -71,11 +62,7 @@ describe('aria-required-children', () => {
       const virtualTarget = axe.utils.getNodeFromTree(target);
 
       const params = [target, undefined, virtualTarget];
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
       assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
     }
   );
@@ -84,22 +71,14 @@ describe('aria-required-children', () => {
     const params = checkSetup(
       '<div id="target" role="menu"><li role="none"></li><li role="menuitem">Item 1</li><div role="menuitemradio">Item 2</div><div role="menuitemcheckbox">Item 3</div></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should return undefined when element is empty and is in reviewEmpty options', () => {
     const params = checkSetup('<div role="list" id="target"></div>', {
       reviewEmpty: ['list']
     });
-    assert.isUndefined(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should return false when children do not have correct role and is in reviewEmpty options', () => {
@@ -107,11 +86,7 @@ describe('aria-required-children', () => {
       '<div role="list" id="target"><div role="menuitem"></div></div>',
       { reviewEmpty: ['list'] }
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should return false when owned children do not have correct role and is in reviewEmpty options', () => {
@@ -119,22 +94,14 @@ describe('aria-required-children', () => {
       '<div role="list" id="target" aria-owns="ownedchild"></div><div id="ownedchild" role="menuitem"></div>',
       { reviewEmpty: ['list'] }
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when list does not have required children listitem', () => {
     const params = checkSetup(
       '<div id="target" role="list"><span>Item 1</span></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     assert.deepEqual(checkContext._data, ['listitem']);
   });
@@ -143,11 +110,7 @@ describe('aria-required-children', () => {
     const params = checkSetup(
       '<div id="target" role="list"><div role="tabpanel"><div role="listitem">List item 1</div></div></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     const unallowed = axe.utils.querySelectorAll(
       axe._tree,
@@ -164,11 +127,7 @@ describe('aria-required-children', () => {
     const params = checkSetup(
       '<div id="target" role="list"><div aria-live="polite"><div role="listitem">List item 1</div></div></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     const unallowed = axe.utils.querySelectorAll(
       axe._tree,
@@ -185,11 +144,7 @@ describe('aria-required-children', () => {
     const params = checkSetup(
       '<div id="target" role="list"><div tabindex="0"><div role="listitem">List item 1</div></div></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     const unallowed = axe.utils.querySelectorAll(
       axe._tree,
@@ -210,11 +165,7 @@ describe('aria-required-children', () => {
         <div role="tabpanel"></div>
       </div>
     `);
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
@@ -229,11 +180,7 @@ describe('aria-required-children', () => {
         '<div role="listitem">List item 1</div>' +
         '</div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass when list has child with aria-hidden and is focusable', () => {
@@ -243,22 +190,14 @@ describe('aria-required-children', () => {
         '<div role="listitem">List item 1</div>' +
         '</div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when nested child with role row does not have required child role cell', () => {
     const params = checkSetup(
       '<div  role="grid"><div role="row" id="target"><span>Item 1</span></div></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     assert.includeMembers(checkContext._data, ['cell']);
   });
@@ -267,198 +206,126 @@ describe('aria-required-children', () => {
     const params = checkSetup(
       '<div role="grid" id="target" aria-owns="r"></div><div id="r"><div role="row">Nothing here.</div></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should not break if aria-owns points to non-existent node', () => {
     const params = checkSetup(
-      '<div role="grid" id="target" aria-owns="nonexistent"></div>'
+      '<div role="row" id="target" aria-owns="nonexistent"></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass one existing aria-owned child when one required', () => {
     const params = checkSetup(
       '<div role="grid" id="target" aria-owns="r"></div><p id="r" role="row">Nothing here.</p>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail one existing aria-owned child when an intermediate child with role that is not a required role exists', () => {
     const params = checkSetup(
       '<div id="target" role="list" aria-owns="list"></div><div id="list"><div role="tabpanel"><div role="listitem"></div></div></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass one existing required child when one required (has explicit role of tab)', () => {
     const params = checkSetup(
       '<ul id="target" role="tablist"><li role="tab">Tab 1</li><li role="tab">Tab 2</li></ul>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass required child roles (grid contains row, which contains cell)', () => {
     const params = checkSetup(
       '<table id="target" role="grid"><tr role="row"><td role="cell">Item 1</td></tr></table>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass one existing required child when one required', () => {
     const params = checkSetup(
       '<div role="grid" id="target"><p role="row">Nothing here.</p></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass one existing required child when one required because of implicit role', () => {
     const params = checkSetup(
       '<table id="target"><p role="row">Nothing here.</p></table>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass when a child with an implicit role is present', () => {
     const params = checkSetup(
       '<table role="grid" id="target"><tr><td>Nothing here.</td></tr></table>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass direct existing required children', () => {
     const params = checkSetup(
       '<div role="list" id="target"><p role="listitem">Nothing here.</p></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass indirect required children', () => {
     const params = checkSetup(
       '<div role="list" id="target"><p>Just a regular ol p that contains a... <p role="listitem">Nothing here.</p></p></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should return true when a role has no required owned', () => {
     const params = checkSetup(
       '<div role="listitem" id="target"><p>Nothing here.</p></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass when role allows group and group has required child', () => {
     const params = checkSetup(
       '<div role="menu" id="target"><ul role="group"><li role="menuitem">Menuitem</li></ul></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when role allows group and group does not have required child', () => {
     const params = checkSetup(
       '<div role="menu" id="target"><ul role="group"><li>Menuitem</li></ul></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when role does not allow group', () => {
     const params = checkSetup(
       '<div role="list" id="target"><ul role="group"><li role="listitem">Item</li></ul></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass when role allows rowgroup and rowgroup has required child', () => {
     const params = checkSetup(
       '<div role="table" id="target"><ul role="rowgroup"><li role="row">Row</li></ul></div>'
     );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when role allows rowgroup and rowgroup does not have required child', () => {
     const params = checkSetup(
       '<div role="table" id="target"><ul role="rowgroup"><li>Row</li></ul></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should fail when role does not allow rowgroup', () => {
     const params = checkSetup(
       '<div role="listbox" id="target"><ul role="rowgroup"><li role="option">Option</li></ul></div>'
     );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
   describe('options', () => {
@@ -466,21 +333,13 @@ describe('aria-required-children', () => {
       const params = checkSetup('<div role="grid" id="target"></div>', {
         reviewEmpty: []
       });
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
       // Options:
       params[1] = {
         reviewEmpty: ['grid']
       };
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should not throw when options is incorrect', () => {
@@ -488,27 +347,15 @@ describe('aria-required-children', () => {
 
       // Options: (incorrect)
       params[1] = ['menu'];
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
       // Options: (incorrect)
       params[1] = null;
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
       // Options: (incorrect)
       params[1] = 'menu';
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should return undefined when the element has empty children', () => {
@@ -518,11 +365,7 @@ describe('aria-required-children', () => {
       params[1] = {
         reviewEmpty: ['listbox']
       };
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should return false when the element has empty child with role', () => {
@@ -532,11 +375,27 @@ describe('aria-required-children', () => {
       params[1] = {
         reviewEmpty: ['listbox']
       };
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should return undefined when there is a empty text node', () => {
+      const params = checkSetup(
+        '<div role="listbox" id="target"> &nbsp; <!-- empty --> \n\t </div>'
       );
+      params[1] = {
+        reviewEmpty: ['listbox']
+      };
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should return false when there is a non-empty text node', () => {
+      const params = checkSetup(
+        '<div role="listbox" id="target">  hello  </div>'
+      );
+      params[1] = {
+        reviewEmpty: ['listbox']
+      };
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should return undefined when the element has empty child with role=presentation', () => {
@@ -546,11 +405,7 @@ describe('aria-required-children', () => {
       params[1] = {
         reviewEmpty: ['listbox']
       };
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should return undefined when the element has empty child with role=none', () => {
@@ -560,11 +415,21 @@ describe('aria-required-children', () => {
       params[1] = {
         reviewEmpty: ['listbox']
       };
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should return undefined when the element has hidden children', () => {
+      const params = checkSetup(
+        `<div role="menu" id="target">
+          <div role="menuitem" hidden></div>
+          <div role="none" hidden></div>
+          <div role="list" hidden></div>
+        </div>`
       );
+      params[1] = {
+        reviewEmpty: ['menu']
+      };
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should return undefined when the element has empty child and aria-label', () => {
@@ -574,11 +439,7 @@ describe('aria-required-children', () => {
       params[1] = {
         reviewEmpty: ['listbox']
       };
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
+      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
     });
   });
 });
