@@ -187,6 +187,17 @@ describe('SerialVirtualNode', function () {
       });
       assert.equal(vNode.props.type, 'month');
     });
+
+    it('reflects checkbox properties', () => {
+      var vNode = new SerialVirtualNode({
+        nodeName: 'input',
+        type: 'checkbox',
+        checked: true,
+        indeterminate: true
+      });
+      assert.equal(vNode.props.checked, true);
+      assert.equal(vNode.props.indeterminate, true);
+    });
   });
 
   describe('attr', function () {

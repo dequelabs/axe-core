@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.7.0",
+  "version": "4.7.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -122,6 +122,7 @@
     "chalk": "^4.x",
     "chromedriver": "latest",
     "clone": "^2.1.2",
+    "colorjs.io": "^0.4.3",
     "conventional-commits-parser": "^3.2.4",
     "core-js": "^3.27.1",
     "css-selector-parser": "^1.4.1",

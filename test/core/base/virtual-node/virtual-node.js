@@ -188,6 +188,38 @@ describe('VirtualNode', function () {
       });
     });
 
+    describe('checkbox properties', () => {
+      it('should reflect the checked property', function () {
+        const div = document.createElement('div');
+        const vDiv = new VirtualNode(div);
+        assert.isUndefined(vDiv.props.checked);
+
+        const node = document.createElement('input');
+        node.setAttribute('type', 'checkbox');
+        const vUnchecked = new VirtualNode(node);
+        assert.isFalse(vUnchecked.props.checked);
+
+        node.click();
+        const vChecked = new VirtualNode(node);
+        assert.equal(vChecked.props.checked, true);
+      });
+
+      it('reflects the indeterminate property', () => {
+        const div = document.createElement('div');
+        const vDiv = new VirtualNode(div);
+        assert.isUndefined(vDiv.props.indeterminate);
+
+        const node = document.createElement('input');
+        node.setAttribute('type', 'checkbox');
+        const vUnchecked = new VirtualNode(node);
+        assert.isFalse(vUnchecked.props.indeterminate);
+
+        node.indeterminate = true;
+        const vIndeterminate = new VirtualNode(node);
+        assert.isTrue(vIndeterminate.props.indeterminate);
+      });
+    });
+
     describe.skip('isFocusable', function () {
       var commons;
 

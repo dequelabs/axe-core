@@ -429,6 +429,14 @@
       "pass": "Element has an aria-busy attribute",
       "fail": "Element uses aria-busy=\"true\" while showing a loader"
     },
+    "aria-conditional-attr": {
+      "pass": "ARIA attribute is allowed",
+      "fail": {
+        "checkbox": "Remove aria-checked, or set it to \"${data.checkState}\" to match the real checkbox state",
+        "rowSingular": "This attribute is supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "These attributes are supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
       "fail": {
@@ -615,6 +623,10 @@
     },
     "link-in-text-block-style": {
       "pass": "Links can be distinguished from surrounding text by visual styling",
+      "incomplete": {
+        "default": "Check if the link needs styling to distinguish it from nearby text",
+        "pseudoContent": "Check if the link's pseudo style is sufficient to distinguish it from the surrounding text"
+      },
       "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
     },
     "link-in-text-block": {
