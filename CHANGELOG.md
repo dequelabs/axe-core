@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.1](https://github.com/dequelabs/axe-core/compare/v4.7.0...v4.7.1) (2023-05-15)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** no inconsistent aria-checked on HTML checkboxes ([#3895](https://github.com/dequelabs/axe-core/issues/3895)) ([704043e](https://github.com/dequelabs/axe-core/commit/704043e8a4b9359e871403c3b4fc294b9feee931))
+- **aria-allowed-attrs:** add aria-expanded to allowed attrs for menuitemcheckbox and menuitemradio ([#3994](https://github.com/dequelabs/axe-core/issues/3994)) ([0f405c6](https://github.com/dequelabs/axe-core/commit/0f405c6da55570db2d536e2a4a5464865d73e821))
+- **aria-required-children:** trigger reviewEmpty with hidden children ([#4012](https://github.com/dequelabs/axe-core/issues/4012)) ([a19b6cb](https://github.com/dequelabs/axe-core/commit/a19b6cb5252deb062f6170ab035d804742e7c1df))
+- **color-contrast:** support CSS 4 color spaces ([#4020](https://github.com/dequelabs/axe-core/issues/4020)) ([65621c3](https://github.com/dequelabs/axe-core/commit/65621c339fd42798cb3ce66bac62865e62926e8c))
+- **link-in-text-block:** set links with pseudo-content for review ([#4005](https://github.com/dequelabs/axe-core/issues/4005)) ([949f4f8](https://github.com/dequelabs/axe-core/commit/949f4f8dfccd018b88f929bd650dc8920ce4f6f0))
+
 ## [4.7.0](https://github.com/dequelabs/axe-core/compare/v4.6.3...v4.7.0) (2023-04-17)
 
 ### Features
