@@ -7,6 +7,11 @@ describe('link-in-text-block-style', function () {
 
   var checkContext = axe.testUtils.MockCheckContext();
 
+  const { queryFixture } = axe.testUtils;
+  const linkInBlockStyleCheck = axe.testUtils.getCheckEvaluate(
+    'link-in-text-block-style'
+  );
+
   before(function () {
     styleElm = document.createElement('style');
     document.head.appendChild(styleElm);
@@ -107,11 +112,7 @@ describe('link-in-text-block-style', function () {
       axe.testUtils.flatTreeSetup(fixture);
       var linkElm = document.getElementById('link');
 
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block-style')
-          .call(checkContext, linkElm)
-      );
+      assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
     });
 
     (shadowSupport.v1 ? it : xit)(
@@ -126,11 +127,7 @@ describe('link-in-text-block-style', function () {
 
         axe.testUtils.flatTreeSetup(fixture);
 
-        assert.isTrue(
-          axe.testUtils
-            .getCheckEvaluate('link-in-text-block-style')
-            .call(checkContext, linkElm)
-        );
+        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
       }
     );
 
@@ -148,11 +145,7 @@ describe('link-in-text-block-style', function () {
         axe.testUtils.flatTreeSetup(fixture);
         var linkElm = div.querySelector('a');
 
-        assert.isTrue(
-          axe.testUtils
-            .getCheckEvaluate('link-in-text-block-style')
-            .call(checkContext, linkElm)
-        );
+        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
       }
     );
   });
@@ -160,24 +153,58 @@ describe('link-in-text-block-style', function () {
   describe('links distinguished through style', function () {
     it('returns false if link style matches parent', function () {
       var linkElm = getLinkElm({});
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block-style')
-          .call(checkContext, linkElm)
-      );
+      assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+      assert.isNull(checkContext._data);
     });
 
     it('returns true if link has underline', function () {
       var linkElm = getLinkElm({
         textDecoration: 'underline'
       });
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block-style')
-          .call(checkContext, linkElm)
-      );
+      assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns undefined when the link has a :before pseudo element', function () {
+      const link = queryFixture(`
+        <style>
+          a:before { content: '🔗'; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <a href="#" id="target">link</a> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
+      assert.equal(checkContext._relatedNodes[0], link.parentNode);
+    });
+
+    it('returns undefined when the link has a :after pseudo element', function () {
+      const link = queryFixture(`
+        <style>
+          a:after { content: ""; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <a href="#" id="target">link</a> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
+      assert.equal(checkContext._relatedNodes[0], link.parentNode);
+    });
+
+    it('does not return undefined when the pseudo element content is none', function () {
+      const link = queryFixture(`
+        <style>
+          a:after { content: none; position: absolute; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <a href="#" id="target">link</a> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isFalse(result);
     });
   });
 });
