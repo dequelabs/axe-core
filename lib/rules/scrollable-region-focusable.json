@@ -2,7 +2,7 @@
   "id": "scrollable-region-focusable",
   "selector": "*:not(select,textarea)",
   "matches": "scrollable-region-focusable-matches",
-  "tags": ["cat.keyboard", "wcag2a", "wcag211"],
+  "tags": ["cat.keyboard", "wcag2a", "wcag211", "TTv5", "TT4.a"],
   "actIds": ["0ssw9k"],
   "metadata": {
     "description": "Ensure elements that have scrollable content are accessible by keyboard",
