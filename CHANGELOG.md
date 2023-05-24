@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.2](https://github.com/dequelabs/axe-core/compare/v4.7.1...v4.7.2) (2023-05-24)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** Add 'aria-required' to switch role ([#4029](https://github.com/dequelabs/axe-core/issues/4029)) ([cb51be4](https://github.com/dequelabs/axe-core/commit/cb51be4e3ed69e8e8b3725cab5ad1a4671f64c0c)), closes [#4027](https://github.com/dequelabs/axe-core/issues/4027)
+- **aria-allowed-attr:** allow aria-required on role=slider ([#4035](https://github.com/dequelabs/axe-core/issues/4035)) ([bb2bf60](https://github.com/dequelabs/axe-core/commit/bb2bf606d75409722c645a3b2e3240cbce7e97ef))
+- **aria-required-children:** set related nodes for invalid children ([#4033](https://github.com/dequelabs/axe-core/issues/4033)) ([377f72b](https://github.com/dequelabs/axe-core/commit/377f72b16a4db5272b6c056a070e977dc0589cf5))
+- **tags:** Add / correct several TTv5 tags ([#4031](https://github.com/dequelabs/axe-core/issues/4031)) ([25859dd](https://github.com/dequelabs/axe-core/commit/25859dd737e271f69e3912d69ede2a127d78caa4))
+
 ### [4.7.1](https://github.com/dequelabs/axe-core/compare/v4.7.0...v4.7.1) (2023-05-15)
 
 ### Bug Fixes
