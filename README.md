@@ -159,7 +159,7 @@ Axe-core has a new minor release every 3 to 5 months, which usually introduces n
 
 ## Deque Trademarks Policy
 
-DEQUE, DEQUELABS, AXE®, and AXE-CORE® are trademarks of Deque Systems, Inc.  Use of the Deque trademarks must be in accordance with [Deque's trademark policy](https://www.deque.com/legal/trademarks/).
+DEQUE, DEQUELABS, AXE®, and AXE-CORE® are trademarks of Deque Systems, Inc. Use of the Deque trademarks must be in accordance with [Deque's trademark policy](https://www.deque.com/legal/trademarks/).
 
 ## Supported ARIA Roles and Attributes.
 
