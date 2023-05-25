@@ -157,6 +157,10 @@ Axe-core has a new minor release every 3 to 5 months, which usually introduces n
 - See [release and support](doc/release-and-support.md) for details on the frequency of releases, long-term support and recommendations on upgrading axe-core.
 - See [backward compatibility](doc/backwards-compatibility-doc.md) for details on the types of changes different releases may introduce.
 
+## Deque Trademarks Policy
+
+DEQUE, DEQUELABS, AXE®, and AXE-CORE® are trademarks of Deque Systems, Inc. Use of the Deque trademarks must be in accordance with [Deque's trademark policy](https://www.deque.com/legal/trademarks/).
+
 ## Supported ARIA Roles and Attributes.
 
 Refer [axe-core ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.

@@ -2,7 +2,15 @@
   "id": "td-headers-attr",
   "selector": "table",
   "matches": "table-or-grid-role-matches",
-  "tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
+  "tags": [
+    "cat.tables",
+    "wcag2a",
+    "wcag131",
+    "section508",
+    "section508.22.g",
+    "TTv5",
+    "TT14.b"
+  ],
   "actIds": ["a25f45"],
   "metadata": {
     "description": "Ensure that each cell in a table that uses the headers attribute refers only to other cells in that table",
