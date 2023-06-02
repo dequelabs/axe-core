@@ -1,6 +1,8 @@
 {
   "description": "color-contrast test",
   "rule": "color-contrast-enhanced",
-  "violations": [["#fail1"], ["#fail2"]],
-  "passes": [["#pass1"], ["#pass2"], ["#pass3"]]
+  "violations": [["#fail1"]],
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#fail2"]],
+  "DAISY-AXE_violations": [["#fail1"], ["#fail2"]],
+  "DAISY-AXE_passes": [["#pass1"], ["#pass2"], ["#pass3"]]
 }

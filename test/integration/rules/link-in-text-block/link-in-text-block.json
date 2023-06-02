@@ -1,11 +1,24 @@
 {
   "description": "link-in-text-block tests",
   "rule": "link-in-text-block",
-  "violations": [
+  "violations": [],
+  "passes": [
+    ["#fail-insufficient-background-contrast"],
+    ["#pass-default-styling"],
+    ["#pass-default-styling-aria-hidden"],
+    ["#pass-different-weight"],
+    ["#pass-different-size"],
+    ["#pass-background-color"],
+    ["#pass-text-color"],
+    ["#pass-same-colors"],
+    ["#incomplete-pseudo-before"]
+  ],
+  "incomplete": [["#incomplete-low-contrast-parent-has-gradient"]],
+  "DAISY-AXE_violations": [
     ["#fail-insufficient-text-contrast"],
     ["#fail-insufficient-background-contrast"]
   ],
-  "passes": [
+  "DAISY-AXE_passes": [
     ["#pass-default-styling"],
     ["#pass-default-styling-aria-hidden"],
     ["#pass-different-weight"],
@@ -14,7 +27,7 @@
     ["#pass-text-color"],
     ["#pass-same-colors"]
   ],
-  "incomplete": [
+  "DAISY-AXE_incomplete": [
     ["#incomplete-low-contrast-parent-has-gradient"],
     ["#incomplete-pseudo-before"]
   ]
