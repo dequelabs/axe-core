@@ -125,7 +125,7 @@
     "browser-driver-manager": "1.0.4",
     "chai": "^4.3.7",
     "chalk": "^4.x",
-    "chromedriver": "^113.0.0",
+    "chromedriver": "^114.0.1",
     "clone": "^2.1.2",
     "colorjs.io": "^0.4.3",
     "conventional-commits-parser": "^3.2.4",
