@@ -1,6 +1,7 @@
 describe('runRules', function () {
   'use strict';
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  var _v = axe.version.replace(/-\w+\.\w+$/, '');
+  var ver = _v.substring(0, _v.lastIndexOf('.'));
 
   function iframeReady(src, context, id, cb) {
     var i = document.createElement('iframe');
