@@ -56,7 +56,7 @@ describe('color.getForegroundColor', () => {
   describe('text-stroke', () => {
     it('ignores stroke when equal to 0', () => {
       const target = queryFixture(
-        '<div style="color: rgb(0 0 128); -webkit-text-stroke: 0 #CCC" id="target">Hello World</div>'
+        '<div style="color: rgb(0 0 128); font-size: 16px; -webkit-text-stroke: 0 #CCC" id="target">Hello World</div>'
       ).actualNode;
       const options = { textStrokeEmMin: 0 };
       const fgColor = getForegroundColor(target, null, null, options);
@@ -65,7 +65,7 @@ describe('color.getForegroundColor', () => {
 
     it('ignores stroke when less then the minimum', () => {
       const target = queryFixture(
-        '<div style="color: rgb(0 0 128); -webkit-text-stroke: 0.1em #CCC" id="target">Hello World</div>'
+        '<div style="color: rgb(0 0 128); font-size: 16px; -webkit-text-stroke: 0.1em #CCC" id="target">Hello World</div>'
       ).actualNode;
       const options = { textStrokeEmMin: 0.2 };
       const fgColor = getForegroundColor(target, null, null, options);
@@ -74,16 +74,16 @@ describe('color.getForegroundColor', () => {
 
     it('uses stroke color when thickness is equal to the minimum', () => {
       const target = queryFixture(
-        '<div style="color: #CCC; -webkit-text-stroke: 0.2em rgb(0 0 128);" id="target">Hello World</div>'
+        '<div style="color: #CCC; font-size: 16px; -webkit-text-stroke: 0.25em rgb(0 0 128);" id="target">Hello World</div>'
       ).actualNode;
-      const options = { textStrokeEmMin: 0.2 };
+      const options = { textStrokeEmMin: 0.25 };
       const fgColor = getForegroundColor(target, null, null, options);
       assertSameColor(fgColor, new Color(0, 0, 128));
     });
 
     it('blends the stroke color with `color`', () => {
       const target = queryFixture(
-        '<div style="color: rgb(0 0 55); -webkit-text-stroke: 0.2em rgb(0 0 255 / 50%);" id="target">Hello World</div>'
+        '<div style="color: rgb(0 0 55); font-size: 16px; -webkit-text-stroke: 0.2em rgb(0 0 255 / 50%);" id="target">Hello World</div>'
       ).actualNode;
       const options = { textStrokeEmMin: 0.1 };
       const fgColor = getForegroundColor(target, null, null, options);
@@ -129,6 +129,7 @@ describe('color.getForegroundColor', () => {
         `<div id="target" style="
           opacity: 0.5;
           color: transparent;
+          font-size: 16px;
           -webkit-text-stroke: 0.05em rgb(0 255 255 / 50%);
         ">Hello world</div>`
       ).actualNode;
