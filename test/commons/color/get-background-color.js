@@ -43,12 +43,21 @@ describe('color.getBackgroundColor', function () {
     origHtmlBg = document.documentElement.style.background;
   });
 
-  afterEach(function () {
-    document.body.style.background = origBodyBg;
-    document.documentElement.style.background = origHtmlBg;
+  beforeEach(function () {
+    // This normalizes the default mocha behavior of setting a different background
+    // based on prefers-color-scheme settings.
+    document.body.style.background = '#fff';
+    document.documentElement.style.background = 'unset';
+  });
 
+  afterEach(function () {
     axe.commons.color.incompleteData.clear();
     axe._tree = undefined;
+  });
+
+  after(function () {
+    document.body.style.background = origBodyBg;
+    document.documentElement.style.background = origHtmlBg;
   });
 
   it('should return the blended color if it has no background set', function () {
