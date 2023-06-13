@@ -7,6 +7,37 @@ describe('color.getBackgroundColor', function () {
   var origBodyBg;
   var origHtmlBg;
 
+  /**
+   * Assert that two Colors are equal.
+   * @param {axe.commons.color.Color[]} actual
+   * @param {axe.commons.color.Color[]} expected
+   */
+  function assertColorsEqual(actual, expected) {
+    assert.equal(actual.red, expected.red, 'red');
+    assert.equal(actual.green, expected.green, 'green');
+    assert.equal(actual.blue, expected.blue, 'blue');
+    assert.equal(actual.alpha, expected.alpha, 'alpha');
+  }
+
+  /**
+   * Assert that two Colors are close-to-equal.
+   * @param {axe.commons.color.Color[]} actual
+   * @param {axe.commons.color.Color[]} expected
+   * @param {number} threshold How much each RGB value may differ by
+   * @param {number} alphaThreshold How much the alpha channel may differ by
+   */
+  function assertColorsClose(
+    actual,
+    expected,
+    threshold = 0.5,
+    alphaThreshold = 0.1
+  ) {
+    assert.closeTo(actual.red, expected.red, threshold, 'red');
+    assert.closeTo(actual.green, expected.green, threshold, 'green');
+    assert.closeTo(actual.blue, expected.blue, threshold, 'blue');
+    assert.closeTo(actual.alpha, expected.alpha, alphaThreshold, 'alpha');
+  }
+
   before(function () {
     origBodyBg = document.body.style.background;
     origHtmlBg = document.documentElement.style.background;
@@ -31,10 +62,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(128, 0, 0, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -55,11 +83,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(64, 64, 0, 1);
-
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [target, pos]);
   });
 
@@ -75,10 +99,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(64, 64, 0, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [target, under]);
   });
 
@@ -101,11 +122,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(64, 64, 0, 1);
-
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [target, under]);
   });
 
@@ -120,10 +137,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(64, 64, 0, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [target, parent]);
   });
 
@@ -138,10 +152,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(64, 64, 0, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [target, parent]);
   });
 
@@ -155,10 +166,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(102, 153, 51, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
   });
 
   it('should apply opacity from an ancestor not in the element stack', function () {
@@ -173,10 +181,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(102, 153, 51, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
   });
 
   it('should return null if containing parent has a background image and is non-opaque', function () {
@@ -195,16 +200,13 @@ describe('color.getBackgroundColor', function () {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
   });
 
-  it('should return white if transparency goes all the way up to document', function () {
+  it('should return body color if transparency goes all the way up to document', function () {
     fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
     var target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target);
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
   });
 
   it('should return null if there is a background image', function () {
@@ -272,10 +274,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(0, 128, 0, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [target]);
   });
 
@@ -324,9 +323,8 @@ describe('color.getBackgroundColor', function () {
       document.getElementById('target'),
       []
     );
-    assert.equal(Math.round(actual.blue), 255);
-    assert.equal(Math.round(actual.red), 255);
-    assert.equal(Math.round(actual.green), 255);
+    var expected = new axe.commons.color.Color(255, 255, 255);
+    assertColorsClose(actual, expected);
   });
 
   it('should return null if an absolutely positioned element partially obsures background', function () {
@@ -362,10 +360,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -384,10 +379,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -406,10 +398,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -428,10 +417,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -450,10 +436,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -472,10 +455,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -491,10 +471,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.notEqual(bgNodes, [parent]);
   });
 
@@ -508,10 +485,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(0, 0, 0, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
   });
 
   it('handles nested inline elements in the middle of a text', function () {
@@ -527,10 +501,8 @@ describe('color.getBackgroundColor', function () {
     var bgNodes = [];
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
-    assert.equal(actual.red, 0);
-    assert.equal(actual.green, 255);
-    assert.equal(actual.blue, 255);
-    assert.equal(actual.alpha, 1);
+    var expected = new axe.commons.color.Color(0, 255, 255, 1);
+    assertColorsEqual(actual, expected);
   });
 
   it('should return null for inline elements with position:absolute', function () {
@@ -560,10 +532,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.notEqual(bgNodes, [parent]);
   });
 
@@ -586,10 +555,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
     var expected = new axe.commons.color.Color(243, 243, 243, 1);
-    assert.equal(actual.red, expected.red);
-    assert.equal(actual.green, expected.green);
-    assert.equal(actual.blue, expected.blue);
-    assert.equal(actual.alpha, expected.alpha);
+    assertColorsEqual(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -609,10 +575,7 @@ describe('color.getBackgroundColor', function () {
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -630,10 +593,7 @@ describe('color.getBackgroundColor', function () {
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -655,10 +615,7 @@ describe('color.getBackgroundColor', function () {
 
     assert.deepEqual(bgNodes, [shifted]);
 
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
   });
 
   it('should return null when encountering background images during visual traversal', function () {
@@ -715,10 +672,7 @@ describe('color.getBackgroundColor', function () {
 
     var expected = new axe.commons.color.Color(0, 0, 0, 1);
 
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
   });
 
   it('returns negative z-index elements when body has a background', function () {
@@ -736,10 +690,7 @@ describe('color.getBackgroundColor', function () {
 
     var expected = new axe.commons.color.Color(0, 0, 0, 1);
 
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
   });
 
   it('should return null for negative z-index element when html and body have a background', function () {
@@ -768,11 +719,7 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(fixture, []);
     var expected = new axe.commons.color.Color(255, 255, 255, 1);
-
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
   });
 
   it('should return the body bgColor when content does not overlap', function () {
@@ -783,11 +730,8 @@ describe('color.getBackgroundColor', function () {
     axe.testUtils.flatTreeSetup(fixture);
     var target = fixture.querySelector('#target');
     var actual = axe.commons.color.getBackgroundColor(target, []);
-
-    assert.closeTo(actual.red, 255, 0);
-    assert.closeTo(actual.green, 255, 0);
-    assert.closeTo(actual.blue, 255, 0);
-    assert.closeTo(actual.alpha, 1, 0);
+    var expected = new axe.commons.color.Color(255, 255, 255, 1);
+    assertColorsEqual(actual, expected);
   });
 
   it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function () {
@@ -801,17 +745,16 @@ describe('color.getBackgroundColor', function () {
     document.body.style.background = '#000';
     document.body.style.margin = 0;
 
-    axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var actual = axe.commons.color.getBackgroundColor(target, []);
-
-    assert.closeTo(actual.red, 0, 0);
-    assert.closeTo(actual.green, 0, 0);
-    assert.closeTo(actual.blue, 0, 0);
-    assert.closeTo(actual.alpha, 1, 0);
-
-    document.body.style.height = originalHeight;
-    document.body.style.margin = originalMargin;
+    try {
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var actual = axe.commons.color.getBackgroundColor(target, []);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
+    } finally {
+      document.body.style.height = originalHeight;
+      document.body.style.margin = originalMargin;
+    }
   });
 
   it('should return the html canvas bgColor when element content does not overlap with body', function () {
@@ -824,16 +767,15 @@ describe('color.getBackgroundColor', function () {
     document.body.style.background = '#0f0';
     document.documentElement.style.background = '#f00';
 
-    axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var actual = axe.commons.color.getBackgroundColor(target, []);
-
-    assert.closeTo(actual.red, 255, 0);
-    assert.closeTo(actual.green, 0, 0);
-    assert.closeTo(actual.blue, 0, 0);
-    assert.closeTo(actual.alpha, 1, 0);
-
-    document.body.style.height = originalHeight;
+    try {
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var actual = axe.commons.color.getBackgroundColor(target, []);
+      var expected = new axe.commons.color.Color(255, 0, 0, 1);
+      assertColorsEqual(actual, expected);
+    } finally {
+      document.body.style.height = originalHeight;
+    }
   });
 
   it('should apply mix-blend-mode', function () {
@@ -870,10 +812,8 @@ describe('color.getBackgroundColor', function () {
       var target = shadow.querySelector('#shadowTarget');
       var actual = axe.commons.color.getBackgroundColor(target, []);
 
-      assert.closeTo(actual.red, 0, 0);
-      assert.closeTo(actual.green, 0, 0);
-      assert.closeTo(actual.blue, 0, 0);
-      assert.closeTo(actual.alpha, 1, 0);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -890,11 +830,8 @@ describe('color.getBackgroundColor', function () {
 
       var target = shadow.querySelector('#shadowTarget');
       var actual = axe.commons.color.getBackgroundColor(target, [], false);
-
-      assert.equal(actual.red, 0);
-      assert.equal(actual.green, 0);
-      assert.equal(actual.blue, 0);
-      assert.equal(actual.alpha, 1);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -911,11 +848,7 @@ describe('color.getBackgroundColor', function () {
       axe.testUtils.flatTreeSetup(fixture);
       var actual = axe.commons.color.getBackgroundColor(target, []);
       var expected = new axe.commons.color.Color(0, 0, 0, 1);
-
-      assert.equal(actual.red, expected.red);
-      assert.equal(actual.green, expected.green);
-      assert.equal(actual.blue, expected.blue);
-      assert.equal(actual.alpha, expected.alpha);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -933,10 +866,8 @@ describe('color.getBackgroundColor', function () {
       var target = shadow.querySelector('#shadowTarget');
       axe.testUtils.flatTreeSetup(fixture);
       var actual = axe.commons.color.getBackgroundColor(target, []);
-      assert.equal(actual.red, 255);
-      assert.equal(actual.green, 255);
-      assert.equal(actual.blue, 255);
-      assert.equal(actual.alpha, 1);
+      var expected = new axe.commons.color.Color(255, 255, 255, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -954,10 +885,8 @@ describe('color.getBackgroundColor', function () {
       var elm2 = document.querySelector('#elm2');
       axe.testUtils.flatTreeSetup(fixture);
       var actual = axe.commons.color.getBackgroundColor(elm2, []);
-      assert.equal(actual.red, 0);
-      assert.equal(actual.blue, 0);
-      assert.equal(actual.green, 0);
-      assert.equal(actual.alpha, 1);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -983,10 +912,8 @@ describe('color.getBackgroundColor', function () {
       var elm3 = shadow2.querySelector('#elm3');
       axe.testUtils.flatTreeSetup(fixture);
       var actual = axe.commons.color.getBackgroundColor(elm3, []);
-      assert.closeTo(actual.red, 128, 2);
-      assert.closeTo(actual.blue, 128, 2);
-      assert.closeTo(actual.green, 128, 2);
-      assert.closeTo(actual.alpha, 1, 0);
+      var expected = new axe.commons.color.Color(128, 128, 128, 1);
+      assertColorsClose(actual, expected, 2, 0);
     }
   );
 
@@ -1002,10 +929,8 @@ describe('color.getBackgroundColor', function () {
       axe.testUtils.flatTreeSetup(fixture);
       var target = shadow.querySelector('#shadowTarget');
       var actual = axe.commons.color.getBackgroundColor(target, []);
-      assert.equal(actual.red, 0);
-      assert.equal(actual.green, 0);
-      assert.equal(actual.blue, 0);
-      assert.equal(actual.alpha, 1);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -1036,10 +961,8 @@ describe('color.getBackgroundColor', function () {
       axe.testUtils.flatTreeSetup(fixture);
       var linkElm = div.querySelector('a');
       var actual = axe.commons.color.getBackgroundColor(linkElm, []);
-      assert.equal(actual.red, 0);
-      assert.equal(actual.green, 0);
-      assert.equal(actual.blue, 0);
-      assert.equal(actual.alpha, 1);
+      var expected = new axe.commons.color.Color(0, 0, 0, 1);
+      assertColorsEqual(actual, expected);
     }
   );
 
@@ -1056,10 +979,7 @@ describe('color.getBackgroundColor', function () {
 
     // is 128 without the shadow
     var expected = new axe.commons.color.Color(145, 0, 0, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
     assert.deepEqual(bgNodes, [parent]);
   });
 
@@ -1072,11 +992,8 @@ describe('color.getBackgroundColor', function () {
     var bgNodes = [];
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
-
-    assert.equal(actual.red, 0);
-    assert.equal(actual.green, 0);
-    assert.equal(actual.blue, 0);
-    assert.equal(actual.alpha, 1);
+    var expected = new axe.commons.color.Color(0, 0, 0, 1);
+    assertColorsEqual(actual, expected);
   });
 
   it('ignores text-shadows thinner than shadowOutlineEmMax', function () {
@@ -1091,10 +1008,7 @@ describe('color.getBackgroundColor', function () {
 
     // is 128 without the shadow
     var expected = new axe.commons.color.Color(145, 0, 0, 1);
-    assert.closeTo(actual.red, expected.red, 0.5);
-    assert.closeTo(actual.green, expected.green, 0.5);
-    assert.closeTo(actual.blue, expected.blue, 0.5);
-    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+    assertColorsClose(actual, expected);
   });
 
   describe('body and document', function () {
@@ -1108,11 +1022,7 @@ describe('color.getBackgroundColor', function () {
         []
       );
       var expected = new axe.commons.color.Color(255, 0, 0, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
 
     it('returns the body background even when the body is MUCH larger than the screen', function () {
@@ -1126,10 +1036,7 @@ describe('color.getBackgroundColor', function () {
       );
       var expected = new axe.commons.color.Color(255, 0, 0, 1);
 
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
 
     it('returns the html background', function () {
@@ -1145,10 +1052,7 @@ describe('color.getBackgroundColor', function () {
       document.body.removeAttribute('style');
       var expected = new axe.commons.color.Color(0, 255, 0, 1);
 
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
 
     it('returns the html background when body does not cover the element', function () {
@@ -1164,10 +1068,7 @@ describe('color.getBackgroundColor', function () {
       );
       var expected = new axe.commons.color.Color(0, 255, 0, 1);
 
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
 
     it('returns the body background when body does cover the element', function () {
@@ -1182,10 +1083,7 @@ describe('color.getBackgroundColor', function () {
       );
       var expected = new axe.commons.color.Color(0, 0, 255, 1);
 
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
 
     it('returns both the html and body background if the body has alpha', function () {
@@ -1200,10 +1098,7 @@ describe('color.getBackgroundColor', function () {
       );
       var expected = new axe.commons.color.Color(0, 128, 128, 1);
 
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
+      assertColorsClose(actual, expected);
     });
   });
 });
