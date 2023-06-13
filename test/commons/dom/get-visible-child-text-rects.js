@@ -14,20 +14,20 @@ describe('dom.getVisibleChildTextRects', () => {
   }
 
   /**
-   * Asset that two DOMRect arrays are equal.
-   * @param {DOMRect[]} rectAs
-   * @param {DOMRect[]} rectBs
+   * Assert that two DOMRect arrays are equal.
+   * @param {DOMRect[]} actualRects
+   * @param {DOMRect[]} expectedRects
    */
-  function assertRectsEqual(rectAs, rectBs) {
-    assert.equal(rectAs.length, rectBs.length);
-    rectAs.forEach((rect, index) => {
-      const rectA = rectAs[index];
-      const rectB = rectBs[index];
+  function assertRectsEqual(actualRects, expectedRects) {
+    assert.equal(actualRects.length, expectedRects.length);
+    actualRects.forEach((rect, index) => {
+      const actual = actualRects[index];
+      const expected = expectedRects[index];
 
-      assert.approximately(rectA.left, rectB.left, 1);
-      assert.approximately(rectA.top, rectB.top, 1);
-      assert.approximately(rectA.width, rectB.width, 1);
-      assert.approximately(rectA.height, rectB.height, 1);
+      assert.approximately(actual.left, expected.left, 1, 'left');
+      assert.approximately(actual.top, expected.top, 1, 'top');
+      assert.approximately(actual.width, expected.width, 1, 'width');
+      assert.approximately(actual.height, expected.height, 1, 'height');
     });
   }
 

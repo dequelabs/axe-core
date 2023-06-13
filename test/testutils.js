@@ -17,6 +17,11 @@ var originalAudit = axe._audit;
 var originalRules = axe._audit.rules;
 var originalCommons = (commons = axe.commons);
 
+// Global chai configuration
+if (window.chai) {
+  window.chai.config.truncateThreshold = 0;
+}
+
 // add fixture to the body if it's not already
 var fixture = document.getElementById('fixture');
 if (!fixture) {
@@ -597,8 +602,9 @@ if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
       }
     }
 
-    // reset body styles
+    // reset html and body styles
     document.body.removeAttribute('style');
+    document.documentElement.removeAttribute('style');
   });
 }
 
