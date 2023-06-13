@@ -2,6 +2,8 @@ describe('color.getForegroundColor', () => {
   const { getForegroundColor, Color } = axe.commons.color;
   const { queryFixture, queryShadowFixture } = axe.testUtils;
 
+  var origBodyBg;
+
   function assertSameColor(actual, expected, margin = 0) {
     assert.closeTo(actual.red, expected.red, margin);
     assert.closeTo(actual.green, expected.green, margin);
@@ -10,9 +12,23 @@ describe('color.getForegroundColor', () => {
     assert.closeTo(actual.alpha, expected.alpha, margin / 255);
   }
 
+  before(() => {
+    origBodyBg = document.body.style.background;
+  });
+
+  beforeEach(() => {
+    // This normalizes the default mocha behavior of setting a different background
+    // based on prefers-color-scheme settings.
+    document.body.style.background = '#fff';
+  });
+
   afterEach(() => {
     axe.commons.color.incompleteData.clear();
     document.body.scrollTop = 0;
+  });
+
+  after(() => {
+    document.body.style.background = origBodyBg;
   });
 
   it('returns the CSS color property', () => {
