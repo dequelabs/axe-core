@@ -42,34 +42,19 @@ describe('axe.utils.findBy', function () {
   });
 
   it('ignores any non-object elements in the array', function () {
-    var array = [
-      {
-        id: 'monkeys',
-        foo: 'bar'
-      },
-      'bananas',
-      true,
-      null,
-      123
-    ];
+    const obj = {
+      id: 'monkeys',
+      foo: 'bar'
+    };
+    const array = ['bananas', true, null, 123, obj];
 
-    assert.equal(axe.utils.findBy(array, 'id', 'monkeys'), array[0]);
+    assert.equal(axe.utils.findBy(array, 'id', 'monkeys'), obj);
   });
 
   it('only looks at owned properties', function () {
-    var array = [
-      {
-        id: 'monkeys',
-        Constructor: 'monkeys'
-      },
-      {
-        id: 'bananas'
-      }
-    ];
-
-    assert.deepEqual(axe.utils.findBy(array, 'Constructor', 'monkeys'), {
-      id: 'monkeys',
-      Constructor: 'monkeys'
-    });
+    const obj1 = { id: 'monkeys', eat: 'bananas' };
+    const obj2 = Object.create(obj1);
+    obj2.id = 'gorillas';
+    assert.equal(axe.utils.findBy([obj2, obj1], 'eat', 'bananas'), obj1);
   });
 });

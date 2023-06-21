@@ -95,7 +95,7 @@ describe('aria.getAccessibleRefs', function () {
         setLookup({ 'aria-bar': { type: 'idrefs' } });
         fixture.innerHTML = `<div id="ref" aria-bar="${ids.join(
           ' '
-        )}"></div><i id="${id}"></i></b>`;
+        )}"></div><i id="${id}"></i>`;
 
         var node = document.getElementById(id);
         var ref = document.getElementById('ref');
