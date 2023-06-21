@@ -29,7 +29,7 @@ describe('region', function () {
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
-  it('should return true when the region was removed from standards', () => {
+  it('should return true when a region role is added to standards', () => {
     axe.configure({
       standards: {
         ariaRoles: {
