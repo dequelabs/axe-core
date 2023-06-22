@@ -18,6 +18,7 @@ describe('region', function () {
   afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
+    axe.reset();
   });
 
   it('should return true when content is inside the region', function () {
@@ -25,6 +26,23 @@ describe('region', function () {
       '<div role="main"><a id="target" href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>'
     );
 
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when a region role is added to standards', () => {
+    axe.configure({
+      standards: {
+        ariaRoles: {
+          feed: {
+            type: 'landmark'
+          }
+        }
+      }
+    });
+    var checkArgs = checkSetup(
+      '<div role="feed" id="target">This is random content.</div>' +
+        '<div role="main"><h1 id="mainheader">Introduction</h1></div>'
+    );
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
