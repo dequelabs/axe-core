@@ -4,7 +4,16 @@
   "selector": "audio[autoplay], video[autoplay]",
   "matches": "no-autoplay-audio-matches",
   "reviewOnFail": true,
-  "tags": ["cat.time-and-media", "wcag2a", "wcag142", "ACT", "TTv5", "TT2.a"],
+  "tags": [
+    "cat.time-and-media",
+    "wcag2a",
+    "wcag142",
+    "TTv5",
+    "TT2.a",
+    "EN.301.549",
+    "EN-9.1.4.2",
+    "ACT"
+  ],
   "actIds": ["80f0bf"],
   "metadata": {
     "description": "Ensures <video> or <audio> elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio",

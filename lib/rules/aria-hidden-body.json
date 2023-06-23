@@ -3,7 +3,7 @@
   "selector": "body",
   "excludeHidden": false,
   "matches": "is-initiator-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "tags": ["cat.aria", "wcag2a", "wcag412", "EN.301.549", "EN-9.4.1.2"],
   "metadata": {
     "description": "Ensures aria-hidden='true' is not present on the document body.",
     "help": "aria-hidden='true' must not be present on the document body"

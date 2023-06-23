@@ -8,9 +8,11 @@
     "wcag412",
     "section508",
     "section508.22.a",
-    "ACT",
     "TTv5",
-    "TT5.c"
+    "TT5.c",
+    "EN.301.549",
+    "EN-9.4.1.2",
+    "ACT"
   ],
   "actIds": ["97a4e1"],
   "metadata": {

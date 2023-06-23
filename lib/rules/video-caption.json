@@ -8,7 +8,9 @@
     "section508",
     "section508.22.a",
     "TTv5",
-    "TT17.a"
+    "TT17.a",
+    "EN.301.549",
+    "EN-9.1.2.2"
   ],
   "actIds": ["eac66b"],
   "metadata": {
