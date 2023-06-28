@@ -306,7 +306,7 @@ function validateRule({ tags, metadata }) {
   return issues;
 }
 
-const uniqueTags = ['ACT', 'experimental', 'review-item', 'deprecated'];
+const miscTags = ['ACT', 'experimental', 'review-item', 'deprecated'];
 
 const categories = [
   'aria',
@@ -326,6 +326,7 @@ const categories = [
 
 const standardsTags = [
   {
+    // Has to be first, as others rely on the WCAG level getting picked up first
     name: 'WCAG',
     standardRegex: /^wcag2(1|2)?a{1,3}$/,
     criterionRegex: /^wcag\d{3,4}$/
@@ -334,19 +335,19 @@ const standardsTags = [
     name: 'Section 508',
     standardRegex: /^section508$/,
     criterionRegex: /^section508\.\d{1,2}\.[a-z]$/,
-    wcagLevelRegex: /wcag2aa?/
+    wcagLevelRegex: /^wcag2aa?$/
   },
   {
     name: 'Trusted Tester',
     standardRegex: /^TTv5$/,
     criterionRegex: /^TT\d{1,3}\.[a-z]$/,
-    wcagLevelRegex: /wcag2aa?/
+    wcagLevelRegex: /^wcag2aa?$/
   },
   {
     name: 'EN 301 549',
-    standardRegex: /^EN.301.549$/,
+    standardRegex: /^EN\.301\.549$/,
     criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/,
-    wcagLevelRegex: /wcag21?aa?/
+    wcagLevelRegex: /^wcag21?aa?$/
   }
 ];
 
@@ -354,7 +355,6 @@ function findTagIssues(tags) {
   const issues = [];
   const catTags = tags.filter(tag => tag.startsWith('cat.'));
   const bestPracticeTags = tags.filter(tag => tag === 'best-practice');
-  const miscTags = tags.filter(tag => uniqueTags.includes(tag));
 
   // Category
   if (catTags.length !== 1) {
@@ -398,18 +398,16 @@ function findTagIssues(tags) {
       standardTag: standardTags[0] ?? null,
       criterionTags
     };
-    if (bestPracticeTags.length) {
+    if (bestPracticeTags.length !== 0) {
       issues.push(`${name} tags cannot be used along side best-practice tag`);
     }
-    if (standardTags === 0) {
+    if (standardTags.length === 0) {
       issues.push(`Expected one ${name} tag, got 0`);
     } else if (standardTags.length > 1) {
       issues.push(`Expected one ${name} tag, got: ${standardTags.join(', ')}`);
     }
-    if (!criterionTags.length) {
-      issues.push(
-        `Expected at least one ${name} criterion tag, got ${criterionTags.length}`
-      );
+    if (criterionTags.length === 0) {
+      issues.push(`Expected at least one ${name} criterion tag, got 0`);
     }
 
     if (wcagLevelRegex) {
@@ -438,26 +436,26 @@ function findTagIssues(tags) {
         );
       }
     }
-
-    if (!startsWith(tags, bestPracticeTags)) {
-      issues.push(`Tag ${bestPracticeTags[0]} must be before ${tags[0]}`);
-    }
     tags = removeTags(tags, [...standardTags, ...criterionTags]);
   }
 
   // Other tags
   const usedMiscTags = miscTags.filter(tag => tags.includes(tag));
-  if (!startsWith(tags, usedMiscTags)) {
-    issues.push(
-      `Tag [${usedMiscTags.join(',')}] must be before [${tags.join(',')}]`
-    );
-  }
   const unknownTags = removeTags(tags, usedMiscTags);
-
-  // At this point all known tags are filtered
   if (unknownTags.length) {
     issues.push(`Invalid tags: ${unknownTags.join(', ')}`);
   }
+
+  // At this point only misc tags are left:
+  tags = removeTags(tags, unknownTags);
+  if (!startsWith(tags, usedMiscTags)) {
+    issues.push(
+      `Tags [${tags.join(', ')}] should be sorted like [${usedMiscTags.join(
+        ', '
+      )}]`
+    );
+  }
+
   return issues;
 }
 
