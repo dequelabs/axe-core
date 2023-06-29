@@ -96,7 +96,7 @@ describe('utils.clone', () => {
     assert.deepEqual(Cat.prototype.meow, c.meow);
   });
 
-  it('should clone circular objects', () => {
+  it('should clone circular objects while keeping the circular reference', () => {
     const obj = { cats: true };
     obj.child = obj;
     const c = clone(obj);
@@ -107,6 +107,26 @@ describe('utils.clone', () => {
       cats: true,
       child: c
     });
+    assert.equal(c, c.child);
+  });
+
+  it('should not return the same object when cloned twice', () => {
+    const obj = { cats: true };
+    const c1 = clone(obj);
+    const c2 = clone(obj);
+
+    assert.notEqual(c1, c2);
+  });
+
+  it('should not return the same object when nested', () => {
+    const obj = { dogs: true };
+    const obj1 = { cats: true, child: { prop: obj } };
+    const obj2 = { fish: [0, 1, 2], child: { prop: obj } };
+
+    const c1 = clone(obj1);
+    const c2 = clone(obj2);
+
+    assert.notEqual(c1.child.prop, c2.child.prop);
   });
 
   it('should not clone HTML elements', () => {
