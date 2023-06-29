@@ -76,23 +76,26 @@ Each rule in axe-core has a number of tags. These provide metadata about the rul
 
 The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
-| Tag Name         | Accessibility Standard / Purpose                     |
-| ---------------- | ---------------------------------------------------- |
-| `wcag2a`         | WCAG 2.0 Level A                                     |
-| `wcag2aa`        | WCAG 2.0 Level AA                                    |
-| `wcag2aaa`       | WCAG 2.0 Level AAA                                   |
-| `wcag21a`        | WCAG 2.1 Level A                                     |
-| `wcag21aa`       | WCAG 2.1 Level AA                                    |
-| `wcag22aa`       | WCAG 2.2 Level AA                                    |
-| `best-practice`  | Common accessibility best practices                  |
-| `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
-| `ACT`            | W3C approved Accessibility Conformance Testing rules |
-| `section508`     | Old Section 508 rules                                |
-| `section508.*.*` | Requirement in old Section 508                       |
-| `TTv5`           | Trusted Tester v5 rules                              |
-| `TT*.*`          | Test ID in Trusted Tester                            |
-| `experimental`   | Cutting-edge rules, disabled by default              |
-| `cat.*`          | Category mappings used by Deque (see below)          |
+| Tag Name          | Accessibility Standard / Purpose                                                                                              |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `wcag2a`          | WCAG 2.0 Level A                                                                                                              |
+| `wcag2aa`         | WCAG 2.0 Level AA                                                                                                             |
+| `wcag2aaa`        | WCAG 2.0 Level AAA                                                                                                            |
+| `wcag21a`         | WCAG 2.1 Level A                                                                                                              |
+| `wcag21aa`        | WCAG 2.1 Level AA                                                                                                             |
+| `wcag22aa`        | WCAG 2.2 Level AA                                                                                                             |
+| `best-practice`   | Common accessibility best practices                                                                                           |
+| `wcag2a-obsolete` | WCAG 2.0 Level A, no longer required for conformance                                                                          |
+| `wcag***`         | WCAG success criterion e.g. wcag111 maps to SC 1.1.1                                                                          |
+| `ACT`             | W3C approved Accessibility Conformance Testing rules                                                                          |
+| `section508`      | Old Section 508 rules                                                                                                         |
+| `section508.*.*`  | Requirement in old Section 508                                                                                                |
+| `TTv5`            | Trusted Tester v5 rules                                                                                                       |
+| `TT*.*`           | Test ID in Trusted Tester                                                                                                     |
+| `EN-301-549`      | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf) |
+| `EN-9.*`          | Section in EN 301 549 listing the requirement                                                                                 |
+| `experimental`    | Cutting-edge rules, disabled by default                                                                                       |
+| `cat.*`           | Category mappings used by Deque (see below)                                                                                   |
 
 All rules have a `cat.*` tag, which indicates what type of content it is part of. The following `cat.*` tags exist in axe-core:
 

@@ -2,7 +2,14 @@
   "id": "avoid-inline-spacing",
   "selector": "[style]",
   "matches": "is-visible-on-screen-matches",
-  "tags": ["cat.structure", "wcag21aa", "wcag1412", "ACT"],
+  "tags": [
+    "cat.structure",
+    "wcag21aa",
+    "wcag1412",
+    "EN-301-549",
+    "EN-9.1.4.12",
+    "ACT"
+  ],
   "actIds": ["24afc2", "9e45ec", "78fd32"],
   "metadata": {
     "description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
