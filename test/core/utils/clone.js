@@ -139,7 +139,7 @@ describe('utils.clone', () => {
     obj.cats = false;
 
     assert.equal(c.cats, true);
-    assert.equal(c.node, obj.node);
+    assert.strictEqual(c.node, obj.node);
   });
 
   it('should not clone HTML elements from different windows', () => {
@@ -155,6 +155,6 @@ describe('utils.clone', () => {
     obj.cats = false;
 
     assert.equal(c.cats, true);
-    assert.equal(c.node, obj.node);
+    assert.strictEqual(c.node, obj.node);
   });
 });
