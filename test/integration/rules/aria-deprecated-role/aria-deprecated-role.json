@@ -1,0 +1,5 @@
+{
+  "description": "aria-deprecated-role tests",
+  "rule": "aria-deprecated-role",
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]]
+}

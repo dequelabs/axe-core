@@ -14,10 +14,7 @@
     ["#fail10"],
     ["#fail11"],
     ["#fail12"],
-    ["#fail13"],
-    ["#fail14"],
-    ["#fail15"],
-    ["#fail16"]
+    ["#fail13"]
   ],
   "passes": [
     ["#pass1"],

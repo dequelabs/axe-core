@@ -21,6 +21,10 @@
       "description": "Ensures every ARIA button, link and menuitem has an accessible name",
       "help": "ARIA commands must have an accessible name"
     },
+    "aria-deprecated-role": {
+      "description": "Ensures elements do not use deprecated roles",
+      "help": "ARIA roles used must not be deprecated"
+    },
     "aria-dialog-name": {
       "description": "Ensures every ARIA dialog and alertdialog node has an accessible name",
       "help": "ARIA dialog and alertdialog nodes should have an accessible name"

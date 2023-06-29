@@ -1,0 +1,15 @@
+{
+  "id": "aria-deprecated-role",
+  "selector": "[role]",
+  "matches": "no-empty-role-matches",
+  "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "impact": "minor",
+  "actIds": ["674b10"],
+  "metadata": {
+    "description": "Ensures elements do not use deprecated roles",
+    "help": "ARIA roles used must not be deprecated"
+  },
+  "all": [],
+  "any": [],
+  "none": ["deprecatedrole"]
+}
