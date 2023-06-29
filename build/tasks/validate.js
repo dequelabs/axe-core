@@ -328,7 +328,7 @@ const standardsTags = [
   {
     // Has to be first, as others rely on the WCAG level getting picked up first
     name: 'WCAG',
-    standardRegex: /^wcag2(1|2)?a{1,3}$/,
+    standardRegex: /^wcag2(1|2)?a{1,3}(-obsolete)?$/,
     criterionRegex: /^wcag\d{3,4}$/
   },
   {
@@ -345,7 +345,7 @@ const standardsTags = [
   },
   {
     name: 'EN 301 549',
-    standardRegex: /^EN\.301\.549$/,
+    standardRegex: /^EN-301-549$/,
     criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/,
     wcagLevelRegex: /^wcag21?aa?$/
   }

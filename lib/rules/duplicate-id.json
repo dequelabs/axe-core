@@ -3,7 +3,7 @@
   "selector": "[id]",
   "matches": "duplicate-id-misc-matches",
   "excludeHidden": false,
-  "tags": ["cat.parsing", "wcag2a", "wcag411", "EN.301.549", "EN-9.4.1.1"],
+  "tags": ["cat.parsing", "wcag2a", "wcag411", "EN-301-549", "EN-9.4.1.1"],
   "actIds": ["3ea0c8"],
   "metadata": {
     "description": "Ensures every id attribute value is unique",

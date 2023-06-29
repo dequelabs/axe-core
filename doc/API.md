@@ -91,7 +91,7 @@ The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some ru
 | `section508.*.*` | Requirement in old Section 508                                                                                                |
 | `TTv5`           | Trusted Tester v5 rules                                                                                                       |
 | `TT*.*`          | Test ID in Trusted Tester                                                                                                     |
-| `EN.301.549`     | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf) |
+| `EN-301-549`     | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf) |
 | `EN-9.*`         | Section in EN 301 549 listing the requirement                                                                                 |
 | `experimental`   | Cutting-edge rules, disabled by default                                                                                       |
 | `cat.*`          | Category mappings used by Deque (see below)                                                                                   |
