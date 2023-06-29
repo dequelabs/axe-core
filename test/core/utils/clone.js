@@ -107,7 +107,7 @@ describe('utils.clone', () => {
       cats: true,
       child: c
     });
-    assert.equal(c, c.child);
+    assert.strictEqual(c, c.child);
   });
 
   it('should not return the same object when cloned twice', () => {
@@ -115,7 +115,7 @@ describe('utils.clone', () => {
     const c1 = clone(obj);
     const c2 = clone(obj);
 
-    assert.notEqual(c1, c2);
+    assert.notStrictEqual(c1, c2);
   });
 
   it('should not return the same object when nested', () => {
@@ -126,7 +126,7 @@ describe('utils.clone', () => {
     const c1 = clone(obj1);
     const c2 = clone(obj2);
 
-    assert.notEqual(c1.child.prop, c2.child.prop);
+    assert.notStrictEqual(c1.child.prop, c2.child.prop);
   });
 
   it('should not clone HTML elements', () => {
