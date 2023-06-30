@@ -3,7 +3,15 @@
   "selector": "[aria-hidden=\"true\"]",
   "matches": "aria-hidden-focus-matches",
   "excludeHidden": false,
-  "tags": ["cat.name-role-value", "wcag2a", "wcag412", "TTv5", "TT6.a"],
+  "tags": [
+    "cat.name-role-value",
+    "wcag2a",
+    "wcag412",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.4.1.2"
+  ],
   "actIds": ["6cfa84"],
   "metadata": {
     "description": "Ensures aria-hidden elements are not focusable nor contain focusable elements",
