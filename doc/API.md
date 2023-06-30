@@ -621,6 +621,8 @@ The `assets` attribute expects an array of preload(able) constraints to be fetch
 
 The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
 
+Preloading is not applicable to all rules. Even if the `preload` option is enabled, preloading steps may be skipped if no enabled rules require preloading.
+
 ##### Callback Parameter
 
 The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of axe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
