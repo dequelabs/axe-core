@@ -192,4 +192,154 @@ describe('axe.commons.color.getTextShadowColors', function () {
     assert.equal(shadowColors[0].blue, 0);
     assert.equal(shadowColors[0].alpha, 0);
   });
+
+  describe('with shadows that combine to a stroke', () => {
+    const opt = { minRatio: 0.01 };
+    it('combines multiple shadows without blur into a single stroke', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px #F00,
+          2px 0 #F00,
+          0 2px #F00,
+          -2px 0 #F00;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.deepEqual(shadowColors, [
+        {
+          red: 255,
+          green: 0,
+          blue: 0,
+          alpha: 1
+        }
+      ]);
+    });
+
+    it('only combines shadows thinner than minRatio', () => {
+      const minRatio = 0.1; // .1em (has to be greater than 1px, or this will be null)
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px ${minRatio}em #000,
+          2px 0 ${minRatio}em #000,
+          0 2px ${minRatio}em #000,
+          -2px 0 ${minRatio}em #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, {
+        minRatio
+      });
+      assert.lengthOf(shadowColors, 4);
+    });
+
+    it('skips raised-letter effects (shadows on 1 or 2 sides)', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -1px #000,
+          -1px -1px #000,
+          -1px 0 #000,
+          1px 1px #fff;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 0);
+    });
+
+    it('skips shadows offset with 0.5px or less', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0.5px 0.5px #000,
+          -0.5px -0.5px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 0);
+    });
+
+    it('applies an alpha value to shadows of 1.5px or less', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -1.5px #000,
+          1.5px 0 #000,
+          0 1.5px #000,
+          -1.5px 0 #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 0);
+      assert.equal(shadowColors[0].green, 0);
+      assert.equal(shadowColors[0].blue, 0);
+      assert.closeTo(shadowColors[0].alpha, 0.46, 0.01);
+    });
+
+    it('applies an alpha value if not all shadows are offset by more than 1.5px', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px #000,
+          2px 0 #000,
+          0 1.5px #000,
+          -1.5px 0 #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 0);
+      assert.equal(shadowColors[0].green, 0);
+      assert.equal(shadowColors[0].blue, 0);
+      assert.closeTo(shadowColors[0].alpha, 0.46, 0.01);
+    });
+
+    it('multiplies alpha value for each shadow', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -1px #000,
+          0 -1px #000,
+          1px 0 #000,
+          1px 0 #000,
+          0 1px #000,
+          0 1px #000,
+          -1px 0 #000,
+          -1px 0 #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 0);
+      assert.equal(shadowColors[0].green, 0);
+      assert.equal(shadowColors[0].blue, 0);
+      assert.closeTo(shadowColors[0].alpha, 0.7, 0.01);
+    });
+
+    it('double-counts shadows on corners', () => {
+      // Corner-shadows overlap on the sides of letters, increasing alpha
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          -1px -1px #000,
+          1px -1px #000,
+          1px 1px #000,
+          -1px 1px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 0);
+      assert.equal(shadowColors[0].green, 0);
+      assert.equal(shadowColors[0].blue, 0);
+      assert.closeTo(shadowColors[0].alpha, 0.7, 0.01);
+    });
+
+    it('places the combined shadow in the correct order with shadows', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -1px #000, 1px 0 #000, 0 1px #000, -1px 0 #000,
+          0 0 1em #111,
+          0 -1px #222, 1px 0 #222, 0 1px #222, -1px 0 #222,
+          1px 1px 0.2em #333;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      const hexColors = shadowColors.map(color => color.toHexString()[1]);
+      assert.deepEqual(['0', '1', '2', '3'], hexColors);
+    });
+  });
 });
