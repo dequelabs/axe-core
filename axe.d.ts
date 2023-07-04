@@ -392,6 +392,42 @@ declare namespace axe {
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
     getStandards(): Required<Standards>;
+    DqElement: new (
+      elm: Element,
+      options?: { absolutePaths?: boolean }
+    ) => SerialDqElement;
+    uuid: (
+      options?: { random?: Uint8Array | Array<number> },
+      buf?: Uint8Array | Array<number>,
+      offset?: number
+    ) => string | Uint8Array | Array<number>;
+  }
+
+  interface Aria {
+    getRoleType: (role: string | Element | VirtualNode | null) => string | null;
+  }
+
+  interface Dom {
+    isFocusable: (node: Element | VirtualNode) => boolean;
+    isNativelyFocusable: (node: Element | VirtualNode) => boolean;
+  }
+
+  type AccessibleTextOptions = {
+    inControlContext?: boolean;
+    inLabelledByContext?: boolean;
+  };
+
+  interface Text {
+    accessibleText: (
+      element: Element,
+      options?: AccessibleTextOptions
+    ) => string;
+  }
+
+  interface Commons {
+    aria: Aria;
+    dom: Dom;
+    text: Text;
   }
 
   interface EnvironmentData {
@@ -405,6 +441,7 @@ declare namespace axe {
   let version: string;
   let plugins: any;
   let utils: Utils;
+  let commons: Commons;
 
   /**
    * Source string to use as an injected script in Selenium

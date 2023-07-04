@@ -381,3 +381,14 @@ var pluginSrc: axe.AxePlugin = {
 };
 axe.registerPlugin(pluginSrc);
 axe.cleanup();
+
+// Utils
+const dqElement = new axe.utils.DqElement(document.body);
+const element = axe.utils.shadowSelect(dqElement.selector[0]);
+const uuid = axe.utils.uuid() as string;
+
+// Commons
+axe.commons.aria.getRoleType('img');
+axe.commons.dom.isFocusable(document.body);
+axe.commons.dom.isNativelyFocusable(document.body);
+axe.commons.text.accessibleText(document.body);
