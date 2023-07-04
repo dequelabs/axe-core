@@ -221,8 +221,14 @@ var spec: axe.Spec = {
   checks: [
     {
       id: 'custom-check',
-      evaluate: function () {
+      evaluate: function (node) {
+        this.relatedNodes([node]);
+        this.data('some data');
         return true;
+      },
+      after: function (results) {
+        const id = results[0].id;
+        return results;
       },
       metadata: {
         impact: 'minor',
@@ -234,6 +240,13 @@ var spec: axe.Spec = {
             or: 'maybe not'
           }
         }
+      }
+    },
+    {
+      id: 'async-check',
+      evaluate: function (node) {
+        const done = this.async();
+        done(true);
       }
     }
   ],

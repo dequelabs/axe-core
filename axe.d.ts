@@ -260,10 +260,31 @@ declare namespace axe {
     brand?: string;
     application?: string;
   }
+  interface CheckHelper {
+    async: () => (result: boolean | undefined | Error) => void;
+    data: (data: unknown) => void;
+    relatedNodes: (nodes: Element[]) => void;
+  }
+  interface AfterResult {
+    id: string;
+    data?: unknown;
+    relatedNodes: SerialDqElement[];
+    result: boolean | undefined;
+    node: SerialDqElement;
+  }
   interface Check {
     id: string;
-    evaluate?: Function | string;
-    after?: Function | string;
+    evaluate?:
+      | string
+      | ((
+          this: CheckHelper,
+          node: Element,
+          options: unknown,
+          virtualNode: VirtualNode
+        ) => boolean | undefined | void);
+    after?:
+      | string
+      | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
     matches?: string;
     enabled?: boolean;
