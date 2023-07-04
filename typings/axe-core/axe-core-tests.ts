@@ -277,6 +277,9 @@ var spec: axe.Spec = {
     {
       id: 'custom-rule',
       any: ['custom-check'],
+      matches: function (node) {
+        return node.tagName === 'BODY';
+      },
       metadata: {
         description: 'custom rule',
         help: 'different help',

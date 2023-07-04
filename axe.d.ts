@@ -304,7 +304,7 @@ declare namespace axe {
     all?: string[];
     none?: string[];
     tags?: string[];
-    matches?: string;
+    matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
     metadata?: Omit<RuleMetadata, 'ruleId'>;
   }
