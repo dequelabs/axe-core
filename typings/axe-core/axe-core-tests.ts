@@ -318,6 +318,10 @@ axe.configure({
         incomplete: {
           foo: 'bar'
         }
+      },
+      bar: {
+        pass: 'pass',
+        fail: 'fail'
       }
     }
   }

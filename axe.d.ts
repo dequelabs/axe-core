@@ -196,7 +196,7 @@ declare namespace axe {
   interface CheckMessages {
     pass: string | { [key: string]: string };
     fail: string | { [key: string]: string };
-    incomplete: string | { [key: string]: string };
+    incomplete?: string | { [key: string]: string };
   }
   interface CheckLocale {
     [key: string]: CheckMessages;
