@@ -164,9 +164,9 @@ declare namespace axe {
   interface NodeResult {
     html: string;
     impact?: ImpactValue;
-    target: string[];
+    target: UnlabelledFrameSelector;
     xpath?: string[];
-    ancestry?: string[];
+    ancestry?: UnlabelledFrameSelector;
     any: CheckResult[];
     all: CheckResult[];
     none: CheckResult[];
@@ -181,7 +181,7 @@ declare namespace axe {
     relatedNodes?: RelatedNode[];
   }
   interface RelatedNode {
-    target: string[];
+    target: UnlabelledFrameSelector;
     html: string;
   }
   interface RuleLocale {
