@@ -306,7 +306,8 @@ declare namespace axe {
     tags?: string[];
     matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
-    metadata?: Omit<RuleMetadata, 'ruleId'>;
+    actIds?: string[];
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
   }
   interface AxePlugin {
     id: string;

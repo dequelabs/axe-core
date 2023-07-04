@@ -280,11 +280,12 @@ var spec: axe.Spec = {
       matches: function (node) {
         return node.tagName === 'BODY';
       },
+      tags: ['a'],
+      actIds: ['b'],
       metadata: {
         description: 'custom rule',
         help: 'different help',
-        helpUrl: 'https://example.com',
-        tags: ['custom']
+        helpUrl: 'https://example.com'
       }
     }
   ]
