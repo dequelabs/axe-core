@@ -181,8 +181,11 @@ declare namespace axe {
     relatedNodes?: RelatedNode[];
   }
   interface RelatedNode {
-    target: UnlabelledFrameSelector;
     html: string;
+    target: UnlabelledFrameSelector;
+    xpath?: string[];
+    ancestry?: UnlabelledFrameSelector;
+    element?: HTMLElement;
   }
   interface RuleLocale {
     [key: string]: {
