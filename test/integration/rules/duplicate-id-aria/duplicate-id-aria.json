@@ -1,6 +1,7 @@
 {
   "description": "duplicate-id-aria test",
   "rule": "duplicate-id-aria",
-  "violations": [[".fail1"]],
+  "violations": [],
+  "incomplete": [[".incomplete1"]],
   "passes": [["#pass1"], ["#pass2"]]
 }
