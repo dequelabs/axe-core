@@ -55,6 +55,29 @@ describe('utils.selector-cache', function () {
 
       assert.lengthOf(Object.keys(map), 0);
     });
+
+    describe('with javascripty attribute selectors', function () {
+      const terms = [
+        'prototype',
+        'constructor',
+        '__proto__',
+        'Element',
+        'nodeName',
+        'valueOf',
+        'toString'
+      ];
+      for (const term of terms) {
+        it(`works with ${term}`, function () {
+          fixture.innerHTML = `<div id="${term}" class="${term}" aria-label="${term}"></div>`;
+          const vNode = new axe.VirtualNode(fixture.firstChild);
+          const map = {};
+          cacheNodeSelectors(vNode, map);
+          assert.deepEqual(map['[id]'], [vNode]);
+          assert.deepEqual(map['[class]'], [vNode]);
+          assert.deepEqual(map['[aria-label]'], [vNode]);
+        });
+      }
+    });
   });
 
   describe('getNodesMatchingExpression', function () {

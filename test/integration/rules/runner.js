@@ -95,7 +95,11 @@
               // check that all nodes are removed
               assert.equal(JSON.stringify(targets), '[]');
             } else {
-              assert(false, 'there are no ' + collection);
+              assert.lengthOf(
+                test[collection],
+                0,
+                'there are no ' + collection
+              );
             }
           });
         });

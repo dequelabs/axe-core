@@ -10,6 +10,12 @@ describe('color.getForegroundColor', () => {
     assert.closeTo(actual.alpha, expected.alpha, margin / 255);
   }
 
+  beforeEach(() => {
+    // This normalizes the default mocha behavior of setting a different background
+    // based on prefers-color-scheme settings.
+    document.body.style.background = '#fff';
+  });
+
   afterEach(() => {
     axe.commons.color.incompleteData.clear();
     document.body.scrollTop = 0;

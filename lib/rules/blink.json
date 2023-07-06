@@ -9,7 +9,9 @@
     "section508",
     "section508.22.j",
     "TTv5",
-    "TT2.b"
+    "TT2.b",
+    "EN-301-549",
+    "EN-9.2.2.2"
   ],
   "metadata": {
     "description": "Ensures <blink> elements are not used",

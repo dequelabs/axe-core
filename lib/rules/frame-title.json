@@ -9,7 +9,9 @@
     "section508",
     "section508.22.i",
     "TTv5",
-    "TT12.c"
+    "TT12.d",
+    "EN-301-549",
+    "EN-9.4.1.2"
   ],
   "actIds": ["cae760"],
   "metadata": {

@@ -2,7 +2,15 @@
   "id": "meta-refresh",
   "selector": "meta[http-equiv=\"refresh\"][content]",
   "excludeHidden": false,
-  "tags": ["cat.time-and-media", "wcag2a", "wcag221", "TTv5", "TT2.c"],
+  "tags": [
+    "cat.time-and-media",
+    "wcag2a",
+    "wcag221",
+    "TTv5",
+    "TT8.a",
+    "EN-301-549",
+    "EN-9.2.2.1"
+  ],
   "actIds": ["bc659a", "bisz58"],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used for delayed refresh",
