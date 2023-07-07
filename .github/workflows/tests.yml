@@ -58,7 +58,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm run test -- --browsers ${{ matrix.browser }}
+      - run: xvfb-run --auto-servernum npm run test -- --browsers ${{ matrix.browser }}
 
   test_integration:
     runs-on: ubuntu-latest
@@ -80,4 +80,5 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm run test:integration:${{ matrix.browser }}
+      - run: npx browser-driver-manager install chromedriver --verbose
+      - run: xvfb-run --auto-servernum npm run test:integration:${{ matrix.browser }}
