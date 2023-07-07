@@ -7,13 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'npm'
       - run: npm ci
       - run: npm run eslint
 
@@ -24,13 +21,10 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'npm'
       - run: npm ci
       - run: npm run build
       - uses: actions/cache/save@v3
@@ -46,10 +40,6 @@ jobs:
         browser: [Chrome, Firefox]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - uses: actions/cache/restore@v3
         with:
           path: axe.js
@@ -57,6 +47,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'npm'
       - run: npm ci
       - run: xvfb-run --auto-servernum npm run test -- --browsers ${{ matrix.browser }}
 
@@ -68,10 +59,6 @@ jobs:
         browser: [chrome, firefox]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - uses: actions/cache/restore@v3
         with:
           path: axe.js
@@ -79,6 +66,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'npm'
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: xvfb-run --auto-servernum npm run test:integration:${{ matrix.browser }}
