@@ -7,7 +7,7 @@
   "actIds": ["674b10"],
   "metadata": {
     "description": "Ensures elements do not use deprecated roles",
-    "help": "ARIA roles used must not be deprecated"
+    "help": "Deprecated ARIA roles must not be used"
   },
   "all": [],
   "any": [],
