@@ -144,6 +144,7 @@
     "html-entities": "1.x",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
+    "inquirer": "^8.2.5",
     "jquery": "^3.6.3",
     "jsdoc": "^3.6.11",
     "jsdom": "^21.0.0",
