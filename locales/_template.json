@@ -23,7 +23,7 @@
     },
     "aria-deprecated-role": {
       "description": "Ensures elements do not use deprecated roles",
-      "help": "ARIA roles used must not be deprecated"
+      "help": "Deprecated ARIA roles must not be used"
     },
     "aria-dialog-name": {
       "description": "Ensures every ARIA dialog and alertdialog node has an accessible name",
