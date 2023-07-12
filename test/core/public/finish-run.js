@@ -104,7 +104,10 @@ describe('axe.finishRun', function () {
   it('can report violations results', function (done) {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe
-      .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
+      .runPartial(
+        { include: [['#fixture']] },
+        { runOnly: 'aria-prohibited-attr' }
+      )
       .then(function (result) {
         return axe.finishRun([result]);
       })
@@ -186,7 +189,7 @@ describe('axe.finishRun', function () {
         allResults.push(results);
         return axe.runPartial(
           { include: [['#fail']] },
-          { runOnly: 'aria-allowed-attr' }
+          { runOnly: 'aria-prohibited-attr' }
         );
       })
       .then(function (results) {
