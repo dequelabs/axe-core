@@ -202,7 +202,7 @@ describe('axe.commons.color.getTextShadowColors', function () {
           2px 0 #F00,
           0 2px #F00,
           -2px 0 #F00;
-        ">Hello wold</span>
+        ">Hello world</span>
       `;
       const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
       assert.deepEqual(shadowColors, [
