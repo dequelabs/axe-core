@@ -24,38 +24,30 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
     ]);
   });
 
-  it('skips raised-letter effects (shadows on 1 or 2 sides)', () => {
-    const shadows = parseTextShadows(`
-      0 -1px #000,
-      -1px -1px #000,
-      -1px 0 #000,
-      1px 1px #fff
-    `);
+  it('returns null when one side is covered by the shadow', () => {
+    const shadows = parseTextShadows(`0 1px #000`);
     const shadowColors = getStrokeColorsFromShadows(shadows);
-    assert.lengthOf(shadowColors, 0);
+    assert.isNull(shadowColors);
   });
 
-  it('includes shadows on 3 sides', () => {
-    const shadows = parseTextShadows(`
-      0 -2px #F00,
-      2px 0 #F00,
-      0 2px #F00
-    `);
+  it('returns null when two sides is covered by the shadow', () => {
+    const shadows = parseTextShadows(`1px 0 #000, 0 1px #000`);
     const shadowColors = getStrokeColorsFromShadows(shadows);
-    assert.deepEqual(shadowColors, [
-      {
-        red: 255,
-        green: 0,
-        blue: 0,
-        alpha: 1
-      }
-    ]);
+    assert.isNull(shadowColors);
+  });
+
+  it('returns null when three sides is covered by the shadow', () => {
+    const shadows = parseTextShadows(`1px 0 #000, 0 1px #000, -1px 0 #000`);
+    const shadowColors = getStrokeColorsFromShadows(shadows);
+    assert.isNull(shadowColors);
   });
 
   it('skips shadows offset with 0.5px or less', () => {
     const shadows = parseTextShadows(`
-      0.5px 0.5px #000,
-      -0.5px -0.5px #000
+      .5px 0 #000,
+      0 .4px #000,
+      -0.3px 0 #000,
+      0 -0.2px #000
     `);
     const shadowColors = getStrokeColorsFromShadows(shadows);
     assert.lengthOf(shadowColors, 0);
@@ -64,9 +56,9 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
   it('applies an alpha value to shadows of 1.5px or less', () => {
     const shadows = parseTextShadows(`
       0 -1.5px #000,
-      1.5px 0 #000,
-      0 1.5px #000,
-      -1.5px 0 #000
+      1.4px 0 #000,
+      0 1.3px #000,
+      -1.2px 0 #000
     `);
     const shadowColors = getStrokeColorsFromShadows(shadows);
     assert.lengthOf(shadowColors, 1);
@@ -93,14 +85,14 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
 
   it('multiplies alpha value for each shadow', () => {
     const shadows = parseTextShadows(`
-        0 -1px #000,
-        0 -1px #000,
-        1px 0 #000,
-        1px 0 #000,
-        0 1px #000,
-        0 1px #000,
-        -1px 0 #000,
-        -1px 0 #000
+      0 -1px #000,
+      0 -1px #000,
+      1px 0 #000,
+      1px 0 #000,
+      0 1px #000,
+      0 1px #000,
+      -1px 0 #000,
+      -1px 0 #000
     `);
     const shadowColors = getStrokeColorsFromShadows(shadows);
     assert.lengthOf(shadowColors, 1);
@@ -113,10 +105,10 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
   it('double-counts shadows on corners', () => {
     // Corner-shadows overlap on the sides of letters, increasing alpha
     const shadows = parseTextShadows(`
-        -1px -1px #000,
-        1px -1px #000,
-        1px 1px #000,
-        -1px 1px #000
+      -1px -1px #000,
+      1px -1px #000,
+      1px 1px #000,
+      -1px 1px #000
     `);
     const shadowColors = getStrokeColorsFromShadows(shadows);
     assert.lengthOf(shadowColors, 1);

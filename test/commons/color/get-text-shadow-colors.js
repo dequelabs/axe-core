@@ -142,7 +142,7 @@ describe('axe.commons.color.getTextShadowColors', function () {
     assert.equal(shadowColors[0].blue, 0);
   });
 
-  it('does not return shadows with a ratio less than minRatio', function () {
+  it('returns null if a shadows has a ratio less than minRatio', function () {
     fixture.innerHTML =
       '<span style="text-shadow: ' +
       '0 0 1em #F00, 0 0 0.5em #0F0, 1px 1px 0.2em #00F;' +
@@ -150,10 +150,7 @@ describe('axe.commons.color.getTextShadowColors', function () {
 
     var span = fixture.querySelector('span');
     var shadowColors = getTextShadowColors(span, { minRatio: 0.5 });
-
-    assert.lengthOf(shadowColors, 2);
-    assert.equal(shadowColors[0].red, 255);
-    assert.equal(shadowColors[1].green, 255);
+    assert.isNull(shadowColors);
   });
 
   it('does not return shadows with a ratio less than maxRatio', function () {
@@ -243,6 +240,18 @@ describe('axe.commons.color.getTextShadowColors', function () {
       const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
       const hexColors = shadowColors.map(color => color.toHexString()[1]);
       assert.deepEqual(['0', '1', '2', '3'], hexColors);
+    });
+
+    it('returns null when when thin shadows are not all the way around the text', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px #000,
+          2px 0 #000,
+          0 2px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.isNull(shadowColors);
     });
   });
 });
