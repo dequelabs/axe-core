@@ -1,23 +1,25 @@
-describe('axe.utils.sendCommandToFrame', function () {
-  'use strict';
+describe('axe.utils.sendCommandToFrame', () => {
+  const fixture = document.getElementById('fixture');
+  let params;
+  const captureError = axe.testUtils.captureError;
 
-  var fixture = document.getElementById('fixture');
-  var params = { command: 'rules' };
-  var captureError = axe.testUtils.captureError;
+  beforeEach(() => {
+    params = { command: 'rules' };
+  });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe._tree = undefined;
     axe._selectorData = undefined;
   });
 
-  var assertNotCalled = function () {
+  const assertNotCalled = () => {
     assert.ok(false, 'should not be called');
   };
 
-  it('should return results from frames', function (done) {
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
+  it('should return results from frames', done => {
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
       axe.utils.sendCommandToFrame(
         frame,
         params,
@@ -26,7 +28,7 @@ describe('axe.utils.sendCommandToFrame', function () {
           assert.equal(res[0].id, 'html');
           done();
         }, done),
-        function () {
+        () => {
           done(new Error('sendCommandToFrame should not error'));
         }
       );
@@ -37,15 +39,15 @@ describe('axe.utils.sendCommandToFrame', function () {
     fixture.appendChild(frame);
   });
 
-  it('adjusts skips ping with options.pingWaitTime=0', function (done) {
-    var frame = document.createElement('iframe');
-    var params = {
+  it('adjusts skips ping with options.pingWaitTime=0', done => {
+    const frame = document.createElement('iframe');
+    params = {
       command: 'rules',
       options: { pingWaitTime: 0 }
     };
 
-    frame.addEventListener('load', function () {
-      var topics = [];
+    frame.addEventListener('load', () => {
+      const topics = [];
       frame.contentWindow.addEventListener('message', function (event) {
         try {
           topics.push(JSON.parse(event.data).topic);
@@ -56,7 +58,7 @@ describe('axe.utils.sendCommandToFrame', function () {
       axe.utils.sendCommandToFrame(
         frame,
         params,
-        captureError(function () {
+        captureError(() => {
           try {
             assert.deepEqual(topics, ['axe.start']);
             done();
@@ -64,7 +66,7 @@ describe('axe.utils.sendCommandToFrame', function () {
             done(e);
           }
         }, done),
-        function () {
+        () => {
           done(new Error('sendCommandToFrame should not error'));
         }
       );
@@ -75,8 +77,8 @@ describe('axe.utils.sendCommandToFrame', function () {
     fixture.appendChild(frame);
   });
 
-  it('should timeout if there is no response from frame', function (done) {
-    var orig = window.setTimeout;
+  it('should timeout if there is no response from frame', done => {
+    const orig = window.setTimeout;
     window.setTimeout = function (fn, to) {
       if (to === 30000) {
         assert.ok('timeout set');
@@ -88,8 +90,8 @@ describe('axe.utils.sendCommandToFrame', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
       axe._tree = axe.utils.getFlattenedTree(document.documentElement);
       axe.utils.sendCommandToFrame(
         frame,
