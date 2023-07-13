@@ -635,7 +635,7 @@ var commons;
     win = win || window;
     const axe = win.axe;
     const frameContexts = axe.utils.getFrameContexts(context);
-    const promiseResults = [axe.runPartial(context, options)];
+    let promiseResults = [axe.runPartial(context, options)];
 
     frameContexts.forEach(function (c) {
       const frame = testUtils.shadowQuerySelector(
