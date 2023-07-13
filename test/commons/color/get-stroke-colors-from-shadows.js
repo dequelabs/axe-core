@@ -24,10 +24,10 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
     ]);
   });
 
-  it('returns null when one side is covered by the shadow', () => {
+  it('returns empty when only one side is covered by the shadow', () => {
     const shadows = parseTextShadows(`0 1px #000`);
     const shadowColors = getStrokeColorsFromShadows(shadows);
-    assert.isNull(shadowColors);
+    assert.lengthOf(shadowColors, 0);
   });
 
   it('returns null when two sides is covered by the shadow', () => {
