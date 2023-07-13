@@ -52,6 +52,7 @@ module.exports = {
     'dot-notation': 2,
     'no-new-func': 0,
     'no-new-wrappers': 0,
+    'no-shadow': 2,
     'no-restricted-syntax': [
       'error',
       {

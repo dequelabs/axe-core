@@ -45,7 +45,7 @@ module.exports = function (grunt) {
         var commons = file.src[0];
 
         buildManual(grunt, options, commons, function (result) {
-          var out = {
+          var locale = {
             lang: options.lang,
             rules: result.rules.reduce(function (out, rule) {
               out[rule.id] = rule.metadata;
@@ -74,10 +74,10 @@ module.exports = function (grunt) {
             var oldMessages = grunt.file.readJSON(localeFile);
 
             // mergeMessages mutates out
-            mergeMessages(out, oldMessages);
+            mergeMessages(locale, oldMessages);
           }
 
-          grunt.file.write(file.dest, JSON.stringify(out, null, '  '));
+          grunt.file.write(file.dest, JSON.stringify(locale, null, '  '));
           console.log('created file at', file.dest);
         });
       });
