@@ -24,7 +24,8 @@
 <div role="superscript" aria-labelledby="value" id="fail18"></div>
 <div aria-label="value" id="fail19"></div>
 <div aria-labelledby="value" id="fail20"></div>
-<!-- technically presentation and none roles do not allow aria-label and aria-labelledby, but since those are global attributes the presentation role conflict will not resolve the roles to none or presentation -->
+<!- aria-label(ledby) is prohibited on none / presentation. Axe-core considers this to trigger presentation role 
+conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has only been implemented in Chomium. -->
 <span aria-label="value" id="fail21"></span>
 <strong aria-label="value" id="fail22"></strong>
 <kbd aria-label="value" id="fail23"></kbd>
