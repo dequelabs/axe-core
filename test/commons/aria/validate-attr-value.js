@@ -1,31 +1,29 @@
-describe('aria.validateAttrValue', function () {
-  'use strict';
+describe('aria.validateAttrValue', () => {
+  const fixture = document.getElementById('fixture');
+  const shadowSupport = axe.testUtils.shadowSupport;
+  let node;
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
-  var node;
-
-  function setAttr(node, attrName, attrValue) {
-    node.setAttribute(attrName, attrValue);
+  function setAttr(elm, attrName, attrValue) {
+    elm.setAttribute(attrName, attrValue);
     axe.teardown();
-    return axe.setup(node);
+    return axe.setup(elm);
   }
 
-  beforeEach(function () {
+  beforeEach(() => {
     node = document.createElement('div');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe.reset();
   });
 
-  it('should return true if there is no matching attribute (future-compat???)', function () {
+  it('should return true if there is no matching attribute (future-compat???)', () => {
     setAttr(node, 'unknown-attr', 'hello');
 
     assert.isTrue(axe.commons.aria.validateAttrValue(node, 'unknown-attr'));
   });
 
-  it('works on virtual nodes', function () {
+  it('works on virtual nodes', () => {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -37,14 +35,14 @@ describe('aria.validateAttrValue', function () {
         }
       }
     });
-    var vNode = axe.testUtils.queryFixture(
+    const vNode = axe.testUtils.queryFixture(
       '<div id="target" cats="valid"></div>'
     );
     assert.isTrue(axe.commons.aria.validateAttrValue(vNode, 'cats'));
   });
 
-  describe('allowEmpty', function () {
-    beforeEach(function () {
+  describe('allowEmpty', () => {
+    beforeEach(() => {
       axe.configure({
         standards: {
           ariaAttrs: {
@@ -82,7 +80,7 @@ describe('aria.validateAttrValue', function () {
       });
     });
 
-    it('returns true for empty attributes with allowEmpty:true', function () {
+    it('returns true for empty attributes with allowEmpty:true', () => {
       setAttr(node, 'cats', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 
@@ -105,7 +103,7 @@ describe('aria.validateAttrValue', function () {
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
     });
 
-    it('returns true for whitespace-only attributes with allowEmpty:true', function () {
+    it('returns true for whitespace-only attributes with allowEmpty:true', () => {
       setAttr(node, 'cats', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 
@@ -129,9 +127,9 @@ describe('aria.validateAttrValue', function () {
     });
   });
 
-  describe('schema defintions', function () {
-    describe('enumerated values', function () {
-      beforeEach(function () {
+  describe('schema defintions', () => {
+    describe('enumerated values', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -144,7 +142,7 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('should validate against enumerated .values if present', function () {
+      it('should validate against enumerated .values if present', () => {
         setAttr(node, 'cats', 'valid');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
@@ -154,21 +152,21 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
 
-      it('should be case-insensitive for enumerated values', function () {
+      it('should be case-insensitive for enumerated values', () => {
         setAttr(node, 'cats', 'vaLiD');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
 
-      it('should reject empty strings', function () {
+      it('should reject empty strings', () => {
         setAttr(node, 'cats', '');
 
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
     });
 
-    describe('idref', function () {
-      beforeEach(function () {
+    describe('idref', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -180,7 +178,7 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('should validate the referenced node exists', function () {
+      it('should validate the referenced node exists', () => {
         fixture.innerHTML = '<div id="target"></div>';
         setAttr(node, 'dogs', 'target');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
@@ -189,8 +187,8 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'dogs'));
       });
 
-      it('should work in shadow DOM', function () {
-        var shadEl;
+      it('should work in shadow DOM', () => {
+        let shadEl;
 
         if (shadowSupport.v1) {
           // shadow DOM v1 - note: v0 is compatible with this code, so no need
@@ -209,14 +207,14 @@ describe('aria.validateAttrValue', function () {
         }
       });
 
-      it('returns false if empty without allowEmpty: true', function () {
+      it('returns false if empty without allowEmpty: true', () => {
         setAttr(node, 'dogs', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'dogs'));
       });
     });
 
-    describe('idrefs', function () {
-      beforeEach(function () {
+    describe('idrefs', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -228,46 +226,46 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('should return false when a single referenced node is not found', function () {
+      it('should return false when a single referenced node is not found', () => {
         setAttr(node, 'goats', 'invalid');
         // target2 not found
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
-      it('should return false when no referenced element is found', function () {
+      it('should return false when no referenced element is found', () => {
         fixture.innerHTML = '<div id="target"></div>';
         setAttr(node, 'goats', 'target2 target3');
         // target2 not found
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
-      it('should return true when at least one referenced element is found', function () {
+      it('should return true when at least one referenced element is found', () => {
         fixture.innerHTML = '<div id="target"></div>';
         setAttr(node, 'goats', 'target target2');
         // target2 not found
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
-      it('should return true when all targets are found', function () {
+      it('should return true when all targets are found', () => {
         fixture.innerHTML = '<div id="target"></div><div id="target2"></div>';
         setAttr(node, 'goats', 'target target2');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
-      it('should not fail on weird whitespace', function () {
+      it('should not fail on weird whitespace', () => {
         fixture.innerHTML = '<div id="target"></div><div id="target2"></div>';
         setAttr(node, 'goats', ' \t \ttarget   \t   target2      ');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
-      it('returns false if empty without allowEmpty: true', function () {
+      it('returns false if empty without allowEmpty: true', () => {
         setAttr(node, 'goats', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
     });
 
-    describe('string', function () {
-      beforeEach(function () {
+    describe('string', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -279,19 +277,19 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('returns true for non-empty strings', function () {
+      it('returns true for non-empty strings', () => {
         setAttr(node, 'cows', 'hi');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
       });
 
-      it('returns false for non-empty strings without allowEmpty:true', function () {
+      it('returns false for non-empty strings without allowEmpty:true', () => {
         setAttr(node, 'cows', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cows'));
       });
     });
 
-    describe('decimal', function () {
-      beforeEach(function () {
+    describe('decimal', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -303,7 +301,7 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('should allow, but not require, a preceeding sign', function () {
+      it('should allow, but not require, a preceeding sign', () => {
         setAttr(node, 'sheep', '+1.12');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -314,7 +312,7 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should make the decimal separator optional', function () {
+      it('should make the decimal separator optional', () => {
         setAttr(node, 'sheep', '+1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -325,7 +323,7 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should make the whole number optional', function () {
+      it('should make the whole number optional', () => {
         setAttr(node, 'sheep', '+.1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -336,7 +334,7 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should make the right-side optional', function () {
+      it('should make the right-side optional', () => {
         setAttr(node, 'sheep', '+1.');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -347,7 +345,7 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should validate the entire string', function () {
+      it('should validate the entire string', () => {
         setAttr(node, 'sheep', ' +1.12 ');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -358,7 +356,7 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should only allow for numbers', function () {
+      it('should only allow for numbers', () => {
         setAttr(node, 'sheep', '+a.12');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -369,7 +367,7 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('should require at least one number', function () {
+      it('should require at least one number', () => {
         setAttr(node, 'sheep', '+.');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
@@ -389,14 +387,14 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
-      it('returns false for empty strings without allowEmpty:true', function () {
+      it('returns false for empty strings without allowEmpty:true', () => {
         setAttr(node, 'sheep', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
     });
 
-    describe('int', function () {
-      beforeEach(function () {
+    describe('int', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -408,7 +406,7 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('should only allow for numbers by an optional preceding sign', function () {
+      it('should only allow for numbers by an optional preceding sign', () => {
         setAttr(node, 'pigs', '+1234234');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
@@ -419,7 +417,7 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
-      it('should return true for value greater than or equal to minValue', function () {
+      it('should return true for value greater than or equal to minValue', () => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -441,12 +439,12 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
-      it('returns false for empty strings without allowEmpty:true', function () {
+      it('returns false for empty strings without allowEmpty:true', () => {
         setAttr(node, 'pigs', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
-      it('should return false for value less than the minValue', function () {
+      it('should return false for value less than the minValue', () => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -463,8 +461,8 @@ describe('aria.validateAttrValue', function () {
       });
     });
 
-    describe('boolean', function () {
-      beforeEach(function () {
+    describe('boolean', () => {
+      beforeEach(() => {
         axe.configure({
           standards: {
             ariaAttrs: {
@@ -476,7 +474,7 @@ describe('aria.validateAttrValue', function () {
         });
       });
 
-      it('returns true for boolean value', function () {
+      it('returns true for boolean value', () => {
         setAttr(node, 'horses', 'true');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
 
@@ -484,13 +482,13 @@ describe('aria.validateAttrValue', function () {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
-      it('should be case-insensitive', function () {
+      it('should be case-insensitive', () => {
         setAttr(node, 'horses', 'trUE');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
-      it('returns false for non-boolean values', function () {
+      it('returns false for non-boolean values', () => {
         setAttr(node, 'horses', 'hi');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
 
@@ -498,7 +496,7 @@ describe('aria.validateAttrValue', function () {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
-      it('returns false for non-empty strings without allowEmpty:true', function () {
+      it('returns false for non-empty strings without allowEmpty:true', () => {
         setAttr(node, 'horses', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
@@ -508,8 +506,8 @@ describe('aria.validateAttrValue', function () {
 
 function makeShadowTreeVAV(node) {
   'use strict';
-  var root = node.attachShadow({ mode: 'open' });
-  var div = document.createElement('div');
+  const root = node.attachShadow({ mode: 'open' });
+  const div = document.createElement('div');
   div.className = 'parent';
   root.appendChild(div);
   div.appendChild(createContentVAV());
@@ -517,7 +515,7 @@ function makeShadowTreeVAV(node) {
 
 function createContentVAV() {
   'use strict';
-  var group = document.createElement('div');
+  const group = document.createElement('div');
   group.innerHTML =
     '<label id="mylabel">Label</label>' +
     '<input id="myinput" aria-labelledby="mylabel" type="text" />' +
