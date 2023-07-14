@@ -1,13 +1,13 @@
 /*global mocha */
 const failedTests = [];
-function flattenTitles (test) {
+function flattenTitles(test) {
   const titles = [];
   while (test.parent.title) {
     titles.push(test.parent.title);
     test = test.parent;
   }
   return titles.reverse();
-};
+}
 
 (function () {
   'use strict';
