@@ -117,4 +117,35 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
     assert.equal(shadowColors[0].blue, 0);
     assert.closeTo(shadowColors[0].alpha, 0.7, 0.01);
   });
+
+  it('applies an alpha value if not all sides are offset by more than 1.5px', () => {
+    const shadows = parseTextShadows(`
+      -1.5px -2px #000,
+      2px 1.5px #000
+    `);
+    const shadowColors = getStrokeColorsFromShadows(shadows);
+    assert.lengthOf(shadowColors, 1);
+    assert.equal(shadowColors[0].red, 0);
+    assert.equal(shadowColors[0].green, 0);
+    assert.equal(shadowColors[0].blue, 0);
+    assert.closeTo(shadowColors[0].alpha, 0.46, 0.01);
+  });
+
+  describe('options.ignoreEdgeCount: true', () => {
+    it('returns empty when two sides is covered by the shadow', () => {
+      const shadows = parseTextShadows(`1px 0 #000, 0 1px #000`);
+      const shadowColors = getStrokeColorsFromShadows(shadows, {
+        ignoreEdgeCount: true
+      });
+      assert.deepEqual(shadowColors, []);
+    });
+
+    it('returns empty when three sides is covered by the shadow', () => {
+      const shadows = parseTextShadows(`1px 0 #000, 0 1px #000, -1px 0 #000`);
+      const shadowColors = getStrokeColorsFromShadows(shadows, {
+        ignoreEdgeCount: true
+      });
+      assert.deepEqual(shadowColors, []);
+    });
+  });
 });

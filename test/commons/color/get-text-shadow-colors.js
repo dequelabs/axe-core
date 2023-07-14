@@ -253,5 +253,22 @@ describe('axe.commons.color.getTextShadowColors', function () {
       const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
       assert.isNull(shadowColors);
     });
+
+    it('ignores partial strokes with ignoreEdgeCount: true', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          2px 1px 2px #F00,
+          0 -2px #000,
+          2px 0 #000,
+          0 2px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, {
+        ...opt,
+        ignoreEdgeCount: true
+      });
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 255);
+    });
   });
 });
