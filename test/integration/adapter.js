@@ -1,7 +1,7 @@
 /*global mocha */
-var failedTests = [];
-var flattenTitles = function (test) {
-  var titles = [];
+const failedTests = [];
+function flattenTitles (test) {
+  const titles = [];
   while (test.parent.title) {
     titles.push(test.parent.title);
     test = test.parent;
