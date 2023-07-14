@@ -142,7 +142,7 @@ describe('axe.commons.color.getTextShadowColors', function () {
     assert.equal(shadowColors[0].blue, 0);
   });
 
-  it('does not return shadows with a ratio less than minRatio', function () {
+  it('returns null if a shadows has a ratio less than minRatio', function () {
     fixture.innerHTML =
       '<span style="text-shadow: ' +
       '0 0 1em #F00, 0 0 0.5em #0F0, 1px 1px 0.2em #00F;' +
@@ -150,10 +150,7 @@ describe('axe.commons.color.getTextShadowColors', function () {
 
     var span = fixture.querySelector('span');
     var shadowColors = getTextShadowColors(span, { minRatio: 0.5 });
-
-    assert.lengthOf(shadowColors, 2);
-    assert.equal(shadowColors[0].red, 255);
-    assert.equal(shadowColors[1].green, 255);
+    assert.isNull(shadowColors);
   });
 
   it('does not return shadows with a ratio less than maxRatio', function () {
@@ -191,5 +188,87 @@ describe('axe.commons.color.getTextShadowColors', function () {
     assert.equal(shadowColors[0].green, 0);
     assert.equal(shadowColors[0].blue, 0);
     assert.equal(shadowColors[0].alpha, 0);
+  });
+
+  describe('with shadows that combine to a stroke', () => {
+    const opt = { minRatio: 0.01 };
+    it('combines multiple shadows without blur into a single stroke', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px #F00,
+          2px 0 #F00,
+          0 2px #F00,
+          -2px 0 #F00;
+        ">Hello world</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.deepEqual(shadowColors, [
+        {
+          red: 255,
+          green: 0,
+          blue: 0,
+          alpha: 1
+        }
+      ]);
+    });
+
+    it('only combines shadows thinner than minRatio', () => {
+      const minRatio = 0.1; // .1em (has to be greater than 1px, or this will be null)
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px ${minRatio}em #000,
+          2px 0 ${minRatio}em #000,
+          0 2px ${minRatio}em #000,
+          -2px 0 ${minRatio}em #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, {
+        minRatio
+      });
+      assert.lengthOf(shadowColors, 4);
+    });
+
+    it('places the combined shadow in the correct order with shadows', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -1px #000, 1px 0 #000, 0 1px #000, -1px 0 #000,
+          0 0 1em #111,
+          0 -1px #222, 1px 0 #222, 0 1px #222, -1px 0 #222,
+          1px 1px 0.2em #333;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      const hexColors = shadowColors.map(color => color.toHexString()[1]);
+      assert.deepEqual(['0', '1', '2', '3'], hexColors);
+    });
+
+    it('returns null when when thin shadows are not all the way around the text', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          0 -2px #000,
+          2px 0 #000,
+          0 2px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
+      assert.isNull(shadowColors);
+    });
+
+    it('ignores partial strokes with ignoreEdgeCount: true', () => {
+      fixture.innerHTML = `
+        <span style="text-shadow:
+          2px 1px 2px #F00,
+          0 -2px #000,
+          2px 0 #000,
+          0 2px #000;
+        ">Hello wold</span>
+      `;
+      const shadowColors = getTextShadowColors(fixture.firstElementChild, {
+        ...opt,
+        ignoreEdgeCount: true
+      });
+      assert.lengthOf(shadowColors, 1);
+      assert.equal(shadowColors[0].red, 255);
+    });
   });
 });
