@@ -293,6 +293,20 @@ describe('aria-required-children', () => {
     assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
+  it('should ignore hidden children inside the group', () => {
+    const params = checkSetup(`
+      <div role="menu" id="target">
+        <ul role="group">
+          <li style="display: none">hidden</li>
+          <li aria-hidden="true">hidden</li>
+          <li style="visibility: hidden" aria-hidden="true">hidden</li>
+          <li role="menuitem">Menuitem</li>
+        </ul>
+      </div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
   it('should fail when role allows group and group does not have required child', () => {
     const params = checkSetup(
       '<div role="menu" id="target"><ul role="group"><li>Menuitem</li></ul></div>'
@@ -329,19 +343,6 @@ describe('aria-required-children', () => {
   });
 
   describe('options', () => {
-    it('should return undefined instead of false when the role is in options.reviewEmpty', () => {
-      const params = checkSetup('<div role="grid" id="target"></div>', {
-        reviewEmpty: []
-      });
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-
-      // Options:
-      params[1] = {
-        reviewEmpty: ['grid']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
-
     it('should not throw when options is incorrect', () => {
       const params = checkSetup('<div role="row" id="target"></div>');
 
@@ -358,88 +359,129 @@ describe('aria-required-children', () => {
       assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
     });
 
-    it('should return undefined when the element has empty children', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target"><div></div></div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
+    describe('reviewEmpty', () => {
+      it('should return undefined instead of false when the role is in options.reviewEmpty', () => {
+        const params = checkSetup('<div role="grid" id="target"></div>', {
+          reviewEmpty: []
+        });
+        assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
-    it('should return false when the element has empty child with role', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target"><div role="grid"></div></div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-    });
+        // Options:
+        params[1] = {
+          reviewEmpty: ['grid']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return undefined when there is a empty text node', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target"> &nbsp; <!-- empty --> \n\t </div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
+      it('should return undefined when the element has empty children', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"><div></div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return false when there is a non-empty text node', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target">  hello  </div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-    });
+      it('should return false when the element has empty child with role', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"><div role="grid"></div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return undefined when the element has empty child with role=presentation', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target"><div role="presentation"></div></div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
+      it('should return undefined when there is a empty text node', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"> &nbsp; <!-- empty --> \n\t </div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return undefined when the element has empty child with role=none', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target"><div role="none"></div></div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
+      it('should return false when there is a non-empty text node', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target">  hello  </div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return undefined when the element has hidden children', () => {
-      const params = checkSetup(
-        `<div role="menu" id="target">
-          <div role="menuitem" hidden></div>
-          <div role="none" hidden></div>
-          <div role="list" hidden></div>
-        </div>`
-      );
-      params[1] = {
-        reviewEmpty: ['menu']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
-    });
+      it('should return undefined when the element has empty child with role=presentation', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"><div role="presentation"></div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
 
-    it('should return undefined when the element has empty child and aria-label', () => {
-      const params = checkSetup(
-        '<div role="listbox" id="target" aria-label="listbox"><div></div></div>'
-      );
-      params[1] = {
-        reviewEmpty: ['listbox']
-      };
-      assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      it('should return false when role=none child has visible content', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"><div role="none">hello</div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      });
+
+      it('should return undefined when role=none child has hidden content', () => {
+        const params = checkSetup(`
+          <div role="listbox" id="target">
+            <div role="none">
+              <h1 style="display:none">hello</h1>
+              <h1 aria-hidden="true">hello</h1>
+              <h1 style="visibility:hidden" aria-hidden="true">hello</h1>
+            </div>
+          </div>
+        `);
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+
+      it('should return undefined when the element has empty child with role=none', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target"><div role="none"></div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+
+      it('should return undefined when the element has hidden children', () => {
+        const params = checkSetup(
+          `<div role="menu" id="target">
+            <div role="menuitem" hidden></div>
+            <div role="none" hidden></div>
+            <div role="list" hidden></div>
+          </div>`
+        );
+        params[1] = {
+          reviewEmpty: ['menu']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+
+      it('should return undefined when the element has empty child and aria-label', () => {
+        const params = checkSetup(
+          '<div role="listbox" id="target" aria-label="listbox"><div></div></div>'
+        );
+        params[1] = {
+          reviewEmpty: ['listbox']
+        };
+        assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
     });
   });
 });
