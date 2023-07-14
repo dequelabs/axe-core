@@ -1,0 +1,41 @@
+<div role="checkbox" aria-required="true" id="pass1">ok</div>
+<div id="pass2" aria-label="  ">Foo</div>
+<div id="pass3" aria-labelledby="  ">Foo</div>
+<div role="alert" aria-selected="true" id="pass4"></div>
+<div role="row" aria-colcount="value" id="pass5"></div>
+
+<div role="caption" aria-label="value" id="fail1"></div>
+<div role="caption" aria-labelledby="value" id="fail2"></div>
+<div role="code" aria-label="value" id="fail3"></div>
+<div role="code" aria-labelledby="value" id="fail4"></div>
+<div role="deletion" aria-label="value" id="fail5"></div>
+<div role="deletion" aria-labelledby="value" id="fail6"></div>
+<div role="emphasis" aria-label="value" id="fail7"></div>
+<div role="emphasis" aria-labelledby="value" id="fail8"></div>
+<div role="insertion" aria-label="value" id="fail9"></div>
+<div role="insertion" aria-labelledby="value" id="fail10"></div>
+<div role="paragraph" aria-label="value" id="fail11"></div>
+<div role="paragraph" aria-labelledby="value" id="fail12"></div>
+<div role="strong" aria-label="value" id="fail13"></div>
+<div role="strong" aria-labelledby="value" id="fail14"></div>
+<div role="subscript" aria-label="value" id="fail15"></div>
+<div role="subscript" aria-labelledby="value" id="fail16"></div>
+<div role="superscript" aria-label="value" id="fail17"></div>
+<div role="superscript" aria-labelledby="value" id="fail18"></div>
+<div aria-label="value" id="fail19"></div>
+<div aria-labelledby="value" id="fail20"></div>
+<!- aria-label(ledby) is prohibited on none / presentation. Axe-core considers this to trigger presentation role 
+conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has only been implemented in Chomium. -->
+<span aria-label="value" id="fail21"></span>
+<strong aria-label="value" id="fail22"></strong>
+<kbd aria-label="value" id="fail23"></kbd>
+<abbr aria-label="value" id="fail24"></abbr>
+<custom-elm aria-label="value" id="fail25"></custom-elm>
+<div role="mark" aria-label="value" id="fail26"></div>
+<div role="mark" aria-labelledby="value" id="fail27"></div>
+<div role="suggestion" aria-label="value" id="fail28"></div>
+<div role="suggestion" aria-labelledby="value" id="fail29"></div>
+
+<div id="incomplete1" aria-label="foo">Foo</div>
+<div id="incomplete2" aria-labelledby="missing">Foo</div>
+<div id="incomplete3" aria-label="foo" role="code">Foo</div>
