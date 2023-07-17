@@ -1,47 +1,47 @@
-describe('matches.fromFunction', function () {
-  var fromFunction = axe.commons.matches.fromFunction;
+describe('matches.fromFunction', () => {
+  const fromFunction = axe.commons.matches.fromFunction;
   function noop() {}
 
-  it('throws an error when the matcher is a number', function () {
-    assert.throws(function () {
+  it('throws an error when the matcher is a number', () => {
+    assert.throws(() => {
       fromFunction(noop, 123);
     });
   });
 
-  it('throws an error when the matcher is a string', function () {
-    assert.throws(function () {
+  it('throws an error when the matcher is a string', () => {
+    assert.throws(() => {
       fromFunction(noop, 'foo');
     });
   });
 
-  it('throws an error when the matcher is an array', function () {
-    assert.throws(function () {
+  it('throws an error when the matcher is an array', () => {
+    assert.throws(() => {
       fromFunction(noop, ['foo']);
     });
   });
 
-  it('throws an error when the matcher is a RegExp', function () {
-    assert.throws(function () {
+  it('throws an error when the matcher is a RegExp', () => {
+    assert.throws(() => {
       fromFunction(noop, /foo/);
     });
   });
 
-  describe('with object matches', function () {
-    var keyMap = {};
+  describe('with object matches', () => {
+    let keyMap = {};
     function getValue(key) {
       return key;
     }
 
-    it('passes every object key to the getValue function once', function () {
-      var keys = ['foo', 'bar', 'baz'];
-      function getValue(key) {
-        var index = keys.indexOf(key);
+    it('passes every object key to the getValue function once', () => {
+      const keys = ['foo', 'bar', 'baz'];
+      function getValueOnce(key) {
+        const index = keys.indexOf(key);
         assert.notEqual(index, -1);
         keys.splice(index, 1);
         return key;
       }
 
-      fromFunction(getValue, {
+      fromFunction(getValueOnce, {
         foo: 'foo',
         bar: 'bar',
         baz: 'baz'
@@ -49,7 +49,7 @@ describe('matches.fromFunction', function () {
       assert.lengthOf(keys, 0);
     });
 
-    it('returns true if every value is matched', function () {
+    it('returns true if every value is matched', () => {
       keyMap = {
         foo: 'foo',
         bar: 'bar',
@@ -58,7 +58,7 @@ describe('matches.fromFunction', function () {
       assert.isTrue(fromFunction(getValue, keyMap));
     });
 
-    it('returns false if any value is not matched', function () {
+    it('returns false if any value is not matched', () => {
       keyMap = {
         foo: 'foo',
         bar: 'bar',
@@ -74,7 +74,7 @@ describe('matches.fromFunction', function () {
       );
     });
 
-    it('returns true if there are no keys', function () {
+    it('returns true if there are no keys', () => {
       assert.isTrue(fromFunction(getValue, {}));
     });
   });
