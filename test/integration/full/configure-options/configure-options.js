@@ -203,7 +203,7 @@ describe('Configure Options', function () {
       };
 
       var iframe = document.createElement('iframe');
-      iframe.src = '/test/mock/frames/context.html';
+      iframe.src = '/test/mock/frames/noHtml-config.html';
       iframe.onload = function () {
         axe.configure(config);
 

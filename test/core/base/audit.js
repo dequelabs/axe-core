@@ -585,6 +585,8 @@ describe('Audit', function () {
         '<input aria-labelledby="monkeys">' +
         '<blink>FAIL ME</blink>';
 
+      axe.setup();
+
       a.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {},
@@ -971,6 +973,7 @@ describe('Audit', function () {
           return true;
         }
       });
+      axe.setup();
 
       var preloadOptions = {
         preload: {

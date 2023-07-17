@@ -1,15 +1,13 @@
+const base = axe.utils.DqElement.defaultSerializer;
 axe.utils.DqElement.setSerializer({
-  serializeNode: function customSerializeNode(node) {
-    const result = axe.utils.DqElement.defaultSerializer.serializeNode(node);
-    result.id = node.element.id;
+  toSpec: function toSpec(dqElm) {
+    const result = base.toSpec(dqElm);
+    result.source = dqElm.element.id;
     return result;
   },
-  mergeSpecs: function customMergeSpecs(nodeSpec, frameSpec) {
-    const result = axe.utils.DqElement.defaultSerializer.mergeSpecs(
-      nodeSpec,
-      frameSpec
-    );
-    result.source = `${frameSpec.source}\n\n# Inside ${frameSpec.id}.contentWindow:\n${nodeSpec.source}`;
+  mergeSpecs: function mergeSpecs(parentSpec, childSpec) {
+    const result = base.mergeSpecs(parentSpec, childSpec);
+    result.source = `${parentSpec.source} > ${childSpec.source}`;
     return result;
   }
 });

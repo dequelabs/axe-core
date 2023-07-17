@@ -13,9 +13,10 @@ describe('serializer', function () {
 
   const runOptions = { runOnly: 'html-lang-valid' };
   const expectedCustomNodeSources = [
-    '<iframe id="frame1" src="frames/level1.html"></iframe>\n\n# Inside frame1.contentWindow:\n<html id="level1" lang="@(#$*">',
-    '<iframe id="frame1" src="frames/level1.html"></iframe>\n\n# Inside frame1.contentWindow:\n<iframe id="frame2-a" src="level2-a.html"></iframe>\n\n# Inside frame2-a.contentWindow:\n<html id="level2-a" lang="!@£"><head>\n    <meta charset="utf8">\n    <script src="/axe.js"></script>\n    <script src="../custom-source-serializer.js"></script>\n  </head>\n  <body>\n    Hi\n  \n\n</body></html>',
-    '<iframe id="frame1" src="frames/level1.html"></iframe>\n\n# Inside frame1.contentWindow:\n<iframe id="frame2-b" src="level2-b.html"></iframe>\n\n# Inside frame2-b.contentWindow:\n<html id="level2-b" xml:lang="$%^"><head>\n    <meta charset="utf8">\n    <script src="/axe.js"></script>\n    <script src="../custom-source-serializer.js"></script>\n  </head>\n  <body>\n\n</body></html>'
+    'level0',
+    'frame1 > level1',
+    'frame1 > frame2-a > level2-a',
+    'frame1 > frame2-b > level2-b'
   ];
 
   it('applies serializer hooks with axe.runPartial/finishRun', function (done) {
@@ -37,6 +38,23 @@ describe('serializer', function () {
       .then(function (results) {
         const nodeHtmls = results.violations[0].nodes.map(n => n.html);
         assert.deepStrictEqual(nodeHtmls, expectedCustomNodeSources);
+        done();
+      })
+      .catch(done);
+  });
+
+  it('still supports axe.run with options.elementRef', done => {
+    axe
+      .run(document, { ...runOptions, elementRef: true })
+      .then(function (results) {
+        const nodeElements = results.violations[0].nodes.map(n => n.element);
+        assert.deepStrictEqual(nodeElements, [
+          document.querySelector('html'),
+          // as usual, elementRef only works for the top frame
+          undefined,
+          undefined,
+          undefined
+        ]);
         done();
       })
       .catch(done);
