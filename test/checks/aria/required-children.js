@@ -69,9 +69,16 @@ describe('aria-required-children', () => {
 
   it('should pass all existing required children when all required', () => {
     const params = checkSetup(
-      '<div id="target" role="menu"><li role="none"></li><li role="menuitem">Item 1</li><div role="menuitemradio">Item 2</div><div role="menuitemcheckbox">Item 3</div></div>'
+      `<div id="target" role="menu">
+        <li role="none"></li>
+        <li role="menuitem">Item 1</li>
+        <div role="menuitemradio">Item 2</div>
+        <div role="menuitemcheckbox">Item 3</div>
+      </div>`
     );
-    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    const out = requiredChildrenCheck.apply(checkContext, params);
+    console.log(checkContext._data);
+    assert.isTrue(out);
   });
 
   it('should return undefined when element is empty and is in reviewEmpty options', () => {
