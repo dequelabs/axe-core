@@ -276,7 +276,7 @@ describe('text.formControlValue', () => {
         </div>
       `);
       const text = ariaTextboxValue(target).trim();
-      assert.equal(text, '[role=texbox] { display: none }');
+      assert.equal(text, '[role="texbox"] { display: none; }');
     });
   });
 
