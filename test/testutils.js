@@ -688,6 +688,18 @@ var commons;
     return fixtureNode.querySelector('#target');
   };
 
+  /**
+   * Noop tag for code highlighting in editors
+   * @param {array} strings
+   * @param  {...any} values
+   * @returns {string}
+   */
+  testUtils.html = (strings, ...values) => {
+    return strings.reduce((total, string, i) => {
+      return total + string + (values[i] ?? '');
+    }, '');
+  };
+
   function appendHtml(fixtureNode, htmlCode) {
     const tmp = document.createElement('div');
     tmp.innerHTML = htmlCode;
