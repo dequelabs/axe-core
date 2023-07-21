@@ -21,6 +21,10 @@
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認します",
       "help": "ARIAコマンドにはアクセシブルな名前がなければなりません"
     },
+    "aria-deprecated-role": {
+      "description": "要素に非推奨のロールが使用されていないことを確認します",
+      "help": "非推奨のARIAロールを使用してはなりません"
+    },
     "aria-dialog-name": {
       "description": "すべてのARIA dialog、alertdialogノードにアクセシブルな名前があることを確認します",
       "help": "ARIA dialogとalertdialogノードにはアクセシブルな名前がなければなりません"
@@ -44,6 +48,10 @@
     "aria-progressbar-name": {
       "description": "すべてのARIA progressbarノードにアクセシブルな名前があることを確認します",
       "help": "ARIA progressbarノードにはアクセシブルな名前がなければなりません"
+    },
+    "aria-prohibited-attr": {
+      "description": "Ensures ARIA attributes are not prohibited for an element's role",
+      "help": "Elements must only use permitted ARIA attributes"
     },
     "aria-required-attr": {
       "description": "ARIAロールのある要素にすべての必須ARIA属性が存在することを確認します",
@@ -611,6 +619,7 @@
         "bgGradient": "背景グラデーションのため、要素の背景色を判定できません",
         "imgNode": "画像ノードが含まれるため、要素の背景色を判定できません",
         "bgOverlap": "他の要素と重なっているため、要素の背景色を判定できません",
+        "complexTextShadows": "Element's contrast could not be determined because it uses complex text shadows",
         "fgAlpha": "アルファ透明度により、要素の前景色を判定できません",
         "elmPartiallyObscured": "他の要素により部分的に不明瞭なため、要素の背景色を判定できません",
         "elmPartiallyObscuring": "他の要素と部分的に重なっているため、要素の背景色を判定できません",
