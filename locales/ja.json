@@ -619,7 +619,7 @@
         "bgGradient": "背景グラデーションのため、要素の背景色を判定できません",
         "imgNode": "画像ノードが含まれるため、要素の背景色を判定できません",
         "bgOverlap": "他の要素と重なっているため、要素の背景色を判定できません",
-        "complexTextShadows": "Element's contrast could not be determined because it uses complex text shadows",
+        "complexTextShadows": "複雑なtext-shadowが用いられているため、要素のコントラスト比を判定できません",
         "fgAlpha": "アルファ透明度により、要素の前景色を判定できません",
         "elmPartiallyObscured": "他の要素により部分的に不明瞭なため、要素の背景色を判定できません",
         "elmPartiallyObscuring": "他の要素と部分的に重なっているため、要素の背景色を判定できません",
