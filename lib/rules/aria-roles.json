@@ -10,5 +10,5 @@
   },
   "all": [],
   "any": [],
-  "none": ["invalidrole", "abstractrole", "unsupportedrole", "deprecatedrole"]
+  "none": ["invalidrole", "abstractrole", "unsupportedrole"]
 }

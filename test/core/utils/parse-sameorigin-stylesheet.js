@@ -1,8 +1,6 @@
-describe('axe.utils.parseSameOriginStylesheet', function () {
-  'use strict';
-
-  var stylesForPage;
-  var styleSheets = {
+describe('axe.utils.parseSameOriginStylesheet', () => {
+  let stylesForPage;
+  const styleSheets = {
     emptyStyleTag: {
       id: 'emptyStyleTag',
       text: ''
@@ -16,43 +14,43 @@ describe('axe.utils.parseSameOriginStylesheet', function () {
       text: '.inline-css { font-weight:normal; }'
     }
   };
-  var dynamicDoc;
-  var convertDataToStylesheet;
+  let dynamicDoc;
+  let convertDataToStylesheet;
 
-  beforeEach(function () {
+  beforeEach(() => {
     dynamicDoc = document.implementation.createHTMLDocument(
       'Dynamic document for testing axe.utils.parseSameOriginStylesheet'
     );
     convertDataToStylesheet = axe.utils.getStyleSheetFactory(dynamicDoc);
   });
 
-  afterEach(function (done) {
+  afterEach(done => {
     dynamicDoc = undefined;
     convertDataToStylesheet = undefined;
-    axe.testUtils.removeStyleSheets(stylesForPage).then(function () {
+    axe.testUtils.removeStyleSheets(stylesForPage).then(() => {
       done();
       stylesForPage = undefined;
     });
   });
 
-  it('returns empty results when given sheet has no cssRules', function (done) {
+  it('returns empty results when given sheet has no cssRules', done => {
     // add style that has no styles
     stylesForPage = [styleSheets.emptyStyleTag];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
+    axe.testUtils.addStyleSheets(stylesForPage).then(() => {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
-        return sheet.ownerNode.id === styleSheets.emptyStyleTag.id;
+      const sheet = Array.from(document.styleSheets).filter(styleSheet => {
+        return styleSheet.ownerNode.id === styleSheets.emptyStyleTag.id;
       })[0];
       // parse sheet
-      var options = {
+      const options = {
         rootNode: document,
         shadowId: undefined,
         convertDataToStylesheet: convertDataToStylesheet
       };
-      var priority = [1, 0];
-      var importedUrls = [];
-      var isCrossOriginRequest = false;
+      const priority = [1, 0];
+      const importedUrls = [];
+      const isCrossOriginRequest = false;
       axe.utils
         .parseSameOriginStylesheet(
           sheet,
@@ -73,24 +71,24 @@ describe('axe.utils.parseSameOriginStylesheet', function () {
     });
   });
 
-  it('returns @import rule specified in the stylesheet', function (done) {
+  it('returns @import rule specified in the stylesheet', done => {
     // add style that has @import style
     stylesForPage = [styleSheets.styleTagWithOneImport];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
+    axe.testUtils.addStyleSheets(stylesForPage).then(() => {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
-        return sheet.ownerNode.id === styleSheets.styleTagWithOneImport.id;
+      const sheet = Array.from(document.styleSheets).filter(styleSheet => {
+        return styleSheet.ownerNode.id === styleSheets.styleTagWithOneImport.id;
       })[0];
       // parse sheet
-      var options = {
+      const options = {
         rootNode: document,
         shadowId: undefined,
         convertDataToStylesheet: convertDataToStylesheet
       };
-      var priority = [1, 0];
-      var importedUrls = [];
-      var isCrossOriginRequest = false;
+      const priority = [1, 0];
+      const importedUrls = [];
+      const isCrossOriginRequest = false;
       axe.utils
         .parseSameOriginStylesheet(
           sheet,
@@ -102,7 +100,7 @@ describe('axe.utils.parseSameOriginStylesheet', function () {
         .then(function (data) {
           assert.isDefined(data);
 
-          var parsedImportData = data[0];
+          const parsedImportData = data[0];
           assert.isDefined(parsedImportData.sheet);
           assert.equal(parsedImportData.isCrossOrigin, isCrossOriginRequest);
           // as @import is a style with in @imported sheet, an additional priority is appended.
@@ -119,24 +117,24 @@ describe('axe.utils.parseSameOriginStylesheet', function () {
     });
   });
 
-  it('returns inline style specified in the stylesheet', function (done) {
+  it('returns inline style specified in the stylesheet', done => {
     // add style that has @import style
     stylesForPage = [styleSheets.inlineStyle];
 
-    axe.testUtils.addStyleSheets(stylesForPage).then(function () {
+    axe.testUtils.addStyleSheets(stylesForPage).then(() => {
       // get recently added sheet
-      var sheet = Array.from(document.styleSheets).filter(function (sheet) {
-        return sheet.ownerNode.id === styleSheets.inlineStyle.id;
+      const sheet = Array.from(document.styleSheets).filter(styleSheet => {
+        return styleSheet.ownerNode.id === styleSheets.inlineStyle.id;
       })[0];
       // parse sheet
-      var options = {
+      const options = {
         rootNode: document,
         shadowId: undefined,
         convertDataToStylesheet: convertDataToStylesheet
       };
-      var priority = [1, 0];
-      var importedUrls = [];
-      var isCrossOriginRequest = false;
+      const priority = [1, 0];
+      const importedUrls = [];
+      const isCrossOriginRequest = false;
       axe.utils
         .parseSameOriginStylesheet(
           sheet,

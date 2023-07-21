@@ -1020,5 +1020,21 @@ describe('color-contrast', function () {
       );
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
+
+    it('incompletes if text-shadow is only on part of the text', function () {
+      var params = checkSetup(`
+        <div id="target" style="
+          background-color: #aaa;
+          color:#666; 
+          text-shadow: 1px 1px #000;
+        "> Hello world </div>
+      `);
+
+      assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._relatedNodes, []);
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'complexTextShadows'
+      });
+    });
   });
 });

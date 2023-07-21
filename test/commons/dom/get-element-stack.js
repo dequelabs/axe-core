@@ -465,6 +465,28 @@ describe('dom.getElementStack', () => {
       assert.deepEqual(stack, []);
     });
 
+    it('should correctly position children of different stacking contexts', () => {
+      fixture.innerHTML = `
+        <header id="1" style="position: absolute; z-index: 999; height: 50px; width: 100%; top: 0">
+          <div id="2" style="display: flex; position: relative; height: 50px;">
+            <div id="3" style="position: relative; height: 50px; width: 100%;"></div>
+          </div>
+          <div id="4" style="display: flex; position: absolute; height: 50px; width: 100%; top: 0;">
+            <div id="5" style="position: absolute; transform: translate(0, -50%);">
+              <div id="6" style="display: flex;">
+                <span id="target">Hello World</span>
+              </div>
+            </div>
+          </div>
+        </header>
+      `;
+
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '6', '5', '4', '3', '2', '1']);
+    });
+
     it('should throw error if element midpoint-x exceeds the grid', () => {
       fixture.innerHTML = '<div id="target">Hello World</div>';
       axe.testUtils.flatTreeSetup(fixture);
