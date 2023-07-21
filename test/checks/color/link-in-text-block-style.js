@@ -1,67 +1,64 @@
-describe('link-in-text-block-style', function () {
-  'use strict';
+describe('link-in-text-block-style', () => {
+  const fixture = document.getElementById('fixture');
+  const shadowSupport = axe.testUtils.shadowSupport;
+  let styleElm;
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
-  var styleElm;
-
-  var checkContext = axe.testUtils.MockCheckContext();
+  const checkContext = axe.testUtils.MockCheckContext();
 
   const { queryFixture } = axe.testUtils;
   const linkInBlockStyleCheck = axe.testUtils.getCheckEvaluate(
     'link-in-text-block-style'
   );
 
-  before(function () {
+  before(() => {
     styleElm = document.createElement('style');
     document.head.appendChild(styleElm);
   });
 
-  var defaultStyle = {
+  const defaultStyle = {
     color: 'black',
     textDecoration: 'none'
   };
 
-  beforeEach(function () {
+  beforeEach(() => {
     createStyleString('p', defaultStyle);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     styleElm.innerHTML = '';
     checkContext.reset();
   });
 
-  after(function () {
+  after(() => {
     styleElm.parentNode.removeChild(styleElm);
   });
 
   function createStyleString(selector, outerStyle) {
     // Merge style with the default
-    var prop;
-    var styleObj = {};
-    for (prop in defaultStyle) {
+    const styleObj = {};
+    for (const prop in defaultStyle) {
       if (defaultStyle.hasOwnProperty(prop)) {
         styleObj[prop] = defaultStyle[prop];
       }
     }
-    for (prop in outerStyle) {
+    for (const prop in outerStyle) {
       if (outerStyle.hasOwnProperty(prop)) {
         styleObj[prop] = outerStyle[prop];
       }
     }
 
-    var cssLines = Object.keys(styleObj)
-      .map(function (prop) {
+    const cssLines = Object.keys(styleObj)
+      .map(prop => {
         // Make camelCase prop dash separated
-        var cssPropName = prop
+        const cssPropName = prop
           .trim()
           .split(/(?=[A-Z])/g)
-          .reduce(function (prop, propPiece) {
-            if (!prop) {
+          .reduce((name, propPiece) => {
+            if (!name) {
               return propPiece;
             } else {
-              return prop + '-' + propPiece.toLowerCase();
+              return name + '-' + propPiece.toLowerCase();
             }
           }, null);
 
@@ -76,8 +73,8 @@ describe('link-in-text-block-style', function () {
 
   function getLinkElm(linkStyle) {
     // Get a random id and build the style strings
-    var linkId = 'linkid-' + Math.floor(Math.random() * 100000);
-    var parId = 'parid-' + Math.floor(Math.random() * 100000);
+    const linkId = 'linkid-' + Math.floor(Math.random() * 100000);
+    const parId = 'parid-' + Math.floor(Math.random() * 100000);
 
     createStyleString('#' + linkId, linkStyle);
     createStyleString('#' + parId, {});
@@ -94,14 +91,14 @@ describe('link-in-text-block-style', function () {
     return document.getElementById(linkId);
   }
 
-  describe('link default state', function () {
-    beforeEach(function () {
+  describe('link default state', () => {
+    beforeEach(() => {
       createStyleString('a', {
         textDecoration: 'none'
       });
     });
 
-    it('passes the selected node and closest ancestral block element', function () {
+    it('passes the selected node and closest ancestral block element', () => {
       fixture.innerHTML =
         '<div> <span style="display:block; id="parent">' +
         '	<p style="display:inline"><a href="" id="link">' +
@@ -110,19 +107,19 @@ describe('link-in-text-block-style', function () {
         '</span> outside block </div>';
 
       axe.testUtils.flatTreeSetup(fixture);
-      var linkElm = document.getElementById('link');
+      const linkElm = document.getElementById('link');
 
       assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
     });
 
     (shadowSupport.v1 ? it : xit)(
       'works with the block outside the shadow tree',
-      function () {
-        var parentElm = document.createElement('div');
-        var shadow = parentElm.attachShadow({ mode: 'open' });
+      () => {
+        const parentElm = document.createElement('div');
+        const shadow = parentElm.attachShadow({ mode: 'open' });
         shadow.innerHTML =
           '<a href="" style="text-decoration:underline;">Link</a>';
-        var linkElm = shadow.querySelector('a');
+        const linkElm = shadow.querySelector('a');
         fixture.appendChild(parentElm);
 
         axe.testUtils.flatTreeSetup(fixture);
@@ -133,33 +130,33 @@ describe('link-in-text-block-style', function () {
 
     (shadowSupport.v1 ? it : xit)(
       'works with the link inside the shadow tree slot',
-      function () {
-        var div = document.createElement('div');
+      () => {
+        const div = document.createElement('div');
         div.setAttribute('style', 'text-decoration:none;');
         div.innerHTML =
           '<a href="" style="text-decoration:underline;">Link</a>';
-        var shadow = div.attachShadow({ mode: 'open' });
+        const shadow = div.attachShadow({ mode: 'open' });
         shadow.innerHTML = '<p><slot></slot></p>';
         fixture.appendChild(div);
 
         axe.testUtils.flatTreeSetup(fixture);
-        var linkElm = div.querySelector('a');
+        const linkElm = div.querySelector('a');
 
         assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
       }
     );
   });
 
-  describe('links distinguished through style', function () {
-    it('returns false if link style matches parent', function () {
-      var linkElm = getLinkElm({});
+  describe('links distinguished through style', () => {
+    it('returns false if link style matches parent', () => {
+      const linkElm = getLinkElm({});
       assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
       assert.isNull(checkContext._data);
     });
 
-    it('returns true if link has underline', function () {
-      var linkElm = getLinkElm({
+    it('returns true if link has underline', () => {
+      const linkElm = getLinkElm({
         textDecoration: 'underline'
       });
       assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
@@ -167,7 +164,7 @@ describe('link-in-text-block-style', function () {
       assert.isNull(checkContext._data);
     });
 
-    it('returns undefined when the link has a :before pseudo element', function () {
+    it('returns undefined when the link has a :before pseudo element', () => {
       const link = queryFixture(`
         <style>
           a:before { content: '🔗'; }
@@ -181,7 +178,7 @@ describe('link-in-text-block-style', function () {
       assert.equal(checkContext._relatedNodes[0], link.parentNode);
     });
 
-    it('returns undefined when the link has a :after pseudo element', function () {
+    it('returns undefined when the link has a :after pseudo element', () => {
       const link = queryFixture(`
         <style>
           a:after { content: ""; }
@@ -195,7 +192,7 @@ describe('link-in-text-block-style', function () {
       assert.equal(checkContext._relatedNodes[0], link.parentNode);
     });
 
-    it('does not return undefined when the pseudo element content is none', function () {
+    it('does not return undefined when the pseudo element content is none', () => {
       const link = queryFixture(`
         <style>
           a:after { content: none; position: absolute; }

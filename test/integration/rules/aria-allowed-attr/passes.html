@@ -2153,3 +2153,9 @@
 
 <input type="checkbox" aria-checked="false" id="pass92" />
 <input type="checkbox" aria-checked="true" checked id="pass93" />
+
+<!-- Prohibited attributes fail in aria-prohibited-attr -->
+<div role="caption" aria-label="value" id="pass94"></div>
+<div role="caption" aria-labelledby="value" id="pass95"></div>
+<div role="paragraph" aria-labelledby="value" id="pass96"></div>
+<div role="strong" aria-label="value" id="pass97"></div>

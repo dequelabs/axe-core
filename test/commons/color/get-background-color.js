@@ -981,6 +981,27 @@ describe('color.getBackgroundColor', function () {
     assert.deepEqual(actual, expected);
   });
 
+  it('filters small shadows, while keeping larger ones', () => {
+    fixture.innerHTML = `
+      <div id="parent" style="height: 40px; width: 30px; background-color: #800000;">
+      <div id="target" style="
+        height: 20px; 
+        width: 15px; 
+        text-shadow: red 0 0 1em, black 1px 1px 0;">foo
+      </div></div>
+    `;
+    var target = fixture.querySelector('#target');
+    var parent = fixture.querySelector('#parent');
+    var bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
+    // is 128 without the shadow
+    var expected = new axe.commons.color.Color(145, 0, 0, 1);
+    assertColorsClose(actual, expected);
+    assert.deepEqual(bgNodes, [parent]);
+  });
+
   it('ignores text-shadows thinner than shadowOutlineEmMax', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px; background-color: #800000;">' +

@@ -10,8 +10,8 @@
       "help": "Active <area> elements must have alternate text"
     },
     "aria-allowed-attr": {
-      "description": "Ensures ARIA attributes are allowed for an element's role",
-      "help": "Elements must only use allowed ARIA attributes"
+      "description": "Ensures an element's role supports its ARIA attributes",
+      "help": "Elements must only use supported ARIA attributes"
     },
     "aria-allowed-role": {
       "description": "Ensures role attribute has an appropriate value for the element",
@@ -48,6 +48,10 @@
     "aria-progressbar-name": {
       "description": "Ensures every ARIA progressbar node has an accessible name",
       "help": "ARIA progressbar nodes must have an accessible name"
+    },
+    "aria-prohibited-attr": {
+      "description": "Ensures ARIA attributes are not prohibited for an element's role",
+      "help": "Elements must only use permitted ARIA attributes"
     },
     "aria-required-attr": {
       "description": "Ensures elements with ARIA roles have all required ARIA attributes",
@@ -615,6 +619,7 @@
         "bgGradient": "Element's background color could not be determined due to a background gradient",
         "imgNode": "Element's background color could not be determined because element contains an image node",
         "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
+        "complexTextShadows": "Element's contrast could not be determined because it uses complex text shadows",
         "fgAlpha": "Element's foreground color could not be determined because of alpha transparency",
         "elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
         "elmPartiallyObscuring": "Element's background color could not be determined because it partially overlaps other elements",

@@ -1,7 +1,7 @@
-describe('color-contrast blending test', function () {
-  var include = [];
-  var resultElms = [];
-  var expected = [
+describe('color-contrast blending test', () => {
+  const include = [];
+  const resultElms = [];
+  const expected = [
     // normal
     'rgb(223, 112, 96)',
     'rgb(255, 128, 128)',
@@ -124,8 +124,8 @@ describe('color-contrast blending test', function () {
     'rgb(198, 198, 198)'
   ];
 
-  var fixture = document.querySelector('#fixture');
-  var testGroup = document.querySelector('.test-group');
+  const fixture = document.querySelector('#fixture');
+  const testGroup = document.querySelector('.test-group');
   [
     'multiply',
     'screen',
@@ -138,19 +138,19 @@ describe('color-contrast blending test', function () {
     'soft-light',
     'difference',
     'exclusion'
-  ].forEach(function (blendMode) {
-    var nodes = testGroup.cloneNode(true);
-    var group = testGroup.cloneNode();
+  ].forEach(blendMode => {
+    const nodes = testGroup.cloneNode(true);
+    const group = testGroup.cloneNode();
 
-    var heading = document.createElement('h2');
+    const heading = document.createElement('h2');
     heading.textContent = blendMode;
     fixture.appendChild(heading);
 
-    Array.from(nodes.children).forEach(function (node, index) {
-      var id = node.id;
-      var target = node.querySelector('#' + id + '-target');
-      var result = node.querySelector('#' + id + '-result');
-      var blendModeIndex = blendMode + (index + 1);
+    Array.from(nodes.children).forEach((node, index) => {
+      const id = node.id;
+      const target = node.querySelector('#' + id + '-target');
+      const result = node.querySelector('#' + id + '-result');
+      const blendModeIndex = blendMode + (index + 1);
 
       node.id = blendModeIndex;
       target.id = blendModeIndex + '-target';
@@ -165,37 +165,37 @@ describe('color-contrast blending test', function () {
 
     fixture.appendChild(group);
   });
-  var testElms = Array.from(document.querySelectorAll('.test-group > div'));
-  testElms.forEach(function (testElm) {
-    var id = testElm.id;
-    var target = testElm.querySelector('#' + id + '-target');
-    var result = testElm.querySelector('#' + id + '-result');
+  const testElms = Array.from(document.querySelectorAll('.test-group > div'));
+  testElms.forEach(testElm => {
+    const id = testElm.id;
+    const target = testElm.querySelector('#' + id + '-target');
+    const result = testElm.querySelector('#' + id + '-result');
     include.push(target);
     resultElms.push(result);
   });
 
-  before(function (done) {
+  before(done => {
     axe.run(
       { include: include },
       { runOnly: ['color-contrast'] },
-      function (err, res) {
+      (err, res) => {
         assert.isNull(err);
 
         // don't care where the result goes as we just want to
         // extract the background color for each one
-        var results = []
+        const results = []
           .concat(res.passes)
           .concat(res.violations)
           .concat(res.incomplete);
-        results.forEach(function (result) {
-          result.nodes.forEach(function (node) {
-            var bgColor = node.any[0].data.bgColor;
-            var id = node.target[0].substring(
+        results.forEach(result => {
+          result.nodes.forEach(node => {
+            const bgColor = node.any[0].data.bgColor;
+            const id = node.target[0].substring(
               0,
               node.target[0].lastIndexOf('-')
             );
-            var result = document.querySelector(id + '-result');
-            result.style.backgroundColor = bgColor;
+            const resultNode = document.querySelector(id + '-result');
+            resultNode.style.backgroundColor = bgColor;
           });
         });
 
@@ -204,9 +204,9 @@ describe('color-contrast blending test', function () {
     );
   });
 
-  resultElms.forEach(function (elm, index) {
-    it('produces the correct blended color for ' + elm.id, function () {
-      var style = window.getComputedStyle(elm);
+  resultElms.forEach((elm, index) => {
+    it('produces the correct blended color for ' + elm.id, () => {
+      const style = window.getComputedStyle(elm);
       assert.equal(style.getPropertyValue('background-color'), expected[index]);
     });
   });

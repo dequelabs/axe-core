@@ -1,5 +1,3 @@
-/*global window, Promise */
-
 const globby = require('globby');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
@@ -9,12 +7,12 @@ const args = process.argv.slice(2);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
-let browser = 'chrome';
-args.forEach(function (arg) {
+let browserArg = 'chrome';
+args.forEach(arg => {
   // pattern: browsers=Chrome
   const parts = arg.split('=');
   if (parts[0] === 'browser') {
-    browser = parts[1].toLowerCase();
+    browserArg = parts[1].toLowerCase();
   }
 });
 
@@ -24,9 +22,9 @@ args.forEach(function (arg) {
 function collectTestResults(driver) {
   // inject a script that waits half a second
   return driver
-    .executeAsyncScript(function () {
+    .executeAsyncScript(() => {
       const callback = arguments[arguments.length - 1];
-      setTimeout(function () {
+      setTimeout(() => {
         if (!window.mocha) {
           callback('mocha-missing;' + window.location.href);
         }
@@ -34,7 +32,7 @@ function collectTestResults(driver) {
         callback(window.mochaResults);
       }, 500);
     })
-    .then(function (result) {
+    .then(result => {
       // If there are no results, listen a little longer
       if (typeof result === 'string' && result.includes('mocha-missing')) {
         throw new Error(
@@ -64,14 +62,14 @@ function runTestUrls(driver, isMobile, urls, errors) {
     driver
       .get(url)
       // Get results
-      .then(function () {
+      .then(() => {
         return Promise.all([
           driver.getCapabilities(),
           collectTestResults(driver)
         ]);
       })
       // And process them
-      .then(function (promiseResults) {
+      .then(promiseResults => {
         const capabilities = promiseResults[0];
         const result = promiseResults[1];
         const browserName =
@@ -80,7 +78,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         console.log(url + ' [' + browserName + ']');
 
         // Remember the errors
-        (result.reports || []).forEach(function (err) {
+        (result.reports || []).forEach(err => {
           console.log(err.message);
           err.url = url;
           err.browser = browserName;
@@ -101,7 +99,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         );
         console.log();
       })
-      .then(function () {
+      .then(() => {
         // Start the next job, if any
         if (urls.length > 0) {
           return runTestUrls(driver, isMobile, urls, errors);
@@ -160,7 +158,7 @@ function start(options) {
       'test/integration/full/**/*.{html,xhtml}',
       '!**/frames/**/*.{html,xhtml}'
     ])
-    .map(function (url) {
+    .map(url => {
       return 'http://localhost:9876/' + url;
     });
 
@@ -190,9 +188,9 @@ function start(options) {
 
   // Test all pages
   runTestUrls(driver, isMobile, testUrls)
-    .then(function (testErrors) {
+    .then(testErrors => {
       // log each error and abort
-      testErrors.forEach(function (err) {
+      testErrors.forEach(err => {
         console.log();
         console.log('URL: ' + err.url);
         console.log('Browser: ' + err.browser);
@@ -206,10 +204,10 @@ function start(options) {
 
       // catch any potential problems
     })
-    .catch(function (err) {
+    .catch(err => {
       console.log(err);
       process.exit(1);
     });
 }
 
-start({ browser: browser });
+start({ browser: browserArg });

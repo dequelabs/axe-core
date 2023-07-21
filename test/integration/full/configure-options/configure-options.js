@@ -1,16 +1,14 @@
-describe('Configure Options', function () {
-  'use strict';
+describe('Configure Options', () => {
+  const target = document.querySelector('#target');
 
-  var target = document.querySelector('#target');
-
-  afterEach(function () {
+  afterEach(() => {
     axe.reset();
     target.innerHTML = '';
   });
 
-  describe('Check', function () {
-    describe('aria-allowed-attr', function () {
-      it('should allow an attribute supplied in options', function (done) {
+  describe('Check', () => {
+    describe('aria-allowed-attr', () => {
+      it('should allow an attribute supplied in options', done => {
         target.setAttribute('role', 'separator');
         target.setAttribute('aria-valuenow', '0');
 
@@ -37,7 +35,7 @@ describe('Configure Options', function () {
         );
       });
 
-      it('should not normalize external check options', function (done) {
+      it('should not normalize external check options', done => {
         target.setAttribute('lang', 'en');
 
         axe.configure({
@@ -46,7 +44,7 @@ describe('Configure Options', function () {
               id: 'dylang',
               options: ['dylan'],
               evaluate:
-                'function (node, options) {\n        var lang = (node.getAttribute("lang") || "").trim().toLowerCase();\n        var xmlLang = (node.getAttribute("xml:lang") || "").trim().toLowerCase();\n        var invalid = [];\n        (options || []).forEach(function(cc) {\n          cc = cc.toLowerCase();\n          if (lang && (lang === cc || lang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            lang = null;\n          }\n          if (xmlLang && (xmlLang === cc || xmlLang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            xmlLang = null;\n          }\n        });\n        if (xmlLang) {\n          invalid.push(\'xml:lang="\' + xmlLang + \'"\');\n        }\n        if (lang) {\n          invalid.push(\'lang="\' + lang + \'"\');\n        }\n        if (invalid.length) {\n          this.data(invalid);\n          return true;\n        }\n        return false;\n      }',
+                'function (node, options) {\n        const lang = (node.getAttribute("lang") || "").trim().toLowerCase();\n        const xmlLang = (node.getAttribute("xml:lang") || "").trim().toLowerCase();\n        const invalid = [];\n        (options || []).forEach(function(cc) {\n          cc = cc.toLowerCase();\n          if (lang && (lang === cc || lang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            lang = null;\n          }\n          if (xmlLang && (xmlLang === cc || xmlLang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            xmlLang = null;\n          }\n        });\n        if (xmlLang) {\n          invalid.push(\'xml:lang="\' + xmlLang + \'"\');\n        }\n        if (lang) {\n          invalid.push(\'lang="\' + lang + \'"\');\n        }\n        if (invalid.length) {\n          this.data(invalid);\n          return true;\n        }\n        return false;\n      }',
               messages: {
                 pass: 'Good language',
                 fail: 'You mst use the DYLAN language'
@@ -100,8 +98,8 @@ describe('Configure Options', function () {
       });
     });
 
-    describe('aria-required-attr', function () {
-      it('should report unique attributes when supplied from options', function (done) {
+    describe('aria-required-attr', () => {
+      it('should report unique attributes when supplied from options', done => {
         target.setAttribute('role', 'slider');
         axe.configure({
           checks: [
@@ -131,8 +129,8 @@ describe('Configure Options', function () {
     });
   });
 
-  describe('disableOtherRules', function () {
-    it('disables rules that are not in the `rules` array', function (done) {
+  describe('disableOtherRules', () => {
+    it('disables rules that are not in the `rules` array', done => {
       axe.configure({
         disableOtherRules: true,
         rules: [
@@ -160,9 +158,9 @@ describe('Configure Options', function () {
     });
   });
 
-  describe('noHtml', function () {
-    var captureError = axe.testUtils.captureError;
-    it('prevents html property on nodes', function (done) {
+  describe('noHtml', () => {
+    const captureError = axe.testUtils.captureError;
+    it('prevents html property on nodes', done => {
       target.setAttribute('role', 'slider');
       axe.configure({
         noHtml: true,
@@ -189,8 +187,8 @@ describe('Configure Options', function () {
       );
     });
 
-    it('prevents html property on nodes from iframes', function (done) {
-      var config = {
+    it('prevents html property on nodes from iframes', done => {
+      const config = {
         noHtml: true,
         rules: [
           {
@@ -202,11 +200,10 @@ describe('Configure Options', function () {
         ]
       };
 
-      var iframe = document.createElement('iframe');
+      const iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/noHtml-config.html';
-      iframe.onload = function () {
+      iframe.onload = () => {
         axe.configure(config);
-
         axe.run(
           '#target',
           {
@@ -229,8 +226,8 @@ describe('Configure Options', function () {
       target.appendChild(iframe);
     });
 
-    it('prevents html property in postMesage', function (done) {
-      var config = {
+    it('prevents html property in postMesage', done => {
+      const config = {
         noHtml: true,
         rules: [
           {
@@ -242,9 +239,9 @@ describe('Configure Options', function () {
         ]
       };
 
-      var iframe = document.createElement('iframe');
+      const iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/noHtml-config.html';
-      iframe.onload = function () {
+      iframe.onload = () => {
         axe.configure(config);
 
         axe.run('#target', {
@@ -256,14 +253,14 @@ describe('Configure Options', function () {
       };
       target.appendChild(iframe);
 
-      window.addEventListener('message', function (e) {
-        var data = JSON.parse(e.data);
+      window.addEventListener('message', function (evt) {
+        const data = JSON.parse(evt.data);
         if (Array.isArray(data.payload)) {
           try {
             assert.isNull(data.payload[0].nodes[0].node.source);
             done();
-          } catch (e) {
-            done(e);
+          } catch (err) {
+            done(err);
           }
         }
       });
