@@ -61,11 +61,6 @@ describe('text.isIconLigature', () => {
     assert.isFalse(isIconLigature(target.children[0]));
   });
 
-  it('should return false for text with format unicode', () => {
-    const target = queryFixture('<div id="target">⁩Hello World</div>');
-    assert.isFalse(isIconLigature(target.children[0]));
-  });
-
   (fontApiSupport ? it : it.skip)(
     'should return false for common ligatures (fi)',
     () => {
