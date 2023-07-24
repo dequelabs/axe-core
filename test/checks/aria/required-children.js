@@ -76,9 +76,7 @@ describe('aria-required-children', () => {
         <div role="menuitemcheckbox">Item 3</div>
       </div>`
     );
-    const out = requiredChildrenCheck.apply(checkContext, params);
-    console.log(checkContext._data);
-    assert.isTrue(out);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params))
   });
 
   it('should return undefined when element is empty and is in reviewEmpty options', () => {
