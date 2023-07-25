@@ -55,6 +55,14 @@ describe('axe.runPartial', function () {
       .catch(done);
   });
 
+  it('does ignores { elementRef: true } option', async () => {
+    const options = { elementRef: true };
+    const result = await axe.runPartial(options);
+    for (const nodeResult of result.results[0].nodes) {
+      assert.isUndefined(nodeResult.node.element);
+    }
+  });
+
   describe('result', function () {
     var partialResult;
     before(function (done) {
@@ -89,6 +97,24 @@ describe('axe.runPartial', function () {
       assert.hasAllKeys(checkResult, ['any', 'all', 'none', 'node']);
       assert.notInstanceOf(checkResult.node, DqElement);
       assert.hasAllKeys(checkResult.node, dqElementKeys);
+    });
+
+    it('does not return DqElement objects', () => {
+      for (const result of partialResult.results) {
+        for (const nodeResult of result.nodes) {
+          assert.notInstanceOf(nodeResult.node, DqElement);
+          const checks = [
+            ...nodeResult.any,
+            ...nodeResult.all,
+            ...nodeResult.none
+          ];
+          for (const check of checks) {
+            for (const relatedNode of check.relatedNodes) {
+              assert.notInstanceOf(relatedNode, DqElement);
+            }
+          }
+        }
+      }
     });
 
     it('can be serialized using JSON.stringify', function () {

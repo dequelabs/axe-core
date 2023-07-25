@@ -267,4 +267,29 @@ describe('DqElement', function () {
       });
     });
   });
+
+  describe('DqElement.setRunOptions', function () {
+    it('sets options for DqElement', function () {
+      axe.setup();
+      var options = { absolutePaths: true, elementRef: true };
+      DqElement.setRunOptions(options);
+      var dqElm = new DqElement(document.body);
+
+      const { element, selector } = dqElm.toJSON();
+      assert.equal(element, document.body);
+      assert.equal(selector, 'html > body');
+    });
+
+    it('is reset by axe.teardown', () => {
+      var options = { absolutePaths: true, elementRef: true };
+      DqElement.setRunOptions(options);
+      axe.teardown();
+
+      axe.setup();
+      var dqElm = new DqElement(document.body);
+      const { element, selector } = dqElm.toJSON();
+      assert.isUndefined(element);
+      assert.equal(selector, 'body');
+    });
+  });
 });
