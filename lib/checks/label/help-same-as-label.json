@@ -1,7 +1,6 @@
 {
   "id": "help-same-as-label",
   "evaluate": "help-same-as-label-evaluate",
-  "enabled": false,
   "metadata": {
     "impact": "minor",
     "messages": {
