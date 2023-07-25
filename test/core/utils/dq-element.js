@@ -161,45 +161,19 @@ describe('DqElement', function () {
   });
 
   describe('toJSON', function () {
-    afterEach(() => {
-      DqElement.setSerializer(null);
-    });
-
     it('should only stringify selector and source', function () {
       var spec = {
-        selector: 'foo > bar > joe',
+        selector: ['foo > bar > joe'],
         source: '<joe aria-required="true">',
-        xpath: '/foo/bar/joe',
-        ancestry: 'foo > bar > joe',
-        nodeIndexes: [123, 456]
+        xpath: ['/foo/bar/joe'],
+        ancestry: ['foo > bar > joe'],
+        nodeIndexes: [123],
+        fromFrame: false
       };
 
       var div = document.createElement('div');
-      var dqElm = new DqElement(div, {}, spec);
-      assert.deepEqual(dqElm.toJSON(), spec);
-    });
-
-    it('can be hooked by setSerializer', function () {
-      var serializeNodeHook = sinon.spy(node => ({
-        ...DqElement.defaultSerializer.serializeNode(node),
-        hookAddition: 'new value'
-      }));
-      DqElement.setSerializer({ serializeNode: serializeNodeHook });
-
-      var spec = {
-        selector: 'foo > bar > joe',
-        source: '<joe aria-required="true">',
-        xpath: '/foo/bar/joe',
-        ancestry: 'foo > bar > joe',
-        nodeIndexes: [123, 456]
-      };
-      var div = document.createElement('div');
-      var dqElm = new DqElement(div, {}, spec);
-
-      var output = dqElm.toJSON();
-
-      assert.isTrue(serializeNodeHook.calledOnceWith(dqElm));
-      assert.propertyVal(output, 'hookAddition', 'new value');
+      var result = new DqElement(div, {}, spec);
+      assert.deepEqual(result.toJSON(), spec);
     });
   });
 
@@ -226,14 +200,11 @@ describe('DqElement', function () {
       dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
-    describe('DqElement.mergeSpecs', function () {
+    describe('.mergeSpecs', function () {
       var mainSpec, iframeSpec;
       beforeEach(function () {
         mainSpec = dqMain.toJSON();
         iframeSpec = dqIframe.toJSON();
-      });
-      afterEach(function () {
-        DqElement.setSerializer(null);
       });
 
       it('merges node and frame selectors', function () {
@@ -258,19 +229,6 @@ describe('DqElement', function () {
           iframeSpec.nodeIndexes[0],
           mainSpec.nodeIndexes[0]
         ]);
-      });
-
-      it('can be hooked by setSerializer', function () {
-        var mergeSpecsHook = sinon.spy((nodeSpec, frameSpec) => ({
-          ...DqElement.defaultSerializer.mergeSpecs(nodeSpec, frameSpec),
-          hookAddition: 'new value'
-        }));
-        DqElement.setSerializer({ mergeSpecs: mergeSpecsHook });
-
-        var mergedSpec = DqElement.mergeSpecs(mainSpec, iframeSpec);
-
-        assert.isTrue(mergeSpecsHook.calledOnceWith(mainSpec, iframeSpec));
-        assert.propertyVal(mergedSpec, 'hookAddition', 'new value');
       });
     });
 

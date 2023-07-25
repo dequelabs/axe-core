@@ -43,11 +43,9 @@ describe('runRules', function () {
   }
 
   var fixture = document.getElementById('fixture');
-  var memoizedFns;
 
   var isNotCalled;
   beforeEach(function () {
-    memoizedFns = axe._memoizedFns.slice();
     isNotCalled = function (err) {
       throw err || new Error('Reject should not be called');
     };
@@ -56,8 +54,7 @@ describe('runRules', function () {
   afterEach(function () {
     fixture.innerHTML = '';
     axe._audit = null;
-    axe._tree = undefined;
-    axe._memoizedFns = memoizedFns;
+    axe.teardown();
   });
 
   it('should work', function (done) {
@@ -228,7 +225,8 @@ describe('runRules', function () {
                           "/div[@id='target']"
                         ],
                         source: '<div id="target"></div>',
-                        nodeIndexes: [12, 14]
+                        nodeIndexes: [12, 14],
+                        fromFrame: true
                       },
                       any: [
                         {
@@ -271,7 +269,8 @@ describe('runRules', function () {
                         ],
                         source:
                           '<div id="foo">\n      <div id="bar"></div>\n    </div>',
-                        nodeIndexes: [12, 9]
+                        nodeIndexes: [12, 9],
+                        fromFrame: true
                       },
                       any: [
                         {
@@ -290,7 +289,8 @@ describe('runRules', function () {
                               ],
                               source:
                                 '<div id="foo">\n      <div id="bar"></div>\n    </div>',
-                              nodeIndexes: [12, 9]
+                              nodeIndexes: [12, 9],
+                              fromFrame: true
                             }
                           ]
                         }
@@ -538,7 +538,8 @@ describe('runRules', function () {
                     ],
                     xpath: ["/div[@id='target']"],
                     source: '<div id="target">Target!</div>',
-                    nodeIndexes: [12]
+                    nodeIndexes: [12],
+                    fromFrame: false
                   },
                   impact: 'moderate',
                   any: [
@@ -582,7 +583,8 @@ describe('runRules', function () {
                       'html > body > div:nth-child(1) > div:nth-child(1)'
                     ],
                     source: '<div id="target">Target!</div>',
-                    nodeIndexes: [12]
+                    nodeIndexes: [12],
+                    fromFrame: false
                   },
                   any: [
                     {
@@ -599,7 +601,8 @@ describe('runRules', function () {
                           ],
                           xpath: ["/div[@id='target']"],
                           source: '<div id="target">Target!</div>',
-                          nodeIndexes: [12]
+                          nodeIndexes: [12],
+                          fromFrame: false
                         }
                       ]
                     }
@@ -847,7 +850,7 @@ describe('runRules', function () {
       setTimeout(function () {
         axe._runRules(
           document,
-          { iframes: false },
+          { iframes: false, elementRef: true },
           function (r) {
             assert.lengthOf(r[0].passes, 1);
             assert.equal(

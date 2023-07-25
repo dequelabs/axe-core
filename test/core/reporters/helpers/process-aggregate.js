@@ -83,7 +83,7 @@ describe('helpers.processAggregate', function () {
                 relatedNodes: [
                   {
                     element: document.createElement('input'),
-                    selector: '#dopel',
+                    selector: ['#dopel'],
                     source: ['<input id="dopel"/>'],
                     xpath: ['/main/input[@id="dopel"]'],
                     ancestry: ['html > body > main > input:nth-child(2)'],
