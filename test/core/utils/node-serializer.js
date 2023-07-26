@@ -31,7 +31,7 @@ describe('nodeSerializer', () => {
     });
   });
 
-  describe('.combineSpecs()', () => {
+  describe('.mergeSpecs()', () => {
     const nodeSpec = {
       source: '<div id="fixture"></div>',
       selector: ['#fixture'],
@@ -48,19 +48,19 @@ describe('nodeSerializer', () => {
     };
 
     it('returns DqElement.mergeSpecs() by default', () => {
-      const combinedSpec = nodeSerializer.combineSpecs(nodeSpec, frameSpec);
+      const combinedSpec = nodeSerializer.mergeSpecs(nodeSpec, frameSpec);
       assert.deepEqual(combinedSpec, DqElement.mergeSpecs(nodeSpec, frameSpec));
     });
 
-    it('can be replaced with nodeSerializer({ combineSpecs: fn })', () => {
+    it('can be replaced with nodeSerializer({ mergeSpecs: fn })', () => {
       nodeSerializer({
-        combineSpecs(childSpec, parentSpec) {
+        mergeSpecs(childSpec, parentSpec) {
           const spec = DqElement.mergeSpecs(childSpec, parentSpec);
           spec.source = 'Replaced';
           return spec;
         }
       });
-      const spec = nodeSerializer.combineSpecs(nodeSpec, frameSpec);
+      const spec = nodeSerializer.mergeSpecs(nodeSpec, frameSpec);
       assert.deepEqual(spec, {
         ...DqElement.mergeSpecs(nodeSpec, frameSpec),
         source: 'Replaced'

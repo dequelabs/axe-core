@@ -176,6 +176,26 @@ describe('helpers.processAggregate', function () {
     });
   });
 
+  describe('axe.configure({ noHtml: true })', () => {
+    afterEach(() => {
+      axe.reset();
+    });
+
+    it('sets html to null on nodes', () => {
+      axe.configure({ noHtml: true });
+      const { passes, violations } = helpers.processAggregate(results, {});
+      assert.isNull(passes[0].nodes[0].html);
+      assert.isNull(violations[0].nodes[0].html);
+    });
+
+    it('sets html to null on relatedNodes', () => {
+      axe.configure({ noHtml: true });
+      const { passes, violations } = helpers.processAggregate(results, {});
+      assert.isNull(passes[0].nodes[0].any[0].relatedNodes[0].html);
+      assert.isNull(violations[0].nodes[0].any[0].relatedNodes[0].html);
+    });
+  });
+
   describe('`options` argument', function () {
     describe('`resultTypes` option', function () {
       it('should reduce the unwanted result types to 1 in the `resultObject`', function () {
