@@ -78,8 +78,8 @@ describe('text.hasUnicode', () => {
     });
 
     it('returns true when given string has format unicode', () => {
-      // the front of this string contains a zero-width character
-      const actual = axe.commons.text.hasUnicode('⁩Hello World', {
+      // zero-width spacer character U+200B
+      const actual = axe.commons.text.hasUnicode('\u200BHello World', {
         nonBmp: true
       });
       assert.isTrue(actual);
@@ -181,8 +181,8 @@ describe('text.hasUnicode', () => {
     });
 
     it('returns true when given format unicode characters', () => {
-      // the front of this string contains a zero-width character
-      const actual = axe.commons.text.hasUnicode('⁩Hello World', {
+      // zero-width spacer character U+200B
+      const actual = axe.commons.text.hasUnicode('\u200BHello World', {
         emoji: true,
         nonBmp: true,
         punctuations: true
@@ -264,8 +264,8 @@ describe('text.removeUnicode', () => {
   });
 
   it('returns string removing format unicode', () => {
-    // the front of this string contains a zero-width character
-    const actual = axe.commons.text.removeUnicode('⁩Hello World', {
+    // zero-width spacer character U+200B
+    const actual = axe.commons.text.removeUnicode('\u200BHello World', {
       nonBmp: true
     });
     assert.equal(actual, 'Hello World');
