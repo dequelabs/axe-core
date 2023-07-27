@@ -27,11 +27,44 @@ describe('text.formControlValue', () => {
     assert.equal(formControlValue(target, { startNode: target }), '');
   });
 
-  it('returns `` when accessibleNameFromFieldValue says the role is unsupported', () => {
-    const target = queryFixture(html`
-      <input id="target" value="foo" role="progressbar" />
-    `);
-    assert.equal(formControlValue(target), '');
+  describe('unsupported accessibleNameFromFieldValue', () => {
+    it('returns `` for unsupported progressbar role', () => {
+      const target = queryFixture(html`
+        <div id="target" role="progressbar" aria-value="foo"></div>
+      `);
+      assert.equal(formControlValue(target), '');
+    });
+
+    it('returns the value for supported textbox role', () => {
+      const target = queryFixture(html`
+        <div id="target" role="textbox">bar</div>
+      `);
+      assert.equal(formControlValue(target), 'bar');
+    });
+
+    it('returns the value for supported listbox role', () => {
+      const target = queryFixture(html`
+        <div id="target" role="listbox">
+          <div role="option">foo</div>
+          <div role="option" aria-selected="true">bar</div>
+          <div role="option">baz</div>
+        </div>
+      `);
+      assert.equal(formControlValue(target), 'bar');
+    });
+
+    it('returns the value for supported combobox role', () => {
+      const target = queryFixture(html`
+        <div id="target" role="combobox">
+          <div role="textbox" id="text">nope</div>
+          <div role="listbox" id="list">
+            <div role="option">foo</div>
+            <div role="option" aria-selected="true">bar</div>
+          </div>
+        </div>
+      `);
+      assert.equal(formControlValue(target), 'bar');
+    });
   });
 
   describe('nativeTextboxValue', () => {
