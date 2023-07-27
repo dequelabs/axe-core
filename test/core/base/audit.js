@@ -84,7 +84,6 @@ describe('Audit', () => {
 
   afterEach(() => {
     axe.teardown();
-    fixture.innerHTML = '';
     audit.run = origAuditRun;
   });
 
