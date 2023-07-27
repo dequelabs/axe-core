@@ -55,7 +55,7 @@ describe('axe.runPartial', function () {
       .catch(done);
   });
 
-  it('does ignores { elementRef: true } option', async () => {
+  it('ignores { elementRef: true } option', async () => {
     const options = { elementRef: true };
     const result = await axe.runPartial(options);
     for (const nodeResult of result.results[0].nodes) {
