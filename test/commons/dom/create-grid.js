@@ -55,6 +55,24 @@ describe('create-grid', () => {
     ]);
   });
 
+  it('only adds the visible non-overflow area of large elements', () => {
+    const vNode = queryFixture(`
+      <div style="overflow: hidden; width: 300px; height: 300px;">
+        <span id="target" style="display: inline-block; width: 1000px; height: 1000px;">' +
+        'Hello world</span>
+      </div>
+    `);
+    createGrid();
+
+    const positions = findPositions(vNode._grid, vNode);
+    assert.deepEqual(positions, [
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 0, row: 1 },
+      { col: 1, row: 1 }
+    ]);
+  });
+
   describe('stackingOrder', () => {
     it('adds stacking context information', () => {
       fixture = fixtureSetup('<span>Hello world</span>');
