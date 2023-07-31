@@ -201,6 +201,16 @@ describe('axe.run', function () {
         done();
       });
     });
+
+    it('gives reporter errors', done => {
+      axe.addReporter('throwing', (resolve, reject) => {
+        reject(new Error('Something went wrong'));
+      });
+      axe.run({ reporter: 'throwing' }, err => {
+        assert.equal(err.message, 'Something went wrong');
+        done();
+      });
+    });
   });
 
   describe('promise result', function () {
