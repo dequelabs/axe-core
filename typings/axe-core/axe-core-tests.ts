@@ -221,8 +221,14 @@ var spec: axe.Spec = {
   checks: [
     {
       id: 'custom-check',
-      evaluate: function () {
+      evaluate: function (node) {
+        this.relatedNodes([node]);
+        this.data('some data');
         return true;
+      },
+      after: function (results) {
+        const id = results[0].id;
+        return results;
       },
       metadata: {
         impact: 'minor',
@@ -234,6 +240,13 @@ var spec: axe.Spec = {
             or: 'maybe not'
           }
         }
+      }
+    },
+    {
+      id: 'async-check',
+      evaluate: function (node) {
+        const done = this.async();
+        done(true);
       }
     }
   ],
@@ -264,11 +277,15 @@ var spec: axe.Spec = {
     {
       id: 'custom-rule',
       any: ['custom-check'],
+      matches: function (node) {
+        return node.tagName === 'BODY';
+      },
+      tags: ['a'],
+      actIds: ['b'],
       metadata: {
         description: 'custom rule',
         help: 'different help',
-        helpUrl: 'https://example.com',
-        tags: ['custom']
+        helpUrl: 'https://example.com'
       }
     }
   ]
@@ -318,6 +335,10 @@ axe.configure({
         incomplete: {
           foo: 'bar'
         }
+      },
+      bar: {
+        pass: 'pass',
+        fail: 'fail'
       }
     }
   }
@@ -360,3 +381,14 @@ var pluginSrc: axe.AxePlugin = {
 };
 axe.registerPlugin(pluginSrc);
 axe.cleanup();
+
+// Utils
+const dqElement = new axe.utils.DqElement(document.body);
+const element = axe.utils.shadowSelect(dqElement.selector[0]);
+const uuid = axe.utils.uuid() as string;
+
+// Commons
+axe.commons.aria.getRoleType('img');
+axe.commons.dom.isFocusable(document.body);
+axe.commons.dom.isNativelyFocusable(document.body);
+axe.commons.text.accessibleText(document.body);

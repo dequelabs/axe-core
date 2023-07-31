@@ -29,5 +29,5 @@
     "non-empty-placeholder",
     "presentational-role"
   ],
-  "none": ["help-same-as-label", "hidden-explicit-label"]
+  "none": ["hidden-explicit-label"]
 }
