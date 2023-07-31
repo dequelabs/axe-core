@@ -97,7 +97,7 @@ const getRuleMatchesFileMeta = (
             assert.isFalse(rule.matches(vNode.actualNode, vNode));
           });
         });
-			`,
+      `,
       dir: directories.testRuleMatches
     };
     files.push(ruleMatchesTestJs);
@@ -179,7 +179,7 @@ const getCheckTestJsFileMeta = (name, dir) => {
 
         // TODO: Replace this with real tests for this check
         it('returns false when img has no alt', () => {
-          const args = checkSetup('<img id="target" />');
+          const params = checkSetup('<img id="target" />');
           assert.isFalse(checkEvaluate.apply(checkContext, params));
           assert.deepEqual(checkContext._data, { messageKey: 'missing-alt' });
         });
