@@ -58,4 +58,17 @@ describe('aria-braille-equivalent virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('incompletes if the subtree fails to compute with aria-braillelabel', () => {
+    const results = axe.runVirtualRule('aria-braille-equivalent', {
+      nodeName: 'button',
+      attributes: {
+        'aria-braillelabel': 'Hello world'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
 });

@@ -4,8 +4,9 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "aria-braillelabel is not used on an element with no accessible text",
-      "fail": "aria-braillelabel is used on an element with no accessible text"
+      "pass": "aria-braillelabel is used on an element with accessible text",
+      "fail": "aria-braillelabel is used on an element with no accessible text",
+      "incomplete": "Unable to compute accessible text"
     }
   }
 }
