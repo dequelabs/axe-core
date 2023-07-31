@@ -1,0 +1,12 @@
+{
+  "id": "braille-label-equivalent",
+  "evaluate": "braille-label-equivalent-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "aria-braillelabel is used on an element with accessible text",
+      "fail": "aria-braillelabel is used on an element with no accessible text",
+      "incomplete": "Unable to compute accessible text"
+    }
+  }
+}
