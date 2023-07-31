@@ -22,8 +22,8 @@
       "help": "ARIA commands must have an accessible name"
     },
     "aria-conditional-attr": {
-      "description": "Ensures ARIA attributes are used as described for the element's role",
-      "help": "ARIA attributes must be used as described by the element's role"
+      "description": "Ensures ARIA attributes are used as described in the specification of the element's role",
+      "help": "ARIA attributes must be used as specified for the element's role"
     },
     "aria-deprecated-role": {
       "description": "Ensures elements do not use deprecated roles",
