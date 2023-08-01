@@ -1,5 +1,6 @@
 {
   "id": "duplicate-id-active",
+  "impact": "serious",
   "selector": "[id]",
   "matches": "duplicate-id-active-matches",
   "excludeHidden": false,

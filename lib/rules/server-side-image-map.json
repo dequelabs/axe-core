@@ -1,5 +1,6 @@
 {
   "id": "server-side-image-map",
+  "impact": "minor",
   "selector": "img[ismap]",
   "tags": [
     "cat.text-alternatives",

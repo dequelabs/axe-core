@@ -1,5 +1,6 @@
 {
   "id": "avoid-inline-spacing",
+  "impact": "serious",
   "selector": "[style]",
   "matches": "is-visible-on-screen-matches",
   "tags": [

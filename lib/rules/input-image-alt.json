@@ -1,5 +1,6 @@
 {
   "id": "input-image-alt",
+  "impact": "critical",
   "selector": "input[type=\"image\"]",
   "matches": "no-explicit-name-required-matches",
   "tags": [

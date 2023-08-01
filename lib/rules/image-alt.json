@@ -1,5 +1,6 @@
 {
   "id": "image-alt",
+  "impact": "critical",
   "selector": "img",
   "matches": "no-explicit-name-required-matches",
   "tags": [

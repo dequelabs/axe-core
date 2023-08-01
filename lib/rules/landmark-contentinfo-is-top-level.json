@@ -1,5 +1,6 @@
 {
   "id": "landmark-contentinfo-is-top-level",
+  "impact": "moderate",
   "selector": "footer:not([role]), [role=contentinfo]",
   "matches": "landmark-has-body-context-matches",
   "tags": ["cat.semantics", "best-practice"],

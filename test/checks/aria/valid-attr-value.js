@@ -222,6 +222,10 @@ describe('aria-valid-attr-value', function () {
   });
 
   describe('null values', function () {
+    afterEach(() => {
+      axe.reset();
+    });
+
     it('returns undefined when a boolean attribute is null', function () {
       var vNode = queryFixture(
         '<div id="target" role="checkbox" aria-checked></div>'
@@ -249,6 +253,15 @@ describe('aria-valid-attr-value', function () {
     });
 
     it('returns false for empty string values that are not allowed to be empty', function () {
+      axe.configure({
+        standards: {
+          ariaAttrs: {
+            'aria-valuetext': {
+              allowEmpty: false
+            }
+          }
+        }
+      });
       var vNode = queryFixture(
         '<div id="target" aria-valuetext="" role="range"></div>'
       );

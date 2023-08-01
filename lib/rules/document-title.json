@@ -1,5 +1,6 @@
 {
   "id": "document-title",
+  "impact": "serious",
   "selector": "html",
   "matches": "is-initiator-matches",
   "tags": [
