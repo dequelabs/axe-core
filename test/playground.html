@@ -187,6 +187,16 @@ this should not effect their outcome -->
   </main>
 
   <style>
+    /*#fail2 {
+      display: block;
+      margin-top: -35px;
+      width: 200px;
+      height: 200px;
+      background: teal;
+      position: relative;
+      margin-left: -13px;
+    }*/
+
     #highlight {
       position: absolute;
       width: 0;
@@ -201,29 +211,40 @@ this should not effect their outcome -->
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    axe.setup();
-
     function highlightTarget(node) {
       const vNode = axe.utils.getNodeFromTree(node);
       const { rect } = axe.commons.dom.getTargetSize(vNode);
 
+      if (!rect) {
+        console.log('no rect');
+        return;
+      }
+
       highlight.setAttribute('style', `width: ${rect.width}px; height: ${rect.height}px; top: ${rect.top}px; left: ${rect.left}px;`);
     }
 
-    // axe.testUtils.awaitNestedLoad(
-    //   window,
-    //   () => {
-    //     axe.run(
-    //       {
-    //         runOnly: 'color-contrast',
-    //         elementRef: true
-    //       },
-    //       (err, results) => {
-    //         console.log(err || results);
-    //       }
-    //     );
-    //   },
-    //   err => console.error(err)
-    // );
+    axe.testUtils.awaitNestedLoad(
+      window,
+      () => {
+        axe.run(
+          {
+            runOnly: 'target-size',
+            elementRef: true
+          },
+          (err, results) => {
+            // console.log(err || results);
+
+            console.log({
+              incomplete: results.incomplete[0].nodes.map(node => node.target),
+              passes: results.passes[0].nodes.map(node => node.target),
+              violations: results.violations[0].nodes.map(node => node.target)
+            });
+          }
+        );
+      },
+      err => console.error(err)
+    );
+
+    setTimeout(() => axe.setup(), 2000)
   </script>
 </html>
