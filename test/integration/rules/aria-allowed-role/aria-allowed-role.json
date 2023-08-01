@@ -87,7 +87,8 @@
     ["#pass-imgmap-1"],
     ["#pass-imgmap-2"],
     ["#pass-navnone-1"],
-    ["#pass-navnone-2"]
+    ["#pass-navnone-2"],
+    ["#pass-search-elm"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
