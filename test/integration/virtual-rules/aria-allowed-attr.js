@@ -120,21 +120,6 @@ describe('aria-allowed-attr virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('fails when aria-checked is inconsistent with native checkbox state', () => {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
-      nodeName: 'input',
-      checked: true,
-      attributes: {
-        type: 'checkbox',
-        'aria-checked': 'false'
-      }
-    });
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
   it('should incomplete for non-global attributes and custom element', function () {
     var results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'custom-elm1',

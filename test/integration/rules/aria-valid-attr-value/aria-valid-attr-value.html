@@ -39,18 +39,27 @@
     hi
   </div>
   <div id="violation35-ref"></div>
-  <div aria-valuetext="" id="violation36"></div>
   <!-- don't allow empty aria-valuetext -->
 
-  <div aria-level="0" id="violation37">hi</div>
-  <div aria-level="-1" id="violation38">hi</div>
-  <div aria-level="-22" id="violation39">hi</div>
+  <div aria-level="0" id="violation36">hi</div>
+  <div aria-level="-1" id="violation37">hi</div>
+  <div aria-level="-22" id="violation38">hi</div>
 
-  <div aria-posinset="0" id="violation40">hi</div>
-  <div aria-posinset="-1" id="violation41">hi</div>
-  <div aria-posinset="-22" id="violation42">hi</div>
+  <div aria-posinset="0" id="violation39">hi</div>
+  <div aria-posinset="-1" id="violation40">hi</div>
+  <div aria-posinset="-22" id="violation41">hi</div>
 
-  <div aria-setsize="-22" id="violation43">hi</div>
+  <div aria-setsize="-22" id="violation42">hi</div>
+
+  <div>
+    <input
+      type="text"
+      id="violation43"
+      aria-invalid="true"
+      aria-errormessage="violation43-ref"
+    />
+    <div id="violation43-ref" hidden>Error message 1</div>
+  </div>
 
   <div>
     <input
@@ -59,7 +68,7 @@
       aria-invalid="true"
       aria-errormessage="violation44-ref"
     />
-    <div id="violation44-ref" hidden>Error message 1</div>
+    <div id="violation44-ref" style="display: none">Error message 1</div>
   </div>
 
   <div>
@@ -69,7 +78,7 @@
       aria-invalid="true"
       aria-errormessage="violation45-ref"
     />
-    <div id="violation45-ref" style="display: none">Error message 1</div>
+    <div id="violation45-ref" style="visibility: hidden">Error message 1</div>
   </div>
 
   <div>
@@ -79,17 +88,7 @@
       aria-invalid="true"
       aria-errormessage="violation46-ref"
     />
-    <div id="violation46-ref" style="visibility: hidden">Error message 1</div>
-  </div>
-
-  <div>
-    <input
-      type="text"
-      id="violation47"
-      aria-invalid="true"
-      aria-errormessage="violation47-ref"
-    />
-    <div id="violation47-ref" aria-hidden="true">Error message 1</div>
+    <div id="violation46-ref" aria-hidden="true">Error message 1</div>
   </div>
 </div>
 <h2>Possible False Positives</h2>
@@ -343,6 +342,12 @@
       aria-errormessage="violation44-ref"
     />
   </div>
+  <div
+    id="pass191"
+    aria-braillelabel=""
+    aria-brailleroledescription=""
+    aria-valuetext=""
+  ></div>
 
   <div id="ref">Hi</div>
   <div id="ref2">Hi2</div>
