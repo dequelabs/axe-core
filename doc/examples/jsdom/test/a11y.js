@@ -1,10 +1,11 @@
 /* global describe, it */
+const axe = require('axe-core');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const assert = require('assert');
 
 describe('axe', () => {
-  const { window } = new JSDOM(`<!DOCTYPE html>
+  const { document } = new JSDOM(`<!DOCTYPE html>
   <html lang="en">
     <head>
       <title>JSDOM Example</title>
@@ -18,30 +19,30 @@ describe('axe', () => {
         <p>Not a label</p><input type="text" id="no-label">
       </div>
     </body>
-  </html>`);
-
-  const axe = require('axe-core');
+  </html>`).window;
   const config = {
     rules: {
       'color-contrast': { enabled: false }
     }
   };
 
-  it('should report that good HTML is good', function (done) {
-    var n = window.document.getElementById('working');
-    axe.run(n, config, function (err, result) {
-      assert.equal(err, null, 'Error is not null');
-      assert.equal(result.violations.length, 0, 'Violations is not empty');
-      done();
-    });
+  it('reports that good HTML is good', async () => {
+    const node = document.getElementById('working');
+    const result = await axe.run(node, config);
+    assert.equal(result.violations.length, 0, 'Violations is not empty');
   });
 
-  it('should report that bad HTML is bad', function (done) {
-    var n = window.document.getElementById('broken');
-    axe.run(n, config, function (err, result) {
-      assert.equal(err, null, 'Error is not null');
-      assert.equal(result.violations.length, 1, 'Violations.length is not 1');
-      done();
-    });
+  it('reports that bad HTML is bad', async () => {
+    const node = document.getElementById('broken');
+    const results = await axe.run(node, config);
+    assert.equal(results.violations.length, 1, 'Violations.length is not 1');
+  });
+
+  it('allows commons after axe.setup() is called', () => {
+    axe.setup(document);
+    const input = document.querySelector('input');
+    const role = axe.commons.aria.getRole(input);
+    assert.equal(role, 'textbox');
+    axe.teardown();
   });
 });
