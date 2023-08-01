@@ -1,5 +1,6 @@
 {
   "id": "meta-refresh-no-exceptions",
+  "impact": "minor",
   "selector": "meta[http-equiv=\"refresh\"][content]",
   "excludeHidden": false,
   "enabled": false,

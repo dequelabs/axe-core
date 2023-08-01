@@ -1,5 +1,6 @@
 {
   "id": "p-as-heading",
+  "impact": "serious",
   "selector": "p",
   "matches": "p-as-heading-matches",
   "tags": [

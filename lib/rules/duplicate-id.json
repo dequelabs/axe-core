@@ -1,5 +1,6 @@
 {
   "id": "duplicate-id",
+  "impact": "minor",
   "selector": "[id]",
   "matches": "duplicate-id-misc-matches",
   "excludeHidden": false,

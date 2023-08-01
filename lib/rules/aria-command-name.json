@@ -1,5 +1,6 @@
 {
   "id": "aria-command-name",
+  "impact": "serious",
   "selector": "[role=\"link\"], [role=\"button\"], [role=\"menuitem\"]",
   "matches": "no-naming-method-matches",
   "tags": [

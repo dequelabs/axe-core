@@ -1,5 +1,6 @@
 {
   "id": "aria-required-parent",
+  "impact": "critical",
   "selector": "[role]",
   "matches": "aria-required-parent-matches",
   "tags": ["cat.aria", "wcag2a", "wcag131", "EN-301-549", "EN-9.1.3.1"],

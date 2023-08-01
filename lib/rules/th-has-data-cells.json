@@ -1,5 +1,6 @@
 {
   "id": "th-has-data-cells",
+  "impact": "serious",
   "selector": "table",
   "matches": "data-table-matches",
   "tags": [

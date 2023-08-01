@@ -25,6 +25,7 @@ const getRuleSpecFileMeta = (ruleName, ruleHasMatches, ruleChecks) => {
     content: JSON.stringify(
       {
         id: ruleName,
+        impact: '',
         selector: '*',
         ...(ruleHasMatches && {
           matches: `${ruleName}-matches`
@@ -121,7 +122,6 @@ const getCheckSpecFileMeta = (name, dir) => {
         id: `${name}`,
         evaluate: `${name}-evaluate`,
         metadata: {
-          impact: '',
           messages: {
             pass: '',
             fail: '',

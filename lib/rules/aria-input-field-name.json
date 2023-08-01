@@ -1,5 +1,6 @@
 {
   "id": "aria-input-field-name",
+  "impact": "serious",
   "selector": "[role=\"combobox\"], [role=\"listbox\"], [role=\"searchbox\"], [role=\"slider\"], [role=\"spinbutton\"], [role=\"textbox\"]",
   "matches": "no-naming-method-matches",
   "tags": [

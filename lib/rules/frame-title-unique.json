@@ -1,5 +1,6 @@
 {
   "id": "frame-title-unique",
+  "impact": "serious",
   "selector": "frame[title], iframe[title]",
   "matches": "frame-title-has-text-matches",
   "tags": [

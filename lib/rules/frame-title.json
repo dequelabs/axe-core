@@ -1,5 +1,6 @@
 {
   "id": "frame-title",
+  "impact": "serious",
   "selector": "frame, iframe",
   "matches": "no-negative-tabindex-matches",
   "tags": [
