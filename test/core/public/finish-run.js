@@ -212,6 +212,40 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
+  it('rejects with sync reporter errors', async () => {
+    axe.addReporter('throwing', () => {
+      throw new Error('Something went wrong');
+    });
+    const options = { reporter: 'throwing' };
+
+    fixture.innerHTML = '<h1>Hello world</h1>';
+    const partial = await axe.runPartial('#fixture', options);
+    try {
+      await axe.finishRun([partial], options);
+      assert.fail('Should have thrown');
+    } catch (err) {
+      assert.equal(err.message, 'Something went wrong');
+    }
+  });
+
+  it('rejects with async reporter errors', async () => {
+    axe.addReporter('throwing', (results, options, resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('Something went wrong'));
+      }, 10);
+    });
+    const options = { reporter: 'throwing' };
+
+    fixture.innerHTML = '<h1>Hello world</h1>';
+    const partial = await axe.runPartial('#fixture', options);
+    try {
+      await axe.finishRun([partial], options);
+      assert.fail('Should have thrown');
+    } catch (err) {
+      assert.equal(err.message, 'Something went wrong');
+    }
+  });
+
   describe('frames', function () {
     function createIframe(html, parent) {
       return new Promise(function (resolve) {

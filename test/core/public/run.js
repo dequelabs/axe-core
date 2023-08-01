@@ -202,9 +202,21 @@ describe('axe.run', function () {
       });
     });
 
-    it('gives reporter errors', done => {
-      axe.addReporter('throwing', (resolve, reject) => {
-        reject(new Error('Something went wrong'));
+    it('rejects with sync reporter errors', done => {
+      axe.addReporter('throwing', () => {
+        throw new Error('Something went wrong');
+      });
+      axe.run({ reporter: 'throwing' }, err => {
+        assert.equal(err.message, 'Something went wrong');
+        done();
+      });
+    });
+
+    it('rejects with async reporter errors', done => {
+      axe.addReporter('throwing', (results, options, resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('Something went wrong'));
+        }, 10);
       });
       axe.run({ reporter: 'throwing' }, err => {
         assert.equal(err.message, 'Something went wrong');
