@@ -179,7 +179,7 @@ describe('jsdom axe-core', () => {
 
       const skipLink = document.querySelector('#skip');
       assert.equal(axe.commons.aria.getRole(skipLink), 'link');
-      assert.equal(axe.commons.text.accessibleText(skipLink), 'Skip link');
+      assert.equal(axe.commons.text.accessibleText(skipLink), 'Skip Link');
     });
 
     it('is cleaned up with axe.teardown()', () => {
