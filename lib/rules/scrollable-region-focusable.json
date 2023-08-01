@@ -1,5 +1,6 @@
 {
   "id": "scrollable-region-focusable",
+  "impact": "serious",
   "selector": "*:not(select,textarea)",
   "matches": "scrollable-region-focusable-matches",
   "tags": [

@@ -1,5 +1,6 @@
 {
   "id": "audio-caption",
+  "impact": "critical",
   "selector": "audio",
   "enabled": false,
   "excludeHidden": false,

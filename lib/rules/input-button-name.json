@@ -1,5 +1,6 @@
 {
   "id": "input-button-name",
+  "impact": "critical",
   "selector": "input[type=\"button\"], input[type=\"submit\"], input[type=\"reset\"]",
   "matches": "no-explicit-name-required-matches",
   "tags": [

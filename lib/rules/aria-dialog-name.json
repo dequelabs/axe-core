@@ -1,5 +1,6 @@
 {
   "id": "aria-dialog-name",
+  "impact": "serious",
   "selector": "[role=\"dialog\"], [role=\"alertdialog\"]",
   "matches": "no-naming-method-matches",
   "tags": ["cat.aria", "best-practice"],

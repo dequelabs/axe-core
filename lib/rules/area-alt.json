@@ -1,5 +1,6 @@
 {
   "id": "area-alt",
+  "impact": "critical",
   "selector": "map area[href]",
   "excludeHidden": false,
   "tags": [

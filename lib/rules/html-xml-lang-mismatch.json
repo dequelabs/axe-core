@@ -1,5 +1,6 @@
 {
   "id": "html-xml-lang-mismatch",
+  "impact": "moderate",
   "selector": "html[lang][xml\\:lang]",
   "matches": "xml-lang-mismatch-matches",
   "tags": [

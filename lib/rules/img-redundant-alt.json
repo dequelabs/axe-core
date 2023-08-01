@@ -1,5 +1,6 @@
 {
   "id": "image-redundant-alt",
+  "impact": "minor",
   "selector": "img",
   "tags": ["cat.text-alternatives", "best-practice"],
   "metadata": {

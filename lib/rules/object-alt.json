@@ -1,5 +1,6 @@
 {
   "id": "object-alt",
+  "impact": "serious",
   "selector": "object[data]",
   "matches": "object-is-loaded-matches",
   "tags": [

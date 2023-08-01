@@ -1,5 +1,6 @@
 {
   "id": "td-headers-attr",
+  "impact": "serious",
   "selector": "table",
   "matches": "table-or-grid-role-matches",
   "tags": [

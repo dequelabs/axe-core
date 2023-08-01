@@ -1,5 +1,6 @@
 {
   "id": "label",
+  "impact": "critical",
   "selector": "input, textarea",
   "matches": "label-matches",
   "tags": [

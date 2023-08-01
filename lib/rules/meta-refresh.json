@@ -1,5 +1,6 @@
 {
   "id": "meta-refresh",
+  "impact": "critical",
   "selector": "meta[http-equiv=\"refresh\"][content]",
   "excludeHidden": false,
   "tags": [
