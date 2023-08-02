@@ -160,4 +160,37 @@ describe('jsdom axe-core', () => {
         });
     });
   });
+
+  describe('axe.setup()', () => {
+    afterEach(() => {
+      axe.teardown();
+    });
+
+    it('sets up the tree', function () {
+      const { document } = new jsdom.JSDOM(domStr).window;
+      const tree = axe.setup(document.body);
+      assert.equal(tree, axe._tree[0]);
+      assert.equal(tree.actualNode, document.body);
+    });
+
+    it('can use commons after axe.setup()', () => {
+      const { document } = new jsdom.JSDOM(domStr).window;
+      axe.setup(document);
+
+      const skipLink = document.querySelector('#skip');
+      assert.equal(axe.commons.aria.getRole(skipLink), 'link');
+      assert.equal(axe.commons.text.accessibleText(skipLink), 'Skip Link');
+    });
+
+    it('is cleaned up with axe.teardown()', () => {
+      const { document } = new jsdom.JSDOM(domStr).window;
+      axe.setup(document);
+      axe.teardown();
+      const skipLink = document.querySelector('#skip');
+
+      assert.throws(() => {
+        assert.equal(axe.commons.aria.getRole(skipLink), 'link');
+      });
+    });
+  });
 });
