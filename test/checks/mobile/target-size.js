@@ -106,7 +106,7 @@ describe('target-size tests', function () {
   });
 
   describe('when partially obscured', function () {
-    it.only('returns true for focusable non-widgets', function () {
+    it('returns true for focusable non-widgets', function () {
       var checkArgs = checkSetup(
         '<button id="target" style="' +
           'display: inline-block; width:40px; height:30px; margin-left:30px;' +
