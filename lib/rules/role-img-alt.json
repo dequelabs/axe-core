@@ -1,5 +1,6 @@
 {
   "id": "role-img-alt",
+  "impact": "serious",
   "selector": "[role='img']:not(img, area, input, object)",
   "matches": "html-namespace-matches",
   "tags": [

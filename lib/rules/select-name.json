@@ -1,5 +1,6 @@
 {
   "id": "select-name",
+  "impact": "critical",
   "selector": "select",
   "tags": [
     "cat.forms",

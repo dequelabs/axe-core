@@ -1,5 +1,6 @@
 {
   "id": "list",
+  "impact": "serious",
   "selector": "ul, ol",
   "matches": "no-role-matches",
   "tags": ["cat.structure", "wcag2a", "wcag131", "EN-301-549", "EN-9.1.3.1"],

@@ -1,5 +1,6 @@
 {
   "id": "aria-hidden-body",
+  "impact": "critical",
   "selector": "body",
   "excludeHidden": false,
   "matches": "is-initiator-matches",

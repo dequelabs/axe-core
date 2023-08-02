@@ -1,5 +1,6 @@
 {
   "id": "aria-braille-equivalent",
+  "impact": "serious",
   "selector": "[aria-brailleroledescription], [aria-braillelabel]",
   "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
   "metadata": {

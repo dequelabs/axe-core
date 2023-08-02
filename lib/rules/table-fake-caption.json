@@ -1,5 +1,6 @@
 {
   "id": "table-fake-caption",
+  "impact": "serious",
   "selector": "table",
   "matches": "data-table-matches",
   "tags": [

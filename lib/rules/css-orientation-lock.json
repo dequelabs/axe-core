@@ -1,5 +1,6 @@
 {
   "id": "css-orientation-lock",
+  "impact": "serious",
   "selector": "html",
   "tags": [
     "cat.structure",

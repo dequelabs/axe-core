@@ -1,5 +1,6 @@
 {
   "id": "label-content-name-mismatch",
+  "impact": "serious",
   "matches": "label-content-name-mismatch-matches",
   "tags": [
     "cat.semantics",
