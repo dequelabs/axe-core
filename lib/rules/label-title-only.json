@@ -1,5 +1,6 @@
 {
   "id": "label-title-only",
+  "impact": "serious",
   "selector": "input, select, textarea",
   "matches": "label-matches",
   "tags": ["cat.forms", "best-practice"],

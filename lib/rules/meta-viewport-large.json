@@ -1,5 +1,6 @@
 {
   "id": "meta-viewport-large",
+  "impact": "minor",
   "selector": "meta[name=\"viewport\"]",
   "matches": "is-initiator-matches",
   "excludeHidden": false,

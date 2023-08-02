@@ -1,5 +1,6 @@
 {
   "id": "video-caption",
+  "impact": "critical",
   "selector": "video",
   "tags": [
     "cat.text-alternatives",

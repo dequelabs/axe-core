@@ -1,5 +1,6 @@
 {
   "id": "frame-focusable-content",
+  "impact": "serious",
   "selector": "html",
   "matches": "frame-focusable-content-matches",
   "tags": [

@@ -1,5 +1,6 @@
 {
   "id": "html-has-lang",
+  "impact": "serious",
   "selector": "html",
   "matches": "is-initiator-matches",
   "tags": [

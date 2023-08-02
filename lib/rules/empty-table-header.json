@@ -1,5 +1,6 @@
 {
   "id": "empty-table-header",
+  "impact": "minor",
   "selector": "th:not([role]), [role=\"rowheader\"], [role=\"columnheader\"]",
   "tags": ["cat.name-role-value", "best-practice"],
   "metadata": {

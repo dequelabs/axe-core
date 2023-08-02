@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test Page</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 2000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+    <script src="/test/integration/no-ui-reporter.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        background: #fff;
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fixture">
+      <div style="overflow: hidden; width: 200px; height: 200px">
+        <!-- browsers each have their own CSS size limit so this number (which should be greater than the limit) will be capped to that -->
+        <div style="width: 1e9px; height: 1e9px">Hello World</div>
+      </div>
+    </div>
+    <script src="memory.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>

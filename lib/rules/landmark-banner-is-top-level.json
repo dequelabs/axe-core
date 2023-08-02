@@ -1,5 +1,6 @@
 {
   "id": "landmark-banner-is-top-level",
+  "impact": "moderate",
   "selector": "header:not([role]), [role=banner]",
   "matches": "landmark-has-body-context-matches",
   "tags": ["cat.semantics", "best-practice"],

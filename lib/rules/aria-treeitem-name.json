@@ -1,5 +1,6 @@
 {
   "id": "aria-treeitem-name",
+  "impact": "serious",
   "selector": "[role=\"treeitem\"]",
   "matches": "no-naming-method-matches",
   "tags": ["cat.aria", "best-practice"],

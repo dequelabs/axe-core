@@ -1,5 +1,6 @@
 {
   "id": "no-autoplay-audio",
+  "impact": "moderate",
   "excludeHidden": false,
   "selector": "audio[autoplay], video[autoplay]",
   "matches": "no-autoplay-audio-matches",

@@ -17,9 +17,17 @@
       "description": "Ensures role attribute has an appropriate value for the element",
       "help": "ARIA role should be appropriate for the element"
     },
+    "aria-braille-equivalent": {
+      "description": "Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent",
+      "help": "aria-braille attributes must have a non-braille equivalent"
+    },
     "aria-command-name": {
       "description": "Ensures every ARIA button, link and menuitem has an accessible name",
       "help": "ARIA commands must have an accessible name"
+    },
+    "aria-conditional-attr": {
+      "description": "Ensures ARIA attributes are used as described in the specification of the element's role",
+      "help": "ARIA attributes must be used as specified for the element's role"
     },
     "aria-deprecated-role": {
       "description": "Ensures elements do not use deprecated roles",
@@ -535,6 +543,18 @@
       "fail": {
         "singular": "Invalid ARIA attribute name: ${data.values}",
         "plural": "Invalid ARIA attribute names: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel is used on an element with accessible text",
+      "fail": "aria-braillelabel is used on an element with no accessible text",
+      "incomplete": "Unable to compute accessible text"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription is not used on an element with no accessible text",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription is used on an element with no aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription is used on an element with an empty aria-roledescription"
       }
     },
     "deprecatedrole": {

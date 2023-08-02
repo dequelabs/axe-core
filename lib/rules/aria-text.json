@@ -1,5 +1,6 @@
 {
   "id": "aria-text",
+  "impact": "serious",
   "selector": "[role=text]",
   "tags": ["cat.aria", "best-practice"],
   "metadata": {

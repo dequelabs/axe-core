@@ -2121,26 +2121,6 @@
 <svg aria-label="value" id="pass89"></svg>
 <video aria-label="value" id="pass90" controls></video>
 
-<table role="treegrid">
-  <thead>
-    <tr>
-      <th>Col 1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      id="treegrid"
-      role="row"
-      aria-level="1"
-      aria-posinset="1"
-      aria-setsize="1"
-      aria-expanded="true"
-    >
-      <td role="gridcell">Treegrids are awesome</td>
-    </tr>
-  </tbody>
-</table>
-
 <div
   id="pass91"
   role="comment"
@@ -2151,11 +2131,30 @@
   ok
 </div>
 
-<input type="checkbox" aria-checked="false" id="pass92" />
-<input type="checkbox" aria-checked="true" checked id="pass93" />
-
 <!-- Prohibited attributes fail in aria-prohibited-attr -->
-<div role="caption" aria-label="value" id="pass94"></div>
-<div role="caption" aria-labelledby="value" id="pass95"></div>
-<div role="paragraph" aria-labelledby="value" id="pass96"></div>
-<div role="strong" aria-label="value" id="pass97"></div>
+<div role="caption" aria-label="value" id="pass92"></div>
+<div role="caption" aria-labelledby="value" id="pass93"></div>
+<div role="paragraph" aria-labelledby="value" id="pass94"></div>
+<div role="strong" aria-label="value" id="pass95"></div>
+
+<!-- Conditional ARIA attributes tested under aria-conditional-attr: -->
+<div role="table">
+  <div role="row" aria-expanded="false" id="pass96"></div>
+</div>
+<table role="treegrid">
+  <tr
+    id="pass97"
+    role="row"
+    aria-level="1"
+    aria-posinset="1"
+    aria-setsize="1"
+    aria-expanded="true"
+  >
+    <td role="gridcell">Treegrids are awesome</td>
+  </tr>
+</table>
+
+<input type="checkbox" aria-checked="false" id="pass98" />
+<input type="checkbox" aria-checked="mixed" id="pass99" />
+
+<search aria-expanded="true" id="pass100"></search>

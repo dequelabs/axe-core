@@ -1,5 +1,6 @@
 {
   "id": "color-contrast",
+  "impact": "serious",
   "matches": "color-contrast-matches",
   "excludeHidden": false,
   "tags": [

@@ -1,5 +1,6 @@
 {
   "id": "skip-link",
+  "impact": "moderate",
   "selector": "a[href^=\"#\"], a[href^=\"/#\"]",
   "matches": "skip-link-matches",
   "tags": ["cat.keyboard", "best-practice"],
