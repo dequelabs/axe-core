@@ -15,11 +15,11 @@ describe('target-offset tests', () => {
     );
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-    assert.equal(checkContext._data.minOffset, 12);
-    assert.closeTo(checkContext._data.closestOffset, 12, 0.2);
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
-  it('returns true when the offset is 12px', () => {
+  it('returns true when the offset is 24px', () => {
     const checkArgs = checkSetup(
       '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px; margin-right: 8px' +
@@ -30,8 +30,8 @@ describe('target-offset tests', () => {
     );
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-    assert.equal(checkContext._data.minOffset, 12);
-    assert.closeTo(checkContext._data.closestOffset, 12, 0.2);
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
   describe('when the offset is insufficient', () => {
@@ -47,8 +47,8 @@ describe('target-offset tests', () => {
 
       assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
       assert.isUndefined(checkContext._data.messageKey);
-      assert.equal(checkContext._data.minOffset, 12);
-      assert.closeTo(checkContext._data.closestOffset, 11, 0.2);
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
     });
 
     it('returns undefined for targets not in the tab order', () => {
@@ -63,8 +63,8 @@ describe('target-offset tests', () => {
 
       assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
       assert.isUndefined(checkContext._data.messageKey);
-      assert.equal(checkContext._data.minOffset, 12);
-      assert.closeTo(checkContext._data.closestOffset, 11, 0.2);
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
     });
   });
 
@@ -79,8 +79,8 @@ describe('target-offset tests', () => {
     );
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-    assert.equal(checkContext._data.minOffset, 12);
-    assert.closeTo(checkContext._data.closestOffset, 12, 0.2);
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
   it('ignores non-focusable widget elements as neighbors', () => {
@@ -94,8 +94,8 @@ describe('target-offset tests', () => {
     );
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-    assert.equal(checkContext._data.minOffset, 12);
-    assert.closeTo(checkContext._data.closestOffset, 12, 0.2);
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
   it('sets all elements that are too close as related nodes', () => {
@@ -111,8 +111,8 @@ describe('target-offset tests', () => {
         '">x</a>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
-    assert.equal(checkContext._data.minOffset, 12);
-    assert.closeTo(checkContext._data.closestOffset, 4, 0.2);
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 8, 0.2);
 
     const relatedIds = checkContext._relatedNodes.map(function (node) {
       return '#' + node.id;
@@ -135,8 +135,8 @@ describe('target-offset tests', () => {
       );
       assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
       assert.equal(checkContext._data.messageKey, 'nonTabbableNeighbor');
-      assert.equal(checkContext._data.minOffset, 12);
-      assert.closeTo(checkContext._data.closestOffset, 4, 0.2);
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 8, 0.2);
 
       const relatedIds = checkContext._relatedNodes.map(function (node) {
         return '#' + node.id;
@@ -158,8 +158,8 @@ describe('target-offset tests', () => {
       );
       assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
       assert.isUndefined(checkContext._data.messageKey);
-      assert.equal(checkContext._data.minOffset, 12);
-      assert.closeTo(checkContext._data.closestOffset, 4, 0.2);
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 8, 0.2);
 
       const relatedIds = checkContext._relatedNodes.map(function (node) {
         return '#' + node.id;
