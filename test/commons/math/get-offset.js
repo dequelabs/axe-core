@@ -1,5 +1,4 @@
 describe('getOffset', () => {
-  'use strict';
   const fixtureSetup = axe.testUtils.fixtureSetup;
   const getOffset = axe.commons.math.getOffset;
   const round = 0.2;
@@ -24,7 +23,7 @@ describe('getOffset', () => {
     assert.closeTo(getOffset(nodeA, nodeB), 45, round);
   });
 
-  it('returns center to corner or square when at a diagonal', () => {
+  it('returns center to corner of square when at a diagonal', () => {
     const fixture = fixtureSetup(`
       <button style="width: 10px; height: 10px; margin: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
       <button style="width: 30px; height: 30px; margin: 0; position: absolute; top: 50px; left: 50px">&nbsp;</button>
@@ -54,7 +53,7 @@ describe('getOffset', () => {
     assert.equal(getOffset(nodeA, nodeB), 0);
   });
 
-  it('allows passing radius', () => {
+  it('subtracts minNeighbourRadius from center-to-center calculations', () => {
     const fixture = fixtureSetup(`
       <button style="width: 10px; height: 10px; margin: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
       <button style="width: 10px; height: 10px; margin: 0; position: absolute; top: 50px; left: 0">&nbsp;</button>

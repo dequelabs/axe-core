@@ -1,5 +1,4 @@
 describe('target-offset tests', () => {
-  'use strict';
 
   const checkContext = axe.testUtils.MockCheckContext();
   const { checkSetup, getCheckEvaluate } = axe.testUtils;
