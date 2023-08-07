@@ -23,20 +23,23 @@ describe('text.isIconLigature', () => {
       'url(/test/assets/MaterialIcons.woff2)'
     );
     const robotoFont = new FontFace('Roboto', 'url(/test/assets/Roboto.woff2)');
-    const affirmFont = new FontFace('Affirm', 'url(/test/assets/Affirm.woff)');
+    const zeroWidth0CharFont = new FontFace(
+      'ZeroWidth0Char',
+      'url(/test/assets/ZeroWidth0Char.woff)'
+    );
 
     window.Promise.all([
       firaFont.load(),
       ligatureFont.load(),
       materialFont.load(),
       robotoFont.load(),
-      affirmFont.load()
+      zeroWidth0CharFont.load()
     ]).then(() => {
       document.fonts.add(firaFont);
       document.fonts.add(ligatureFont);
       document.fonts.add(materialFont);
       document.fonts.add(robotoFont);
-      document.fonts.add(affirmFont);
+      document.fonts.add(zeroWidth0CharFont);
       done();
     });
   });
@@ -142,7 +145,7 @@ describe('text.isIconLigature', () => {
     'should return true for a font that has zero width characters',
     () => {
       const target = queryFixture(
-        '<div id="target" style="font-family: \'Affirm\'">f</div>'
+        '<div id="target" style="font-family: \'ZeroWidth0Char\'">0</div>'
       );
       assert.isTrue(isIconLigature(target.children[0]));
     }
