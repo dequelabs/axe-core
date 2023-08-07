@@ -371,7 +371,8 @@ declare namespace axe {
   type AxeReporter<T = unknown> = (
     rawResults: RawResult[],
     option: RunOptions,
-    callback: (report: T) => void
+    resolve: (report: T) => void,
+    reject: (error: Error) => void
   ) => void;
 
   interface VirtualNode {
