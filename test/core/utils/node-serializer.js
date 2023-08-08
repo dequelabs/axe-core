@@ -6,7 +6,7 @@ describe('nodeSerializer', () => {
   });
 
   afterEach(() => {
-    nodeSerializer(null);
+    nodeSerializer.update(null);
   });
 
   describe('.toSpec()', () => {
@@ -16,8 +16,8 @@ describe('nodeSerializer', () => {
       assert.deepEqual(spec, dqElm.toJSON());
     });
 
-    it('can be replaced with nodeSerializer({ toSpec: fn })', () => {
-      nodeSerializer({
+    it('can be replaced with nodeSerializer.update({ toSpec: fn })', () => {
+      nodeSerializer.update({
         toSpec(dqElm) {
           const json = dqElm.toJSON();
           json.source = 'Replaced';
@@ -52,8 +52,8 @@ describe('nodeSerializer', () => {
       assert.deepEqual(combinedSpec, DqElement.mergeSpecs(nodeSpec, frameSpec));
     });
 
-    it('can be replaced with nodeSerializer({ mergeSpecs: fn })', () => {
-      nodeSerializer({
+    it('can be replaced with nodeSerializer.update({ mergeSpecs: fn })', () => {
+      nodeSerializer.update({
         mergeSpecs(childSpec, parentSpec) {
           const spec = DqElement.mergeSpecs(childSpec, parentSpec);
           spec.source = 'Replaced';

@@ -1,4 +1,4 @@
-axe.utils.nodeSerializer({
+axe.utils.nodeSerializer.update({
   toSpec(dqElm) {
     const result = dqElm.toJSON();
     result.source = dqElm.element.id;
