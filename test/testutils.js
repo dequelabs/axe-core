@@ -689,7 +689,7 @@ var commons;
   };
 
   /**
-   * Noop tag for code highlighting in editors
+   * Enables test code like html` <img /> ` to get code highlighting
    * @param {array} strings
    * @param  {...any} values
    * @returns {string}
