@@ -17,7 +17,7 @@ describe('aria-braille-equivalent virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('fails when accessible text is empty but braille label is not', () => {
+  it('incompletes when accessible text is empty but braille label is not', () => {
     const results = axe.runVirtualRule('aria-braille-equivalent', {
       nodeName: 'img',
       attributes: {
@@ -27,8 +27,8 @@ describe('aria-braille-equivalent virtual-rule', () => {
     });
 
     assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
   });
 
   it('passes when roledescription and brailleroledescription are not empty', () => {
@@ -45,7 +45,7 @@ describe('aria-braille-equivalent virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('fails when roledescription is empty but brailleroledescription is not', () => {
+  it('incompletes when roledescription is empty but brailleroledescription is not', () => {
     const results = axe.runVirtualRule('aria-braille-equivalent', {
       nodeName: 'div',
       attributes: {
@@ -55,8 +55,8 @@ describe('aria-braille-equivalent virtual-rule', () => {
     });
 
     assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
   });
 
   it('incompletes if the subtree fails to compute with aria-braillelabel', () => {
