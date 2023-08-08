@@ -1,5 +1,6 @@
 {
   "id": "target-size",
+  "impact": "serious",
   "selector": "*",
   "enabled": false,
   "matches": "widget-not-inline-matches",

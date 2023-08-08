@@ -1,5 +1,6 @@
 {
   "id": "table-duplicate-name",
+  "impact": "minor",
   "selector": "table",
   "tags": ["cat.tables", "best-practice"],
   "metadata": {

@@ -1,5 +1,6 @@
 {
   "id": "aria-hidden-focus",
+  "impact": "serious",
   "selector": "[aria-hidden=\"true\"]",
   "matches": "aria-hidden-focus-matches",
   "excludeHidden": false,

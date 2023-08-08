@@ -1,5 +1,6 @@
 {
   "id": "valid-lang",
+  "impact": "serious",
   "selector": "[lang]:not(html), [xml\\:lang]:not(html)",
   "tags": [
     "cat.language",

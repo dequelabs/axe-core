@@ -1,5 +1,6 @@
 {
   "id": "landmark-complementary-is-top-level",
+  "impact": "moderate",
   "selector": "aside:not([role]), [role=complementary]",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {

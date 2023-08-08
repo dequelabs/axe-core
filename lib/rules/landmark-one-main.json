@@ -1,5 +1,6 @@
 {
   "id": "landmark-one-main",
+  "impact": "moderate",
   "selector": "html",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {

@@ -348,9 +348,10 @@ axe.configure({
 let fooReporter = (
   results: axe.RawResult[],
   options: axe.RunOptions,
-  cb: (out: 'foo') => void
+  resolve: (out: 'foo') => void,
+  reject: (err: Error) => void
 ) => {
-  cb('foo');
+  reject && resolve('foo');
 };
 
 axe.addReporter<'foo'>('foo', fooReporter, true);
