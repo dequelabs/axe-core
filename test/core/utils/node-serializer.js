@@ -174,4 +174,50 @@ describe('nodeSerializer', () => {
       ]);
     });
   });
+
+  describe('.mapRawResults()', () => {
+    it('converts DqElements to specs', () => {
+      const dqElm = new DqElement(fixture);
+      const rawNodeResults = [
+        {
+          any: [
+            {
+              id: 'nope',
+              data: null,
+              relatedNodes: [dqElm]
+            }
+          ],
+          all: [],
+          none: [],
+          node: dqElm,
+          result: 'failed'
+        }
+      ];
+      const rawResults = [
+        {
+          id: 'test',
+          nodes: rawNodeResults
+        }
+      ];
+
+      const serialized = nodeSerializer.mapRawResults(rawResults);
+      assert.deepEqual(serialized, [
+        {
+          ...rawResults[0],
+          nodes: [
+            {
+              ...rawNodeResults[0],
+              node: dqElm.toJSON(),
+              any: [
+                {
+                  ...rawNodeResults[0].any[0],
+                  relatedNodes: [dqElm.toJSON()]
+                }
+              ]
+            }
+          ]
+        }
+      ]);
+    });
+  });
 });
