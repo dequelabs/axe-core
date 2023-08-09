@@ -62,4 +62,14 @@ describe('getOffset', () => {
     const nodeB = fixture.children[3];
     assert.closeTo(getOffset(nodeA, nodeB, 30), 20, round);
   });
+
+  it('returns 0 if center of nodeA is enclosed by nodeB', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 50px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 20px;">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.equal(getOffset(nodeA, nodeB, 30), 0);
+  });
 });
