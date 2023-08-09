@@ -89,7 +89,7 @@ describe('runRules', function () {
             assert.lengthOf(r[0].passes, 3);
             done();
           },
-          isNotCalled
+          err => done(err)
         );
       }, 500);
     });
