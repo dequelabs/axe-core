@@ -1,5 +1,6 @@
 {
   "id": "label",
+  "impact": "critical",
   "selector": "input, textarea",
   "matches": "label-matches",
   "tags": [
@@ -29,5 +30,5 @@
     "non-empty-placeholder",
     "presentational-role"
   ],
-  "none": ["help-same-as-label", "hidden-explicit-label"]
+  "none": ["hidden-explicit-label"]
 }

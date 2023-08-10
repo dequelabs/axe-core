@@ -49,7 +49,7 @@ async function run() {
     const result = await Promise.all(
       files.map(async meta => {
         const path = `${meta.dir}/${meta.name}`;
-        const content = meta.content;
+        const content = meta.content + '\n';
         await createFile(path, content);
         return path;
       })

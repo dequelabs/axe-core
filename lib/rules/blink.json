@@ -1,5 +1,6 @@
 {
   "id": "blink",
+  "impact": "serious",
   "selector": "blink",
   "excludeHidden": false,
   "tags": [

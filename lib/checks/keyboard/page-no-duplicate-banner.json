@@ -4,7 +4,7 @@
   "after": "page-no-duplicate-after",
   "options": {
     "selector": "header:not([role]), [role=banner]",
-    "nativeScopeFilter": "article, aside, main, nav, section"
+    "role": "banner"
   },
   "metadata": {
     "impact": "moderate",

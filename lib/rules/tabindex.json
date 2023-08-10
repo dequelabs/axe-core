@@ -1,5 +1,6 @@
 {
   "id": "tabindex",
+  "impact": "serious",
   "selector": "[tabindex]",
   "tags": ["cat.keyboard", "best-practice"],
   "metadata": {

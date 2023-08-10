@@ -1,5 +1,6 @@
 {
   "id": "autocomplete-valid",
+  "impact": "serious",
   "matches": "autocomplete-matches",
   "tags": [
     "cat.forms",

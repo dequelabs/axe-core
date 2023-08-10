@@ -1,5 +1,6 @@
 {
   "id": "frame-tested",
+  "impact": "critical",
   "selector": "html, frame, iframe",
   "tags": ["cat.structure", "best-practice", "review-item"],
   "metadata": {

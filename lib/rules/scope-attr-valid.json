@@ -1,5 +1,6 @@
 {
   "id": "scope-attr-valid",
+  "impact": "moderate",
   "selector": "td[scope], th[scope]",
   "tags": ["cat.tables", "best-practice"],
   "metadata": {

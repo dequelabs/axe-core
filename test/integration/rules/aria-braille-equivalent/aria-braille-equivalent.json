@@ -1,0 +1,7 @@
+{
+  "description": "aria-braille-equivalent tests",
+  "rule": "aria-braille-equivalent",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"]],
+  "incomplete": [["#incomplete1"], ["#incomplete2"]],
+  "violation": []
+}

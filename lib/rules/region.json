@@ -1,5 +1,6 @@
 {
   "id": "region",
+  "impact": "moderate",
   "selector": "body *",
   "tags": ["cat.keyboard", "best-practice"],
   "metadata": {

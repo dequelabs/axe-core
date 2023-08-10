@@ -112,8 +112,8 @@ function createSchemas() {
               conform: 'Must have at least two valid messages'
             }
           },
+          // @deprecated: Use impact on rules instead
           impact: {
-            required: true,
             type: 'string',
             enum: ['minor', 'moderate', 'serious', 'critical']
           }
@@ -134,6 +134,7 @@ function createSchemas() {
         type: 'string'
       },
       impact: {
+        required: true,
         type: 'string',
         enum: ['minor', 'moderate', 'serious', 'critical']
       },
