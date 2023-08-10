@@ -2,6 +2,7 @@ describe('helpers.processAggregate', function () {
   'use strict';
   var results, options;
   const helpers = axe._thisWillBeDeletedDoNotUse.helpers;
+  const fixture = document.getElementById('fixture');
 
   beforeEach(function () {
     results = [
@@ -214,6 +215,21 @@ describe('helpers.processAggregate', function () {
         assert.isDefined(resultObject.incomplete);
         assert.isDefined(resultObject.inapplicable);
       });
+
+      it('should not compute selectors of filtered nodes', () => {
+        const dqElm = new axe.utils.DqElement(fixture);
+        Object.defineProperty(dqElm, 'ancestry', {
+          get() {
+            throw new Error('Should not be called');
+          }
+        });
+        results[0].passes[1].node = dqElm;
+        assert.doesNotThrow(() => {
+          helpers.processAggregate(results, {
+            resultTypes: ['violations']
+          });
+        });
+      });
     });
 
     describe('`elementRef` option', function () {
@@ -300,6 +316,19 @@ describe('helpers.processAggregate', function () {
               resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
             );
           });
+
+          it('should not call DqElement.selector', () => {
+            const dqElm = new axe.utils.DqElement(fixture);
+            Object.defineProperty(dqElm, 'selector', {
+              get() {
+                throw new Error('Should not be called');
+              }
+            });
+            results[0].passes[0].node = dqElm;
+            assert.doesNotThrow(() => {
+              helpers.processAggregate(results, options);
+            });
+          });
         });
       });
 
@@ -351,6 +380,21 @@ describe('helpers.processAggregate', function () {
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
           );
         });
+
+        it('should not call DqElement.ancestry', () => {
+          const dqElm = new axe.utils.DqElement(fixture, options, {
+            selector: ['div'] // prevent axe._selectorData error
+          });
+          Object.defineProperty(dqElm, 'ancestry', {
+            get() {
+              throw new Error('Should not be called');
+            }
+          });
+          results[0].passes[0].node = dqElm;
+          assert.doesNotThrow(() => {
+            helpers.processAggregate(results, options);
+          });
+        });
       });
 
       describe('when not set at all', function () {
@@ -400,6 +444,21 @@ describe('helpers.processAggregate', function () {
           assert.isUndefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].xpath
           );
+        });
+
+        it('should not call DqElement.xpath', () => {
+          const dqElm = new axe.utils.DqElement(fixture, options, {
+            selector: ['div'] // prevent axe._selectorData error
+          });
+          Object.defineProperty(dqElm, 'xpath', {
+            get() {
+              throw new Error('Should not be called');
+            }
+          });
+          results[0].passes[0].node = dqElm;
+          assert.doesNotThrow(() => {
+            helpers.processAggregate(results, options);
+          });
         });
       });
     });

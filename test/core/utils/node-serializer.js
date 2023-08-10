@@ -51,6 +51,63 @@ describe('nodeSerializer', () => {
       const spec = nodeSerializer.dqElmToSpec(dqElm);
       assert.deepEqual(spec, { ...dqElm.toJSON(), source: 'Replaced' });
     });
+
+    it('optionally accepts runOptions, replacing real values with dummy values', () => {
+      const dqElm = new DqElement(fixture);
+      const spec = nodeSerializer.dqElmToSpec(dqElm, {
+        selectors: false,
+        xpath: false,
+        ancestry: false
+      });
+      assert.deepEqual(spec, {
+        ...dqElm.toJSON(),
+        selector: [':root'],
+        ancestry: [':root'],
+        xpath: '/'
+      });
+    });
+
+    it('returns selector when falsey but not false', () => {
+      const dqElm = new DqElement(fixture);
+      const spec = nodeSerializer.dqElmToSpec(dqElm, { selectors: null });
+      assert.deepEqual(spec, {
+        ...dqElm.toJSON(),
+        ancestry: [':root'],
+        xpath: '/'
+      });
+    });
+
+    it('returns selector if fromFame, even if runOptions.selectors is false', () => {
+      const dqElm = new DqElement(fixture);
+      dqElm.fromFrame = true;
+      const spec = nodeSerializer.dqElmToSpec(dqElm, {
+        selectors: false
+      });
+      assert.deepEqual(spec, {
+        ...dqElm.toJSON(),
+        ancestry: [':root'],
+        xpath: '/'
+      });
+    });
+
+    it('skips computing props turned off with runOptions', () => {
+      const dqElm = new DqElement(fixture);
+
+      const throws = () => {
+        throw new Error('Should not be called');
+      };
+      Object.defineProperty(dqElm, 'selector', { get: throws });
+      Object.defineProperty(dqElm, 'ancestry', { get: throws });
+      Object.defineProperty(dqElm, 'xpath', { get: throws });
+
+      assert.doesNotThrow(() => {
+        nodeSerializer.dqElmToSpec(dqElm, {
+          selectors: false,
+          xpath: false,
+          ancestry: false
+        });
+      });
+    });
   });
 
   describe('.mergeSpecs()', () => {
