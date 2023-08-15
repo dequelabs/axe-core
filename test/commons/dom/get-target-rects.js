@@ -35,6 +35,16 @@ describe('get-target-rects', () => {
     assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
   });
 
+  it('ignores non-tabbable descendants of the target', () => {
+    const vNode = queryFixture(`
+      <button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px">
+        <div style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>
+      </button>
+    `);
+    const rects = getTargetRects(vNode);
+    assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
+  });
+
   it('returns each unobscured area', () => {
     const vNode = queryFixture(`
       <button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px">x</button>
@@ -55,5 +65,18 @@ describe('get-target-rects', () => {
     `);
     const rects = getTargetRects(vNode);
     assert.lengthOf(rects, 0);
+  });
+
+  it('returns subset rect of the target with tabbable descendant', () => {
+    const vNode = queryFixture(`
+      <button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px">
+        <div tabindex="0" style="position: absolute; left: 5p; top: 5px; width: 50px; height: 50px;"></div>
+      </button>
+    `);
+    const rects = getTargetRects(vNode);
+    assert.deepEqual(rects, [
+      new DOMRect(10, 5, 30, 7),
+      new DOMRect(10, 5, 8, 40)
+    ]);
   });
 });
