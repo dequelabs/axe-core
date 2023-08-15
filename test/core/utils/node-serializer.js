@@ -77,7 +77,7 @@ describe('nodeSerializer', () => {
       });
     });
 
-    it('returns selector if fromFame, even if runOptions.selectors is false', () => {
+    it('returns selector if fromFrame, even if runOptions.selectors is false', () => {
       const dqElm = new DqElement(fixture);
       dqElm.fromFrame = true;
       const spec = nodeSerializer.dqElmToSpec(dqElm, {

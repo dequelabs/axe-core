@@ -68,6 +68,14 @@ describe('axe.utils.checkHelper', () => {
       const fixture = document.getElementById('fixture');
       const getSelector = node => node.selector;
 
+      it('returns DqElements', () => {
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
+        const target = {};
+        const helper = axe.utils.checkHelper(target, noop);
+        helper.relatedNodes(fixture.children);
+        assert.instanceOf(target.relatedNodes[0], axe.utils.DqElement);
+      });
+
       it('should accept NodeList', () => {
         fixtureSetup('<div id="t1"></div><div id="t2"></div>');
         const target = {};
