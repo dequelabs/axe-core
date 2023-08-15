@@ -70,13 +70,14 @@ describe('get-target-rects', () => {
   it('returns subset rect of the target with tabbable descendant', () => {
     const vNode = queryFixture(`
       <button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px">
-        <div tabindex="0" style="position: absolute; left: 5p; top: 5px; width: 50px; height: 50px;"></div>
+        <div tabindex="0" style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>
       </button>
     `);
     const rects = getTargetRects(vNode);
+    console.log(JSON.stringify(rects));
     assert.deepEqual(rects, [
       new DOMRect(10, 5, 30, 7),
-      new DOMRect(10, 5, 8, 40)
+      new DOMRect(10, 5, 7, 40)
     ]);
   });
 });
