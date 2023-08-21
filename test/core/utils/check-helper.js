@@ -1,6 +1,5 @@
 describe('axe.utils.checkHelper', () => {
-  const { queryFixture } = axe.testUtils;
-  const DqElement = axe.utils.DqElement;
+  const { queryFixture, fixtureSetup } = axe.testUtils;
   function noop() {}
 
   it('should be a function', () => {
@@ -67,46 +66,46 @@ describe('axe.utils.checkHelper', () => {
 
     describe('relatedNodes', () => {
       const fixture = document.getElementById('fixture');
-      afterEach(() => {
-        fixture.innerHTML = '';
-      });
+      const getSelector = node => node.selector;
 
-      it('should accept NodeList', () => {
-        fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+      it('returns DqElements', () => {
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         helper.relatedNodes(fixture.children);
-        assert.lengthOf(target.relatedNodes, 2);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.instanceOf(target.relatedNodes[1], DqElement);
-        assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-        assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+        assert.instanceOf(target.relatedNodes[0], axe.utils.DqElement);
+      });
+
+      it('should accept NodeList', () => {
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
+        const target = {};
+        const helper = axe.utils.checkHelper(target, noop);
+        helper.relatedNodes(fixture.children);
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#t1'], ['#t2']]);
       });
 
       it('should accept a single Node', () => {
-        fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         helper.relatedNodes(fixture.firstChild);
-        assert.lengthOf(target.relatedNodes, 1);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.equal(target.relatedNodes[0].element, fixture.firstChild);
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#t1']]);
       });
 
       it('should accept an Array', () => {
-        fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
+
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         helper.relatedNodes(Array.prototype.slice.call(fixture.children));
-        assert.lengthOf(target.relatedNodes, 2);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.instanceOf(target.relatedNodes[1], DqElement);
-        assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-        assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#t1'], ['#t2']]);
       });
 
       it('should accept an array-like Object', () => {
-        fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+        fixtureSetup('<div id="t1"></div><div id="t2"></div>');
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         const nodes = {
@@ -115,11 +114,8 @@ describe('axe.utils.checkHelper', () => {
           length: 2
         };
         helper.relatedNodes(nodes);
-        assert.lengthOf(target.relatedNodes, 2);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.instanceOf(target.relatedNodes[1], DqElement);
-        assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-        assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#t1'], ['#t2']]);
       });
 
       it('should accept a VirtualNode', () => {
@@ -127,27 +123,24 @@ describe('axe.utils.checkHelper', () => {
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         helper.relatedNodes(vNode);
-        assert.lengthOf(target.relatedNodes, 1);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.equal(target.relatedNodes[0].element.nodeName, 'A');
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#target']]);
       });
 
       it('should accept an array of VirtualNodes', () => {
         const vNode = queryFixture(`
-          <div id="target"><a></a><b></b></div>
+          <div id="target"><a id="a"></a><b id="b"></b></div>
         `);
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
         helper.relatedNodes(vNode.children);
-        assert.lengthOf(target.relatedNodes, 2);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.equal(target.relatedNodes[0].element.nodeName, 'A');
-        assert.equal(target.relatedNodes[1].element.nodeName, 'B');
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#a'], ['#b']]);
       });
 
       it('should filter out non-nodes', () => {
         const vNode = queryFixture(`
-          <div><a id="target"></a><b></b></div>
+          <div><a id="target"></a><b id="b"></b></div>
         `);
         const target = {};
         const helper = axe.utils.checkHelper(target, noop);
@@ -162,10 +155,8 @@ describe('axe.utils.checkHelper', () => {
           })
         ];
         helper.relatedNodes(nodes);
-        assert.lengthOf(target.relatedNodes, 2);
-        assert.instanceOf(target.relatedNodes[0], DqElement);
-        assert.equal(target.relatedNodes[0].element.nodeName, 'A');
-        assert.equal(target.relatedNodes[1].element.nodeName, 'B');
+        const selectors = target.relatedNodes.map(getSelector);
+        assert.deepEqual(selectors, [['#target'], ['#b']]);
       });
 
       it('should noop for non-node-like objects', () => {

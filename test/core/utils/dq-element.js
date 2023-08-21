@@ -163,11 +163,12 @@ describe('DqElement', function () {
   describe('toJSON', function () {
     it('should only stringify selector and source', function () {
       var spec = {
-        selector: 'foo > bar > joe',
+        selector: ['foo > bar > joe'],
         source: '<joe aria-required="true">',
-        xpath: '/foo/bar/joe',
-        ancestry: 'foo > bar > joe',
-        nodeIndexes: [123, 456]
+        xpath: ['/foo/bar/joe'],
+        ancestry: ['foo > bar > joe'],
+        nodeIndexes: [123],
+        fromFrame: false
       };
 
       var div = document.createElement('div');
@@ -264,6 +265,31 @@ describe('DqElement', function () {
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
         assert.isTrue(dqElm.fromFrame);
       });
+    });
+  });
+
+  describe('DqElement.setRunOptions', function () {
+    it('sets options for DqElement', function () {
+      axe.setup();
+      var options = { absolutePaths: true, elementRef: true };
+      DqElement.setRunOptions(options);
+      var dqElm = new DqElement(document.body);
+
+      const { element, selector } = dqElm.toJSON();
+      assert.equal(element, document.body);
+      assert.equal(selector, 'html > body');
+    });
+
+    it('is reset by axe.teardown', () => {
+      var options = { absolutePaths: true, elementRef: true };
+      DqElement.setRunOptions(options);
+      axe.teardown();
+
+      axe.setup();
+      var dqElm = new DqElement(document.body);
+      const { element, selector } = dqElm.toJSON();
+      assert.isUndefined(element);
+      assert.equal(selector, 'body');
     });
   });
 });
