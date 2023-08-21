@@ -23,7 +23,7 @@ describe('get-target-size', () => {
       <div style="position: absolute; left: 30px; top: 0; width: 50px; height: 50px; pointer-events: none"></div>
     `);
     const rect = getTargetSize(vNode);
-    assert.deepEqual(rect, new DOMRect(10, 5, 30, 40));
+    assert.deepEqual(rect, vNode.actualNode.getBoundingClientRect());
   });
 
   it("ignores elements that don't overlap the target", () => {
@@ -32,7 +32,7 @@ describe('get-target-size', () => {
       <div style="position: absolute; left: 60px; top: 0; width: 50px; height: 50px;"></div>
     `);
     const rect = getTargetSize(vNode);
-    assert.deepEqual(rect, new DOMRect(10, 5, 30, 40));
+    assert.deepEqual(rect, vNode.actualNode.getBoundingClientRect());
   });
 
   it('returns the largest unobscured area', () => {
