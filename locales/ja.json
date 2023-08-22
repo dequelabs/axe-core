@@ -18,16 +18,16 @@
       "help": "ARIAロールは要素に対して適切でなければなりません"
     },
     "aria-braille-equivalent": {
-      "description": "Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent",
-      "help": "aria-braille attributes must have a non-braille equivalent"
+      "description": "aria-braillelabelとaria-brailleroledescriptionには、点字以外の同等のものが存在することを確認します",
+      "help": "aria-braille属性には、点じ以外の同等のものがなければなりません "
     },
     "aria-command-name": {
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認します",
       "help": "ARIAコマンドにはアクセシブルな名前がなければなりません"
     },
     "aria-conditional-attr": {
-      "description": "Ensures ARIA attributes are used as described in the specification of the element's role",
-      "help": "ARIA attributes must be used as specified for the element's role"
+      "description": "ARIA属性が要素のロールの仕様に従って使用されていることを確認します",
+      "help": "ARIA属性は要素のロールの仕様に従って使用しなければなりません"
     },
     "aria-deprecated-role": {
       "description": "要素に非推奨のロールが使用されていないことを確認します",
@@ -546,15 +546,15 @@
       }
     },
     "braille-label-equivalent": {
-      "pass": "aria-braillelabel is used on an element with accessible text",
-      "fail": "aria-braillelabel is used on an element with no accessible text",
-      "incomplete": "Unable to compute accessible text"
+      "pass": "aria-braillelabelはアクセシブルなテキストがある要素に対して使用されています",
+      "fail": "aria-braillelabelがアクセシブルなテキストがない要素に対して使用されています",
+      "incomplete": "アクセシブルなテキストを算出することができません"
     },
     "braille-roledescription-equivalent": {
-      "pass": "aria-brailleroledescription is not used on an element with no accessible text",
+      "pass": "aria-brailleroledescriptionはアクセシブルなテキストがある要素に対して使用されています",
       "fail": {
-        "noRoleDescription": "aria-brailleroledescription is used on an element with no aria-roledescription",
-        "emptyRoleDescription": "aria-brailleroledescription is used on an element with an empty aria-roledescription"
+        "noRoleDescription": "aria-brailleroledescriptionがaria-roledescriptionが指定されていない要素に対して使用されています",
+        "emptyRoleDescription": "aria-brailleroledescriptionが空のaria-roledescriptionが指定されている要素に対して使用されています"
       }
     },
     "deprecatedrole": {
