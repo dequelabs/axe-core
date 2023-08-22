@@ -429,8 +429,8 @@
         "plural": "ARIAロール${data.values}は指定された要素では許可されていません"
       },
       "incomplete": {
-        "singular": "ARIAロール${data.values}はこの要素で許可されていないため、要素が表示されたときはARIAロールを削除する必要があります",
-        "plural": "ARIAロール${data.values}この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
+        "singular": "ARIAロール${data.values}はこの要素では許可されていないため、要素が表示されたときはARIAロールを削除する必要があります",
+        "plural": "ARIAロール${data.values}はこの要素では許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
       }
     },
     "aria-busy": {
