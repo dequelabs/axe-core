@@ -550,8 +550,8 @@
       "fail": "aria-braillelabelがアクセシブルなテキストがない要素に対して使用されています",
       "incomplete": "アクセシブルなテキストを算出することができません"
     },
-    "braille-roledescription-equivalent": {
-      "pass": "aria-brailleroledescriptionはアクセシブルなテキストがある要素に対して使用されています",
+  " ": {
+      "pass": "aria-brailleroledescriptionはaria-roledescriptionが指定されている要素に対して使用されています",
       "fail": {
         "noRoleDescription": "aria-brailleroledescriptionがaria-roledescriptionが指定されていない要素に対して使用されています",
         "emptyRoleDescription": "aria-brailleroledescriptionが空のaria-roledescriptionが指定されている要素に対して使用されています"
