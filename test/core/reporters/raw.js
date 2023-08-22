@@ -26,7 +26,8 @@ describe('reporters - raw', function () {
             any: [
               {
                 result: true,
-                data: 'minkey'
+                data: 'minkey',
+                relatedNodes: []
               }
             ],
             all: [],
@@ -50,7 +51,8 @@ describe('reporters - raw', function () {
               {
                 result: false,
                 data: 'pillock',
-                impact: 'cats'
+                impact: 'cats',
+                relatedNodes: []
               }
             ],
             any: [],
@@ -75,7 +77,8 @@ describe('reporters - raw', function () {
               {
                 data: 'foon',
                 impact: 'monkeys',
-                result: true
+                result: true,
+                relatedNodes: []
               }
             ],
             any: [],
@@ -93,10 +96,13 @@ describe('reporters - raw', function () {
         passes: [
           {
             result: 'passed',
+            any: [],
+            all: [],
             none: [
               {
                 data: 'clueso',
-                result: true
+                result: true,
+                relatedNodes: []
               }
             ],
             node: createDqElement()
@@ -111,8 +117,9 @@ describe('reporters - raw', function () {
     axe._cache.set('selectorData', {});
   });
 
-  after(function () {
+  afterEach(function () {
     fixture.innerHTML = '';
+    sinon.restore();
   });
 
   it('should serialize DqElements', function (done) {
@@ -137,5 +144,19 @@ describe('reporters - raw', function () {
         });
       });
     });
+  });
+
+  it('uses nodeSerializer', done => {
+    var rawReporter = axe.getReporter('raw');
+    var spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
+    rawReporter(
+      runResults,
+      {},
+      function () {
+        assert.isTrue(spy.called);
+        done();
+      },
+      done
+    );
   });
 });

@@ -177,6 +177,9 @@
       .ml-n6 {
         margin-left: -36px;
       }
+      .ml-n5 {
+        margin-left: -30px;
+      }
       .ml-n4 {
         margin-left: -24px;
       }
@@ -350,7 +353,7 @@
       </div>
     </section>
 
-    <p>Example E1 and E2 pass, the two outside elements of E3 and E4 fail.</p>
+    <p>Example E1 - E3 pass, E4 fails.</p>
     <section class="sample">
       <div>
         <span class="passed h2 w2"></span>
@@ -363,18 +366,18 @@
         <span class="passed h2 w2"></span>
       </div>
       <div>
-        <span class="failed h2 w2"></span>
+        <span class="passed h2 w2"></span>
         <span class="passed h2 w4 ml1 mr1"></span>
-        <span class="failed h2 w2"></span>
+        <span class="passed h2 w2"></span>
       </div>
       <div>
         <span class="failed h2 w2"></span>
-        <span class="passed h2 w4"></span>
+        <span class="failed h2 w4"></span>
         <span class="failed h2 w2"></span>
       </div>
     </section>
 
-    <p>Example F1 and F2 pass, the inside element of F3 and F4 fail.</p>
+    <p>Example F1 - F3 pass, F4 fails.</p>
     <section class="sample">
       <div>
         <span class="passed h2 w4"></span>
@@ -388,13 +391,13 @@
       </div>
       <div>
         <span class="passed h2 w4"></span>
-        <span class="failed h2 w2 ml1 mr1"></span>
+        <span class="passed h2 w2 ml1 mr1"></span>
         <span class="passed h2 w4"></span>
       </div>
       <div>
-        <span class="passed h2 w4"></span>
+        <span class="failed h2 w4"></span>
         <span class="failed h2 w2"></span>
-        <span class="passed h2 w4"></span>
+        <span class="failed h2 w4"></span>
       </div>
     </section>
 
@@ -440,7 +443,7 @@
         </span>
       </div>
       <div>
-        <span class="passed h6 w10">
+        <span class="failed h6 w10">
           <span class="passed h4 w4 mt1 ml1"></span>
           <span class="passed h4 w4 mt1"></span>
         </span>
@@ -456,7 +459,7 @@
       </div>
       <div>
         <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 mt1 ml-n4"></span>
+          <span class="passed h2 w6 mt1 ml-n5"></span>
         </span>
       </div>
       <div>
@@ -480,7 +483,7 @@
       </div>
       <div>
         <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 ml-n4"></span>
+          <span class="passed h2 w6 ml-n5"></span>
         </span>
       </div>
       <div>
@@ -495,26 +498,26 @@
       </div>
     </section>
 
-    <p>Example K1 - K3 pass, the middle element of K4 fails.</p>
+    <p>Example K1 and K2 pass, K3 and K4 fail.</p>
     <section class="sample">
       <div>
         <span class="passed h4 w6 ml4">
-          <span class="passed h2 w5 mt1 ml-n4"></span>
+          <span class="passed h2 w5 mt1 ml-n5"></span>
         </span>
       </div>
       <div>
         <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 mt1 ml-n4"></span>
+          <span class="passed h2 w6 mt1 ml-n5"></span>
         </span>
       </div>
       <div>
         <span class="failed h4 w6 ml4">
-          <span class="passed h2 w7 mt1 ml-n4"></span>
+          <span class="failed h2 w7 mt1 ml-n4"></span>
         </span>
       </div>
       <div>
         <span class="failed h4 w6 ml4">
-          <span class="passed h2 w8 mt1 ml-n4"></span>
+          <span class="failed h2 w8 mt1 ml-n5"></span>
         </span>
       </div>
     </section>
@@ -587,6 +590,7 @@
         </span>
       </div>
       <div>
+        <!-- this should technically fail the target-size rule if we were implementing the size based on the largest inscribed square -->
         <span class="passed h6 w10 rnd-50">
           <span class="failed h2 w2 mt2 ml4"></span>
         </span>
@@ -608,7 +612,7 @@
         <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="passed h6 w6 ml2">
+        <span class="failed h6 w6 ml2">
           <span class="passed h4 w4 mt1 ml-n2"></span>
         </span>
         <span class="passed h4 w4 mt1 ml-n1"></span>
@@ -639,6 +643,7 @@
         </span>
       </div>
       <div>
+        <!-- this should technically fail the target-size rule if we were implementing the size based on the largest inscribed square -->
         <span class="passed h6 w10 rnd-0-100">
           <span class="passed h4 w4 mt1 ml1"></span>
         </span>

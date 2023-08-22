@@ -2,7 +2,8 @@ describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
-  let a, getFlattenedTree;
+  const { fixtureSetup } = axe.testUtils;
+  let audit;
   const isNotCalled = function (err) {
     throw err || new Error('Reject should not be called');
   };
@@ -69,24 +70,21 @@ describe('Audit', () => {
   const fixture = document.getElementById('fixture');
 
   let origAuditRun;
-  let origAxeUtilsPreload;
 
   beforeEach(() => {
-    a = new Audit();
+    audit = new Audit();
     mockRules.forEach(function (r) {
-      a.addRule(r);
+      audit.addRule(r);
     });
     mockChecks.forEach(function (c) {
-      a.addCheck(c);
+      audit.addCheck(c);
     });
-    origAuditRun = a.run;
+    origAuditRun = audit.run;
   });
 
   afterEach(() => {
-    fixture.innerHTML = '';
-    axe._tree = undefined;
-    axe._selectCache = undefined;
-    a.run = origAuditRun;
+    axe.teardown();
+    audit.run = origAuditRun;
   });
 
   it('should be a function', () => {
@@ -95,19 +93,19 @@ describe('Audit', () => {
 
   describe('defaults', () => {
     it('should set noHtml', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.isFalse(audit.noHtml);
     });
 
     it('should set allowedOrigins', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 
   describe('Audit#_constructHelpUrls', () => {
     it('should create default help URLS', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -124,7 +122,7 @@ describe('Audit', () => {
       });
     });
     it('should use changed branding', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -142,7 +140,7 @@ describe('Audit', () => {
       });
     });
     it('should use changed application', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -161,7 +159,7 @@ describe('Audit', () => {
     });
 
     it('does not override helpUrls of different products', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target1',
         matches: 'function () {return "hello";}',
@@ -206,7 +204,7 @@ describe('Audit', () => {
     });
     it('understands prerelease type version numbers', () => {
       const tempVersion = axe.version;
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -225,7 +223,7 @@ describe('Audit', () => {
 
     it('matches major release versions', () => {
       const tempVersion = axe.version;
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -242,7 +240,7 @@ describe('Audit', () => {
       );
     });
     it('sets the lang query if locale has been set', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -265,7 +263,7 @@ describe('Audit', () => {
 
   describe('Audit#setBranding', () => {
     it('should change the brand', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
       audit.setBranding({
@@ -275,7 +273,7 @@ describe('Audit', () => {
       assert.equal(audit.application, 'axeAPI');
     });
     it('should change the application', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
       audit.setBranding({
@@ -285,7 +283,7 @@ describe('Audit', () => {
       assert.equal(audit.application, 'thing');
     });
     it('should change the application when passed a string', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'axeAPI');
       audit.setBranding('thing');
@@ -293,7 +291,7 @@ describe('Audit', () => {
       assert.equal(audit.application, 'thing');
     });
     it('should call _constructHelpUrls', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -312,7 +310,7 @@ describe('Audit', () => {
       });
     });
     it('should call _constructHelpUrls even when nothing changed', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -329,7 +327,7 @@ describe('Audit', () => {
       });
     });
     it('should not replace custom set branding', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -356,7 +354,7 @@ describe('Audit', () => {
 
   describe('Audit#addRule', () => {
     it('should override existing rule', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         matches: 'function () {return "hello";}',
@@ -376,7 +374,7 @@ describe('Audit', () => {
       assert.equal(audit.rules[0].matches(), 'hello');
     });
     it('should otherwise push new rule', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'target',
         selector: 'bob'
@@ -398,7 +396,7 @@ describe('Audit', () => {
 
   describe('Audit#resetRulesAndChecks', () => {
     it('should override newly created check', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
         id: 'target',
@@ -410,7 +408,7 @@ describe('Audit', () => {
       assert.equal(audit.checks.target, undefined);
     });
     it('should reset locale', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.lang, 'en');
       audit.applyLocale({
         lang: 'de'
@@ -420,7 +418,7 @@ describe('Audit', () => {
       assert.equal(audit.lang, 'en');
     });
     it('should reset brand', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.brand, 'axe');
       audit.setBranding({
         brand: 'test'
@@ -430,7 +428,7 @@ describe('Audit', () => {
       assert.equal(audit.brand, 'axe');
     });
     it('should reset brand application', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.application, 'axeAPI');
       audit.setBranding({
         application: 'test'
@@ -450,14 +448,14 @@ describe('Audit', () => {
     });
 
     it('should reset noHtml', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.noHtml = true;
       audit.resetRulesAndChecks();
       assert.isFalse(audit.noHtml);
     });
 
     it('should reset allowedOrigins', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.allowedOrigins = ['hello'];
       audit.resetRulesAndChecks();
       assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
@@ -466,7 +464,7 @@ describe('Audit', () => {
 
   describe('Audit#addCheck', () => {
     it('should create a new check', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
         id: 'target',
@@ -476,7 +474,7 @@ describe('Audit', () => {
       assert.deepEqual(audit.checks.target.options, { value: 'jane' });
     });
     it('should configure the metadata, if passed', () => {
-      const audit = new Audit();
+      audit = new Audit();
       assert.equal(audit.checks.target, undefined);
       audit.addCheck({
         id: 'target',
@@ -486,7 +484,7 @@ describe('Audit', () => {
       assert.equal(audit.data.checks.target.guy, 'bob');
     });
     it('should reconfigure existing check', () => {
-      const audit = new Audit();
+      audit = new Audit();
       const myTest = () => {};
       audit.addCheck({
         id: 'target',
@@ -505,7 +503,7 @@ describe('Audit', () => {
       assert.deepEqual(audit.checks.target.options, { value: 'fred' });
     });
     it('should not turn messages into a function', () => {
-      const audit = new Audit();
+      audit = new Audit();
       const spec = {
         id: 'target',
         evaluate: 'function () { return "blah";}',
@@ -523,7 +521,7 @@ describe('Audit', () => {
     });
 
     it('should turn function strings into a function', () => {
-      const audit = new Audit();
+      audit = new Audit();
       const spec = {
         id: 'target',
         evaluate: 'function () { return "blah";}',
@@ -543,7 +541,7 @@ describe('Audit', () => {
 
   describe('Audit#setAllowedOrigins', () => {
     it('should set allowedOrigins', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.setAllowedOrigins([
         'https://deque.com',
         'https://dequeuniversity.com'
@@ -555,7 +553,7 @@ describe('Audit', () => {
     });
 
     it('should normalize <same_origin>', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.setAllowedOrigins(['<same_origin>', 'https://deque.com']);
       assert.deepEqual(audit.allowedOrigins, [
         window.location.origin,
@@ -564,7 +562,7 @@ describe('Audit', () => {
     });
 
     it('should normalize <unsafe_all_origins>', () => {
-      const audit = new Audit();
+      audit = new Audit();
       audit.setAllowedOrigins([
         'https://deque.com',
         '<unsafe_all_origins>',
@@ -576,13 +574,14 @@ describe('Audit', () => {
 
   describe('Audit#run', () => {
     it('should run all the rules', done => {
-      fixture.innerHTML =
+      fixtureSetup(
         '<input aria-label="monkeys" type="text">' +
-        '<div id="monkeys">bananas</div>' +
-        '<input aria-labelledby="monkeys">' +
-        '<blink>FAIL ME</blink>';
+          '<div id="monkeys">bananas</div>' +
+          '<input aria-labelledby="monkeys">' +
+          '<blink>FAIL ME</blink>'
+      );
 
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {},
         function (results) {
@@ -636,7 +635,7 @@ describe('Audit', () => {
     });
 
     it('should not run rules disabled by the options', done => {
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {
           rules: {
@@ -656,7 +655,7 @@ describe('Audit', () => {
     it('should ensure audit.run recieves preload options', done => {
       fixture.innerHTML = '<input aria-label="yo" type="text">';
 
-      const audit = new Audit();
+      audit = new Audit();
       audit.addRule({
         id: 'preload1',
         selector: '*'
@@ -730,7 +729,7 @@ describe('Audit', () => {
         });
       };
 
-      const audit = new Audit();
+      audit = new Audit();
       // add a rule and check that does not need preload
       audit.addRule({
         id: 'no-preload',
@@ -811,7 +810,7 @@ describe('Audit', () => {
         });
       };
 
-      const audit = new Audit();
+      audit = new Audit();
       // add a rule and check that does not need preload
       audit.addRule({
         id: 'no-preload',
@@ -882,7 +881,7 @@ describe('Audit', () => {
         return Promise.reject(rejectionMsg);
       };
 
-      const audit = new Audit();
+      audit = new Audit();
       // add a rule and check that does not need preload
       audit.addRule({
         id: 'no-preload',
@@ -946,7 +945,7 @@ describe('Audit', () => {
       // the actual axios call is invoked, and timedout immediately as timeout is set to 0.1
 
       let preloadNeededCheckInvoked = false;
-      const audit = new Audit();
+      audit = new Audit();
       // add a rule and check that does not need preload
       audit.addRule({
         id: 'no-preload',
@@ -968,6 +967,7 @@ describe('Audit', () => {
           return true;
         }
       });
+      axe.setup();
 
       const preloadOptions = {
         preload: {
@@ -1007,7 +1007,7 @@ describe('Audit', () => {
         assert.equal(axe._selectCache.length, 0);
         return false;
       };
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {},
         () => {
@@ -1019,7 +1019,7 @@ describe('Audit', () => {
     });
 
     it('should clear axe._selectCache', done => {
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {
           rules: {}
@@ -1033,7 +1033,7 @@ describe('Audit', () => {
     });
 
     it('should not run rules disabled by the configuration', done => {
-      const audit = new Audit();
+      audit = new Audit();
       const success = true;
       audit.rules.push(
         new Rule({
@@ -1063,7 +1063,7 @@ describe('Audit', () => {
 
     it("should call the rule's run function", done => {
       const targetRule = mockRules[mockRules.length - 1];
-      const rule = axe.utils.findBy(a.rules, 'id', targetRule.id);
+      const rule = axe.utils.findBy(audit.rules, 'id', targetRule.id);
       let called = false;
       let orig;
 
@@ -1073,7 +1073,7 @@ describe('Audit', () => {
         called = true;
         callback({});
       };
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         {},
         () => {
@@ -1087,7 +1087,7 @@ describe('Audit', () => {
 
     it('should pass the option to the run function', done => {
       const targetRule = mockRules[mockRules.length - 1];
-      const rule = axe.utils.findBy(a.rules, 'id', targetRule.id);
+      const rule = axe.utils.findBy(audit.rules, 'id', targetRule.id);
       let passed = false;
       let orig;
       let options;
@@ -1101,7 +1101,7 @@ describe('Audit', () => {
       };
       options = { rules: {} };
       (options.rules[targetRule.id] = {}).data = 'monkeys';
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree()[0]] },
         options,
         () => {
@@ -1114,7 +1114,7 @@ describe('Audit', () => {
     });
 
     it('should skip pageLevel rules if context is not set to entire page', () => {
-      const audit = new Audit();
+      audit = new Audit();
 
       audit.rules.push(
         new Rule({
@@ -1141,7 +1141,7 @@ describe('Audit', () => {
 
     it('catches errors and passes them as a cantTell result', done => {
       const err = new Error('Launch the super sheep!');
-      a.addRule({
+      audit.addRule({
         id: 'throw1',
         selector: '*',
         any: [
@@ -1150,7 +1150,7 @@ describe('Audit', () => {
           }
         ]
       });
-      a.addCheck({
+      audit.addCheck({
         id: 'throw1-check1',
         evaluate: () => {
           throw err;
@@ -1158,7 +1158,7 @@ describe('Audit', () => {
       });
       axe._tree = axe.utils.getFlattenedTree(fixture);
       axe._selectorData = axe.utils.getSelectorData(axe._tree);
-      a.run(
+      audit.run(
         { include: [axe._tree[0]] },
         {
           runOnly: {
@@ -1179,7 +1179,7 @@ describe('Audit', () => {
     });
 
     it('should not halt if errors occur', done => {
-      a.addRule({
+      audit.addRule({
         id: 'throw1',
         selector: '*',
         any: [
@@ -1188,13 +1188,13 @@ describe('Audit', () => {
           }
         ]
       });
-      a.addCheck({
+      audit.addCheck({
         id: 'throw1-check1',
         evaluate: () => {
           throw new Error('Launch the super sheep!');
         }
       });
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {
           runOnly: {
@@ -1217,11 +1217,11 @@ describe('Audit', () => {
         '<blink>FAIL ME</blink>';
       let checked = 'options not validated';
 
-      a.normalizeOptions = () => {
+      audit.normalizeOptions = () => {
         checked = 'options validated';
       };
 
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {},
         noop,
@@ -1231,7 +1231,7 @@ describe('Audit', () => {
     });
 
     it('should halt if an error occurs when debug is set', done => {
-      a.addRule({
+      audit.addRule({
         id: 'throw1',
         selector: '*',
         any: [
@@ -1240,7 +1240,7 @@ describe('Audit', () => {
           }
         ]
       });
-      a.addCheck({
+      audit.addCheck({
         id: 'throw1-check1',
         evaluate: () => {
           throw new Error('Launch the super sheep!');
@@ -1250,7 +1250,7 @@ describe('Audit', () => {
       // check error node requires _selectorCache to be setup
       axe.setup();
 
-      a.run(
+      audit.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {
           debug: true,
@@ -1266,12 +1266,27 @@ describe('Audit', () => {
         }
       );
     });
+
+    it('propagates DqElement options', async () => {
+      fixtureSetup('<input id="input">');
+      const results = await new Promise((resolve, reject) => {
+        audit.run(
+          { include: [axe.utils.getFlattenedTree(fixture)[0]] },
+          { elementRef: true, absolutePaths: true },
+          resolve,
+          reject
+        );
+      });
+      const { node } = results[0].nodes[0];
+      assert.equal(node.element, fixture.firstChild);
+      assert.equal(node.selector, 'html > body > #fixture > #input');
+    });
   });
 
   describe('Audit#after', () => {
     it('should run Rule#after on any rule whose result is passed in', () => {
       /*eslint no-unused-vars:0*/
-      const audit = new Audit();
+      audit = new Audit();
       let success = false;
       const options = [{ id: 'hehe', enabled: true, monkeys: 'bananas' }];
       const results = [
@@ -1317,7 +1332,7 @@ describe('Audit', () => {
           negative1: { enabled: false }
         }
       };
-      assert(a.normalizeOptions(opt), opt);
+      assert(audit.normalizeOptions(opt), opt);
     });
 
     it('allows `value` as alternative to `values`', () => {
@@ -1327,7 +1342,7 @@ describe('Audit', () => {
           value: ['positive1', 'positive2']
         }
       };
-      const out = a.normalizeOptions(opt);
+      const out = audit.normalizeOptions(opt);
       assert.deepEqual(out.runOnly.values, ['positive1', 'positive2']);
       assert.isUndefined(out.runOnly.value);
     });
@@ -1339,7 +1354,7 @@ describe('Audit', () => {
           values: ['positive1', 'positive2']
         }
       };
-      assert(a.normalizeOptions(opt).runOnly.type, 'rule');
+      assert(audit.normalizeOptions(opt).runOnly.type, 'rule');
     });
 
     it('allows type: tags as an alternative to type: tag', () => {
@@ -1349,7 +1364,7 @@ describe('Audit', () => {
           values: ['positive']
         }
       };
-      assert(a.normalizeOptions(opt).runOnly.type, 'tag');
+      assert(audit.normalizeOptions(opt).runOnly.type, 'tag');
     });
 
     it('allows type: undefined as an alternative to type: tag', () => {
@@ -1358,33 +1373,33 @@ describe('Audit', () => {
           values: ['positive']
         }
       };
-      assert(a.normalizeOptions(opt).runOnly.type, 'tag');
+      assert(audit.normalizeOptions(opt).runOnly.type, 'tag');
     });
 
     it('allows runOnly as an array as an alternative to type: tag', () => {
       const opt = { runOnly: ['positive', 'negative'] };
-      const out = a.normalizeOptions(opt);
+      const out = audit.normalizeOptions(opt);
       assert(out.runOnly.type, 'tag');
       assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
     });
 
     it('allows runOnly as an array as an alternative to type: rule', () => {
       const opt = { runOnly: ['positive1', 'negative1'] };
-      const out = a.normalizeOptions(opt);
+      const out = audit.normalizeOptions(opt);
       assert(out.runOnly.type, 'rule');
       assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
     });
 
     it('allows runOnly as a string as an alternative to an array', () => {
       const opt = { runOnly: 'positive1' };
-      const out = a.normalizeOptions(opt);
+      const out = audit.normalizeOptions(opt);
       assert(out.runOnly.type, 'rule');
       assert.deepEqual(out.runOnly.values, ['positive1']);
     });
 
     it('throws an error if runOnly contains both rules and tags', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: ['positive', 'negative1']
         });
       });
@@ -1392,14 +1407,14 @@ describe('Audit', () => {
 
     it('defaults runOnly to type: tag', () => {
       const opt = { runOnly: ['fakeTag'] };
-      const out = a.normalizeOptions(opt);
+      const out = audit.normalizeOptions(opt);
       assert(out.runOnly.type, 'tag');
       assert.deepEqual(out.runOnly.values, ['fakeTag']);
     });
 
     it('throws an error runOnly.values not an array', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: {
             type: 'rule',
             values: { badProp: 'badValue' }
@@ -1410,7 +1425,7 @@ describe('Audit', () => {
 
     it('throws an error runOnly.values an empty', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: {
             type: 'rule',
             values: []
@@ -1421,7 +1436,7 @@ describe('Audit', () => {
 
     it('throws an error runOnly.type is unknown', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: {
             type: 'something-else',
             values: ['wcag2aa']
@@ -1432,7 +1447,7 @@ describe('Audit', () => {
 
     it('throws an error when option.runOnly has an unknown rule', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: {
             type: 'rule',
             values: ['frakeRule']
@@ -1443,7 +1458,7 @@ describe('Audit', () => {
 
     it("doesn't throw an error when option.runOnly has an unknown tag", () => {
       assert.doesNotThrow(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           runOnly: {
             type: 'tags',
             values: ['fakeTag']
@@ -1454,7 +1469,7 @@ describe('Audit', () => {
 
     it('throws an error when option.rules has an unknown rule', () => {
       assert.throws(() => {
-        a.normalizeOptions({
+        audit.normalizeOptions({
           rules: {
             fakeRule: { enabled: false }
           }
@@ -1467,7 +1482,7 @@ describe('Audit', () => {
       axe.log = function (m) {
         message = m;
       };
-      a.normalizeOptions({
+      audit.normalizeOptions({
         runOnly: {
           type: 'tags',
           values: ['unknwon-tag']
@@ -1481,7 +1496,7 @@ describe('Audit', () => {
       axe.log = function (m) {
         message = m;
       };
-      a.normalizeOptions({
+      audit.normalizeOptions({
         runOnly: {
           type: 'tags',
           values: ['wcag23aaa']
@@ -1495,7 +1510,7 @@ describe('Audit', () => {
       axe.log = function (m) {
         message = m;
       };
-      a.normalizeOptions({
+      audit.normalizeOptions({
         runOnly: {
           type: 'tags',
           values: ['wcag23aaa', 'unknwon-tag']

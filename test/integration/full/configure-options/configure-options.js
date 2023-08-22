@@ -201,10 +201,9 @@ describe('Configure Options', () => {
       };
 
       const iframe = document.createElement('iframe');
-      iframe.src = '/test/mock/frames/context.html';
+      iframe.src = '/test/mock/frames/noHtml-config.html';
       iframe.onload = () => {
         axe.configure(config);
-
         axe.run(
           '#target',
           {

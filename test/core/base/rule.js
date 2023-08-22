@@ -4,6 +4,7 @@ describe('Rule', () => {
   const metadataFunctionMap =
     axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
   const fixture = document.getElementById('fixture');
+  const { fixtureSetup } = axe.testUtils;
   const noop = () => {};
   const isNotCalled = function (err) {
     throw err || new Error('Reject should not be called');
@@ -114,8 +115,7 @@ describe('Rule', () => {
         );
       });
       it('should exclude hidden elements', () => {
-        fixture.innerHTML =
-          '<div style="display: none"><span>HEHEHE</span></div>';
+        fixtureSetup('<div style="display: none"><span>HEHEHE</span></div>');
 
         const rule = new Rule({}),
           result = rule.gather({
@@ -129,7 +129,7 @@ describe('Rule', () => {
         assert.lengthOf(result, 0);
       });
       it('should include hidden elements if excludeHidden is false', () => {
-        fixture.innerHTML = '<div style="display: none"></div>';
+        fixtureSetup('<div style="display: none"></div>');
 
         const rule = new Rule({
           excludeHidden: false
@@ -258,7 +258,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#run on its child checks - any', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -290,7 +290,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#run on its child checks - all', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -322,7 +322,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#run on its child checks - none', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -355,7 +355,7 @@ describe('Rule', () => {
       });
 
       it('should pass the matching option to check.run', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const options = {
           checks: {
             cats: {
@@ -394,7 +394,7 @@ describe('Rule', () => {
       });
 
       it('should pass the matching option to check.run defined on the rule over global', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const options = {
           rules: {
             cats: {
@@ -485,7 +485,7 @@ describe('Rule', () => {
           axe.utils.DqElement = () => {
             isDqElementCalled = true;
           };
-          fixture.innerHTML = '<blink>Hi</blink>';
+          fixtureSetup('<blink>Hi</blink>');
         });
 
         afterEach(() => {
@@ -616,7 +616,7 @@ describe('Rule', () => {
       });
 
       it('should pass thrown errors to the reject param', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const rule = new Rule(
           {
             none: ['cats']
@@ -647,7 +647,7 @@ describe('Rule', () => {
       });
 
       it('should pass reject calls to the reject param', done => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const rule = new Rule(
           {
             none: ['cats']
@@ -678,6 +678,7 @@ describe('Rule', () => {
       });
 
       it('should mark checks as incomplete if reviewOnFail is set to true', done => {
+        axe.setup();
         const rule = new Rule(
           {
             reviewOnFail: true,
@@ -720,6 +721,7 @@ describe('Rule', () => {
 
       describe('NODE rule', () => {
         it('should create a RuleResult', () => {
+          axe.setup();
           const orig = window.RuleResult;
           let success = false;
           window.RuleResult = function (r) {
@@ -760,7 +762,9 @@ describe('Rule', () => {
 
           window.RuleResult = orig;
         });
+
         it('should execute rule callback', () => {
+          axe.setup();
           let success = false;
 
           const rule = new Rule(
@@ -905,7 +909,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#runSync on its child checks - any', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -936,7 +940,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#runSync on its child checks - all', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -967,7 +971,7 @@ describe('Rule', () => {
       });
 
       it('should execute Check#run on its child checks - none', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         let success = false;
         const rule = new Rule(
           {
@@ -999,7 +1003,7 @@ describe('Rule', () => {
       });
 
       it('should pass the matching option to check.runSync', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const options = {
           checks: {
             cats: {
@@ -1038,7 +1042,7 @@ describe('Rule', () => {
       });
 
       it('should pass the matching option to check.runSync defined on the rule over global', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const options = {
           rules: {
             cats: {
@@ -1131,7 +1135,7 @@ describe('Rule', () => {
           axe.utils.DqElement = () => {
             isDqElementCalled = true;
           };
-          fixture.innerHTML = '<blink>Hi</blink>';
+          fixtureSetup('<blink>Hi</blink>');
         });
 
         afterEach(() => {
@@ -1317,7 +1321,7 @@ describe('Rule', () => {
       });
 
       it('should pass thrown errors to the reject param', () => {
-        fixture.innerHTML = '<blink>Hi</blink>';
+        fixtureSetup('<blink>Hi</blink>');
         const rule = new Rule(
           {
             none: ['cats']
@@ -1347,6 +1351,7 @@ describe('Rule', () => {
       });
 
       it('should mark checks as incomplete if reviewOnFail is set to true', () => {
+        axe.setup();
         const rule = new Rule(
           {
             reviewOnFail: true,
@@ -1659,6 +1664,7 @@ describe('Rule', () => {
 
     describe('after', () => {
       it('should mark checks as incomplete if reviewOnFail is set to true for all', () => {
+        axe.setup();
         const rule = new Rule(
           {
             id: 'cats',
