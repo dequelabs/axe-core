@@ -82,7 +82,7 @@
       "help": "ARIA roles used must conform to valid values"
     },
     "aria-text": {
-      "description": "Ensures \"role=text\" is used on elements with no focusable descendants",
+      "description": "Ensures role=\"text\" is used on elements with no focusable descendants",
       "help": "\"role=text\" should have no focusable descendants"
     },
     "aria-toggle-field-name": {
@@ -551,7 +551,7 @@
       "incomplete": "Unable to compute accessible text"
     },
     "braille-roledescription-equivalent": {
-      "pass": "aria-brailleroledescription is not used on an element with no accessible text",
+      "pass": "aria-brailleroledescription is used on an element with aria-roledescription",
       "fail": {
         "noRoleDescription": "aria-brailleroledescription is used on an element with no aria-roledescription",
         "emptyRoleDescription": "aria-brailleroledescription is used on an element with an empty aria-roledescription"
