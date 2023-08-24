@@ -326,8 +326,8 @@
       "help": "Strona musi zawierać nagłówek poziomu 1."
     },
     "presentation-role-conflict": {
-      "description": "Elementy z [role=\"none\"] lub [role=\"presentation\"] nie mogą kolidować z innymi rolami.",
-      "help": "Elementy, które mają role=\"none\"] lub [role=\"presentation\"], nie mogą kolidować z innymi rolami."
+      "description": "Elementy oznaczone jako prezentacyjne nie powinny mieć globalnego ARIA ani tabindex, aby zapewnić, że wszystkie czytniki ekranu je zignorują.",
+      "help": "Upewnij się, że elementy oznaczone jako prezentacyjne są konsekwentnie ignorowane."
     },
     "region": {
       "description": "Cała treść strony jest objęta przez punkty orientacyjne.",
@@ -394,8 +394,8 @@
       "help": "Atrybuty lang muszą mieć poprawną wartość."
     },
     "video-caption": {
-      "description": "Elementy <video> mają napisy rozszerzone dla niesłyszących.",
-      "help": "Elementy <video> muszą mieć napisy rozszerzone dla niesłyszących."
+      "description": "Elementy <video> mają napisy rozszerzone.",
+      "help": "Elementy <video> muszą mieć napisy rozszerzone."
     }
   },
   "checks": {
@@ -567,9 +567,9 @@
     "color-contrast-enhanced": {
       "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}",
       "fail": {
-        "default": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia (foreground color: ${data.fgColor}, text-shadow color: ${data.shadowColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem cienia a kolorem tła (text-shadow color: ${data.shadowColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
+        "default": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} (kolor pierwszego planu: ${data.fgColor}, kolor tła: ${data.bgColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia tekstu (kolor pierwszego planu: ${data.fgColor}, kolor cienia tekstu: ${data.shadowColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} pomiędzy kolorem cienia tekstu a kolorem tła (kolor cienia tekstu: ${data.shadowColor}, kolor tła: ${data.bgColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Nie można określić współczynnika kontrastu.",
@@ -593,9 +593,9 @@
         "hidden": "Element jest ukryty"
       },
       "fail": {
-        "default": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia (foreground color: ${data.fgColor}, text-shadow color: ${data.shadowColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów: of ${data.contrastRatio} pomiędzy kolorem cienia a kolorem tła (text-shadow color: ${data.shadowColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
+        "default": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} (kolor pierwszego planu: ${data.fgColor}, kolor tła: ${data.bgColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} pomiędzy kolorem pierwszego planu a kolorem cienia tekstu (kolor pierwszego planu: ${data.fgColor}, kolor cienia tekstu: ${data.shadowColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element ma niewystarczający kontrast kolorów ${data.contrastRatio} pomiędzy kolorem  cienia tekstu a kolorem tła (kolor cienia tekstu: ${data.shadowColor}, kolor tła: ${data.bgColor}, rozmiar czcionki: ${data.fontSize}, waga czcionki: ${data.fontWeight}). Oczekiwany współczynnik kontrastu: ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Nie można określić współczynnika kontrastu.",
