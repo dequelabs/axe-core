@@ -39,7 +39,7 @@ const example = async url => {
           // its value (`results.result.value` is undefined). By
           // `JSON.stringify()`ing it, we can `JSON.parse()` it later on
           // and return a valid results set.
-          .then(results => JSON.stringify(results))
+          .then(res => JSON.stringify(res))
           .then(resolve)
           .catch(reject);
       });

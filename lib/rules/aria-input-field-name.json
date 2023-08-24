@@ -1,8 +1,18 @@
 {
   "id": "aria-input-field-name",
+  "impact": "serious",
   "selector": "[role=\"combobox\"], [role=\"listbox\"], [role=\"searchbox\"], [role=\"slider\"], [role=\"spinbutton\"], [role=\"textbox\"]",
   "matches": "no-naming-method-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "ACT"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "TTv5",
+    "TT5.c",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "ACT"
+  ],
   "actIds": ["e086e5"],
   "metadata": {
     "description": "Ensures every ARIA input field has an accessible name",

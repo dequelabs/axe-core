@@ -1,50 +1,49 @@
-describe('color.elementIsDistinct', function () {
-  'use strict';
-  var styleElm, elementIsDistinct;
+describe('color.elementIsDistinct', () => {
+  let styleElm;
+  let elementIsDistinct;
 
-  var fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
 
-  before(function () {
+  before(() => {
     styleElm = document.createElement('style');
     document.head.appendChild(styleElm);
   });
 
-  var defaultStyle = {
+  const defaultStyle = {
     color: '#000',
     textDecoration: 'none'
   };
 
   function createStyleString(selector, outerStyle) {
     // Merge style with the default
-    var prop;
-    var styleObj = {};
-    for (prop in defaultStyle) {
+    const styleObj = {};
+    for (const prop in defaultStyle) {
       if (defaultStyle.hasOwnProperty(prop)) {
         styleObj[prop] = defaultStyle[prop];
       }
     }
-    for (prop in outerStyle) {
+    for (const prop in outerStyle) {
       if (outerStyle.hasOwnProperty(prop)) {
         styleObj[prop] = outerStyle[prop];
       }
     }
 
-    var cssLines = Object.keys(styleObj)
-      .map(function (prop) {
+    const cssLines = Object.keys(styleObj)
+      .map(prop => {
         // Make camelCase prop dash separated
-        var cssPropName = prop
+        const cssPropName = prop
           .trim()
           .split(/(?=[A-Z])/g)
-          .reduce(function (prop, propPiece) {
-            if (!prop) {
+          .reduce((name, propPiece) => {
+            if (!name) {
               return propPiece;
             } else {
-              return prop + '-' + propPiece.toLowerCase();
+              return name + '-' + propPiece.toLowerCase();
             }
           }, null);
 
         // Return indented line of style code
-        return '	' + cssPropName + ':' + styleObj[prop] + ';';
+        return '  ' + cssPropName + ':' + styleObj[prop] + ';';
       })
       .join('\n');
 
@@ -54,8 +53,8 @@ describe('color.elementIsDistinct', function () {
 
   function getLinkElm(linkStyle, paragraphStyle) {
     // Get a random id and build the style string
-    var linkId = 'linkid-' + Math.floor(Math.random() * 100000);
-    var parId = 'parid-' + Math.floor(Math.random() * 100000);
+    const linkId = 'linkid-' + Math.floor(Math.random() * 100000);
+    const parId = 'parid-' + Math.floor(Math.random() * 100000);
 
     createStyleString('#' + linkId, linkStyle);
     createStyleString('#' + parId, paragraphStyle);
@@ -74,92 +73,92 @@ describe('color.elementIsDistinct', function () {
     };
   }
 
-  beforeEach(function () {
+  beforeEach(() => {
     createStyleString('p', defaultStyle);
     elementIsDistinct = axe.commons.color.elementIsDistinct;
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     styleElm.innerHTML = '';
   });
 
-  after(function () {
+  after(() => {
     styleElm.parentNode.removeChild(styleElm);
   });
 
-  it('returns false without style adjustments', function () {
-    var elms = getLinkElm({});
-    var result = elementIsDistinct(elms.link, elms.par);
+  it('returns false without style adjustments', () => {
+    const elms = getLinkElm({});
+    const result = elementIsDistinct(elms.link, elms.par);
 
     assert.isFalse(result);
   });
 
-  it('returns true with background-image set', function () {
-    var elms = getLinkElm({
+  it('returns true with background-image set', () => {
+    const elms = getLinkElm({
       background: 'url(icon.png) no-repeat'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns true with border: dashed 1px black', function () {
-    var elms = getLinkElm({
+  it('returns true with border: dashed 1px black', () => {
+    const elms = getLinkElm({
       border: 'dashed 1px black'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns true with border-bottom: dashed 1px black', function () {
-    var elms = getLinkElm({
+  it('returns true with border-bottom: dashed 1px black', () => {
+    const elms = getLinkElm({
       borderBottom: 'dashed 1px black'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns false with border: solid 0px black', function () {
-    var elms = getLinkElm({
+  it('returns false with border: solid 0px black', () => {
+    const elms = getLinkElm({
       border: 'solid 0px black'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('returns false with border: none 1px black', function () {
-    var elms = getLinkElm({
+  it('returns false with border: none 1px black', () => {
+    const elms = getLinkElm({
       border: 'none 1px black'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('returns false with border: solid 1px transparent', function () {
-    var elms = getLinkElm({
+  it('returns false with border: solid 1px transparent', () => {
+    const elms = getLinkElm({
       border: 'solid 1px transparent'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('returns true with outline: solid 1px black', function () {
-    var elms = getLinkElm({
+  it('returns true with outline: solid 1px black', () => {
+    const elms = getLinkElm({
       outline: 'solid 1px black'
     });
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns true if font-weight is different', function () {
-    var elms = getLinkElm(
+  it('returns true if font-weight is different', () => {
+    const elms = getLinkElm(
       {
         fontWeight: 'bold'
       },
@@ -168,12 +167,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns false if font-weight is the same', function () {
-    var elms = getLinkElm(
+  it('returns false if font-weight is the same', () => {
+    const elms = getLinkElm(
       {
         fontWeight: 'bold'
       },
@@ -182,12 +181,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('compares font numbers and labels correctly', function () {
-    var elms = getLinkElm(
+  it('compares font numbers and labels correctly', () => {
+    const elms = getLinkElm(
       {
         fontWeight: 'bold'
       },
@@ -196,12 +195,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('returns true if text-decoration is different', function () {
-    var elms = getLinkElm(
+  it('returns true if text-decoration is different', () => {
+    const elms = getLinkElm(
       {
         textDecoration: 'underline'
       },
@@ -210,12 +209,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns false if text-decoration is the same', function () {
-    var elms = getLinkElm(
+  it('returns false if text-decoration is the same', () => {
+    const elms = getLinkElm(
       {
         textDecoration: 'underline'
       },
@@ -224,12 +223,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 
-  it('returns true if font-size is different', function () {
-    var elms = getLinkElm(
+  it('returns true if font-size is different', () => {
+    const elms = getLinkElm(
       {
         fontSize: '14px'
       },
@@ -238,12 +237,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns true if font-family is different', function () {
-    var elms = getLinkElm(
+  it('returns true if font-family is different', () => {
+    const elms = getLinkElm(
       {
         fontFamily: 'Arial'
       },
@@ -252,12 +251,12 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isTrue(result);
   });
 
-  it('returns false if the first font-family is identical', function () {
-    var elms = getLinkElm(
+  it('returns false if the first font-family is identical', () => {
+    const elms = getLinkElm(
       {
         fontFamily: 'Arial-black, Arial'
       },
@@ -266,7 +265,7 @@ describe('color.elementIsDistinct', function () {
       }
     );
 
-    var result = elementIsDistinct(elms.link, elms.par);
+    const result = elementIsDistinct(elms.link, elms.par);
     assert.isFalse(result);
   });
 });

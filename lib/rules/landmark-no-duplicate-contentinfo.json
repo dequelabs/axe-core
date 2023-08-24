@@ -1,5 +1,6 @@
 {
   "id": "landmark-no-duplicate-contentinfo",
+  "impact": "moderate",
   "selector": "footer:not([role]), [role=contentinfo]",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {

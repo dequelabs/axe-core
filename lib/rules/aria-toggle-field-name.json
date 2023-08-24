@@ -1,8 +1,18 @@
 {
   "id": "aria-toggle-field-name",
+  "impact": "serious",
   "selector": "[role=\"checkbox\"], [role=\"menuitemcheckbox\"], [role=\"menuitemradio\"], [role=\"radio\"], [role=\"switch\"], [role=\"option\"]",
   "matches": "no-naming-method-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "ACT"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "TTv5",
+    "TT5.c",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "ACT"
+  ],
   "actIds": ["e086e5"],
   "metadata": {
     "description": "Ensures every ARIA toggle field has an accessible name",

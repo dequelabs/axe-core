@@ -113,12 +113,12 @@
       "description": "Vérifier que chaque page dispose au minimum d’un mécanisme de contournement de la navigation pour accéder directement au contenu",
       "help": "Chaque page doit fournir des moyens de contourner les contenus répétés"
     },
-    "color-contrast": {
-      "description": "Vérifier que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AA",
-      "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
-    },
     "color-contrast-enhanced": {
       "description": "Vérifier que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AAA",
+      "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
+    },
+    "color-contrast": {
+      "description": "Vérifier que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AA",
       "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
     },
     "css-orientation-lock": {
@@ -289,9 +289,13 @@
       "description": "Vérifier que l’élément <marquee> n’est pas utilisé",
       "help": "L’élément <marquee> est déprécié et ne doit pas être utilisé"
     },
+    "meta-refresh-no-exceptions": {
+      "description": "Vérifier que <meta http-equiv=\"refresh\"> n’est pas utilisé pour une actualisation différée",
+      "help": "L'actualisation différée ne doit pas être utilisée"
+    },
     "meta-refresh": {
-      "description": "Vérifier que <meta http-equiv=\"refresh\"> n’est pas utilisé",
-      "help": "La page HTML ne doit pas être actualisée automatiquement"
+      "description": "Vérifier que <meta http-equiv=\"refresh\"> n’est pas utilisé pour une actualisation différée",
+      "help": "L'actualisation différée en dessous de 20 heures ne doit pas être utilisée"
     },
     "meta-viewport-large": {
       "description": "Vérifier que <meta name=\"viewport\"> permet un agrandissement significatif",
@@ -368,6 +372,10 @@
     "table-fake-caption": {
       "description": "Vérifier que les tableaux avec une légende utilisent l’élément <caption>",
       "help": "Les données ou les cellules d’entête ne devraient pas être utilisées pour légender un tableau de données"
+    },
+    "target-size": {
+      "description": "Vérifier que la cible tactile a une taille et un espace suffisants",
+      "help": "Toutes les cibles tactiles doivent faire 24px de large, ou être suffisamment grandes"
     },
     "td-has-header": {
       "description": "Vérifier que chaque cellule de données non vide dans un tableau de données a une ou plusieurs cellules d’entête",

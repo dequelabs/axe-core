@@ -1,26 +1,26 @@
-describe('utils.clone', function () {
-  'use strict';
-  var clone = axe.utils.clone;
+describe('utils.clone', () => {
+  const clone = axe.utils.clone;
+  const fixture = document.querySelector('#fixture');
 
-  it('should clone an object', function () {
-    var obj = {
+  it('should clone an object', () => {
+    const obj = {
       cats: true,
       dogs: 2,
-      fish: [0, 1, 2]
+      fish: [0, 1, { one: 'two' }]
     };
-    var c = clone(obj);
+    const c = clone(obj);
 
     obj.cats = false;
     obj.dogs = 1;
-    obj.fish[0] = 'stuff';
+    obj.fish[2].one = 'three';
 
     assert.strictEqual(c.cats, true);
     assert.strictEqual(c.dogs, 2);
-    assert.deepEqual(c.fish, [0, 1, 2]);
+    assert.deepEqual(c.fish, [0, 1, { one: 'two' }]);
   });
 
-  it('should clone nested objects', function () {
-    var obj = {
+  it('should clone nested objects', () => {
+    const obj = {
       cats: {
         fred: 1,
         billy: 2,
@@ -33,7 +33,7 @@ describe('utils.clone', function () {
       },
       fish: [0, 1, 2]
     };
-    var c = clone(obj);
+    const c = clone(obj);
 
     obj.cats.fred = 47;
     obj.dogs = 47;
@@ -54,45 +54,107 @@ describe('utils.clone', function () {
     assert.deepEqual(c.fish, [0, 1, 2]);
   });
 
-  it('should clone objects with methods', function () {
-    var obj = {
-      cats: function () {
+  it('should clone objects with methods', () => {
+    const obj = {
+      cats: () => {
         return 'meow';
       },
-      dogs: function () {
+      dogs: () => {
         return 'woof';
       }
     };
-    var c = clone(obj);
+    const c = clone(obj);
 
     assert.strictEqual(obj.cats, c.cats);
     assert.strictEqual(obj.dogs, c.dogs);
 
-    obj.cats = function () {};
-    obj.dogs = function () {};
+    obj.cats = () => {};
+    obj.dogs = () => {};
 
     assert.notStrictEqual(obj.cats, c.cats);
     assert.notStrictEqual(obj.dogs, c.dogs);
   });
 
-  it('should clone prototypes', function () {
+  it('should clone prototypes', () => {
     function Cat(name) {
       this.name = name;
     }
 
-    Cat.prototype.meow = function () {
+    Cat.prototype.meow = () => {
       return 'meow';
     };
 
-    Cat.prototype.bark = function () {
+    Cat.prototype.bark = () => {
       return 'cats dont bark';
     };
 
-    var cat = new Cat('Fred'),
+    const cat = new Cat('Fred'),
       c = clone(cat);
 
     assert.deepEqual(cat.name, c.name);
     assert.deepEqual(Cat.prototype.bark, c.bark);
     assert.deepEqual(Cat.prototype.meow, c.meow);
+  });
+
+  it('should clone circular objects while keeping the circular reference', () => {
+    const obj = { cats: true };
+    obj.child = obj;
+    const c = clone(obj);
+
+    obj.cats = false;
+
+    assert.deepEqual(c, {
+      cats: true,
+      child: c
+    });
+    assert.strictEqual(c, c.child);
+  });
+
+  it('should not return the same object when cloned twice', () => {
+    const obj = { cats: true };
+    const c1 = clone(obj);
+    const c2 = clone(obj);
+
+    assert.notStrictEqual(c1, c2);
+  });
+
+  it('should not return the same object when nested', () => {
+    const obj = { dogs: true };
+    const obj1 = { cats: true, child: { prop: obj } };
+    const obj2 = { fish: [0, 1, 2], child: { prop: obj } };
+
+    const c1 = clone(obj1);
+    const c2 = clone(obj2);
+
+    assert.notStrictEqual(c1.child.prop, c2.child.prop);
+  });
+
+  it('should not clone HTML elements', () => {
+    const obj = {
+      cats: true,
+      node: document.createElement('div')
+    };
+    const c = clone(obj);
+
+    obj.cats = false;
+
+    assert.equal(c.cats, true);
+    assert.strictEqual(c.node, obj.node);
+  });
+
+  it('should not clone HTML elements from different windows', () => {
+    fixture.innerHTML = '<iframe id="target"></iframe>';
+    const iframe = fixture.querySelector('#target');
+
+    const obj = {
+      cats: true,
+      node: iframe.contentDocument
+    };
+    const c = clone(obj);
+
+    obj.cats = false;
+
+    assert.equal(c.cats, true);
+    assert.strictEqual(c.node, obj.node);
   });
 });

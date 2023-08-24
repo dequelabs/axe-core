@@ -1,0 +1,14 @@
+{
+  "id": "aria-prohibited-attr",
+  "impact": "serious",
+  "matches": "aria-allowed-attr-matches",
+  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "actIds": ["5c01ea"],
+  "metadata": {
+    "description": "Ensures ARIA attributes are not prohibited for an element's role",
+    "help": "Elements must only use permitted ARIA attributes"
+  },
+  "all": [],
+  "any": [],
+  "none": ["aria-prohibited-attr"]
+}

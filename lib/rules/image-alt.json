@@ -1,5 +1,6 @@
 {
   "id": "image-alt",
+  "impact": "critical",
   "selector": "img",
   "matches": "no-explicit-name-required-matches",
   "tags": [
@@ -8,6 +9,11 @@
     "wcag111",
     "section508",
     "section508.22.a",
+    "TTv5",
+    "TT7.a",
+    "TT7.b",
+    "EN-301-549",
+    "EN-9.1.1.1",
     "ACT"
   ],
   "actIds": ["23a2a8"],

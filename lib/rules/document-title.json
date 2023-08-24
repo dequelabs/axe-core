@@ -1,8 +1,18 @@
 {
   "id": "document-title",
+  "impact": "serious",
   "selector": "html",
   "matches": "is-initiator-matches",
-  "tags": ["cat.text-alternatives", "wcag2a", "wcag242", "ACT"],
+  "tags": [
+    "cat.text-alternatives",
+    "wcag2a",
+    "wcag242",
+    "TTv5",
+    "TT12.a",
+    "EN-301-549",
+    "EN-9.2.4.2",
+    "ACT"
+  ],
   "actIds": ["2779a5"],
   "metadata": {
     "description": "Ensures each HTML document contains a non-empty <title> element",

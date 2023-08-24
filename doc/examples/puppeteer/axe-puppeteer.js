@@ -9,11 +9,11 @@ const isValidURL = input => {
   return u.protocol && u.host;
 };
 
-// node axe-puppeteer.js <url>
-const url = process.argv[2];
-assert(isValidURL(url), 'Invalid URL');
+(async () => {
+  // node axe-puppeteer.js <url>
+  const url = process.argv[2];
+  assert(isValidURL(url), 'Invalid URL');
 
-const main = async url => {
   let browser;
   let results;
   try {
@@ -34,6 +34,8 @@ const main = async url => {
 
     // Get the results from `axe.run()`.
     results = await handle.jsonValue();
+    console.log(results);
+
     // Destroy the handle & return axe results.
     await handle.dispose();
   } catch (err) {
@@ -42,19 +44,9 @@ const main = async url => {
       await browser.close();
     }
 
-    // Re-throw
-    throw err;
+    console.error('Error running axe-core:', err.message);
+    process.exit(1);
   }
 
   await browser.close();
-  return results;
-};
-
-main(url)
-  .then(results => {
-    console.log(results);
-  })
-  .catch(err => {
-    console.error('Error running axe-core:', err.message);
-    process.exit(1);
-  });
+})();

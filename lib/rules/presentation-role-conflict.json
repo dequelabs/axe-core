@@ -1,5 +1,6 @@
 {
   "id": "presentation-role-conflict",
+  "impact": "minor",
   "selector": "img[alt=''], [role=\"none\"], [role=\"presentation\"]",
   "matches": "has-implicit-chromium-role-matches",
   "tags": ["cat.aria", "best-practice", "ACT"],

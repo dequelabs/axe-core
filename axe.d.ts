@@ -164,9 +164,9 @@ declare namespace axe {
   interface NodeResult {
     html: string;
     impact?: ImpactValue;
-    target: string[];
+    target: UnlabelledFrameSelector;
     xpath?: string[];
-    ancestry?: string[];
+    ancestry?: UnlabelledFrameSelector;
     any: CheckResult[];
     all: CheckResult[];
     none: CheckResult[];
@@ -181,8 +181,11 @@ declare namespace axe {
     relatedNodes?: RelatedNode[];
   }
   interface RelatedNode {
-    target: string[];
     html: string;
+    target: UnlabelledFrameSelector;
+    xpath?: string[];
+    ancestry?: UnlabelledFrameSelector;
+    element?: HTMLElement;
   }
   interface RuleLocale {
     [key: string]: {
@@ -193,7 +196,7 @@ declare namespace axe {
   interface CheckMessages {
     pass: string | { [key: string]: string };
     fail: string | { [key: string]: string };
-    incomplete: string | { [key: string]: string };
+    incomplete?: string | { [key: string]: string };
   }
   interface CheckLocale {
     [key: string]: CheckMessages;
@@ -257,10 +260,31 @@ declare namespace axe {
     brand?: string;
     application?: string;
   }
+  interface CheckHelper {
+    async: () => (result: boolean | undefined | Error) => void;
+    data: (data: unknown) => void;
+    relatedNodes: (nodes: Element[]) => void;
+  }
+  interface AfterResult {
+    id: string;
+    data?: unknown;
+    relatedNodes: SerialDqElement[];
+    result: boolean | undefined;
+    node: SerialDqElement;
+  }
   interface Check {
     id: string;
-    evaluate?: Function | string;
-    after?: Function | string;
+    evaluate?:
+      | string
+      | ((
+          this: CheckHelper,
+          node: Element,
+          options: unknown,
+          virtualNode: VirtualNode
+        ) => boolean | undefined | void);
+    after?:
+      | string
+      | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
     matches?: string;
     enabled?: boolean;
@@ -280,9 +304,10 @@ declare namespace axe {
     all?: string[];
     none?: string[];
     tags?: string[];
-    matches?: string;
+    matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
-    metadata?: Omit<RuleMetadata, 'ruleId'>;
+    actIds?: string[];
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
   }
   interface AxePlugin {
     id: string;
@@ -346,7 +371,8 @@ declare namespace axe {
   type AxeReporter<T = unknown> = (
     rawResults: RawResult[],
     option: RunOptions,
-    callback: (report: T) => void
+    resolve: (report: T) => void,
+    reject: (error: Error) => void
   ) => void;
 
   interface VirtualNode {
@@ -367,6 +393,42 @@ declare namespace axe {
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
     getStandards(): Required<Standards>;
+    DqElement: new (
+      elm: Element,
+      options?: { absolutePaths?: boolean }
+    ) => SerialDqElement;
+    uuid: (
+      options?: { random?: Uint8Array | Array<number> },
+      buf?: Uint8Array | Array<number>,
+      offset?: number
+    ) => string | Uint8Array | Array<number>;
+  }
+
+  interface Aria {
+    getRoleType: (role: string | Element | VirtualNode | null) => string | null;
+  }
+
+  interface Dom {
+    isFocusable: (node: Element | VirtualNode) => boolean;
+    isNativelyFocusable: (node: Element | VirtualNode) => boolean;
+  }
+
+  type AccessibleTextOptions = {
+    inControlContext?: boolean;
+    inLabelledByContext?: boolean;
+  };
+
+  interface Text {
+    accessibleText: (
+      element: Element,
+      options?: AccessibleTextOptions
+    ) => string;
+  }
+
+  interface Commons {
+    aria: Aria;
+    dom: Dom;
+    text: Text;
   }
 
   interface EnvironmentData {
@@ -380,6 +442,7 @@ declare namespace axe {
   let version: string;
   let plugins: any;
   let utils: Utils;
+  let commons: Commons;
 
   /**
    * Source string to use as an injected script in Selenium

@@ -1,13 +1,14 @@
 {
   "id": "aria-allowed-attr",
+  "impact": "critical",
   "matches": "aria-allowed-attr-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
   "actIds": ["5c01ea"],
   "metadata": {
-    "description": "Ensures ARIA attributes are allowed for an element's role",
-    "help": "Elements must only use allowed ARIA attributes"
+    "description": "Ensures an element's role supports its ARIA attributes",
+    "help": "Elements must only use supported ARIA attributes"
   },
-  "all": [],
-  "any": ["aria-allowed-attr"],
-  "none": ["aria-unsupported-attr", "aria-prohibited-attr"]
+  "all": ["aria-allowed-attr"],
+  "any": [],
+  "none": ["aria-unsupported-attr"]
 }

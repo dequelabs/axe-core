@@ -1,0 +1,14 @@
+{
+  "id": "aria-braille-equivalent",
+  "reviewOnFail": true,
+  "impact": "serious",
+  "selector": "[aria-brailleroledescription], [aria-braillelabel]",
+  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "metadata": {
+    "description": "Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent",
+    "help": "aria-braille attributes must have a non-braille equivalent"
+  },
+  "all": ["braille-roledescription-equivalent", "braille-label-equivalent"],
+  "any": [],
+  "none": []
+}

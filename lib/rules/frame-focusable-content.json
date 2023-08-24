@@ -1,8 +1,17 @@
 {
   "id": "frame-focusable-content",
+  "impact": "serious",
   "selector": "html",
   "matches": "frame-focusable-content-matches",
-  "tags": ["cat.keyboard", "wcag2a", "wcag211"],
+  "tags": [
+    "cat.keyboard",
+    "wcag2a",
+    "wcag211",
+    "TTv5",
+    "TT4.a",
+    "EN-301-549",
+    "EN-9.2.1.1"
+  ],
   "actIds": ["akn7bn"],
   "metadata": {
     "description": "Ensures <frame> and <iframe> elements with focusable content do not have tabindex=-1",
