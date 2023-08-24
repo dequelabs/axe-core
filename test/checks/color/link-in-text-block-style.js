@@ -71,24 +71,71 @@ describe('link-in-text-block-style', () => {
     styleElm.innerHTML += selector + ' {\n' + cssLines + '\n}\n';
   }
 
-  function getLinkElm(linkStyle) {
+  function getLinkElm(linkStyle, spanStyle = {}) {
     // Get a random id and build the style strings
     const linkId = 'linkid-' + Math.floor(Math.random() * 100000);
     const parId = 'parid-' + Math.floor(Math.random() * 100000);
+    const spanId = 'spanid-' + Math.floor(Math.random() * 100000);
 
     createStyleString('#' + linkId, linkStyle);
     createStyleString('#' + parId, {});
+    createStyleString('#' + spanId, spanStyle);
 
-    fixture.innerHTML +=
-      '<p id="' +
-      parId +
-      '"> Text ' +
-      '<a href="/" id="' +
-      linkId +
-      '">link</a>' +
-      '</p>';
+    fixture.innerHTML += `
+      <p id="${parId}">
+        <span id="${spanId}">
+          <a href="/" id="${linkId}">link</a>
+        </span>
+      </p>
+    `;
+
     axe.testUtils.flatTreeSetup(fixture);
-    return document.getElementById(linkId);
+    return {
+      parentElm: document.getElementById(parId),
+      linkElm: document.getElementById(linkId)
+    };
+  }
+
+  function createPseudoTests(elmName, desc) {
+    it(`returns undefined if ${desc} has a :before pseudo element`, () => {
+      const link = queryFixture(`
+        <style>
+          ${elmName}:before { content: '🔗'; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <span><a href="#" id="target">link</a></span> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
+      assert.equal(checkContext._relatedNodes[0], link.parentNode.parentNode);
+    });
+
+    it(`returns undefined if ${desc} has a :after pseudo element`, () => {
+      const link = queryFixture(`
+        <style>
+          ${elmName}:after { content: ""; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <span><a href="#" id="target">link</a></span> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
+      assert.equal(checkContext._relatedNodes[0], link.parentNode.parentNode);
+    });
+
+    it(`does not return undefined if ${desc} pseudo content is none`, () => {
+      const link = queryFixture(`
+        <style>
+          ${elmName}:after { content: none; position: absolute; }
+          a { text-decoration: none; }
+        </style>
+        <p>A <span><a href="#" id="target">link</a></span> inside a block of text</p>
+      `).actualNode;
+      const result = linkInBlockStyleCheck.call(checkContext, link);
+      assert.isFalse(result);
+    });
   }
 
   describe('link default state', () => {
@@ -148,60 +195,41 @@ describe('link-in-text-block-style', () => {
   });
 
   describe('links distinguished through style', () => {
+    const testSuites = {
+      underline: { textDecoration: 'underline' },
+      border: { 'border-bottom': '1px solid' },
+      outline: { outline: '1px solid' },
+      'font-weight': { 'font-weight': 'bold' },
+      'font-size': { 'font-size': '2rem' },
+      'background-image': { 'background-image': 'url()' }
+    };
+
     it('returns false if link style matches parent', () => {
-      const linkElm = getLinkElm({});
+      const { linkElm, parentElm } = getLinkElm({});
       assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
-      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+      assert.equal(checkContext._relatedNodes[0], parentElm);
       assert.isNull(checkContext._data);
     });
 
-    it('returns true if link has underline', () => {
-      const linkElm = getLinkElm({
-        textDecoration: 'underline'
+    Object.entries(testSuites).forEach(([property, styles]) => {
+      it(`returns true if link has ${property}`, () => {
+        const { linkElm, parentElm } = getLinkElm(styles);
+        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
+        assert.equal(checkContext._relatedNodes[0], parentElm);
+        assert.isNull(checkContext._data);
       });
-      assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
-      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
-      assert.isNull(checkContext._data);
     });
 
-    it('returns undefined when the link has a :before pseudo element', () => {
-      const link = queryFixture(`
-        <style>
-          a:before { content: '🔗'; }
-          a { text-decoration: none; }
-        </style>
-        <p>A <a href="#" id="target">link</a> inside a block of text</p>
-      `).actualNode;
-      const result = linkInBlockStyleCheck.call(checkContext, link);
-      assert.isUndefined(result);
-      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
-      assert.equal(checkContext._relatedNodes[0], link.parentNode);
+    Object.entries(testSuites).forEach(([property, styles]) => {
+      it(`returns true if ancestor inline element has ${property}`, () => {
+        const { linkElm, parentElm } = getLinkElm({}, styles);
+        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
+        assert.equal(checkContext._relatedNodes[0], parentElm);
+        assert.isNull(checkContext._data);
+      });
     });
 
-    it('returns undefined when the link has a :after pseudo element', () => {
-      const link = queryFixture(`
-        <style>
-          a:after { content: ""; }
-          a { text-decoration: none; }
-        </style>
-        <p>A <a href="#" id="target">link</a> inside a block of text</p>
-      `).actualNode;
-      const result = linkInBlockStyleCheck.call(checkContext, link);
-      assert.isUndefined(result);
-      assert.deepEqual(checkContext._data, { messageKey: 'pseudoContent' });
-      assert.equal(checkContext._relatedNodes[0], link.parentNode);
-    });
-
-    it('does not return undefined when the pseudo element content is none', () => {
-      const link = queryFixture(`
-        <style>
-          a:after { content: none; position: absolute; }
-          a { text-decoration: none; }
-        </style>
-        <p>A <a href="#" id="target">link</a> inside a block of text</p>
-      `).actualNode;
-      const result = linkInBlockStyleCheck.call(checkContext, link);
-      assert.isFalse(result);
-    });
+    createPseudoTests('a', 'link');
+    createPseudoTests('span', 'ancestor inline element');
   });
 });
