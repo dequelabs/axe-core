@@ -10,6 +10,8 @@
     ["#pass-default-styling-aria-hidden"],
     ["#pass-different-weight"],
     ["#pass-different-size"],
+    ["#pass-ancestor-different-weight"],
+    ["#pass-ancestor-border"],
     ["#pass-background-color"],
     ["#pass-text-color"],
     ["#pass-same-colors"]
