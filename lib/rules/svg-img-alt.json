@@ -1,5 +1,6 @@
 {
   "id": "svg-img-alt",
+  "impact": "serious",
   "selector": "[role=\"img\"], [role=\"graphics-symbol\"], svg[role=\"graphics-document\"]",
   "matches": "svg-namespace-matches",
   "tags": [
@@ -8,6 +9,10 @@
     "wcag111",
     "section508",
     "section508.22.a",
+    "TTv5",
+    "TT7.a",
+    "EN-301-549",
+    "EN-9.1.1.1",
     "ACT"
   ],
   "actIds": ["7d6734"],

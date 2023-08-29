@@ -26,7 +26,10 @@ module.exports = function (grunt) {
             bundle: true
           })
             .then(done)
-            .catch(done);
+            .catch(e => {
+              grunt.fail.fatal(e);
+              done();
+            });
         });
       });
     }

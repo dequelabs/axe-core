@@ -404,6 +404,20 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should not match inert', function () {
+    fixture.innerHTML = '<div inert>hi</div>';
+    var target = fixture.querySelector('div');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should not match a descendant of inert', function () {
+    fixture.innerHTML = '<div inert><span>hi</span></div>';
+    var target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   if (shadowSupport) {
     it('should match a descendant of an element across a shadow boundary', function () {
       fixture.innerHTML =
@@ -537,4 +551,32 @@ describe('color-contrast-matches', function () {
       assert.isTrue(rule.matches(input, axe.utils.getNodeFromTree(input)));
     });
   }
+
+  describe('with font icons', () => {
+    before(async () => {
+      const materialFont = new FontFace(
+        'Material Icons',
+        'url(/test/assets/MaterialIcons.woff2)'
+      );
+      await materialFont.load();
+      document.fonts.add(materialFont);
+    });
+
+    it('is false for a single icon', () => {
+      fixture.innerHTML =
+        '<div id="target" style="font-family: \'Material Icons\'">delete</div>';
+      const target = fixture.querySelector('#target');
+      axe.testUtils.flatTreeSetup(fixture);
+      assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+    });
+
+    it('is false for multiple icons', () => {
+      fixture.innerHTML = `<div id="target" style="font-family: \'Material Icons\'">
+          check star favorite
+        </div>`;
+      const target = fixture.querySelector('#target');
+      axe.testUtils.flatTreeSetup(fixture);
+      assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+    });
+  });
 });

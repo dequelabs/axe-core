@@ -24,7 +24,13 @@
 <div role="listbox" id="incomplete9">
   <div></div>
 </div>
-<div role="menu" id="incomplete10"></div>
+<div role="menu" id="incomplete10">
+  <!-- -->
+  <span role="menuitem" hidden></span>
+  <span role="none">
+    <span role="menuitem" aria-hidden="true">hidden</span>
+  </span>
+</div>
 <div role="menubar" id="incomplete11"></div>
 <div role="list" id="fail4">
   <div role="tabpanel" id="ignore6">
@@ -49,8 +55,9 @@
 <div role="menu" id="pass7">
   <ul role="group" id="ignore11">
     <li role="menuitem" id="ignore12">>Inbox</li>
-    <li role="menuitem" id="ignore13">>Archive</li>
-    <li role="menuitem" id="ignore14">>Trash</li>
+    <li role="separator" id="ignored13"></li>
+    <li role="menuitem" id="ignore14">>Archive</li>
+    <li role="menuitem" id="ignore15">>Trash</li>
   </ul>
 </div>
 
@@ -127,3 +134,24 @@
     </ul>
   </li>
 </ul>
+
+<nav role="menubar" id="pass17">
+  <a role="menuitem" href="">Item 1</a>
+  <a role="menuitem" href="">Item 2</a>
+  <span role="separator"></span>
+  <a role="menuitem" href="">Item 3</a>
+</nav>
+
+<div role="menu" id="pass18">
+  <div role="menuitem">menu item</div>
+  <div aria-hidden="true">shouldn't be flagged but is</div>
+</div>
+
+<div role="list" id="pass19">
+  <div role="presentation">
+    <div style="display: none">ignore</div>
+    <div style="visibility: hidden" aria-hidden="true">ignore</div>
+    <li>item 1</li>
+    <li>item 2</li>
+  </div>
+</div>

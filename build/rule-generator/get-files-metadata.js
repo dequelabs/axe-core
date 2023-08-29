@@ -1,4 +1,5 @@
 const directories = require('./directories');
+const outdent = require('outdent');
 
 /**
  * Helper to convert a given string to camel case (split by hyphens if any)
@@ -23,8 +24,9 @@ const getRuleSpecFileMeta = (ruleName, ruleHasMatches, ruleChecks) => {
     name: `${ruleName}.json`,
     content: JSON.stringify(
       {
-        id: `${ruleName}`,
-        selector: '',
+        id: ruleName,
+        impact: '',
+        selector: '*',
         ...(ruleHasMatches && {
           matches: `${ruleName}-matches`
         }),
@@ -70,15 +72,13 @@ const getRuleMatchesFileMeta = (
     const fnName = `${camelCase(ruleName)}Matches`;
     const ruleMatchesJs = {
       name: `${ruleName}-matches.js`,
-      content: `
-			// TODO: Filter node(s)	
-			
-			function ${fnName}(node, virtualNode) {
-				return node
-			}
+      content: outdent`
+        // TODO: Filter node(s)	
 
-			export default ${fnName}
-			`,
+        export default function ${fnName}(node, virtualNode) {
+          return true;
+        }
+      `,
       dir: directories.rules
     };
     files.push(ruleMatchesJs);
@@ -87,12 +87,18 @@ const getRuleMatchesFileMeta = (
   if (ruleHasUnitTestAssets) {
     const ruleMatchesTestJs = {
       name: `${ruleName}-matches.js`,
-      content: `
-			describe('${ruleName}-matches', function() {
-				'use strict';
-				// TODO: Write tests
-			})
-			`,
+      content: outdent`
+        describe('${ruleName}-matches', () => {
+          const rule = axe.utils.getRule('${ruleName}');
+          const { queryFixture } = axe.testUtils;
+        
+          // TODO: Replace with real tests
+          it('returns false for paragraphs', () => {
+            const vNode = queryFixture('<p id="target">Hello world</p>');
+            assert.isFalse(rule.matches(vNode.actualNode, vNode));
+          });
+        });
+      `,
       dir: directories.testRuleMatches
     };
     files.push(ruleMatchesTestJs);
@@ -116,7 +122,6 @@ const getCheckSpecFileMeta = (name, dir) => {
         id: `${name}`,
         evaluate: `${name}-evaluate`,
         metadata: {
-          impact: '',
           messages: {
             pass: '',
             fail: '',
@@ -142,13 +147,12 @@ const getCheckJsFileMeta = (name, dir) => {
   const fnName = `${camelCase(name)}Evaluate`;
   return {
     name: `${name}-evaluate.js`,
-    content: `
-		// TODO: Logic for check
-		function ${fnName}(node, options, virtualNode) {
-			return true
-		}
-		export default ${fnName};
-		`,
+    content: outdent`
+      // TODO: Logic for check
+      export default function ${fnName}(node, options, virtualNode) {
+        return true
+      }
+    `,
     dir
   };
 };
@@ -163,12 +167,24 @@ const getCheckJsFileMeta = (name, dir) => {
 const getCheckTestJsFileMeta = (name, dir) => {
   return {
     name: `${name}.js`,
-    content: `
-		describe('${name} tests', function() {
-			'use strict';
-			// TODO: Write tests
-		})
-		`,
+    content: outdent`
+      describe('${name} tests', () => {
+        const { checkSetup, getCheckEvaluate } = axe.testUtils;
+        const checkContext = axe.testUtils.MockCheckContext();
+        const checkEvaluate = getCheckEvaluate('${name}');
+
+        afterEach(() => {
+          checkContext.reset();
+        });
+
+        // TODO: Replace this with real tests for this check
+        it('returns false when img has no alt', () => {
+          const params = checkSetup('<img id="target" />');
+          assert.isFalse(checkEvaluate.apply(checkContext, params));
+          assert.deepEqual(checkContext._data, { messageKey: 'missing-alt' });
+        });
+      });
+    `,
     dir
   };
 };

@@ -2,15 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const handler = require('serve-handler');
-const chromedriver = require('chromedriver');
 const AxeBuilder = require('@axe-core/webdriverjs');
-const {
-  getWebdriver,
-  connectToChromeDriver
-} = require('../aria-practices/run-server');
+const { getWebdriver } = require('../get-webdriver');
 const { assert } = require('chai');
 
-const driverPort = 9515;
 const serverPort = 9898;
 const axePath = require.resolve('../../axe.js');
 const axeSource = fs.readFileSync(axePath, 'utf8');
@@ -34,9 +29,6 @@ module.exports = ({ id, title, axeRules, skipTests = [] }) => {
     this.retries(3);
 
     before(async () => {
-      chromedriver.start([`--port=${driverPort}`]);
-      await new Promise(r => setTimeout(r, 500));
-      await connectToChromeDriver(driverPort);
       driver = getWebdriver();
     });
 
@@ -59,7 +51,6 @@ module.exports = ({ id, title, axeRules, skipTests = [] }) => {
 
     after(async () => {
       await driver.close();
-      chromedriver.stop();
       await new Promise(r => server.close(r));
     });
 

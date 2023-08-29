@@ -164,9 +164,9 @@ declare namespace axe {
   interface NodeResult {
     html: string;
     impact?: ImpactValue;
-    target: string[];
+    target: UnlabelledFrameSelector;
     xpath?: string[];
-    ancestry?: string[];
+    ancestry?: UnlabelledFrameSelector;
     any: CheckResult[];
     all: CheckResult[];
     none: CheckResult[];
@@ -181,8 +181,11 @@ declare namespace axe {
     relatedNodes?: RelatedNode[];
   }
   interface RelatedNode {
-    target: string[];
     html: string;
+    target: UnlabelledFrameSelector;
+    xpath?: string[];
+    ancestry?: UnlabelledFrameSelector;
+    element?: HTMLElement;
   }
   interface RuleLocale {
     [key: string]: {
@@ -190,12 +193,13 @@ declare namespace axe {
       help: string;
     };
   }
+  interface CheckMessages {
+    pass: string | { [key: string]: string };
+    fail: string | { [key: string]: string };
+    incomplete?: string | { [key: string]: string };
+  }
   interface CheckLocale {
-    [key: string]: {
-      pass: string | { [key: string]: string };
-      fail: string | { [key: string]: string };
-      incomplete: string | { [key: string]: string };
-    };
+    [key: string]: CheckMessages;
   }
   interface Locale {
     lang?: string;
@@ -237,7 +241,7 @@ declare namespace axe {
   }
   interface Spec {
     branding?: string | Branding;
-    reporter?: ReporterVersion;
+    reporter?: ReporterVersion | string | AxeReporter;
     checks?: Check[];
     rules?: Rule[];
     standards?: Standards;
@@ -256,13 +260,38 @@ declare namespace axe {
     brand?: string;
     application?: string;
   }
+  interface CheckHelper {
+    async: () => (result: boolean | undefined | Error) => void;
+    data: (data: unknown) => void;
+    relatedNodes: (nodes: Element[]) => void;
+  }
+  interface AfterResult {
+    id: string;
+    data?: unknown;
+    relatedNodes: SerialDqElement[];
+    result: boolean | undefined;
+    node: SerialDqElement;
+  }
   interface Check {
     id: string;
-    evaluate?: Function | string;
-    after?: Function | string;
+    evaluate?:
+      | string
+      | ((
+          this: CheckHelper,
+          node: Element,
+          options: unknown,
+          virtualNode: VirtualNode
+        ) => boolean | undefined | void);
+    after?:
+      | string
+      | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
     matches?: string;
     enabled?: boolean;
+    metadata?: {
+      impact?: ImpactValue;
+      messages?: CheckMessages;
+    };
   }
   interface Rule {
     id: string;
@@ -275,8 +304,10 @@ declare namespace axe {
     all?: string[];
     none?: string[];
     tags?: string[];
-    matches?: string;
+    matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
+    actIds?: string[];
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
   }
   interface AxePlugin {
     id: string;
@@ -319,6 +350,41 @@ declare namespace axe {
     frameSelector: CrossTreeSelector;
     frameContext: FrameContextObject;
   }
+
+  interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
+    any: CheckResult[];
+    all: CheckResult[];
+    none: CheckResult[];
+    impact: ImpactValue | null;
+    result: T;
+  }
+
+  interface RawResult extends Omit<Result, 'nodes'> {
+    inapplicable: [];
+    passes: RawNodeResult<'passed'>[];
+    incomplete: RawNodeResult<'incomplete'>[];
+    violations: RawNodeResult<'failed'>[];
+    pageLevel: boolean;
+    result: 'failed' | 'passed' | 'incomplete' | 'inapplicable';
+  }
+
+  type AxeReporter<T = unknown> = (
+    rawResults: RawResult[],
+    option: RunOptions,
+    resolve: (report: T) => void,
+    reject: (error: Error) => void
+  ) => void;
+
+  interface VirtualNode {
+    actualNode?: Node;
+    shadowId?: string;
+    children?: VirtualNode[];
+    parent?: VirtualNode;
+    attr(attr: string): string | null;
+    hasAttr(attr: string): boolean;
+    props: { [key: string]: unknown };
+  }
+
   interface Utils {
     getFrameContexts: (
       context?: ElementContext,
@@ -326,7 +392,45 @@ declare namespace axe {
     ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
+    getStandards(): Required<Standards>;
+    DqElement: new (
+      elm: Element,
+      options?: { absolutePaths?: boolean }
+    ) => SerialDqElement;
+    uuid: (
+      options?: { random?: Uint8Array | Array<number> },
+      buf?: Uint8Array | Array<number>,
+      offset?: number
+    ) => string | Uint8Array | Array<number>;
   }
+
+  interface Aria {
+    getRoleType: (role: string | Element | VirtualNode | null) => string | null;
+  }
+
+  interface Dom {
+    isFocusable: (node: Element | VirtualNode) => boolean;
+    isNativelyFocusable: (node: Element | VirtualNode) => boolean;
+  }
+
+  type AccessibleTextOptions = {
+    inControlContext?: boolean;
+    inLabelledByContext?: boolean;
+  };
+
+  interface Text {
+    accessibleText: (
+      element: Element,
+      options?: AccessibleTextOptions
+    ) => string;
+  }
+
+  interface Commons {
+    aria: Aria;
+    dom: Dom;
+    text: Text;
+  }
+
   interface EnvironmentData {
     testEngine: TestEngine;
     testRunner: TestRunner;
@@ -338,6 +442,7 @@ declare namespace axe {
   let version: string;
   let plugins: any;
   let utils: Utils;
+  let commons: Commons;
 
   /**
    * Source string to use as an injected script in Selenium
@@ -435,6 +540,35 @@ declare namespace axe {
    * Set up alternative frame communication
    */
   function frameMessenger(frameMessenger: FrameMessenger): void;
+
+  /**
+   * Setup axe-core so axe.common functions can work properly.
+   */
+  function setup(node?: Element | Document): VirtualNode;
+
+  /**
+   * Clean up axe-core tree and caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+   */
+  function teardown(): void;
+
+  /**
+   * Check if a reporter is registered
+   */
+  function hasReporter(reporterName: string): boolean;
+
+  /**
+   * Get a reporter based the name it is registered with
+   */
+  function getReporter<T>(reporterName: string): AxeReporter<T>;
+
+  /**
+   * Register a new reporter, optionally setting it as the default
+   */
+  function addReporter<T>(
+    reporterName: string,
+    reporter: AxeReporter<T>,
+    isDefault?: boolean
+  ): void;
 
   // axe.frameMessenger
   type FrameMessenger = {

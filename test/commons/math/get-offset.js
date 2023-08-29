@@ -1,104 +1,75 @@
-describe('getOffset', function () {
-  'use strict';
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var getOffset = axe.commons.math.getOffset;
-  var round = 0.2;
+describe('getOffset', () => {
+  const fixtureSetup = axe.testUtils.fixtureSetup;
+  const getOffset = axe.commons.math.getOffset;
+  const round = 0.2;
 
-  // Return the diagonal of a square of size X, or rectangle of size X * Y
-  function getDiagonal(x, y) {
-    y = typeof y === 'number' ? y : x;
-    return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-  }
-
-  it('returns with + spacing for horizontally adjacent elms', function () {
-    var fixture = fixtureSetup(
-      '<a style="width:30px; margin-right:10px; display:inline-block">&nbsp;</a>' +
-        '<b style="width:20px; display:inline-block">&nbsp;</b>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), 40, round);
-    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
+  it('returns center to edge of circle when both are undersized', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 50px; left: 0">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.closeTo(getOffset(nodeA, nodeB), 38, round);
   });
 
-  it('returns closest horizontal distance for elements horizontally aligned', function () {
-    var fixture = fixtureSetup(
-      '<a style="width:30px; height:30px; margin-right:10px; display:inline-block">&nbsp;</a>' +
-        '<b style="width:20px; height:20px; top:5px; position:relative; display:inline-block">&nbsp;</b>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 5), round);
-    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
+  it('returns center to edge of square when one is undersized', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 30px; height: 30px; margin: 0; padding: 0; position: absolute; top: 50px; left: 0">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.closeTo(getOffset(nodeA, nodeB), 45, round);
   });
 
-  it('returns height + spacing for vertically adjacent elms', function () {
-    var fixture = fixtureSetup(
-      '<a style="height:30px; margin:10px 0; display:block">&nbsp;</a>' +
-        '<b style="height:20px; display:block">&nbsp;</b>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), 40, round);
-    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
+  it('returns center to corner of square when at a diagonal', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 30px; height: 30px; margin: 0; padding: 0; position: absolute; top: 50px; left: 50px">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.closeTo(getOffset(nodeA, nodeB), 63.6, round);
   });
 
-  it('returns closest vertical distance for elements horizontally aligned', function () {
-    var fixture = fixtureSetup(
-      '<a style="height:30px; margin:10px 0; display:block">&nbsp;</a>' +
-        '<b style="height:20px; margin: 0 10px; display:block">&nbsp;</b>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = fixture.children[1];
-
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 10), round);
-    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
+  it('returns 0 if nodeA is overlapped by nodeB', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 30px; height: 30px; margin: 0; padding: 0; position: absolute; top: -10px; left: -10px">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.equal(getOffset(nodeA, nodeB), 0);
   });
 
-  it('returns corner to corner distance for diagonal elms', function () {
-    var fixture = fixtureSetup(
-      '<a style="width: 30px; height:30px; margin:10px 30px; display:block">&nbsp;</a>' +
-        '<b style="width: 20px; height:20px; display:block">&nbsp;</b>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40), round);
-    assert.closeTo(getOffset(nodeB, nodeA), getDiagonal(30), round);
+  it('returns 0 if nodeB is overlapped by nodeA', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 30px; height: 30px; margin: 0; padding: 0; position: absolute; top: -10px; left: -10px">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[3];
+    const nodeB = fixture.children[1];
+    assert.equal(getOffset(nodeA, nodeB), 0);
   });
 
-  it('returns the distance to the edge when elements overlap on an edge', function () {
-    var fixture = fixtureSetup(
-      '<a style="padding-right:30px; display:inline-block">' +
-        '<b style="width:30px; height: 20px; display:inline-block">&nbsp;</b>' +
-        '</a>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = nodeA.children[0];
-    assert.closeTo(getOffset(nodeA, nodeB), 30, round);
-    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
+  it('subtracts minNeighbourRadius from center-to-center calculations', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 50px; left: 0">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.closeTo(getOffset(nodeA, nodeB, 30), 20, round);
   });
 
-  it('returns the shortest side of the element when an element overlaps on a corner', function () {
-    var fixture = fixtureSetup(
-      '<a style="padding:30px 30px 0 0; display:inline-block">' +
-        '<b style="width:30px; height: 20px; display:inline-block">&nbsp;</b>' +
-        '</a>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = nodeA.children[0];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(30), round);
-    assert.closeTo(getOffset(nodeB, nodeA), 20, round);
-  });
-
-  it('returns smallest diagonal if elmA fully covers elmB', function () {
-    var fixture = fixtureSetup(
-      '<a style="padding:10px; display:inline-block">' +
-        '<b style="width:20px; height: 30px; display:inline-block">&nbsp;</b>' +
-        '</a>'
-    );
-    var nodeA = fixture.children[0];
-    var nodeB = nodeA.children[0];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(10), round);
-    assert.closeTo(getOffset(nodeB, nodeA), 10, round);
+  it('returns 0 if center of nodeA is enclosed by nodeB', () => {
+    const fixture = fixtureSetup(`
+      <button style="width: 50px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 0">&nbsp;</button>
+      <button style="width: 10px; height: 10px; margin: 0; padding: 0; position: absolute; top: 0; left: 20px;">&nbsp;</button>
+    `);
+    const nodeA = fixture.children[1];
+    const nodeB = fixture.children[3];
+    assert.equal(getOffset(nodeA, nodeB, 30), 0);
   });
 });

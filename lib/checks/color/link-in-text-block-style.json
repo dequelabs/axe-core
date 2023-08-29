@@ -5,6 +5,10 @@
     "impact": "serious",
     "messages": {
       "pass": "Links can be distinguished from surrounding text by visual styling",
+      "incomplete": {
+        "default": "Check if the link needs styling to distinguish it from nearby text",
+        "pseudoContent": "Check if the link's pseudo style is sufficient to distinguish it from the surrounding text"
+      },
       "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
     }
   }

@@ -1,5 +1,6 @@
 {
   "id": "heading-order",
+  "impact": "moderate",
   "selector": "h1, h2, h3, h4, h5, h6, [role=heading]",
   "matches": "heading-matches",
   "tags": ["cat.semantics", "best-practice"],

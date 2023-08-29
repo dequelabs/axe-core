@@ -36,6 +36,7 @@
   - [region](#region)
   - [inline-style-property](#inline-style-property)
   - [invalid-children](#invalid-children)
+  - [link-in-text-block](#link-in-text-block)
 
 ## How Checks Work
 
@@ -206,6 +207,10 @@ All checks allow these global options:
 
 ### aria-allowed-attr
 
+Previously supported properties `validTreeRowAttrs` is no longer available. `invalidTableRowAttrs` from [aria-conditional-attr](#aria-conditional-attr) instead.
+
+### aria-conditional-attr
+
 <table>
   <thead>
     <tr>
@@ -217,7 +222,7 @@ All checks allow these global options:
   <tbody>
     <tr>
       <td>
-        <code>validTreeRowAttrs</code>
+        <code>invalidTableRowAttrs</code>
       </td>
       <td align="left">
         <pre lang=js><code>[
@@ -538,3 +543,12 @@ This evaluation method is used in the `list` and `definition-list` rule to deter
 | `validNodeNames` | Nodes without role allowed as children                                              |
 | `validRoles`     | Roles allowed on child elements                                                     |
 | `divGroups`      | Whether the child nodes can be grouped in a div without any role (false by default) |
+
+### link-in-text-block
+
+This evaluation method is used in the `link-in-text-block` rule and tests that either the foreground color or the background color has sufficient contrast between the link text and the surrounding text.
+
+| Option                  | Default | Description                                                                 |
+| ----------------------- | :------ | :-------------------------------------------------------------------------- |
+| `requiredContrastRatio` | `3`     | Minimum contrast needed to pass the check between text or background colors |
+| `allowSameColor`        | `true`  | Whether links with colors identical to its surroundings should pass         |

@@ -1,8 +1,16 @@
 {
   "id": "p-as-heading",
+  "impact": "serious",
   "selector": "p",
   "matches": "p-as-heading-matches",
-  "tags": ["cat.semantics", "wcag2a", "wcag131", "experimental"],
+  "tags": [
+    "cat.semantics",
+    "wcag2a",
+    "wcag131",
+    "EN-301-549",
+    "EN-9.1.3.1",
+    "experimental"
+  ],
   "metadata": {
     "description": "Ensure bold, italic text and font-size is not used to style <p> elements as a heading",
     "help": "Styled <p> elements must not be used as headings"

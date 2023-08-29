@@ -1,5 +1,6 @@
 {
   "id": "accesskeys",
+  "impact": "serious",
   "selector": "[accesskey]",
   "excludeHidden": false,
   "tags": ["cat.keyboard", "best-practice"],

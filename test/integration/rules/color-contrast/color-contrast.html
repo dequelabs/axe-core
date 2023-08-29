@@ -424,3 +424,38 @@
 <p style="color: #ccc; -webkit-text-stroke: 0.02em #444" id="fail12">
   Text-stroke 0.02em
 </p>
+
+<div
+  id="backdrop"
+  style="
+    position: absolute;
+    z-index: 1;
+    height: 40px;
+    background: #333;
+    width: 100%;
+  "
+></div>
+<div style="display: flex">
+  <div style="background: white; z-index: 1">
+    <span id="pass22">This div will be on top of the stack</span>
+  </div>
+</div>
+
+<div id="ignore11" style="background: #000; color: #333" inert>hello</div>
+
+<div inert>
+  <div>
+    <div id="ignore12" style="background: #000; color: #333">hello</div>
+  </div>
+</div>
+
+<div
+  id="pass23"
+  style="
+    color: #000;
+    background: #737373;
+    text-shadow: color(display-p3 1 1 1 / 1) 0 0 3px;
+  "
+>
+  Hello world
+</div>

@@ -1,13 +1,19 @@
 {
   "id": "link-name",
+  "impact": "serious",
   "selector": "a[href]",
   "tags": [
     "cat.name-role-value",
     "wcag2a",
-    "wcag412",
     "wcag244",
+    "wcag412",
     "section508",
     "section508.22.a",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.2.4.4",
+    "EN-9.4.1.2",
     "ACT"
   ],
   "actIds": ["c487ae"],

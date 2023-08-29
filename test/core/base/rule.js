@@ -1,43 +1,42 @@
-describe('Rule', function () {
-  'use strict';
-
-  var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-  var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
-  var metadataFunctionMap =
+describe('Rule', () => {
+  const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+  const Check = axe._thisWillBeDeletedDoNotUse.base.Check;
+  const metadataFunctionMap =
     axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
-  var fixture = document.getElementById('fixture');
-  var noop = function () {};
-  var isNotCalled = function (err) {
+  const fixture = document.getElementById('fixture');
+  const { fixtureSetup } = axe.testUtils;
+  const noop = () => {};
+  const isNotCalled = function (err) {
     throw err || new Error('Reject should not be called');
   };
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(Rule);
   });
 
-  it('should accept two parameters', function () {
+  it('should accept two parameters', () => {
     assert.lengthOf(Rule, 2);
   });
 
-  describe('prototype', function () {
-    describe('gather', function () {
-      it('should gather nodes which match the selector', function () {
-        var node = document.createElement('div');
+  describe('prototype', () => {
+    describe('gather', () => {
+      it('should gather nodes which match the selector', () => {
+        const node = document.createElement('div');
         node.id = 'monkeys';
         fixture.appendChild(node);
 
-        var rule = new Rule({
-            selector: '#monkeys'
-          }),
-          nodes = rule.gather({
-            include: [axe.utils.getFlattenedTree(fixture)[0]],
-            exclude: [],
-            frames: []
-          });
+        const rule = new Rule({
+          selector: '#monkeys'
+        });
+        let nodes = rule.gather({
+          include: [axe.utils.getFlattenedTree(fixture)[0]],
+          exclude: [],
+          frames: []
+        });
 
         assert.lengthOf(nodes, 1);
         assert.equal(nodes[0].actualNode, node);
@@ -52,33 +51,33 @@ describe('Rule', function () {
         assert.lengthOf(nodes, 0);
       });
 
-      it('should return a real array', function () {
-        var rule = new Rule({
-            selector: 'div'
-          }),
-          result = rule.gather({
-            include: [axe.utils.getFlattenedTree(fixture)[0]],
-            exclude: [],
-            frames: []
-          });
+      it('should return a real array', () => {
+        const rule = new Rule({
+          selector: 'div'
+        });
+        const result = rule.gather({
+          include: [axe.utils.getFlattenedTree(fixture)[0]],
+          exclude: [],
+          frames: []
+        });
 
         assert.isArray(result);
       });
 
-      it('should take a context parameter', function () {
-        var node = document.createElement('div');
+      it('should take a context parameter', () => {
+        const node = document.createElement('div');
         fixture.appendChild(node);
 
-        var rule = new Rule({
-            selector: 'div'
-          }),
-          nodes = rule.gather({
-            include: [
-              axe.utils.getFlattenedTree(
-                document.getElementById('fixture').firstChild
-              )[0]
-            ]
-          });
+        const rule = new Rule({
+          selector: 'div'
+        });
+        const nodes = rule.gather({
+          include: [
+            axe.utils.getFlattenedTree(
+              document.getElementById('fixture').firstChild
+            )[0]
+          ]
+        });
 
         assert.deepEqual(
           nodes.map(function (n) {
@@ -88,9 +87,9 @@ describe('Rule', function () {
         );
       });
 
-      it('should default to all nodes if selector is not specified', function () {
-        var nodes = [fixture],
-          node = document.createElement('div');
+      it('should default to all nodes if selector is not specified', () => {
+        const nodes = [fixture];
+        let node = document.createElement('div');
 
         fixture.appendChild(node);
         nodes.push(node);
@@ -100,7 +99,7 @@ describe('Rule', function () {
         fixture.appendChild(node);
         nodes.push(node);
 
-        var rule = new Rule({}),
+        const rule = new Rule({}),
           result = rule.gather({
             include: [
               axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]
@@ -115,11 +114,10 @@ describe('Rule', function () {
           nodes
         );
       });
-      it('should exclude hidden elements', function () {
-        fixture.innerHTML =
-          '<div style="display: none"><span>HEHEHE</span></div>';
+      it('should exclude hidden elements', () => {
+        fixtureSetup('<div style="display: none"><span>HEHEHE</span></div>');
 
-        var rule = new Rule({}),
+        const rule = new Rule({}),
           result = rule.gather({
             include: [
               axe.utils.getFlattenedTree(
@@ -130,19 +128,19 @@ describe('Rule', function () {
 
         assert.lengthOf(result, 0);
       });
-      it('should include hidden elements if excludeHidden is false', function () {
-        fixture.innerHTML = '<div style="display: none"></div>';
+      it('should include hidden elements if excludeHidden is false', () => {
+        fixtureSetup('<div style="display: none"></div>');
 
-        var rule = new Rule({
-            excludeHidden: false
-          }),
-          result = rule.gather({
-            include: [
-              axe.utils.getFlattenedTree(
-                document.getElementById('fixture').firstChild
-              )[0]
-            ]
-          });
+        const rule = new Rule({
+          excludeHidden: false
+        });
+        const result = rule.gather({
+          include: [
+            axe.utils.getFlattenedTree(
+              document.getElementById('fixture').firstChild
+            )[0]
+          ]
+        });
 
         assert.deepEqual(
           result.map(function (n) {
@@ -153,29 +151,29 @@ describe('Rule', function () {
       });
     });
 
-    describe('run', function () {
-      it('should be a function', function () {
+    describe('run', () => {
+      it('should be a function', () => {
         assert.isFunction(Rule.prototype.run);
       });
 
-      it('should run #matches', function (done) {
-        var div = document.createElement('div');
+      it('should run #matches', done => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
-          rule = new Rule({
-            matches: function (node) {
-              assert.equal(node, div);
-              success = true;
-              return [];
-            }
-          });
+        let success = false;
+        const rule = new Rule({
+          matches: function (node) {
+            assert.equal(node, div);
+            success = true;
+            return [];
+          }
+        });
 
         rule.run(
           {
             include: [axe.utils.getFlattenedTree(div)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -183,10 +181,10 @@ describe('Rule', function () {
         );
       });
 
-      it('should pass a virtualNode to #matches', function (done) {
-        var div = document.createElement('div');
+      it('should pass a virtualNode to #matches', done => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
+        let success = false,
           rule = new Rule({
             matches: function (node, virtualNode) {
               assert.equal(virtualNode.actualNode, div);
@@ -200,7 +198,7 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(div)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -208,10 +206,10 @@ describe('Rule', function () {
         );
       });
 
-      it('should pass a context to #matches', function (done) {
-        var div = document.createElement('div');
+      it('should pass a context to #matches', done => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
+        let success = false,
           rule = new Rule({
             matches: function (node, virtualNode, context) {
               assert.isDefined(context);
@@ -227,7 +225,7 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(div)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -235,13 +233,13 @@ describe('Rule', function () {
         );
       });
 
-      it('should handle an error in #matches', function (done) {
-        var div = document.createElement('div');
+      it('should handle an error in #matches', done => {
+        const div = document.createElement('div');
         div.setAttribute('style', '#fff');
         fixture.appendChild(div);
-        var success = false,
+        let success = false,
           rule = new Rule({
-            matches: function () {
+            matches: () => {
               throw new Error('this is an error');
             }
           });
@@ -252,17 +250,17 @@ describe('Rule', function () {
           },
           {},
           isNotCalled,
-          function () {
+          () => {
             assert.isFalse(success);
             done();
           }
         );
       });
 
-      it('should execute Check#run on its child checks - any', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#run on its child checks - any', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             any: ['cats']
           },
@@ -283,7 +281,7 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(fixture)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -291,10 +289,10 @@ describe('Rule', function () {
         );
       });
 
-      it('should execute Check#run on its child checks - all', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#run on its child checks - all', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             all: ['cats']
           },
@@ -315,7 +313,7 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(fixture)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -323,10 +321,10 @@ describe('Rule', function () {
         );
       });
 
-      it('should execute Check#run on its child checks - none', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#run on its child checks - none', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             none: ['cats']
           },
@@ -348,7 +346,7 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(fixture)[0]]
           },
           {},
-          function () {
+          () => {
             assert.isTrue(success);
             done();
           },
@@ -356,9 +354,9 @@ describe('Rule', function () {
         );
       });
 
-      it('should pass the matching option to check.run', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var options = {
+      it('should pass the matching option to check.run', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        const options = {
           checks: {
             cats: {
               enabled: 'bananas',
@@ -366,7 +364,7 @@ describe('Rule', function () {
             }
           }
         };
-        var rule = new Rule(
+        const rule = new Rule(
           {
             none: ['cats']
           },
@@ -374,9 +372,9 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                run: function (node, options, context, resolve) {
-                  assert.equal(options.enabled, 'bananas');
-                  assert.equal(options.options, 'minkeys');
+                run: function (node, opts, context, resolve) {
+                  assert.equal(opts.enabled, 'bananas');
+                  assert.equal(opts.options, 'minkeys');
                   resolve(true);
                 }
               }
@@ -388,16 +386,16 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(document)[0]]
           },
           options,
-          function () {
+          () => {
             done();
           },
           isNotCalled
         );
       });
 
-      it('should pass the matching option to check.run defined on the rule over global', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var options = {
+      it('should pass the matching option to check.run defined on the rule over global', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        const options = {
           rules: {
             cats: {
               checks: {
@@ -416,7 +414,7 @@ describe('Rule', function () {
           }
         };
 
-        var rule = new Rule(
+        const rule = new Rule(
           {
             id: 'cats',
             any: [
@@ -429,9 +427,9 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                run: function (node, options, context, resolve) {
-                  assert.equal(options.enabled, 'apples');
-                  assert.equal(options.options, 'apes');
+                run: function (node, opts, context, resolve) {
+                  assert.equal(opts.enabled, 'apples');
+                  assert.equal(opts.options, 'apes');
                   resolve(true);
                 }
               }
@@ -443,15 +441,15 @@ describe('Rule', function () {
             include: [axe.utils.getFlattenedTree(document)[0]]
           },
           options,
-          function () {
+          () => {
             done();
           },
           isNotCalled
         );
       });
 
-      it('should filter out null results', function () {
-        var rule = new Rule(
+      it('should filter out null results', () => {
+        const rule = new Rule(
           {
             selector: '#fixture',
             any: ['cats']
@@ -460,7 +458,7 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                run: function () {}
+                run: () => {}
               }
             }
           }
@@ -477,25 +475,25 @@ describe('Rule', function () {
         );
       });
 
-      describe.skip('DqElement', function () {
-        var origDqElement;
-        var isDqElementCalled;
+      describe.skip('DqElement', () => {
+        let origDqElement;
+        let isDqElementCalled;
 
-        beforeEach(function () {
+        beforeEach(() => {
           isDqElementCalled = false;
           origDqElement = axe.utils.DqElement;
-          axe.utils.DqElement = function () {
+          axe.utils.DqElement = () => {
             isDqElementCalled = true;
           };
-          fixture.innerHTML = '<blink>Hi</blink>';
+          fixtureSetup('<blink>Hi</blink>');
         });
 
-        afterEach(function () {
+        afterEach(() => {
           axe.utils.DqElement = origDqElement;
         });
 
-        it('is created for matching nodes', function (done) {
-          var rule = new Rule(
+        it('is created for matching nodes', done => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -504,10 +502,10 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: true,
-                  evaluate: function () {
+                  evaluate: () => {
                     return true;
                   },
-                  matches: function () {
+                  matches: () => {
                     return true;
                   }
                 })
@@ -519,7 +517,7 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(fixture)[0]]
             },
             {},
-            function () {
+            () => {
               assert.isTrue(isDqElementCalled);
               done();
             },
@@ -527,8 +525,8 @@ describe('Rule', function () {
           );
         });
 
-        it('is not created for disabled checks', function (done) {
-          var rule = new Rule(
+        it('is not created for disabled checks', done => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -537,8 +535,8 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: false,
-                  evaluate: function () {},
-                  matches: function () {
+                  evaluate: () => {},
+                  matches: () => {
                     return true;
                   }
                 })
@@ -550,7 +548,7 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(fixture)[0]]
             },
             {},
-            function () {
+            () => {
               assert.isFalse(isDqElementCalled);
               done();
             },
@@ -558,8 +556,8 @@ describe('Rule', function () {
           );
         });
 
-        it('is created for matching nodes', function (done) {
-          var rule = new Rule(
+        it('is created for matching nodes', done => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -568,7 +566,7 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: true,
-                  evaluate: function () {
+                  evaluate: () => {
                     return true;
                   }
                 })
@@ -580,7 +578,7 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(fixture)[0]]
             },
             {},
-            function () {
+            () => {
               assert.isTrue(isDqElementCalled);
               done();
             },
@@ -588,8 +586,8 @@ describe('Rule', function () {
           );
         });
 
-        it('is not created for disabled checks', function (done) {
-          var rule = new Rule(
+        it('is not created for disabled checks', done => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -598,7 +596,7 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: false,
-                  evaluate: function () {}
+                  evaluate: () => {}
                 })
               }
             }
@@ -608,7 +606,7 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(fixture)[0]]
             },
             {},
-            function () {
+            () => {
               assert.isFalse(isDqElementCalled);
               done();
             },
@@ -617,16 +615,16 @@ describe('Rule', function () {
         });
       });
 
-      it('should pass thrown errors to the reject param', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var rule = new Rule(
+      it('should pass thrown errors to the reject param', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        const rule = new Rule(
           {
             none: ['cats']
           },
           {
             checks: {
               cats: {
-                run: function () {
+                run: () => {
                   throw new Error('Holy hand grenade');
                 }
               }
@@ -648,9 +646,9 @@ describe('Rule', function () {
         );
       });
 
-      it('should pass reject calls to the reject param', function (done) {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var rule = new Rule(
+      it('should pass reject calls to the reject param', done => {
+        fixtureSetup('<blink>Hi</blink>');
+        const rule = new Rule(
           {
             none: ['cats']
           },
@@ -679,8 +677,9 @@ describe('Rule', function () {
         );
       });
 
-      it('should mark checks as incomplete if reviewOnFail is set to true', function (done) {
-        var rule = new Rule(
+      it('should mark checks as incomplete if reviewOnFail is set to true', done => {
+        axe.setup();
+        const rule = new Rule(
           {
             reviewOnFail: true,
             all: ['cats'],
@@ -691,13 +690,13 @@ describe('Rule', function () {
             checks: {
               cats: new Check({
                 id: 'cats',
-                evaluate: function () {
+                evaluate: () => {
                   return false;
                 }
               }),
               dogs: new Check({
                 id: 'dogs',
-                evaluate: function () {
+                evaluate: () => {
                   return true;
                 }
               })
@@ -720,21 +719,22 @@ describe('Rule', function () {
         );
       });
 
-      describe('NODE rule', function () {
-        it('should create a RuleResult', function () {
-          var orig = window.RuleResult;
-          var success = false;
+      describe('NODE rule', () => {
+        it('should create a RuleResult', () => {
+          axe.setup();
+          const orig = window.RuleResult;
+          let success = false;
           window.RuleResult = function (r) {
             this.nodes = [];
             assert.equal(rule, r);
             success = true;
           };
 
-          var rule = new Rule(
+          const rule = new Rule(
             {
               any: [
                 {
-                  evaluate: function () {},
+                  evaluate: () => {},
                   id: 'cats'
                 }
               ]
@@ -762,14 +762,16 @@ describe('Rule', function () {
 
           window.RuleResult = orig;
         });
-        it('should execute rule callback', function () {
-          var success = false;
 
-          var rule = new Rule(
+        it('should execute rule callback', () => {
+          axe.setup();
+          let success = false;
+
+          const rule = new Rule(
             {
               any: [
                 {
-                  evaluate: function () {},
+                  evaluate: () => {},
                   id: 'cats'
                 }
               ]
@@ -790,7 +792,7 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(document)[0]]
             },
             {},
-            function () {
+            () => {
               success = true;
             },
             isNotCalled
@@ -800,22 +802,22 @@ describe('Rule', function () {
       });
     });
 
-    describe('runSync', function () {
-      it('should be a function', function () {
+    describe('runSync', () => {
+      it('should be a function', () => {
         assert.isFunction(Rule.prototype.runSync);
       });
 
-      it('should run #matches', function () {
-        var div = document.createElement('div');
+      it('should run #matches', () => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
-          rule = new Rule({
-            matches: function (node) {
-              assert.equal(node, div);
-              success = true;
-              return [];
-            }
-          });
+        let success = false;
+        const rule = new Rule({
+          matches: function (node) {
+            assert.equal(node, div);
+            success = true;
+            return [];
+          }
+        });
 
         try {
           rule.runSync(
@@ -830,17 +832,17 @@ describe('Rule', function () {
         }
       });
 
-      it('should pass a virtualNode to #matches', function () {
-        var div = document.createElement('div');
+      it('should pass a virtualNode to #matches', () => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
-          rule = new Rule({
-            matches: function (node, virtualNode) {
-              assert.equal(virtualNode.actualNode, div);
-              success = true;
-              return [];
-            }
-          });
+        let success = false;
+        const rule = new Rule({
+          matches: function (node, virtualNode) {
+            assert.equal(virtualNode.actualNode, div);
+            success = true;
+            return [];
+          }
+        });
 
         try {
           rule.runSync(
@@ -855,19 +857,19 @@ describe('Rule', function () {
         }
       });
 
-      it('should pass a context to #matches', function () {
-        var div = document.createElement('div');
+      it('should pass a context to #matches', () => {
+        const div = document.createElement('div');
         fixture.appendChild(div);
-        var success = false,
-          rule = new Rule({
-            matches: function (node, virtualNode, context) {
-              assert.isDefined(context);
-              assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
-              assert.lengthOf(context.include, 1);
-              success = true;
-              return [];
-            }
-          });
+        let success = false;
+        const rule = new Rule({
+          matches: function (node, virtualNode, context) {
+            assert.isDefined(context);
+            assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
+            assert.lengthOf(context.include, 1);
+            success = true;
+            return [];
+          }
+        });
 
         try {
           rule.runSync(
@@ -882,13 +884,13 @@ describe('Rule', function () {
         }
       });
 
-      it('should handle an error in #matches', function () {
-        var div = document.createElement('div');
+      it('should handle an error in #matches', () => {
+        const div = document.createElement('div');
         div.setAttribute('style', '#fff');
         fixture.appendChild(div);
-        var success = false;
-        var rule = new Rule({
-          matches: function () {
+        let success = false;
+        const rule = new Rule({
+          matches: () => {
             throw new Error('this is an error');
           }
         });
@@ -906,17 +908,17 @@ describe('Rule', function () {
         }
       });
 
-      it('should execute Check#runSync on its child checks - any', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#runSync on its child checks - any', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             any: ['cats']
           },
           {
             checks: {
               cats: {
-                runSync: function () {
+                runSync: () => {
                   success = true;
                 }
               }
@@ -937,17 +939,17 @@ describe('Rule', function () {
         }
       });
 
-      it('should execute Check#runSync on its child checks - all', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#runSync on its child checks - all', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             all: ['cats']
           },
           {
             checks: {
               cats: {
-                runSync: function () {
+                runSync: () => {
                   success = true;
                 }
               }
@@ -968,17 +970,17 @@ describe('Rule', function () {
         }
       });
 
-      it('should execute Check#run on its child checks - none', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var success = false;
-        var rule = new Rule(
+      it('should execute Check#run on its child checks - none', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        let success = false;
+        const rule = new Rule(
           {
             none: ['cats']
           },
           {
             checks: {
               cats: {
-                runSync: function () {
+                runSync: () => {
                   success = true;
                 }
               }
@@ -1000,9 +1002,9 @@ describe('Rule', function () {
         }
       });
 
-      it('should pass the matching option to check.runSync', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var options = {
+      it('should pass the matching option to check.runSync', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        const options = {
           checks: {
             cats: {
               enabled: 'bananas',
@@ -1010,7 +1012,7 @@ describe('Rule', function () {
             }
           }
         };
-        var rule = new Rule(
+        const rule = new Rule(
           {
             none: ['cats']
           },
@@ -1018,9 +1020,9 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                runSync: function (node, options) {
-                  assert.equal(options.enabled, 'bananas');
-                  assert.equal(options.options, 'minkeys');
+                runSync: function (node, opts) {
+                  assert.equal(opts.enabled, 'bananas');
+                  assert.equal(opts.options, 'minkeys');
                 }
               }
             }
@@ -1039,9 +1041,9 @@ describe('Rule', function () {
         }
       });
 
-      it('should pass the matching option to check.runSync defined on the rule over global', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var options = {
+      it('should pass the matching option to check.runSync defined on the rule over global', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        const options = {
           rules: {
             cats: {
               checks: {
@@ -1060,7 +1062,7 @@ describe('Rule', function () {
           }
         };
 
-        var rule = new Rule(
+        const rule = new Rule(
           {
             id: 'cats',
             any: [
@@ -1073,9 +1075,9 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                runSync: function (node, options) {
-                  assert.equal(options.enabled, 'apples');
-                  assert.equal(options.options, 'apes');
+                runSync: function (node, opts) {
+                  assert.equal(opts.enabled, 'apples');
+                  assert.equal(opts.options, 'apes');
                 }
               }
             }
@@ -1094,8 +1096,8 @@ describe('Rule', function () {
         }
       });
 
-      it('should filter out null results', function () {
-        var rule = new Rule(
+      it('should filter out null results', () => {
+        const rule = new Rule(
           {
             selector: '#fixture',
             any: ['cats']
@@ -1104,14 +1106,14 @@ describe('Rule', function () {
             checks: {
               cats: {
                 id: 'cats',
-                runSync: function () {}
+                runSync: () => {}
               }
             }
           }
         );
 
         try {
-          var r = rule.runSync(
+          const r = rule.runSync(
             {
               include: [axe.utils.getFlattenedTree(document)[0]]
             },
@@ -1123,25 +1125,25 @@ describe('Rule', function () {
         }
       });
 
-      describe.skip('DqElement', function () {
-        var origDqElement;
-        var isDqElementCalled;
+      describe.skip('DqElement', () => {
+        let origDqElement;
+        let isDqElementCalled;
 
-        beforeEach(function () {
+        beforeEach(() => {
           isDqElementCalled = false;
           origDqElement = axe.utils.DqElement;
-          axe.utils.DqElement = function () {
+          axe.utils.DqElement = () => {
             isDqElementCalled = true;
           };
-          fixture.innerHTML = '<blink>Hi</blink>';
+          fixtureSetup('<blink>Hi</blink>');
         });
 
-        afterEach(function () {
+        afterEach(() => {
           axe.utils.DqElement = origDqElement;
         });
 
-        it('is created for matching nodes', function () {
-          var rule = new Rule(
+        it('is created for matching nodes', () => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -1150,10 +1152,10 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: true,
-                  evaluate: function () {
+                  evaluate: () => {
                     return true;
                   },
-                  matches: function () {
+                  matches: () => {
                     return true;
                   }
                 })
@@ -1174,8 +1176,8 @@ describe('Rule', function () {
           }
         });
 
-        it('is not created for disabled checks', function () {
-          var rule = new Rule(
+        it('is not created for disabled checks', () => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -1184,8 +1186,8 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: false,
-                  evaluate: function () {},
-                  matches: function () {
+                  evaluate: () => {},
+                  matches: () => {
                     return true;
                   }
                 })
@@ -1206,8 +1208,8 @@ describe('Rule', function () {
           }
         });
 
-        it('is created for matching nodes', function () {
-          var rule = new Rule(
+        it('is created for matching nodes', () => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -1216,7 +1218,7 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: true,
-                  evaluate: function () {
+                  evaluate: () => {
                     return true;
                   }
                 })
@@ -1237,8 +1239,8 @@ describe('Rule', function () {
           }
         });
 
-        it('is not created for disabled checks', function () {
-          var rule = new Rule(
+        it('is not created for disabled checks', () => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -1247,7 +1249,7 @@ describe('Rule', function () {
                 cats: new Check({
                   id: 'cats',
                   enabled: false,
-                  evaluate: function () {}
+                  evaluate: () => {}
                 })
               }
             }
@@ -1257,15 +1259,15 @@ describe('Rule', function () {
               include: [axe.utils.getFlattenedTree(fixture)[0]]
             },
             {},
-            function () {
+            () => {
               assert.isFalse(isDqElementCalled);
             },
             isNotCalled
           );
         });
 
-        it('should not be called when there is no actualNode', function () {
-          var rule = new Rule(
+        it('should not be called when there is no actualNode', () => {
+          const rule = new Rule(
             {
               all: ['cats']
             },
@@ -1273,13 +1275,13 @@ describe('Rule', function () {
               checks: {
                 cats: new Check({
                   id: 'cats',
-                  evaluate: function () {}
+                  evaluate: () => {}
                 })
               }
             }
           );
           rule.excludeHidden = false; // so we don't call utils.isHidden
-          var vNode = {
+          const vNode = {
             shadowId: undefined,
             children: [],
             parent: undefined,
@@ -1295,7 +1297,7 @@ describe('Rule', function () {
               id: null,
               type: 'text'
             },
-            hasClass: function () {
+            hasClass: () => {
               return false;
             },
             attr: function (attrName) {
@@ -1310,7 +1312,7 @@ describe('Rule', function () {
               include: [vNode]
             },
             {},
-            function () {
+            () => {
               assert.isFalse(isDqElementCalled);
             },
             isNotCalled
@@ -1318,16 +1320,16 @@ describe('Rule', function () {
         });
       });
 
-      it('should pass thrown errors to the reject param', function () {
-        fixture.innerHTML = '<blink>Hi</blink>';
-        var rule = new Rule(
+      it('should pass thrown errors to the reject param', () => {
+        fixtureSetup('<blink>Hi</blink>');
+        const rule = new Rule(
           {
             none: ['cats']
           },
           {
             checks: {
               cats: {
-                runSync: function () {
+                runSync: () => {
                   throw new Error('Holy hand grenade');
                 }
               }
@@ -1348,8 +1350,9 @@ describe('Rule', function () {
         }
       });
 
-      it('should mark checks as incomplete if reviewOnFail is set to true', function () {
-        var rule = new Rule(
+      it('should mark checks as incomplete if reviewOnFail is set to true', () => {
+        axe.setup();
+        const rule = new Rule(
           {
             reviewOnFail: true,
             all: ['cats'],
@@ -1360,13 +1363,13 @@ describe('Rule', function () {
             checks: {
               cats: new Check({
                 id: 'cats',
-                evaluate: function () {
+                evaluate: () => {
                   return false;
                 }
               }),
               dogs: new Check({
                 id: 'dogs',
-                evaluate: function () {
+                evaluate: () => {
                   return true;
                 }
               })
@@ -1374,7 +1377,7 @@ describe('Rule', function () {
           }
         );
 
-        var results = rule.runSync(
+        const results = rule.runSync(
           {
             include: [axe.utils.getFlattenedTree(fixture)[0]]
           },
@@ -1386,21 +1389,21 @@ describe('Rule', function () {
         assert.isUndefined(results.nodes[0].none[0].result);
       });
 
-      describe.skip('NODE rule', function () {
-        it('should create a RuleResult', function () {
-          var orig = window.RuleResult;
-          var success = false;
+      describe.skip('NODE rule', () => {
+        it('should create a RuleResult', () => {
+          const orig = window.RuleResult;
+          let success = false;
           window.RuleResult = function (r) {
             this.nodes = [];
             assert.equal(rule, r);
             success = true;
           };
 
-          var rule = new Rule(
+          const rule = new Rule(
             {
               any: [
                 {
-                  evaluate: function () {},
+                  evaluate: () => {},
                   id: 'cats'
                 }
               ]
@@ -1408,7 +1411,7 @@ describe('Rule', function () {
             {
               checks: {
                 cats: {
-                  runSync: function () {}
+                  runSync: () => {}
                 }
               }
             }
@@ -1429,14 +1432,14 @@ describe('Rule', function () {
           window.RuleResult = orig;
         });
 
-        it('should execute rule callback', function () {
-          var success = false;
+        it('should execute rule callback', () => {
+          let success = false;
 
-          var rule = new Rule(
+          const rule = new Rule(
             {
               any: [
                 {
-                  evaluate: function () {},
+                  evaluate: () => {},
                   id: 'cats'
                 }
               ]
@@ -1444,7 +1447,7 @@ describe('Rule', function () {
             {
               checks: {
                 cats: {
-                  runSync: function () {
+                  runSync: () => {
                     success = true;
                   }
                 }
@@ -1468,11 +1471,11 @@ describe('Rule', function () {
       });
     });
 
-    describe('after', function () {
-      it('should execute Check#after with options', function () {
-        var success = false;
+    describe('after', () => {
+      it('should execute Check#after with options', () => {
+        let success = false;
 
-        var rule = new Rule(
+        const rule = new Rule(
           {
             id: 'cats',
             any: ['cats']
@@ -1483,11 +1486,7 @@ describe('Rule', function () {
                 id: 'cats',
                 enabled: true,
                 after: function (results, options) {
-                  assert.deepEqual(options, {
-                    enabled: true,
-                    options: { dogs: true },
-                    absolutePaths: undefined
-                  });
+                  assert.deepEqual(options, { dogs: true });
                   success = true;
                   return results;
                 }
@@ -1518,10 +1517,10 @@ describe('Rule', function () {
         assert.isTrue(success);
       });
 
-      it('should add the check node to the check result', function () {
-        var success = false;
+      it('should add the check node to the check result', () => {
+        let success = false;
 
-        var rule = new Rule(
+        const rule = new Rule(
           {
             id: 'cats',
             any: ['cats']
@@ -1564,8 +1563,8 @@ describe('Rule', function () {
         assert.isTrue(success);
       });
 
-      it('should filter removed checks', function () {
-        var rule = new Rule(
+      it('should filter removed checks', () => {
+        const rule = new Rule(
           {
             id: 'cats',
             any: ['cats']
@@ -1582,7 +1581,7 @@ describe('Rule', function () {
           }
         );
 
-        var result = rule.after(
+        const result = rule.after(
           {
             id: 'cats',
             nodes: [
@@ -1616,10 +1615,10 @@ describe('Rule', function () {
         assert.isTrue(result.nodes[0].all[0].result);
       });
 
-      it('should combine all checks for pageLevel rules', function () {
-        var rule = new Rule({});
+      it('should combine all checks for pageLevel rules', () => {
+        const rule = new Rule({});
 
-        var result = rule.after(
+        const result = rule.after(
           {
             id: 'cats',
             pageLevel: true,
@@ -1663,9 +1662,10 @@ describe('Rule', function () {
       });
     });
 
-    describe('after', function () {
-      it('should mark checks as incomplete if reviewOnFail is set to true for all', function () {
-        var rule = new Rule(
+    describe('after', () => {
+      it('should mark checks as incomplete if reviewOnFail is set to true for all', () => {
+        axe.setup();
+        const rule = new Rule(
           {
             id: 'cats',
             reviewOnFail: true,
@@ -1687,7 +1687,7 @@ describe('Rule', function () {
           }
         );
 
-        var result = rule.after(
+        const result = rule.after(
           {
             id: 'cats',
             nodes: [
@@ -1711,8 +1711,8 @@ describe('Rule', function () {
         assert.isUndefined(result.nodes[0].all[0].result);
       });
 
-      it('should mark checks as incomplete if reviewOnFail is set to true for any', function () {
-        var rule = new Rule(
+      it('should mark checks as incomplete if reviewOnFail is set to true for any', () => {
+        const rule = new Rule(
           {
             id: 'cats',
             reviewOnFail: true,
@@ -1734,7 +1734,7 @@ describe('Rule', function () {
           }
         );
 
-        var result = rule.after(
+        const result = rule.after(
           {
             id: 'cats',
             nodes: [
@@ -1758,8 +1758,8 @@ describe('Rule', function () {
         assert.isEmpty(result.nodes[0].all);
       });
 
-      it('should mark checks as incomplete if reviewOnFail is set to true for none', function () {
-        var rule = new Rule(
+      it('should mark checks as incomplete if reviewOnFail is set to true for none', () => {
+        const rule = new Rule(
           {
             id: 'cats',
             reviewOnFail: true,
@@ -1781,7 +1781,7 @@ describe('Rule', function () {
           }
         );
 
-        var result = rule.after(
+        const result = rule.after(
           {
             id: 'cats',
             nodes: [
@@ -1807,143 +1807,143 @@ describe('Rule', function () {
     });
   });
 
-  describe('spec object', function () {
-    describe('.selector', function () {
-      it('should be set', function () {
-        var spec = {
+  describe('spec object', () => {
+    describe('.selector', () => {
+      it('should be set', () => {
+        const spec = {
           selector: '#monkeys'
         };
         assert.equal(new Rule(spec).selector, spec.selector);
       });
 
-      it('should default to *', function () {
-        var spec = {};
+      it('should default to *', () => {
+        const spec = {};
         assert.equal(new Rule(spec).selector, '*');
       });
     });
 
-    describe('.enabled', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.enabled', () => {
+      it('should be set', () => {
+        const spec = {
           enabled: false
         };
         assert.equal(new Rule(spec).enabled, spec.enabled);
       });
 
-      it('should default to true', function () {
-        var spec = {};
+      it('should default to true', () => {
+        const spec = {};
         assert.isTrue(new Rule(spec).enabled);
       });
 
-      it('should default to true if given a bad value', function () {
-        var spec = {
+      it('should default to true if given a bad value', () => {
+        const spec = {
           enabled: 'monkeys'
         };
         assert.isTrue(new Rule(spec).enabled);
       });
     });
 
-    describe('.excludeHidden', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.excludeHidden', () => {
+      it('should be set', () => {
+        const spec = {
           excludeHidden: false
         };
         assert.equal(new Rule(spec).excludeHidden, spec.excludeHidden);
       });
 
-      it('should default to true', function () {
-        var spec = {};
+      it('should default to true', () => {
+        const spec = {};
         assert.isTrue(new Rule(spec).excludeHidden);
       });
 
-      it('should default to true if given a bad value', function () {
-        var spec = {
+      it('should default to true if given a bad value', () => {
+        const spec = {
           excludeHidden: 'monkeys'
         };
         assert.isTrue(new Rule(spec).excludeHidden);
       });
     });
 
-    describe('.pageLevel', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.pageLevel', () => {
+      it('should be set', () => {
+        const spec = {
           pageLevel: false
         };
         assert.equal(new Rule(spec).pageLevel, spec.pageLevel);
       });
 
-      it('should default to false', function () {
-        var spec = {};
+      it('should default to false', () => {
+        const spec = {};
         assert.isFalse(new Rule(spec).pageLevel);
       });
 
-      it('should default to false if given a bad value', function () {
-        var spec = {
+      it('should default to false if given a bad value', () => {
+        const spec = {
           pageLevel: 'monkeys'
         };
         assert.isFalse(new Rule(spec).pageLevel);
       });
     });
 
-    describe('.reviewOnFail', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.reviewOnFail', () => {
+      it('should be set', () => {
+        const spec = {
           reviewOnFail: true
         };
         assert.equal(new Rule(spec).reviewOnFail, spec.reviewOnFail);
       });
 
-      it('should default to false', function () {
-        var spec = {};
+      it('should default to false', () => {
+        const spec = {};
         assert.isFalse(new Rule(spec).reviewOnFail);
       });
 
-      it('should default to false if given a bad value', function () {
-        var spec = {
+      it('should default to false if given a bad value', () => {
+        const spec = {
           reviewOnFail: 'monkeys'
         };
         assert.isFalse(new Rule(spec).reviewOnFail);
       });
     });
 
-    describe('.id', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.id', () => {
+      it('should be set', () => {
+        const spec = {
           id: 'monkeys'
         };
         assert.equal(new Rule(spec).id, spec.id);
       });
 
-      it('should have no default', function () {
-        var spec = {};
+      it('should have no default', () => {
+        const spec = {};
         assert.equal(new Rule(spec).id, spec.id);
       });
     });
 
-    describe('.impact', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.impact', () => {
+      it('should be set', () => {
+        const spec = {
           impact: 'critical'
         };
         assert.equal(new Rule(spec).impact, spec.impact);
       });
 
-      it('should have no default', function () {
-        var spec = {};
+      it('should have no default', () => {
+        const spec = {};
         assert.isUndefined(new Rule(spec).impact);
       });
 
-      it('throws if impact is invalid', function () {
-        assert.throws(function () {
+      it('throws if impact is invalid', () => {
+        assert.throws(() => {
           // eslint-disable-next-line no-new
           new Rule({ impact: 'hello' });
         });
       });
     });
 
-    describe('.any', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.any', () => {
+      it('should be set', () => {
+        const spec = {
           any: [
             {
               name: 'monkeys'
@@ -1960,9 +1960,9 @@ describe('Rule', function () {
       });
     });
 
-    describe('.all', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.all', () => {
+      it('should be set', () => {
+        const spec = {
           all: [
             {
               name: 'monkeys'
@@ -1979,9 +1979,9 @@ describe('Rule', function () {
       });
     });
 
-    describe('.none', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.none', () => {
+      it('should be set', () => {
+        const spec = {
           none: [
             {
               name: 'monkeys'
@@ -1998,162 +1998,162 @@ describe('Rule', function () {
       });
     });
 
-    describe('.matches', function () {
-      it('should be set', function () {
-        var spec = {
-          matches: function () {}
+    describe('.matches', () => {
+      it('should be set', () => {
+        const spec = {
+          matches: () => {}
         };
         assert.equal(new Rule(spec).matches, spec.matches);
       });
 
-      it('should default to prototype', function () {
-        var spec = {};
+      it('should default to prototype', () => {
+        const spec = {};
         assert.equal(new Rule(spec).matches, Rule.prototype.matches);
       });
 
-      it('should turn a string into a function', function () {
-        var spec = {
+      it('should turn a string into a function', () => {
+        const spec = {
           matches: 'function() {return "blah";}'
         };
         assert.equal(new Rule(spec).matches(), 'blah');
       });
     });
 
-    describe('.tags', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.tags', () => {
+      it('should be set', () => {
+        const spec = {
           tags: ['foo', 'bar']
         };
         assert.deepEqual(new Rule(spec).tags, spec.tags);
       });
 
-      it('should default to empty array', function () {
-        var spec = {};
+      it('should default to empty array', () => {
+        const spec = {};
         assert.deepEqual(new Rule(spec).tags, []);
       });
     });
 
-    describe('.actIds', function () {
-      it('should be set', function () {
-        var spec = {
+    describe('.actIds', () => {
+      it('should be set', () => {
+        const spec = {
           actIds: ['abc123', 'xyz789']
         };
         assert.deepEqual(new Rule(spec).actIds, spec.actIds);
       });
 
-      it('should default to undefined', function () {
-        var spec = {};
+      it('should default to undefined', () => {
+        const spec = {};
         assert.isUndefined(new Rule(spec).actIds);
       });
     });
   });
 
-  describe('configure', function () {
-    beforeEach(function () {
+  describe('configure', () => {
+    beforeEach(() => {
       Rule.prototype._get = function (attr) {
         return this[attr];
       };
     });
-    afterEach(function () {
+    afterEach(() => {
       delete Rule.prototype._get;
     });
-    it('should be a function that takes one argument', function () {
+    it('should be a function that takes one argument', () => {
       assert.isFunction(Rule.prototype.configure);
       assert.lengthOf(new Rule({}).configure, 1);
     });
-    it('should NOT override the id', function () {
-      var rule = new Rule({ id: 'foo' });
+    it('should NOT override the id', () => {
+      const rule = new Rule({ id: 'foo' });
 
       assert.equal(rule._get('id'), 'foo');
       rule.configure({ id: 'fong' });
       assert.equal(rule._get('id'), 'foo');
     });
-    it('should NOT override a random property', function () {
-      var rule = new Rule({ id: 'foo' });
+    it('should NOT override a random property', () => {
+      const rule = new Rule({ id: 'foo' });
 
       rule.configure({ fong: 'fong' });
       assert.equal(rule._get('fong'), undefined);
     });
-    it('should override the selector', function () {
-      var rule = new Rule({ selector: 'foo' });
+    it('should override the selector', () => {
+      const rule = new Rule({ selector: 'foo' });
 
       assert.equal(rule._get('selector'), 'foo');
       rule.configure({ selector: 'fong' });
       assert.equal(rule._get('selector'), 'fong');
     });
-    it('should override excludeHidden', function () {
-      var rule = new Rule({ excludeHidden: false });
+    it('should override excludeHidden', () => {
+      const rule = new Rule({ excludeHidden: false });
 
       assert.equal(rule._get('excludeHidden'), false);
       rule.configure({ excludeHidden: true });
       assert.equal(rule._get('excludeHidden'), true);
     });
-    it('should override enabled', function () {
-      var rule = new Rule({ enabled: false });
+    it('should override enabled', () => {
+      const rule = new Rule({ enabled: false });
 
       assert.equal(rule._get('enabled'), false);
       rule.configure({ enabled: true });
       assert.equal(rule._get('enabled'), true);
     });
-    it('should override pageLevel', function () {
-      var rule = new Rule({ pageLevel: false });
+    it('should override pageLevel', () => {
+      const rule = new Rule({ pageLevel: false });
 
       assert.equal(rule._get('pageLevel'), false);
       rule.configure({ pageLevel: true });
       assert.equal(rule._get('pageLevel'), true);
     });
-    it('should override reviewOnFail', function () {
-      var rule = new Rule({ reviewOnFail: false });
+    it('should override reviewOnFail', () => {
+      const rule = new Rule({ reviewOnFail: false });
 
       assert.equal(rule._get('reviewOnFail'), false);
       rule.configure({ reviewOnFail: true });
       assert.equal(rule._get('reviewOnFail'), true);
     });
-    it('should override any', function () {
-      var rule = new Rule({ any: ['one', 'two'] });
+    it('should override any', () => {
+      const rule = new Rule({ any: ['one', 'two'] });
 
       assert.deepEqual(rule._get('any'), ['one', 'two']);
       rule.configure({ any: [] });
       assert.deepEqual(rule._get('any'), []);
     });
-    it('should override all', function () {
-      var rule = new Rule({ all: ['one', 'two'] });
+    it('should override all', () => {
+      const rule = new Rule({ all: ['one', 'two'] });
 
       assert.deepEqual(rule._get('all'), ['one', 'two']);
       rule.configure({ all: [] });
       assert.deepEqual(rule._get('all'), []);
     });
-    it('should override none', function () {
-      var rule = new Rule({ none: ['none', 'two'] });
+    it('should override none', () => {
+      const rule = new Rule({ none: ['none', 'two'] });
 
       assert.deepEqual(rule._get('none'), ['none', 'two']);
       rule.configure({ none: [] });
       assert.deepEqual(rule._get('none'), []);
     });
-    it('should override tags', function () {
-      var rule = new Rule({ tags: ['tags', 'two'] });
+    it('should override tags', () => {
+      const rule = new Rule({ tags: ['tags', 'two'] });
 
       assert.deepEqual(rule._get('tags'), ['tags', 'two']);
       rule.configure({ tags: [] });
       assert.deepEqual(rule._get('tags'), []);
     });
-    it('should override matches (doT.js function)', function () {
-      var rule = new Rule({ matches: 'function () {return "matches";}' });
+    it('should override matches (doT.js function)', () => {
+      const rule = new Rule({ matches: 'function () {return "matches";}' });
 
       assert.equal(rule._get('matches')(), 'matches');
       rule.configure({ matches: 'function () {return "does not match";}' });
       assert.equal(rule._get('matches')(), 'does not match');
     });
-    it('should override matches (metadata function name)', function () {
+    it('should override matches (metadata function name)', () => {
       axe._load({});
-      metadataFunctionMap['custom-matches'] = function () {
+      metadataFunctionMap['custom-matches'] = () => {
         return 'custom-matches';
       };
-      metadataFunctionMap['other-matches'] = function () {
+      metadataFunctionMap['other-matches'] = () => {
         return 'other-matches';
       };
 
-      var rule = new Rule({ matches: 'custom-matches' });
+      const rule = new Rule({ matches: 'custom-matches' });
 
       assert.equal(rule._get('matches')(), 'custom-matches');
       rule.configure({ matches: 'other-matches' });
@@ -2162,9 +2162,9 @@ describe('Rule', function () {
       delete metadataFunctionMap['custom-matches'];
       delete metadataFunctionMap['other-matches'];
     });
-    it('should error if matches does not match an ID', function () {
+    it('should error if matches does not match an ID', () => {
       function fn() {
-        var rule = new Rule({});
+        const rule = new Rule({});
         rule.configure({ matches: 'does-not-exist' });
       }
 
@@ -2173,17 +2173,17 @@ describe('Rule', function () {
         'Function ID does not exist in the metadata-function-map: does-not-exist'
       );
     });
-    it('should override impact', function () {
-      var rule = new Rule({ impact: 'minor' });
+    it('should override impact', () => {
+      const rule = new Rule({ impact: 'minor' });
 
       assert.equal(rule._get('impact'), 'minor');
       rule.configure({ impact: 'serious' });
       assert.equal(rule._get('impact'), 'serious');
     });
-    it('should throw if impact impact', function () {
-      var rule = new Rule({ impact: 'minor' });
+    it('should throw if impact impact', () => {
+      const rule = new Rule({ impact: 'minor' });
 
-      assert.throws(function () {
+      assert.throws(() => {
         rule.configure({ impact: 'hello' });
       });
     });

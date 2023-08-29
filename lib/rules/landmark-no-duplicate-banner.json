@@ -1,5 +1,6 @@
 {
   "id": "landmark-no-duplicate-banner",
+  "impact": "moderate",
   "selector": "header:not([role]), [role=banner]",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {

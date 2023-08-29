@@ -1,7 +1,16 @@
 {
   "id": "nested-interactive",
+  "impact": "serious",
   "matches": "nested-interactive-matches",
-  "tags": ["cat.keyboard", "wcag2a", "wcag412"],
+  "tags": [
+    "cat.keyboard",
+    "wcag2a",
+    "wcag412",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.4.1.2"
+  ],
   "actIds": ["307n5z"],
   "metadata": {
     "description": "Ensures interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies",

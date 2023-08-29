@@ -115,12 +115,12 @@ After execution, a Check will return `true`, `false`, or `undefined` depending o
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules). The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30). A valid Rule JSON consists of the following:
 
 - `id` - `String` A unique name of the Rule.
+- `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`). Sets the impact of the results of this rule
 - `selector` - **optional** `String` which is a [CSS selector](#supported-css-selectors) that specifies the elements of the page on which the Rule runs. axe-core will look inside of the light DOM and _open_ [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
 - `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements. Defaults to `true`.
 - `enabled` - **optional** `Boolean` Whether the rule is enabled by default. Defaults to `true`.
 - `pageLevel` - **optional** `Boolean` Whether the rule is page level. Page level rules will only run if given an entire `document` as context.
 - `matches` - **optional** `String` The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
-- `impact` - **optional** `String` (one of `minor`, `moderate`, `serious`, or `critical`). Override the impact defined by checks.
 - `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
 - `metadata` - `Object` Consisting of:
   - `description` - `String` Text string that describes what the rule does.
@@ -155,7 +155,7 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 - `after` - **optional** `String` The ID of the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
 - `options` - **optional** `Object` Any information the Check needs that you might need to customize and/or is locale specific. Options can be overridden at runtime (with the options parameter) or config-time. For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid. Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 - `metadata` - `Object` Consisting of:
-  - `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
+  - `impact` - **Deprecated** `String` (one of `minor`, `moderate`, `serious`, or `critical`)
   - `messages` - `Object` These messages are displayed when the Check passes or fails
     - `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
     - `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails

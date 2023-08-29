@@ -4,10 +4,12 @@
   "private": true,
   "main": "axe-puppeteer.js",
   "scripts": {
-    "test": "node axe-puppeteer.js https://deque.com"
+    "test": "npm run test:url && npm run test:set-content",
+    "test:url": "node axe-puppeteer.js https://deque.com",
+    "test:set-content": "node set-content.js"
   },
-  "dependencies": {
-    "axe-core": "^3.3.1",
-    "puppeteer": "^1.19.0"
+  "devDependencies": {
+    "axe-core": "^4.6.2",
+    "puppeteer": "^19.8.2"
   }
 }

@@ -80,6 +80,34 @@ describe('aria.getAccessibleRefs', function () {
     assert.deepEqual(getAccessibleRefs(node), [ref]);
   });
 
+  describe('when JavaScript object names are used as IDs', function () {
+    const ids = [
+      'prototype',
+      'constructor',
+      '__proto__',
+      'Element',
+      'nodeName',
+      'valueOf',
+      'toString'
+    ];
+    for (const id of ids) {
+      it(`does not break with id="${id}"`, function () {
+        setLookup({ 'aria-bar': { type: 'idrefs' } });
+        fixture.innerHTML = `<div id="ref" aria-bar="${ids.join(
+          ' '
+        )}"></div><i id="${id}"></i>`;
+
+        var node = document.getElementById(id);
+        var ref = document.getElementById('ref');
+        assert.deepEqual(
+          getAccessibleRefs(node),
+          [ref],
+          `Not equal for ID ${id}`
+        );
+      });
+    }
+  });
+
   (shadowSupport ? it : xit)('works inside shadow DOM', function () {
     setLookup({ 'aria-bar': { type: 'idref' } });
     fixture.innerHTML = '<div id="foo"></div>';

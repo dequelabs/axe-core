@@ -13,6 +13,8 @@ const axeResults = await axe.finishRun(partialResults, options);
 
 **note**: The code in this page uses native DOM methods. This will only work on frames with the same origin. Scripts do not have access to `contentWindow` of cross-origin frames. Use of `runPartial` and `finishRun` in browser drivers like Selenium and Puppeteer works in the same way.
 
+**note**: Because `axe.runPartial()` is designed to be serialized, it will not return element references even if the `elementRef` option is set.
+
 ## axe.runPartial(context, options): Promise<PartialResult>
 
 When using `axe.runPartial()` it is important to keep in mind that the `context` may be different for different frames. For example, `context` can be done in such a way that in frame A, `main` is excluded, and in frame B `footer` is. The `axe.utils.getFrameContexts` method will provide a list of frames that must be tested, and what context to test it with.

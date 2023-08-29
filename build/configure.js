@@ -41,7 +41,7 @@ function buildRules(grunt, options, commons, callback) {
   var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
   var locale = getLocale(grunt, options);
   options.getFiles = false;
-  buildManual(grunt, options, commons, function (result) {
+  buildManual(grunt, options, commons, function (build) {
     var metadata = {
       rules: {},
       checks: {}
@@ -96,8 +96,8 @@ function buildRules(grunt, options, commons, callback) {
       .join('\n');
 
     var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-    var rules = result.rules;
-    var checks = result.checks;
+    var rules = build.rules;
+    var checks = build.checks;
 
     // Translate checks before parsing them so that translations
     // get applied to the metadata object
@@ -113,9 +113,9 @@ function buildRules(grunt, options, commons, callback) {
 
     function parseMetaData(source, propType) {
       var data = source.metadata;
-      var key = source.id || source.type;
-      if (key && locale && locale[propType] && propType !== 'checks') {
-        data = locale[propType][key] || data;
+      var id = source.id || source.type;
+      if (id && locale && locale[propType] && propType !== 'checks') {
+        data = locale[propType][id] || data;
       }
       var result = clone(data) || {};
 
@@ -151,8 +151,8 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function getIncompleteMsg(summaries) {
-      var summary = summaries.find(function (summary) {
-        return typeof summary.incompleteFallbackMessage === 'string';
+      var summary = summaries.find(function (element) {
+        return typeof element.incompleteFallbackMessage === 'string';
       });
       return summary ? summary.incompleteFallbackMessage : '';
     }
@@ -184,8 +184,8 @@ function buildRules(grunt, options, commons, callback) {
       });
     }
 
-    function findCheck(checks, id) {
-      return checks.filter(function (check) {
+    function findCheck(checkCollection, id) {
+      return checkCollection.filter(function (check) {
         if (check.id === id) {
           return true;
         }
@@ -336,21 +336,21 @@ function buildRules(grunt, options, commons, callback) {
         metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
       }
 
-      var rules;
+      var result;
       if (rule.tags.includes('deprecated')) {
-        rules = descriptions.deprecated.rules;
+        result = descriptions.deprecated.rules;
       } else if (rule.tags.includes('experimental')) {
-        rules = descriptions.experimental.rules;
+        result = descriptions.experimental.rules;
       } else if (rule.tags.find(tag => tag.includes('aaa'))) {
-        rules = descriptions.wcag2aaa.rules;
+        result = descriptions.wcag2aaa.rules;
       } else if (rule.tags.includes('best-practice')) {
-        rules = descriptions.bestPractice.rules;
+        result = descriptions.bestPractice.rules;
       } else if (rule.tags.find(tag => tag.startsWith('wcag2a'))) {
-        rules = descriptions.wcag20.rules;
+        result = descriptions.wcag20.rules;
       } else if (rule.tags.find(tag => tag.startsWith('wcag21a'))) {
-        rules = descriptions.wcag21.rules;
+        result = descriptions.wcag21.rules;
       } else {
-        rules = descriptions.wcag22.rules;
+        result = descriptions.wcag22.rules;
       }
 
       var issueType = [];
@@ -363,7 +363,7 @@ function buildRules(grunt, options, commons, callback) {
 
       var actLinks = createActLinksForRule(rule);
 
-      rules.push([
+      result.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
         entities.encode(rule.metadata.description),
         impact,
@@ -408,8 +408,8 @@ ${TOC}
 ${ruleTables}`;
 
     // Translate failureSummaries
-    metadata.failureSummaries = createFailureSummaryObject(result.misc);
-    metadata.incompleteFallbackMessage = getIncompleteMsg(result.misc);
+    metadata.failureSummaries = createFailureSummaryObject(build.misc);
+    metadata.incompleteFallbackMessage = getIncompleteMsg(build.misc);
 
     callback({
       auto: replaceFunctions(

@@ -1,8 +1,9 @@
 {
   "id": "hidden-content",
+  "impact": "minor",
   "selector": "*",
   "excludeHidden": false,
-  "tags": ["cat.structure", "experimental", "review-item", "best-practice"],
+  "tags": ["cat.structure", "best-practice", "experimental", "review-item"],
   "metadata": {
     "description": "Informs users about hidden content.",
     "help": "Hidden content on the page should be analyzed"

@@ -1,8 +1,18 @@
 {
   "id": "html-has-lang",
+  "impact": "serious",
   "selector": "html",
   "matches": "is-initiator-matches",
-  "tags": ["cat.language", "wcag2a", "wcag311", "ACT"],
+  "tags": [
+    "cat.language",
+    "wcag2a",
+    "wcag311",
+    "TTv5",
+    "TT11.a",
+    "EN-301-549",
+    "EN-9.3.1.1",
+    "ACT"
+  ],
   "actIds": ["b5c3f8"],
   "metadata": {
     "description": "Ensures every HTML document has a lang attribute",

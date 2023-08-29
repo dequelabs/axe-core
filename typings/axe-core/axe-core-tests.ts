@@ -221,12 +221,37 @@ var spec: axe.Spec = {
   checks: [
     {
       id: 'custom-check',
-      evaluate: function () {
+      evaluate: function (node) {
+        this.relatedNodes([node]);
+        this.data('some data');
         return true;
+      },
+      after: function (results) {
+        const id = results[0].id;
+        return results;
+      },
+      metadata: {
+        impact: 'minor',
+        messages: {
+          pass: 'yes',
+          fail: 'nope',
+          incomplete: {
+            maybe: 'maybe',
+            or: 'maybe not'
+          }
+        }
+      }
+    },
+    {
+      id: 'async-check',
+      evaluate: function (node) {
+        const done = this.async();
+        done(true);
       }
     }
   ],
   standards: {
+    ...axe.utils.getStandards(),
     ariaRoles: {
       'custom-role': {
         type: 'widget',
@@ -251,7 +276,17 @@ var spec: axe.Spec = {
   rules: [
     {
       id: 'custom-rule',
-      any: ['custom-check']
+      any: ['custom-check'],
+      matches: function (node) {
+        return node.tagName === 'BODY';
+      },
+      tags: ['a'],
+      actIds: ['b'],
+      metadata: {
+        description: 'custom rule',
+        help: 'different help',
+        helpUrl: 'https://example.com'
+      }
     }
   ]
 };
@@ -269,24 +304,6 @@ const rules = axe.getRules();
 rules.forEach(rule => {
   rule.ruleId.substr(1234);
 });
-
-// Plugins
-var pluginSrc: axe.AxePlugin = {
-  id: 'doStuff',
-  run: (data: any, callback: Function) => {
-    callback();
-  },
-  commands: [
-    {
-      id: 'run-doStuff',
-      callback: (data: any, callback: Function) => {
-        axe.plugins['doStuff'].run(data, callback);
-      }
-    }
-  ]
-};
-axe.registerPlugin(pluginSrc);
-axe.cleanup();
 
 axe.configure({
   locale: {
@@ -318,7 +335,61 @@ axe.configure({
         incomplete: {
           foo: 'bar'
         }
+      },
+      bar: {
+        pass: 'pass',
+        fail: 'fail'
       }
     }
   }
 });
+
+// Reporters
+let fooReporter = (
+  results: axe.RawResult[],
+  options: axe.RunOptions,
+  resolve: (out: 'foo') => void,
+  reject: (err: Error) => void
+) => {
+  reject && resolve('foo');
+};
+
+axe.addReporter<'foo'>('foo', fooReporter, true);
+axe.configure({ reporter: fooReporter });
+fooReporter = axe.getReporter<'foo'>('foo');
+const hasFoo: boolean = axe.hasReporter('foo');
+
+// setup & teardown
+axe.setup();
+axe.setup(document);
+axe.setup(document.createElement('div'));
+axe.teardown();
+
+// Plugins
+var pluginSrc: axe.AxePlugin = {
+  id: 'doStuff',
+  run: (data: any, callback: Function) => {
+    callback();
+  },
+  commands: [
+    {
+      id: 'run-doStuff',
+      callback: (data: any, callback: Function) => {
+        axe.plugins['doStuff'].run(data, callback);
+      }
+    }
+  ]
+};
+axe.registerPlugin(pluginSrc);
+axe.cleanup();
+
+// Utils
+const dqElement = new axe.utils.DqElement(document.body);
+const element = axe.utils.shadowSelect(dqElement.selector[0]);
+const uuid = axe.utils.uuid() as string;
+
+// Commons
+axe.commons.aria.getRoleType('img');
+axe.commons.dom.isFocusable(document.body);
+axe.commons.dom.isNativelyFocusable(document.body);
+axe.commons.text.accessibleText(document.body);

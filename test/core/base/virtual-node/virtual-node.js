@@ -1,25 +1,23 @@
-describe('VirtualNode', function () {
-  'use strict';
+describe('VirtualNode', () => {
+  const VirtualNode = axe.VirtualNode;
+  let node;
 
-  var VirtualNode = axe.VirtualNode;
-  var node;
-
-  beforeEach(function () {
+  beforeEach(() => {
     node = document.createElement('div');
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(VirtualNode);
   });
 
-  it('should accept three parameters', function () {
+  it('should accept three parameters', () => {
     assert.lengthOf(VirtualNode, 3);
   });
 
-  describe('prototype', function () {
-    it('should have public properties', function () {
-      var parent = {};
-      var vNode = new VirtualNode(node, parent, 'foo');
+  describe('prototype', () => {
+    it('should have public properties', () => {
+      const parent = {};
+      const vNode = new VirtualNode(node, parent, 'foo');
 
       assert.equal(vNode.shadowId, 'foo');
       assert.typeOf(vNode.children, 'array');
@@ -27,10 +25,10 @@ describe('VirtualNode', function () {
       assert.equal(vNode.parent, parent);
     });
 
-    it('should abstract Node properties', function () {
+    it('should abstract Node properties', () => {
       node = document.createElement('input');
       node.id = 'monkeys';
-      var vNode = new VirtualNode(node);
+      const vNode = new VirtualNode(node);
 
       assert.isDefined(vNode.props);
       assert.equal(vNode.props.nodeType, 1);
@@ -39,9 +37,9 @@ describe('VirtualNode', function () {
       assert.equal(vNode.props.type, 'text');
     });
 
-    it('should reflect selected property', function () {
+    it('should reflect selected property', () => {
       node = document.createElement('option');
-      var vNode = new VirtualNode(node);
+      let vNode = new VirtualNode(node);
       assert.equal(vNode.props.selected, false);
 
       node.selected = true;
@@ -49,125 +47,125 @@ describe('VirtualNode', function () {
       assert.equal(vNode.props.selected, true);
     });
 
-    it('should lowercase type', function () {
-      var node = document.createElement('input');
+    it('should lowercase type', () => {
+      node = document.createElement('input');
       node.setAttribute('type', 'COLOR');
-      var vNode = new VirtualNode(node);
+      const vNode = new VirtualNode(node);
 
       assert.equal(vNode.props.type, 'color');
     });
 
-    it('should default type to text', function () {
-      var node = document.createElement('input');
-      var vNode = new VirtualNode(node);
+    it('should default type to text', () => {
+      node = document.createElement('input');
+      const vNode = new VirtualNode(node);
 
       assert.equal(vNode.props.type, 'text');
     });
 
-    it('should default type to text if type is invalid', function () {
-      var node = document.createElement('input');
+    it('should default type to text if type is invalid', () => {
+      node = document.createElement('input');
       node.setAttribute('type', 'woohoo');
-      var vNode = new VirtualNode(node);
+      const vNode = new VirtualNode(node);
 
       assert.equal(vNode.props.type, 'text');
     });
 
-    it('should lowercase nodeName', function () {
-      var node = {
+    it('should lowercase nodeName', () => {
+      node = {
         nodeName: 'FOOBAR'
       };
-      var vNode = new VirtualNode(node);
+      const vNode = new VirtualNode(node);
 
       assert.equal(vNode.props.nodeName, 'foobar');
     });
 
-    describe('attr', function () {
-      it('should return the value of the given attribute', function () {
+    describe('attr', () => {
+      it('should return the value of the given attribute', () => {
         node.setAttribute('data-foo', 'bar');
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.equal(vNode.attr('data-foo'), 'bar');
       });
 
-      it('should return null for text nodes', function () {
+      it('should return null for text nodes', () => {
         node.textContent = 'hello';
-        var vNode = new VirtualNode(node.firstChild);
+        const vNode = new VirtualNode(node.firstChild);
 
         assert.isNull(vNode.attr('data-foo'));
       });
 
-      it('should return null if getAttribute is not a function', function () {
-        var node = {
+      it('should return null if getAttribute is not a function', () => {
+        node = {
           nodeName: 'DIV',
           getAttribute: null
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.isNull(vNode.attr('data-foo'));
       });
     });
 
-    describe('hasAttr', function () {
-      it('should return true if the element has the attribute', function () {
+    describe('hasAttr', () => {
+      it('should return true if the element has the attribute', () => {
         node.setAttribute('foo', 'bar');
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.isTrue(vNode.hasAttr('foo'));
       });
 
-      it('should return false if the element does not have the attribute', function () {
-        var vNode = new VirtualNode(node);
+      it('should return false if the element does not have the attribute', () => {
+        const vNode = new VirtualNode(node);
 
         assert.isFalse(vNode.hasAttr('foo'));
       });
 
-      it('should return false for text nodes', function () {
+      it('should return false for text nodes', () => {
         node.textContent = 'hello';
-        var vNode = new VirtualNode(node.firstChild);
+        const vNode = new VirtualNode(node.firstChild);
 
         assert.isFalse(vNode.hasAttr('foo'));
       });
 
-      it('should return false if hasAttribute is not a function', function () {
-        var node = {
+      it('should return false if hasAttribute is not a function', () => {
+        node = {
           nodeName: 'DIV',
           hasAttribute: null
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.isFalse(vNode.hasAttr('foo'));
       });
     });
 
-    describe('attrNames', function () {
-      it('should return a list of attribute names', function () {
+    describe('attrNames', () => {
+      it('should return a list of attribute names', () => {
         node.setAttribute('foo', 'bar');
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.deepEqual(vNode.attrNames, ['foo']);
       });
 
-      it('should work with clobbered attributes', function () {
-        var node = document.createElement('form');
+      it('should work with clobbered attributes', () => {
+        node = document.createElement('form');
         node.setAttribute('id', '123');
         node.innerHTML = '<select name="attributes"></select>';
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.deepEqual(vNode.attrNames, ['id']);
       });
 
-      it('should return an empty array if there are no attributes', function () {
-        var vNode = new VirtualNode(node);
+      it('should return an empty array if there are no attributes', () => {
+        const vNode = new VirtualNode(node);
         assert.deepEqual(vNode.attrNames, []);
       });
     });
 
-    describe('nodeIndex', function () {
-      it('increments nodeIndex when a parent is passed', function () {
-        var vHtml = new VirtualNode({ nodeName: 'html' });
-        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
-        var vTitle = new VirtualNode({ nodeName: 'title' }, vHead);
-        var vBody = new VirtualNode({ nodeName: 'body' }, vHtml);
+    describe('nodeIndex', () => {
+      it('increments nodeIndex when a parent is passed', () => {
+        const vHtml = new VirtualNode({ nodeName: 'html' });
+        const vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        const vTitle = new VirtualNode({ nodeName: 'title' }, vHead);
+        const vBody = new VirtualNode({ nodeName: 'body' }, vHtml);
 
         assert.equal(vHtml.nodeIndex, 0);
         assert.equal(vHead.nodeIndex, 1);
@@ -175,9 +173,9 @@ describe('VirtualNode', function () {
         assert.equal(vBody.nodeIndex, 3);
       });
 
-      it('resets nodeIndex when no parent is passed', function () {
-        var vHtml = new VirtualNode({ nodeName: 'html' });
-        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+      it('resets nodeIndex when no parent is passed', () => {
+        let vHtml = new VirtualNode({ nodeName: 'html' });
+        let vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
         assert.equal(vHtml.nodeIndex, 0);
         assert.equal(vHead.nodeIndex, 1);
 
@@ -188,42 +186,74 @@ describe('VirtualNode', function () {
       });
     });
 
-    describe.skip('isFocusable', function () {
-      var commons;
+    describe('checkbox properties', () => {
+      it('should reflect the checked property', () => {
+        const div = document.createElement('div');
+        const vDiv = new VirtualNode(div);
+        assert.isUndefined(vDiv.props.checked);
 
-      beforeEach(function () {
+        node = document.createElement('input');
+        node.setAttribute('type', 'checkbox');
+        const vUnchecked = new VirtualNode(node);
+        assert.isFalse(vUnchecked.props.checked);
+
+        node.click();
+        const vChecked = new VirtualNode(node);
+        assert.equal(vChecked.props.checked, true);
+      });
+
+      it('reflects the indeterminate property', () => {
+        const div = document.createElement('div');
+        const vDiv = new VirtualNode(div);
+        assert.isUndefined(vDiv.props.indeterminate);
+
+        node = document.createElement('input');
+        node.setAttribute('type', 'checkbox');
+        const vUnchecked = new VirtualNode(node);
+        assert.isFalse(vUnchecked.props.indeterminate);
+
+        node.indeterminate = true;
+        const vIndeterminate = new VirtualNode(node);
+        assert.isTrue(vIndeterminate.props.indeterminate);
+      });
+    });
+
+    describe.skip('isFocusable', () => {
+      let commons;
+
+      beforeEach(() => {
         commons = axe.commons = axe.commons;
       });
 
-      afterEach(function () {
+      afterEach(() => {
         axe.commons = commons;
       });
 
-      it('should call dom.isFocusable', function () {
-        var called = false;
+      it('should call dom.isFocusable', () => {
+        let called = false;
         axe.commons = {
           dom: {
-            isFocusable: function () {
+            isFocusable: () => {
               called = true;
             }
           }
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.isFocusable;
 
         assert.isTrue(called);
       });
 
-      it('should only call dom.isFocusable once', function () {
-        var count = 0;
+      it('should only call dom.isFocusable once', () => {
+        let count = 0;
         axe.commons = {
           dom: {
-            isFocusable: function () {
+            isFocusable: () => {
               count++;
             }
           }
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.isFocusable;
         vNode.isFocusable;
         vNode.isFocusable;
@@ -231,42 +261,42 @@ describe('VirtualNode', function () {
       });
     });
 
-    describe.skip('tabbableElements', function () {
-      var commons;
+    describe.skip('tabbableElements', () => {
+      let commons;
 
-      beforeEach(function () {
+      beforeEach(() => {
         commons = axe.commons = axe.commons;
       });
 
-      afterEach(function () {
+      afterEach(() => {
         axe.commons = commons;
       });
 
-      it('should call dom.getTabbableElements', function () {
-        var called = false;
+      it('should call dom.getTabbableElements', () => {
+        let called = false;
         axe.commons = {
           dom: {
-            getTabbableElements: function () {
+            getTabbableElements: () => {
               called = true;
             }
           }
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.tabbableElements;
 
         assert.isTrue(called);
       });
 
-      it('should only call dom.getTabbableElements once', function () {
-        var count = 0;
+      it('should only call dom.getTabbableElements once', () => {
+        let count = 0;
         axe.commons = {
           dom: {
-            getTabbableElements: function () {
+            getTabbableElements: () => {
               count++;
             }
           }
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.tabbableElements;
         vNode.tabbableElements;
         vNode.tabbableElements;
@@ -274,46 +304,46 @@ describe('VirtualNode', function () {
       });
     });
 
-    describe('getComputedStylePropertyValue', function () {
-      var computedStyle;
+    describe('getComputedStylePropertyValue', () => {
+      let computedStyle;
 
-      beforeEach(function () {
+      beforeEach(() => {
         computedStyle = window.getComputedStyle;
       });
 
-      afterEach(function () {
+      afterEach(() => {
         window.getComputedStyle = computedStyle;
       });
 
-      it('should call window.getComputedStyle and return the property', function () {
-        var called = false;
-        window.getComputedStyle = function () {
+      it('should call window.getComputedStyle and return the property', () => {
+        let called = false;
+        window.getComputedStyle = () => {
           called = true;
           return {
-            getPropertyValue: function () {
+            getPropertyValue: () => {
               return 'result';
             }
           };
         };
-        var vNode = new VirtualNode(node);
-        var result = vNode.getComputedStylePropertyValue('prop');
+        const vNode = new VirtualNode(node);
+        const result = vNode.getComputedStylePropertyValue('prop');
 
         assert.isTrue(called);
         assert.equal(result, 'result');
       });
 
-      it('should only call window.getComputedStyle and getPropertyValue once', function () {
-        var computedCount = 0;
-        var propertyCount = 0;
-        window.getComputedStyle = function () {
+      it('should only call window.getComputedStyle and getPropertyValue once', () => {
+        let computedCount = 0;
+        let propertyCount = 0;
+        window.getComputedStyle = () => {
           computedCount++;
           return {
-            getPropertyValue: function () {
+            getPropertyValue: () => {
               propertyCount++;
             }
           };
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.getComputedStylePropertyValue('prop');
         vNode.getComputedStylePropertyValue('prop');
         vNode.getComputedStylePropertyValue('prop');
@@ -322,60 +352,60 @@ describe('VirtualNode', function () {
       });
     });
 
-    describe('clientRects', function () {
-      it('should call node.getClientRects', function () {
-        var called = false;
-        node.getClientRects = function () {
+    describe('clientRects', () => {
+      it('should call node.getClientRects', () => {
+        let called = false;
+        node.getClientRects = () => {
           called = true;
           return [];
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.clientRects;
 
         assert.isTrue(called);
       });
 
-      it('should only call node.getClientRects once', function () {
-        var count = 0;
-        node.getClientRects = function () {
+      it('should only call node.getClientRects once', () => {
+        let count = 0;
+        node.getClientRects = () => {
           count++;
           return [];
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.clientRects;
         vNode.clientRects;
         vNode.clientRects;
         assert.equal(count, 1);
       });
 
-      it('should filter out 0 width rects', function () {
-        node.getClientRects = function () {
+      it('should filter out 0 width rects', () => {
+        node.getClientRects = () => {
           return [{ width: 10 }, { width: 0 }, { width: 20 }];
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
 
         assert.deepEqual(vNode.clientRects, [{ width: 10 }, { width: 20 }]);
       });
     });
 
-    describe('boundingClientRect', function () {
-      it('should call node.getBoundingClientRect', function () {
-        var called = false;
-        node.getBoundingClientRect = function () {
+    describe('boundingClientRect', () => {
+      it('should call node.getBoundingClientRect', () => {
+        let called = false;
+        node.getBoundingClientRect = () => {
           called = true;
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.boundingClientRect;
 
         assert.isTrue(called);
       });
 
-      it('should only call node.getBoundingClientRect once', function () {
-        var count = 0;
-        node.getBoundingClientRect = function () {
+      it('should only call node.getBoundingClientRect once', () => {
+        let count = 0;
+        node.getBoundingClientRect = () => {
           count++;
         };
-        var vNode = new VirtualNode(node);
+        const vNode = new VirtualNode(node);
         vNode.boundingClientRect;
         vNode.boundingClientRect;
         vNode.boundingClientRect;

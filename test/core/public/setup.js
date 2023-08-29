@@ -32,6 +32,11 @@ describe('axe.setup', function () {
     assert.exists(axe._selectorData);
   });
 
+  it('takes documentElement when passed the document', () => {
+    axe.setup(document);
+    assert.equal(axe._tree[0].actualNode, document.documentElement);
+  });
+
   it('should throw if called twice in a row', function () {
     function fn() {
       axe.setup();

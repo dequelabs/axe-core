@@ -2,6 +2,7 @@ describe('helpers.processAggregate', function () {
   'use strict';
   var results, options;
   const helpers = axe._thisWillBeDeletedDoNotUse.helpers;
+  const fixture = document.getElementById('fixture');
 
   beforeEach(function () {
     results = [
@@ -83,7 +84,7 @@ describe('helpers.processAggregate', function () {
                 relatedNodes: [
                   {
                     element: document.createElement('input'),
-                    selector: '#dopel',
+                    selector: ['#dopel'],
                     source: ['<input id="dopel"/>'],
                     xpath: ['/main/input[@id="dopel"]'],
                     ancestry: ['html > body > main > input:nth-child(2)'],
@@ -176,6 +177,26 @@ describe('helpers.processAggregate', function () {
     });
   });
 
+  describe('axe.configure({ noHtml: true })', () => {
+    afterEach(() => {
+      axe.reset();
+    });
+
+    it('sets html to null on nodes', () => {
+      axe.configure({ noHtml: true });
+      const { passes, violations } = helpers.processAggregate(results, {});
+      assert.isNull(passes[0].nodes[0].html);
+      assert.isNull(violations[0].nodes[0].html);
+    });
+
+    it('sets html to null on relatedNodes', () => {
+      axe.configure({ noHtml: true });
+      const { passes, violations } = helpers.processAggregate(results, {});
+      assert.isNull(passes[0].nodes[0].any[0].relatedNodes[0].html);
+      assert.isNull(violations[0].nodes[0].any[0].relatedNodes[0].html);
+    });
+  });
+
   describe('`options` argument', function () {
     describe('`resultTypes` option', function () {
       it('should reduce the unwanted result types to 1 in the `resultObject`', function () {
@@ -193,6 +214,21 @@ describe('helpers.processAggregate', function () {
         assert.equal(resultObject.violations[0].nodes.length, 1);
         assert.isDefined(resultObject.incomplete);
         assert.isDefined(resultObject.inapplicable);
+      });
+
+      it('should not compute selectors of filtered nodes', () => {
+        const dqElm = new axe.utils.DqElement(fixture);
+        Object.defineProperty(dqElm, 'ancestry', {
+          get() {
+            throw new Error('Should not be called');
+          }
+        });
+        results[0].passes[1].node = dqElm;
+        assert.doesNotThrow(() => {
+          helpers.processAggregate(results, {
+            resultTypes: ['violations']
+          });
+        });
       });
     });
 
@@ -280,6 +316,19 @@ describe('helpers.processAggregate', function () {
               resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
             );
           });
+
+          it('should not call DqElement.selector', () => {
+            const dqElm = new axe.utils.DqElement(fixture);
+            Object.defineProperty(dqElm, 'selector', {
+              get() {
+                throw new Error('Should not be called');
+              }
+            });
+            results[0].passes[0].node = dqElm;
+            assert.doesNotThrow(() => {
+              helpers.processAggregate(results, options);
+            });
+          });
         });
       });
 
@@ -331,6 +380,21 @@ describe('helpers.processAggregate', function () {
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
           );
         });
+
+        it('should not call DqElement.ancestry', () => {
+          const dqElm = new axe.utils.DqElement(fixture, options, {
+            selector: ['div'] // prevent axe._selectorData error
+          });
+          Object.defineProperty(dqElm, 'ancestry', {
+            get() {
+              throw new Error('Should not be called');
+            }
+          });
+          results[0].passes[0].node = dqElm;
+          assert.doesNotThrow(() => {
+            helpers.processAggregate(results, options);
+          });
+        });
       });
 
       describe('when not set at all', function () {
@@ -380,6 +444,21 @@ describe('helpers.processAggregate', function () {
           assert.isUndefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].xpath
           );
+        });
+
+        it('should not call DqElement.xpath', () => {
+          const dqElm = new axe.utils.DqElement(fixture, options, {
+            selector: ['div'] // prevent axe._selectorData error
+          });
+          Object.defineProperty(dqElm, 'xpath', {
+            get() {
+              throw new Error('Should not be called');
+            }
+          });
+          results[0].passes[0].node = dqElm;
+          assert.doesNotThrow(() => {
+            helpers.processAggregate(results, options);
+          });
         });
       });
     });

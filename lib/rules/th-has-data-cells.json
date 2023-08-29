@@ -1,8 +1,19 @@
 {
   "id": "th-has-data-cells",
+  "impact": "serious",
   "selector": "table",
   "matches": "data-table-matches",
-  "tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
+  "tags": [
+    "cat.tables",
+    "wcag2a",
+    "wcag131",
+    "section508",
+    "section508.22.g",
+    "TTv5",
+    "TT14.b",
+    "EN-301-549",
+    "EN-9.1.3.1"
+  ],
   "actIds": ["d0f69e"],
   "metadata": {
     "description": "Ensure that <th> elements and elements with role=columnheader/rowheader have data cells they describe",

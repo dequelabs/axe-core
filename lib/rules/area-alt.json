@@ -1,5 +1,6 @@
 {
   "id": "area-alt",
+  "impact": "critical",
   "selector": "map area[href]",
   "excludeHidden": false,
   "tags": [
@@ -9,6 +10,11 @@
     "wcag412",
     "section508",
     "section508.22.a",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.2.4.4",
+    "EN-9.4.1.2",
     "ACT"
   ],
   "actIds": ["c487ae"],

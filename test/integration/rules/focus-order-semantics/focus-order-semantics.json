@@ -10,7 +10,8 @@
     ["#pass6"],
     ["#pass7"],
     ["#pass8"],
-    ["#pass9"]
+    ["#pass9"],
+    ["#pass10"]
   ],
   "violations": [
     ["#violation1"],

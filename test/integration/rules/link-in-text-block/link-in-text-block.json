@@ -11,7 +11,11 @@
     ["#pass-different-weight"],
     ["#pass-different-size"],
     ["#pass-background-color"],
-    ["#pass-text-color"]
+    ["#pass-text-color"],
+    ["#pass-same-colors"]
   ],
-  "incomplete": [["#incomplete-low-contrast-parent-has-gradient"]]
+  "incomplete": [
+    ["#incomplete-low-contrast-parent-has-gradient"],
+    ["#incomplete-pseudo-before"]
+  ]
 }

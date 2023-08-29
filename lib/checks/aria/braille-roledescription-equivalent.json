@@ -1,0 +1,14 @@
+{
+  "id": "braille-roledescription-equivalent",
+  "evaluate": "braille-roledescription-equivalent-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "aria-brailleroledescription is used on an element with aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription is used on an element with no aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription is used on an element with an empty aria-roledescription"
+      }
+    }
+  }
+}

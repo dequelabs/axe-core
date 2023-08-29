@@ -2,13 +2,15 @@
 
 ## Release Cadence
 
-Axe-core is used in lots of [projects and environments](./projects.md). Not all of these are able to upgrade at a rapid pace. Because of this, updates in axe-core are limited in the following ways. For details on what types of changes can come in these releases see [backward compatibility](./backwards-compatibility-doc.md).
+Axe-core is used in many [projects and environments](./projects.md). Not all of these are able to upgrade at a rapid pace. Because of this, updates in axe-core are limited in the following ways. For details on what types of changes can come in these releases see [backward compatibility](./backwards-compatibility-doc.md).
 
-- **Major releases**: Axe-core strives to have a major release every 18 to 24 months. These may include breaking changes, and provide opportunities for Deque to remove previously deprecated features. As an absolute minimum, there will be a 12 month period between major releases of axe-core, except if this is necessary for security.
+- **Major releases**: Major axe-core releases likely include breaking changes, and provide opportunities for Deque to remove previously deprecated features. As an absolute minimum, there will be a 12 month period between major releases of axe-core, except if this is necessary for security.
 
-- **Minor Releases**; Axe-core strives to publish three minor releases every year. There will be at least 6 weeks between each minor release, except if this is necessary for security.
+- **Minor Releases**; Axe-core strives to publish three to five minor releases every year. There will be at least 3 weeks between each minor release, except if this is necessary for security.
 
 - **Patch Releases**: There are no restrictions on the number of patches released for axe-core.
+
+For all major and minor releases a milestone will be created at least three weeks ahead of the release. The axe-core team strives to complete all issues in that milestone, although on occasion issues lower in the milestone may be dropped, and high priority issues may be added. Axe-core will observe a code freeze one week before releasing a major or minor version. Only documentation, metadata, and localizations may be modified during code freeze.
 
 ## Security Updates
 
@@ -20,6 +22,6 @@ The axe-core team considered security its very highest priority. While security 
 
 In order to ensure the best quality from axe-core, we encourage everyone to regularly upgrade their version of axe-core, to try to stay as close to the latest release as possible. Depending on how axe-core is used, upgrading to a new minor or major version may result in new issues getting reported. To handle this, we recommend that you plan time to upgrade your version of axe-core at least twice a year.
 
-Additionally, we recommend that you always use the latest patch version of whatever minor version you are on. For example if you are using axe-core 3.5.5, and 3.5.6 it is best to upgrade immediately. Patch releases of axe-core should should not find new issues, although they occasionally resolve issues in the case of false positives.
+Additionally, we recommend that you always use the latest patch version of whatever minor version you are on. For example if you are using axe-core 3.5.5, and 3.5.6 is released it is best to upgrade immediately. Patch releases of axe-core should not find new issues, although they occasionally resolve issues in the case of false positives.
 
 Ensuring you always use the latest available patch version of axe-core on any minor line guarantees you always the most secure version of axe-core. This minor line must have been released within the last 18 months. See [security updates](#security-updates).

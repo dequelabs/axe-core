@@ -1,5 +1,6 @@
 {
   "id": "audio-caption",
+  "impact": "critical",
   "selector": "audio",
   "enabled": false,
   "excludeHidden": false,
@@ -7,8 +8,11 @@
     "cat.time-and-media",
     "wcag2a",
     "wcag121",
+    "EN-301-549",
+    "EN-9.1.2.1",
     "section508",
-    "section508.22.a"
+    "section508.22.a",
+    "deprecated"
   ],
   "actIds": ["2eb176", "afb423"],
   "metadata": {

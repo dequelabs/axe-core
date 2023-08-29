@@ -1,5 +1,6 @@
 {
   "id": "input-button-name",
+  "impact": "critical",
   "selector": "input[type=\"button\"], input[type=\"submit\"], input[type=\"reset\"]",
   "matches": "no-explicit-name-required-matches",
   "tags": [
@@ -8,6 +9,10 @@
     "wcag412",
     "section508",
     "section508.22.a",
+    "TTv5",
+    "TT5.c",
+    "EN-301-549",
+    "EN-9.4.1.2",
     "ACT"
   ],
   "actIds": ["97a4e1"],

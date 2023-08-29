@@ -1,7 +1,17 @@
 {
   "id": "valid-lang",
+  "impact": "serious",
   "selector": "[lang]:not(html), [xml\\:lang]:not(html)",
-  "tags": ["cat.language", "wcag2aa", "wcag312", "ACT"],
+  "tags": [
+    "cat.language",
+    "wcag2aa",
+    "wcag312",
+    "TTv5",
+    "TT11.b",
+    "EN-301-549",
+    "EN-9.3.1.2",
+    "ACT"
+  ],
   "actIds": ["de46e4"],
   "metadata": {
     "description": "Ensures lang attributes have valid values",
