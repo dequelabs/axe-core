@@ -212,8 +212,91 @@ describe('color.elementIsDistinct', () => {
   });
 
   describe('inline element', () => {
+    describe('background-image', () => {
+      it('returns true if inline adds background-image', () => {
+        const elms = createTestFixture({
+          inline: {
+            background: 'url(icon.png) no-repeat'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isTrue(result);
+      });
+    });
+
+    describe('border', () => {
+      it('returns true if inline adds border', () => {
+        const elms = createTestFixture({
+          inline: {
+            'border-bottom': '1px solid'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns false if inline adds border with 0 width', () => {
+        const elms = createTestFixture({
+          inline: {
+            'border-top': '0 solid'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if inline adds border with 0 alpha', () => {
+        const elms = createTestFixture({
+          inline: {
+            'border-bottom': '2px solid rgba(255,255,255,0)'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isFalse(result);
+      });
+    });
+
+    describe('outline', () => {
+      it('returns true if inline adds outline', () => {
+        const elms = createTestFixture({
+          inline: {
+            outline: '1px solid'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns false if inline adds outline with 0 width', () => {
+        const elms = createTestFixture({
+          inline: {
+            outline: '0 solid'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if inline adds outline with 0 alpha', () => {
+        const elms = createTestFixture({
+          inline: {
+            outline: '2px solid rgba(255,255,255,0)'
+          }
+        });
+
+        const result = elementIsDistinct(elms.target, elms.root);
+        assert.isFalse(result);
+      });
+    });
+
     describe('text-decoration-line', () => {
-      it('returns true if inline adds', () => {
+      it('returns true if inline adds text-decoration-line', () => {
         const elms = createTestFixture({
           inline: {
             'text-decoration': 'underline'
@@ -268,7 +351,7 @@ describe('color.elementIsDistinct', () => {
     });
 
     describe('text-decoration-style', () => {
-      it('returns true if inline adds', () => {
+      it('returns true if inline adds text-decoration-style', () => {
         const elms = createTestFixture({
           inline: {
             'text-decoration': 'underline solid'
