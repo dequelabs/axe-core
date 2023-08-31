@@ -33,7 +33,7 @@ restore_build: &restore_build
 commands:
   browser-tools-job:
     steps:
-      -browser-tools/install-browser-tools:
+      - browser-tools/install-browser-tools:
           # TODO: remove when chromedriver downloads are fixed
           chrome-version: 116.0.5845.96
 
