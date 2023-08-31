@@ -234,7 +234,7 @@
       "help": "Przyciski input type=button muszą mieć odróżniający je tekst."
     },
     "input-image-alt": {
-      "description": "Elementy <input type=\"image\"> mają tekst atrybutu alt.",
+      "description": "Elementy <input type=\"image\"> mają tekst alternatywny.",
       "help": "Przyciski graficzne muszą mieć tekst alternatywny."
     },
     "label-content-name-mismatch": {
