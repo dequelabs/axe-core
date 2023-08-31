@@ -82,7 +82,7 @@
       "help": "Stosowane role ARIA muszą mieć poprawne wartości."
     },
     "aria-text": {
-      "description": "Atrybut \"role=text\" jest używany dla elementów, które nie mają potomków przyjmujących fokus",
+      "description": "Atrybut role=\"text\" jest używany dla elementów, które nie mają potomków przyjmujących fokus",
       "help": "Element z atrybutem role=\"text\" nie może mieć potomków przyjmujących fokus."
     },
     "aria-toggle-field-name": {
