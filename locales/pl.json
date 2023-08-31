@@ -83,7 +83,7 @@
     },
     "aria-text": {
       "description": "Atrybut \"role=text\" jest używany dla elementów, które nie mają potomków przyjmujących fokus",
-      "help": "Element z atrybutem \"role=text\" nie może mieć potomków przyjmujących fokus."
+      "help": "Element z atrybutem role=\"text\" nie może mieć potomków przyjmujących fokus."
     },
     "aria-toggle-field-name": {
       "description": "Każdy element ARIA toggle (przełącznik) ma dostępną nazwę.",
