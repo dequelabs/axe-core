@@ -1,0 +1,14 @@
+{
+  "id": "aria-conditional-attr",
+  "impact": "serious",
+  "matches": "aria-allowed-attr-matches",
+  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "actIds": ["5c01ea"],
+  "metadata": {
+    "description": "Ensures ARIA attributes are used as described in the specification of the element's role",
+    "help": "ARIA attributes must be used as specified for the element's role"
+  },
+  "all": ["aria-conditional-attr"],
+  "any": [],
+  "none": []
+}

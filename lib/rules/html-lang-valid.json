@@ -1,7 +1,17 @@
 {
   "id": "html-lang-valid",
+  "impact": "serious",
   "selector": "html[lang]:not([lang=\"\"]), html[xml\\:lang]:not([xml\\:lang=\"\"])",
-  "tags": ["cat.language", "wcag2a", "wcag311", "ACT", "TTv5", "TT11.a"],
+  "tags": [
+    "cat.language",
+    "wcag2a",
+    "wcag311",
+    "TTv5",
+    "TT11.a",
+    "EN-301-549",
+    "EN-9.3.1.1",
+    "ACT"
+  ],
   "actIds": ["bf051a"],
   "metadata": {
     "description": "Ensures the lang attribute of the <html> element has a valid value",

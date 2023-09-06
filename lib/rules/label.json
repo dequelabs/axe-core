@@ -1,5 +1,6 @@
 {
   "id": "label",
+  "impact": "critical",
   "selector": "input, textarea",
   "matches": "label-matches",
   "tags": [
@@ -8,9 +9,11 @@
     "wcag412",
     "section508",
     "section508.22.n",
-    "ACT",
     "TTv5",
-    "TT5.c"
+    "TT5.c",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "ACT"
   ],
   "actIds": ["e086e5"],
   "metadata": {
@@ -27,5 +30,5 @@
     "non-empty-placeholder",
     "presentational-role"
   ],
-  "none": ["help-same-as-label", "hidden-explicit-label"]
+  "none": ["hidden-explicit-label"]
 }

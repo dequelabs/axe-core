@@ -76,23 +76,26 @@ Each rule in axe-core has a number of tags. These provide metadata about the rul
 
 The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
-| Tag Name         | Accessibility Standard / Purpose                     |
-| ---------------- | ---------------------------------------------------- |
-| `wcag2a`         | WCAG 2.0 Level A                                     |
-| `wcag2aa`        | WCAG 2.0 Level AA                                    |
-| `wcag2aaa`       | WCAG 2.0 Level AAA                                   |
-| `wcag21a`        | WCAG 2.1 Level A                                     |
-| `wcag21aa`       | WCAG 2.1 Level AA                                    |
-| `wcag22aa`       | WCAG 2.2 Level AA                                    |
-| `best-practice`  | Common accessibility best practices                  |
-| `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
-| `ACT`            | W3C approved Accessibility Conformance Testing rules |
-| `section508`     | Old Section 508 rules                                |
-| `section508.*.*` | Requirement in old Section 508                       |
-| `TTv5`           | Trusted Tester v5 rules                              |
-| `TT*.*`          | Test ID in Trusted Tester                            |
-| `experimental`   | Cutting-edge rules, disabled by default              |
-| `cat.*`          | Category mappings used by Deque (see below)          |
+| Tag Name          | Accessibility Standard / Purpose                                                                                              |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `wcag2a`          | WCAG 2.0 Level A                                                                                                              |
+| `wcag2aa`         | WCAG 2.0 Level AA                                                                                                             |
+| `wcag2aaa`        | WCAG 2.0 Level AAA                                                                                                            |
+| `wcag21a`         | WCAG 2.1 Level A                                                                                                              |
+| `wcag21aa`        | WCAG 2.1 Level AA                                                                                                             |
+| `wcag22aa`        | WCAG 2.2 Level AA                                                                                                             |
+| `best-practice`   | Common accessibility best practices                                                                                           |
+| `wcag2a-obsolete` | WCAG 2.0 Level A, no longer required for conformance                                                                          |
+| `wcag***`         | WCAG success criterion e.g. wcag111 maps to SC 1.1.1                                                                          |
+| `ACT`             | W3C approved Accessibility Conformance Testing rules                                                                          |
+| `section508`      | Old Section 508 rules                                                                                                         |
+| `section508.*.*`  | Requirement in old Section 508                                                                                                |
+| `TTv5`            | Trusted Tester v5 rules                                                                                                       |
+| `TT*.*`           | Test ID in Trusted Tester                                                                                                     |
+| `EN-301-549`      | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf) |
+| `EN-9.*`          | Section in EN 301 549 listing the requirement                                                                                 |
+| `experimental`    | Cutting-edge rules, disabled by default                                                                                       |
+| `cat.*`           | Category mappings used by Deque (see below)                                                                                   |
 
 All rules have a `cat.*` tag, which indicates what type of content it is part of. The following `cat.*` tags exist in axe-core:
 
@@ -225,7 +228,7 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-      - `impact` - string(optional). Override the impact defined by checks
+      - `impact` - string(required). Sets the impact of that rule's results
       - `reviewOnFail` - boolean(option, default `false`). Override the result of a rule to return "Needs Review" rather than "Violation" if the rule fails.
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
@@ -617,6 +620,8 @@ The `assets` attribute expects an array of preload(able) constraints to be fetch
 | `media`    | This asset type preloads metadata information of any HTMLMediaElement in the specified document                                                                                                                                                                                                                                                                                                                                             |
 
 The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
+
+Preloading is not applicable to all rules. Even if the `preload` option is enabled, preloading steps may be skipped if no enabled rules require preloading.
 
 ##### Callback Parameter
 

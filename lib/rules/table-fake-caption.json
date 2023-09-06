@@ -1,5 +1,6 @@
 {
   "id": "table-fake-caption",
+  "impact": "serious",
   "selector": "table",
   "matches": "data-table-matches",
   "tags": [
@@ -8,7 +9,9 @@
     "wcag2a",
     "wcag131",
     "section508",
-    "section508.22.g"
+    "section508.22.g",
+    "EN-301-549",
+    "EN-9.1.3.1"
   ],
   "metadata": {
     "description": "Ensure that tables with a caption use the <caption> element.",

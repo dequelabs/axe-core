@@ -1,7 +1,15 @@
 {
   "id": "css-orientation-lock",
+  "impact": "serious",
   "selector": "html",
-  "tags": ["cat.structure", "wcag134", "wcag21aa", "experimental"],
+  "tags": [
+    "cat.structure",
+    "wcag134",
+    "wcag21aa",
+    "EN-301-549",
+    "EN-9.1.3.4",
+    "experimental"
+  ],
   "actIds": ["b33eff"],
   "metadata": {
     "description": "Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations",

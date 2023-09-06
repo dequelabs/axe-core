@@ -10,24 +10,36 @@
       "help": "Active <area> elements must have alternate text"
     },
     "aria-allowed-attr": {
-      "description": "Ensures ARIA attributes are allowed for an element's role",
-      "help": "Elements must only use allowed ARIA attributes"
+      "description": "Ensures an element's role supports its ARIA attributes",
+      "help": "Elements must only use supported ARIA attributes"
     },
     "aria-allowed-role": {
       "description": "Ensures role attribute has an appropriate value for the element",
       "help": "ARIA role should be appropriate for the element"
     },
+    "aria-braille-equivalent": {
+      "description": "Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent",
+      "help": "aria-braille attributes must have a non-braille equivalent"
+    },
     "aria-command-name": {
       "description": "Ensures every ARIA button, link and menuitem has an accessible name",
       "help": "ARIA commands must have an accessible name"
+    },
+    "aria-conditional-attr": {
+      "description": "Ensures ARIA attributes are used as described in the specification of the element's role",
+      "help": "ARIA attributes must be used as specified for the element's role"
+    },
+    "aria-deprecated-role": {
+      "description": "Ensures elements do not use deprecated roles",
+      "help": "Deprecated ARIA roles must not be used"
     },
     "aria-dialog-name": {
       "description": "Ensures every ARIA dialog and alertdialog node has an accessible name",
       "help": "ARIA dialog and alertdialog nodes should have an accessible name"
     },
     "aria-hidden-body": {
-      "description": "Ensures aria-hidden='true' is not present on the document body.",
-      "help": "aria-hidden='true' must not be present on the document body"
+      "description": "Ensures aria-hidden=\"true\" is not present on the document body.",
+      "help": "aria-hidden=\"true\" must not be present on the document body"
     },
     "aria-hidden-focus": {
       "description": "Ensures aria-hidden elements are not focusable nor contain focusable elements",
@@ -44,6 +56,10 @@
     "aria-progressbar-name": {
       "description": "Ensures every ARIA progressbar node has an accessible name",
       "help": "ARIA progressbar nodes must have an accessible name"
+    },
+    "aria-prohibited-attr": {
+      "description": "Ensures ARIA attributes are not prohibited for an element's role",
+      "help": "Elements must only use permitted ARIA attributes"
     },
     "aria-required-attr": {
       "description": "Ensures elements with ARIA roles have all required ARIA attributes",
@@ -66,7 +82,7 @@
       "help": "ARIA roles used must conform to valid values"
     },
     "aria-text": {
-      "description": "Ensures \"role=text\" is used on elements with no focusable descendants",
+      "description": "Ensures role=\"text\" is used on elements with no focusable descendants",
       "help": "\"role=text\" should have no focusable descendants"
     },
     "aria-toggle-field-name": {
@@ -334,8 +350,8 @@
       "help": "All page content should be contained by landmarks"
     },
     "role-img-alt": {
-      "description": "Ensures [role='img'] elements have alternate text",
-      "help": "[role='img'] elements must have an alternative text"
+      "description": "Ensures [role=\"img\"] elements have alternate text",
+      "help": "[role=\"img\"] elements must have an alternative text"
     },
     "scope-attr-valid": {
       "description": "Ensures the scope attribute is used correctly on tables",
@@ -529,6 +545,18 @@
         "plural": "Invalid ARIA attribute names: ${data.values}"
       }
     },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel is used on an element with accessible text",
+      "fail": "aria-braillelabel is used on an element with no accessible text",
+      "incomplete": "Unable to compute accessible text"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription is used on an element with aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription is used on an element with no aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription is used on an element with an empty aria-roledescription"
+      }
+    },
     "deprecatedrole": {
       "pass": "ARIA role is not deprecated",
       "fail": "The role used is deprecated: ${data}"
@@ -611,6 +639,7 @@
         "bgGradient": "Element's background color could not be determined due to a background gradient",
         "imgNode": "Element's background color could not be determined because element contains an image node",
         "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
+        "complexTextShadows": "Element's contrast could not be determined because it uses complex text shadows",
         "fgAlpha": "Element's foreground color could not be determined because of alpha transparency",
         "elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
         "elmPartiallyObscuring": "Element's background color could not be determined because it partially overlaps other elements",
@@ -681,7 +710,7 @@
     "focusable-not-tabbable": {
       "pass": "No focusable elements contained within element",
       "incomplete": "Check if the focusable elements immediately move the focus indicator",
-      "fail": "Focusable content should have tabindex='-1' or be removed from the DOM"
+      "fail": "Focusable content should have tabindex=\"-1\" or be removed from the DOM"
     },
     "frame-focusable-content": {
       "pass": "Element does not have focusable descendants",
@@ -696,7 +725,7 @@
       "pass": "Element does not have focusable descendants",
       "fail": {
         "default": "Element has focusable descendants",
-        "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with 'aria-hidden=true')"
+        "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with aria-hidden=\"true\")"
       },
       "incomplete": "Could not determine if element has descendants"
     },
@@ -833,11 +862,11 @@
       "fail": "${data} on <meta> tag disables zooming on mobile devices"
     },
     "target-offset": {
-      "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
-      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "pass": "Target has sufficient space from its closest neighbors (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "fail": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px)",
       "incomplete": {
-        "default": "Element with negative tabindex has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px). Is this a target?",
-        "nonTabbableNeighbor": "Target has insufficient offset from a neighbor with negative tabindex (${data.closestOffset}px should be at least ${data.minOffset}px). Is the neighbor a target?"
+        "default": "Element with negative tabindex has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px). Is this a target?",
+        "nonTabbableNeighbor": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px). Is the neighbor a target?"
       }
     },
     "target-size": {

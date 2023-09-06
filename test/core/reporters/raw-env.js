@@ -26,7 +26,8 @@ describe('reporters - raw-env', function () {
             any: [
               {
                 result: true,
-                data: 'minkey'
+                data: 'minkey',
+                relatedNodes: []
               }
             ],
             all: [],
@@ -50,7 +51,8 @@ describe('reporters - raw-env', function () {
               {
                 result: false,
                 data: 'pillock',
-                impact: 'cats'
+                impact: 'cats',
+                relatedNodes: []
               }
             ],
             any: [],
@@ -75,7 +77,8 @@ describe('reporters - raw-env', function () {
               {
                 data: 'foon',
                 impact: 'monkeys',
-                result: true
+                result: true,
+                relatedNodes: []
               }
             ],
             any: [],
@@ -93,10 +96,13 @@ describe('reporters - raw-env', function () {
         passes: [
           {
             result: 'passed',
+            any: [],
+            all: [],
             none: [
               {
                 data: 'clueso',
-                result: true
+                result: true,
+                relatedNodes: []
               }
             ],
             node: createDqElement()
@@ -111,8 +117,9 @@ describe('reporters - raw-env', function () {
     axe._cache.set('selectorData', {});
   });
 
-  after(function () {
+  afterEach(function () {
     fixture.innerHTML = '';
+    sinon.restore();
   });
 
   it('should serialize DqElements (#1195)', function () {
@@ -147,6 +154,20 @@ describe('reporters - raw-env', function () {
       function (results) {
         assert.deepEqual(results.env, environmentData);
       }
+    );
+  });
+
+  it('uses nodeSerializer', done => {
+    var rawReporter = axe.getReporter('rawEnv');
+    var spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
+    rawReporter(
+      runResults,
+      {},
+      function () {
+        assert.isTrue(spy.called);
+        done();
+      },
+      done
     );
   });
 });

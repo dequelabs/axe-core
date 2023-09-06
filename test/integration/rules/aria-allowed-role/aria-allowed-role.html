@@ -9,6 +9,7 @@
   <li id="pass-li-role-doc-biblioentry" role="doc-biblioentry"></li>
 </ul>
 <aside id="pass-aside-doc-example" role="doc-example"></aside>
+<aside id="pass-aside-doc-glossary" role="doc-glossary"></aside>
 <div id="pass-div-has-any-role" role="contentinfo"></div>
 <div id="pass-div-valid-role" role="link">ok</div>
 <ol id="pass-ol-valid-role" role="directory"></ol>
@@ -246,6 +247,15 @@
 <div id="fail-dpub-4" role="doc-noteref">ok</div>
 <!-- images -->
 <div id="fail-dpub-5" role="doc-cover">ok</div>
+<img
+  src="#"
+  role="meter"
+  aria-valuenow="0"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  alt="test"
+  id="pass-img-valid-role-meter"
+/>
 <img role="doc-cover" aria-label="foo" id="pass-img-valid-role-aria-label" />
 <img role="menuitem" title="bar" id="pass-img-valid-role-title" />
 <div id="image-baz">hazaar</div>
@@ -291,3 +301,5 @@
   />
   <area shape="circle" coords="15,15,10" role="checkbox" id="fail-imgmap-2" />
 </map>
+
+<search role="form" id="pass-search-elm"></search>

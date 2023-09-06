@@ -23,7 +23,6 @@ describe('aria-valid-attr-value virtual-rule', function () {
       attributes: {
         role: 'slider',
         'aria-valuemin': true,
-        'aria-valuetext': '',
         'aria-expanded': 'grid',
         'aria-haspopup': 'Range',
         'aria-valuenow': false
@@ -34,7 +33,7 @@ describe('aria-valid-attr-value virtual-rule', function () {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
 
-    assert.lengthOf(results.violations[0].nodes[0].all[0].data, 5);
+    assert.lengthOf(results.violations[0].nodes[0].all[0].data, 4);
   });
 
   it('should only mark invalid values', function () {

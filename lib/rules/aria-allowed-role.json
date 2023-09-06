@@ -1,5 +1,6 @@
 {
   "id": "aria-allowed-role",
+  "impact": "minor",
   "excludeHidden": false,
   "selector": "[role]",
   "matches": "aria-allowed-role-matches",

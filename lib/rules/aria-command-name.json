@@ -1,8 +1,18 @@
 {
   "id": "aria-command-name",
+  "impact": "serious",
   "selector": "[role=\"link\"], [role=\"button\"], [role=\"menuitem\"]",
   "matches": "no-naming-method-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "ACT", "TTv5", "TT6.a"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "ACT"
+  ],
   "actIds": ["97a4e1"],
   "metadata": {
     "description": "Ensures every ARIA button, link and menuitem has an accessible name",

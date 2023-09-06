@@ -112,8 +112,8 @@ function createSchemas() {
               conform: 'Must have at least two valid messages'
             }
           },
+          // @deprecated: Use impact on rules instead
           impact: {
-            required: true,
             type: 'string',
             enum: ['minor', 'moderate', 'serious', 'critical']
           }
@@ -134,6 +134,7 @@ function createSchemas() {
         type: 'string'
       },
       impact: {
+        required: true,
         type: 'string',
         enum: ['minor', 'moderate', 'serious', 'critical']
       },
@@ -198,12 +199,6 @@ function createSchemas() {
         type: 'array',
         items: {
           type: 'string'
-        },
-        conform: function hasCategoryTag(tags) {
-          return tags.some(tag => tag.includes('cat.'));
-        },
-        messages: {
-          conform: 'must include a category tag'
         }
       },
       actIds: {
@@ -307,5 +302,168 @@ function validateRule({ tags, metadata }) {
   if (help.toLowerCase().includes(prohibitedWord)) {
     issues.push(`metadata.help can not contain the word '${prohibitedWord}'.`);
   }
+
+  issues.push(...findTagIssues(tags));
   return issues;
+}
+
+const miscTags = ['ACT', 'experimental', 'review-item', 'deprecated'];
+
+const categories = [
+  'aria',
+  'color',
+  'forms',
+  'keyboard',
+  'language',
+  'name-role-value',
+  'parsing',
+  'semantics',
+  'sensory-and-visual-cues',
+  'structure',
+  'tables',
+  'text-alternatives',
+  'time-and-media'
+];
+
+const standardsTags = [
+  {
+    // Has to be first, as others rely on the WCAG level getting picked up first
+    name: 'WCAG',
+    standardRegex: /^wcag2(1|2)?a{1,3}(-obsolete)?$/,
+    criterionRegex: /^wcag\d{3,4}$/
+  },
+  {
+    name: 'Section 508',
+    standardRegex: /^section508$/,
+    criterionRegex: /^section508\.\d{1,2}\.[a-z]$/,
+    wcagLevelRegex: /^wcag2aa?$/
+  },
+  {
+    name: 'Trusted Tester',
+    standardRegex: /^TTv5$/,
+    criterionRegex: /^TT\d{1,3}\.[a-z]$/,
+    wcagLevelRegex: /^wcag2aa?$/
+  },
+  {
+    name: 'EN 301 549',
+    standardRegex: /^EN-301-549$/,
+    criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/,
+    wcagLevelRegex: /^wcag21?aa?$/
+  }
+];
+
+function findTagIssues(tags) {
+  const issues = [];
+  const catTags = tags.filter(tag => tag.startsWith('cat.'));
+  const bestPracticeTags = tags.filter(tag => tag === 'best-practice');
+
+  // Category
+  if (catTags.length !== 1) {
+    issues.push(`Must have exactly one cat. tag, got ${catTags.length}`);
+  }
+  if (catTags.length && !categories.includes(catTags[0].slice(4))) {
+    issues.push(`Invalid category tag: ${catTags[0]}`);
+  }
+  if (!startsWith(tags, catTags)) {
+    issues.push(`Tag ${catTags[0]} must be before ${tags[0]}`);
+  }
+  tags = removeTags(tags, catTags);
+
+  // Best practice
+  if (bestPracticeTags.length > 1) {
+    issues.push(
+      `Only one best-practice tag is allowed, got ${bestPracticeTags.length}`
+    );
+  }
+  if (!startsWith(tags, bestPracticeTags)) {
+    issues.push(`Tag ${bestPracticeTags[0]} must be before ${tags[0]}`);
+  }
+  tags = removeTags(tags, bestPracticeTags);
+
+  const standards = {};
+  // WCAG, Section 508, Trusted Tester, EN 301 549
+  for (const {
+    name,
+    standardRegex,
+    criterionRegex,
+    wcagLevelRegex
+  } of standardsTags) {
+    const standardTags = tags.filter(tag => tag.match(standardRegex));
+    const criterionTags = tags.filter(tag => tag.match(criterionRegex));
+    if (!standardTags.length && !criterionTags.length) {
+      continue;
+    }
+
+    standards[name] = {
+      name,
+      standardTag: standardTags[0] ?? null,
+      criterionTags
+    };
+    if (bestPracticeTags.length !== 0) {
+      issues.push(`${name} tags cannot be used along side best-practice tag`);
+    }
+    if (standardTags.length === 0) {
+      issues.push(`Expected one ${name} tag, got 0`);
+    } else if (standardTags.length > 1) {
+      issues.push(`Expected one ${name} tag, got: ${standardTags.join(', ')}`);
+    }
+    if (criterionTags.length === 0) {
+      issues.push(`Expected at least one ${name} criterion tag, got 0`);
+    }
+
+    if (wcagLevelRegex) {
+      const wcagLevel = standards.WCAG.standardTag;
+      if (!wcagLevel.match(wcagLevelRegex)) {
+        issues.push(`${name} rules not allowed on ${wcagLevel}`);
+      }
+    }
+
+    // Must have the same criteria listed
+    if (name === 'EN 301 549') {
+      const wcagCriteria = standards.WCAG.criterionTags.map(tag =>
+        tag.slice(4)
+      );
+      const enCriteria = criterionTags.map(tag =>
+        tag.slice(5).replaceAll('.', '')
+      );
+      if (
+        wcagCriteria.length !== enCriteria.length ||
+        !startsWith(wcagCriteria, enCriteria)
+      ) {
+        issues.push(
+          `Expect WCAG and EN criteria numbers to match: ${wcagCriteria.join(
+            ', '
+          )} vs ${enCriteria.join(', ')}}`
+        );
+      }
+    }
+    tags = removeTags(tags, [...standardTags, ...criterionTags]);
+  }
+
+  // Other tags
+  const usedMiscTags = miscTags.filter(tag => tags.includes(tag));
+  const unknownTags = removeTags(tags, usedMiscTags);
+  if (unknownTags.length) {
+    issues.push(`Invalid tags: ${unknownTags.join(', ')}`);
+  }
+
+  // At this point only misc tags are left:
+  tags = removeTags(tags, unknownTags);
+  if (!startsWith(tags, usedMiscTags)) {
+    issues.push(
+      `Tags [${tags.join(', ')}] should be sorted like [${usedMiscTags.join(
+        ', '
+      )}]`
+    );
+  }
+
+  return issues;
+}
+
+function startsWith(arr1, arr2) {
+  return arr2.every((item, i) => item === arr1[i]);
+}
+
+function removeTags(tags, tagsToRemove) {
+  return tags.filter(tag => !tagsToRemove.includes(tag));
 }
