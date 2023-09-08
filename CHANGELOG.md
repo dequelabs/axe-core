@@ -4,22 +4,32 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [4.8.0](https://github.com/dequelabs/axe-core/compare/v4.7.2...v4.8.0) (2023-09-06)
 
-### Features
+### Consistent Rule Impact
 
-- add EN.301.549 tags to rules ([#4063](https://github.com/dequelabs/axe-core/issues/4063)) ([de3da89](https://github.com/dequelabs/axe-core/commit/de3da897e56179d94ef8a0dc1a667b5663c489d1))
-- add rule aria-conditional-attr ([#4094](https://github.com/dequelabs/axe-core/issues/4094)) ([d417630](https://github.com/dequelabs/axe-core/commit/d417630e89a41603426c2bb545b49057f03ed8e5))
+This release changes it so that a rule never changes what impact it reports. To facilitate this while without changing the impact on certain issues, some rules have been split. The following changes were involved:
+
+- Deprecate impact on checks; use rules instead ([#4114](https://github.com/dequelabs/axe-core/issues/4114)) ([2cc5547](https://github.com/dequelabs/axe-core/commit/2cc5547634ee783701675631ee3978129707e6f0))
 - add rule aria-deprecated-role ([#4074](https://github.com/dequelabs/axe-core/issues/4074)) ([03f2771](https://github.com/dequelabs/axe-core/commit/03f2771ab43bd877b7919c29b4f5e737b5a69544))
+- add rule aria-conditional-attr ([#4094](https://github.com/dequelabs/axe-core/issues/4094)) ([d417630](https://github.com/dequelabs/axe-core/commit/d417630e89a41603426c2bb545b49057f03ed8e5))
 - **aria-input/toggle-field-name:** set impact always to serious ([#4095](https://github.com/dequelabs/axe-core/issues/4095)) ([e031d68](https://github.com/dequelabs/axe-core/commit/e031d68652229a80ba6ff7d02d29a50a846bfa5b))
 - **aria-prohibited-attr:** add rule aria-prohibited-attr ([#4088](https://github.com/dequelabs/axe-core/issues/4088)) ([7b115d3](https://github.com/dequelabs/axe-core/commit/7b115d3a9e7256ae2c0a1d7d0f9ba791a06c8599))
-- **checks:** enable help-same-as-label, but remove from rules ([#4096](https://github.com/dequelabs/axe-core/issues/4096)) ([034038a](https://github.com/dequelabs/axe-core/commit/034038a625b390ed25b30fccc96e3fc1f384dbc1))
-- **d.ts:** improve axe.d.ts types ([#4081](https://github.com/dequelabs/axe-core/issues/4081)) ([7c5f991](https://github.com/dequelabs/axe-core/commit/7c5f99143a1d97e294d21e14917f4963013fc6f8)), closes [#3966](https://github.com/dequelabs/axe-core/issues/3966)
-- deprecate & disable duplicate-id / duplicate-id-active ([#4071](https://github.com/dequelabs/axe-core/issues/4071)) ([733c45e](https://github.com/dequelabs/axe-core/commit/733c45e6a40a9f8ff6e75f7db864edff0b404ca2))
-- Deprecate impact on checks, use rules instead ([#4114](https://github.com/dequelabs/axe-core/issues/4114)) ([2cc5547](https://github.com/dequelabs/axe-core/commit/2cc5547634ee783701675631ee3978129707e6f0))
-- **duplicate-id-aria:** set to review on fail and tag as wcag412 ([#4075](https://github.com/dequelabs/axe-core/issues/4075)) ([9f1a3e3](https://github.com/dequelabs/axe-core/commit/9f1a3e3cbffbe09eaf90fa254c6421fd4264cf4a))
 - **impact:** aria-roles / aria-valid-attr-value is always "critical" ([#4112](https://github.com/dequelabs/axe-core/issues/4112)) ([5cc8041](https://github.com/dequelabs/axe-core/commit/5cc8041f74a6f015dcbca36ee7414767528277c2))
 - **impact:** scope-attr-valid is always "moderate" ([#4113](https://github.com/dequelabs/axe-core/issues/4113)) ([131f552](https://github.com/dequelabs/axe-core/commit/131f5524e8c8022ace047ac6d69d779460c85fe6))
+
+### Other Features
+
+- deprecate & disable duplicate-id / duplicate-id-active ([#4071](https://github.com/dequelabs/axe-core/issues/4071)) ([733c45e](https://github.com/dequelabs/axe-core/commit/733c45e6a40a9f8ff6e75f7db864edff0b404ca2))
+- **duplicate-id-aria:** set to review on fail and tag as wcag412 ([#4075](https://github.com/dequelabs/axe-core/issues/4075)) ([9f1a3e3](https://github.com/dequelabs/axe-core/commit/9f1a3e3cbffbe09eaf90fa254c6421fd4264cf4a))
+- add EN.301.549 tags to rules ([#4063](https://github.com/dequelabs/axe-core/issues/4063)) ([de3da89](https://github.com/dequelabs/axe-core/commit/de3da897e56179d94ef8a0dc1a667b5663c489d1))
+- **checks:** enable help-same-as-label, but remove from rules ([#4096](https://github.com/dequelabs/axe-core/issues/4096)) ([034038a](https://github.com/dequelabs/axe-core/commit/034038a625b390ed25b30fccc96e3fc1f384dbc1))
 - **new-rule:** aria-braille-equivalent finds incorrect uses of aria-braille attributes ([#4107](https://github.com/dequelabs/axe-core/issues/4107)) ([6260a2f](https://github.com/dequelabs/axe-core/commit/6260a2f25781b465960aec0b1e7781be5496c9bd))
 - **page-no-duplicate-banner/contentinfo:** deprecate options.nativeScopeFilter, take into ancestors with sectioning roles ([#4105](https://github.com/dequelabs/axe-core/issues/4105)) ([c6e07be](https://github.com/dequelabs/axe-core/commit/c6e07bec43ef1935f2afb9429e9f12a937c38f14))
+
+### Type Fixes & Improvements
+
+Various improvements were made to the types. Potentially the most impactful of which is that the `target` and `ancestry` property now return as `UnlabelledFrameSelector` instead of as `string[]`, which is incorrect for selectors involving shadow DOM. This may create some issues during migration for any code that has been incorrectly assuming these two properties have the `string[]` type. For more details and other type changes, see the commit itself:
+
+- **d.ts:** improve axe.d.ts types ([#4081](https://github.com/dequelabs/axe-core/issues/4081)) ([7c5f991](https://github.com/dequelabs/axe-core/commit/7c5f99143a1d97e294d21e14917f4963013fc6f8)), closes [#3966](https://github.com/dequelabs/axe-core/issues/3966)
 
 ### Bug Fixes
 
