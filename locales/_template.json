@@ -862,11 +862,11 @@
       "fail": "${data} on <meta> tag disables zooming on mobile devices"
     },
     "target-offset": {
-      "pass": "Target has sufficient space from its closest neighbors (${data.closestOffset}px should be at least ${data.minOffset}px)",
-      "fail": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px)",
+      "pass": "Target has sufficient space from its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px which is at least ${data.minOffset}px.",
+      "fail": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px.",
       "incomplete": {
-        "default": "Element with negative tabindex has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px). Is this a target?",
-        "nonTabbableNeighbor": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of {$data.closestOffset}px instead of at least ${data.minOffset}px). Is the neighbor a target?"
+        "default": "Element with negative tabindex has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px. Is this a target?",
+        "nonTabbableNeighbor": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px. Is the neighbor a target?"
       }
     },
     "target-size": {
