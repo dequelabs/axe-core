@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.1](https://github.com/dequelabs/axe-core/compare/v4.8.0...v4.8.1) (2023-09-08)
+
+### Bug Fixes
+
+- **target-size:** show closest offset in message ([#4151](https://github.com/dequelabs/axe-core/issues/4151)) ([a0882f6](https://github.com/dequelabs/axe-core/commit/a0882f64610279adce39b015c7e62bf955e04a22))
+
 ## [4.8.0](https://github.com/dequelabs/axe-core/compare/v4.7.2...v4.8.0) (2023-09-06)
 
 ### Consistent Rule Impact
