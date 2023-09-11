@@ -863,10 +863,10 @@
     },
     "target-offset": {
       "pass": "ターゲットに最も近い隣接要素との間の空白の大きさは十分です。クリッカブルな領域として十分な大きさは、直径${data.minOffset}pxで、${data.minOffset}px以上です。",
-      "fail": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径{$data.closestOffset}pxです。",
+      "fail": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。",
       "incomplete": {
-        "default": "tabindexが負の要素において、最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径{$data.closestOffset}pxです。これがターゲットであるか確認しましょう。",
-        "nonTabbableNeighbor": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径{$data.closestOffset}pxです。隣接要素がターゲットであるか確認しましょう。"
+        "default": "tabindexが負の要素において、最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。これがターゲットであるか確認しましょう。",
+        "nonTabbableNeighbor": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。隣接要素がターゲットであるか確認しましょう。"
       }
     },
     "target-size": {
