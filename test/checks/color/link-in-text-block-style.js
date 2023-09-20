@@ -212,20 +212,20 @@ describe('link-in-text-block-style', () => {
     });
 
     Object.entries(testSuites).forEach(([property, styles]) => {
-      it(`returns true if link has ${property}`, () => {
-        const { linkElm, parentElm } = getLinkElm(styles);
-        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
-        assert.equal(checkContext._relatedNodes[0], parentElm);
-        assert.isNull(checkContext._data);
-      });
-    });
+      describe(`with ${property}`, () => {
+        it(`returns true if link has ${property}`, () => {
+          const { linkElm, parentElm } = getLinkElm(styles);
+          assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
+          assert.equal(checkContext._relatedNodes[0], parentElm);
+          assert.isNull(checkContext._data);
+        });
 
-    Object.entries(testSuites).forEach(([property, styles]) => {
-      it(`returns true if ancestor inline element has ${property}`, () => {
-        const { linkElm, parentElm } = getLinkElm({}, styles);
-        assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
-        assert.equal(checkContext._relatedNodes[0], parentElm);
-        assert.isNull(checkContext._data);
+        it(`returns true if ancestor inline element has ${property}`, () => {
+          const { linkElm, parentElm } = getLinkElm({}, styles);
+          assert.isTrue(linkInBlockStyleCheck.call(checkContext, linkElm));
+          assert.equal(checkContext._relatedNodes[0], parentElm);
+          assert.isNull(checkContext._data);
+        });
       });
     });
 

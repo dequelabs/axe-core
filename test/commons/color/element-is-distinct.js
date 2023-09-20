@@ -9,10 +9,10 @@ describe('color.elementIsDistinct', () => {
       .join(';');
   }
 
-  function createTestFixture({ target, root, inline } = {}) {
+  function createTestFixture({ target, root, targetWrap } = {}) {
     const linkStyles = convertStylePropsToString(target);
     const paragraphStyles = convertStylePropsToString(root);
-    const spanStyles = convertStylePropsToString(inline);
+    const spanStyles = convertStylePropsToString(targetWrap);
 
     fixtureSetup(`
       <p style="color: black; ${paragraphStyles}">
@@ -24,7 +24,7 @@ describe('color.elementIsDistinct', () => {
 
     return {
       root: fixture.querySelector('p'),
-      inline: fixture.querySelector('span'),
+      targetWrap: fixture.querySelector('span'),
       target: fixture.querySelector('a')
     };
   }
@@ -211,11 +211,11 @@ describe('color.elementIsDistinct', () => {
     assert.isFalse(result);
   });
 
-  describe('inline element', () => {
+  describe('targetWrap element', () => {
     describe('background-image', () => {
-      it('returns true if inline adds background-image', () => {
+      it('returns true if targetWrap adds background-image', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             background: 'url(icon.png) no-repeat'
           }
         });
@@ -225,10 +225,75 @@ describe('color.elementIsDistinct', () => {
       });
     });
 
+    describe('text', () => {
+      it('returns true if the targetWrap has more than 3 characters before target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `Hows ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns true if the targetWrap has more than 3 characters after target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML} Hows`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns false if the targetWrap has 3 characters before target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `the ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if the targetWrap has 3 characters after target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML} the`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if the targetWrap has less than 3 characters before target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `: ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if the targetWrap has less than 3 characters after target', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML}: `;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('ignores whitespace', () => {
+        const elms = createTestFixture();
+        elms.targetWrap.innerHTML = `\n\t       ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+    });
+
     describe('border', () => {
-      it('returns true if inline adds border', () => {
+      it('returns true if targetWrap adds border', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'border-bottom': '1px solid'
           }
         });
@@ -237,9 +302,9 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns false if inline adds border with 0 width', () => {
+      it('returns false if targetWrap adds border with 0 width', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'border-top': '0 solid'
           }
         });
@@ -248,9 +313,9 @@ describe('color.elementIsDistinct', () => {
         assert.isFalse(result);
       });
 
-      it('returns false if inline adds border with 0 alpha', () => {
+      it('returns false if targetWrap adds border with 0 alpha', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'border-bottom': '2px solid rgba(255,255,255,0)'
           }
         });
@@ -261,9 +326,9 @@ describe('color.elementIsDistinct', () => {
     });
 
     describe('outline', () => {
-      it('returns true if inline adds outline', () => {
+      it('returns true if targetWrap adds outline', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             outline: '1px solid'
           }
         });
@@ -272,9 +337,9 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns false if inline adds outline with 0 width', () => {
+      it('returns false if targetWrap adds outline with 0 width', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             outline: '0 solid'
           }
         });
@@ -283,9 +348,9 @@ describe('color.elementIsDistinct', () => {
         assert.isFalse(result);
       });
 
-      it('returns false if inline adds outline with 0 alpha', () => {
+      it('returns false if targetWrap adds outline with 0 alpha', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             outline: '2px solid rgba(255,255,255,0)'
           }
         });
@@ -296,9 +361,9 @@ describe('color.elementIsDistinct', () => {
     });
 
     describe('text-decoration-line', () => {
-      it('returns true if inline adds text-decoration-line', () => {
+      it('returns true if targetWrap adds text-decoration-line', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline'
           }
         });
@@ -307,12 +372,12 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns true if target has text-decoration:none and inline adds', () => {
+      it('returns true if target has text-decoration:none and targetWrap adds', () => {
         const elms = createTestFixture({
           target: {
             'text-decoration': 'none'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline'
           }
         });
@@ -321,12 +386,12 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns false if inline and root use same value', () => {
+      it('returns false if targetWrap and root use same value', () => {
         const elms = createTestFixture({
           root: {
             'text-decoration': 'underline'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline'
           }
         });
@@ -335,12 +400,12 @@ describe('color.elementIsDistinct', () => {
         assert.isFalse(result);
       });
 
-      it('returns true if inline and root use different value', () => {
+      it('returns true if targetWrap and root use different value', () => {
         const elms = createTestFixture({
           root: {
             'text-decoration': 'underline'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'overline'
           }
         });
@@ -351,9 +416,9 @@ describe('color.elementIsDistinct', () => {
     });
 
     describe('text-decoration-style', () => {
-      it('returns true if inline adds text-decoration-style', () => {
+      it('returns true if targetWrap adds text-decoration-style', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline solid'
           }
         });
@@ -362,12 +427,12 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns true if target has text-decoration:none and inline adds', () => {
+      it('returns true if target has text-decoration:none and targetWrap adds', () => {
         const elms = createTestFixture({
           target: {
             'text-decoration': 'none'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline solid'
           }
         });
@@ -376,12 +441,12 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns false if inline and root use same value', () => {
+      it('returns false if targetWrap and root use same value', () => {
         const elms = createTestFixture({
           root: {
             'text-decoration': 'underline solid'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline solid'
           }
         });
@@ -390,12 +455,12 @@ describe('color.elementIsDistinct', () => {
         assert.isFalse(result);
       });
 
-      it('returns true if inline and root use different value', () => {
+      it('returns true if targetWrap and root use different value', () => {
         const elms = createTestFixture({
           root: {
             'text-decoration': 'underline solid'
           },
-          inline: {
+          targetWrap: {
             'text-decoration': 'underline wavy'
           }
         });
@@ -406,9 +471,9 @@ describe('color.elementIsDistinct', () => {
     });
 
     describe('font', () => {
-      it('returns true if inline adds', () => {
+      it('returns true if targetWrap adds', () => {
         const elms = createTestFixture({
-          inline: {
+          targetWrap: {
             'font-weight': 'bold'
           }
         });
@@ -417,7 +482,7 @@ describe('color.elementIsDistinct', () => {
         assert.isTrue(result);
       });
 
-      it('returns false if target has same font as root and inline adds', () => {
+      it('returns false if target has same font as root and targetWrap adds', () => {
         const elms = createTestFixture({
           target: {
             'font-weight': 'normal'
@@ -425,7 +490,7 @@ describe('color.elementIsDistinct', () => {
           root: {
             'font-weight': 'normal'
           },
-          inline: {
+          targetWrap: {
             'font-weight': 'bold'
           }
         });
