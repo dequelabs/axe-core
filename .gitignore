@@ -24,7 +24,7 @@ lib/core/base/metadata-function-map.js
 doc/api/*
 
 # ts generated file
-typings/axe-core/axe-core-tests.js
+typings/axe-core/*.js
 
 # doc
 doc/rule-descriptions.*.md

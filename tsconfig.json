@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "esModuleInterop": true
   },
-  "include": ["typings/axe-core/axe-core-tests.ts"],
+  "include": ["typings/axe-core/*.ts"],
   "exclude": ["node_modules"]
 }
