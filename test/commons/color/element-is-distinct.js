@@ -225,71 +225,6 @@ describe('color.elementIsDistinct', () => {
       });
     });
 
-    describe('text', () => {
-      it('returns true if the targetWrap has more than 3 characters before target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `Hows ${elms.target.outerHTML}`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isTrue(result);
-      });
-
-      it('returns true if the targetWrap has more than 3 characters after target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `${elms.target.outerHTML} Hows`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isTrue(result);
-      });
-
-      it('returns false if the targetWrap has 3 characters before target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `the ${elms.target.outerHTML}`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isFalse(result);
-      });
-
-      it('returns false if the targetWrap has 3 characters after target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `${elms.target.outerHTML} the`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isFalse(result);
-      });
-
-      it('returns false if the targetWrap has less than 3 characters before target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `: ${elms.target.outerHTML}`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isFalse(result);
-      });
-
-      it('returns false if the targetWrap has less than 3 characters after target', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `${elms.target.outerHTML}: `;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isFalse(result);
-      });
-
-      it('ignores whitespace', () => {
-        const elms = createTestFixture();
-        elms.targetWrap.innerHTML = `\n\t       ${elms.target.outerHTML}`;
-        const target = elms.targetWrap.querySelector('a');
-
-        const result = elementIsDistinct(target, elms.root);
-        assert.isFalse(result);
-      });
-    });
-
     describe('border', () => {
       it('returns true if targetWrap adds border', () => {
         const elms = createTestFixture({
@@ -466,6 +401,99 @@ describe('color.elementIsDistinct', () => {
         });
 
         const result = elementIsDistinct(elms.target, elms.root);
+        assert.isTrue(result);
+      });
+    });
+
+    describe('text', () => {
+      it('returns true if targetWrap adds border and has <= 3 characters before target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            'border-bottom': '1px solid'
+          }
+        });
+        elms.targetWrap.innerHTML = `the ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns true if targetWrap adds outline and has <= 3 characters after target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            outline: '1px solid'
+          }
+        });
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML} the`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns true if targetWrap adds text-decoration and has <= 3 characters before target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            'text-decoration': 'underline'
+          }
+        });
+        elms.targetWrap.innerHTML = `the ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isTrue(result);
+      });
+
+      it('returns false if targetWrap adds border and has > 3 characters before target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            'border-bottom': '1px solid'
+          }
+        });
+        elms.targetWrap.innerHTML = `World ${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if targetWrap adds outline and has <= 3 characters after target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            outline: '1px solid'
+          }
+        });
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML} World`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('returns false if targetWrap adds text-decoration and has > 3 characters after target', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            'text-decoration': 'underline'
+          }
+        });
+        elms.targetWrap.innerHTML = `${elms.target.outerHTML} World`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
+        assert.isFalse(result);
+      });
+
+      it('ignores whitespace differences', () => {
+        const elms = createTestFixture({
+          targetWrap: {
+            'text-decoration': 'underline'
+          }
+        });
+        elms.targetWrap.innerHTML = `\t   \n${elms.target.outerHTML}`;
+        const target = elms.targetWrap.querySelector('a');
+
+        const result = elementIsDistinct(target, elms.root);
         assert.isTrue(result);
       });
     });
