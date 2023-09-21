@@ -594,7 +594,7 @@
         },
         "fail": {
           "default": "Το στοιχείο έχει ανεπαρκή χρωματική αντίθεση ${data.contrastRatio} (χρώμα προσκηνίου: ${data.fgColor}, χρώμα φόντου: ${data.bgColor}, μέγεθος γραμματοσειράς: ${data.fontSize}, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
-          "fgOnShadowColor": "Το στοιχείο έχει ανεπαρκή χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος προσκηνίου και σκιάς (χρώμα προσκηνίου: ${data.fgColor}, χρώμα σκιάς κειμένου: ${data.shadowColor}, μέγεθος γραμματοσειράς: ${data.fontSize} , βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
+          "fgOnShadowColor": "Το στοιχείο έχει ανεπαρκή χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος προσκηνίου και σκιάς (χρώμα προσκηνίου: ${data.fgColor}, χρώμα σκιάς κειμένου: ${data.shadowColor}, μέγεθος γραμματοσειράς: ${data.fontSize}, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
           "shadowOnBgColor": "Το στοιχείο έχει ανεπαρκή χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος σκιάς και του χρώματος φόντου (χρώμα σκιάς κειμένου: ${data.shadowColor}, χρώμα φόντου: ${data.bgColor}, μέγεθος γραμματοσειράς: ${data.fontSize}, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}"
         },
         "incomplete": {
