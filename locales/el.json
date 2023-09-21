@@ -841,7 +841,7 @@
           "default": "Το στοιχείο με αρνητικό tabindex έχει ανεπαρκές μέγεθος (${data.width}px επί ${data.height}px, θα πρέπει να είναι τουλάχιστον ${data.minSize}px επί ${data.minSize}px). Είναι στόχος;",
           "contentOverflow": "Το μέγεθος του στοιχείου δεν ήταν δυνατό να προσδιοριστεί με ακρίβεια λόγω του περιεχομένου υπερχείλισης",
           "partiallyObscured": "Το στοιχείο με αρνητικό tabindex δεν έχει επαρκές μέγεθος επειδή είναι μερικώς κρυμμένο (το μικρότερο διάστημα είναι ${data.width}px επί ${data.height}px, θα πρέπει να είναι τουλάχιστον ${data.minSize}px επί ${data.minSize} px). Είναι στόχος;",
-          "partiallyObscuredNonTabbable": "Ο στόχος έχει ανεπαρκές μέγεθος επειδή είναι μερικώς καλυμμένος από έναν γείτονα με αρνητικό tabindex (το μικρότερο διάστημα είναι ${data.width}px επί ${data.height}px, θα πρέπει να είναι τουλάχιστον ${data.minSize}px επί ${data .minSize}px). Είναι στόχος ο γείτονας;"
+          "partiallyObscuredNonTabbable": "Ο στόχος έχει ανεπαρκές μέγεθος επειδή είναι μερικώς καλυμμένος από έναν γείτονα με αρνητικό tabindex (το μικρότερο διάστημα είναι ${data.width}px επί ${data.height}px, θα πρέπει να είναι τουλάχιστον ${data.minSize}px επί ${data.minSize}px). Είναι στόχος ο γείτονας;"
         }
       },
       "header-present": {
