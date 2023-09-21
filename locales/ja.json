@@ -10,8 +10,8 @@
       "help": "アクティブな<area>要素には代替テキストが存在しなければなりません"
     },
     "aria-allowed-attr": {
-      "description": "要素のロールにARIA属性が許可されていることを確認します",
-      "help": "要素には許可されているARIA属性のみを使用しなければなりません"
+      "description": "要素のロールがARIA属性をサポートしていることを確認します",
+      "help": "要素にはサポートされているARIA属性のみを使用しなければなりません"
     },
     "aria-allowed-role": {
       "description": "role属性の値が要素に対して適切であることを確認します",
@@ -38,8 +38,8 @@
       "help": "ARIA dialogとalertdialogノードにはアクセシブルな名前がなければなりません"
     },
     "aria-hidden-body": {
-      "description": "ドキュメント本体にaria-hidden='true'が存在しないことを確認します",
-      "help": "ドキュメント本体にaria-hidden='true'が存在してはなりません"
+      "description": "ドキュメント本体にaria-hidden=\"true\"が存在しないことを確認します",
+      "help": "ドキュメント本体にaria-hidden=\"true\"が存在してはなりません"
     },
     "aria-hidden-focus": {
       "description": "aria-hiddenが指定されている要素にフォーカスできないこと、その要素にフォーカス可能な要素が含まれていないことを確認します",
@@ -350,8 +350,8 @@
       "help": "ページのすべてのコンテンツはlandmarkに含まれていなければなりません"
     },
     "role-img-alt": {
-      "description": "[role='img'] の要素に代替テキストが存在することを確認します",
-      "help": "[role='img'] の要素には代替テキストがなければなりません"
+      "description": "[role=\"img\"] の要素に代替テキストが存在することを確認します",
+      "help": "[role=\"img\"] の要素には代替テキストがなければなりません"
     },
     "scope-attr-valid": {
       "description": "scope属性がテーブルで正しく使用されていることを確認します",
@@ -710,7 +710,7 @@
     "focusable-not-tabbable": {
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
       "incomplete": "フォーカス可能な要素がすぐにフォーカスインジケータを動かすかどうか確認しましょう",
-      "fail": "フォーカス可能なコンテンツはtabindex='-1'を指定するか、DOMから削除するべきです"
+      "fail": "フォーカス可能なコンテンツはtabindex=\"-1\"を指定するか、DOMから削除するべきです"
     },
     "frame-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
@@ -725,7 +725,7 @@
       "pass": "要素の子孫にフォーカス可能なものはありません",
       "fail": {
         "default": "要素の子孫にフォーカス可能なものがあります",
-        "notHidden": "インタラクティブなコントロールの内側の要素に負のtabindexを指定しても、（'aria-hidden=true'が指定されている場合も）支援技術がその要素にフォーカスできないようにはなりません"
+        "notHidden": "インタラクティブなコントロールの内側の要素に負のtabindexを指定しても、（aria-hidden=\"true\"が指定されている場合も）支援技術がその要素にフォーカスできないようにはなりません"
       },
       "incomplete": "要素に子孫があるか判定できませんでした"
     },
@@ -862,11 +862,11 @@
       "fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
     },
     "target-offset": {
-      "pass": "ターゲットに最も近い隣接要素からのオフセットが十分にあリます (${data.closestOffset}pxであり、${data.minOffset}px以上です)",
-      "fail": "ターゲットの最も近い隣接要素からのオフセットが不十分です (${data.closestOffset}pxですが、${data.minOffset}px以上でなければなりません)",
+      "pass": "ターゲットに最も近い隣接要素との間の空白の大きさは十分です。クリッカブルな領域として十分な大きさは、直径${data.minOffset}pxで、${data.minOffset}px以上です。",
+      "fail": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。",
       "incomplete": {
-        "default": "tabindexが負の要素において、最も近い隣接要素からのオフセットが不十分です (${data.closestOffset}pxですが、${data.minOffset}px以上でなければなりません)。これがターゲットであるか確認しましょう",
-        "nonTabbableNeighbor": "ターゲットの隣接ノードで、tabindexが負のものからのオフセットが不十分です (${data.closestOffset}pxですが、${data.minOffset}px以上でなければなりません)。隣接要素がターゲットであるか確認しましょう"
+        "default": "tabindexが負の要素において、最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。これがターゲットであるか確認しましょう。",
+        "nonTabbableNeighbor": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。隣接要素がターゲットであるか確認しましょう。"
       }
     },
     "target-size": {
