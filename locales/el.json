@@ -568,7 +568,7 @@
         "pass": "Το στοιχείο έχει επαρκώς ενισχυμένη χρωματική αντίθεση ${data.contrastRatio}",
         "fail": {
           "default": "Το στοιχείο έχει ανεπαρκώς ενισχυμένη χρωματική αντίθεση ${data.contrastRatio} (χρώμα προσκηνίου: ${data.fgColor}, χρώμα φόντου: ${data.bgColor}, μέγεθος γραμματοσειράς: ${data.fontSize}, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
-          "fgOnShadowColor": "Το στοιχείο έχει ανεπαρκώς ενισχυμένη χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος του προσκηνίου και του χρώματος σκιάς (χρώμα προσκηνίου: ${data.fgColor}, χρώμα σκιάς κειμένου: ${data.shadowColor}, μέγεθος γραμματοσειράς: ${data.fontSize} , βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
+          "fgOnShadowColor": "Το στοιχείο έχει ανεπαρκώς ενισχυμένη χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος του προσκηνίου και του χρώματος σκιάς (χρώμα προσκηνίου: ${data.fgColor}, χρώμα σκιάς κειμένου: ${data.shadowColor}, μέγεθος γραμματοσειράς: ${data.fontSize}, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}",
           "shadowOnBgColor": "Το στοιχείο έχει ανεπαρκώς ενισχυμένη χρωματική αντίθεση ${data.contrastRatio} μεταξύ του χρώματος σκιάς και του χρώματος φόντου (χρώμα σκιάς κειμένου: ${data.shadowColor}, χρώμα φόντου: ${data.bgColor}, μέγεθος γραμματοσειράς: ${data.fontSize }, βάρος γραμματοσειράς: ${data.fontWeight}). Αναμενόμενος λόγος αντίθεσης ${data.expectedContrastRatio}"
         },
         "incomplete": {
