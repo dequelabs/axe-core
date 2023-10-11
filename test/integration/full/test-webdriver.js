@@ -1,4 +1,4 @@
-const globby = require('globby');
+const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
 const chromedriver = require('chromedriver');
@@ -153,14 +153,12 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globby
-    .sync([
-      'test/integration/full/**/*.{html,xhtml}',
-      '!**/frames/**/*.{html,xhtml}'
-    ])
-    .map(url => {
-      return 'http://localhost:9876/' + url;
-    });
+  const testUrls = globSync([
+    'test/integration/full/**/*.{html,xhtml}',
+    '!**/frames/**/*.{html,xhtml}'
+  ]).map(url => {
+    return 'http://localhost:9876/' + url;
+  });
 
   if (
     (process.platform === 'win32' && options.browser === 'safari') ||

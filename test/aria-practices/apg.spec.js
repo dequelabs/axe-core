@@ -3,12 +3,12 @@ const fs = require('fs');
 const AxeBuilder = require('@axe-core/webdriverjs');
 const { getWebdriver } = require('../get-webdriver');
 const { assert } = require('chai');
-const globby = require('globby');
+const { globSync } = require('glob');
 
 describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG package.json main file does not exist
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
-  const filePaths = globby.sync(
+  const filePaths = globSync(
     `${apgPath}/content/patterns/*/**/examples/*.html`
   );
   const testFiles = filePaths.map(
