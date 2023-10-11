@@ -6,7 +6,7 @@ var clone = require('clone');
 var doT = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
-var entities = new (require('html-entities').AllHtmlEntities)();
+var { encode } = require('html-entities');
 var packageJSON = require('../package.json');
 var doTRegex = /\{\{.+?\}\}/g;
 
@@ -365,7 +365,7 @@ function buildRules(grunt, options, commons, callback) {
 
       result.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
-        entities.encode(rule.metadata.description),
+        encode(rule.metadata.description),
         impact,
         rule.tags.join(', '),
         issueType.join(', '),

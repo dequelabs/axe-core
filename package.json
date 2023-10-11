@@ -141,7 +141,7 @@
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "^1.1.0",
-    "html-entities": "1.x",
+    "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
     "inquirer": "^8.2.5",
