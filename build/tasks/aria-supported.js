@@ -2,7 +2,6 @@
 'use strict';
 
 const { roles, aria: props } = require('aria-query');
-const mdTable = require('markdown-table');
 const format = require('../shared/format');
 
 module.exports = function (grunt) {
@@ -50,10 +49,16 @@ module.exports = function (grunt) {
         ariaAttrs,
         listType
       );
-      const attributesTableMarkdown = mdTable([
+      const formatMarkdownTableRow = columnValues =>
+        `| ${columnValues.join(' | ')} |`;
+      const attributesTableWithHeader = [
         headings.attributesMdTableHeader,
+        ['---', '---'],
         ...attributesTable
-      ]);
+      ];
+      const attributesTableMarkdown = attributesTableWithHeader
+        .map(formatMarkdownTableRow)
+        .join('\n');
 
       const footnotes = [...rolesFootnotes, ...attributesFootnotes].map(
         (footnote, index) => `[^${index + 1}]: ${footnote}`
