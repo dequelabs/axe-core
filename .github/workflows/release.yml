@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 16
           cache: 'npm'
       - name: Run release script and open PR
         run: |

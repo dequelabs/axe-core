@@ -26,16 +26,8 @@ updates:
       # Prevent updates to ESM-only versions
       - dependency-name: 'chalk'
         versions: ['>=5.0.0']
-      - dependency-name: 'esbuild'
-        versions: ['>=0.11.0']
       - dependency-name: 'execa'
         versions: ['>=6.0.0']
-      - dependency-name: 'globby'
-        versions: ['>=12.0.0']
-      - dependency-name: 'html-entities'
-        versions: ['>=2.0.0']
-      - dependency-name: 'markdown-table'
-        versions: ['>=3.0.0']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:
