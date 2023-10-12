@@ -3,9 +3,6 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
-  // TODO: create type to represent Element | AbstractVirtualNode
-  type ElementLike = Element | AbstractVirtualNode
-
   type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
   type TagValue = string;
@@ -460,6 +457,8 @@ declare namespace axe {
     boundingClientRect: DOMRect;
   }
 
+  type ElementLike = Element | AbstractVirtualNode;
+
   interface Utils {
     getFrameContexts: (
       context?: ElementContext,
@@ -489,15 +488,13 @@ declare namespace axe {
   }
 
   interface Aria {
-    getRoleType: (
-      role: string | Element | AbstractVirtualNode | null
-    ) => string | null;
+    getRoleType: (role: string | ElementLike | null) => string | null;
   }
 
   interface Dom {
-    isFocusable: (node: Element | AbstractVirtualNode) => boolean;
-    isNativelyFocusable: (node: Element | AbstractVirtualNode) => boolean;
-    isVisibleToScreenReaders(node: Element | AbstractVirtualNode): boolean;
+    isFocusable: (node: ElementLike) => boolean;
+    isNativelyFocusable: (node: ElementLike) => boolean;
+    isVisibleToScreenReaders(node: ElementLike): boolean;
   }
 
   type AccessibleTextOptions = {
@@ -549,7 +546,7 @@ declare namespace axe {
     dom: Dom;
     text: Text;
     color: Color;
-    matches: (node: Element | AbstractVirtualNode, definition: any) => boolean;
+    matches: (node: ElementLike, definition: any) => boolean;
   }
 
   interface EnvironmentData {
