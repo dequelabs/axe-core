@@ -123,7 +123,7 @@
     "chromedriver": "latest",
     "clone": "^2.1.2",
     "colorjs.io": "^0.4.3",
-    "conventional-commits-parser": "^3.2.4",
+    "conventional-commits-parser": "^5.0.0",
     "core-js": "^3.27.1",
     "css-selector-parser": "^1.4.1",
     "emoji-regex": "^10.2.1",
