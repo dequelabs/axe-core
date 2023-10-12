@@ -23,9 +23,6 @@ lib/core/base/metadata-function-map.js
 # generated jsdoc api docs
 doc/api/*
 
-# ts generated file
-typings/axe-core/*.js
-
 # doc
 doc/rule-descriptions.*.md
 

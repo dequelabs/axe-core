@@ -3,6 +3,6 @@
     "noImplicitAny": true,
     "esModuleInterop": true
   },
-  "include": ["typings/axe-core/*.ts"],
+  "include": ["test/typings/*.ts"],
   "exclude": ["node_modules"]
 }

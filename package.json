@@ -72,7 +72,7 @@
     "build": "grunt",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
-    "test:tsc": "tsc",
+    "test:tsc": "tsc --noEmit",
     "test:unit": "karma start test/karma.conf.js",
     "test:debug": "npm run test:unit -- --no-single-run --browsers=Chrome",
     "test:unit:core": "npm run test:unit -- testDirs=core",

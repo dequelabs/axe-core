@@ -3,6 +3,9 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
+  // TODO: create type to represent Element | AbstractVirtualNode
+  type ElementLike = Element | AbstractVirtualNode
+
   type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
   type TagValue = string;
@@ -299,7 +302,6 @@ declare namespace axe {
       | string
       | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
-    matches?: string;
     enabled?: boolean;
     metadata?: {
       impact?: ImpactValue;
@@ -526,9 +528,9 @@ declare namespace axe {
       alpha: number;
     };
     parseString(colorString: string): this;
-    parseRgbString(colorString: string): this;
-    parseHexString(colorString: string): this;
-    parseColorFnString(colorString: string): this;
+    parseRgbString(colorString: string): void;
+    parseHexString(colorString: string): void;
+    parseColorFnString(colorString: string): void;
     getRelativeLuminance(): number;
   }
 
