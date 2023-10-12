@@ -231,3 +231,4 @@ rules.forEach(rule => {
 
 const source = axe.source;
 const version = axe.version;
+const { NA, PASS, CANTTELL, FAIL } = axe.constants;

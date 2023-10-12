@@ -549,6 +549,13 @@ declare namespace axe {
     matches: (node: ElementLike, definition: any) => boolean;
   }
 
+  interface Constants {
+    NA: 'inapplicable';
+    PASS: 'passed';
+    CANTTELL: 'cantTell';
+    FAIL: 'failed';
+  }
+
   interface EnvironmentData {
     testEngine: TestEngine;
     testRunner: TestRunner;
@@ -561,6 +568,7 @@ declare namespace axe {
   let plugins: any;
   let utils: Utils;
   let commons: Commons;
+  let constants: Constants;
 
   /**
    * Source string to use as an injected script in Selenium
