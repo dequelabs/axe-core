@@ -153,10 +153,9 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync([
-    'test/integration/full/**/*.{html,xhtml}',
-    '!**/frames/**/*.{html,xhtml}'
-  ]).map(url => {
+  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
+    ignore: '**/frames/**/*.{html,xhtml}'
+  }).map(url => {
     return 'http://localhost:9876/' + url;
   });
 
