@@ -4,7 +4,7 @@
 
 declare namespace axe {
   // TODO: create type to represent Element | AbstractVirtualNode
-  type ElementLike = Element | AbstractVirtualNode
+  type ElementLike = Element | AbstractVirtualNode;
 
   type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
