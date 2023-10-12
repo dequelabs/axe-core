@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.2](https://github.com/dequelabs/axe-core/compare/v4.8.1...v4.8.2) (2023-09-18)
+
+### Bug Fixes
+
+- polyfill Object.hasOwn for node 14 ([#4152](https://github.com/dequelabs/axe-core/issues/4152)) ([c7b597b](https://github.com/dequelabs/axe-core/commit/c7b597b9ec9c74009f4ddac16d5311ee642ab352))
+
 ### [4.8.1](https://github.com/dequelabs/axe-core/compare/v4.8.0...v4.8.1) (2023-09-08)
 
 ### Bug Fixes
