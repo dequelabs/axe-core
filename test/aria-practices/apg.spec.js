@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const AxeBuilder = require('@axe-core/webdriverjs');
+const { AxeBuilder } = require('@axe-core/webdriverjs');
 const { getWebdriver } = require('../get-webdriver');
 const { assert } = require('chai');
 const { globSync } = require('glob');
