@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const handler = require('serve-handler');
-const AxeBuilder = require('@axe-core/webdriverjs');
+const { AxeBuilder } = require('@axe-core/webdriverjs');
 const { getWebdriver } = require('../get-webdriver');
 const { assert } = require('chai');
 

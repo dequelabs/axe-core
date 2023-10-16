@@ -130,7 +130,7 @@
     "es6-promise": "^4.2.8",
     "esbuild": "^0.10.x",
     "eslint": "^8.31.0",
-    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
     "execa": "5.x",
     "glob": "^10.3.10",
@@ -174,7 +174,7 @@
     "standard-version": "^9.5.0",
     "start-server-and-test": "^1.15.2",
     "typedarray": "^0.0.7",
-    "typescript": "^4.9.4",
+    "typescript": "^5.2.2",
     "uglify-js": "^3.17.4",
     "wcag-act-rules": "github:w3c/wcag-act-rules#2341a1b",
     "weakmap-polyfill": "^2.0.4"
