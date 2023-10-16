@@ -156,7 +156,7 @@
     "karma-mocha": "^2.0.1",
     "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "^0.0.36",
-    "lint-staged": "^13.1.0",
+    "lint-staged": "^15.0.1",
     "memoizee": "^0.4.15",
     "minami": "^1.2.3",
     "mocha": "^10.2.0",
