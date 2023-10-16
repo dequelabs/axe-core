@@ -281,9 +281,9 @@ declare namespace axe {
   interface AfterResult {
     id: string;
     data?: unknown;
-    relatedNodes: SerialDqElement[];
+    relatedNodes: DqElement[];
     result: boolean | undefined;
-    node: SerialDqElement;
+    node: DqElement;
   }
   interface Check {
     id: string;
@@ -367,6 +367,10 @@ declare namespace axe {
     selector: UnlabelledFrameSelector;
     xpath: string[];
     ancestry: UnlabelledFrameSelector;
+  }
+  interface DqElement extends SerialDqElement {
+    toJSON(): SerialDqElement;
+    element: Element;
   }
   interface PartialRuleResult {
     id: string;
@@ -470,7 +474,7 @@ declare namespace axe {
     DqElement: new (
       elm: Element,
       options?: { absolutePaths?: boolean }
-    ) => SerialDqElement;
+    ) => DqElement;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
       buf?: Uint8Array | Array<number>,
