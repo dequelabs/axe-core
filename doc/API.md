@@ -228,7 +228,7 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-      - `impact` - string(required). Sets the impact of that rule's results
+      - `impact` - string(required). Sets the impact of that rule's results. See [Issue Impacts](issue_impact.md) for more information.
       - `reviewOnFail` - boolean(option, default `false`). Override the result of a rule to return "Needs Review" rather than "Violation" if the rule fails.
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
@@ -678,15 +678,15 @@ Each object returned in these arrays have the following properties:
 - `help` - Help text that describes the test that was performed
 - `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
 - `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
-- `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
+- `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed. See [Issue Impacts](issue_impact.md) for more information.
 - `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.run` parameters for more information](#parameters-axerun)).
 - `nodes` - Array of all elements the Rule tested
   - `html` - Snippet of HTML of the Element
-  - `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
+  - `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed. See [Issue Impacts](issue_impact.md) for more information.
   - `target` - Array of either strings or Arrays of strings. If the item in the array is a string, then it is a CSS selector. If there are multiple items in the array each item corresponds to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`. If the item in the Array is an Array of strings, then it points to an element in a shadow DOM and each item (except the n-1th) in this array is a selector to a DOM element with a shadow DOM. The last element in the array points to the final shadow DOM node.
   - `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
     - `id` - Unique identifier for this check. Check ids may be the same as Rule ids
-    - `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+    - `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule. See [Issue Impacts](issue_impact.md) for more information.
     - `message` - Description of why this check passed or failed
     - `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
     - `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
