@@ -7,7 +7,7 @@ declare namespace axe {
 
   type TagValue = string;
 
-  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
+  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'rawEnv' | 'no-passes';
 
   type RunOnlyType = 'rule' | 'rules' | 'tag' | 'tags';
 
@@ -132,7 +132,7 @@ declare namespace axe {
   interface RunOptions {
     runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
-    reporter?: ReporterVersion;
+    reporter?: ReporterVersion | string;
     resultTypes?: resultGroups[];
     selectors?: boolean;
     ancestry?: boolean;
