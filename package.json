@@ -170,7 +170,7 @@
     "sinon": "^17.0.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^9.5.0",
-    "start-server-and-test": "^1.15.2",
+    "start-server-and-test": "^2.0.1",
     "typedarray": "^0.0.7",
     "typescript": "^5.2.2",
     "uglify-js": "^3.17.4",
