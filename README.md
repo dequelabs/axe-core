@@ -93,7 +93,7 @@ The [axe-core API](doc/API.md) package consists of:
 
 ## Localization
 
-Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
+Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
 
 `grunt build --lang=nl`
 
