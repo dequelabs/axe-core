@@ -63,11 +63,11 @@ describe('external API', () => {
     });
     it('must have the signature String -> String {role.type}', () => {
       const keys = getKeys(axe.commons.aria.lookupTable.role);
-      const types = getValues(axe.commons.aria.lookupTable.role).map(function (
-        role
-      ) {
-        return role.type;
-      });
+      const types = getValues(axe.commons.aria.lookupTable.role).map(
+        function (role) {
+          return role.type;
+        }
+      );
       keys.forEach(assert.isString);
       types.forEach(assert.isString);
     });

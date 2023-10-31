@@ -12,16 +12,19 @@ describe('color.elementHasImage', function () {
   });
 
   it('returns true when `HTMLElement` is of graphical type', function () {
-    ['img', 'canvas', 'object', 'iframe', 'video', 'svg'].forEach(function (
-      nodeName
-    ) {
-      var vNode = queryFixture(
-        '<' + nodeName + ' id="target"></' + nodeName + '>'
-      );
-      var actual = elementHasImage(vNode.actualNode);
-      assert.isTrue(actual);
-      assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
-    });
+    ['img', 'canvas', 'object', 'iframe', 'video', 'svg'].forEach(
+      function (nodeName) {
+        var vNode = queryFixture(
+          '<' + nodeName + ' id="target"></' + nodeName + '>'
+        );
+        var actual = elementHasImage(vNode.actualNode);
+        assert.isTrue(actual);
+        assert.equal(
+          axe.commons.color.incompleteData.get('bgColor'),
+          'imgNode'
+        );
+      }
+    );
   });
 
   it('returns false when `HTMLElement` has no background-image style set', function () {
