@@ -332,6 +332,14 @@ declare namespace axe {
     xpath: string[];
     ancestry: UnlabelledFrameSelector;
   }
+  interface DqElement extends axe.SerialDqElement {
+    element: Element;
+    toJSON(): axe.SerialDqElement;
+    mergeSpecs(
+      childSpec: axe.SerialDqElement,
+      parentSpec: axe.SerialDqElement
+    ): axe.SerialDqElement;
+  }
   interface PartialRuleResult {
     id: string;
     result: 'inapplicable';
@@ -351,11 +359,11 @@ declare namespace axe {
   }
 
   interface RawCheckResult extends Omit<CheckResult, 'relatedNodes'> {
-    relatedNodes?: SerialDqElement[];
+    relatedNodes?: Array<SerialDqElement | DqElement>;
   }
 
   interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
-    node: SerialDqElement;
+    node: SerialDqElement | DqElement;
     any: RawCheckResult[];
     all: RawCheckResult[];
     none: RawCheckResult[];
@@ -401,7 +409,7 @@ declare namespace axe {
     DqElement: new (
       elm: Element,
       options?: { absolutePaths?: boolean }
-    ) => SerialDqElement;
+    ) => DqElement;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
       buf?: Uint8Array | Array<number>,

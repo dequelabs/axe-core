@@ -364,7 +364,10 @@ const results: axe.RawResult[] = [
             data: null,
             impact: 'serious',
             message: 'Element has sufficient color contrast of 21',
-            relatedNodes: [new axe.utils.DqElement(document.body)]
+            relatedNodes: [
+              new axe.utils.DqElement(document.body),
+              new axe.utils.DqElement(document.body).toJSON()
+            ]
           }
         ],
         all: [],
