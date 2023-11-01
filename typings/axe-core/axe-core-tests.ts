@@ -344,6 +344,41 @@ axe.configure({
   }
 });
 
+const results: axe.RawResult[] = [
+  {
+    id: 'the-best-rule',
+    result: 'passed',
+    pageLevel: false,
+    impact: null,
+    tags: ['best-practice'],
+    description: 'Be cool',
+    help: 'No, cooler',
+    helpUrl:
+      'https://dequeuniversity.com/rules/axe/4.8/the-best-rule?application=axeAPI',
+    inapplicable: [],
+    passes: [
+      {
+        any: [
+          {
+            id: 'the-best-check',
+            data: null,
+            impact: 'serious',
+            message: 'Element has sufficient color contrast of 21',
+            relatedNodes: [new axe.utils.DqElement(document.body)]
+          }
+        ],
+        all: [],
+        none: [],
+        impact: null,
+        result: 'passed',
+        node: new axe.utils.DqElement(document.body)
+      }
+    ],
+    incomplete: [],
+    violations: []
+  }
+];
+
 // Reporters
 let fooReporter = (
   results: axe.RawResult[],
