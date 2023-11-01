@@ -1,6 +1,5 @@
 // Type definitions for axe-core
 // Project: https://github.com/dequelabs/axe-core
-// Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
   type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
@@ -351,16 +350,21 @@ declare namespace axe {
     frameContext: FrameContextObject;
   }
 
+  interface RawCheckResult extends Omit<CheckResult, 'relatedNodes'> {
+    relatedNodes?: SerialDqElement[];
+  }
+
   interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
-    any: CheckResult[];
-    all: CheckResult[];
-    none: CheckResult[];
+    node: SerialDqElement;
+    any: RawCheckResult[];
+    all: RawCheckResult[];
+    none: RawCheckResult[];
     impact: ImpactValue | null;
     result: T;
   }
 
   interface RawResult extends Omit<Result, 'nodes'> {
-    inapplicable: [];
+    inapplicable: Array<never>;
     passes: RawNodeResult<'passed'>[];
     incomplete: RawNodeResult<'incomplete'>[];
     violations: RawNodeResult<'failed'>[];
@@ -383,6 +387,7 @@ declare namespace axe {
     attr(attr: string): string | null;
     hasAttr(attr: string): boolean;
     props: { [key: string]: unknown };
+    boundingClientRect: DOMRect;
   }
 
   interface Utils {
