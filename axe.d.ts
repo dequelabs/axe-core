@@ -332,13 +332,13 @@ declare namespace axe {
     xpath: string[];
     ancestry: UnlabelledFrameSelector;
   }
-  interface DqElement extends axe.SerialDqElement {
+  interface DqElement extends SerialDqElement {
     element: Element;
-    toJSON(): axe.SerialDqElement;
+    toJSON(): SerialDqElement;
     mergeSpecs(
-      childSpec: axe.SerialDqElement,
-      parentSpec: axe.SerialDqElement
-    ): axe.SerialDqElement;
+      childSpec: SerialDqElement,
+      parentSpec: SerialDqElement
+    ): SerialDqElement;
   }
   interface PartialRuleResult {
     id: string;
