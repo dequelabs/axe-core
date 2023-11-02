@@ -57,6 +57,7 @@ jobs:
         run: |
           git reset HEAD --hard
           git checkout $BRANCH_NAME
+          npm ci
           npm run build
           git status
           git config user.name github-actions

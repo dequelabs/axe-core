@@ -8,7 +8,8 @@ module.exports = function (grunt) {
   grunt.registerMultiTask(
     'aria-supported',
     'Task for generating a diff of supported aria roles and properties.',
-    function () {
+    async function () {
+      const done = this.async();
       /**
        * NOTE:
        * `axe` has to be dynamically required at this stage,
@@ -37,11 +38,7 @@ module.exports = function (grunt) {
       };
 
       const { ariaRoles, ariaAttrs } = axe.utils.getStandards();
-      const { diff: rolesTable, notes: rolesFootnotes } = getDiff(
-        roles,
-        ariaRoles,
-        listType
-      );
+      const { notes: rolesFootnotes } = getDiff(roles, ariaRoles, listType);
 
       const ariaQueryAriaAttributes = getAriaQueryAttributes();
       const { diff: attributesTable, notes: attributesFootnotes } = getDiff(
@@ -69,10 +66,11 @@ module.exports = function (grunt) {
       const destFile = this.data.destFile;
       // Format the content so Prettier doesn't create a diff after running.
       // See https://github.com/dequelabs/axe-core/issues/1310.
-      const formattedContent = format(content, destFile);
+      const formattedContent = await format(content, destFile);
 
       // write `aria supported` file contents
       grunt.file.write(destFile, formattedContent);
+      done();
 
       /**
        * Get list of aria attributes, from `aria-query`

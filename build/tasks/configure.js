@@ -23,12 +23,12 @@ module.exports = function (grunt) {
           options.locale = match[1];
         }
 
-        buildRules(grunt, options, null, function (result) {
+        buildRules(grunt, options, null, async function (result) {
           grunt.file.write(file.dest.auto, 'axe._load(' + result.auto + ');');
 
           // Format the content so Prettier doesn't create a diff after running.
           // See https://github.com/dequelabs/axe-core/issues/1310.
-          const descriptionsContent = format(
+          const descriptionsContent = await format(
             result.descriptions,
             file.dest.descriptions
           );
