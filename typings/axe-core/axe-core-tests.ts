@@ -2,7 +2,13 @@ import * as axe from '../../axe';
 
 var context: any = document;
 var $fixture = [document];
-var options = { iframes: false, selectors: false, elementRef: false };
+var options: axe.RunOptions = {
+  iframes: false,
+  selectors: false,
+  elementRef: false
+};
+options.reporter = 'rawEnv';
+options.reporter = 'custom';
 
 axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
   if (error) {
