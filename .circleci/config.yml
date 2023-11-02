@@ -33,10 +33,7 @@ restore_build: &restore_build
 commands:
   browser-tools-job:
     steps:
-      - browser-tools/install-browser-tools:
-          # https://googlechromelabs.github.io/chrome-for-testing/ - 118.0.5993.70
-          chrome-version: 118.0.5993.70
-
+      - browser-tools/install-browser-tools
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
