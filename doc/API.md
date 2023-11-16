@@ -72,7 +72,7 @@ For a full listing of API offered by axe, clone the repository and run `npm run 
 
 ### Axe-core Tags
 
-Each rule in axe-core has a number of tags. These provide metadata about the rule. Each rule has one tag that indicates which WCAG version / level it belongs to, or if it doesn't it have the `best-practice` tag. If the rule is required by WCAG, there is a tag that references the success criterion number. For example, the `wcag111` tag means a rule is required for WCAG 2 success criterion 1.1.1.
+Each rule in axe-core has a number of tags. These provide metadata about the rule. Each rule has one tag that indicates which WCAG version / level it belongs to, or if it doesn't, it will have the `best-practice` tag. If the rule is required by WCAG, there is a tag that references the success criterion number. For example, the `wcag111` tag means a rule is required for WCAG 2 success criterion 1.1.1.
 
 The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
