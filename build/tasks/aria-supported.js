@@ -70,11 +70,16 @@ module.exports = function (grunt) {
       const destFile = this.data.destFile;
       // Format the content so Prettier doesn't create a diff after running.
       // See https://github.com/dequelabs/axe-core/issues/1310.
-      format(content, destFile).then(formattedContent => {
-        // write `aria supported` file contents
-        grunt.file.write(destFile, formattedContent);
-        done();
-      });
+      format(content, destFile)
+        .then(formattedContent => {
+          // write `aria supported` file contents
+          grunt.file.write(destFile, formattedContent);
+          done();
+        })
+        .catch(err => {
+          console.error(err.message);
+          done(false);
+        });
 
       /**
        * Get list of aria attributes, from `aria-query`

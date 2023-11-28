@@ -28,12 +28,15 @@ module.exports = function (grunt) {
 
           // Format the content so Prettier doesn't create a diff after running.
           // See https://github.com/dequelabs/axe-core/issues/1310.
-          format(result.descriptions, file.dest.descriptions).then(
-            descriptionsContent => {
+          format(result.descriptions, file.dest.descriptions)
+            .then(descriptionsContent => {
               grunt.file.write(file.dest.descriptions, descriptionsContent);
               done();
-            }
-          );
+            })
+            .catch(err => {
+              console.error(err.message);
+              done(false);
+            });
         });
       });
     }
