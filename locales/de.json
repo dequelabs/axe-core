@@ -170,7 +170,7 @@
       "help": "Überschriften dürfen nichtleer sein."
     },
     "empty-table-header": {
-      "description": "Stellt sicher, dass Tabellenkopfzeilen einen erkennbaren Text haben.",
+      "description": "Stellt sicher, dass Tabellenkopfzeilen einen wahrnehmbaren Text beinhalten.",
       "help": "Tabellenkopfzeilen sollten nicht leer sein."
     },
     "focus-order-semantics": {
@@ -230,8 +230,8 @@
       "help": "Der Alternativtext von Bildern sollte nicht als Text wiederholt werden."
     },
     "input-button-name": {
-      "description": "Stellt sicher, dass Eingabeschaltflächen sichtbaren Text beinhalten.",
-      "help": "Eingabeschaltflächen müssen sichtbaren Text beinhalten."
+      "description": "Stellt sicher, dass Eingabeschaltflächen wahrnehmbaren Text beinhalten.",
+      "help": "Eingabeschaltflächen müssen wahrnehmbaren Text beinhalten."
     },
     "input-image-alt": {
       "description": "Stellt sicher, dass <input type=\"image\">-Elemente einen Alternativtext besitzen.",
@@ -282,16 +282,16 @@
       "help": "Seite muss eine main landmark enthalten."
     },
     "landmark-unique": {
-      "help": "Landmarks müssen eine einzigartige role oder role/label/title Kombination (bzw. zugänglicher Name / accessible name) besitzen.",
-      "description": "Stellt sicher, dass landmarks einzigartig sind."
+      "help": "Stellt sicher, dass landmarks einzigartig sind.",
+      "description": "Landmarks müssen eine einzigartige role oder role/label/title Kombination (bzw. zugänglicher Name / accessible name) besitzen."
     },
     "link-in-text-block": {
       "description": "Stellt sicher, dass Links vom umgebenden Text nicht allein durch die Farbe unterschieden werden können.",
       "help": "Links müssen vom umgebenden Text auf eine Weise unterschieden werden können, die nicht allein auf Farbe beruht."
     },
     "link-name": {
-      "description": "Stellt sicher, dass Links wahrnehmbaren Text enthalten.",
-      "help": "Links müssen wahrnehmbaren Text enthalten."
+      "description": "Stellt sicher, dass Links wahrnehmbaren Text beinhalten.",
+      "help": "Links müssen wahrnehmbaren Text beinhalten."
     },
     "list": {
       "description": "Stellt sicher, dass Listen korrekt strukturiert sind.",
@@ -604,8 +604,8 @@
       "pass": "Das Element hat einen ausreichenden Kontrast von ${data.contrastRatio}.",
       "fail": {
         "default": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Vordergrund- und der Schattenfarbe (Vordergrundfarbe: ${data.fgColor}, Textschattenfarbe: ${data.shadowColor}, Schriftgröße: ${data.fontSize}, Schriftgewicht: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Schattenfarbe und der Hintergrundfarbe (Textschattenfarbe: ${data.shadowColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftgewicht: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}"
+        "fgOnShadowColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Vordergrund- und der Schattenfarbe (Vordergrundfarbe: ${data.fgColor}, Textschattenfarbe: ${data.shadowColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Schattenfarbe und der Hintergrundfarbe (Textschattenfarbe: ${data.shadowColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Das Kontrastverhältnis konnte nicht ermittelt werden.",
@@ -630,8 +630,8 @@
       },
       "fail": {
         "default": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Vordergrund- und der Schattenfarbe (Vordergrundfarbe: ${data.fgColor}, Textschattenfarbe: ${data.shadowColor}, Schriftgröße: ${data.fontSize}, Schriftgewicht: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Schattenfarbe und der Hintergrundfarbe (Textschattenfarbe: ${data.shadowColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftgewicht: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}"
+        "fgOnShadowColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Vordergrund- und der Schattenfarbe (Vordergrundfarbe: ${data.fgColor}, Textschattenfarbe: ${data.shadowColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} zwischen der Schattenfarbe und der Hintergrundfarbe (Textschattenfarbe: ${data.shadowColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}). Erwartetes Kontrastverhältnis von ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Das Kontrastverhältnis konnte nicht ermittelt werden.",
