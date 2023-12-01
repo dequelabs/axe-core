@@ -125,7 +125,7 @@
     "colorjs.io": "^0.4.3",
     "conventional-commits-parser": "^5.0.0",
     "core-js": "^3.27.1",
-    "css-selector-parser": "^1.4.1",
+    "css-selector-parser": "^3.0.2",
     "emoji-regex": "^10.2.1",
     "es6-promise": "^4.2.8",
     "esbuild": "^0.10.x",
