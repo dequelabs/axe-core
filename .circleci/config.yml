@@ -240,15 +240,31 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
 
-  # Test node API
-  test_node:
+  # Test jsdom API
+  test_jsdom:
     <<: *defaults
     <<: *unix_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
       - <<: *restore_build
+      - run: npm run test:jsdom
+
+  # Test node versions
+  test_node:
+    parameters:
+      node-version:
+        type: string
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - <<: *restore_build
+      - node/install:
+          node-version: << parameters.node-version >>
       - run: npm run test:node
+
 
   # Release a "next" version
   next_release:
@@ -360,9 +376,15 @@ workflows:
       - test_rule_help_version:
           requires:
             - build_unix
+      - test_jsdom:
+          requires:
+            - build_unix
       - test_node:
           requires:
             - build_unix
+          matrix:
+            parameters:
+              node-version: ["16.9.0", "18.17.1"]
       # Verify the sri history is correct
       - verify_sri:
           requires:
@@ -385,6 +407,7 @@ workflows:
             - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
+            - test_jsdom
             - test_node
             - verify_sri
           filters:
@@ -403,6 +426,7 @@ workflows:
             - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
+            - test_jsdom
             - test_node
           filters:
             branches:
