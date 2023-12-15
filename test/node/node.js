@@ -1,4 +1,4 @@
-// this file is purposefully written without mocha and in non-es6 syntax in order
+// this file is purposefully written without mocha and in es5 syntax in order
 // to be compatible with node 4+
 
 var axe = require('../../');
