@@ -23,6 +23,7 @@ var domStr =
 initJsdom(function (err, window) {
   assert.equal(err, null);
 
+  console.log('running axe');
   axe.run(
     window.document.documentElement,
     {
@@ -31,6 +32,7 @@ initJsdom(function (err, window) {
     function (axeError, results) {
       assert.equal(axeError, null);
       assert.notEqual(results.violations.length, 0);
+      console.log('axe ran successfully');
     }
   );
 });
@@ -50,11 +52,14 @@ function initJsdom(callback) {
     var majorNodeVersion = process.versions.node.split('.')[0];
     var jsdomVersion = nodeToJsdomMatrix[majorNodeVersion] || 'latest';
 
+    console.log('node version detected as: v' + majorNodeVersion);
+    console.log('installing jsdom v' + jsdomVersion);
     exec('npm install jsdom@' + jsdomVersion, function (installError) {
       if (installError) {
         callback(installError);
       }
 
+      console.log('installed');
       var jsdom = require('jsdom');
 
       // jsdom 9

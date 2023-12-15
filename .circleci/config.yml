@@ -384,7 +384,7 @@ workflows:
             - build_unix
           matrix:
             parameters:
-              node-version: ['16.9.0', '18.17.1']
+              node-version: ['6', '8', '10', '12', '14', '16', '18', '20']
       # Verify the sri history is correct
       - verify_sri:
           requires:
