@@ -3,7 +3,7 @@
 
 var axe = require('../../');
 var assert = require('assert');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
 var domStr =
   '<!DOCTYPE html>' +
@@ -54,11 +54,18 @@ function initJsdom(callback) {
 
     console.log('node version detected as: v' + majorNodeVersion);
     console.log('installing jsdom v' + jsdomVersion);
-    exec('npm install jsdom@' + jsdomVersion, function (installError) {
-      if (installError) {
-        callback(installError);
-      }
-
+    var child = spawn('npm', ['install', 'jsdom@' + jsdomVersion], {
+      cwd: __dirname
+    });
+    child.stdout.setEncoding('utf8');
+    child.stderr.setEncoding('utf8');
+    child.stdout.on('data', function (data) {
+      console.log(data);
+    });
+    child.stderr.on('data', function (data) {
+      console.error(data);
+    });
+    child.on('close', function () {
       console.log('installed');
       var jsdom = require('jsdom');
 
@@ -78,6 +85,8 @@ function initJsdom(callback) {
         callback(null, dom.window);
       }
     });
+
+    // exec('npm install jsdom@' + jsdomVersion, function (installError) {
   } catch (err) {
     callback(err);
   }
