@@ -265,7 +265,6 @@ jobs:
           node-version: << parameters.node-version >>
       - run: npm run test:node
 
-
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -384,7 +383,7 @@ workflows:
             - build_unix
           matrix:
             parameters:
-              node-version: ["16.9.0", "18.17.1"]
+              node-version: ['16.9.0', '18.17.1']
       # Verify the sri history is correct
       - verify_sri:
           requires:
