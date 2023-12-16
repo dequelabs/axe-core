@@ -37,6 +37,12 @@ initJsdom(function (err, window) {
   );
 });
 
+/**
+ * Install a version of jsdom that is compatible with the currently running node
+ * version and return the jsdom window object.
+ * @param {Function} callback - callback function when jsdom is installed.
+ * Is passed any error object and the jsdom window object.
+ */
 function initJsdom(callback) {
   try {
     var nodeToJsdomMatrix = {
@@ -85,8 +91,6 @@ function initJsdom(callback) {
         callback(null, dom.window);
       }
     });
-
-    // exec('npm install jsdom@' + jsdomVersion, function (installError) {
   } catch (err) {
     callback(err);
   }
