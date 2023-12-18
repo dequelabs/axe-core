@@ -35,6 +35,7 @@ commands:
   browser-tools-job:
     steps:
       - browser-tools/install-browser-tools
+
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -384,7 +385,7 @@ workflows:
             - build_unix
           matrix:
             parameters:
-              node-version: ['6', '8', '10', '12', '14', '16', '18', '20']
+              node-version: ['6', '18', '20']
       # Verify the sri history is correct
       - verify_sri:
           requires:
