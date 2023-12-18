@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.3](https://github.com/dequelabs/axe-core/compare/v4.8.2...v4.8.3) (2023-12-18)
+
+### Bug Fixes
+
+- add Object.values polyfill for node <=6 ([#4274](https://github.com/dequelabs/axe-core/issues/4274)) ([b39b0e6](https://github.com/dequelabs/axe-core/commit/b39b0e60b68f8c1e34dc056809a04f8ccf8f24c7))
+
 ### [4.8.2](https://github.com/dequelabs/axe-core/compare/v4.8.1...v4.8.2) (2023-09-18)
 
 ### Bug Fixes
