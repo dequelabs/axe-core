@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      # v4 download seems to have some flakiness with the download of artifacts so pinning to v3 for now
+      # @see https://github.com/actions/download-artifact/issues/249
+      - uses: actions/upload-artifact@v3
+        with:
+          name: axe-core
+          path: axe.js
+          retention-days: 1
+
+  test_node:
+    strategy:
+      matrix:
+        node: [6, 18, 20]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node}}
+      - uses: actions/download-artifact@v3
+        with:
+          name: axe-core
+      - run: npm run test:node

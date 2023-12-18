@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.8.2",
+  "version": "4.8.3",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -95,7 +95,8 @@
     "test:locales": "mocha test/test-locales.js",
     "test:virtual-rules": "mocha test/test-virtual-rules.js",
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
-    "test:node": "mocha test/node/*.js",
+    "test:node": "node test/node/node.js",
+    "test:jsdom": "mocha test/node/jsdom.js",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
@@ -147,7 +148,7 @@
     "inquirer": "^8.2.5",
     "jquery": "^3.6.3",
     "jsdoc": "^3.6.11",
-    "jsdom": "^22.1.0",
+    "jsdom": "^23.0.1",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.1",

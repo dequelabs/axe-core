@@ -109,7 +109,10 @@ module.exports = {
     },
     {
       // polyfills are mostly copy-pasted from sources so we don't control their styling
-      files: ['lib/core/utils/pollyfills.js'],
+      files: [
+        'lib/core/imports/polyfills.js',
+        'lib/core/utils/pollyfill-elements-from-point.js'
+      ],
       env: {
         browser: false
       },
