@@ -34,6 +34,7 @@ commands:
   browser-tools-job:
     steps:
       - browser-tools/install-browser-tools
+
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -240,15 +241,15 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
 
-  # Test node API
-  test_node:
+  # Test jsdom API
+  test_jsdom:
     <<: *defaults
     <<: *unix_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
       - <<: *restore_build
-      - run: npm run test:node
+      - run: npm run test:jsdom
 
   # Release a "next" version
   next_release:
@@ -360,7 +361,7 @@ workflows:
       - test_rule_help_version:
           requires:
             - build_unix
-      - test_node:
+      - test_jsdom:
           requires:
             - build_unix
       # Verify the sri history is correct
@@ -385,7 +386,7 @@ workflows:
             - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
-            - test_node
+            - test_jsdom
             - verify_sri
           filters:
             branches:
@@ -403,7 +404,7 @@ workflows:
             - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
-            - test_node
+            - test_jsdom
           filters:
             branches:
               only: develop

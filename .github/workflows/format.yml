@@ -17,7 +17,7 @@ jobs:
           cache: 'npm'
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
-        run: echo ".github" >> .prettierignore
+        run: echo ".github" >> .prettierignore && cat .prettierignore
       - run: npm run fmt
       # Prevent the prettierignore change from being committed.
       - run: git checkout .prettierignore
