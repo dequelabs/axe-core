@@ -14,7 +14,6 @@ unix_nightly_box: &unix_nightly_box
 orbs:
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.4.6
-  node: circleci/node@5.1.1
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH

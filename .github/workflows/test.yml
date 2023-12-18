@@ -22,7 +22,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: axe-core
-          path: axe-core.js
+          path: axe.js
           retention-days: 1
 
   test_node:
