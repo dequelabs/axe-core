@@ -21,7 +21,7 @@ jobs:
       - run: npm run build
       # v4 download seems to have some flakiness with the download of artifacts so pinning to v3 for now
       # @see https://github.com/actions/download-artifact/issues/249
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: axe-core
           path: axe.js
