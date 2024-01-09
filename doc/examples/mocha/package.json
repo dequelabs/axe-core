@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "axe-core": "^4.6.2",
+    "chai": "^4.3.7",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.1",
