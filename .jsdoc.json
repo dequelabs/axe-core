@@ -12,7 +12,7 @@
     "destination": "./doc/api",
     "encoding": "utf8",
     "recurse": true,
-    "template": "./node_modules/minami"
+    "template": "./node_modules/clean-jsdoc-theme"
   },
   "plugins": ["plugins/markdown"]
 }
