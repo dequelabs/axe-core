@@ -471,7 +471,8 @@ describe('axe.utils.getSelector', function () {
       'aria-expanded',
       'aria-grabbed',
       'aria-pressed',
-      'aria-valuenow'
+      'aria-valuenow',
+      'xmlns'
     ];
     ignoredAttributes.forEach(function (att) {
       node.setAttribute(att, 'true');
