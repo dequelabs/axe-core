@@ -38,7 +38,7 @@
       "help": "ARIA 對話框和警報對話框節點應該有一個無障礙的名稱"
     },
     "aria-hidden-body": {
-      "description": "確保 <body> 沒有 aria-hidden=\"true\"。",
+      "description": "確保 <body> 沒有 aria-hidden=\"true\"",
       "help": "aria-hidden=\"true\" 不得出現在 <body>"
     },
     "aria-hidden-focus": {
@@ -202,7 +202,7 @@
       "help": "標題等級只能增加一級"
     },
     "hidden-content": {
-      "description": "告知使用者隱藏內容。",
+      "description": "告知使用者隱藏內容",
       "help": "應分析頁面上的隱藏內容"
     },
     "html-has-lang": {
@@ -283,7 +283,7 @@
     },
     "landmark-unique": {
       "help": "確保 landmark 的獨特性",
-      "description": " landmark 應具有獨特的角色或角色/標籤/標題（即無障礙的名稱）組合成唯一"
+      "description": "landmark 應具有獨特的角色或角色/標籤/標題（即無障礙的名稱） 組合成唯一"
     },
     "link-in-text-block": {
       "description": "確保連結以不依賴顏色的方式與周圍的文字區分開來",
@@ -386,8 +386,8 @@
       "help": "表格不應具有相同的摘要和標題"
     },
     "table-fake-caption": {
-      "description": "確保帶有標題的表格使用 <caption> 元素。",
-      "help": "資料或標題儲存格不得用於為資料表提供標題。"
+      "description": "確保帶有標題的表格使用 <caption> 元素",
+      "help": "資料或標題儲存格不得用於為資料表提供標題"
     },
     "target-size": {
       "description": "確保觸摸目標有足夠的尺寸和空間",
@@ -456,8 +456,8 @@
     "aria-errormessage": {
       "pass": "aria-errormessage 存在，並引用使用受支援的 aria-errormessage 技術的螢幕閱讀器可見的元素",
       "fail": {
-        "singular": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如，aria-live、aria-scribedby、role=alert 等）",
-        "plural": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如，aria-live、aria-scribedby、role=alert 等）",
+        "singular": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-scribedby、role=alert 等）",
+        "plural": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-scribedby、role=alert 等）",
         "hidden": "aria-errormessage 值 `${data.values}` 無法引用隱藏元素"
       },
       "incomplete": {
@@ -477,16 +477,16 @@
     "aria-prohibited-attr": {
       "pass": "允許使用 ARIA 屬性",
       "fail": {
-        "hasRolePlural": "${data.prohibited} 屬性不能與角色「${data.role}」一起使用。",
-        "hasRoleSingular": "${data.prohibited} 屬性不能與角色「${data.role}」一起使用。",
-        "noRolePlural": "${data.prohibited} 屬性不能在沒有有效角色屬性的 ${data.nodeName} 上使用。",
-        "noRoleSingular": "${data.prohibited} 屬性不能在沒有有效角色屬性的 ${data.nodeName} 上使用。"
+        "hasRolePlural": "${data.prohibited} 屬性不能與角色「${data.role}」一起使用",
+        "hasRoleSingular": "${data.prohibited} 屬性不能與角色「${data.role}」一起使用",
+        "noRolePlural": "${data.prohibited} 屬性不能在沒有有效角色屬性的 ${data.nodeName} 上使用",
+        "noRoleSingular": "${data.prohibited} 屬性不能在沒有有效角色屬性的 ${data.nodeName} 上使用"
       },
       "incomplete": {
-        "hasRoleSingular": "角色「${data.role}」較不支援 ${data.prohibited} 屬性。",
-        "hasRolePlural": "角色「${data.role}」不能很好地支援 ${data.prohibited} 屬性。",
-        "noRoleSingular": "沒有有效角色屬性的 ${data.nodeName} 不能很好地支援 ${data.prohibited} 屬性。",
-        "noRolePlural": "沒有有效角色屬性的 ${data.nodeName} 不能很好地支援 ${data.prohibited} 屬性。"
+        "hasRoleSingular": "角色「${data.role}」較不支援 ${data.prohibited} 屬性",
+        "hasRolePlural": "角色「${data.role}」不能很好地支援 ${data.prohibited} 屬性",
+        "noRoleSingular": "沒有有效角色屬性的 ${data.nodeName} 不能很好地支援 ${data.prohibited} 屬性",
+        "noRolePlural": "沒有有效角色屬性的 ${data.nodeName} 不能很好地支援 ${data.prohibited} 屬性"
       }
     },
     "aria-required-attr": {
@@ -564,7 +564,7 @@
     "fallbackrole": {
       "pass": "僅使用一個角色值",
       "fail": "僅使用一個角色值，因為舊版瀏覽器不支援後備角色",
-      "incomplete": "僅使用角色 'presentation' 或 'none' ，因為它們是同義詞。"
+      "incomplete": "僅使用角色 'presentation' 或 'none'，因為它們是同義詞"
     },
     "has-global-aria-attribute": {
       "pass": {
@@ -574,8 +574,8 @@
       "fail": "元素沒有全域 ARIA 屬性"
     },
     "has-widget-role": {
-      "pass": "元素具有小部件角色。",
-      "fail": "元素沒有小部件角色。"
+      "pass": "元素具有小部件角色",
+      "fail": "元素沒有小部件角色"
     },
     "invalidrole": {
       "pass": "ARIA 角色有效",
@@ -585,8 +585,8 @@
       }
     },
     "is-element-focusable": {
-      "pass": "元素是可聚焦的。",
-      "fail": "元素不可聚焦。"
+      "pass": "元素是可聚焦的",
+      "fail": "元素不可聚焦"
     },
     "no-implicit-explicit-label": {
       "pass": "<label> 和無障礙名稱之間沒有不匹配",
@@ -597,15 +597,15 @@
       "fail": "所使用的角色在螢幕閱讀器和輔助軟體並未被廣泛支持：${data}"
     },
     "valid-scrollable-semantics": {
-      "pass": "元素對於焦點次序中的元素具有有效語意。",
-      "fail": "對於焦點次序中的元素，元素具有無效語意。"
+      "pass": "元素對於焦點次序中的元素具有有效語意",
+      "fail": "對於焦點次序中的元素，元素具有無效語意"
     },
     "color-contrast-enhanced": {
       "pass": "元素具有足夠的顏色對比 ${data.contrastRatio}",
       "fail": {
-        "default": "元素的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，背景色：${data.bgColor}，字體大小：${data.fontSize}，字體粗細：${data.字體粗細})。預期對比 ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "元素的前景色與陰影顏色之間的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，文字陰影顏色：${data.shadowColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight})。預期對比 ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "元素的陰影顏色和背景顏色之間的 ${data.contrastRatio} 顏色對比不足（文字陰影顏色：${data.shadowColor}，背景顏色：${data.bgColor}，字體大小：${data.fontSize } ，字型粗細：${data.fontWeight})。預期對比 ${data.expectedContrastRatio}"
+        "default": "元素的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，背景色：${data.bgColor}，字體大小：${data.fontSize}，字體粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "元素的前景色與陰影顏色之間的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，文字陰影顏色：${data.shadowColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "元素的陰影顏色和背景顏色之間的 ${data.contrastRatio} 顏色對比不足（文字陰影顏色：${data.shadowColor}，背景顏色：${data.bgColor}，字體大小：${data.fontSize } ，字型粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "無法確定對比度",
@@ -629,9 +629,9 @@
         "hidden": "元素被隱藏"
       },
       "fail": {
-        "default": "元素的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，背景色：${data.bgColor}，字體大小：${data.fontSize}，字體粗細：${data.字體粗細})。預期對比 ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "元素的前景色與陰影顏色之間的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，文字陰影顏色：${data.shadowColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight})。預期對比 ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "元素的陰影顏色和背景顏色之間的 ${data.contrastRatio} 顏色對比不足（文字陰影顏色：${data.shadowColor}，背景顏色：${data.bgColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight})。預期對比 ${data.expectedContrastRatio}"
+        "default": "元素的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，背景色：${data.bgColor}，字體大小：${data.fontSize}，字體粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "元素的前景色與陰影顏色之間的 ${data.contrastRatio} 顏色對比不足（前景色：${data.fgColor}，文字陰影顏色：${data.shadowColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "元素的陰影顏色和背景顏色之間的 ${data.contrastRatio} 顏色對比不足（文字陰影顏色：${data.shadowColor}，背景顏色：${data.bgColor}，字體大小：${data.fontSize} ，字型粗細：${data.fontWeight}），預期對比 ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "無法確定對比度",
@@ -661,7 +661,7 @@
     "link-in-text-block": {
       "pass": "連結可以透過顏色以外的其他方式與周圍的文字區分開來",
       "fail": {
-        "fgContrast": "此連結與周圍文字的顏色對比 ${data.contrastRatio}:1 不足。 （最小對比為 ${data.requiredContrastRatio}:1，連結文字：${data.nodeColor}，周圍文字：${data.parentColor}）",
+        "fgContrast": "此連結與周圍文字的顏色對比 ${data.contrastRatio}:1 不足，(最小對比為 ${data.requiredContrastRatio}:1，連結文字：${data.nodeColor}，周圍文字：${data.parentColor}）",
         "bgContrast": "連結背景的顏色對比 ${data.contrastRatio} 不足（最小對比為 ${data.requiredContrastRatio}:1，連結背景顏色：${data.nodeBackgroundColor}，周圍背景顏色：${data.parentBackgroundColor}）"
       },
       "incomplete": {
@@ -718,8 +718,8 @@
       "incomplete": "無法確定元素是否有後代"
     },
     "landmark-is-top-level": {
-      "pass": "${data.role} landmark 位於頂層。",
-      "fail": "${data.role} landmark 包含在另一個 landmark 。"
+      "pass": "${data.role} landmark 位於頂層",
+      "fail": "${data.role} landmark 包含在另一個 landmark"
     },
     "no-focusable-content": {
       "pass": "元素沒有可聚焦的後代",
@@ -767,8 +767,8 @@
       "incomplete": "無法確定表單是否具有明確的標籤文字 <label>"
     },
     "help-same-as-label": {
-      "pass": "說明文字（ title or aria-describedby ）不重複標籤文字",
-      "fail": "說明文字（ title or aria-describedby ）文字與標籤文字相同"
+      "pass": "說明文字（title 或 aria-describedby） 不重複標籤文字",
+      "fail": "說明文字（title 或 aria-describedby） 文字與標籤文字相同"
     },
     "hidden-explicit-label": {
       "pass": "表單有一個可見且明確的標籤文字 <label>",
@@ -786,7 +786,7 @@
     },
     "multiple-label": {
       "pass": "表單欄位沒有多個標籤元素",
-      "incomplete": "輔助軟體並未廣泛支援多個標籤元素。確保第一個標籤包含所有必要的資訊。"
+      "incomplete": "輔助軟體並未廣泛支援多個標籤元素，確保第一個標籤包含所有必要的資訊"
     },
     "title-only": {
       "pass": "表單不僅僅使用 title 屬性作為其標籤",
@@ -799,7 +799,7 @@
     "has-lang": {
       "pass": "<html> 元素有一個 lang 屬性",
       "fail": {
-        "noXHTML": "xml:lang 屬性在 HTML 頁面上無效，請使用 lang 屬性。",
+        "noXHTML": "xml:lang 屬性在 HTML 頁面上無效，請使用 lang 屬性",
         "noLang": "<html> 元素沒有 lang 屬性"
       }
     },
@@ -862,11 +862,11 @@
       "fail": "<meta> 標記上的 ${data} 停用行動裝置上的縮放"
     },
     "target-offset": {
-      "pass": "目標與其最近的鄰近的元素有足夠的空間。安全可點選空間的距離為 ${data.closestOffset}px，至少為 ${data.minOffset}px。",
-      "fail": "目標與其最近鄰近的元素之間的空間不足。安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px。",
+      "pass": "目標與其最近的鄰近的元素有足夠的空間，安全可點選空間的距離為 ${data.closestOffset}px，至少為 ${data.minOffset}px",
+      "fail": "目標與其最近鄰近的元素之間的空間不足，安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px",
       "incomplete": {
-        "default": "tabindex 為負的元素與其最近鄰近的元素的空間不足。安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px。這是一個目標嗎？",
-        "nonTabbableNeighbor": "目標與其最近鄰近的元素之間的空間不足。安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px。鄰近的元素是目標嗎？"
+        "default": "tabindex 為負的元素與其最近鄰近的元素的空間不足，安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px，這是一個目標嗎？",
+        "nonTabbableNeighbor": "目標與其最近鄰近的元素之間的空間不足，安全可點擊空間的距離為 ${data.closestOffset}px，而不是至少 ${data.minOffset}px，鄰近的元素是目標嗎？"
       }
     },
     "target-size": {
@@ -879,10 +879,10 @@
         "partiallyObscured": "目標尺寸不足，因為它被部分遮蔽（最小空間為 ${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data.minSize}px）"
       },
       "incomplete": {
-        "default": "tabindex 為負的元素大小不足（${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data.minSize}px）。這是一個目標嗎？",
+        "default": "tabindex 為負的元素大小不足（${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data.minSize}px），這是一個目標嗎？",
         "contentOverflow": "由於內容溢出，無法準確確定元素大小",
-        "partiallyObscured": "tabindex 為負的元素大小不足，因為它被部分遮蔽（最小空間為 ${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data.minSize}像素）。這是一個目標嗎？",
-        "partiallyObscuredNonTabbable": "目標大小不足，因為它被負 tabindex 的鄰近的元素部分遮擋（最小空間為 ${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data .minSize }px）。相鄰的元素是目標嗎？"
+        "partiallyObscured": "tabindex 為負的元素大小不足，因為它被部分遮蔽（最小空間為 ${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data.minSize}像素），這是一個目標嗎？",
+        "partiallyObscuredNonTabbable": "目標大小不足，因為它被負 tabindex 的鄰近的元素部分遮擋（最小空間為 ${data.width}px x ${data.height}px，應至少為 ${data.minSize}px x ${data .minSize }px），相鄰的元素是目標嗎？"
       }
     },
     "header-present": {
@@ -896,7 +896,7 @@
     },
     "identical-links-same-purpose": {
       "pass": "沒有其他具有相同名稱且轉到不同 URL 連結",
-      "incomplete": "檢查連結是否有相同的目的，或是否故意含糊不清。"
+      "incomplete": "檢查連結是否有相同的目的，或是否故意含糊不清"
     },
     "internal-link-present": {
       "pass": "找到有效的跳過連結",
@@ -987,7 +987,7 @@
       "fail": "樣式屬性中的字母間距不得使用 !important，或位於 ${data.minValue}em（目前 ${data.value}em）"
     },
     "important-line-height": {
-      "pass": "style屬性中的line-height沒有設定為!important，或滿足最小值",
+      "pass": "style 屬性中的line-height沒有設定為!important，或滿足最小值",
       "fail": "style 屬性中的 line-height 不得使用 !important，或位於 ${data.minValue}em（目前 ${data.value}em）"
     },
     "important-word-spacing": {
@@ -1064,11 +1064,11 @@
       "fail": "表格的第一個子項目應該是標題而不是表格儲存格"
     },
     "html5-scope": {
-      "pass": "範圍屬性僅用於表頭元素 (<th>)",
-      "fail": "在 HTML 5 中，範圍屬性只能用在表頭元素 (<th>) 上"
+      "pass": "範圍屬性僅用於表頭元素（<th>）",
+      "fail": "在 HTML 5 中，範圍屬性只能用在表頭元素（<th>） 上"
     },
     "same-caption-summary": {
-      "pass": "摘要屬性和<caption>的內容不重複",
+      "pass": "摘要屬性和 <caption> 的內容不重複",
       "fail": "摘要屬性和 <caption> 元素的內容相同",
       "incomplete": "無法確定 <table> 元素是否有標題"
     },
@@ -1091,9 +1091,9 @@
       "incomplete": "表格資料單元格缺失或為空"
     },
     "hidden-content": {
-      "pass": "頁面上的所有內容都已分析。",
-      "fail": "分析此頁面上的內容時出現問題。",
-      "incomplete": "頁面上存在未分析的隱藏內容。您將需要觸發此內容的顯示才能對其進行分析。"
+      "pass": "頁面上的所有內容都已分析",
+      "fail": "分析此頁面上的內容時出現問題",
+      "incomplete": "頁面上存在未分析的隱藏內容，您將需要觸發此內容的顯示才能對其進行分析"
     }
   },
   "failureSummaries": {
