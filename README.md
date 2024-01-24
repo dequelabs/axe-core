@@ -183,4 +183,4 @@ Thanks to Marat Dulin for his [css-selector-parser](https://www.npmjs.com/packag
 
 ## Licenses
 
-Axe-core is distributed under an [MIT license](LICENSE). It comes bundled with several dependencies which are distributed under their own terms. (See [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt))
+Axe-core is distributed under the [Mozilla Public License, version 2.0](LICENSE). It comes bundled with several dependencies which are distributed under their own terms. (See [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt))
