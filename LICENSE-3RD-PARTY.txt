@@ -1,19 +1,23 @@
 -----------------------------------------------------------------------------
                               MIT License
   Applies to: 
-  - core-js-pure; Copyright (c) 2014-2023 Denis Pushkarev
-  - weakmap-polyfill; Copyright (c) 2015-2021 polygonplanet
-  - typedarray;
-      Copyright (c) 2010, Linden Research, Inc.
-      Copyright (c) 2012, Joshua Bell
-  - es6-promise;
-      Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors
   - colorjs.io; Copyright (c) 2021 Lea Verou, Chris Lilley
-  - emoji-regex; Copyright Mathias Bynens <https://mathiasbynens.be/>
+  - core-js-pure; Copyright (c) 2014-2023 Denis Pushkarev
   - css-selector-parser; Copyright (c) 2013 Dulin Marat
   - doT.js; Copyright (c) 2011 Laura Doktorova
       Software includes portions from jQote2 Copyright (c) 2010 aefxx,
       http://aefxx.com/ licensed under the MIT license.
+  - emoji-regex; Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
+  - es6-iterator; Copyright (c) 2013-2017 Mariusz Nowak (www.medikoo.com)
+  - es6-promise;
+      Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors
+  - event-emitter; Copyright (C) 2012-2015 Mariusz Nowak (www.medikoo.com)
+  - is-promise; Copyright (c) 2014 Forbes Lindesay
+  - lru-queue; Copyright (C) 2014 Mariusz Nowak (www.medikoo.com)
+  - typedarray;
+      Copyright (c) 2010, Linden Research, Inc.
+      Copyright (c) 2012, Joshua Bell
+  - weakmap-polyfill; Copyright (c) 2015-2021 polygonplanet
 -----------------------------------------------------------------------------
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,7 +42,15 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
                               ISC License
   Applies to: 
+  - d; Copyright (c) 2013-2019, Mariusz Nowak, @medikoo, medikoo.com
+  - es5-ext; Copyright (c) 2011-2022, Mariusz Nowak, @medikoo, medikoo.com
+  - es6-symbol; Copyright (c) 2013-2019, Mariusz Nowak, @medikoo, medikoo.com
+  - es6-weak-map; Copyright (c) 2013-2018, Mariusz Nowak, @medikoo, medikoo.com
+  - ext; Copyright (c) 2011-2022, Mariusz Nowak, @medikoo, medikoo.com
   - memoizee; Copyright (c) 2012-2018, Mariusz Nowak, @medikoo, medikoo.com
+  - next-tick; Copyright (c) 2012-2020, Mariusz Nowak, @medikoo, medikoo.com
+  - timers-ext; Copyright (c) 2013-2018, Mariusz Nowak, @medikoo, medikoo.com
+  - type; Copyright (c) 2019, Mariusz Nowak, @medikoo, medikoo.com
 -----------------------------------------------------------------------------
 
 Permission to use, copy, modify, and/or distribute this software for any
