@@ -55,7 +55,8 @@
     "axe.min.js",
     "axe.d.ts",
     "sri-history.json",
-    "locales/"
+    "locales/",
+    "LICENSE-3RD-PARTY.txt"
   ],
   "standard-version": {
     "scripts": {
