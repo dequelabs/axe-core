@@ -133,7 +133,7 @@ function buildWebDriver(browser) {
     ]);
     webdriver = chrome.Driver.createSession(options, service);
   } else if (browser === 'firefox') {
-    const options = new firefox.Options().headless();
+    const options = new firefox.Options().addArguments('--headless');
     webdriver = firefox.Driver.createSession(options);
   }
 
