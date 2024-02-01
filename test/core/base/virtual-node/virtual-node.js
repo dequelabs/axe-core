@@ -37,47 +37,45 @@ describe('VirtualNode', () => {
       assert.equal(vNode.props.type, 'text');
     });
 
-    it('should reflect selected property', () => {
-      node = document.createElement('option');
-      let vNode = new VirtualNode(node);
-      assert.equal(vNode.props.selected, false);
+    for (const [prop, tagName, examplePropValue] of [
+      ['value', 'input', 'test value'],
+      ['selected', 'option', true],
+      ['checked', 'input', true],
+      ['indeterminate', 'input', true],
+      ['multiple', 'select', true]
+    ]) {
+      describe(`props.${prop}`, () => {
+        it(`should reflect a ${tagName} element's ${prop} property`, () => {
+          node = document.createElement(tagName);
+          let vNode = new VirtualNode(node);
+          assert.equal(vNode.props[prop], '');
 
-      node.selected = true;
-      vNode = new VirtualNode(node);
-      assert.equal(vNode.props.selected, true);
-    });
-
-    describe('props.value', () => {
-      it("should reflect an input element's value property", () => {
-        node = document.createElement('input');
-        let vNode = new VirtualNode(node);
-        assert.equal(vNode.props.value, '');
-
-        node.value = 'test';
-        vNode = new VirtualNode(node);
-        assert.equal(vNode.props.value, 'test');
-      });
-
-      it('should be undefined for a text node', () => {
-        node = document.createTextNode('text content');
-        let vNode = new VirtualNode(node);
-        assert.equal(vNode.props.value, undefined);
-      });
-
-      // Regression test for #4316
-      it('should be resilient to text node with un-gettable value property', () => {
-        node = document.createTextNode('text content');
-        Object.defineProperty(node, 'value', {
-          get() {
-            throw new Error('Unqueryable value');
-          }
+          node[prop] = examplePropValue;
+          vNode = new VirtualNode(node);
+          assert.equal(vNode.props[prop], examplePropValue);
         });
-        let vNode = new VirtualNode(node);
-        assert.throws(() => node.value);
-        assert.doesNotThrow(() => vNode.props.value);
-        assert.equal(vNode.props.value, undefined);
+
+        it('should be undefined for a text node', () => {
+          node = document.createTextNode('text content');
+          let vNode = new VirtualNode(node);
+          assert.equal(vNode.props[prop], undefined);
+        });
+
+        // Regression test for #4316
+        it(`should be resilient to text node with un-gettable ${prop} property`, () => {
+          node = document.createTextNode('text content');
+          Object.defineProperty(node, prop, {
+            get() {
+              throw new Error('Unqueryable value');
+            }
+          });
+          let vNode = new VirtualNode(node);
+          assert.throws(() => node[prop]);
+          assert.doesNotThrow(() => vNode.props[prop]);
+          assert.equal(vNode.props[prop], undefined);
+        });
       });
-    });
+    }
 
     it('should lowercase type', () => {
       node = document.createElement('input');
