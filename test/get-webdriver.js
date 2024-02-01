@@ -6,7 +6,7 @@ const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);
 
   const webdriver = new Builder()
-    .setChromeOptions(new chrome.Options().headless())
+    .setChromeOptions(new chrome.Options().addArguments('headless'))
     .forBrowser('chrome')
     .setChromeService(service)
     .build();

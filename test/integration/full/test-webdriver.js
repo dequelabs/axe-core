@@ -125,16 +125,15 @@ function buildWebDriver(browser) {
   if (browser === 'chrome') {
     const service = new chrome.ServiceBuilder(chromedriver.path).build();
 
-    const options = new chrome.Options()
-      .headless()
-      .addArguments([
-        '--no-sandbox',
-        '--disable-extensions',
-        '--disable-dev-shm-usage'
-      ]);
+    const options = new chrome.Options().addArguments([
+      'headless',
+      '--no-sandbox',
+      '--disable-extensions',
+      '--disable-dev-shm-usage'
+    ]);
     webdriver = chrome.Driver.createSession(options, service);
   } else if (browser === 'firefox') {
-    const options = new firefox.Options().headless();
+    const options = new firefox.Options().addArguments('--headless');
     webdriver = firefox.Driver.createSession(options);
   }
 
