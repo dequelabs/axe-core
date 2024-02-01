@@ -47,6 +47,38 @@ describe('VirtualNode', () => {
       assert.equal(vNode.props.selected, true);
     });
 
+    describe('props.value', () => {
+      it("should reflect an input element's value property", () => {
+        node = document.createElement('input');
+        let vNode = new VirtualNode(node);
+        assert.equal(vNode.props.value, '');
+
+        node.value = 'test';
+        vNode = new VirtualNode(node);
+        assert.equal(vNode.props.value, 'test');
+      });
+
+      it('should be undefined for a text node', () => {
+        node = document.createTextNode('text content');
+        let vNode = new VirtualNode(node);
+        assert.equal(vNode.props.value, undefined);
+      });
+
+      // Regression test for #4316
+      it('should be resilient to text node with un-gettable value property', () => {
+        node = document.createTextNode('text content');
+        Object.defineProperty(node, 'value', {
+          get() {
+            throw new Error('Unqueryable value');
+          }
+        });
+        let vNode = new VirtualNode(node);
+        assert.throws(() => node.value);
+        assert.doesNotThrow(() => vNode.props.value);
+        assert.equal(vNode.props.value, undefined);
+      });
+    });
+
     it('should lowercase type', () => {
       node = document.createElement('input');
       node.setAttribute('type', 'COLOR');
