@@ -146,7 +146,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.7",
     "inquirer": "^8.2.5",
     "jquery": "^3.6.3",
     "jsdoc": "^4.0.2",
