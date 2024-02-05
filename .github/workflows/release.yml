@@ -14,11 +14,6 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      # https://github.com/actions/runner-images/issues/8362
-      - name: Install Hub
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y hub
       - name: Run release script and open PR
         run: |
           git config user.name "API Team CI User"
@@ -44,11 +39,9 @@ jobs:
               --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
           )
 
-          echo "chore(release): v$Version" > /tmp/pr.txt
-          echo "" >> /tmp/pr.txt
           echo "$ReleaseNotes" >> /tmp/pr.txt
           echo "" >> /tmp/pr.txt
           echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
-          hub pull-request --file /tmp/pr.txt --base master
+          gh pr create --title "chore(release): v$Version" --body-file "/tmp/pr.txt" --base release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
