@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.9.0](https://github.com/dequelabs/axe-core/compare/v4.8.3...v4.9.0) (2024-02-05)
+
+### Features
+
+- **i18n:** add Greek Translations ([#3836](https://github.com/dequelabs/axe-core/issues/3836)) ([3ea9a48](https://github.com/dequelabs/axe-core/commit/3ea9a48cf88d02271db8b19651bff0415237b856))
+
+### Bug Fixes
+
+- Add LICENSE-3RD-PARTY.txt file ([#4304](https://github.com/dequelabs/axe-core/issues/4304)) ([daa0fe6](https://github.com/dequelabs/axe-core/commit/daa0fe677d4837c9c79bad8ee6c77aff11212339))
+- add Object.values polyfill for node <=6 ([#4274](https://github.com/dequelabs/axe-core/issues/4274)) ([5eb867b](https://github.com/dequelabs/axe-core/commit/5eb867b04e174140122c62eb5c705a842a3489e1))
+- avoid reading element-specific node properties of non-element node types ([#4317](https://github.com/dequelabs/axe-core/issues/4317)) ([b853b18](https://github.com/dequelabs/axe-core/commit/b853b18a24dd2d1c9408705b821cc11146ae1186)), closes [#4316](https://github.com/dequelabs/axe-core/issues/4316) [#4316](https://github.com/dequelabs/axe-core/issues/4316)
+- **d.ts:** RawNodesResult issues ([#4229](https://github.com/dequelabs/axe-core/issues/4229)) ([d660518](https://github.com/dequelabs/axe-core/commit/d6605181ec942bcca46e3bfe889064b3781919ca))
+- **d.ts:** RunOptions.reporter can be any string ([#4218](https://github.com/dequelabs/axe-core/issues/4218)) ([e53f5c5](https://github.com/dequelabs/axe-core/commit/e53f5c5184a0e5f75db65e7929a9da84d7ee6df6))
+- **scrollable-region-focusable:** missing wcag213 tag ([#4201](https://github.com/dequelabs/axe-core/issues/4201)) ([0080a72](https://github.com/dequelabs/axe-core/commit/0080a7255eb7f246bb7b6f53974a95b65983b83a))
+- **utils/get-selector:** ignore 'xmlns' attribute when generating a selector ([#4303](https://github.com/dequelabs/axe-core/issues/4303)) ([938b411](https://github.com/dequelabs/axe-core/commit/938b411bb0609b54e5c46a8e5b50c9ea4de4bdee))
+
 ### [4.8.3](https://github.com/dequelabs/axe-core/compare/v4.8.2...v4.8.3) (2023-12-18)
 
 ### Bug Fixes
