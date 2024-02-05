@@ -42,6 +42,6 @@ jobs:
           echo "$ReleaseNotes" >> /tmp/pr.txt
           echo "" >> /tmp/pr.txt
           echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
-          gh pr create --title "chore(release): v$Version" --body-file "/tmp/pr.txt" --base release
+          gh pr create --title "chore(release): v$Version" --body-file "/tmp/pr.txt" --base master
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
