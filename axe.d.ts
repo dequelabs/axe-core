@@ -1,13 +1,12 @@
 // Type definitions for axe-core
 // Project: https://github.com/dequelabs/axe-core
-// Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
   type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
   type TagValue = string;
 
-  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
+  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'rawEnv' | 'no-passes';
 
   type RunOnlyType = 'rule' | 'rules' | 'tag' | 'tags';
 
@@ -132,7 +131,7 @@ declare namespace axe {
   interface RunOptions {
     runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
-    reporter?: ReporterVersion;
+    reporter?: ReporterVersion | string;
     resultTypes?: resultGroups[];
     selectors?: boolean;
     ancestry?: boolean;
@@ -333,6 +332,14 @@ declare namespace axe {
     xpath: string[];
     ancestry: UnlabelledFrameSelector;
   }
+  interface DqElement extends SerialDqElement {
+    element: Element;
+    toJSON(): SerialDqElement;
+    mergeSpecs(
+      childSpec: SerialDqElement,
+      parentSpec: SerialDqElement
+    ): SerialDqElement;
+  }
   interface PartialRuleResult {
     id: string;
     result: 'inapplicable';
@@ -351,16 +358,21 @@ declare namespace axe {
     frameContext: FrameContextObject;
   }
 
+  interface RawCheckResult extends Omit<CheckResult, 'relatedNodes'> {
+    relatedNodes?: Array<SerialDqElement | DqElement>;
+  }
+
   interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
-    any: CheckResult[];
-    all: CheckResult[];
-    none: CheckResult[];
+    node: SerialDqElement | DqElement;
+    any: RawCheckResult[];
+    all: RawCheckResult[];
+    none: RawCheckResult[];
     impact: ImpactValue | null;
     result: T;
   }
 
   interface RawResult extends Omit<Result, 'nodes'> {
-    inapplicable: [];
+    inapplicable: Array<never>;
     passes: RawNodeResult<'passed'>[];
     incomplete: RawNodeResult<'incomplete'>[];
     violations: RawNodeResult<'failed'>[];
@@ -383,6 +395,7 @@ declare namespace axe {
     attr(attr: string): string | null;
     hasAttr(attr: string): boolean;
     props: { [key: string]: unknown };
+    boundingClientRect: DOMRect;
   }
 
   interface Utils {
@@ -396,7 +409,7 @@ declare namespace axe {
     DqElement: new (
       elm: Element,
       options?: { absolutePaths?: boolean }
-    ) => SerialDqElement;
+    ) => DqElement;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
       buf?: Uint8Array | Array<number>,
