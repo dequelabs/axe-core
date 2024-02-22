@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.4](https://github.com/dequelabs/axe-core/compare/v4.8.3...v4.8.4) (2024-02-07)
+
+### Bug Fixes
+
+- Add LICENSE-3RD-PARTY.txt file ([#4304](https://github.com/dequelabs/axe-core/issues/4304)) ([139c553](https://github.com/dequelabs/axe-core/commit/139c5535c72e926f03bb37a9ba0b7fd6b97cba8c))
+- avoid reading element-specific node properties of non-element node types ([#4317](https://github.com/dequelabs/axe-core/issues/4317)) ([a2a6935](https://github.com/dequelabs/axe-core/commit/a2a69355ea5aafce14367cf967153f7958a8878c)), closes [#4316](https://github.com/dequelabs/axe-core/issues/4316) [#4316](https://github.com/dequelabs/axe-core/issues/4316)
+- **d.ts:** RawNodesResult issues ([#4229](https://github.com/dequelabs/axe-core/issues/4229)) ([f105266](https://github.com/dequelabs/axe-core/commit/f1052662b3b8b57d520fcbd23a3e9d4a5660a7e1))
+- **d.ts:** RunOptions.reporter can be any string ([#4218](https://github.com/dequelabs/axe-core/issues/4218)) ([80de793](https://github.com/dequelabs/axe-core/commit/80de793362bbbffde85654e874942a26df0108a8))
+- **utils/get-selector:** ignore 'xmlns' attribute when generating a selector ([#4303](https://github.com/dequelabs/axe-core/issues/4303)) ([8c68546](https://github.com/dequelabs/axe-core/commit/8c6854661f4613d0b7a6ba98bbfdc0c9ca61b4d1))
+
 ### [4.8.3](https://github.com/dequelabs/axe-core/compare/v4.8.2...v4.8.3) (2023-12-18)
 
 ### Bug Fixes
