@@ -376,7 +376,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Los hijos ARIA requeridos están presentes",
+      "pass": {
+        "default": "Los hijos ARIA requeridos están presentes"
+      },
       "fail": {
         "singular": "Rol de hijos requerido en ARIA no presente: ${data.values}",
         "plural": "Rol de hijo requerido en ARIA no presente: ${data.values}"

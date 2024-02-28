@@ -444,7 +444,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Os ARIA filhos necessários estão presentes",
+      "pass": {
+        "default": "Os ARIA filhos necessários estão presentes"
+      },
       "fail": {
         "singular": "Função ARIA filha necessária ausente: ${data.values}",
         "plural": "Funções ARIA filhas necessárias ausentes: ${data.values}"

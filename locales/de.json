@@ -497,7 +497,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Alle benötigten ARIA Kinder sind vorhanden.",
+      "pass": {
+        "default": "Alle benötigten ARIA Kinder sind vorhanden."
+      },
       "fail": {
         "singular": "Benötigte ARIA Kindrolle nicht vorhanden: ${data.values}",
         "plural": "Benötigte ARIA Kindrollen nicht vorhanden: ${data.values}",
