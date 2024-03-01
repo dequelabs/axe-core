@@ -456,8 +456,8 @@
     "aria-errormessage": {
       "pass": "aria-errormessage 存在，並引用使用受支援的 aria-errormessage 技術的螢幕閱讀器可見的元素",
       "fail": {
-        "singular": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-scribedby、role=alert 等）",
-        "plural": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-scribedby、role=alert 等）",
+        "singular": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-describedby、role=alert 等）",
+        "plural": "aria-errormessage 值 `${data.values}` 必須使用某種技巧來通告訊息（例如：aria-live、aria-describedby、role=alert 等）",
         "hidden": "aria-errormessage 值 `${data.values}` 無法引用隱藏元素"
       },
       "incomplete": {
