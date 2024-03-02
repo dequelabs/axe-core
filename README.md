@@ -179,6 +179,8 @@ Read the [documentation on contributing](CONTRIBUTING.md)
 
 ## Acknowledgements
 
-Thanks to Marat Dulin for his [css-selector-parser](https://www.npmjs.com/package/css-selector-parser) implementation which is included for shadow DOM support.
+Thanks to Marat Dulin for his [css-selector-parser](https://www.npmjs.com/package/css-selector-parser) implementation which is included for shadow DOM support. Another thank you to the [Slick Parser](https://github.com/mootools/slick/blob/master/Source/Slick.Parser.js) implementers for their contribution, we have used some of their algorithms in our shadow DOM support code. Thanks to Lea Verou and Chris Lilley for their [colorjs.io](https://colorjs.io/) library which we have used for converting between color formats.
 
-Thanks to the [Slick Parser](https://github.com/mootools/slick/blob/master/Source/Slick.Parser.js) implementers for their contribution, we have used some of their algorithms in our shadow DOM support code.
+## Licenses
+
+Axe-core is distributed under the [Mozilla Public License, version 2.0](LICENSE). It comes bundled with several dependencies which are distributed under their own terms. (See [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt))

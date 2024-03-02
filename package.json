@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.8.3",
+  "version": "4.8.4",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -55,7 +55,8 @@
     "axe.min.js",
     "axe.d.ts",
     "sri-history.json",
-    "locales/"
+    "locales/",
+    "LICENSE-3RD-PARTY.txt"
   ],
   "standard-version": {
     "scripts": {
@@ -104,7 +105,7 @@
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
@@ -145,11 +146,11 @@
     "grunt-contrib-watch": "^1.1.0",
     "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.7",
     "inquirer": "^8.2.5",
     "jquery": "^3.6.3",
     "jsdoc": "^4.0.2",
-    "jsdom": "^23.0.1",
+    "jsdom": "^24.0.0",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.1",
@@ -175,7 +176,7 @@
     "typedarray": "^0.0.7",
     "typescript": "^5.2.2",
     "uglify-js": "^3.17.4",
-    "wcag-act-rules": "github:w3c/wcag-act-rules#485104c",
+    "wcag-act-rules": "github:w3c/wcag-act-rules#dc90495a5533d326b300ee5a9487afdfc6d493c0",
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {
