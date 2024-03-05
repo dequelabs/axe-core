@@ -139,7 +139,7 @@ describe('aria-prohibited-attr', function () {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow elements that have an invalid role', function () {
+  it('should not allow aria-label on divs that have an invalid role', function () {
     var params = checkSetup(
       '<div id="target" role="foo" aria-label="foo"></div>'
     );
@@ -152,14 +152,14 @@ describe('aria-prohibited-attr', function () {
     });
   });
 
-  it('should allow elements that have fallback roles', function () {
+  it('should allow aria-label on divs with a valid fallback role', function () {
     var params = checkSetup(
       '<div id="target" role="foo dialog" aria-label="foo"></div>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow elements that have multiple invalid roles', function () {
+  it('should not allow aria-label on divs with no valid fallback roles', function () {
     var params = checkSetup(
       '<div id="target" role="foo bar" aria-label="foo"></div>'
     );
