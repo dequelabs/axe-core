@@ -497,7 +497,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "必須のARIA子ロールが存在します",
+      "pass": {
+        "default": "必須のARIA子ロールが存在します"
+      },
       "fail": {
         "singular": "必須のARIA子ロールが提供されていません: ${data.values}",
         "plural": "必須のARIA子ロールが提供されていません: ${data.values}",
