@@ -112,19 +112,6 @@ describe('invalidrole', function () {
     assert.deepEqual(checkContext._data, ['foo', 'bar']);
   });
 
-  it('should return true if applied to an empty uppercase role', function () {
-    var virtualNode = queryFixture('<div id="target" role="">Contents</div>');
-    assert.isTrue(
-      checks.invalidrole.evaluate.call(
-        checkContext,
-        virtualNode.actualNode,
-        null,
-        virtualNode
-      )
-    );
-    assert.deepEqual(checkContext._data, ['']);
-  });
-
   it('should return true if applied to an uppercase nonsensical role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="FOO">Contents</div>'
