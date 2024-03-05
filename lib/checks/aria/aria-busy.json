@@ -1,6 +1,7 @@
 {
   "id": "aria-busy",
   "evaluate": "aria-busy-evaluate",
+  "deprecated": true,
   "metadata": {
     "impact": "serious",
     "messages": {
