@@ -413,4 +413,82 @@ describe('color.Color', () => {
       assert.isTrue(lBlue > lBlack);
     });
   });
+
+  describe('add', () => {
+    it('adds the value to the color', () => {
+      const color = new Color(0, 0, 0, 1);
+      const actual = color.add(144);
+      assert.equal(actual.red, 144);
+      assert.equal(actual.green, 144);
+      assert.equal(actual.blue, 144);
+      assert.equal(actual.alpha, 1);
+    });
+
+    it('does not modify the original color', () => {
+      const color = new Color(0, 0, 0, 1);
+      color.add(144);
+      assert.equal(color.red, 0);
+      assert.equal(color.green, 0);
+      assert.equal(color.blue, 0);
+      assert.equal(color.alpha, 1);
+    });
+
+    it('does not clamp the value', () => {
+      const color = new Color(0, 0, 0, 1);
+      const actual = color.add(3000);
+      assert.equal(actual.red, 3000);
+      assert.equal(actual.green, 3000);
+      assert.equal(actual.blue, 3000);
+      assert.equal(actual.alpha, 1);
+    });
+  });
+
+  describe('divide', () => {
+    it('divides the color by the value', () => {
+      const color = new Color(144, 144, 144, 1);
+      const actual = color.divide(2);
+      assert.equal(actual.red, 72);
+      assert.equal(actual.green, 72);
+      assert.equal(actual.blue, 72);
+      assert.equal(actual.alpha, 1);
+    });
+
+    it('does not modify the original color', () => {
+      const color = new Color(144, 144, 144, 1);
+      color.divide(2);
+      assert.equal(color.red, 144);
+      assert.equal(color.green, 144);
+      assert.equal(color.blue, 144);
+      assert.equal(color.alpha, 1);
+    });
+  });
+
+  describe('multiply', () => {
+    it('multiplies the color by the value', () => {
+      const color = new Color(72, 72, 72, 1);
+      const actual = color.multiply(2);
+      assert.equal(actual.red, 144);
+      assert.equal(actual.green, 144);
+      assert.equal(actual.blue, 144);
+      assert.equal(actual.alpha, 1);
+    });
+
+    it('does not modify the original color', () => {
+      const color = new Color(72, 72, 72, 1);
+      color.multiply(2);
+      assert.equal(color.red, 72);
+      assert.equal(color.green, 72);
+      assert.equal(color.blue, 72);
+      assert.equal(color.alpha, 1);
+    });
+
+    it('does not clamp the value', () => {
+      const color = new Color(30, 30, 30, 1);
+      const actual = color.multiply(100);
+      assert.equal(actual.red, 3000);
+      assert.equal(actual.green, 3000);
+      assert.equal(actual.blue, 3000);
+      assert.equal(actual.alpha, 1);
+    });
+  });
 });
