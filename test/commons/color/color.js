@@ -10,6 +10,15 @@ describe('color.Color', () => {
     assert.equal(c1.alpha, 1);
   });
 
+  it('can be constructed from a Color', () => {
+    const c1 = new Color(4, 3, 2, 0.5);
+    const c2 = new Color(c1);
+    assert.equal(c2.red, 4);
+    assert.equal(c2.green, 3);
+    assert.equal(c2.blue, 2);
+    assert.equal(c2.alpha, 0.5);
+  });
+
   it('has a toJSON method', () => {
     const c1 = new Color(255, 128, 0);
     assert.deepEqual(c1.toJSON(), {
@@ -411,6 +420,173 @@ describe('color.Color', () => {
       assert.isTrue(lYellow > lDarkyellow);
       assert.isTrue(lYellow > lBlue);
       assert.isTrue(lBlue > lBlack);
+    });
+  });
+
+  describe('normalize', () => {
+    it('normalizes RGB between 0-1', () => {
+      const black = new Color(0, 0, 0, 1).normalize();
+      const white = new Color(255, 255, 255, 1).normalize();
+      const darkyellow = new Color(128, 128, 0, 1).normalize();
+
+      assert.deepEqual(black.toJSON(), { red: 0, green: 0, blue: 0, alpha: 1 });
+      assert.deepEqual(white.toJSON(), { red: 1, green: 1, blue: 1, alpha: 1 });
+      assert.deepEqual(darkyellow.toJSON(), {
+        red: 0.5019607843137255,
+        green: 0.5019607843137255,
+        blue: 0,
+        alpha: 1
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.normalize();
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('scale', () => {
+    it('scales RGB by the value', () => {
+      const black = new Color(0, 0, 0, 1).scale(2);
+      const white = new Color(127.5, 127.5, 127.5, 1).scale(2);
+      const darkyellow = new Color(32, 32, 0, 0.5).scale(4);
+
+      assert.deepEqual(black.toJSON(), { red: 0, green: 0, blue: 0, alpha: 1 });
+      assert.deepEqual(white.toJSON(), {
+        red: 255,
+        green: 255,
+        blue: 255,
+        alpha: 1
+      });
+      assert.deepEqual(darkyellow.toJSON(), {
+        red: 128,
+        green: 128,
+        blue: 0,
+        alpha: 0.5
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.scale(2);
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('add', () => {
+    it('adds the value to RGB', () => {
+      const black = new Color(-2, -2, -2, 1).add(2);
+      const white = new Color(250, 250, 250, 1).add(5);
+      const darkyellow = new Color(32, 32, -96, 0.5).add(96);
+
+      assert.deepEqual(black.toJSON(), { red: 0, green: 0, blue: 0, alpha: 1 });
+      assert.deepEqual(white.toJSON(), {
+        red: 255,
+        green: 255,
+        blue: 255,
+        alpha: 1
+      });
+      assert.deepEqual(darkyellow.toJSON(), {
+        red: 128,
+        green: 128,
+        blue: 0,
+        alpha: 0.5
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.add(2);
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('getLuminosity', () => {
+    it('returns luminosity of the Color', () => {
+      const L = new Color(128, 128, 0, 1).normalize().getLuminosity();
+      assert.equal(L, 0.44674509803921564);
+    });
+  });
+
+  describe('setLuminosity', () => {
+    it('sets the luminosity of the Color', () => {
+      const color = new Color(0, 0, 0, 1).normalize().setLuminosity(0.5);
+      assert.deepEqual(color.toJSON(), {
+        red: 0.5,
+        green: 0.5,
+        blue: 0.5,
+        alpha: 1
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.setLuminosity(0.5);
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('getSaturation', () => {
+    it('returns the saturation of the Color', () => {
+      const s = new Color(255, 128, 200, 1).normalize().getSaturation();
+      assert.equal(s, 0.4980392156862745);
+    });
+  });
+
+  describe('setSaturation', () => {
+    it('sets the saturation of the Color', () => {
+      const color = new Color(128, 100, 0, 1).normalize().setSaturation(0.8);
+      assert.deepEqual(color.toJSON(), {
+        red: 0.8,
+        green: 0.625,
+        blue: 0,
+        alpha: 1
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.setSaturation(0.5);
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('clip', () => {
+    it('clips to the lower bound', () => {
+      const color = new Color(255, 0, -1, 1).normalize().clip();
+      assert.deepEqual(color.toJSON(), {
+        red: 0.9909493297254295,
+        green: 0.003870895819239939,
+        blue: 0,
+        alpha: 1
+      });
+    });
+
+    it('clips to the upper bound', () => {
+      const color = new Color(255, 0, 256, 1).normalize().clip();
+      assert.deepEqual(color.toJSON(), {
+        red: 0.9961043436801178,
+        green: 0.002711982110142841,
+        blue: 1,
+        alpha: 1
+      });
+    });
+
+    it('clips both the lower and upper bounds', () => {
+      const color = new Color(-1, 0, 256, 1).normalize().clip();
+      assert.deepEqual(color.toJSON(), {
+        red: 0.00047889410870861904,
+        green: 0.004247986549875488,
+        blue: 0.9691356514885925,
+        alpha: 1
+      });
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.clip();
+      assert.notEqual(black, nBlack);
     });
   });
 });
