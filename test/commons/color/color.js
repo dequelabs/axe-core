@@ -19,6 +19,31 @@ describe('color.Color', () => {
     assert.equal(c2.alpha, 0.5);
   });
 
+  it('clamps out of gamut values for red, green, blue', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    assert.equal(c1.red, 0);
+    assert.equal(c1.green, 0);
+    assert.equal(c1.blue, 255);
+    assert.equal(c1.alpha, 0.5);
+  });
+
+  it('retains out of gamut values for r, g, b', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    assert.equal(c1.r, -1);
+    assert.equal(c1.g, 0);
+    assert.equal(c1.b, 2);
+    assert.equal(c1.alpha, 0.5);
+  });
+
+  it('can be constructed from a Color preserving out of gamut values', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    const c2 = new Color(c1);
+    assert.equal(c2.r, -1);
+    assert.equal(c2.g, 0);
+    assert.equal(c2.b, 2);
+    assert.equal(c2.alpha, 0.5);
+  });
+
   it('has a toJSON method', () => {
     const c1 = new Color(255, 128, 0);
     assert.deepEqual(c1.toJSON(), {
