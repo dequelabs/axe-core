@@ -10,6 +10,40 @@ describe('color.Color', () => {
     assert.equal(c1.alpha, 1);
   });
 
+  it('can be constructed from a Color', () => {
+    const c1 = new Color(4, 3, 2, 0.5);
+    const c2 = new Color(c1);
+    assert.equal(c2.red, 4);
+    assert.equal(c2.green, 3);
+    assert.equal(c2.blue, 2);
+    assert.equal(c2.alpha, 0.5);
+  });
+
+  it('clamps out of gamut values for red, green, blue', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    assert.equal(c1.red, 0);
+    assert.equal(c1.green, 0);
+    assert.equal(c1.blue, 255);
+    assert.equal(c1.alpha, 0.5);
+  });
+
+  it('retains out of gamut values for r, g, b', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    assert.equal(c1.r, -1);
+    assert.equal(c1.g, 0);
+    assert.equal(c1.b, 2);
+    assert.equal(c1.alpha, 0.5);
+  });
+
+  it('can be constructed from a Color preserving out of gamut values', () => {
+    const c1 = new Color(-255, 0, 510, 0.5);
+    const c2 = new Color(c1);
+    assert.equal(c2.r, -1);
+    assert.equal(c2.g, 0);
+    assert.equal(c2.b, 2);
+    assert.equal(c2.alpha, 0.5);
+  });
+
   it('has a toJSON method', () => {
     const c1 = new Color(255, 128, 0);
     assert.deepEqual(c1.toJSON(), {
@@ -414,81 +448,82 @@ describe('color.Color', () => {
     });
   });
 
-  describe('add', () => {
-    it('adds the value to the color', () => {
-      const color = new Color(0, 0, 0, 1);
-      const actual = color.add(144);
-      assert.equal(actual.red, 144);
-      assert.equal(actual.green, 144);
-      assert.equal(actual.blue, 144);
-      assert.equal(actual.alpha, 1);
-    });
-
-    it('does not modify the original color', () => {
-      const color = new Color(0, 0, 0, 1);
-      color.add(144);
-      assert.equal(color.red, 0);
-      assert.equal(color.green, 0);
-      assert.equal(color.blue, 0);
-      assert.equal(color.alpha, 1);
-    });
-
-    it('does not clamp the value', () => {
-      const color = new Color(0, 0, 0, 1);
-      const actual = color.add(3000);
-      assert.equal(actual.red, 3000);
-      assert.equal(actual.green, 3000);
-      assert.equal(actual.blue, 3000);
-      assert.equal(actual.alpha, 1);
+  describe('getLuminosity', () => {
+    it('returns luminosity of the Color', () => {
+      const L = new Color(128, 128, 0, 1).getLuminosity();
+      assert.equal(L, 0.44674509803921564);
     });
   });
 
-  describe('divide', () => {
-    it('divides the color by the value', () => {
-      const color = new Color(144, 144, 144, 1);
-      const actual = color.divide(2);
-      assert.equal(actual.red, 72);
-      assert.equal(actual.green, 72);
-      assert.equal(actual.blue, 72);
-      assert.equal(actual.alpha, 1);
+  describe('setLuminosity', () => {
+    it('sets the luminosity of the Color', () => {
+      const color = new Color(0, 0, 0, 1).setLuminosity(0.5);
+      assert.deepEqual(color.toJSON(), {
+        red: 128,
+        green: 128,
+        blue: 128,
+        alpha: 1
+      });
     });
 
-    it('does not modify the original color', () => {
-      const color = new Color(144, 144, 144, 1);
-      color.divide(2);
-      assert.equal(color.red, 144);
-      assert.equal(color.green, 144);
-      assert.equal(color.blue, 144);
-      assert.equal(color.alpha, 1);
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.setLuminosity(0.5);
+      assert.notEqual(black, nBlack);
     });
   });
 
-  describe('multiply', () => {
-    it('multiplies the color by the value', () => {
-      const color = new Color(72, 72, 72, 1);
-      const actual = color.multiply(2);
-      assert.equal(actual.red, 144);
-      assert.equal(actual.green, 144);
-      assert.equal(actual.blue, 144);
-      assert.equal(actual.alpha, 1);
+  describe('getSaturation', () => {
+    it('returns the saturation of the Color', () => {
+      const s = new Color(255, 128, 200, 1).getSaturation();
+      assert.equal(s, 0.4980392156862745);
+    });
+  });
+
+  describe('setSaturation', () => {
+    it('sets the saturation of the Color', () => {
+      const color = new Color(128, 100, 0, 1).setSaturation(0.8);
+      assert.deepEqual(color.toJSON(), {
+        red: 204,
+        green: 159,
+        blue: 0,
+        alpha: 1
+      });
     });
 
-    it('does not modify the original color', () => {
-      const color = new Color(72, 72, 72, 1);
-      color.multiply(2);
-      assert.equal(color.red, 72);
-      assert.equal(color.green, 72);
-      assert.equal(color.blue, 72);
-      assert.equal(color.alpha, 1);
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.setSaturation(0.5);
+      assert.notEqual(black, nBlack);
+    });
+  });
+
+  describe('clip', () => {
+    it('clips to the lower bound', () => {
+      const color = new Color(255, 0, -1, 1).clip();
+      assert.equal(color.r, 0.9909493297254295);
+      assert.equal(color.g, 0.003870895819239939);
+      assert.equal(color.b, 0);
     });
 
-    it('does not clamp the value', () => {
-      const color = new Color(30, 30, 30, 1);
-      const actual = color.multiply(100);
-      assert.equal(actual.red, 3000);
-      assert.equal(actual.green, 3000);
-      assert.equal(actual.blue, 3000);
-      assert.equal(actual.alpha, 1);
+    it('clips to the upper bound', () => {
+      const color = new Color(255, 0, 256, 1).clip();
+      assert.equal(color.r, 0.9961043436801178);
+      assert.equal(color.g, 0.002711982110142841);
+      assert.equal(color.b, 1);
+    });
+
+    it('clips both the lower and upper bounds', () => {
+      const color = new Color(-1, 0, 256, 1).clip();
+      assert.equal(color.r, 0.00047889410870861904);
+      assert.equal(color.g, 0.004247986549875488);
+      assert.equal(color.b, 0.9691356514885925);
+    });
+
+    it('returns a new Color', () => {
+      const black = new Color(0, 0, 0, 1);
+      const nBlack = black.clip();
+      assert.notEqual(black, nBlack);
     });
   });
 });

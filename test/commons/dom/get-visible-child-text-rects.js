@@ -120,4 +120,20 @@ describe('dom.getVisibleChildTextRects', () => {
 
     assert.lengthOf(actual, 2);
   });
+
+  it('changes nodeRect size if all text rects got outside ancestor overflow', () => {
+    fixtureSetup(`
+      <div style="overflow: hidden; width: 50px;">
+        <div style="overflow: hidden; width: 25px">
+          <div id="target" style="padding-left: 65px;">Hello World</div>
+        </div>
+      </div>
+    `);
+    const node = fixture.querySelector('#target');
+    const actual = getVisibleChildTextRects(node);
+    const rect = getClientRects(node)[0];
+    const expected = new DOMRect(rect.left, rect.top, 25, rect.height);
+
+    assertRectsEqual(actual, [expected]);
+  });
 });
