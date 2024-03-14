@@ -167,6 +167,36 @@ describe('target-size tests', function () {
         assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
       });
 
+      it('returns undefined if there are too many focusable widgets', () => {
+        let html = '';
+        for (let i = 0; i < 100; i++) {
+          html += `
+            <tr>
+              <td><a href="#">Hello</a></td>
+              <td>Hello</td>
+              <td>Hello</td>
+              <td>Hello</td>
+              <td>Hello</td>
+              <td>Hello</td>
+              <td>Hello</td>
+              <td><button>view</button></td>
+              <td><button>download</button></td>
+              <td><button>expand</button></td>
+            </tr>
+          `;
+        }
+        const checkArgs = checkSetup(`
+          <div id="target" role="tabpanel" tabindex="0">
+            <table id="tab-table">${html}</table>
+          </div>
+        `);
+        assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(checkContext._data, {
+          messageKey: 'tooManyRects',
+          minSize: 24
+        });
+      });
+
       describe('for obscured targets with insufficient space', () => {
         it('returns false if all elements are tabbable', function () {
           var checkArgs = checkSetup(
