@@ -14,14 +14,13 @@ describe('axe.commons.color.getStrokeColorsFromShadow', () => {
       -2px 0 #F00
     `);
     const shadowColors = getStrokeColorsFromShadows(shadows);
-    assert.deepEqual(shadowColors, [
-      {
-        red: 255,
-        green: 0,
-        blue: 0,
-        alpha: 1
-      }
-    ]);
+    assert.lengthOf(shadowColors, 1);
+    assert.deepEqual(shadowColors[0].toJSON(), {
+      red: 255,
+      green: 0,
+      blue: 0,
+      alpha: 1
+    });
   });
 
   it('returns empty when only one side is covered by the shadow', () => {

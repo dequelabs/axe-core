@@ -120,6 +120,30 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
+  it('returns false if there are too many focusable widgets', () => {
+    let html = '';
+    for (let i = 0; i < 100; i++) {
+      html += `
+        <tr>
+          <td><a href="#">A</a></td>
+          <td><button>B</button></td>
+          <td><button>C</button></td>
+          <td><button>D</button></td>
+        </tr>
+      `;
+    }
+    const checkArgs = checkSetup(`
+      <div id="target" role="tabpanel" tabindex="0" style="display:inline-block">
+        <table id="tab-table">${html}</table>
+      </div>
+    `);
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      closestOffset: 0,
+      minOffset: 24
+    });
+  });
+
   describe('when neighbors are focusable but not tabbable', () => {
     it('returns undefined if all neighbors are not tabbable', () => {
       const checkArgs = checkSetup(
@@ -165,6 +189,23 @@ describe('target-offset tests', () => {
         return '#' + node.id;
       });
       assert.deepEqual(relatedIds, ['#left', '#right']);
+    });
+
+    it('returns true if the target is 10x the minOffset', () => {
+      const checkArgs = checkSetup(
+        '<a href="#" id="left" style="' +
+          'display: inline-block; width:16px; height:16px;' +
+          '">x</a>' +
+          '<a href="#" id="target" style="' +
+          'display: inline-block; width:240px; height:240px; margin-right: 4px' +
+          '">x</a>' +
+          '<a href="#" id="right" style="' +
+          'display: inline-block; width:16px; height:16px;' +
+          '">x</a>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.equal(checkContext._data.messageKey, 'large');
     });
   });
 });

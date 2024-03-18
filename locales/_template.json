@@ -822,7 +822,7 @@
       "pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
       "fail": {
         "default": "List item does not have a <ul>, <ol> parent element",
-        "roleNotValid": "List item does not have a <ul>, <ol> parent element without a role, or a role=\"list\""
+        "roleNotValid": "List item parent element has a role that is not role=\"list\""
       }
     },
     "only-dlitems": {
@@ -865,7 +865,10 @@
       "fail": "${data} on <meta> tag disables zooming on mobile devices"
     },
     "target-offset": {
-      "pass": "Target has sufficient space from its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px which is at least ${data.minOffset}px.",
+      "pass": {
+        "default": "Target has sufficient space from its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px which is at least ${data.minOffset}px.",
+        "large": "Target far exceeds the minimum size of ${data.minOffset}px."
+      },
       "fail": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px.",
       "incomplete": {
         "default": "Element with negative tabindex has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px. Is this a target?",
@@ -875,7 +878,8 @@
     "target-size": {
       "pass": {
         "default": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "obscured": "Control is ignored because it is fully obscured and thus not clickable"
+        "obscured": "Control is ignored because it is fully obscured and thus not clickable",
+        "large": "Target far exceeds the minimum size of ${data.minSize}px."
       },
       "fail": {
         "default": "Target has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
@@ -885,7 +889,8 @@
         "default": "Element with negative tabindex has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
         "contentOverflow": "Element size could not be accurately determined due to overflow content",
         "partiallyObscured": "Element with negative tabindex has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
-        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?"
+        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?",
+        "tooManyRects": "Could not get the target size because there are too many overlapping elements"
       }
     },
     "header-present": {

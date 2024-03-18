@@ -418,6 +418,19 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should not match text outside overflow', () => {
+    fixture.innerHTML = `
+      <div style="overflow: hidden; width: 50px;">
+        <div style="overflow: hidden; width: 25px">
+          <div id="target" style="padding-left: 65px;">Hello World</div>
+        </div>
+      </div>
+    `;
+    var target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   if (shadowSupport) {
     it('should match a descendant of an element across a shadow boundary', function () {
       fixture.innerHTML =
