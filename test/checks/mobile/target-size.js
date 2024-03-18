@@ -58,6 +58,16 @@ describe('target-size tests', function () {
     });
   });
 
+  it('returns true for very large targets', function () {
+    var checkArgs = checkSetup(
+      '<button id="target" style="' +
+        'display: inline-block; width:240px; height:300px;' +
+        '">x</button>'
+    );
+    assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, { messageKey: 'large', minSize: 24 });
+  });
+
   describe('when fully obscured', function () {
     it('returns true, regardless of size', function () {
       var checkArgs = checkSetup(
@@ -172,21 +182,15 @@ describe('target-size tests', function () {
         for (let i = 0; i < 100; i++) {
           html += `
             <tr>
-              <td><a href="#">Hello</a></td>
-              <td>Hello</td>
-              <td>Hello</td>
-              <td>Hello</td>
-              <td>Hello</td>
-              <td>Hello</td>
-              <td>Hello</td>
-              <td><button>view</button></td>
-              <td><button>download</button></td>
-              <td><button>expand</button></td>
+              <td><a href="#">A</a></td>
+              <td><button>B</button></td>
+              <td><button>C</button></td>
+              <td><button>D</button></td>
             </tr>
           `;
         }
         const checkArgs = checkSetup(`
-          <div id="target" role="tabpanel" tabindex="0">
+          <div id="target" role="tabpanel" tabindex="0" style="display:inline-block">
             <table id="tab-table">${html}</table>
           </div>
         `);

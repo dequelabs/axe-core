@@ -22,7 +22,12 @@
     <main id="mocha"></main>
 
     <section id="incomplete">
-      <div id="incomplete-many-rects" role="tabpanel" tabindex="0">
+      <div
+        id="incomplete-many-rects"
+        role="tabpanel"
+        tabindex="0"
+        style="display: inline-block"
+      >
         <table id="tab-table"></table>
       </div>
     </section>
@@ -32,16 +37,10 @@
       for (let i = 0; i < 100; i++) {
         html += `
         <tr>
-          <td><a href="#">Hello</a></td>
-          <td>Hello</td>
-          <td>Hello</td>
-          <td>Hello</td>
-          <td>Hello</td>
-          <td>Hello</td>
-          <td>Hello</td>
-          <td><button>view</button></td>
-          <td><button>download</button></td>
-          <td><button>expand</button></td>
+          <td><a href="#">A</a></td>
+          <td><button>B</button></td>
+          <td><button>C</button></td>
+          <td><button>D</button></td>
         </tr>`;
       }
       document.querySelector('#tab-table').innerHTML = html;
