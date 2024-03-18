@@ -120,6 +120,36 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
+  it('returns false if there are too many focusable widgets', () => {
+    let html = '';
+    for (let i = 0; i < 100; i++) {
+      html += `
+        <tr>
+          <td><a href="#">Hello</a></td>
+          <td>Hello</td>
+          <td>Hello</td>
+          <td>Hello</td>
+          <td>Hello</td>
+          <td>Hello</td>
+          <td>Hello</td>
+          <td><button>view</button></td>
+          <td><button>download</button></td>
+          <td><button>expand</button></td>
+        </tr>
+      `;
+    }
+    const checkArgs = checkSetup(`
+      <div id="target" role="tabpanel" tabindex="0">
+        <table id="tab-table">${html}</table>
+      </div>
+    `);
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      closestOffset: 0,
+      minOffset: 24
+    });
+  });
+
   describe('when neighbors are focusable but not tabbable', () => {
     it('returns undefined if all neighbors are not tabbable', () => {
       const checkArgs = checkSetup(
