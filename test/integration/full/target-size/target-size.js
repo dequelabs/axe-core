@@ -1,25 +1,20 @@
-describe('target-size test', () => {
+describe('target-size test', function () {
   'use strict';
-  let results;
+  var results;
 
-  before(done => {
-    axe.testUtils.awaitNestedLoad(() => {
+  before(function (done) {
+    axe.testUtils.awaitNestedLoad(function () {
       // Add necessary markup for axe to recognize these as components:
-      document.querySelectorAll('section span').forEach(link => {
+      document.querySelectorAll('section span').forEach(function (link) {
         link.setAttribute('role', 'link');
         link.setAttribute('tabindex', '0');
       });
 
-      const options = {
+      var options = {
         runOnly: ['target-size'],
         elementRef: true
       };
-      const context = {
-        include: 'section',
-        // ignore the incomplete table results
-        exclude: 'table tr'
-      };
-      axe.run(context, options, (err, r) => {
+      axe.run('section', options, function (err, r) {
         if (err) {
           done(err);
         }
@@ -27,11 +22,11 @@ describe('target-size test', () => {
         // Add some highlighting for visually identifying issues.
         // There are too many test cases to just do this by selector.
         results.violations[0] &&
-          results.violations[0].nodes.forEach(node => {
+          results.violations[0].nodes.forEach(function (node) {
             node.element.className += ' violations';
           });
         results.passes[0] &&
-          results.passes[0].nodes.forEach(node => {
+          results.passes[0].nodes.forEach(function (node) {
             node.element.className += ' passes';
           });
         console.log(results);
@@ -40,38 +35,25 @@ describe('target-size test', () => {
     });
   });
 
-  it('finds all passing nodes', () => {
-    const passResults = results.passes[0] ? results.passes[0].nodes : [];
-    const passedElms = document.querySelectorAll(
+  it('finds all passing nodes', function () {
+    var passResults = results.passes[0] ? results.passes[0].nodes : [];
+    var passedElms = document.querySelectorAll(
       'section:not([hidden]) div:not([hidden]) .passed'
     );
-    passResults.forEach(result => {
+    passResults.forEach(function (result) {
       assert.include(passedElms, result.element);
     });
     assert.lengthOf(passResults, passedElms.length);
   });
 
-  it('finds all failed nodes', () => {
-    const failResults = results.violations[0]
-      ? results.violations[0].nodes
-      : [];
-    const failedElms = document.querySelectorAll(
-      'section:not([hidden]) div:not([hidden]) .failed'
+  it('finds all failed nodes', function () {
+    var failResults = results.violations[0] ? results.violations[0].nodes : [];
+    var failedElms = document.querySelectorAll(
+      'section:not([hidden]) div:not([hidden])  .failed'
     );
-    failResults.forEach(result => {
+    failResults.forEach(function (result) {
       assert.include(failedElms, result.element);
     });
     assert.lengthOf(failResults, failedElms.length);
-  });
-
-  it('incompletes with too many rects', () => {
-    const incompleteNodes = results.incomplete[0]
-      ? results.incomplete[0].nodes
-      : [];
-    assert.lengthOf(incompleteNodes, 1);
-    assert.include(
-      incompleteNodes[0].element,
-      document.querySelector('#incomplete-many-rects')
-    );
   });
 });

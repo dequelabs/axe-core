@@ -651,32 +651,6 @@
       </div>
     </section>
 
-    <section id="incomplete">
-      <div id="incomplete-many-rects" role="tabpanel" tabindex="0">
-        <table id="tab-table"></table>
-      </div>
-      <script>
-        let html = '';
-        for (let i = 0; i < 100; i++) {
-          html += `
-          <tr>
-            <td><a href="#">Hello</a></td>
-            <td>Hello</td>
-            <td>Hello</td>
-            <td>Hello</td>
-            <td>Hello</td>
-            <td>Hello</td>
-            <td>Hello</td>
-            <td><button>view</button></td>
-            <td><button>download</button></td>
-            <td><button>expand</button></td>
-          </tr>
-        `;
-        }
-        document.querySelector('#tab-table').innerHTML = html;
-      </script>
-    </section>
-
     <script src="/test/testutils.js"></script>
     <script src="target-size.js"></script>
     <script src="/test/integration/adapter.js"></script>
