@@ -166,5 +166,22 @@ describe('target-offset tests', () => {
       });
       assert.deepEqual(relatedIds, ['#left', '#right']);
     });
+
+    it('returns true if the target is 10x the minOffset', () => {
+      const checkArgs = checkSetup(
+        '<a href="#" id="left" style="' +
+          'display: inline-block; width:16px; height:16px;' +
+          '">x</a>' +
+          '<a href="#" id="target" style="' +
+          'display: inline-block; width:240px; height:240px; margin-right: 4px' +
+          '">x</a>' +
+          '<a href="#" id="right" style="' +
+          'display: inline-block; width:16px; height:16px;' +
+          '">x</a>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.equal(checkContext._data.messageKey, 'large');
+    });
   });
 });

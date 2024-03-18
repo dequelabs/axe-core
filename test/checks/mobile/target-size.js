@@ -58,6 +58,16 @@ describe('target-size tests', function () {
     });
   });
 
+  it('returns true for very large targets', function () {
+    var checkArgs = checkSetup(
+      '<button id="target" style="' +
+        'display: inline-block; width:240px; height:300px;' +
+        '">x</button>'
+    );
+    assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, { messageKey: 'large', minSize: 24 });
+  });
+
   describe('when fully obscured', function () {
     it('returns true, regardless of size', function () {
       var checkArgs = checkSetup(
