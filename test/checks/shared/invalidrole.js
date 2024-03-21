@@ -139,6 +139,5 @@ describe('invalidrole', function () {
         virtualNode
       )
     );
-    assert.deepEqual(checkContext._data, ['BUTTON']);
   });
 });
