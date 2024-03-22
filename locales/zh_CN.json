@@ -14,20 +14,20 @@
       "help": "元素仅能使用受支持的 ARIA 属性"
     },
     "aria-allowed-role": {
-      "description": "确保使用 ARIA 属性时，所有必需的属性都已存在",
-      "help": "使用 ARIA 属性时，所有必需的属性都必须存在"
+      "description": "确保角色属性值符合所属元素",
+      "help": "ARIA 角色应该符合元素"
     },
     "aria-braille-equivalent": {
-      "description": "确保 aria-braillelabel 和 aria-brailleroledescription 有对应的非盲文描述",
-      "help": "aria-braille 属性必须有对应的非盲文描述"
+      "description": "确保 aria-braillelabel 和 aria-brailleroledescription 有对应的非盲文的标签和描述",
+      "help": "aria-braille 相关属性必须有非盲文的对应属性"
     },
     "aria-command-name": {
       "description": "确保每个 ARIA 按钮、链接和菜单项都有可访问名称",
       "help": "ARIA 指令必须有一个可访问名称"
     },
     "aria-conditional-attr": {
-      "description": "确保 ARIA 属性的使用符合元素角色规范中的描述",
-      "help": "ARIA 属性必须按照该元素角色的规范进行使用"
+      "description": "确保 ARIA 属性的使用符合所属元素角色的特定规范",
+      "help": "ARIA 属性的使用必须符合元素的特定角色"
     },
     "aria-deprecated-role": {
       "description": "确保页面元素不使用已弃用的角色属性",
