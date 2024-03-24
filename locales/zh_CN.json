@@ -79,7 +79,7 @@
     },
     "aria-roles": {
       "description": "确保所有元素包含的 role 属性值都是有效的",
-      "help": "使用的 ARIA 角色必须符合有效的值"
+      "help": "使用的 ARIA 角色属性值必须有效"
     },
     "aria-text": {
       "description": "确保使用 role=\"text\" 的元素没有任何可聚焦后代",
@@ -423,7 +423,7 @@
       }
     },
     "aria-allowed-attr": {
-      "pass": "ARIA 属性正确用于定义的角色",
+      "pass": "所定义的角色使用的 ARIA 属性都是正确的",
       "fail": {
         "singular": "不允许使用 ARIA 属性: ${data.values}",
         "plural": "不允许使用 ARIA 属性: ${data.values}"
