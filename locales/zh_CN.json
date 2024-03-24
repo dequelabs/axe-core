@@ -14,7 +14,7 @@
       "help": "元素仅能使用受支持的 ARIA 属性"
     },
     "aria-allowed-role": {
-      "description": "确保角色属性值符合所属元素",
+      "description": "确保 role 属性值符合所属元素",
       "help": "ARIA 角色应该符合元素"
     },
     "aria-braille-equivalent": {
@@ -30,8 +30,8 @@
       "help": "ARIA 属性的使用必须符合元素的特定角色"
     },
     "aria-deprecated-role": {
-      "description": "确保页面元素不使用已弃用的角色属性",
-      "help": "不得使用已弃用的 ARIA 角色属性"
+      "description": "确保页面元素不使用已弃用的角色",
+      "help": "不得使用已弃用的 ARIA 角色"
     },
     "aria-dialog-name": {
       "description": "确保每个 ARIA 对话框和警示框节点都有可访问的名称",
@@ -66,11 +66,11 @@
       "help": "必须提供必需的 ARIA 属性"
     },
     "aria-required-children": {
-      "description": "确保需要子角色的 ARIA 角色元素包含它们",
+      "description": "如果元素的ARIA角色需要子角色，确保该元素包含这些子元素",
       "help": "某些 ARIA 角色必须包含特定的子元素"
     },
     "aria-required-parent": {
-      "description": "确保需要父角色的 ARIA 角色元素被它们包含",
+      "description": "如果元素的ARIA角色需要父角色，确保该元素被这些父元素包含",
       "help": "某些 ARIA 角色必须被特定的父元素包含"
     },
     "aria-roledescription": {
@@ -78,11 +78,11 @@
       "help": "aria-roledescription 必须用于有语义角色的元素"
     },
     "aria-roles": {
-      "description": "确保所有包含 role 属性的元素都使用有效的值",
+      "description": "确保所有元素包含的 role 属性值都是有效的",
       "help": "使用的 ARIA 角色必须符合有效的值"
     },
     "aria-text": {
-      "description": "确保 role=\"text\" 用于没有任何可聚焦后代的元素",
+      "description": "确保使用 role=\"text\" 的元素没有任何可聚焦后代",
       "help": "\"role=text\" 应该没有任何可聚焦的后代"
     },
     "aria-toggle-field-name": {
@@ -98,12 +98,12 @@
       "help": "ARIA 树项目节点应有一个可访问名称"
     },
     "aria-valid-attr-value": {
-      "description": "确保所有 ARIA 属性都包含有效值",
-      "help": "ARIA 属性必须符合有效值"
+      "description": "确保所有 ARIA 属性值都是有效的",
+      "help": "ARIA 属性值必须有效"
     },
     "aria-valid-attr": {
       "description": "确保以 aria- 开头的属性是有效的 ARIA 属性",
-      "help": "ARIA 属性必须符合有效名称"
+      "help": "ARIA 属性名称必须有效"
     },
     "audio-caption": {
       "description": "确保 <audio> 元素有字幕",
@@ -127,7 +127,7 @@
     },
     "bypass": {
       "description": "确保每个页面至少有一种机制，使用户能够绕过导航直接跳转到内容",
-      "help": "页面必须有方法绕过重复的块"
+      "help": "页面必须有方法绕过重复的部分"
     },
     "color-contrast-enhanced": {
       "description": "确保前景色与背景色之间的对比度满足 WCAG 2 AAA 增强对比度比率阈值",
@@ -391,7 +391,7 @@
     },
     "target-size": {
       "description": "确保触摸目标有足够的大小和空间",
-      "help": "所有触摸目标必须为 24px 大，或留出足够的空间"
+      "help": "所有触摸目标的大小必须为 24px，或留出足够的空间"
     },
     "td-has-header": {
       "description": "确保大于 3 x 3 的 <table> 中每个非空数据单元格都有一个或多个表头",
@@ -428,7 +428,7 @@
         "singular": "不允许使用 ARIA 属性: ${data.values}",
         "plural": "不允许使用 ARIA 属性: ${data.values}"
       },
-      "incomplete": "检查是否忽略该元素上的 ARIA 属性会出现问题: ${data.values}"
+      "incomplete": "检查如果忽略该元素的 ARIA 属性，会不会出现问题: ${data.values}"
     },
     "aria-allowed-role": {
       "pass": "给定元素允许 ARIA 角色",
@@ -449,8 +449,8 @@
       "pass": "允许使用 ARIA 属性",
       "fail": {
         "checkbox": "删除 aria-checked 属性，或将其设置为\"${data.checkState}\"以匹配真实复选框状态",
-        "rowSingular": "treegrid 行中支持此属性，但 ${data.ownerRole} 不支持：${data.invalidAttrs}",
-        "rowPlural": "treegrid 行中支持这些属性，但 ${data.ownerRole} 不支持：${data.invalidAttrs}"
+        "rowSingular": "树形表格的行 treegrid rows 支持此属性，但 ${data.ownerRole} 不支持：${data.invalidAttrs}",
+        "rowPlural": "树形表格的行 treegrid rows 支持此属性，但 ${data.ownerRole} 不支持：${data.invalidAttrs}"
       }
     },
     "aria-errormessage": {
@@ -472,21 +472,21 @@
     },
     "aria-level": {
       "pass": "aria-level 值是有效的",
-      "incomplete": "大于 6 的 aria-level 值在部分屏幕阅读器和浏览器组合上不支持"
+      "incomplete": "部分屏幕阅读器和浏览器组合不支持大于 6 的 aria-level 值"
     },
     "aria-prohibited-attr": {
       "pass": "允许使用 ARIA 属性",
       "fail": {
         "hasRolePlural": "${data.prohibited} 属性不能与角色 \"${data.role}\" 一起使用",
         "hasRoleSingular": "${data.prohibited} 属性不能与角色\"${data.role}\" 一起使用",
-        "noRolePlural": "${data.prohibited} 属性不能在没有有效角色属性的 ${data.nodeName} 上使用",
-        "noRoleSingular": "${data.prohibited 属性不能在没有有效角色属性的 ${data.nodeName} 上使用"
+        "noRolePlural": "${data.prohibited} 属性不能在没有有效 role 属性的 ${data.nodeName} 上使用",
+        "noRoleSingular": "${data.prohibited 属性不能在没有有效 role 属性的 ${data.nodeName} 上使用"
       },
       "incomplete": {
         "hasRoleSingular": "角色 \"${data.role}\" 无法良好支持 ${data.prohibited} 属性",
         "hasRolePlural": "角色 \"${data.role}\" 无法良好支持 ${data.prohibited} 属性",
-        "noRoleSingular": "没有有效角色属性的 ${data.nodeName} 无法良好支持 ${data.prohibited} 属性",
-        "noRolePlural": "没有有效角色属性的 ${data.nodeName} 无法良好支持 ${data.prohibited} 属性"
+        "noRoleSingular": "没有有效 role 属性的 ${data.nodeName} 无法良好支持 ${data.prohibited} 属性",
+        "noRolePlural": "没有有效 role 属性的 ${data.nodeName} 无法良好支持 ${data.prohibited} 属性"
       }
     },
     "aria-required-attr": {
@@ -593,7 +593,7 @@
     },
     "no-implicit-explicit-label": {
       "pass": "<label> 和可访问名称之间没有不匹配",
-      "incomplete": "检查 <label> 是否不需要成为 ARIA ${data} 字段名称的一部分"
+      "incomplete": "检查 <label> 有没有必要成为 ARIA ${data} 字段名称的一部分"
     },
     "unsupportedrole": {
       "pass": "ARIA 角色受支持",
@@ -1000,7 +1000,7 @@
     },
     "important-word-spacing": {
       "pass": "style 属性中的 word-spacing 未设置为 !important，或满足最小值",
-      "fail": "style 属性中的 word-spacing 必须不使用 !important，或为 ${data.minValue}em（当前 ${data.value}em）"
+      "fail": "style 属性中的 word-spacing 一定不能使用 !important，也不能是 ${data.minValue}em（当前 ${data.value}em）"
     },
     "is-on-screen": {
       "pass": "元素不可见",
