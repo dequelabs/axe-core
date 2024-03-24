@@ -992,11 +992,11 @@
     },
     "important-letter-spacing": {
       "pass": "style 属性中的 letter-spacing 未设置为 !important，或满足最小值",
-      "fail": "style 属性中的 letter-spacing 必须不使用 !important，或为 ${data.minValue}em（当前 ${data.value}em）"
+      "fail": "style 属性中的 letter-spacing 一定不能使用 !important，也不能是 ${data.minValue}em（当前 ${data.value}em）"
     },
     "important-line-height": {
       "pass": "style 属性中的 line-height 未设置为 !important，或满足最小值",
-      "fail": "style 属性中的 line-height 必须不使用 !important，或为 ${data.minValue}em（当前 ${data.value}em）"
+      "fail": "style 属性中的 line-height 一定不能使用 !important，也不能是 ${data.minValue}em（当前 ${data.value}em）"
     },
     "important-word-spacing": {
       "pass": "style 属性中的 word-spacing 未设置为 !important，或满足最小值",
