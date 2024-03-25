@@ -1,0 +1,4 @@
+{
+  "description": "This package.json is intentionally left empty so running the node.js test does not install jsdom at the root level node_modules",
+  "dependencies": {}
+}

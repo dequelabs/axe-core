@@ -2,7 +2,6 @@
 'use strict';
 
 const { roles, aria: props } = require('aria-query');
-const mdTable = require('markdown-table');
 const format = require('../shared/format');
 
 module.exports = function (grunt) {
@@ -16,6 +15,7 @@ module.exports = function (grunt) {
        * as `axe` does not exist until grunt task `build:uglify` is complete,
        * hence cannot be required at the top of the file.
        */
+      const done = this.async();
       const { langs } = this.options();
       const fileNameSuffix = langs && langs.length > 0 ? `${langs[0]}` : '';
       const axe = require(`../../axe${fileNameSuffix}`);
@@ -50,10 +50,16 @@ module.exports = function (grunt) {
         ariaAttrs,
         listType
       );
-      const attributesTableMarkdown = mdTable([
+      const formatMarkdownTableRow = columnValues =>
+        `| ${columnValues.join(' | ')} |`;
+      const attributesTableWithHeader = [
         headings.attributesMdTableHeader,
+        ['---', '---'],
         ...attributesTable
-      ]);
+      ];
+      const attributesTableMarkdown = attributesTableWithHeader
+        .map(formatMarkdownTableRow)
+        .join('\n');
 
       const footnotes = [...rolesFootnotes, ...attributesFootnotes].map(
         (footnote, index) => `[^${index + 1}]: ${footnote}`
@@ -64,10 +70,16 @@ module.exports = function (grunt) {
       const destFile = this.data.destFile;
       // Format the content so Prettier doesn't create a diff after running.
       // See https://github.com/dequelabs/axe-core/issues/1310.
-      const formattedContent = format(content, destFile);
-
-      // write `aria supported` file contents
-      grunt.file.write(destFile, formattedContent);
+      format(content, destFile)
+        .then(formattedContent => {
+          // write `aria supported` file contents
+          grunt.file.write(destFile, formattedContent);
+          done();
+        })
+        .catch(err => {
+          console.error(err.message);
+          done(false);
+        });
 
       /**
        * Get list of aria attributes, from `aria-query`

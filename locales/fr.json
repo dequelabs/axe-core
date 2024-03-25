@@ -457,7 +457,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Les descendants ARIA requis sont présents",
+      "pass": {
+        "default": "Les descendants ARIA requis sont présents"
+      },
       "fail": {
         "singular": "Le descendant ARIA requis est manquant : ${data.values}",
         "plural": "Les descendants ARIA requis sont manquants : ${data.values}"

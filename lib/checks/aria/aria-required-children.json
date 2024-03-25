@@ -20,7 +20,10 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "Required ARIA children are present",
+      "pass": {
+        "default": "Required ARIA children are present",
+        "aria-busy": "Element has an aria-busy attribute, so it is allowed to omit required children"
+      },
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",

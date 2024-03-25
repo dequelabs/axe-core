@@ -7,16 +7,13 @@ jobs:
     name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: npm-cache-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
+          cache: 'npm'
       - name: Run release script and open PR
         run: |
           git config user.name "API Team CI User"
@@ -42,11 +39,9 @@ jobs:
               --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
           )
 
-          echo "chore(release): v$Version" > /tmp/pr.txt
-          echo "" >> /tmp/pr.txt
           echo "$ReleaseNotes" >> /tmp/pr.txt
           echo "" >> /tmp/pr.txt
           echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
-          hub pull-request --file /tmp/pr.txt --base master
+          gh pr create --title "chore(release): v$Version" --body-file "/tmp/pr.txt" --base master
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}

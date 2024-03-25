@@ -2,7 +2,7 @@
 
 const currentVersion = process.version.replace('v', '');
 
-const minimumVersionMajor = 12;
+const minimumVersionMajor = 18;
 const currentVersionMajor = parseInt(currentVersion.split('.')[0]);
 
 const usesMinimumVersion = currentVersionMajor >= minimumVersionMajor;

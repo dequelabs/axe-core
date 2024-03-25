@@ -461,7 +461,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "필수 ARIA 하위 항목들이 존재합니다.",
+      "pass": {
+        "default": "필수 ARIA 하위 항목들이 존재합니다."
+      },
       "fail": {
         "singular": "필수 ARIA 하위 역할(role)이 없습니다: ${data.values}",
         "plural": "필수 ARIA 하위 역할(role)들이 없습니다: ${data.values}"

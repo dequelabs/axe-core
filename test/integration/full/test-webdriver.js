@@ -1,4 +1,4 @@
-const globby = require('globby');
+const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
 const chromedriver = require('chromedriver');
@@ -125,16 +125,15 @@ function buildWebDriver(browser) {
   if (browser === 'chrome') {
     const service = new chrome.ServiceBuilder(chromedriver.path).build();
 
-    const options = new chrome.Options()
-      .headless()
-      .addArguments([
-        '--no-sandbox',
-        '--disable-extensions',
-        '--disable-dev-shm-usage'
-      ]);
+    const options = new chrome.Options().addArguments([
+      'headless',
+      '--no-sandbox',
+      '--disable-extensions',
+      '--disable-dev-shm-usage'
+    ]);
     webdriver = chrome.Driver.createSession(options, service);
   } else if (browser === 'firefox') {
-    const options = new firefox.Options().headless();
+    const options = new firefox.Options().addArguments('--headless');
     webdriver = firefox.Driver.createSession(options);
   }
 
@@ -153,14 +152,11 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globby
-    .sync([
-      'test/integration/full/**/*.{html,xhtml}',
-      '!**/frames/**/*.{html,xhtml}'
-    ])
-    .map(url => {
-      return 'http://localhost:9876/' + url;
-    });
+  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
+    ignore: '**/frames/**/*.{html,xhtml}'
+  }).map(url => {
+    return 'http://localhost:9876/' + url;
+  });
 
   if (
     (process.platform === 'win32' && options.browser === 'safari') ||

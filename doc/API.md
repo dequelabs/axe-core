@@ -670,7 +670,7 @@ The results of axe are grouped according to their outcome into the following arr
 - `passes`: These results indicate what elements passed the rules
 - `violations`: These results indicate what elements failed the rules
 - `inapplicable`: These results indicate which rules did not run because no matching content was found on the page. For example, with no video, those rules won't run.
-- `incomplete`: These results were aborted and require further testing. This can happen either because of technical restrictions to what the rule can test, or because a javascript error occurred.
+- `incomplete`: Also known as "needs review," these results were aborted and require further testing. This can happen either because of technical restrictions to what the rule can test, or because a javascript error occurred.
 
 Each object returned in these arrays have the following properties:
 

@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: 'chore'
+    groups:
+      # Any updates not caught by the group config will get individual PRs
+      gha-low-risk:
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: 'chore'
+    ignore:
+      # Prevent updates to ESM-only versions
+      - dependency-name: 'chalk'
+        versions: ['>=5.0.0']
+      - dependency-name: 'execa'
+        versions: ['>=6.0.0']
+      - dependency-name: 'inquirer'
+        versions: ['>=9.0.0']
+      - dependency-name: 'chai'
+        versions: ['>=5.0.0']
+      # Prevent Webpack error caused by v0.11+ of esbuild
+      # @see https://github.com/dequelabs/axe-core/issues/3771
+      - dependency-name: 'esbuild'
+        versions: ['>=0.11.0']
+    groups:
+      # Any updates not caught by the group config will get individual PRs
+      npm-low-risk:
+        update-types:
+          - 'minor'
+          - 'patch'
