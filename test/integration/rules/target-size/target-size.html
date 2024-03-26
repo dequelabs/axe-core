@@ -28,7 +28,7 @@ this should not effect their outcome -->
   </textarea>
 </p>
 
-<!-- Nested controls-->
+<!-- Nested controls -->
 <p>
   <a
     role="link"
@@ -52,6 +52,14 @@ this should not effect their outcome -->
     Wide link <button id="fail7">y</button>
   </a>
 </p>
+
+<!-- Regression test for stacking context behavior from #4350 -->
+<div style="margin: 30px; height: 50px">
+  <div style="position: absolute; transform: scale(1)">
+    <a href="#" id="pass9">wide enough</a>
+    <a href="#" id="pass10" style="opacity: 0.6">also wide enough</a>
+  </div>
+</div>
 
 <!-- Failed examples -->
 <p>
