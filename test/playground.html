@@ -5,6 +5,7 @@
 
   <main>
     <h1>Hello World</h1>
+    <section aria-label="foo"></section>
   </main>
 
   <script src="/axe.js"></script>
@@ -15,7 +16,7 @@
       () => {
         axe.run(
           {
-            runOnly: 'color-contrast',
+            // runOnly: 'color-contrast',
             elementRef: true
           },
           (err, results) => {
