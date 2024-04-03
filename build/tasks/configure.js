@@ -18,8 +18,8 @@ module.exports = function (grunt) {
       });
 
       this.files.forEach(function (file) {
-        // locale will always be the 2nd to last part of the file
-        // filename and in the format of "<filename>.<locale>.js"
+        // locale will always be the 2nd to last part of the
+        // filename and in the format of "<name>.<locale>.js"
         const parts = file.dest.auto.split('.');
         if (parts.length > 2) {
           options.locale = parts[parts.length - 2];
