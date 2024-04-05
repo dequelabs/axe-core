@@ -88,7 +88,8 @@
     ["#pass-imgmap-2"],
     ["#pass-navnone-1"],
     ["#pass-navnone-2"],
-    ["#pass-search-elm"]
+    ["#pass-search-elm"],
+    ["#pass-button-role-gridcell"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
@@ -102,7 +103,6 @@
     ["#fail-button-role-cell"],
     ["#fail-aside-doc-foreword"],
     ["#fail-aside-role-tab"],
-    ["#fail-button-role-gridcell"],
     ["#fail-input-role-gridcell-multiple-role"],
     ["#fail-dpub-1"],
     ["#fail-dpub-2"],
