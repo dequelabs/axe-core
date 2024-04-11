@@ -4,10 +4,18 @@ describe('text.isHumanInterpretable', function () {
     assert.equal(actual, 0);
   });
 
-  it('returns 0 when given string is a single character that is blacklisted as icon', function () {
-    var blacklistedIcons = ['x', 'i'];
-    blacklistedIcons.forEach(function (iconText) {
-      var actual = axe.commons.text.isHumanInterpretable(iconText);
+  it('returns 0 when given string is a single alpha character', function () {
+    const singleCharacterExamples = ['i', '×'];
+    singleCharacterExamples.forEach(function (characterExample) {
+      const actual = axe.commons.text.isHumanInterpretable(characterExample);
+      assert.equal(actual, 0);
+    });
+  });
+
+  it('returns 0 when given string is in the symbolic text characters set (blocklist)', function () {
+    const blocklistedSymbols = ['aA', 'abc'];
+    blocklistedSymbols.forEach(function (symbolicText) {
+      const actual = axe.commons.text.isHumanInterpretable(symbolicText);
       assert.equal(actual, 0);
     });
   });
