@@ -5,7 +5,7 @@ describe('text.isHumanInterpretable', function () {
   });
 
   it('returns 0 when given string is a single alpha character', function () {
-    const singleCharacterExamples = ['i', '×'];
+    const singleCharacterExamples = ['i', 'x', 'X', '×', ''];
     singleCharacterExamples.forEach(function (characterExample) {
       const actual = axe.commons.text.isHumanInterpretable(characterExample);
       assert.equal(actual, 0);
@@ -13,7 +13,7 @@ describe('text.isHumanInterpretable', function () {
   });
 
   it('returns 0 when given string is in the symbolic text characters set (blocklist)', function () {
-    const blocklistedSymbols = ['aA', 'abc'];
+    const blocklistedSymbols = ['aA', 'Aa', 'abc', 'ABC'];
     blocklistedSymbols.forEach(function (symbolicText) {
       const actual = axe.commons.text.isHumanInterpretable(symbolicText);
       assert.equal(actual, 0);
