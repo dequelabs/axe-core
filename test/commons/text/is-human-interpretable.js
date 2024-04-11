@@ -25,6 +25,11 @@ describe('text.isHumanInterpretable', function () {
     assert.equal(actual, 0);
   });
 
+  it('returns 1 when given string that has a number', function () {
+    const actual = axe.commons.text.isHumanInterpretable('7');
+    assert.equal(actual, 1);
+  });
+
   it('returns 1 when given string has emoji as a part of the sentence', function () {
     const actual = axe.commons.text.isHumanInterpretable('I like 🏀');
     assert.equal(actual, 1);
