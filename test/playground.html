@@ -4,7 +4,20 @@
   <!-- The playground is used for quick local host axe-core during development -->
 
   <main>
-    <h1>Hello World</h1>
+    <a href="#">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>Circle</title>
+        <circle cx="50" cy="50" r="50" />
+      </svg>
+      I would like a 🍔
+    </a>
+    <div>foo<br />baz</div>
+    <div>foo<abbr title="foo">baz</abbr></div>
   </main>
 
   <script src="/axe.js"></script>
@@ -15,7 +28,7 @@
       () => {
         axe.run(
           {
-            runOnly: 'color-contrast',
+            // runOnly: 'color-contrast',
             elementRef: true
           },
           (err, results) => {
