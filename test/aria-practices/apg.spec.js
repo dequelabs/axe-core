@@ -9,7 +9,8 @@ describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG package.json main file does not exist
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
   const filePaths = globSync(
-    `${apgPath}/content/patterns/*/**/examples/*.html`
+    `${apgPath}/content/patterns/*/**/examples/*.html`,
+    { posix: true }
   );
   const testFiles = filePaths.map(
     fileName => fileName.split('/aria-practices/content/patterns/')[1]

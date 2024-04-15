@@ -33,7 +33,10 @@ const validateGetRuleName = async input => {
     throw new Error(`RULE name conflicts with an existing rule's filename.`);
   }
   // 3) ensure no rule id overlaps
-  const ruleSpecs = await glob(`${directories.rules}/**/*.json`);
+  const ruleSpecs = await glob(`${directories.rules}/**/*.json`, {
+    posix: true,
+    absolute: true
+  });
   const axeRulesIds = ruleSpecs.reduce((out, specPath) => {
     const spec = require(specPath);
     out.push(spec.id);
@@ -62,7 +65,10 @@ const validateGetCheckName = async input => {
     );
   }
   // 2) ensure no check filename overlaps
-  const checkSpecs = await glob(`${directories.checks}/**/*.json`);
+  const checkSpecs = await glob(`${directories.checks}/**/*.json`, {
+    posix: true,
+    absolute: true
+  });
   // cannot use `fs.existsSync` here, as we do not know which category of checks to look under
   const axeChecksFileNames = checkSpecs.map(
     f => f.replace('.json', '').split('/').reverse()[0]
@@ -71,7 +77,10 @@ const validateGetCheckName = async input => {
     throw new Error('CHECK name conflicts with an existing filename.');
   }
   // 3) ensure no check id overlaps
-  const ruleSpecs = await glob(`${directories.rules}/**/*.json`);
+  const ruleSpecs = await glob(`${directories.rules}/**/*.json`, {
+    posix: true,
+    absolute: true
+  });
   const axe = require(directories.axePath);
   const axeChecksIds = ruleSpecs.reduce((out, specPath) => {
     const spec = require(specPath);
