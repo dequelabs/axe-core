@@ -59,13 +59,37 @@ module.exports = {
         selector: 'MemberExpression[property.name=tagName]',
         message: "Don't use node.tagName, use node.nodeName instead."
       },
+      // node.attributes can be clobbered so is unsafe to use
+      // @see https://github.com/dequelabs/axe-core/pull/1432
       {
-        // node.attributes can be clobbered so is unsafe to use
-        // @see https://github.com/dequelabs/axe-core/pull/1432
+        // node.attributes
         selector:
           'MemberExpression[object.name=node][property.name=attributes]',
         message:
           "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
+      },
+      {
+        // vNode.actualNode.attributes
+        selector:
+          'MemberExpression[object.property.name=actualNode][property.name=attributes]',
+        message:
+          "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
+      },
+      // node.contains doesn't work with shadow dom
+      // @see https://github.com/dequelabs/axe-core/issues/4194
+      {
+        // node.contains()
+        selector:
+          'CallExpression[callee.object.name=node][callee.property.name=contains]',
+        message:
+          "Don't use node.contains(node2), use axe.utils.contains(node, node2) instead."
+      },
+      {
+        // vNode.actualNode.contains()
+        selector:
+          'CallExpression[callee.object.property.name=actualNode][callee.property.name=contains]',
+        message:
+          "Don't use node.contains(node2), use axe.utils.contains(node, node2) instead."
       }
     ]
   },
