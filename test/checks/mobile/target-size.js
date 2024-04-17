@@ -1,23 +1,22 @@
-describe('target-size tests', function () {
-  'use strict';
-
-  var checkContext = axe.testUtils.MockCheckContext();
-  var checkSetup = axe.testUtils.checkSetup;
-  var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-  var check = checks['target-size'];
+describe('target-size tests', () => {
+  const checkContext = axe.testUtils.MockCheckContext();
+  const checkSetup = axe.testUtils.checkSetup;
+  const shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  const check = checks['target-size'];
+  const fixture = document.querySelector('#fixture');
 
   function elmIds(elms) {
-    return Array.from(elms).map(function (elm) {
+    return Array.from(elms).map(elm => {
       return '#' + elm.id;
     });
   }
 
-  afterEach(function () {
+  afterEach(() => {
     checkContext.reset();
   });
 
-  it('returns false for targets smaller than minSize', function () {
-    var checkArgs = checkSetup(
+  it('returns false for targets smaller than minSize', () => {
+    const checkArgs = checkSetup(
       '<button id="target" style="' +
         'display: inline-block; width:20px; height:30px;' +
         '">x</button>'
@@ -30,8 +29,8 @@ describe('target-size tests', function () {
     });
   });
 
-  it('returns undefined for non-tabbable targets smaller than minSize', function () {
-    var checkArgs = checkSetup(
+  it('returns undefined for non-tabbable targets smaller than minSize', () => {
+    const checkArgs = checkSetup(
       '<button id="target" tabindex="-1" style="' +
         'display: inline-block; width:20px; height:30px;' +
         '">x</button>'
@@ -44,8 +43,8 @@ describe('target-size tests', function () {
     });
   });
 
-  it('returns true for unobscured targets larger than minSize', function () {
-    var checkArgs = checkSetup(
+  it('returns true for unobscured targets larger than minSize', () => {
+    const checkArgs = checkSetup(
       '<button id="target" style="' +
         'display: inline-block; width:40px; height:30px;' +
         '">x</button>'
@@ -58,8 +57,8 @@ describe('target-size tests', function () {
     });
   });
 
-  it('returns true for very large targets', function () {
-    var checkArgs = checkSetup(
+  it('returns true for very large targets', () => {
+    const checkArgs = checkSetup(
       '<button id="target" style="' +
         'display: inline-block; width:240px; height:300px;' +
         '">x</button>'
@@ -68,9 +67,9 @@ describe('target-size tests', function () {
     assert.deepEqual(checkContext._data, { messageKey: 'large', minSize: 24 });
   });
 
-  describe('when fully obscured', function () {
-    it('returns true, regardless of size', function () {
-      var checkArgs = checkSetup(
+  describe('when fully obscured', () => {
+    it('returns true, regardless of size', () => {
+      const checkArgs = checkSetup(
         '<a href="#" id="target" style="' +
           'display: inline-block; width:20px; height:20px;' +
           '">x</a>' +
@@ -83,8 +82,8 @@ describe('target-size tests', function () {
       assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
-    it('returns true when obscured by another focusable widget', function () {
-      var checkArgs = checkSetup(
+    it('returns true when obscured by another focusable widget', () => {
+      const checkArgs = checkSetup(
         '<a href="#" id="target" style="' +
           'display: inline-block; width:20px; height:20px;' +
           '">x</a>' +
@@ -97,8 +96,8 @@ describe('target-size tests', function () {
       assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
-    it('ignores obscuring element has pointer-events:none', function () {
-      var checkArgs = checkSetup(
+    it('ignores obscuring element has pointer-events:none', () => {
+      const checkArgs = checkSetup(
         '<a href="#" id="target" style="' +
           'display: inline-block; width:20px; height:20px;' +
           '">x</a>' +
@@ -115,9 +114,9 @@ describe('target-size tests', function () {
     });
   });
 
-  describe('when partially obscured', function () {
-    it('returns true for focusable non-widgets', function () {
-      var checkArgs = checkSetup(
+  describe('when partially obscured', () => {
+    it('returns true for focusable non-widgets', () => {
+      const checkArgs = checkSetup(
         '<button id="target" style="' +
           'display: inline-block; width:40px; height:30px; margin-left:30px;' +
           '">x</button>' +
@@ -137,8 +136,8 @@ describe('target-size tests', function () {
       assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
-    it('returns true for non-focusable widgets', function () {
-      var checkArgs = checkSetup(
+    it('returns true for non-focusable widgets', () => {
+      const checkArgs = checkSetup(
         '<button id="target" style="' +
           'display: inline-block; width:40px; height:30px; margin-left:30px;' +
           '">x</button>' +
@@ -158,9 +157,9 @@ describe('target-size tests', function () {
       assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
-    describe('by a focusable widget', function () {
-      it('returns true for obscured targets with sufficient space', function () {
-        var checkArgs = checkSetup(
+    describe('by a focusable widget', () => {
+      it('returns true for obscured targets with sufficient space', () => {
+        const checkArgs = checkSetup(
           '<button id="target" style="' +
             'display: inline-block; width:40px; height:30px;' +
             '">x</button>' +
@@ -202,8 +201,8 @@ describe('target-size tests', function () {
       });
 
       describe('for obscured targets with insufficient space', () => {
-        it('returns false if all elements are tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns false if all elements are tabbable', () => {
+          const checkArgs = checkSetup(
             '<button id="target" style="' +
               'display: inline-block; width:40px; height:30px; margin-left:30px;' +
               '">x</button>' +
@@ -227,8 +226,8 @@ describe('target-size tests', function () {
           ]);
         });
 
-        it('returns undefined if the target is not tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns undefined if the target is not tabbable', () => {
+          const checkArgs = checkSetup(
             '<button id="target" tabindex="-1" style="' +
               'display: inline-block; width:40px; height:30px; margin-left:30px;' +
               '">x</button>' +
@@ -252,8 +251,8 @@ describe('target-size tests', function () {
           ]);
         });
 
-        it('returns undefined if the obscuring node is not tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns undefined if the obscuring node is not tabbable', () => {
+          const checkArgs = checkSetup(
             '<button id="target" style="' +
               'display: inline-block; width:40px; height:30px; margin-left:30px;' +
               '">x</button>' +
@@ -279,8 +278,8 @@ describe('target-size tests', function () {
       });
 
       describe('that is a descendant', () => {
-        it('returns false if the widget is tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns false if the widget is tabbable', () => {
+          const checkArgs = checkSetup(
             `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
               <button style="margin:1px; line-height:20px">Play</button>
             </a>`
@@ -289,8 +288,8 @@ describe('target-size tests', function () {
           assert.isFalse(out);
         });
 
-        it('returns true if the widget is not tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns true if the widget is not tabbable', () => {
+          const checkArgs = checkSetup(
             `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
               <button tabindex="-1" style="margin:1px; line-height:20px">Play</button>
             </a>`
@@ -301,8 +300,8 @@ describe('target-size tests', function () {
       });
 
       describe('that is a descendant', () => {
-        it('returns false if the widget is tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns false if the widget is tabbable', () => {
+          const checkArgs = checkSetup(
             `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
               <button style="margin:1px; line-height:20px">Play</button>
             </a>`
@@ -311,8 +310,8 @@ describe('target-size tests', function () {
           assert.isFalse(out);
         });
 
-        it('returns true if the widget is not tabbable', function () {
-          var checkArgs = checkSetup(
+        it('returns true if the widget is not tabbable', () => {
+          const checkArgs = checkSetup(
             `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
               <button tabindex="-1" style="margin:1px; line-height:20px">Play</button>
             </a>`
@@ -324,9 +323,9 @@ describe('target-size tests', function () {
     });
   });
 
-  describe('with overflowing content', function () {
+  describe('with overflowing content', () => {
     it('returns undefined target is too small', () => {
-      var checkArgs = checkSetup(
+      const checkArgs = checkSetup(
         '<a href="#" id="target"><img width="24" height="24"></a>'
       );
       assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
@@ -337,7 +336,7 @@ describe('target-size tests', function () {
     });
 
     it('returns true if target has sufficient size', () => {
-      var checkArgs = checkSetup(
+      const checkArgs = checkSetup(
         '<a href="#" id="target" style="font-size:24px;"><img width="24" height="24"></a>'
       );
       assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -345,7 +344,7 @@ describe('target-size tests', function () {
 
     describe('and partially obscured', () => {
       it('is undefined when unobscured area is too small', () => {
-        var checkArgs = checkSetup(
+        const checkArgs = checkSetup(
           '<a href="#" id="target" style="font-size:24px;">' +
             '  <img width="24" height="36" style="vertical-align: bottom;">' +
             '</a><br>' +
@@ -359,7 +358,7 @@ describe('target-size tests', function () {
       });
 
       it('is true when unobscured area is sufficient', () => {
-        var checkArgs = checkSetup(
+        const checkArgs = checkSetup(
           '<a href="#" id="target" style="font-size:24px;">' +
             '  <img width="24" height="36" style="vertical-align: bottom;">' +
             '</a><br>' +
@@ -371,7 +370,7 @@ describe('target-size tests', function () {
 
     describe('and fully obscured', () => {
       it('is undefined', () => {
-        var checkArgs = checkSetup(
+        const checkArgs = checkSetup(
           '<a href="#" id="target" style="font-size:24px;">' +
             '  <img width="24" height="36" style="vertical-align: bottom;">' +
             '</a><br>' +
@@ -386,8 +385,8 @@ describe('target-size tests', function () {
     });
   });
 
-  it('works across shadow boundaries', function () {
-    var checkArgs = shadowCheckSetup(
+  it('works across shadow boundaries', () => {
+    const checkArgs = shadowCheckSetup(
       '<span id="shadow"></span>' +
         '<button id="obscurer1" style="' +
         'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
@@ -410,5 +409,20 @@ describe('target-size tests', function () {
       '#obscurer1',
       '#obscurer2'
     ]);
+  });
+
+  it('ignores descendants of the target that are in shadow dom', () => {
+    fixture.innerHTML =
+      '<button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px"><span id="shadow"></span></button>';
+    const target = fixture.querySelector('#target');
+    const shadow = fixture
+      .querySelector('#shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<div style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>';
+
+    axe.setup(fixture);
+    const vNode = axe.utils.getNodeFromTree(target);
+    assert.isTrue(check.evaluate.apply(checkContext, [target, {}, vNode]));
   });
 });

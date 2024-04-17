@@ -1,6 +1,5 @@
 describe('get-target-rects', () => {
   const getTargetRects = axe.commons.dom.getTargetRects;
-  const shadowSupport = axe.testUtils.shadowSupport.v1;
   const { queryFixture } = axe.testUtils;
   const fixture = document.getElementById('fixture');
 
@@ -82,22 +81,19 @@ describe('get-target-rects', () => {
     ]);
   });
 
-  it(
-    'ignores non-tabbable descendants of the target that are in shadow dom',
-    () => {
-      fixture.innerHTML =
-        '<button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px"><span id="shadow"></span></button>';
-      const target = fixture.querySelector('#target');
-      const shadow = fixture
-        .querySelector('#shadow')
-        .attachShadow({ mode: 'open' });
-      shadow.innerHTML =
-        '<div style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>';
+  it('ignores non-tabbable descendants of the target that are in shadow dom', () => {
+    fixture.innerHTML =
+      '<button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px"><span id="shadow"></span></button>';
+    const target = fixture.querySelector('#target');
+    const shadow = fixture
+      .querySelector('#shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<div style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>';
 
-      axe.setup(fixture);
-      const vNode = axe.utils.getNodeFromTree(target);
-      const rects = getTargetRects(vNode);
-      assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
-    }
-  );
+    axe.setup(fixture);
+    const vNode = axe.utils.getNodeFromTree(target);
+    const rects = getTargetRects(vNode);
+    assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
+  });
 });

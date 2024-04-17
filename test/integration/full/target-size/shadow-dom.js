@@ -3,7 +3,7 @@ describe('target-size shadow dom test', () => {
   let results;
 
   before(done => {
-    axe.testUtils.awaitNestedLoad(() => {
+    axe.testUtils.awaitNestedLoad(async () => {
       const options = {
         runOnly: ['target-size'],
         elementRef: true
@@ -12,14 +12,8 @@ describe('target-size shadow dom test', () => {
         // ignore the mocha links
         exclude: '#mocha'
       };
-      axe.run(context, options, (err, r) => {
-        if (err) {
-          done(err);
-        }
-        results = r;
-        console.log(results);
-        done();
-      });
+      results = await axe.run(context, options);
+      done();
     });
   });
 

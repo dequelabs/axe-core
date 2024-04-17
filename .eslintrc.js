@@ -82,14 +82,14 @@ module.exports = {
         selector:
           'CallExpression[callee.object.name=node][callee.property.name=contains]',
         message:
-          "Don't use node.contains(node2), use axe.utils.contains(node, node2) instead."
+          "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
       },
       {
         // vNode.actualNode.contains()
         selector:
           'CallExpression[callee.object.property.name=actualNode][callee.property.name=contains]',
         message:
-          "Don't use node.contains(node2), use axe.utils.contains(node, node2) instead."
+          "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
       }
     ]
   },
