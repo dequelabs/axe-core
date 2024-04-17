@@ -82,7 +82,7 @@ describe('get-target-rects', () => {
     ]);
   });
 
-  (shadowSupport ? it : xit)(
+  it(
     'ignores non-tabbable descendants of the target that are in shadow dom',
     () => {
       fixture.innerHTML =
