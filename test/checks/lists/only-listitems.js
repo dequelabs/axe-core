@@ -198,7 +198,7 @@ describe('only-listitems', () => {
     });
   });
 
-	it('should return false if the list has elements with role presentation', () => {
+  it('should return false if the list has elements with role presentation', () => {
     const checkArgs = checkSetup(
       '<ol id="target"><li>A list</li><li role="presentation">...</li></ol>'
     );
