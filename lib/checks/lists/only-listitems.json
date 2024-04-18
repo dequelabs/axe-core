@@ -2,7 +2,7 @@
   "id": "only-listitems",
   "evaluate": "invalid-children-evaluate",
   "options": {
-    "validRoles": ["listitem"],
+    "validRoles": ["listitem", "presentation"],
     "validNodeNames": ["li"]
   },
   "metadata": {
