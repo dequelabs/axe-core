@@ -198,6 +198,14 @@ describe('only-listitems', () => {
     });
   });
 
+	it('should return false if the list has elements with role presentation', () => {
+    const checkArgs = checkSetup(
+      '<ol id="target"><li>A list</li><li role="presentation">...</li></ol>'
+    );
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
   describe('nodeNames', () => {
     it('returns multiple node names', () => {
       const checkArgs = checkSetup(
