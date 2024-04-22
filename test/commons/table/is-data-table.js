@@ -32,6 +32,14 @@ describe('table.isDataTable', function () {
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
 
+  it('should be false if the table has role=application, which is an astract role of structure', function () {
+    fixture.innerHTML = '<table role="application"></table>';
+
+    var node = fixture.querySelector('table');
+    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    assert.isFalse(axe.commons.table.isDataTable(node));
+  });
+
   it('should be true if the table is inside an editable area', function () {
     fixture.innerHTML =
       '<div contenteditable="true">' +
@@ -71,13 +79,6 @@ describe('table.isDataTable', function () {
   });
 
   describe('should be true if the table has a landmark role', function () {
-    it('application', function () {
-      fixture.innerHTML = '<table role="application"></table>';
-
-      var node = fixture.querySelector('table');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
-      assert.isTrue(axe.commons.table.isDataTable(node));
-    });
     it('banner', function () {
       fixture.innerHTML = '<table role="banner"></table>';
 
