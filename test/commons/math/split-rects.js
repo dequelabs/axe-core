@@ -16,13 +16,16 @@ describe('splitRects', () => {
     assert.deepEqual(rects[0], rectA);
   });
 
-  it('returns empty array if there are too many overlapping rects', () => {
+  it('throws if there are too many overlapping rects', () => {
     const rects = [];
     for (let i = 0; i < 100; i++) {
       rects.push(new DOMRect(i, i, 50, 50));
     }
     const rectA = new DOMRect(0, 0, 1000, 1000);
-    assert.lengthOf(splitRects(rectA, rects), 0);
+
+    assert.throws(() => {
+      splitRects(rectA, rects);
+    }, 'splitRects: Too many rects');
   });
 
   describe('with one overlapping rect', () => {

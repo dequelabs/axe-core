@@ -120,7 +120,7 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
-  it('returns false if there are too many focusable widgets', () => {
+  it('returns undefined if there are too many focusable widgets', () => {
     let html = '';
     for (let i = 0; i < 100; i++) {
       html += `
@@ -137,8 +137,9 @@ describe('target-offset tests', () => {
         <table id="tab-table">${html}</table>
       </div>
     `);
-    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
+      messageKey: 'tooManyRects',
       closestOffset: 0,
       minOffset: 24
     });
