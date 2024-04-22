@@ -98,6 +98,21 @@ describe('target-offset tests', () => {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
+  it('ignores obscured widget elements as neighbors', () => {
+    const checkArgs = checkSetup(`
+      <div style="position: fixed; bottom: 0">
+        <a href="#">Go to top</a>
+      </div>
+      <div id="target" style="position: fixed; bottom: 0; left: 0; right: 0; background: #eee">
+        Cookies: <a href="#">Accept all cookies</a>
+      </div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+  });
+
   it('sets all elements that are too close as related nodes', () => {
     const checkArgs = checkSetup(
       '<a href="#" id="left" style="' +
