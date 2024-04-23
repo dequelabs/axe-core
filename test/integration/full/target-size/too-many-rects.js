@@ -9,6 +9,7 @@ describe('target-size too many rects test', () => {
         elementRef: true
       };
       const context = {
+        include: '#incomplete',
         // ignore the incomplete table results
         exclude: 'table tr'
       };
