@@ -117,6 +117,10 @@ describe('aria-valid-attr-value', function () {
     assert.isUndefined(
       validAttrValueCheck.call(checkContext, null, null, vNode)
     );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'controlsWithinPopup',
+      needsReview: 'aria-controls="test"'
+    });
   });
 
   it('should pass on aria-owns and aria-expanded=false when the element is not in the DOM', function () {
