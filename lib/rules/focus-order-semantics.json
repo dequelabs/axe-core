@@ -9,6 +9,6 @@
     "help": "Elements in the focus order should have an appropriate role"
   },
   "all": [],
-  "any": ["has-widget-role", "valid-scrollable-semantics"],
+  "any": ["has-widget-or-window-role", "valid-scrollable-semantics"],
   "none": []
 }
