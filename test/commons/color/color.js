@@ -166,9 +166,27 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 1);
       });
 
+      it('supports negative rad on hue', () => {
+        const c = new Color();
+        c.parseColorFnString('hsl(-3.49rad, 40%, 50%)');
+        assert.equal(c.red, 77);
+        assert.equal(c.green, 179);
+        assert.equal(c.blue, 145);
+        assert.equal(c.alpha, 1);
+      });
+
       it('supports turn on hue', () => {
         const c = new Color();
         c.parseColorFnString('hsl(0.444turn, 40%, 50%)');
+        assert.equal(c.red, 77);
+        assert.equal(c.green, 179);
+        assert.equal(c.blue, 144);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('supports negative turn on hue', () => {
+        const c = new Color();
+        c.parseColorFnString('hsl(-0.556turn, 40%, 50%)');
         assert.equal(c.red, 77);
         assert.equal(c.green, 179);
         assert.equal(c.blue, 144);
