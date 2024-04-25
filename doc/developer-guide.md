@@ -71,7 +71,7 @@ There are also a set of tests that are not considered unit tests that you can ru
 
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
-If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can also navigate to the newly opened page using any supported browser.
+If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../.vscode/launch.json) is provided. You can also navigate to the newly opened page using any supported browser.
 
 You can scope which set of tests to debug by passing the `testDirs` argument. Supported values are:
 
