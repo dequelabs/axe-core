@@ -576,10 +576,6 @@
       },
       "fail": "Das Element hat keine globalen ARIA Attribute."
     },
-    "has-widget-role": {
-      "pass": "Element hat eine widget-Rolle.",
-      "fail": "Das Element besitzt keine widget-Rolle."
-    },
     "invalidrole": {
       "pass": "ARIA Rolle ist gültig.",
       "fail": {

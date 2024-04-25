@@ -365,10 +365,6 @@
         "plural": "'aria-errormessage'-værdi ${data.values}` bør bruge en teknik til at annoncere beskeden (fx 'aria-live', 'aria-describedby', 'role=alert', osv.)"
       }
     },
-    "has-widget-role": {
-      "pass": "Elementet har en 'widget'-rolle.",
-      "fail": "Elementet har ikke en 'widget'-rolle."
-    },
     "invalidrole": {
       "pass": "ARIA-rollen er korrekt",
       "fail": "Rollen skal være en af de mulige ARIA-roller"

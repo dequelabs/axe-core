@@ -5,8 +5,8 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "Element has a widget role.",
-      "fail": "Element does not have a widget role."
+      "pass": "Element has a widget or window role.",
+      "fail": "Element does not have a widget or window role."
     }
   }
 }

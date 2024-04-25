@@ -356,10 +356,6 @@
         "plural": "aria-errormessagen, bailioa  ${data.values}`, mezua iragartzeko teknika bat erabili behar da (adibidez: aria-live, aria-describedby, role = alert, etab.)."
       }
     },
-    "has-widget-role": {
-      "pass": "Elementuak widget rola du.",
-      "fail": "Elementuak ez du widget rolik."
-    },
     "invalidrole": {
       "pass": "ARIA rola baliozkoa da",
       "fail": "Rolak baliozko ARIA rola izan behar du"

@@ -504,10 +504,6 @@
       },
       "fail": "O elemento não tem atributo ARIA global"
     },
-    "has-widget-role": {
-      "pass": "Elemento tem um 'role' de 'widget'.",
-      "fail": "Elemento não tem um 'role' de 'widget'."
-    },
     "invalidrole": {
       "pass": "O ARIA 'role' é válido",
       "fail": {
