@@ -11,6 +11,7 @@ var testDirs = [
   'virtual-rules'
 ];
 var testFiles = [];
+var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
 var args = process.argv.slice(2);
 
 args.forEach(function (arg) {
@@ -22,6 +23,10 @@ args.forEach(function (arg) {
   // pattern: testFiles=path/to/file
   else if (parts[0] === 'testFiles') {
     testFiles = parts[1].split(',');
+  }
+  // pattern: debugPort=1234
+  else if (parts[0] === 'debugPort') {
+    debugPort = parseInt(parts[1], 10);
   }
 });
 
@@ -107,6 +112,12 @@ module.exports = function (config) {
       mocha: {
         timeout: 4000,
         reporter: 'html'
+      }
+    },
+    customLaunchers: {
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: ['--remote-debugging-port=' + debugPort]
       }
     }
   });
