@@ -1,6 +1,6 @@
 {
-  "id": "has-widget-or-window-role",
-  "evaluate": "has-widget-or-window-role-evaluate",
+  "id": "has-widget-role",
+  "evaluate": "has-widget-role-evaluate",
   "options": [],
   "metadata": {
     "impact": "minor",
