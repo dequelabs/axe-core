@@ -2,7 +2,7 @@
 
 Rule Integration tests take an HTML snippet file and runs an axe-core rule against it. The results for the run are then compared against the companion JSON file to ensure that every node returns as the expected result (passes, violation, incomplete, inapplicable).
 
-To run the rule integration tests, run `npm run test:unit:integration`. You can run and debug the tests in a non-headless browser by running `npm run test:debug -- testDirs=integration`.
+To run the rule integration tests, run `npm run test:unit:integration`. You can run and debug the tests in a non-headless browser by running `npm run test:debug -- testDirs=integration`. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../../../.vscode/launch.json) is provided.
 
 When the tests are run, each JSON file is converted into a test suite file using [Karmas preprocessor](https://karma-runner.github.io/latest/config/preprocessors.html) and [runner.js](./runner.js) as the test suite template.
 
