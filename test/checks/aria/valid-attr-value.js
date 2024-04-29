@@ -110,6 +110,19 @@ describe('aria-valid-attr-value', function () {
     assert.isFalse(validAttrValueCheck.call(checkContext, null, null, vNode));
   });
 
+  it('should return undefined on aria-controls with aria-haspopup as we cannot determine if it is in the DOM later', function () {
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test" aria-haspopup="true">Button</button>'
+    );
+    assert.isUndefined(
+      validAttrValueCheck.call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'controlsWithinPopup',
+      needsReview: 'aria-controls="test"'
+    });
+  });
+
   it('should pass on aria-owns and aria-expanded=false when the element is not in the DOM', function () {
     var vNode = queryFixture(
       '<button id="target" aria-owns="test" aria-expanded="false">Button</button>'
