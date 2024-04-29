@@ -356,6 +356,10 @@
         "plural": "En aria-errormessage, valor  ${data.values}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)"
       }
     },
+    "has-widget-role": {
+      "pass": "El elemento tiene un rol de widget.",
+      "fail": "El elemento no tiene un rol de widget."
+    },
     "invalidrole": {
       "pass": "El rol ARIA es válido",
       "fail": "El rol debe ser uno de los roles ARIA válidos"

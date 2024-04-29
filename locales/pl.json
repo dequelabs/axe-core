@@ -575,6 +575,10 @@
       },
       "fail": "Element nie ma ogólnego atrybutu ARIA"
     },
+    "has-widget-role": {
+      "pass": "Element ma rolę widżetu.",
+      "fail": "Element nie ma roli widżetu."
+    },
     "invalidrole": {
       "pass": "Rola ARIA jest poprawna.",
       "fail": {

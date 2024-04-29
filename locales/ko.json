@@ -524,6 +524,10 @@
       },
       "fail": "엘리먼트가 전역 ARIA 어트리뷰트를 가지고 있지 않습니다."
     },
+    "has-widget-role": {
+      "pass": "엘리먼트가 위젯 역할(role)을 가지고 있습니다.",
+      "fail": "엘리먼트가 위젯 역할(role)을 가지고 있지 않습니다."
+    },
     "invalidrole": {
       "pass": "ARIA 역할(role)이 유효합니다.",
       "fail": {

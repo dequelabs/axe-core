@@ -575,6 +575,10 @@
       },
       "fail": "要素にはグローバルなARIA属性が指定されていません"
     },
+    "has-widget-role": {
+      "pass": "要素にはwidgetロールが存在します",
+      "fail": "要素にはwidgetロールが存在しません"
+    },
     "invalidrole": {
       "pass": "ARIAロールが有効です",
       "fail": {

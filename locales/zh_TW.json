@@ -573,6 +573,10 @@
       },
       "fail": "元素沒有全域 ARIA 屬性"
     },
+    "has-widget-role": {
+      "pass": "元素具有小部件角色",
+      "fail": "元素沒有小部件角色"
+    },
     "invalidrole": {
       "pass": "ARIA 角色有效",
       "fail": {

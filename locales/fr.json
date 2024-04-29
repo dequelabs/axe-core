@@ -519,6 +519,10 @@
       },
       "fail": "L’élément n’a pas d’attribut ARIA global"
     },
+    "has-widget-role": {
+      "pass": "L’élément a un rôle widget.",
+      "fail": "L’élément n’a pas de rôle widget."
+    },
     "invalidrole": {
       "pass": "Le rôle ARIA est valide",
       "fail": {
