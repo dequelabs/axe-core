@@ -203,6 +203,15 @@ describe('region', function () {
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });
 
+  it('ignores native landmark elements with an overwriting role with a nested child', function () {
+    var checkArgs = checkSetup(`
+      <main id="target" role="none"><p>Content</p></main>
+			<div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
   it('returns false for content outside of form tags with accessible names', function () {
     var checkArgs = checkSetup(
       '<p id="target">Text</p><form aria-label="form"></form>'
