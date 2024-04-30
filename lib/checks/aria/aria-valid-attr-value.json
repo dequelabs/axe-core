@@ -15,7 +15,8 @@
         "noIdShadow": "ARIA attribute element ID does not exist on the page or is a descendant of a different shadow DOM tree: ${data.needsReview}",
         "ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}",
         "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}",
-        "empty": "ARIA attribute value is ignored while empty: ${data.needsReview}"
+        "empty": "ARIA attribute value is ignored while empty: ${data.needsReview}",
+        "controlsWithinPopup": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: ${data.needsReview}"
       }
     }
   }

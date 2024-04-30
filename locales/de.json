@@ -498,7 +498,8 @@
     },
     "aria-required-children": {
       "pass": {
-        "default": "Alle benötigten ARIA Kinder sind vorhanden."
+        "default": "Alle benötigten ARIA Kinder sind vorhanden.",
+        "aria-busy": "Element hat ein aria-busy-Attribut, daher ist es erlaubt, erforderliche ARIA Kinder wegzulassen"
       },
       "fail": {
         "singular": "Benötigte ARIA Kindrolle nicht vorhanden: ${data.values}",
@@ -864,7 +865,10 @@
       "fail": "Die viewport-Einstellungen im <meta>-Tag blockieren das Zoomen auf mobilen Geräten."
     },
     "target-offset": {
-      "pass": "Das Ziel hat genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px, der mindestens ${data.minOffset}px beträgt.",
+      "pass": {
+        "default": "Das Ziel hat genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px, der mindestens ${data.minOffset}px beträgt.",
+        "large": "Das Ziel überschreitet bei weitem die Mindestgröße von ${data.minOffset}px."
+      },
       "fail": "Das Ziel hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px.",
       "incomplete": {
         "default": "Element mit negativem Tabindex hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px. Ist dies ein Ziel?",
@@ -874,7 +878,8 @@
     "target-size": {
       "pass": {
         "default": "Das Steuerelement hat eine ausreichende Größe (${data.width}px x ${data.height}px, sollte mindestens ${data.minSize}px x ${data.minSize}px sein).",
-        "obscured": "Das Steuerelement wird ignoriert, da es vollständig verdeckt ist und daher nicht angeklickt werden kann."
+        "obscured": "Das Steuerelement wird ignoriert, da es vollständig verdeckt ist und daher nicht angeklickt werden kann.",
+        "large": "Das Ziel überschreitet bei weitem die Mindestgröße von ${data.minSize}px."
       },
       "fail": {
         "default": "Das Ziel hat eine unzureichende Größe (${data.width}px x ${data.height}px, sollte mindestens ${data.minSize}px x ${data.minSize}px sein).",
@@ -884,7 +889,8 @@
         "default": "Element mit negativem Tabindex hat unzureichende Größe (${data.width}px mal ${data.height}px, sollte mindestens ${data.minSize}px mal ${data.minSize}px sein). Ist dies ein Ziel?",
         "contentOverflow": "Elementgröße konnte aufgrund von Überlaufinhalten nicht genau bestimmt werden",
         "partiallyObscured": "Element mit negativem Tabindex hat unzureichende Größe, weil es teilweise verdeckt ist (kleinster Platz ist ${data.width}px mal ${data.height}px, sollte mindestens ${data.minSize}px mal ${data.minSize}px sein). Ist dies ein Ziel?",
-        "partiallyObscuredNonTabbable": "Das Ziel hat eine unzureichende Größe, weil es teilweise von einem Nachbarn mit negativem Tabindex verdeckt wird (der kleinste Platz ist ${data.width}px mal ${data.height}px, sollte mindestens ${data.minSize}px mal ${data.minSize}px sein). Ist der Nachbar ein Ziel?"
+        "partiallyObscuredNonTabbable": "Das Ziel hat eine unzureichende Größe, weil es teilweise von einem Nachbarn mit negativem Tabindex verdeckt wird (der kleinste Platz ist ${data.width}px mal ${data.height}px, sollte mindestens ${data.minSize}px mal ${data.minSize}px sein). Ist der Nachbar ein Ziel?",
+        "tooManyRects": "Die Zielgröße konnte nicht ermittelt werden, da zu viele überlappende Elemente vorhanden sind."
       }
     },
     "header-present": {
