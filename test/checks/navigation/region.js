@@ -46,8 +46,8 @@ describe('region', function () {
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
-  it('should return false when img content is outside the region', function () {
-    var checkArgs = checkSetup(`
+  it('should return false when img content is outside the region, no alt attribute at all', function () {
+    const checkArgs = checkSetup(`
       <img id="target" src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7">
       <div role="main">Content</div>
     `);
@@ -56,21 +56,39 @@ describe('region', function () {
   });
 
   it('should return true when img content outside of the region is decorative, via an empty alt attr', function () {
-    var checkArgs = checkSetup(`
-      <img id="target" src="#" width="1" height="1" alt="" />
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" alt="" />
       <div role="main">Content</div>
     `);
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
-  it('should return true when img content outside of the region is decorative, via a presentation role', function () {
-    var checkArgs = checkSetup(`
-      <img id="target" src="#" width="1" height="1" role="presentation />
+  it('should return true when img content outside of the region is explicitly decorative, via a presentation role', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" role="presentation" />
       <div role="main">Content</div>
     `);
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when img content outside of the region is focusable (implicit role=img)', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" tabindex="0" alt="" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when img content outside of the region has a global aria attribute (implicit role=img)', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" aria-atomic="true" alt="" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('should return true when textless text content is outside the region', function () {
