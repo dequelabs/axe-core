@@ -67,9 +67,11 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 
 - `type` - string(required). [The role type](https://www.w3.org/TR/wai-aria-1.1/#roles_categorization). Valid types are:
   - `abstract`
-  - `widget`
-  - `structure`
+  - `composite`
   - `landmark`
+  - `structure`
+  - `widget`
+  - `window`
 - `requiredContext` - array(optional). List of required parent roles.
 - `requiredOwned` - array(optional). List of required owned roles.
 - `requiredAttrs` - array(optional). List of required attributes.
