@@ -91,6 +91,42 @@ describe('region', function () {
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });
 
+  it('should return true when canvas role=none', function () {
+    const checkArgs = checkSetup(`
+      <canvas id="target" role="none" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when object has an aria-label', function () {
+    const checkArgs = checkSetup(`
+      <object id="target" aria-label="bar"></object>
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when a non-landmark has text content but a role=none', function () {
+    const checkArgs = checkSetup(`
+      <div id="target" role="none">apples</div>
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when a non-landmark does NOT have text content and a role=none', function () {
+    const checkArgs = checkSetup(`
+      <div id="target" role="none"></div>
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
   it('should return true when textless text content is outside the region', function () {
     var checkArgs = checkSetup(
       '<p id="target"></p><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
