@@ -23,11 +23,6 @@
       <a href="stuff.html#mainheader" id="notskiplink"
         >This is not a skip link.</a
       >
-      <img src="#" />
-      <img src="#" tabindex="0" alt="" />
-      <img src="#" aria-atomic="true" alt="" />
-      <object aria-label="bar"></object>
-      <div id="target" role="none">apples</div>
       <form>
         <div>
           <h1 id="mainheader" tabindex="0">This is a header.</h1>
@@ -43,6 +38,22 @@
       <section title="section 3">
         <p>Content</p>
       </section>
+    </div>
+
+    <div id="img-no-alt">
+      <img src="#" />
+    </div>
+    <div id="img-focusable">
+      <img src="#" tabindex="0" alt="" />
+    </div>
+    <div id="img-aria-global">
+      <img src="#" aria-atomic="true" alt="" />
+    </div>
+    <div id="labeled-object">
+      <object aria-label="bar"></object>
+    </div>
+    <div id="none-role-div">
+      <div id="target" role="none">apples</div>
     </div>
 
     This should be ignored
