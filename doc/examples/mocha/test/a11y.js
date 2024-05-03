@@ -17,7 +17,7 @@ describe('axe', function () {
     );
 
   it('should report that good HTML is good', function (done) {
-    let n = document.getElementById('working');
+    var n = document.getElementById('working');
     axe.run(n, function (err, result) {
       expect(err).to.be.null;
       expect(result.violations.length).to.equal(0);
@@ -26,7 +26,7 @@ describe('axe', function () {
   });
 
   it('should report that bad HTML is bad', function (done) {
-    let n = document.getElementById('broken');
+    var n = document.getElementById('broken');
     axe.run(n, function (err, result) {
       expect(err).to.be.null;
       expect(result.violations.length).to.equal(1);
