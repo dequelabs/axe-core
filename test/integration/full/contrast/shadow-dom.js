@@ -1,12 +1,13 @@
+/* eslint-disable no-var */
 describe('color-contrast shadow dom test', function () {
   'use strict';
 
-  let shadowSupported = axe.testUtils.shadowSupport.v1;
+  var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   before(function () {
-    let fixture = document.querySelector('#fixture');
+    var fixture = document.querySelector('#fixture');
     if (shadowSupported) {
-      let shadow = fixture.attachShadow({ mode: 'open' });
+      var shadow = fixture.attachShadow({ mode: 'open' });
       shadow.innerHTML =
         '<button style="background-color:red;color:white;">Go!</button>' +
         '<span style="color:#ccc;">Text</span>' +

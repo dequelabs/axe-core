@@ -1,7 +1,8 @@
+/* eslint-disable no-var */
 describe('color-contrast code highlighting test', function () {
   'use strict';
 
-  let results;
+  var results;
   function run(done) {
     axe.run(
       '#fixture',

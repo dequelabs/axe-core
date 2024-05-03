@@ -7,12 +7,12 @@
  *
  *--------------------------------------------------------------------------*/
 
-let Prototype = {
+var Prototype = {
   Version: '1.7.3',
 
   Browser: (function () {
-    let ua = navigator.userAgent;
-    let isOpera =
+    var ua = navigator.userAgent;
+    var isOpera =
       Object.prototype.toString.call(window.opera) == '[object Opera]';
     return {
       IE: !!window.attachEvent && !isOpera,
@@ -29,13 +29,13 @@ let Prototype = {
     SelectorsAPI: !!document.querySelector,
 
     ElementExtensions: (function () {
-      let constructor = window.Element || window.HTMLElement;
+      var constructor = window.Element || window.HTMLElement;
       return !!(constructor && constructor.prototype);
     })(),
     SpecificElementExtensions: (function () {
       if (typeof window.HTMLDivElement !== 'undefined') return true;
 
-      let div = document.createElement('div'),
+      var div = document.createElement('div'),
         form = document.createElement('form'),
         isSupported = false;
 
@@ -63,9 +63,9 @@ if (Prototype.Browser.MobileSafari)
   Prototype.BrowserFeatures.SpecificElementExtensions = false;
 /* Based on Alex Arnell's inheritance implementation. */
 
-let Class = (function () {
-  let IS_DONTENUM_BUGGY = (function () {
-    for (let p in { toString: 1 }) {
+var Class = (function () {
+  var IS_DONTENUM_BUGGY = (function () {
+    for (var p in { toString: 1 }) {
       if (p === 'toString') return false;
     }
     return true;
@@ -73,7 +73,7 @@ let Class = (function () {
 
   function subclass() {}
   function create() {
-    let parent = null,
+    var parent = null,
       properties = $A(arguments);
     if (Object.isFunction(properties[0])) parent = properties.shift();
 
@@ -91,7 +91,7 @@ let Class = (function () {
       parent.subclasses.push(klass);
     }
 
-    for (let i = 0, length = properties.length; i < length; i++)
+    for (var i = 0, length = properties.length; i < length; i++)
       klass.addMethods(properties[i]);
 
     if (!klass.prototype.initialize)
@@ -102,7 +102,7 @@ let Class = (function () {
   }
 
   function addMethods(source) {
-    let ancestor = this.superclass && this.superclass.prototype,
+    var ancestor = this.superclass && this.superclass.prototype,
       properties = Object.keys(source);
 
     if (IS_DONTENUM_BUGGY) {
@@ -112,15 +112,15 @@ let Class = (function () {
         properties.push('valueOf');
     }
 
-    for (let i = 0, length = properties.length; i < length; i++) {
-      let property = properties[i],
+    for (var i = 0, length = properties.length; i < length; i++) {
+      var property = properties[i],
         value = source[property];
       if (
         ancestor &&
         Object.isFunction(value) &&
         value.argumentNames()[0] == '$super'
       ) {
-        let method = value;
+        var method = value;
         value = (function (m) {
           return function () {
             return ancestor[m].apply(this, arguments);
@@ -153,7 +153,7 @@ let Class = (function () {
   };
 })();
 (function () {
-  let _toString = Object.prototype.toString,
+  var _toString = Object.prototype.toString,
     _hasOwnProperty = Object.prototype.hasOwnProperty,
     NULL_TYPE = 'Null',
     UNDEFINED_TYPE = 'Undefined',
@@ -173,7 +173,7 @@ let Class = (function () {
       JSON.stringify(0) === '0' &&
       typeof JSON.stringify(Prototype.K) === 'undefined';
 
-  let DONT_ENUMS = [
+  var DONT_ENUMS = [
     'toString',
     'toLocaleString',
     'valueOf',
@@ -183,8 +183,8 @@ let Class = (function () {
     'constructor'
   ];
 
-  let IS_DONTENUM_BUGGY = (function () {
-    for (let p in { toString: 1 }) {
+  var IS_DONTENUM_BUGGY = (function () {
+    for (var p in { toString: 1 }) {
       if (p === 'toString') return false;
     }
     return true;
@@ -197,7 +197,7 @@ let Class = (function () {
       case void 0:
         return UNDEFINED_TYPE;
     }
-    let type = typeof o;
+    var type = typeof o;
     switch (type) {
       case 'boolean':
         return BOOLEAN_TYPE;
@@ -210,7 +210,7 @@ let Class = (function () {
   }
 
   function extend(destination, source) {
-    for (let property in source) destination[property] = source[property];
+    for (var property in source) destination[property] = source[property];
     return destination;
   }
 
@@ -230,12 +230,12 @@ let Class = (function () {
   }
 
   function Str(key, holder, stack) {
-    let value = holder[key];
+    var value = holder[key];
     if (Type(value) === OBJECT_TYPE && typeof value.toJSON === 'function') {
       value = value.toJSON(key);
     }
 
-    let _class = _toString.call(value);
+    var _class = _toString.call(value);
 
     switch (_class) {
       case NUMBER_CLASS:
@@ -253,14 +253,14 @@ let Class = (function () {
         return 'false';
     }
 
-    let type = typeof value;
+    var type = typeof value;
     switch (type) {
       case 'string':
         return value.inspect(true);
       case 'number':
         return isFinite(value) ? String(value) : 'null';
       case 'object':
-        for (let i = 0, length = stack.length; i < length; i++) {
+        for (var i = 0, length = stack.length; i < length; i++) {
           if (stack[i] === value) {
             throw new TypeError(
               "Cyclic reference to '" + value + "' in object"
@@ -269,17 +269,17 @@ let Class = (function () {
         }
         stack.push(value);
 
-        let partial = [];
+        var partial = [];
         if (_class === ARRAY_CLASS) {
-          for (let i = 0, length = value.length; i < length; i++) {
-            let str = Str(i, value, stack);
+          for (var i = 0, length = value.length; i < length; i++) {
+            var str = Str(i, value, stack);
             partial.push(typeof str === 'undefined' ? 'null' : str);
           }
           partial = '[' + partial.join(',') + ']';
         } else {
-          let keys = Object.keys(value);
-          for (let i = 0, length = keys.length; i < length; i++) {
-            let key = keys[i],
+          var keys = Object.keys(value);
+          for (var i = 0, length = keys.length; i < length; i++) {
+            var key = keys[i],
               str = Str(key, value, stack);
             if (typeof str !== 'undefined') {
               partial.push(key.inspect(true) + ':' + str);
@@ -308,13 +308,13 @@ let Class = (function () {
     if (Type(object) !== OBJECT_TYPE) {
       throw new TypeError();
     }
-    let results = [];
-    for (let property in object) {
+    var results = [];
+    for (var property in object) {
       if (_hasOwnProperty.call(object, property)) results.push(property);
     }
 
     if (IS_DONTENUM_BUGGY) {
-      for (let i = 0; (property = DONT_ENUMS[i]); i++) {
+      for (var i = 0; (property = DONT_ENUMS[i]); i++) {
         if (_hasOwnProperty.call(object, property)) results.push(property);
       }
     }
@@ -323,8 +323,8 @@ let Class = (function () {
   }
 
   function values(object) {
-    let results = [];
-    for (let property in object) results.push(object[property]);
+    var results = [];
+    for (var property in object) results.push(object[property]);
     return results;
   }
 
@@ -340,7 +340,7 @@ let Class = (function () {
     return _toString.call(object) === ARRAY_CLASS;
   }
 
-  let hasNativeIsArray =
+  var hasNativeIsArray =
     typeof Array.isArray == 'function' &&
     Array.isArray([]) &&
     !Array.isArray({});
@@ -395,10 +395,10 @@ let Class = (function () {
 Object.extend(
   Function.prototype,
   (function () {
-    let slice = Array.prototype.slice;
+    var slice = Array.prototype.slice;
 
     function update(array, args) {
-      let arrayLength = array.length,
+      var arrayLength = array.length,
         length = args.length;
       while (length--) array[arrayLength + length] = args[length];
       return array;
@@ -410,7 +410,7 @@ Object.extend(
     }
 
     function argumentNames() {
-      let names = this.toString()
+      var names = this.toString()
         .match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
         .replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
         .replace(/\s+/g, '')
@@ -424,13 +424,13 @@ Object.extend(
       if (!Object.isFunction(this))
         throw new TypeError('The object is not callable.');
 
-      let nop = function () {};
-      let __method = this,
+      var nop = function () {};
+      var __method = this,
         args = slice.call(arguments, 1);
 
-      let bound = function () {
-        let a = merge(args, arguments);
-        let c = this instanceof bound ? this : context;
+      var bound = function () {
+        var a = merge(args, arguments);
+        var c = this instanceof bound ? this : context;
         return __method.apply(c, a);
       };
 
@@ -441,26 +441,26 @@ Object.extend(
     }
 
     function bindAsEventListener(context) {
-      let __method = this,
+      var __method = this,
         args = slice.call(arguments, 1);
       return function (event) {
-        let a = update([event || window.event], args);
+        var a = update([event || window.event], args);
         return __method.apply(context, a);
       };
     }
 
     function curry() {
       if (!arguments.length) return this;
-      let __method = this,
+      var __method = this,
         args = slice.call(arguments, 0);
       return function () {
-        let a = merge(args, arguments);
+        var a = merge(args, arguments);
         return __method.apply(this, a);
       };
     }
 
     function delay(timeout) {
-      let __method = this,
+      var __method = this,
         args = slice.call(arguments, 1);
       timeout = timeout * 1000;
       return window.setTimeout(function () {
@@ -469,28 +469,28 @@ Object.extend(
     }
 
     function defer() {
-      let args = update([0.01], arguments);
+      var args = update([0.01], arguments);
       return this.delay.apply(this, args);
     }
 
     function wrap(wrapper) {
-      let __method = this;
+      var __method = this;
       return function () {
-        let a = update([__method.bind(this)], arguments);
+        var a = update([__method.bind(this)], arguments);
         return wrapper.apply(this, a);
       };
     }
 
     function methodize() {
       if (this._methodized) return this._methodized;
-      let __method = this;
+      var __method = this;
       return (this._methodized = function () {
-        let a = update([this], arguments);
+        var a = update([this], arguments);
         return __method.apply(null, a);
       });
     }
 
-    let extensions = {
+    var extensions = {
       argumentNames: argumentNames,
       bindAsEventListener: bindAsEventListener,
       curry: curry,
@@ -537,7 +537,7 @@ RegExp.prototype.match = RegExp.prototype.test;
 RegExp.escape = function (str) {
   return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 };
-let PeriodicalExecuter = Class.create({
+var PeriodicalExecuter = Class.create({
   initialize: function (callback, frequency) {
     this.callback = callback;
     this.frequency = frequency;
@@ -593,14 +593,14 @@ Object.extend(String, {
 Object.extend(
   String.prototype,
   (function () {
-    let NATIVE_JSON_PARSE_SUPPORT =
+    var NATIVE_JSON_PARSE_SUPPORT =
       window.JSON &&
       typeof JSON.parse === 'function' &&
       JSON.parse('{"test": true}').test;
 
     function prepareReplacement(replacement) {
       if (Object.isFunction(replacement)) return replacement;
-      let template = new Template(replacement);
+      var template = new Template(replacement);
       return function (match) {
         return template.evaluate(match);
       };
@@ -611,7 +611,7 @@ Object.extend(
     }
 
     function gsub(pattern, replacement) {
-      let result = '',
+      var result = '',
         source = this,
         match;
       replacement = prepareReplacement(replacement);
@@ -675,7 +675,7 @@ Object.extend(
     }
 
     function extractScripts() {
-      let matchAll = new RegExp(Prototype.ScriptFragment, 'img'),
+      var matchAll = new RegExp(Prototype.ScriptFragment, 'img'),
         matchOne = new RegExp(Prototype.ScriptFragment, 'im');
       return (this.match(matchAll) || []).map(function (scriptTag) {
         return (scriptTag.match(matchOne) || ['', ''])[1];
@@ -702,12 +702,12 @@ Object.extend(
     }
 
     function toQueryParams(separator) {
-      let match = this.strip().match(/([^?#]*)(#.*)?$/);
+      var match = this.strip().match(/([^?#]*)(#.*)?$/);
       if (!match) return {};
 
       return match[1].split(separator || '&').inject({}, function (hash, pair) {
         if ((pair = pair.split('='))[0]) {
-          let key = decodeURIComponent(pair.shift()),
+          var key = decodeURIComponent(pair.shift()),
             value = pair.length > 1 ? pair.join('=') : pair[0];
 
           if (value != undefined) {
@@ -762,7 +762,7 @@ Object.extend(
     }
 
     function inspect(useDoubleQuotes) {
-      let escapedString = this.replace(/[\x00-\x1f\\]/g, function (character) {
+      var escapedString = this.replace(/[\x00-\x1f\\]/g, function (character) {
         if (character in String.specialChar) {
           return String.specialChar[character];
         }
@@ -778,7 +778,7 @@ Object.extend(
     }
 
     function isJSON() {
-      let str = this;
+      var str = this;
       if (str.blank()) return false;
       str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
       str = str.replace(
@@ -790,7 +790,7 @@ Object.extend(
     }
 
     function evalJSON(sanitize) {
-      let json = this.unfilterJSON(),
+      var json = this.unfilterJSON(),
         cx =
           /[\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff\u0000]/g;
       if (cx.test(json)) {
@@ -805,7 +805,7 @@ Object.extend(
     }
 
     function parseJSON() {
-      let json = this.unfilterJSON();
+      var json = this.unfilterJSON();
       return JSON.parse(json);
     }
 
@@ -823,7 +823,7 @@ Object.extend(
       position = Object.isNumber(position) ? position : this.length;
       if (position < 0) position = 0;
       if (position > this.length) position = this.length;
-      let d = position - pattern.length;
+      var d = position - pattern.length;
       return d >= 0 && this.indexOf(pattern, d) === d;
     }
 
@@ -874,7 +874,7 @@ Object.extend(
   })()
 );
 
-let Template = Class.create({
+var Template = Class.create({
   initialize: function (template, pattern) {
     this.template = template.toString();
     this.pattern = pattern || Template.Pattern;
@@ -887,10 +887,10 @@ let Template = Class.create({
     return this.template.gsub(this.pattern, function (match) {
       if (object == null) return match[1] + '';
 
-      let before = match[1] || '';
+      var before = match[1] || '';
       if (before == '\\') return match[2];
 
-      let ctx = object,
+      var ctx = object,
         expr = match[3],
         pattern = /^([^.[]+|\[((?:.*?[^\\])?)\])(\.|\[|$)/;
 
@@ -898,7 +898,7 @@ let Template = Class.create({
       if (match == null) return before;
 
       while (match != null) {
-        let comp = match[1].startsWith('[')
+        var comp = match[1].startsWith('[')
           ? match[2].replace(/\\\\]/g, ']')
           : match[1];
         ctx = ctx[comp];
@@ -915,9 +915,9 @@ let Template = Class.create({
 });
 Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
 
-let $break = {};
+var $break = {};
 
-let Enumerable = (function () {
+var Enumerable = (function () {
   function each(iterator, context) {
     try {
       this._each(iterator, context);
@@ -928,7 +928,7 @@ let Enumerable = (function () {
   }
 
   function eachSlice(number, iterator, context) {
-    let index = -number,
+    var index = -number,
       slices = [],
       array = this.toArray();
     if (number < 1) return array;
@@ -939,7 +939,7 @@ let Enumerable = (function () {
 
   function all(iterator, context) {
     iterator = iterator || Prototype.K;
-    let result = true;
+    var result = true;
     this.each(function (value, index) {
       result = result && !!iterator.call(context, value, index, this);
       if (!result) throw $break;
@@ -949,7 +949,7 @@ let Enumerable = (function () {
 
   function any(iterator, context) {
     iterator = iterator || Prototype.K;
-    let result = false;
+    var result = false;
     this.each(function (value, index) {
       if ((result = !!iterator.call(context, value, index, this))) throw $break;
     }, this);
@@ -958,7 +958,7 @@ let Enumerable = (function () {
 
   function collect(iterator, context) {
     iterator = iterator || Prototype.K;
-    let results = [];
+    var results = [];
     this.each(function (value, index) {
       results.push(iterator.call(context, value, index, this));
     }, this);
@@ -966,7 +966,7 @@ let Enumerable = (function () {
   }
 
   function detect(iterator, context) {
-    let result;
+    var result;
     this.each(function (value, index) {
       if (iterator.call(context, value, index, this)) {
         result = value;
@@ -977,7 +977,7 @@ let Enumerable = (function () {
   }
 
   function findAll(iterator, context) {
-    let results = [];
+    var results = [];
     this.each(function (value, index) {
       if (iterator.call(context, value, index, this)) results.push(value);
     }, this);
@@ -986,7 +986,7 @@ let Enumerable = (function () {
 
   function grep(filter, iterator, context) {
     iterator = iterator || Prototype.K;
-    let results = [];
+    var results = [];
 
     if (Object.isString(filter)) filter = new RegExp(RegExp.escape(filter));
 
@@ -1001,7 +1001,7 @@ let Enumerable = (function () {
     if (Object.isFunction(this.indexOf) && this.indexOf(object) != -1)
       return true;
 
-    let found = false;
+    var found = false;
     this.each(function (value) {
       if (value == object) {
         found = true;
@@ -1027,7 +1027,7 @@ let Enumerable = (function () {
   }
 
   function invoke(method) {
-    let args = $A(arguments).slice(1);
+    var args = $A(arguments).slice(1);
     return this.map(function (value) {
       return value[method].apply(value, args);
     });
@@ -1035,7 +1035,7 @@ let Enumerable = (function () {
 
   function max(iterator, context) {
     iterator = iterator || Prototype.K;
-    let result;
+    var result;
     this.each(function (value, index) {
       value = iterator.call(context, value, index, this);
       if (result == null || value >= result) result = value;
@@ -1045,7 +1045,7 @@ let Enumerable = (function () {
 
   function min(iterator, context) {
     iterator = iterator || Prototype.K;
-    let result;
+    var result;
     this.each(function (value, index) {
       value = iterator.call(context, value, index, this);
       if (result == null || value < result) result = value;
@@ -1055,7 +1055,7 @@ let Enumerable = (function () {
 
   function partition(iterator, context) {
     iterator = iterator || Prototype.K;
-    let trues = [],
+    var trues = [],
       falses = [];
     this.each(function (value, index) {
       (iterator.call(context, value, index, this) ? trues : falses).push(value);
@@ -1064,7 +1064,7 @@ let Enumerable = (function () {
   }
 
   function pluck(property) {
-    let results = [];
+    var results = [];
     this.each(function (value) {
       results.push(value[property]);
     });
@@ -1072,7 +1072,7 @@ let Enumerable = (function () {
   }
 
   function reject(iterator, context) {
-    let results = [];
+    var results = [];
     this.each(function (value, index) {
       if (!iterator.call(context, value, index, this)) results.push(value);
     }, this);
@@ -1087,7 +1087,7 @@ let Enumerable = (function () {
       };
     }, this)
       .sort(function (left, right) {
-        let a = left.criteria,
+        var a = left.criteria,
           b = right.criteria;
         return a < b ? -1 : a > b ? 1 : 0;
       })
@@ -1099,11 +1099,11 @@ let Enumerable = (function () {
   }
 
   function zip() {
-    let iterator = Prototype.K,
+    var iterator = Prototype.K,
       args = $A(arguments);
     if (Object.isFunction(args.last())) iterator = args.pop();
 
-    let collections = [this].concat(args).map($A);
+    var collections = [this].concat(args).map($A);
     return this.map(function (value, index) {
       return iterator(collections.pluck(index));
     });
@@ -1154,7 +1154,7 @@ let Enumerable = (function () {
 function $A(iterable) {
   if (!iterable) return [];
   if ('toArray' in Object(iterable)) return iterable.toArray();
-  let length = iterable.length || 0,
+  var length = iterable.length || 0,
     results = new Array(length);
   while (length--) results[length] = iterable[length];
   return results;
@@ -1169,12 +1169,12 @@ function $w(string) {
 Array.from = $A;
 
 (function () {
-  let arrayProto = Array.prototype,
+  var arrayProto = Array.prototype,
     slice = arrayProto.slice,
     _each = arrayProto.forEach; // use native browser JS 1.6 implementation if available
 
   function each(iterator, context) {
-    for (let i = 0, length = this.length >>> 0; i < length; i++) {
+    for (var i = 0, length = this.length >>> 0; i < length; i++) {
       if (i in this) iterator.call(context, this[i], i, this);
     }
   }
@@ -1208,7 +1208,7 @@ Array.from = $A;
   }
 
   function without() {
-    let values = slice.call(arguments, 0);
+    var values = slice.call(arguments, 0);
     return this.select(function (value) {
       return !values.include(value);
     });
@@ -1250,7 +1250,7 @@ Array.from = $A;
   function indexOf(item, i) {
     if (this == null) throw new TypeError();
 
-    let array = Object(this),
+    var array = Object(this),
       length = array.length >>> 0;
     if (length === 0) return -1;
 
@@ -1263,7 +1263,7 @@ Array.from = $A;
 
     if (i > length) return -1;
 
-    let k = i >= 0 ? i : Math.max(length - Math.abs(i), 0);
+    var k = i >= 0 ? i : Math.max(length - Math.abs(i), 0);
     for (; k < length; k++) if (k in array && array[k] === item) return k;
     return -1;
   }
@@ -1271,7 +1271,7 @@ Array.from = $A;
   function lastIndexOf(item, i) {
     if (this == null) throw new TypeError();
 
-    let array = Object(this),
+    var array = Object(this),
       length = array.length >>> 0;
     if (length === 0) return -1;
 
@@ -1286,22 +1286,22 @@ Array.from = $A;
       i = length;
     }
 
-    let k = i >= 0 ? Math.min(i, length - 1) : length - Math.abs(i);
+    var k = i >= 0 ? Math.min(i, length - 1) : length - Math.abs(i);
 
     for (; k >= 0; k--) if (k in array && array[k] === item) return k;
     return -1;
   }
 
   function concat(_) {
-    let array = [],
+    var array = [],
       items = slice.call(arguments, 0),
       item,
       n = 0;
     items.unshift(this);
-    for (let i = 0, length = items.length; i < length; i++) {
+    for (var i = 0, length = items.length; i < length; i++) {
       item = items[i];
       if (Object.isArray(item) && !('callee' in item)) {
-        for (let j = 0, arrayLength = item.length; j < arrayLength; j++) {
+        for (var j = 0, arrayLength = item.length; j < arrayLength; j++) {
           if (j in item) array[n] = item[j];
           n++;
         }
@@ -1318,7 +1318,7 @@ Array.from = $A;
       if (arguments.length === 0) {
         return method.call(this, Prototype.K);
       } else if (arguments[0] === undefined) {
-        let args = slice.call(arguments, 1);
+        var args = slice.call(arguments, 1);
         args.unshift(Prototype.K);
         return method.apply(this, args);
       } else {
@@ -1331,12 +1331,12 @@ Array.from = $A;
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
 
-    let object = Object(this);
-    let results = [],
+    var object = Object(this);
+    var results = [],
       context = arguments[1],
       n = 0;
 
-    for (let i = 0, length = object.length >>> 0; i < length; i++) {
+    for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object) {
         results[n] = iterator.call(context, object[i], i, object);
       }
@@ -1353,12 +1353,12 @@ Array.from = $A;
   function filter(iterator) {
     if (this == null || !Object.isFunction(iterator)) throw new TypeError();
 
-    let object = Object(this);
-    let results = [],
+    var object = Object(this);
+    var results = [],
       context = arguments[1],
       value;
 
-    for (let i = 0, length = object.length >>> 0; i < length; i++) {
+    for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object) {
         value = object[i];
         if (iterator.call(context, value, i, object)) {
@@ -1376,10 +1376,10 @@ Array.from = $A;
   function some(iterator) {
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
-    let context = arguments[1];
+    var context = arguments[1];
 
-    let object = Object(this);
-    for (let i = 0, length = object.length >>> 0; i < length; i++) {
+    var object = Object(this);
+    for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object && iterator.call(context, object[i], i, object)) {
         return true;
       }
@@ -1395,10 +1395,10 @@ Array.from = $A;
   function every(iterator) {
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
-    let context = arguments[1];
+    var context = arguments[1];
 
-    let object = Object(this);
-    for (let i = 0, length = object.length >>> 0; i < length; i++) {
+    var object = Object(this);
+    for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object && !iterator.call(context, object[i], i, object)) {
         return false;
       }
@@ -1447,7 +1447,7 @@ Array.from = $A;
     inspect: inspect
   });
 
-  let CONCAT_ARGUMENTS_BUGGY = (function () {
+  var CONCAT_ARGUMENTS_BUGGY = (function () {
     return [].concat(arguments)[0][0] !== 1;
   })(1, 2);
 
@@ -1460,7 +1460,7 @@ function $H(object) {
   return new Hash(object);
 }
 
-let Hash = Class.create(
+var Hash = Class.create(
   Enumerable,
   (function () {
     function initialize(object) {
@@ -1470,9 +1470,9 @@ let Hash = Class.create(
     }
 
     function _each(iterator, context) {
-      let i = 0;
-      for (let key in this._object) {
-        let value = this._object[key],
+      var i = 0;
+      for (var key in this._object) {
+        var value = this._object[key],
           pair = [key, value];
         pair.key = key;
         pair.value = value;
@@ -1490,7 +1490,7 @@ let Hash = Class.create(
     }
 
     function unset(key) {
-      let value = this._object[key];
+      var value = this._object[key];
       delete this._object[key];
       return value;
     }
@@ -1508,7 +1508,7 @@ let Hash = Class.create(
     }
 
     function index(value) {
-      let match = this.detect(function (pair) {
+      var match = this.detect(function (pair) {
         return pair.value === value;
       });
       return match && match.key;
@@ -1538,13 +1538,13 @@ let Hash = Class.create(
 
     function toQueryString() {
       return this.inject([], function (results, pair) {
-        let key = encodeURIComponent(pair.key),
+        var key = encodeURIComponent(pair.key),
           values = pair.value;
 
         if (values && typeof values == 'object') {
           if (Object.isArray(values)) {
-            let queryValues = [];
-            for (let i = 0, len = values.length, value; i < len; i++) {
+            var queryValues = [];
+            for (var i = 0, len = values.length, value; i < len; i++) {
               value = values[i];
               queryValues.push(toQueryPair(key, value));
             }
@@ -1608,7 +1608,7 @@ Object.extend(
     }
 
     function toPaddedString(length, radix) {
-      let string = this.toString(radix || 10);
+      var string = this.toString(radix || 10);
       return '0'.times(length - string.length) + string;
     }
 
@@ -1645,7 +1645,7 @@ function $R(start, end, exclusive) {
   return new ObjectRange(start, end, exclusive);
 }
 
-let ObjectRange = Class.create(
+var ObjectRange = Class.create(
   Enumerable,
   (function () {
     function initialize(start, end, exclusive) {
@@ -1655,7 +1655,7 @@ let ObjectRange = Class.create(
     }
 
     function _each(iterator, context) {
-      let value = this.start,
+      var value = this.start,
         i;
       for (i = 0; this.include(value); i++) {
         iterator.call(context, value, i);
@@ -1677,14 +1677,14 @@ let ObjectRange = Class.create(
   })()
 );
 
-let Abstract = {};
+var Abstract = {};
 
-let Try = {
+var Try = {
   these: function () {
-    let returnValue;
+    var returnValue;
 
-    for (let i = 0, length = arguments.length; i < length; i++) {
-      let lambda = arguments[i];
+    for (var i = 0, length = arguments.length; i < length; i++) {
+      var lambda = arguments[i];
       try {
         returnValue = lambda();
         break;
@@ -1695,7 +1695,7 @@ let Try = {
   }
 };
 
-let Ajax = {
+var Ajax = {
   getTransport: function () {
     return (
       Try.these(
@@ -1782,7 +1782,7 @@ Ajax.Request = Class.create(Ajax.Base, {
   request: function (url) {
     this.url = url;
     this.method = this.options.method;
-    let params = Object.isString(this.options.parameters)
+    var params = Object.isString(this.options.parameters)
       ? this.options.parameters
       : Object.toQueryString(this.options.parameters);
 
@@ -1798,7 +1798,7 @@ Ajax.Request = Class.create(Ajax.Base, {
     this.parameters = params.toQueryParams();
 
     try {
-      let response = new Ajax.Response(this);
+      var response = new Ajax.Response(this);
       if (this.options.onCreate) this.options.onCreate(response);
       Ajax.Responders.dispatch('onCreate', this, response);
 
@@ -1827,13 +1827,13 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   onStateChange: function () {
-    let readyState = this.transport.readyState;
+    var readyState = this.transport.readyState;
     if (readyState > 1 && !(readyState == 4 && this._complete))
       this.respondToReadyState(this.transport.readyState);
   },
 
   setRequestHeaders: function () {
-    let headers = {
+    var headers = {
       'X-Requested-With': 'XMLHttpRequest',
       'X-Prototype-Version': Prototype.Version,
       Accept: 'text/javascript, text/html, application/xml, text/xml, */*'
@@ -1856,10 +1856,10 @@ Ajax.Request = Class.create(Ajax.Base, {
     }
 
     if (typeof this.options.requestHeaders == 'object') {
-      let extras = this.options.requestHeaders;
+      var extras = this.options.requestHeaders;
 
       if (Object.isFunction(extras.push))
-        for (let i = 0, length = extras.length; i < length; i += 2)
+        for (var i = 0, length = extras.length; i < length; i += 2)
           headers[extras[i]] = extras[i + 1];
       else
         $H(extras).each(function (pair) {
@@ -1867,13 +1867,13 @@ Ajax.Request = Class.create(Ajax.Base, {
         });
     }
 
-    for (let name in headers)
+    for (var name in headers)
       if (headers[name] != null)
         this.transport.setRequestHeader(name, headers[name]);
   },
 
   success: function () {
-    let status = this.getStatus();
+    var status = this.getStatus();
     return !status || (status >= 200 && status < 300) || status == 304;
   },
 
@@ -1887,7 +1887,7 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   respondToReadyState: function (readyState) {
-    let state = Ajax.Request.Events[readyState],
+    var state = Ajax.Request.Events[readyState],
       response = new Ajax.Response(this);
 
     if (state == 'Complete') {
@@ -1902,7 +1902,7 @@ Ajax.Request = Class.create(Ajax.Base, {
         this.dispatchException(e);
       }
 
-      let contentType = response.getHeader('Content-type');
+      var contentType = response.getHeader('Content-type');
       if (
         this.options.evalJS == 'force' ||
         (this.options.evalJS &&
@@ -1936,7 +1936,7 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   isSameOrigin: function () {
-    let m = this.url.match(/^\s*https?:\/\/[^\/]*/);
+    var m = this.url.match(/^\s*https?:\/\/[^\/]*/);
     return (
       !m ||
       m[0] ==
@@ -1981,7 +1981,7 @@ Ajax.Request.Events = [
 Ajax.Response = Class.create({
   initialize: function (request) {
     this.request = request;
-    let transport = (this.transport = request.transport),
+    var transport = (this.transport = request.transport),
       readyState = (this.readyState = transport.readyState);
 
     if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
@@ -1992,7 +1992,7 @@ Ajax.Response = Class.create({
     }
 
     if (readyState == 4) {
-      let xml = transport.responseXML;
+      var xml = transport.responseXML;
       this.responseXML = Object.isUndefined(xml) ? null : xml;
       this.responseJSON = this._getResponseJSON();
     }
@@ -2031,7 +2031,7 @@ Ajax.Response = Class.create({
   },
 
   _getHeaderJSON: function () {
-    let json = this.getHeader('X-JSON');
+    var json = this.getHeader('X-JSON');
     if (!json) return null;
 
     try {
@@ -2048,7 +2048,7 @@ Ajax.Response = Class.create({
   },
 
   _getResponseJSON: function () {
-    let options = this.request.options;
+    var options = this.request.options;
     if (
       !options.evalJSON ||
       (options.evalJSON != 'force' &&
@@ -2074,7 +2074,7 @@ Ajax.Updater = Class.create(Ajax.Request, {
     };
 
     options = Object.clone(options);
-    let onComplete = options.onComplete;
+    var onComplete = options.onComplete;
     options.onComplete = function (response, json) {
       this.updateContent(response.responseText);
       if (Object.isFunction(onComplete)) onComplete(response, json);
@@ -2084,7 +2084,7 @@ Ajax.Updater = Class.create(Ajax.Request, {
   },
 
   updateContent: function (responseText) {
-    let receiver = this.container[this.success() ? 'success' : 'failure'],
+    var receiver = this.container[this.success() ? 'success' : 'failure'],
       options = this.options;
 
     if (!options.evalScripts) responseText = responseText.stripScripts();
@@ -2092,7 +2092,7 @@ Ajax.Updater = Class.create(Ajax.Request, {
     if ((receiver = $(receiver))) {
       if (options.insertion) {
         if (Object.isString(options.insertion)) {
-          let insertion = {};
+          var insertion = {};
           insertion[options.insertion] = responseText;
           receiver.insert(insertion);
         } else options.insertion(receiver, responseText);
@@ -2147,14 +2147,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 });
 
 (function (GLOBAL) {
-  let UNDEFINED;
-  let SLICE = Array.prototype.slice;
+  var UNDEFINED;
+  var SLICE = Array.prototype.slice;
 
-  let DIV = document.createElement('div');
+  var DIV = document.createElement('div');
 
   function $(element) {
     if (arguments.length > 1) {
-      for (let i = 0, elements = [], length = arguments.length; i < length; i++)
+      for (var i = 0, elements = [], length = arguments.length; i < length; i++)
         elements.push($(arguments[i]));
       return elements;
     }
@@ -2184,7 +2184,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     });
   }
 
-  let ELEMENT_CACHE = {};
+  var ELEMENT_CACHE = {};
 
   function shouldUseCreationCache(tagName, attributes) {
     if (tagName === 'select') return false;
@@ -2192,16 +2192,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return true;
   }
 
-  let HAS_EXTENDED_CREATE_ELEMENT_SYNTAX = (function () {
+  var HAS_EXTENDED_CREATE_ELEMENT_SYNTAX = (function () {
     try {
-      let el = document.createElement('<input name="x">');
+      var el = document.createElement('<input name="x">');
       return el.tagName.toLowerCase() === 'input' && el.name === 'x';
     } catch (err) {
       return false;
     }
   })();
 
-  let oldElement = GLOBAL.Element;
+  var oldElement = GLOBAL.Element;
   function Element(tagName, attributes) {
     attributes = attributes || {};
     tagName = tagName.toLowerCase();
@@ -2218,7 +2218,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (!ELEMENT_CACHE[tagName])
       ELEMENT_CACHE[tagName] = Element.extend(document.createElement(tagName));
 
-    let node = shouldUseCreationCache(tagName, attributes)
+    var node = shouldUseCreationCache(tagName, attributes)
       ? ELEMENT_CACHE[tagName].cloneNode(false)
       : document.createElement(tagName);
 
@@ -2232,15 +2232,15 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   Element.Methods = { ByTag: {}, Simulated: {} };
 
-  let methods = {};
+  var methods = {};
 
-  let INSPECT_ATTRIBUTES = { id: 'id', className: 'class' };
+  var INSPECT_ATTRIBUTES = { id: 'id', className: 'class' };
   function inspect(element) {
     element = $(element);
-    let result = '<' + element.tagName.toLowerCase();
+    var result = '<' + element.tagName.toLowerCase();
 
-    let attribute, value;
-    for (let property in INSPECT_ATTRIBUTES) {
+    var attribute, value;
+    for (var property in INSPECT_ATTRIBUTES) {
       attribute = INSPECT_ATTRIBUTES[property];
       value = (element[property] || '').toString();
       if (value) result += ' ' + attribute + '=' + value.inspect(true);
@@ -2288,8 +2288,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  let SELECT_ELEMENT_INNERHTML_BUGGY = (function () {
-    let el = document.createElement('select'),
+  var SELECT_ELEMENT_INNERHTML_BUGGY = (function () {
+    var el = document.createElement('select'),
       isBuggy = true;
     el.innerHTML = '<option value="test">test</option>';
     if (el.options && el.options[0]) {
@@ -2299,12 +2299,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return isBuggy;
   })();
 
-  let TABLE_ELEMENT_INNERHTML_BUGGY = (function () {
+  var TABLE_ELEMENT_INNERHTML_BUGGY = (function () {
     try {
-      let el = document.createElement('table');
+      var el = document.createElement('table');
       if (el && el.tBodies) {
         el.innerHTML = '<tbody><tr><td>test</td></tr></tbody>';
-        let isBuggy = typeof el.tBodies[0] == 'undefined';
+        var isBuggy = typeof el.tBodies[0] == 'undefined';
         el = null;
         return isBuggy;
       }
@@ -2313,11 +2313,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   })();
 
-  let LINK_ELEMENT_INNERHTML_BUGGY = (function () {
+  var LINK_ELEMENT_INNERHTML_BUGGY = (function () {
     try {
-      let el = document.createElement('div');
+      var el = document.createElement('div');
       el.innerHTML = '<link />';
-      let isBuggy = el.childNodes.length === 0;
+      var isBuggy = el.childNodes.length === 0;
       el = null;
       return isBuggy;
     } catch (e) {
@@ -2325,13 +2325,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   })();
 
-  let ANY_INNERHTML_BUGGY =
+  var ANY_INNERHTML_BUGGY =
     SELECT_ELEMENT_INNERHTML_BUGGY ||
     TABLE_ELEMENT_INNERHTML_BUGGY ||
     LINK_ELEMENT_INNERHTML_BUGGY;
 
-  let SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING = (function () {
-    let s = document.createElement('script'),
+  var SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING = (function () {
+    var s = document.createElement('script'),
       isBuggy = false;
     try {
       s.appendChild(document.createTextNode(''));
@@ -2346,7 +2346,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function update(element, content) {
     element = $(element);
 
-    let descendants = element.getElementsByTagName('*'),
+    var descendants = element.getElementsByTagName('*'),
       i = descendants.length;
     while (i--) purgeElement(descendants[i]);
 
@@ -2355,7 +2355,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (Object.isElement(content)) return element.update().insert(content);
 
     content = Object.toHTML(content);
-    let tagName = element.tagName.toUpperCase();
+    var tagName = element.tagName.toUpperCase();
 
     if (tagName === 'SCRIPT' && SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING) {
       element.text = content;
@@ -2366,11 +2366,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       if (tagName in INSERTION_TRANSLATIONS.tags) {
         while (element.firstChild) element.removeChild(element.firstChild);
 
-        let nodes = getContentFromAnonymousElement(
+        var nodes = getContentFromAnonymousElement(
           tagName,
           content.stripScripts()
         );
-        for (let i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
       } else if (
         LINK_ELEMENT_INNERHTML_BUGGY &&
         Object.isString(content) &&
@@ -2378,13 +2378,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       ) {
         while (element.firstChild) element.removeChild(element.firstChild);
 
-        let nodes = getContentFromAnonymousElement(
+        var nodes = getContentFromAnonymousElement(
           tagName,
           content.stripScripts(),
           true
         );
 
-        for (let i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
       } else {
         element.innerHTML = content.stripScripts();
       }
@@ -2403,7 +2403,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       content = content.toElement();
     } else if (!Object.isElement(content)) {
       content = Object.toHTML(content);
-      let range = element.ownerDocument.createRange();
+      var range = element.ownerDocument.createRange();
       range.selectNode(element);
       content.evalScripts.bind(content).defer();
       content = range.createContextualFragment(content.stripScripts());
@@ -2413,7 +2413,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  let INSERTION_TRANSLATIONS = {
+  var INSERTION_TRANSLATIONS = {
     before: function (element, node) {
       element.parentNode.insertBefore(node, element);
     },
@@ -2436,7 +2436,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   };
 
-  let tags = INSERTION_TRANSLATIONS.tags;
+  var tags = INSERTION_TRANSLATIONS.tags;
 
   Object.extend(tags, {
     THEAD: tags.TBODY,
@@ -2453,19 +2453,19 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     content = Object.toHTML(content);
-    let parent = element.parentNode,
+    var parent = element.parentNode,
       tagName = parent.tagName.toUpperCase();
 
     if (tagName in INSERTION_TRANSLATIONS.tags) {
-      let nextSibling = Element.next(element);
-      let fragments = getContentFromAnonymousElement(
+      var nextSibling = Element.next(element);
+      var fragments = getContentFromAnonymousElement(
         tagName,
         content.stripScripts()
       );
 
       parent.removeChild(element);
 
-      let iterator;
+      var iterator;
       if (nextSibling)
         iterator = function (node) {
           parent.insertBefore(node, nextSibling);
@@ -2498,7 +2498,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function insertContentAt(element, content, position) {
     position = position.toLowerCase();
-    let method = INSERTION_TRANSLATIONS[position];
+    var method = INSERTION_TRANSLATIONS[position];
 
     if (content && content.toElement) content = content.toElement();
     if (Object.isElement(content)) {
@@ -2507,20 +2507,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     content = Object.toHTML(content);
-    let tagName = (
+    var tagName = (
       position === 'before' || position === 'after'
         ? element.parentNode
         : element
     ).tagName.toUpperCase();
 
-    let childNodes = getContentFromAnonymousElement(
+    var childNodes = getContentFromAnonymousElement(
       tagName,
       content.stripScripts()
     );
 
     if (position === 'top' || position === 'after') childNodes.reverse();
 
-    for (let i = 0, node; (node = childNodes[i]); i++) method(element, node);
+    for (var i = 0, node; (node = childNodes[i]); i++) method(element, node);
 
     content.evalScripts.bind(content).defer();
   }
@@ -2530,7 +2530,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (isContent(insertions)) insertions = { bottom: insertions };
 
-    for (let position in insertions)
+    for (var position in insertions)
       insertContentAt(element, insertions[position], position);
 
     return element;
@@ -2556,10 +2556,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function cleanWhitespace(element) {
     element = $(element);
-    let node = element.firstChild;
+    var node = element.firstChild;
 
     while (node) {
-      let nextNode = node.nextSibling;
+      var nextNode = node.nextSibling;
       if (node.nodeType === Node.TEXT_NODE && !/\S/.test(node.nodeValue))
         element.removeChild(node);
       node = nextNode;
@@ -2572,10 +2572,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getContentFromAnonymousElement(tagName, html, force) {
-    let t = INSERTION_TRANSLATIONS.tags[tagName],
+    var t = INSERTION_TRANSLATIONS.tags[tagName],
       div = DIV;
 
-    let workaround = !!t;
+    var workaround = !!t;
     if (!workaround && force) {
       workaround = true;
       t = ['', '', 0];
@@ -2584,7 +2584,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (workaround) {
       div.innerHTML = '&#160;' + t[0] + html + t[1];
       div.removeChild(div.firstChild);
-      for (let i = t[2]; i--; ) div = div.firstChild;
+      for (var i = t[2]; i--; ) div = div.firstChild;
     } else {
       div.innerHTML = html;
     }
@@ -2594,11 +2594,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function clone(element, deep) {
     if (!(element = $(element))) return;
-    let clone = element.cloneNode(deep);
+    var clone = element.cloneNode(deep);
     if (!HAS_UNIQUE_ID_PROPERTY) {
       clone._prototypeUID = UNDEFINED;
       if (deep) {
-        let descendants = Element.select(clone, '*'),
+        var descendants = Element.select(clone, '*'),
           i = descendants.length;
         while (i--) descendants[i]._prototypeUID = UNDEFINED;
       }
@@ -2607,7 +2607,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function purgeElement(element) {
-    let uid = getUniqueElementID(element);
+    var uid = getUniqueElementID(element);
     if (uid) {
       Element.stopObserving(element);
       if (!HAS_UNIQUE_ID_PROPERTY) element._prototypeUID = UNDEFINED;
@@ -2616,12 +2616,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function purgeCollection(elements) {
-    let i = elements.length;
+    var i = elements.length;
     while (i--) purgeElement(elements[i]);
   }
 
   function purgeCollection_IE(elements) {
-    let i = elements.length,
+    var i = elements.length,
       element,
       uid;
     while (i--) {
@@ -2640,7 +2640,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (!(element = $(element))) return;
     purgeElement(element);
 
-    let descendants = element.getElementsByTagName('*'),
+    var descendants = element.getElementsByTagName('*'),
       i = descendants.length;
 
     while (i--) purgeElement(descendants[i]);
@@ -2663,7 +2663,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function recursivelyCollect(element, property, maximumLength) {
     element = $(element);
     maximumLength = maximumLength || -1;
-    let elements = [];
+    var elements = [];
 
     while ((element = element[property])) {
       if (element.nodeType === Node.ELEMENT_NODE)
@@ -2692,7 +2692,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function immediateDescendants(element) {
-    let results = [],
+    var results = [],
       child = $(element).firstChild;
 
     while (child) {
@@ -2715,7 +2715,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function siblings(element) {
     element = $(element);
-    let previous = previousSiblings(element),
+    var previous = previousSiblings(element),
       next = nextSiblings(element);
     return previous.reverse().concat(next);
   }
@@ -2762,7 +2762,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (Object.isNumber(expression)) (index = expression), (expression = '*');
 
-    let node = Prototype.Selector.select(expression, element)[index];
+    var node = Prototype.Selector.select(expression, element)[index];
     return Element.extend(node);
   }
 
@@ -2776,16 +2776,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function select(element) {
     element = $(element);
-    let expressions = SLICE.call(arguments, 1).join(', ');
+    var expressions = SLICE.call(arguments, 1).join(', ');
     return Prototype.Selector.select(expressions, element);
   }
 
   function adjacent(element) {
     element = $(element);
-    let expressions = SLICE.call(arguments, 1).join(', ');
-    let siblings = Element.siblings(element),
+    var expressions = SLICE.call(arguments, 1).join(', ');
+    var siblings = Element.siblings(element),
       results = [];
-    for (let i = 0, sibling; (sibling = siblings[i]); i++) {
+    for (var i = 0, sibling; (sibling = siblings[i]); i++) {
       if (Prototype.Selector.match(sibling, expressions)) results.push(sibling);
     }
 
@@ -2813,7 +2813,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return (element.compareDocumentPosition(ancestor) & 8) === 8;
   }
 
-  let descendantOf;
+  var descendantOf;
   if (DIV.compareDocumentPosition) {
     descendantOf = descendantOf_compareDocumentPosition;
   } else if (DIV.contains) {
@@ -2845,10 +2845,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     childElements: immediateDescendants
   });
 
-  let idCounter = 1;
+  var idCounter = 1;
   function identify(element) {
     element = $(element);
-    let id = Element.readAttribute(element, 'id');
+    var id = Element.readAttribute(element, 'id');
     if (id) return id;
 
     do {
@@ -2866,7 +2866,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function readAttribute_IE(element, name) {
     element = $(element);
 
-    let table = ATTRIBUTE_TRANSLATIONS.read;
+    var table = ATTRIBUTE_TRANSLATIONS.read;
     if (table.values[name]) return table.values[name](element, name);
 
     if (table.names[name]) name = table.names[name];
@@ -2884,10 +2884,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element.getAttribute(name);
   }
 
-  let PROBLEMATIC_ATTRIBUTE_READING = (function () {
+  var PROBLEMATIC_ATTRIBUTE_READING = (function () {
     DIV.setAttribute('onclick', []);
-    let value = DIV.getAttribute('onclick');
-    let isFunction = Object.isArray(value);
+    var value = DIV.getAttribute('onclick');
+    var isFunction = Object.isArray(value);
     DIV.removeAttribute('onclick');
     return isFunction;
   })();
@@ -2900,7 +2900,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function writeAttribute(element, name, value) {
     element = $(element);
-    let attributes = {},
+    var attributes = {},
       table = ATTRIBUTE_TRANSLATIONS.write;
 
     if (typeof name === 'object') {
@@ -2909,7 +2909,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       attributes[name] = Object.isUndefined(value) ? true : value;
     }
 
-    for (let attr in attributes) {
+    for (var attr in attributes) {
       name = table.names[attr] || attr;
       value = attributes[attr];
       if (table.values[attr]) {
@@ -2924,19 +2924,19 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  let PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES = (function () {
+  var PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES = (function () {
     if (!HAS_EXTENDED_CREATE_ELEMENT_SYNTAX) {
       return false;
     }
-    let checkbox = document.createElement('<input type="checkbox">');
+    var checkbox = document.createElement('<input type="checkbox">');
     checkbox.checked = true;
-    let node = checkbox.getAttributeNode('checked');
+    var node = checkbox.getAttributeNode('checked');
     return !node || !node.specified;
   })();
 
   function hasAttribute(element, attribute) {
     attribute = ATTRIBUTE_TRANSLATIONS.has[attribute] || attribute;
-    let node = $(element).getAttributeNode(attribute);
+    var node = $(element).getAttributeNode(attribute);
     return !!(node && node.specified);
   }
 
@@ -2954,11 +2954,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return new Element.ClassNames(element);
   }
 
-  let regExpCache = {};
+  var regExpCache = {};
   function getRegExpForClassName(className) {
     if (regExpCache[className]) return regExpCache[className];
 
-    let re = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+    var re = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
     regExpCache[className] = re;
     return re;
   }
@@ -2966,7 +2966,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function hasClassName(element, className) {
     if (!(element = $(element))) return;
 
-    let elementClassName = element.className;
+    var elementClassName = element.className;
 
     if (elementClassName.length === 0) return false;
     if (elementClassName === className) return true;
@@ -2998,13 +2998,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (Object.isUndefined(bool)) bool = !hasClassName(element, className);
 
-    let method = Element[bool ? 'addClassName' : 'removeClassName'];
+    var method = Element[bool ? 'addClassName' : 'removeClassName'];
     return method(element, className);
   }
 
-  let ATTRIBUTE_TRANSLATIONS = {};
+  var ATTRIBUTE_TRANSLATIONS = {};
 
-  let classProp = 'className',
+  var classProp = 'className',
     forProp = 'for';
 
   DIV.setAttribute(classProp, 'x');
@@ -3013,7 +3013,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (DIV.className === 'x') classProp = 'class';
   }
 
-  let LABEL = document.createElement('label');
+  var LABEL = document.createElement('label');
   LABEL.setAttribute(forProp, 'x');
   if (LABEL.htmlFor !== 'x') {
     LABEL.setAttribute('htmlFor', 'x');
@@ -3030,7 +3030,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function _getAttrNode(element, attribute) {
-    let node = element.getAttributeNode(attribute);
+    var node = element.getAttributeNode(attribute);
     return node ? node.value : '';
   }
 
@@ -3039,13 +3039,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   DIV.onclick = Prototype.emptyFunction;
-  let onclickValue = DIV.getAttribute('onclick');
+  var onclickValue = DIV.getAttribute('onclick');
 
-  let _getEv;
+  var _getEv;
 
   if (String(onclickValue).indexOf('{') > -1) {
     _getEv = function (element, attribute) {
-      let value = element.getAttribute(attribute);
+      var value = element.getAttribute(attribute);
       if (!value) return null;
       value = value.toString();
       value = value.split('{')[1];
@@ -3054,7 +3054,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     };
   } else if (onclickValue === '') {
     _getEv = function (element, attribute) {
-      let value = element.getAttribute(attribute);
+      var value = element.getAttribute(attribute);
       if (!value) return null;
       return value.strip();
     };
@@ -3106,12 +3106,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     ATTRIBUTE_TRANSLATIONS.read.names
   );
 
-  let CAMEL_CASED_ATTRIBUTE_NAMES = $w(
+  var CAMEL_CASED_ATTRIBUTE_NAMES = $w(
     'colSpan rowSpan vAlign dateTime ' +
       'accessKey tabIndex encType maxLength readOnly longDesc frameBorder'
   );
 
-  for (let i = 0, attr; (attr = CAMEL_CASED_ATTRIBUTE_NAMES[i]); i++) {
+  for (var i = 0, attr; (attr = CAMEL_CASED_ATTRIBUTE_NAMES[i]); i++) {
     ATTRIBUTE_TRANSLATIONS.write.names[attr.toLowerCase()] = attr;
     ATTRIBUTE_TRANSLATIONS.has.names[attr.toLowerCase()] = attr;
   }
@@ -3168,23 +3168,23 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function setStyle(element, styles) {
     element = $(element);
-    let elementStyle = element.style,
+    var elementStyle = element.style,
       match;
 
     if (Object.isString(styles)) {
       elementStyle.cssText += ';' + styles;
       if (styles.include('opacity')) {
-        let opacity = styles.match(/opacity:\s*(\d?\.?\d*)/)[1];
+        var opacity = styles.match(/opacity:\s*(\d?\.?\d*)/)[1];
         Element.setOpacity(element, opacity);
       }
       return element;
     }
 
-    for (let property in styles) {
+    for (var property in styles) {
       if (property === 'opacity') {
         Element.setOpacity(element, styles[property]);
       } else {
-        let value = styles[property];
+        var value = styles[property];
         if (property === 'float' || property === 'cssFloat') {
           property = Object.isUndefined(elementStyle.styleFloat)
             ? 'cssFloat'
@@ -3201,9 +3201,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     element = $(element);
     style = normalizeStyleName(style);
 
-    let value = element.style[style];
+    var value = element.style[style];
     if (!value || value === 'auto') {
-      let css = document.defaultView.getComputedStyle(element, null);
+      var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
     }
 
@@ -3217,7 +3217,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       case 'width':
         if (!Element.visible(element)) return null;
 
-        let dim = parseInt(getStyle(element, style), 10);
+        var dim = parseInt(getStyle(element, style), 10);
 
         if (dim !== element['offset' + style.capitalize()]) return dim + 'px';
 
@@ -3232,7 +3232,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     element = $(element);
     style = normalizeStyleName_IE(style);
 
-    let value = element.style[style];
+    var value = element.style[style];
     if (!value && element.currentStyle) {
       value = element.currentStyle[style];
     }
@@ -3261,7 +3261,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  let STANDARD_CSS_OPACITY_SUPPORTED = (function () {
+  var STANDARD_CSS_OPACITY_SUPPORTED = (function () {
     DIV.style.cssText = 'opacity:.55';
     return /^0.55/.test(DIV.style.opacity);
   })();
@@ -3278,7 +3278,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (STANDARD_CSS_OPACITY_SUPPORTED) return setOpacity(element, value);
 
     element = hasLayout_IE($(element));
-    let filter = Element.getStyle(element, 'filter'),
+    var filter = Element.getStyle(element, 'filter'),
       style = element.style;
 
     if (value == 1 || value === '') {
@@ -3303,9 +3303,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function getOpacity_IE(element) {
     if (STANDARD_CSS_OPACITY_SUPPORTED) return getOpacity(element);
 
-    let filter = Element.getStyle(element, 'filter');
+    var filter = Element.getStyle(element, 'filter');
     if (filter.length === 0) return 1.0;
-    let match = (filter || '').match(/alpha\(opacity=(.*)\)/i);
+    var match = (filter || '').match(/alpha\(opacity=(.*)\)/i);
     if (match && match[1]) return parseFloat(match[1]) / 100;
     return 1.0;
   }
@@ -3323,7 +3323,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     methods.getOpacity = getOpacity_IE;
   }
 
-  let UID = 0;
+  var UID = 0;
 
   GLOBAL.Element.Storage = { UID: 1 };
 
@@ -3341,13 +3341,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element.uniqueID;
   }
 
-  let HAS_UNIQUE_ID_PROPERTY = 'uniqueID' in DIV;
+  var HAS_UNIQUE_ID_PROPERTY = 'uniqueID' in DIV;
   if (HAS_UNIQUE_ID_PROPERTY) getUniqueElementID = getUniqueElementID_IE;
 
   function getStorage(element) {
     if (!(element = $(element))) return;
 
-    let uid = getUniqueElementID(element);
+    var uid = getUniqueElementID(element);
 
     if (!Element.Storage[uid]) Element.Storage[uid] = $H();
 
@@ -3356,7 +3356,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function store(element, key, value) {
     if (!(element = $(element))) return;
-    let storage = getStorage(element);
+    var storage = getStorage(element);
     if (arguments.length === 2) {
       storage.update(key);
     } else {
@@ -3367,7 +3367,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function retrieve(element, key, defaultValue) {
     if (!(element = $(element))) return;
-    let storage = getStorage(element),
+    var storage = getStorage(element),
       value = storage.get(key);
 
     if (Object.isUndefined(value)) {
@@ -3384,7 +3384,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     retrieve: retrieve
   });
 
-  let Methods = {},
+  var Methods = {},
     ByTag = Element.Methods.ByTag,
     F = Prototype.BrowserFeatures;
 
@@ -3397,12 +3397,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function checkElementPrototypeDeficiency(tagName) {
     if (typeof window.Element === 'undefined') return false;
     if (!HAS_EXTENDED_CREATE_ELEMENT_SYNTAX) return false;
-    let proto = window.Element.prototype;
+    var proto = window.Element.prototype;
     if (proto) {
-      let id = '_' + (Math.random() + '').slice(2),
+      var id = '_' + (Math.random() + '').slice(2),
         el = document.createElement(tagName);
       proto[id] = 'x';
-      let isBuggy = el[id] !== 'x';
+      var isBuggy = el[id] !== 'x';
       delete proto[id];
       el = null;
       return isBuggy;
@@ -3411,20 +3411,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return false;
   }
 
-  let HTMLOBJECTELEMENT_PROTOTYPE_BUGGY =
+  var HTMLOBJECTELEMENT_PROTOTYPE_BUGGY =
     checkElementPrototypeDeficiency('object');
 
   function extendElementWith(element, methods) {
-    for (let property in methods) {
-      let value = methods[property];
+    for (var property in methods) {
+      var value = methods[property];
       if (Object.isFunction(value) && !(property in element))
         element[property] = value.methodize();
     }
   }
 
-  let EXTENDED = {};
+  var EXTENDED = {};
   function elementIsExtended(element) {
-    let uid = getUniqueElementID(element);
+    var uid = getUniqueElementID(element);
     return uid in EXTENDED;
   }
 
@@ -3433,7 +3433,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (element.nodeType !== Node.ELEMENT_NODE || element == window)
       return element;
 
-    let methods = Object.clone(Methods),
+    var methods = Object.clone(Methods),
       tagName = element.tagName.toUpperCase();
 
     if (ByTag[tagName]) Object.extend(methods, ByTag[tagName]);
@@ -3446,7 +3446,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function extend_IE8(element) {
     if (!element || elementIsExtended(element)) return element;
 
-    let t = element.tagName;
+    var t = element.tagName;
     if (t && /^(?:object|applet|embed)$/i.test(t)) {
       extendElementWith(element, Element.Methods);
       extendElementWith(element, Element.Methods.Simulated);
@@ -3468,8 +3468,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function mergeMethods(destination, methods, onlyIfAbsent) {
     if (Object.isUndefined(onlyIfAbsent)) onlyIfAbsent = false;
-    for (let property in methods) {
-      let value = methods[property];
+    for (var property in methods) {
+      var value = methods[property];
       if (!Object.isFunction(value)) continue;
       if (!onlyIfAbsent || !(property in destination))
         destination[property] = value.methodize();
@@ -3477,8 +3477,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function findDOMClass(tagName) {
-    let klass;
-    let trans = {
+    var klass;
+    var trans = {
       OPTGROUP: 'OptGroup',
       TEXTAREA: 'TextArea',
       P: 'Paragraph',
@@ -3517,7 +3517,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     klass = 'HTML' + tagName.capitalize() + 'Element';
     if (window[klass]) return window[klass];
 
-    let element = document.createElement(tagName),
+    var element = document.createElement(tagName),
       proto = element['__proto__'] || element.constructor.prototype;
 
     element = null;
@@ -3528,7 +3528,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (arguments.length === 0) addFormMethods();
 
     if (arguments.length === 2) {
-      let tagName = methods;
+      var tagName = methods;
       methods = arguments[1];
     }
 
@@ -3536,14 +3536,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       Object.extend(Element.Methods, methods || {});
     } else {
       if (Object.isArray(tagName)) {
-        for (let i = 0, tag; (tag = tagName[i]); i++)
+        for (var i = 0, tag; (tag = tagName[i]); i++)
           addMethodsToTagName(tag, methods);
       } else {
         addMethodsToTagName(tagName, methods);
       }
     }
 
-    let ELEMENT_PROTOTYPE = window.HTMLElement
+    var ELEMENT_PROTOTYPE = window.HTMLElement
       ? HTMLElement.prototype
       : Element.prototype;
 
@@ -3553,8 +3553,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     if (F.SpecificElementExtensions) {
-      for (let tag in Element.Methods.ByTag) {
-        let klass = findDOMClass(tag);
+      for (var tag in Element.Methods.ByTag) {
+        var klass = findDOMClass(tag);
         if (Object.isUndefined(klass)) continue;
         mergeMethods(klass.prototype, ByTag[tag]);
       }
@@ -3610,7 +3610,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 })(this);
 (function () {
   function toDecimal(pctString) {
-    let match = pctString.match(/^(\d+)%?$/i);
+    var match = pctString.match(/^(\d+)%?$/i);
     if (!match) return null;
     return Number(match[1]) / 100;
   }
@@ -3618,9 +3618,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function getRawStyle(element, style) {
     element = $(element);
 
-    let value = element.style[style];
+    var value = element.style[style];
     if (!value || value === 'auto') {
-      let css = document.defaultView.getComputedStyle(element, null);
+      var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
     }
 
@@ -3629,7 +3629,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getRawStyle_IE(element, style) {
-    let value = element.style[style];
+    var value = element.style[style];
     if (!value && element.currentStyle) {
       value = element.currentStyle[style];
     }
@@ -3637,12 +3637,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getContentWidth(element, context) {
-    let boxWidth = element.offsetWidth;
+    var boxWidth = element.offsetWidth;
 
-    let bl = getPixelValue(element, 'borderLeftWidth', context) || 0;
-    let br = getPixelValue(element, 'borderRightWidth', context) || 0;
-    let pl = getPixelValue(element, 'paddingLeft', context) || 0;
-    let pr = getPixelValue(element, 'paddingRight', context) || 0;
+    var bl = getPixelValue(element, 'borderLeftWidth', context) || 0;
+    var br = getPixelValue(element, 'borderRightWidth', context) || 0;
+    var pl = getPixelValue(element, 'paddingLeft', context) || 0;
+    var pr = getPixelValue(element, 'paddingRight', context) || 0;
 
     return boxWidth - bl - br - pl - pr;
   }
@@ -3655,7 +3655,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getPixelValue(value, property, context) {
-    let element = null;
+    var element = null;
     if (Object.isElement(value)) {
       element = value;
       value = getRawStyle(element, property);
@@ -3669,7 +3669,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return window.parseFloat(value);
     }
 
-    let isPercentage = value.include('%'),
+    var isPercentage = value.include('%'),
       isViewport = context === document.viewport;
 
     if (
@@ -3678,7 +3678,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       element.runtimeStyle &&
       !(isPercentage && isViewport)
     ) {
-      let style = element.style.left,
+      var style = element.style.left,
         rStyle = element.runtimeStyle.left;
       element.runtimeStyle.left = element.currentStyle.left;
       element.style.left = value || 0;
@@ -3691,15 +3691,15 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (element && isPercentage) {
       context = context || element.parentNode;
-      let decimal = toDecimal(value),
+      var decimal = toDecimal(value),
         whole = null;
 
-      let isHorizontal =
+      var isHorizontal =
         property.include('left') ||
         property.include('right') ||
         property.include('width');
 
-      let isVertical =
+      var isVertical =
         property.include('top') ||
         property.include('bottom') ||
         property.include('height');
@@ -3731,7 +3731,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function isDisplayed(element) {
     while (element && element.parentNode) {
-      let display = element.getStyle('display');
+      var display = element.getStyle('display');
       if (display === 'none') {
         return false;
       }
@@ -3740,7 +3740,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return true;
   }
 
-  let hasLayout = Prototype.K;
+  var hasLayout = Prototype.K;
   if ('currentStyle' in document.documentElement) {
     hasLayout = function (element) {
       if (!element.currentStyle.hasLayout) {
@@ -3782,20 +3782,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     get: function ($super, property) {
-      let value = $super(property);
+      var value = $super(property);
       return value === null ? this._compute(property) : value;
     },
 
     _begin: function () {
       if (this._isPrepared()) return;
 
-      let element = this.element;
+      var element = this.element;
       if (isDisplayed(element)) {
         this._setPrepared(true);
         return;
       }
 
-      let originalStyles = {
+      var originalStyles = {
         position: element.style.position || '',
         width: element.style.width || '',
         visibility: element.style.visibility || '',
@@ -3804,7 +3804,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       element.store('prototype_original_styles', originalStyles);
 
-      let position = getRawStyle(element, 'position'),
+      var position = getRawStyle(element, 'position'),
         width = element.offsetWidth;
 
       if (width === 0 || width === null) {
@@ -3812,10 +3812,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
         width = element.offsetWidth;
       }
 
-      let context =
+      var context =
         position === 'fixed' ? document.viewport : element.parentNode;
 
-      let tempStyles = {
+      var tempStyles = {
         visibility: 'hidden',
         display: 'block'
       };
@@ -3824,14 +3824,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       element.setStyle(tempStyles);
 
-      let positionedWidth = element.offsetWidth,
+      var positionedWidth = element.offsetWidth,
         newWidth;
       if (width && positionedWidth === width) {
         newWidth = getContentWidth(element, context);
       } else if (position === 'absolute' || position === 'fixed') {
         newWidth = getContentWidth(element, context);
       } else {
-        let parent = element.parentNode,
+        var parent = element.parentNode,
           pLayout = $(parent).getLayout();
 
         newWidth =
@@ -3850,15 +3850,15 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     _end: function () {
-      let element = this.element;
-      let originalStyles = element.retrieve('prototype_original_styles');
+      var element = this.element;
+      var originalStyles = element.retrieve('prototype_original_styles');
       element.store('prototype_original_styles', null);
       element.setStyle(originalStyles);
       this._setPrepared(false);
     },
 
     _compute: function (property) {
-      let COMPUTATIONS = Element.Layout.COMPUTATIONS;
+      var COMPUTATIONS = Element.Layout.COMPUTATIONS;
       if (!(property in COMPUTATIONS)) {
         throw 'Property not found.';
       }
@@ -3878,38 +3878,38 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     toObject: function () {
-      let args = $A(arguments);
-      let keys =
+      var args = $A(arguments);
+      var keys =
         args.length === 0
           ? Element.Layout.PROPERTIES
           : args.join(' ').split(' ');
-      let obj = {};
+      var obj = {};
       keys.each(function (key) {
         if (!Element.Layout.PROPERTIES.include(key)) return;
-        let value = this.get(key);
+        var value = this.get(key);
         if (value != null) obj[key] = value;
       }, this);
       return obj;
     },
 
     toHash: function () {
-      let obj = this.toObject.apply(this, arguments);
+      var obj = this.toObject.apply(this, arguments);
       return new Hash(obj);
     },
 
     toCSS: function () {
-      let args = $A(arguments);
-      let keys =
+      var args = $A(arguments);
+      var keys =
         args.length === 0
           ? Element.Layout.PROPERTIES
           : args.join(' ').split(' ');
-      let css = {};
+      var css = {};
 
       keys.each(function (key) {
         if (!Element.Layout.PROPERTIES.include(key)) return;
         if (Element.Layout.COMPOSITE_PROPERTIES.include(key)) return;
 
-        let value = this.get(key);
+        var value = this.get(key);
         if (value != null) css[cssNameFor(key)] = value + 'px';
       }, this);
       return css;
@@ -3933,16 +3933,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       height: function (element) {
         if (!this._preComputing) this._begin();
 
-        let bHeight = this.get('border-box-height');
+        var bHeight = this.get('border-box-height');
         if (bHeight <= 0) {
           if (!this._preComputing) this._end();
           return 0;
         }
 
-        let bTop = this.get('border-top'),
+        var bTop = this.get('border-top'),
           bBottom = this.get('border-bottom');
 
-        let pTop = this.get('padding-top'),
+        var pTop = this.get('padding-top'),
           pBottom = this.get('padding-bottom');
 
         if (!this._preComputing) this._end();
@@ -3953,16 +3953,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       width: function (element) {
         if (!this._preComputing) this._begin();
 
-        let bWidth = this.get('border-box-width');
+        var bWidth = this.get('border-box-width');
         if (bWidth <= 0) {
           if (!this._preComputing) this._end();
           return 0;
         }
 
-        let bLeft = this.get('border-left'),
+        var bLeft = this.get('border-left'),
           bRight = this.get('border-right');
 
-        let pLeft = this.get('padding-left'),
+        var pLeft = this.get('padding-left'),
           pRight = this.get('padding-right');
 
         if (!this._preComputing) this._end();
@@ -3970,7 +3970,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'padding-box-height': function (element) {
-        let height = this.get('height'),
+        var height = this.get('height'),
           pTop = this.get('padding-top'),
           pBottom = this.get('padding-bottom');
 
@@ -3978,7 +3978,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'padding-box-width': function (element) {
-        let width = this.get('width'),
+        var width = this.get('width'),
           pLeft = this.get('padding-left'),
           pRight = this.get('padding-right');
 
@@ -3987,20 +3987,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       'border-box-height': function (element) {
         if (!this._preComputing) this._begin();
-        let height = element.offsetHeight;
+        var height = element.offsetHeight;
         if (!this._preComputing) this._end();
         return height;
       },
 
       'border-box-width': function (element) {
         if (!this._preComputing) this._begin();
-        let width = element.offsetWidth;
+        var width = element.offsetWidth;
         if (!this._preComputing) this._end();
         return width;
       },
 
       'margin-box-height': function (element) {
-        let bHeight = this.get('border-box-height'),
+        var bHeight = this.get('border-box-height'),
           mTop = this.get('margin-top'),
           mBottom = this.get('margin-bottom');
 
@@ -4010,7 +4010,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'margin-box-width': function (element) {
-        let bWidth = this.get('border-box-width'),
+        var bWidth = this.get('border-box-width'),
           mLeft = this.get('margin-left'),
           mRight = this.get('margin-right');
 
@@ -4020,31 +4020,31 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       top: function (element) {
-        let offset = element.positionedOffset();
+        var offset = element.positionedOffset();
         return offset.top;
       },
 
       bottom: function (element) {
-        let offset = element.positionedOffset(),
+        var offset = element.positionedOffset(),
           parent = element.getOffsetParent(),
           pHeight = parent.measure('height');
 
-        let mHeight = this.get('border-box-height');
+        var mHeight = this.get('border-box-height');
 
         return pHeight - mHeight - offset.top;
       },
 
       left: function (element) {
-        let offset = element.positionedOffset();
+        var offset = element.positionedOffset();
         return offset.left;
       },
 
       right: function (element) {
-        let offset = element.positionedOffset(),
+        var offset = element.positionedOffset(),
           parent = element.getOffsetParent(),
           pWidth = parent.measure('width');
 
-        let mWidth = this.get('border-box-width');
+        var mWidth = this.get('border-box-width');
 
         return pWidth - mWidth - offset.left;
       },
@@ -4102,16 +4102,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   if ('getBoundingClientRect' in document.documentElement) {
     Object.extend(Element.Layout.COMPUTATIONS, {
       right: function (element) {
-        let parent = hasLayout(element.getOffsetParent());
-        let rect = element.getBoundingClientRect(),
+        var parent = hasLayout(element.getOffsetParent());
+        var rect = element.getBoundingClientRect(),
           pRect = parent.getBoundingClientRect();
 
         return (pRect.right - rect.right).round();
       },
 
       bottom: function (element) {
-        let parent = hasLayout(element.getOffsetParent());
-        let rect = element.getBoundingClientRect(),
+        var parent = hasLayout(element.getOffsetParent());
+        var rect = element.getBoundingClientRect(),
           pRect = parent.getBoundingClientRect();
 
         return (pRect.bottom - rect.bottom).round();
@@ -4163,20 +4163,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function getDimensions(element) {
     element = $(element);
-    let display = Element.getStyle(element, 'display');
+    var display = Element.getStyle(element, 'display');
 
     if (display && display !== 'none') {
       return { width: element.offsetWidth, height: element.offsetHeight };
     }
 
-    let style = element.style;
-    let originalStyles = {
+    var style = element.style;
+    var originalStyles = {
       visibility: style.visibility,
       position: style.position,
       display: style.display
     };
 
-    let newStyles = {
+    var newStyles = {
       visibility: 'hidden',
       display: 'block'
     };
@@ -4185,7 +4185,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     Element.setStyle(element, newStyles);
 
-    let dimensions = {
+    var dimensions = {
       width: element.offsetWidth,
       height: element.offsetHeight
     };
@@ -4210,7 +4210,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     )
       return $(document.body);
 
-    let isInline = Element.getStyle(element, 'display') === 'inline';
+    var isInline = Element.getStyle(element, 'display') === 'inline';
     if (!isInline && element.offsetParent)
       return selfOrBody(element.offsetParent);
 
@@ -4225,7 +4225,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function cumulativeOffset(element) {
     element = $(element);
-    let valueT = 0,
+    var valueT = 0,
       valueL = 0;
     if (element.parentNode) {
       do {
@@ -4240,9 +4240,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function positionedOffset(element) {
     element = $(element);
 
-    let layout = element.getLayout();
+    var layout = element.getLayout();
 
-    let valueT = 0,
+    var valueT = 0,
       valueL = 0;
     do {
       valueT += element.offsetTop || 0;
@@ -4250,7 +4250,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       element = element.offsetParent;
       if (element) {
         if (isBody(element)) break;
-        let p = Element.getStyle(element, 'position');
+        var p = Element.getStyle(element, 'position');
         if (p !== 'static') break;
       }
     } while (element);
@@ -4262,11 +4262,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function cumulativeScrollOffset(element) {
-    let valueT = 0,
+    var valueT = 0,
       valueL = 0;
     do {
       if (element === document.body) {
-        let bodyScrollNode =
+        var bodyScrollNode =
           document.documentElement || document.body.parentNode || document.body;
         valueT += !Object.isUndefined(window.pageYOffset)
           ? window.pageYOffset
@@ -4285,12 +4285,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function viewportOffset(forElement) {
-    let valueT = 0,
+    var valueT = 0,
       valueL = 0,
       docBody = document.body;
 
     forElement = $(forElement);
-    let element = forElement;
+    var element = forElement;
     do {
       valueT += element.offsetTop || 0;
       valueL += element.offsetLeft || 0;
@@ -4318,12 +4318,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return element;
     }
 
-    let offsetParent = getOffsetParent(element);
-    let eOffset = element.viewportOffset(),
+    var offsetParent = getOffsetParent(element);
+    var eOffset = element.viewportOffset(),
       pOffset = offsetParent.viewportOffset();
 
-    let offset = eOffset.relativeTo(pOffset);
-    let layout = element.getLayout();
+    var offset = eOffset.relativeTo(pOffset);
+    var layout = element.getLayout();
 
     element.store('prototype_absolutize_original_styles', {
       position: element.getStyle('position'),
@@ -4350,7 +4350,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return element;
     }
 
-    let originalStyles = element.retrieve(
+    var originalStyles = element.retrieve(
       'prototype_absolutize_original_styles'
     );
 
@@ -4360,14 +4360,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function scrollTo(element) {
     element = $(element);
-    let pos = Element.cumulativeOffset(element);
+    var pos = Element.cumulativeOffset(element);
     window.scrollTo(pos.left, pos.top);
     return element;
   }
 
   function makePositioned(element) {
     element = $(element);
-    let position = Element.getStyle(element, 'position'),
+    var position = Element.getStyle(element, 'position'),
       styles = {};
     if (position === 'static' || !position) {
       styles.position = 'relative';
@@ -4383,7 +4383,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function undoPositioned(element) {
     element = $(element);
-    let storage = Element.getStorage(element),
+    var storage = Element.getStorage(element),
       madePositioned = storage.get('prototype_made_positioned');
 
     if (madePositioned) {
@@ -4402,11 +4402,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function makeClipping(element) {
     element = $(element);
 
-    let storage = Element.getStorage(element),
+    var storage = Element.getStorage(element),
       madeClipping = storage.get('prototype_made_clipping');
 
     if (Object.isUndefined(madeClipping)) {
-      let overflow = Element.getStyle(element, 'overflow');
+      var overflow = Element.getStyle(element, 'overflow');
       storage.set('prototype_made_clipping', overflow);
       if (overflow !== 'hidden') element.style.overflow = 'hidden';
     }
@@ -4416,7 +4416,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function undoClipping(element) {
     element = $(element);
-    let storage = Element.getStorage(element),
+    var storage = Element.getStorage(element),
       overflow = storage.get('prototype_made_clipping');
 
     if (!Object.isUndefined(overflow)) {
@@ -4440,11 +4440,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       options || {}
     );
 
-    let docEl = document.documentElement;
+    var docEl = document.documentElement;
 
     source = $(source);
     element = $(element);
-    let p,
+    var p,
       delta,
       layout,
       styles = {};
@@ -4453,13 +4453,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       p = Element.viewportOffset(source);
       delta = [0, 0];
       if (Element.getStyle(element, 'position') === 'absolute') {
-        let parent = Element.getOffsetParent(element);
+        var parent = Element.getOffsetParent(element);
         if (parent !== document.body) delta = Element.viewportOffset(parent);
       }
     }
 
     function pageScrollXY() {
-      let x = 0,
+      var x = 0,
         y = 0;
       if (Object.isNumber(window.pageXOffset)) {
         x = window.pageXOffset;
@@ -4477,7 +4477,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return { x: x, y: y };
     }
 
-    let pageXY = pageScrollXY();
+    var pageXY = pageScrollXY();
 
     if (options.setWidth || options.setHeight) {
       layout = Element.getLayout(source);
@@ -4488,7 +4488,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (options.setTop)
       styles.top = p[1] + pageXY.y - delta[1] + options.offsetTop + 'px';
 
-    let currentLayout = element.getLayout();
+    var currentLayout = element.getLayout();
 
     if (options.setWidth) {
       styles.width = layout.get('width') + 'px';
@@ -4512,11 +4512,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       )
         return $(document.body);
 
-      let position = element.getStyle('position');
+      var position = element.getStyle('position');
       if (position !== 'static') return proceed(element);
 
       element.setStyle({ position: 'relative' });
-      let value = proceed(element);
+      var value = proceed(element);
       element.setStyle({ position: position });
       return value;
     });
@@ -4524,22 +4524,22 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     positionedOffset = positionedOffset.wrap(function (proceed, element) {
       element = $(element);
       if (!element.parentNode) return new Element.Offset(0, 0);
-      let position = element.getStyle('position');
+      var position = element.getStyle('position');
       if (position !== 'static') return proceed(element);
 
-      let offsetParent = element.getOffsetParent();
+      var offsetParent = element.getOffsetParent();
       if (offsetParent && offsetParent.getStyle('position') === 'fixed')
         hasLayout(offsetParent);
 
       element.setStyle({ position: 'relative' });
-      let value = proceed(element);
+      var value = proceed(element);
       element.setStyle({ position: position });
       return value;
     });
   } else if (Prototype.Browser.Webkit) {
     cumulativeOffset = function (element) {
       element = $(element);
-      let valueT = 0,
+      var valueT = 0,
         valueL = 0;
       do {
         valueT += element.offsetTop || 0;
@@ -4600,7 +4600,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
         element = $(element);
         if (isDetached(element)) return new Element.Offset(0, 0);
 
-        let rect = element.getBoundingClientRect(),
+        var rect = element.getBoundingClientRect(),
           docEl = document.documentElement;
         return new Element.Offset(
           rect.left - docEl.clientLeft,
@@ -4612,9 +4612,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 })();
 
 (function () {
-  let IS_OLD_OPERA =
+  var IS_OLD_OPERA =
     Prototype.Browser.Opera && window.parseFloat(window.opera.version()) < 9.5;
-  let ROOT = null;
+  var ROOT = null;
   function getRootElement() {
     if (ROOT) return ROOT;
     ROOT = IS_OLD_OPERA ? document.body : document.documentElement;
@@ -4634,11 +4634,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getScrollOffsets() {
-    let x =
+    var x =
       window.pageXOffset ||
       document.documentElement.scrollLeft ||
       document.body.scrollLeft;
-    let y =
+    var y =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
       document.body.scrollTop;
@@ -4654,7 +4654,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   };
 })();
 window.$$ = function () {
-  let expression = $A(arguments).join(', ');
+  var expression = $A(arguments).join(', ');
   return Prototype.Selector.select(expression, document);
 };
 
@@ -4669,7 +4669,7 @@ Prototype.Selector = (function () {
 
   function find(elements, expression, index) {
     index = index || 0;
-    let match = Prototype.Selector.match,
+    var match = Prototype.Selector.match,
       length = elements.length,
       matchIndex = 0,
       i;
@@ -4682,13 +4682,13 @@ Prototype.Selector = (function () {
   }
 
   function extendElements(elements) {
-    for (let i = 0, length = elements.length; i < length; i++) {
+    for (var i = 0, length = elements.length; i < length; i++) {
       Element.extend(elements[i]);
     }
     return elements;
   }
 
-  let K = Prototype.K;
+  var K = Prototype.K;
 
   return {
     select: select,
@@ -4724,7 +4724,7 @@ Prototype._original_property = window.Sizzle;
  * Date: 2014-02-05
  */
 (function (window) {
-  let i,
+  var i,
     support,
     Expr,
     getText,
@@ -4766,7 +4766,7 @@ Prototype._original_property = window.Sizzle;
     indexOf =
       arr.indexOf ||
       function (elem) {
-        let i = 0,
+        var i = 0,
           len = this.length;
         for (; i < len; i++) {
           if (this[i] === elem) {
@@ -4855,7 +4855,7 @@ Prototype._original_property = window.Sizzle;
       'ig'
     ),
     funescape = function (_, escaped, escapedWhitespace) {
-      let high = '0x' + escaped - 0x10000;
+      var high = '0x' + escaped - 0x10000;
       return high !== high || escapedWhitespace
         ? escaped
         : high < 0
@@ -4876,7 +4876,7 @@ Prototype._original_property = window.Sizzle;
             push_native.apply(target, slice.call(els));
           }
         : function (target, els) {
-            let j = target.length,
+            var j = target.length,
               i = 0;
             while ((target[j++] = els[i++])) {}
             target.length = j - 1;
@@ -4885,7 +4885,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function Sizzle(selector, context, results, seed) {
-    let match, elem, m, nodeType, i, groups, old, nid, newContext, newSelector;
+    var match, elem, m, nodeType, i, groups, old, nid, newContext, newSelector;
 
     if (
       (context ? context.ownerDocument || context : preferredDoc) !== document
@@ -4990,7 +4990,7 @@ Prototype._original_property = window.Sizzle;
    *  deleting the oldest entry
    */
   function createCache() {
-    let keys = [];
+    var keys = [];
 
     function cache(key, value) {
       if (keys.push(key + ' ') > Expr.cacheLength) {
@@ -5015,7 +5015,7 @@ Prototype._original_property = window.Sizzle;
    * @param {Function} fn Passed the created div and expects a boolean result
    */
   function assert(fn) {
-    let div = document.createElement('div');
+    var div = document.createElement('div');
 
     try {
       return !!fn(div);
@@ -5035,7 +5035,7 @@ Prototype._original_property = window.Sizzle;
    * @param {Function} handler The method that will be applied
    */
   function addHandle(attrs, handler) {
-    let arr = attrs.split('|'),
+    var arr = attrs.split('|'),
       i = attrs.length;
 
     while (i--) {
@@ -5050,7 +5050,7 @@ Prototype._original_property = window.Sizzle;
    * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
    */
   function siblingCheck(a, b) {
-    let cur = b && a,
+    var cur = b && a,
       diff =
         cur &&
         a.nodeType === 1 &&
@@ -5078,7 +5078,7 @@ Prototype._original_property = window.Sizzle;
    */
   function createInputPseudo(type) {
     return function (elem) {
-      let name = elem.nodeName.toLowerCase();
+      var name = elem.nodeName.toLowerCase();
       return name === 'input' && elem.type === type;
     };
   }
@@ -5089,7 +5089,7 @@ Prototype._original_property = window.Sizzle;
    */
   function createButtonPseudo(type) {
     return function (elem) {
-      let name = elem.nodeName.toLowerCase();
+      var name = elem.nodeName.toLowerCase();
       return (name === 'input' || name === 'button') && elem.type === type;
     };
   }
@@ -5102,7 +5102,7 @@ Prototype._original_property = window.Sizzle;
     return markFunction(function (argument) {
       argument = +argument;
       return markFunction(function (seed, matches) {
-        let j,
+        var j,
           matchIndexes = fn([], seed.length, argument),
           i = matchIndexes.length;
 
@@ -5134,7 +5134,7 @@ Prototype._original_property = window.Sizzle;
    * @returns {Boolean} True iff elem is a non-HTML XML node
    */
   isXML = Sizzle.isXML = function (elem) {
-    let documentElement = elem && (elem.ownerDocument || elem).documentElement;
+    var documentElement = elem && (elem.ownerDocument || elem).documentElement;
     return documentElement ? documentElement.nodeName !== 'HTML' : false;
   };
 
@@ -5144,7 +5144,7 @@ Prototype._original_property = window.Sizzle;
    * @returns {Object} Returns the current document
    */
   setDocument = Sizzle.setDocument = function (node) {
-    let hasCompare,
+    var hasCompare,
       doc = node ? node.ownerDocument || node : preferredDoc,
       parent = doc.defaultView;
 
@@ -5206,12 +5206,12 @@ Prototype._original_property = window.Sizzle;
     if (support.getById) {
       Expr.find['ID'] = function (id, context) {
         if (typeof context.getElementById !== strundefined && documentIsHTML) {
-          let m = context.getElementById(id);
+          var m = context.getElementById(id);
           return m && m.parentNode ? [m] : [];
         }
       };
       Expr.filter['ID'] = function (id) {
-        let attrId = id.replace(runescape, funescape);
+        var attrId = id.replace(runescape, funescape);
         return function (elem) {
           return elem.getAttribute('id') === attrId;
         };
@@ -5220,9 +5220,9 @@ Prototype._original_property = window.Sizzle;
       delete Expr.find['ID'];
 
       Expr.filter['ID'] = function (id) {
-        let attrId = id.replace(runescape, funescape);
+        var attrId = id.replace(runescape, funescape);
         return function (elem) {
-          let node =
+          var node =
             typeof elem.getAttributeNode !== strundefined &&
             elem.getAttributeNode('id');
           return node && node.value === attrId;
@@ -5237,7 +5237,7 @@ Prototype._original_property = window.Sizzle;
           }
         }
       : function (tag, context) {
-          let elem,
+          var elem,
             tmp = [],
             i = 0,
             results = context.getElementsByTagName(tag);
@@ -5290,7 +5290,7 @@ Prototype._original_property = window.Sizzle;
       });
 
       assert(function (div) {
-        let input = doc.createElement('input');
+        var input = doc.createElement('input');
         input.setAttribute('type', 'hidden');
         div.appendChild(input).setAttribute('name', 'D');
 
@@ -5334,7 +5334,7 @@ Prototype._original_property = window.Sizzle;
     contains =
       hasCompare || rnative.test(docElem.contains)
         ? function (a, b) {
-            let adown = a.nodeType === 9 ? a.documentElement : a,
+            var adown = a.nodeType === 9 ? a.documentElement : a,
               bup = b && b.parentNode;
             return (
               a === bup ||
@@ -5369,7 +5369,7 @@ Prototype._original_property = window.Sizzle;
             return 0;
           }
 
-          let compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
+          var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
           if (compare) {
             return compare;
           }
@@ -5409,7 +5409,7 @@ Prototype._original_property = window.Sizzle;
             return 0;
           }
 
-          let cur,
+          var cur,
             i = 0,
             aup = a.parentNode,
             bup = b.parentNode,
@@ -5475,7 +5475,7 @@ Prototype._original_property = window.Sizzle;
       (!rbuggyQSA || !rbuggyQSA.test(expr))
     ) {
       try {
-        let ret = matches.call(elem, expr);
+        var ret = matches.call(elem, expr);
 
         if (
           ret ||
@@ -5502,7 +5502,7 @@ Prototype._original_property = window.Sizzle;
       setDocument(elem);
     }
 
-    let fn = Expr.attrHandle[name.toLowerCase()],
+    var fn = Expr.attrHandle[name.toLowerCase()],
       val =
         fn && hasOwn.call(Expr.attrHandle, name.toLowerCase())
           ? fn(elem, name, !documentIsHTML)
@@ -5526,7 +5526,7 @@ Prototype._original_property = window.Sizzle;
    * @param {ArrayLike} results
    */
   Sizzle.uniqueSort = function (results) {
-    let elem,
+    var elem,
       duplicates = [],
       j = 0,
       i = 0;
@@ -5556,7 +5556,7 @@ Prototype._original_property = window.Sizzle;
    * @param {Array|Element} elem
    */
   getText = Sizzle.getText = function (elem) {
-    let node,
+    var node,
       ret = '',
       i = 0,
       nodeType = elem.nodeType;
@@ -5641,7 +5641,7 @@ Prototype._original_property = window.Sizzle;
       },
 
       PSEUDO: function (match) {
-        let excess,
+        var excess,
           unquoted = !match[5] && match[2];
 
         if (matchExpr['CHILD'].test(match[0])) {
@@ -5667,7 +5667,7 @@ Prototype._original_property = window.Sizzle;
 
     filter: {
       TAG: function (nodeNameSelector) {
-        let nodeName = nodeNameSelector
+        var nodeName = nodeNameSelector
           .replace(runescape, funescape)
           .toLowerCase();
         return nodeNameSelector === '*'
@@ -5680,7 +5680,7 @@ Prototype._original_property = window.Sizzle;
       },
 
       CLASS: function (className) {
-        let pattern = classCache[className + ' '];
+        var pattern = classCache[className + ' '];
 
         return (
           pattern ||
@@ -5700,7 +5700,7 @@ Prototype._original_property = window.Sizzle;
 
       ATTR: function (name, operator, check) {
         return function (elem) {
-          let result = Sizzle.attr(elem, name);
+          var result = Sizzle.attr(elem, name);
 
           if (result == null) {
             return operator === '!=';
@@ -5731,7 +5731,7 @@ Prototype._original_property = window.Sizzle;
       },
 
       CHILD: function (type, what, argument, first, last) {
-        let simple = type.slice(0, 3) !== 'nth',
+        var simple = type.slice(0, 3) !== 'nth',
           forward = type.slice(-4) !== 'last',
           ofType = what === 'of-type';
 
@@ -5740,7 +5740,7 @@ Prototype._original_property = window.Sizzle;
               return !!elem.parentNode;
             }
           : function (elem, context, xml) {
-              let cache,
+              var cache,
                 outerCache,
                 node,
                 diff,
@@ -5831,7 +5831,7 @@ Prototype._original_property = window.Sizzle;
       },
 
       PSEUDO: function (pseudo, argument) {
-        let args,
+        var args,
           fn =
             Expr.pseudos[pseudo] ||
             Expr.setFilters[pseudo.toLowerCase()] ||
@@ -5845,7 +5845,7 @@ Prototype._original_property = window.Sizzle;
           args = [pseudo, pseudo, '', argument];
           return Expr.setFilters.hasOwnProperty(pseudo.toLowerCase())
             ? markFunction(function (seed, matches) {
-                let idx,
+                var idx,
                   matched = fn(seed, argument),
                   i = matched.length;
                 while (i--) {
@@ -5864,13 +5864,13 @@ Prototype._original_property = window.Sizzle;
 
     pseudos: {
       not: markFunction(function (selector) {
-        let input = [],
+        var input = [],
           results = [],
           matcher = compile(selector.replace(rtrim, '$1'));
 
         return matcher[expando]
           ? markFunction(function (seed, matches, context, xml) {
-              let elem,
+              var elem,
                 unmatched = matcher(seed, null, xml, []),
                 i = seed.length;
 
@@ -5909,7 +5909,7 @@ Prototype._original_property = window.Sizzle;
         }
         lang = lang.replace(runescape, funescape).toLowerCase();
         return function (elem) {
-          let elemLang;
+          var elemLang;
           do {
             if (
               (elemLang = documentIsHTML
@@ -5925,7 +5925,7 @@ Prototype._original_property = window.Sizzle;
       }),
 
       target: function (elem) {
-        let hash = window.location && window.location.hash;
+        var hash = window.location && window.location.hash;
         return hash && hash.slice(1) === elem.id;
       },
 
@@ -5950,7 +5950,7 @@ Prototype._original_property = window.Sizzle;
       },
 
       checked: function (elem) {
-        let nodeName = elem.nodeName.toLowerCase();
+        var nodeName = elem.nodeName.toLowerCase();
         return (
           (nodeName === 'input' && !!elem.checked) ||
           (nodeName === 'option' && !!elem.selected)
@@ -5987,14 +5987,14 @@ Prototype._original_property = window.Sizzle;
       },
 
       button: function (elem) {
-        let name = elem.nodeName.toLowerCase();
+        var name = elem.nodeName.toLowerCase();
         return (
           (name === 'input' && elem.type === 'button') || name === 'button'
         );
       },
 
       text: function (elem) {
-        let attr;
+        var attr;
         return (
           elem.nodeName.toLowerCase() === 'input' &&
           elem.type === 'text' &&
@@ -6016,7 +6016,7 @@ Prototype._original_property = window.Sizzle;
       }),
 
       even: createPositionalPseudo(function (matchIndexes, length) {
-        let i = 0;
+        var i = 0;
         for (; i < length; i += 2) {
           matchIndexes.push(i);
         }
@@ -6024,7 +6024,7 @@ Prototype._original_property = window.Sizzle;
       }),
 
       odd: createPositionalPseudo(function (matchIndexes, length) {
-        let i = 1;
+        var i = 1;
         for (; i < length; i += 2) {
           matchIndexes.push(i);
         }
@@ -6032,7 +6032,7 @@ Prototype._original_property = window.Sizzle;
       }),
 
       lt: createPositionalPseudo(function (matchIndexes, length, argument) {
-        let i = argument < 0 ? argument + length : argument;
+        var i = argument < 0 ? argument + length : argument;
         for (; --i >= 0; ) {
           matchIndexes.push(i);
         }
@@ -6040,7 +6040,7 @@ Prototype._original_property = window.Sizzle;
       }),
 
       gt: createPositionalPseudo(function (matchIndexes, length, argument) {
-        let i = argument < 0 ? argument + length : argument;
+        var i = argument < 0 ? argument + length : argument;
         for (; ++i < length; ) {
           matchIndexes.push(i);
         }
@@ -6069,7 +6069,7 @@ Prototype._original_property = window.Sizzle;
   Expr.setFilters = new setFilters();
 
   function tokenize(selector, parseOnly) {
-    let matched,
+    var matched,
       match,
       tokens,
       type,
@@ -6133,7 +6133,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function toSelector(tokens) {
-    let i = 0,
+    var i = 0,
       len = tokens.length,
       selector = '';
     for (; i < len; i++) {
@@ -6143,7 +6143,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function addCombinator(matcher, combinator, base) {
-    let dir = combinator.dir,
+    var dir = combinator.dir,
       checkNonElements = base && dir === 'parentNode',
       doneName = done++;
 
@@ -6156,7 +6156,7 @@ Prototype._original_property = window.Sizzle;
           }
         }
       : function (elem, context, xml) {
-          let oldCache,
+          var oldCache,
             outerCache,
             newCache = [dirruns, doneName];
 
@@ -6194,7 +6194,7 @@ Prototype._original_property = window.Sizzle;
   function elementMatcher(matchers) {
     return matchers.length > 1
       ? function (elem, context, xml) {
-          let i = matchers.length;
+          var i = matchers.length;
           while (i--) {
             if (!matchers[i](elem, context, xml)) {
               return false;
@@ -6206,7 +6206,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function multipleContexts(selector, contexts, results) {
-    let i = 0,
+    var i = 0,
       len = contexts.length;
     for (; i < len; i++) {
       Sizzle(selector, contexts[i], results);
@@ -6215,7 +6215,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function condense(unmatched, map, filter, context, xml) {
-    let elem,
+    var elem,
       newUnmatched = [],
       i = 0,
       len = unmatched.length,
@@ -6250,7 +6250,7 @@ Prototype._original_property = window.Sizzle;
       postFinder = setMatcher(postFinder, postSelector);
     }
     return markFunction(function (seed, results, context, xml) {
-      let temp,
+      var temp,
         i,
         elem,
         preMap = [],
@@ -6328,7 +6328,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function matcherFromTokens(tokens) {
-    let checkContext,
+    var checkContext,
       matcher,
       j,
       len = tokens.length,
@@ -6395,10 +6395,10 @@ Prototype._original_property = window.Sizzle;
   }
 
   function matcherFromGroupMatchers(elementMatchers, setMatchers) {
-    let bySet = setMatchers.length > 0,
+    var bySet = setMatchers.length > 0,
       byElement = elementMatchers.length > 0,
       superMatcher = function (seed, context, xml, results, outermost) {
-        let elem,
+        var elem,
           j,
           matcher,
           matchedCount = 0,
@@ -6486,7 +6486,7 @@ Prototype._original_property = window.Sizzle;
     selector,
     match /* Internal Use Only */
   ) {
-    let i,
+    var i,
       setMatchers = [],
       elementMatchers = [],
       cached = compilerCache[selector + ' '];
@@ -6525,7 +6525,7 @@ Prototype._original_property = window.Sizzle;
    * @param {Array} [seed] A set of elements to match against
    */
   select = Sizzle.select = function (selector, context, results, seed) {
-    let i,
+    var i,
       tokens,
       token,
       type,
@@ -6641,7 +6641,7 @@ Prototype._original_property = window.Sizzle;
     })
   ) {
     addHandle(booleans, function (elem, name, isXML) {
-      let val;
+      var val;
       if (!isXML) {
         return elem[name] === true
           ? name.toLowerCase()
@@ -6680,7 +6680,7 @@ Prototype._original_property = window.Sizzle;
 })();
 
 (function (engine) {
-  let extendElements = Prototype.Selector.extendElements;
+  var extendElements = Prototype.Selector.extendElements;
 
   function select(selector, scope) {
     return extendElements(engine(selector, scope || document));
@@ -6698,7 +6698,7 @@ Prototype._original_property = window.Sizzle;
 window.Sizzle = Prototype._original_property;
 delete Prototype._original_property;
 
-let Form = {
+var Form = {
   reset: function (form) {
     form = $(form);
     form.reset();
@@ -6708,7 +6708,7 @@ let Form = {
   serializeElements: function (elements, options) {
     if (typeof options != 'object') options = { hash: !!options };
     else if (Object.isUndefined(options.hash)) options.hash = true;
-    let key,
+    var key,
       value,
       submitted = false,
       submit = options.submit,
@@ -6733,7 +6733,7 @@ let Form = {
         if (!values.length) {
           return result;
         }
-        let encodedKey = encodeURIComponent(key).gsub(/%20/, '+');
+        var encodedKey = encodeURIComponent(key).gsub(/%20/, '+');
         return (
           result +
           (result ? '&' : '') +
@@ -6776,12 +6776,12 @@ Form.Methods = {
   },
 
   getElements: function (form) {
-    let elements = $(form).getElementsByTagName('*');
-    let element,
+    var elements = $(form).getElementsByTagName('*');
+    var element,
       results = [],
       serializers = Form.Element.Serializers;
 
-    for (let i = 0; (element = elements[i]); i++) {
+    for (var i = 0; (element = elements[i]); i++) {
       if (serializers[element.tagName.toLowerCase()])
         results.push(Element.extend(element));
     }
@@ -6790,16 +6790,16 @@ Form.Methods = {
 
   getInputs: function (form, typeName, name) {
     form = $(form);
-    let inputs = form.getElementsByTagName('input');
+    var inputs = form.getElementsByTagName('input');
 
     if (!typeName && !name) return $A(inputs).map(Element.extend);
 
     for (
-      let i = 0, matchingInputs = [], length = inputs.length;
+      var i = 0, matchingInputs = [], length = inputs.length;
       i < length;
       i++
     ) {
-      let input = inputs[i];
+      var input = inputs[i];
       if ((typeName && input.type != typeName) || (name && input.name != name))
         continue;
       matchingInputs.push(Element.extend(input));
@@ -6821,12 +6821,12 @@ Form.Methods = {
   },
 
   findFirstElement: function (form) {
-    let elements = $(form)
+    var elements = $(form)
       .getElements()
       .findAll(function (element) {
         return 'hidden' != element.type && !element.disabled;
       });
-    let firstByIndex = elements
+    var firstByIndex = elements
       .findAll(function (element) {
         return element.hasAttribute('tabIndex') && element.tabIndex >= 0;
       })
@@ -6844,7 +6844,7 @@ Form.Methods = {
 
   focusFirstElement: function (form) {
     form = $(form);
-    let element = form.findFirstElement();
+    var element = form.findFirstElement();
     if (element) element.activate();
     return form;
   },
@@ -6852,7 +6852,7 @@ Form.Methods = {
   request: function (form, options) {
     (form = $(form)), (options = Object.clone(options || {}));
 
-    let params = options.parameters,
+    var params = options.parameters,
       action = form.readAttribute('action') || '';
     if (action.blank()) action = window.location.href;
     options.parameters = form.serialize(true);
@@ -6887,9 +6887,9 @@ Form.Element.Methods = {
   serialize: function (element) {
     element = $(element);
     if (!element.disabled && element.name) {
-      let value = element.getValue();
+      var value = element.getValue();
       if (value != undefined) {
-        let pair = {};
+        var pair = {};
         pair[element.name] = value;
         return Object.toQueryString(pair);
       }
@@ -6899,13 +6899,13 @@ Form.Element.Methods = {
 
   getValue: function (element) {
     element = $(element);
-    let method = element.tagName.toLowerCase();
+    var method = element.tagName.toLowerCase();
     return Form.Element.Serializers[method](element);
   },
 
   setValue: function (element, value) {
     element = $(element);
-    let method = element.tagName.toLowerCase();
+    var method = element.tagName.toLowerCase();
     Form.Element.Serializers[method](element, value);
     return element;
   },
@@ -6948,9 +6948,9 @@ Form.Element.Methods = {
 
 /*--------------------------------------------------------------------------*/
 
-let Field = Form.Element;
+var Field = Form.Element;
 
-let $F = Form.Element.Methods.getValue;
+var $F = Form.Element.Methods.getValue;
 
 /*--------------------------------------------------------------------------*/
 
@@ -6980,10 +6980,10 @@ Form.Element.Serializers = (function () {
     if (Object.isUndefined(value))
       return (element.type === 'select-one' ? selectOne : selectMany)(element);
 
-    let opt,
+    var opt,
       currentValue,
       single = !Object.isArray(value);
-    for (let i = 0, length = element.length; i < length; i++) {
+    for (var i = 0, length = element.length; i < length; i++) {
       opt = element.options[i];
       currentValue = this.optionValue(opt);
       if (single) {
@@ -6996,17 +6996,17 @@ Form.Element.Serializers = (function () {
   }
 
   function selectOne(element) {
-    let index = element.selectedIndex;
+    var index = element.selectedIndex;
     return index >= 0 ? optionValue(element.options[index]) : null;
   }
 
   function selectMany(element) {
-    let values,
+    var values,
       length = element.length;
     if (!length) return null;
 
-    for (let i = 0, values = []; i < length; i++) {
-      let opt = element.options[i];
+    for (var i = 0, values = []; i < length; i++) {
+      var opt = element.options[i];
       if (opt.selected) values.push(optionValue(opt));
     }
     return values;
@@ -7038,7 +7038,7 @@ Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
   },
 
   execute: function () {
-    let value = this.getValue();
+    var value = this.getValue();
     if (
       Object.isString(this.lastValue) && Object.isString(value)
         ? this.lastValue != value
@@ -7076,7 +7076,7 @@ Abstract.EventObserver = Class.create({
   },
 
   onElementEvent: function () {
-    let value = this.getValue();
+    var value = this.getValue();
     if (this.lastValue != value) {
       this.callback(this.element, value);
       this.lastValue = value;
@@ -7114,12 +7114,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 });
 (function (GLOBAL) {
-  let DIV = document.createElement('div');
-  let docEl = document.documentElement;
-  let MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
+  var DIV = document.createElement('div');
+  var docEl = document.documentElement;
+  var MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
     'onmouseenter' in docEl && 'onmouseleave' in docEl;
 
-  let Event = {
+  var Event = {
     KEY_BACKSPACE: 8,
     KEY_TAB: 9,
     KEY_RETURN: 13,
@@ -7136,7 +7136,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     KEY_INSERT: 45
   };
 
-  let isIELegacyEvent = function (event) {
+  var isIELegacyEvent = function (event) {
     return false;
   };
 
@@ -7152,13 +7152,13 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     }
   }
 
-  let _isButton;
+  var _isButton;
 
   function _isButtonForDOMEvents(event, code) {
     return event.which ? event.which === code + 1 : event.button === code;
   }
 
-  let legacyButtonMap = { 0: 1, 1: 4, 2: 2 };
+  var legacyButtonMap = { 0: 1, 1: 4, 2: 2 };
   function _isButtonForLegacyEvents(event, code) {
     return event.button === legacyButtonMap[code];
   }
@@ -7211,7 +7211,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   function _element(event) {
     event = Event.extend(event);
 
-    let node = event.target,
+    var node = event.target,
       type = event.type,
       currentTarget = event.currentTarget;
 
@@ -7230,7 +7230,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function findElement(event, expression) {
-    let element = _element(event),
+    var element = _element(event),
       selector = Prototype.Selector;
     if (!expression) return Element.extend(element);
     while (element) {
@@ -7245,7 +7245,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function pointerX(event) {
-    let docElement = document.documentElement,
+    var docElement = document.documentElement,
       body = document.body || { scrollLeft: 0 };
 
     return (
@@ -7257,7 +7257,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function pointerY(event) {
-    let docElement = document.documentElement,
+    var docElement = document.documentElement,
       body = document.body || { scrollTop: 0 };
 
     return (
@@ -7291,14 +7291,14 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     stop: stop
   };
 
-  let methods = Object.keys(Event.Methods).inject({}, function (m, name) {
+  var methods = Object.keys(Event.Methods).inject({}, function (m, name) {
     m[name] = Event.Methods[name].methodize();
     return m;
   });
 
   if (window.attachEvent) {
     function _relatedTarget(event) {
-      let element;
+      var element;
       switch (event.type) {
         case 'mouseover':
         case 'mouseenter':
@@ -7314,7 +7314,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       return Element.extend(element);
     }
 
-    let additionalMethods = {
+    var additionalMethods = {
       stopPropagation: function () {
         this.cancelBubble = true;
       },
@@ -7334,7 +7334,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       if (event._extendedByPrototype) return event;
       event._extendedByPrototype = Prototype.emptyFunction;
 
-      let pointer = Event.pointer(event);
+      var pointer = Event.pointer(event);
 
       Object.extend(event, {
         target: event.srcElement || element,
@@ -7358,7 +7358,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     Object.extend(Event.prototype, methods);
   }
 
-  let EVENT_TRANSLATIONS = {
+  var EVENT_TRANSLATIONS = {
     mouseenter: 'mouseover',
     mouseleave: 'mouseout'
   };
@@ -7392,7 +7392,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   Event._isCustomEvent = isCustomEvent;
 
   function getOrCreateRegistryFor(element, uid) {
-    let CACHE = GLOBAL.Event.cache;
+    var CACHE = GLOBAL.Event.cache;
     if (Object.isUndefined(uid)) uid = getUniqueElementID(element);
     if (!CACHE[uid]) CACHE[uid] = { element: element };
     return CACHE[uid];
@@ -7404,16 +7404,16 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function register(element, eventName, handler) {
-    let registry = getOrCreateRegistryFor(element);
+    var registry = getOrCreateRegistryFor(element);
     if (!registry[eventName]) registry[eventName] = [];
-    let entries = registry[eventName];
+    var entries = registry[eventName];
 
-    let i = entries.length;
+    var i = entries.length;
     while (i--) if (entries[i].handler === handler) return null;
 
-    let uid = getUniqueElementID(element);
-    let responder = GLOBAL.Event._createResponder(uid, eventName, handler);
-    let entry = {
+    var uid = getUniqueElementID(element);
+    var responder = GLOBAL.Event._createResponder(uid, eventName, handler);
+    var entry = {
       responder: responder,
       handler: handler
     };
@@ -7423,10 +7423,10 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function unregister(element, eventName, handler) {
-    let registry = getOrCreateRegistryFor(element);
-    let entries = registry[eventName] || [];
+    var registry = getOrCreateRegistryFor(element);
+    var entries = registry[eventName] || [];
 
-    let i = entries.length,
+    var i = entries.length,
       entry;
     while (i--) {
       if (entries[i].handler === handler) {
@@ -7436,7 +7436,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     }
 
     if (entry) {
-      let index = entries.indexOf(entry);
+      var index = entries.indexOf(entry);
       entries.splice(index, 1);
     }
 
@@ -7451,11 +7451,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function observe(element, eventName, handler) {
     element = $(element);
-    let entry = register(element, eventName, handler);
+    var entry = register(element, eventName, handler);
 
     if (entry === null) return element;
 
-    let responder = entry.responder;
+    var responder = entry.responder;
     if (isCustomEvent(eventName))
       observeCustomEvent(element, eventName, responder);
     else observeStandardEvent(element, eventName, responder);
@@ -7464,7 +7464,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function observeStandardEvent(element, eventName, responder) {
-    let actualEventName = getDOMEventName(eventName);
+    var actualEventName = getDOMEventName(eventName);
     if (element.addEventListener) {
       element.addEventListener(actualEventName, responder, false);
     } else {
@@ -7483,7 +7483,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function stopObserving(element, eventName, handler) {
     element = $(element);
-    let handlerGiven = !Object.isUndefined(handler),
+    var handlerGiven = !Object.isUndefined(handler),
       eventNameGiven = !Object.isUndefined(eventName);
 
     if (!eventNameGiven && !handlerGiven) {
@@ -7496,7 +7496,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       return element;
     }
 
-    let entry = unregister(element, eventName, handler);
+    var entry = unregister(element, eventName, handler);
 
     if (!entry) return element;
     removeEvent(element, eventName, entry.responder);
@@ -7504,7 +7504,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingStandardEvent(element, eventName, responder) {
-    let actualEventName = getDOMEventName(eventName);
+    var actualEventName = getDOMEventName(eventName);
     if (element.removeEventListener) {
       element.removeEventListener(actualEventName, responder, false);
     } else {
@@ -7522,14 +7522,14 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingElement(element) {
-    let uid = getUniqueElementID(element),
+    var uid = getUniqueElementID(element),
       registry = GLOBAL.Event.cache[uid];
     if (!registry) return;
 
     destroyRegistryForElement(element, uid);
 
-    let entries, i;
-    for (let eventName in registry) {
+    var entries, i;
+    for (var eventName in registry) {
       if (eventName === 'element') continue;
 
       entries = registry[eventName];
@@ -7539,18 +7539,18 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingEventName(element, eventName) {
-    let registry = getOrCreateRegistryFor(element);
-    let entries = registry[eventName];
+    var registry = getOrCreateRegistryFor(element);
+    var entries = registry[eventName];
     if (entries) {
       delete registry[eventName];
     }
 
     entries = entries || [];
 
-    let i = entries.length;
+    var i = entries.length;
     while (i--) removeEvent(element, eventName, entries[i].responder);
 
-    for (let name in registry) {
+    for (var name in registry) {
       if (name === 'element') continue;
       return; // There is another registered event
     }
@@ -7576,12 +7576,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     if (Object.isUndefined(bubble)) bubble = true;
     memo = memo || {};
 
-    let event = fireEvent(element, eventName, memo, bubble);
+    var event = fireEvent(element, eventName, memo, bubble);
     return Event.extend(event);
   }
 
   function fireEvent_DOM(element, eventName, memo, bubble) {
-    let event = document.createEvent('HTMLEvents');
+    var event = document.createEvent('HTMLEvents');
     event.initEvent('dataavailable', bubble, true);
 
     event.eventName = eventName;
@@ -7592,7 +7592,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function fireEvent_IE(element, eventName, memo, bubble) {
-    let event = document.createEventObject();
+    var event = document.createEventObject();
     event.eventType = bubble ? 'ondataavailable' : 'onlosecapture';
 
     event.eventName = eventName;
@@ -7602,7 +7602,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     return event;
   }
 
-  let fireEvent = document.createEvent ? fireEvent_DOM : fireEvent_IE;
+  var fireEvent = document.createEvent ? fireEvent_DOM : fireEvent_IE;
 
   Event.Handler = Class.create({
     initialize: function (element, eventName, selector, callback) {
@@ -7624,7 +7624,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     },
 
     handleEvent: function (event) {
-      let element = Event.findElement(event, this.selector);
+      var element = Event.findElement(event, this.selector);
       if (element) this.callback.call(this.element, event, element);
     }
   });
@@ -7688,8 +7688,8 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   /* Code for creating leak-free event responders is based on work by
    John-David Dalton. */
 
-  let docEl = document.documentElement;
-  let MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
+  var docEl = document.documentElement;
+  var MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
     'onmouseenter' in docEl && 'onmouseleave' in docEl;
 
   function isSimulatedMouseEnterLeaveEvent(eventName) {
@@ -7708,7 +7708,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     return function (event) {
       if (!Event.cache) return;
 
-      let element = Event.cache[uid].element;
+      var element = Event.cache[uid].element;
       Event.extend(event, element);
       handler.call(element, event);
     };
@@ -7716,8 +7716,8 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function createResponderForCustomEvent(uid, eventName, handler) {
     return function (event) {
-      let cache = Event.cache[uid];
-      let element = cache && cache.element;
+      var cache = Event.cache[uid];
+      var element = cache && cache.element;
 
       if (Object.isUndefined(event.eventName)) return false;
 
@@ -7730,10 +7730,10 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function createMouseEnterLeaveResponder(uid, eventName, handler) {
     return function (event) {
-      let element = Event.cache[uid].element;
+      var element = Event.cache[uid].element;
 
       Event.extend(event, element);
-      let parent = event.relatedTarget;
+      var parent = event.relatedTarget;
 
       while (parent && parent !== element) {
         try {
@@ -7756,7 +7756,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   /* Support for the DOMContentLoaded event is based on work by Dan Webb,
      Matthias Miller, Dean Edwards, John Resig, and Diego Perini. */
 
-  let TIMER;
+  var TIMER;
 
   function fireContentLoadedEvent() {
     if (document.loaded) return;
@@ -7807,13 +7807,13 @@ Element.addMethods();
 
 Hash.toQueryString = Object.toQueryString;
 
-let Toggle = { display: Element.toggle };
+var Toggle = { display: Element.toggle };
 
 Element.addMethods({
   childOf: Element.Methods.descendantOf
 });
 
-let Insertion = {
+var Insertion = {
   Before: function (element, content) {
     return Element.insert(element, { before: content });
   },
@@ -7831,11 +7831,11 @@ let Insertion = {
   }
 };
 
-let $continue = new Error(
+var $continue = new Error(
   '"throw $continue" is deprecated, use "return" instead'
 );
 
-let Position = {
+var Position = {
   includeScrollOffsets: false,
 
   prepare: function () {
@@ -7867,7 +7867,7 @@ let Position = {
   },
 
   withinIncludingScrolloffsets: function (element, x, y) {
-    let offsetcache = Element.cumulativeScrollOffset(element);
+    var offsetcache = Element.cumulativeScrollOffset(element);
 
     this.xcomp = x + offsetcache[0] - this.deltaX;
     this.ycomp = y + offsetcache[1] - this.deltaY;
@@ -7934,7 +7934,7 @@ if (!document.getElementsByClassName)
     instanceMethods.getElementsByClassName = Prototype.BrowserFeatures.XPath
       ? function (element, className) {
           className = className.toString().strip();
-          let cond = /\s/.test(className)
+          var cond = /\s/.test(className)
             ? $w(className).map(iter).join('')
             : iter(className);
           return cond
@@ -7943,14 +7943,14 @@ if (!document.getElementsByClassName)
         }
       : function (element, className) {
           className = className.toString().strip();
-          let elements = [],
+          var elements = [],
             classNames = /\s/.test(className) ? $w(className) : null;
           if (!classNames && !className) return elements;
 
-          let nodes = $(element).getElementsByTagName('*');
+          var nodes = $(element).getElementsByTagName('*');
           className = ' ' + className + ' ';
 
-          for (let i = 0, child, cn; (child = nodes[i]); i++) {
+          for (var i = 0, child, cn; (child = nodes[i]); i++) {
             if (
               child.className &&
               (cn = ' ' + child.className + ' ') &&
@@ -8039,11 +8039,11 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 
   Object.extend(Selector, {
     matchElements: function (elements, expression) {
-      let match = Prototype.Selector.match,
+      var match = Prototype.Selector.match,
         results = [];
 
-      for (let i = 0, length = elements.length; i < length; i++) {
-        let element = elements[i];
+      for (var i = 0, length = elements.length; i < length; i++) {
+        var element = elements[i];
         if (match(element, expression)) {
           results.push(Element.extend(element));
         }
@@ -8053,9 +8053,9 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 
     findElement: function (elements, expression, index) {
       index = index || 0;
-      let matchIndex = 0,
+      var matchIndex = 0,
         element;
-      for (let i = 0, length = elements.length; i < length; i++) {
+      for (var i = 0, length = elements.length; i < length; i++) {
         element = elements[i];
         if (
           Prototype.Selector.match(element, expression) &&
@@ -8067,7 +8067,7 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
     },
 
     findChildElements: function (element, expressions) {
-      let selector = expressions.toArray().join(', ');
+      var selector = expressions.toArray().join(', ');
       return Prototype.Selector.select(selector, element || document);
     }
   });
