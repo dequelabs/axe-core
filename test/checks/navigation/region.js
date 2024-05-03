@@ -240,7 +240,7 @@ describe('region', function () {
   });
 
   it('ignores native landmark elements with an overwriting role with a nested child', function () {
-    var checkArgs = checkSetup(`
+    let checkArgs = checkSetup(`
       <main id="target" role="none"><p>Content</p></main>
 			<div role="main">Content</div>
     `);
