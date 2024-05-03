@@ -1,10 +1,10 @@
 describe('duplicate-id', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport;
 
-  var checkContext = axe.testUtils.MockCheckContext();
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -13,7 +13,7 @@ describe('duplicate-id', function () {
 
   it('should return true if there is only one element with an ID', function () {
     fixture.innerHTML = '<div id="target"></div>';
-    var node = fixture.querySelector('#target');
+    let node = fixture.querySelector('#target');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
     );
@@ -23,7 +23,7 @@ describe('duplicate-id', function () {
 
   it('should return false if there are multiple elements with an ID', function () {
     fixture.innerHTML = '<div id="target"></div><div id="target"></div>';
-    var node = fixture.querySelector('#target');
+    let node = fixture.querySelector('#target');
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
     );
@@ -45,7 +45,7 @@ describe('duplicate-id', function () {
   it('should ignore empty ids', function () {
     fixture.innerHTML =
       '<div data-testelm="1" id=""></div><div data-testelm="2"  id=""></div>';
-    var node = fixture.querySelector('[data-testelm="1"]');
+    let node = fixture.querySelector('[data-testelm="1"]');
 
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
@@ -57,7 +57,7 @@ describe('duplicate-id', function () {
       '<form data-testelm="1" id="target"><label>mylabel' +
       '<input name="id">' +
       '</label></form>';
-    var node = fixture.querySelector('[data-testelm="1"]');
+    let node = fixture.querySelector('[data-testelm="1"]');
 
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
@@ -67,11 +67,11 @@ describe('duplicate-id', function () {
   (shadowSupport.v1 ? it : xit)(
     'should find duplicate IDs in the same shadow DOM',
     function () {
-      var div = document.createElement('div');
+      let div = document.createElement('div');
       div.id = 'target';
-      var shadow = div.attachShadow({ mode: 'open' });
+      let shadow = div.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<span id="target"></span><p id="target">text</p>';
-      var node = shadow.querySelector('span');
+      let node = shadow.querySelector('span');
       fixture.appendChild(div);
 
       assert.isFalse(
@@ -85,9 +85,9 @@ describe('duplicate-id', function () {
   (shadowSupport.v1 ? it : xit)(
     'should ignore duplicate IDs if they are in different document roots',
     function () {
-      var node = document.createElement('div');
+      let node = document.createElement('div');
       node.id = 'target';
-      var shadow = node.attachShadow({ mode: 'open' });
+      let shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<span id="target"></span>';
       fixture.appendChild(node);
 
@@ -101,11 +101,11 @@ describe('duplicate-id', function () {
   (shadowSupport.v1 ? it : xit)(
     'should ignore same IDs outside shadow trees',
     function () {
-      var div = document.createElement('div');
+      let div = document.createElement('div');
       div.id = 'target';
-      var shadow = div.attachShadow({ mode: 'open' });
+      let shadow = div.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<span id="target"></span>';
-      var node = shadow.querySelector('#target');
+      let node = shadow.querySelector('#target');
       fixture.appendChild(div);
 
       assert.isTrue(
@@ -118,10 +118,10 @@ describe('duplicate-id', function () {
   (shadowSupport.v1 ? it : xit)(
     'should compare slotted content with the light DOM',
     function () {
-      var node = document.createElement('div');
+      let node = document.createElement('div');
       node.id = 'target';
       node.innerHTML = '<p id="target">text</p>';
-      var shadow = node.attachShadow({ mode: 'open' });
+      let shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<span id="target"><slot></slot></span>';
       fixture.appendChild(node);
 

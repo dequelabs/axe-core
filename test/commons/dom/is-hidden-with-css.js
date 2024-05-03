@@ -1,14 +1,14 @@
 describe('dom.isHiddenWithCSS', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var isHiddenWithCSS = axe.commons.dom.isHiddenWithCSS;
-  var origComputedStyle = window.getComputedStyle;
-  var queryFixture = axe.testUtils.queryFixture;
+  let fixture = document.getElementById('fixture');
+  let shadowSupported = axe.testUtils.shadowSupport.v1;
+  let isHiddenWithCSS = axe.commons.dom.isHiddenWithCSS;
+  let origComputedStyle = window.getComputedStyle;
+  let queryFixture = axe.testUtils.queryFixture;
 
   function createContentSlotted(mainProps, targetProps) {
-    var group = document.createElement('div');
+    let group = document.createElement('div');
     group.innerHTML =
       '<main style="' +
       mainProps +
@@ -19,8 +19,8 @@ describe('dom.isHiddenWithCSS', function () {
   }
 
   function makeShadowTree(node, mainProps, targetProps) {
-    var root = node.attachShadow({ mode: 'open' });
-    var node = createContentSlotted(mainProps, targetProps);
+    let root = node.attachShadow({ mode: 'open' });
+    node = createContentSlotted(mainProps, targetProps);
     root.appendChild(node);
   }
 
@@ -33,7 +33,7 @@ describe('dom.isHiddenWithCSS', function () {
     window.getComputedStyle = function () {
       return null;
     };
-    var fakeNode = {
+    let fakeNode = {
       nodeType: Node.ELEMENT_NODE,
       nodeName: 'div'
     };
@@ -44,99 +44,99 @@ describe('dom.isHiddenWithCSS', function () {
 
   it('should return false on static-positioned, visible element', function () {
     fixture.innerHTML = '<div id="target">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return true on static-positioned, hidden element', function () {
     fixture.innerHTML =
       '<div id="target" style="display:none">I am not visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
   it('should return false on absolutely positioned elements that are on-screen', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; left: 10px; right: 10px">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false for off-screen and aria-hidden element', function () {
     fixture.innerHTML =
       '<button id="target" aria-hidden=“true” style=“position:absolute: top:-999em”>I am visible</button>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false on fixed position elements that are on-screen', function () {
     fixture.innerHTML =
       '<div id="target" style="position:fixed; bottom: 0; left: 0;">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false for off-screen absolutely positioned element', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; left: -9999px">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false for off-screen fixed positioned element', function () {
     fixture.innerHTML =
       '<div id="target" style="position: fixed; top: -9999px">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false on detached elements', function () {
-    var el = document.createElement('div');
+    let el = document.createElement('div');
     el.innerHTML = 'I am not visible because I am detached!';
-    var actual = isHiddenWithCSS(el);
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false on a document', function () {
-    var actual = isHiddenWithCSS(document);
+    let actual = isHiddenWithCSS(document);
     assert.isFalse(actual);
   });
 
   it('should return false if static-position but top/left is set', function () {
     fixture.innerHTML =
       '<div id="target" style="top: -9999px; left: -9999px; right: -9999px; bottom: -9999px;">I am visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false, and not be affected by `aria-hidden`', function () {
     fixture.innerHTML =
       '<div id="target" aria-hidden="true">I am visible with css (although hidden to screen readers)</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false for STYLE node', function () {
     fixture.innerHTML = "<style id='target'>body {font-size: 200%}</style>";
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
   it('should return false for SCRIPT node', function () {
     fixture.innerHTML =
       "<script id='target' type='text/javascript' src='temp.js'></script>";
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
@@ -148,8 +148,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<p id="target">I am not visible</p>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -160,8 +160,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<p id="target" style="display:block">I am not visible</p>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -172,8 +172,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<p id="target" style="display:block">I am visible</p>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
@@ -182,9 +182,9 @@ describe('dom.isHiddenWithCSS', function () {
     function () {
       fixture.innerHTML = '<div></div>';
       makeShadowTree(fixture.firstChild, 'display:none;', '');
-      var tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'p')[0];
-      var actual = isHiddenWithCSS(el.actualNode);
+      let tree = axe.utils.getFlattenedTree(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'p')[0];
+      let actual = isHiddenWithCSS(el.actualNode);
       assert.isTrue(actual);
     }
   );
@@ -193,8 +193,8 @@ describe('dom.isHiddenWithCSS', function () {
   it('should return true for element that has `visibility:hidden`', function () {
     fixture.innerHTML =
       '<div id="target" style="visibility: hidden;">I am not visible</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -205,8 +205,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target">I am visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
@@ -217,8 +217,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div style="visibility:visible" id="target">I am visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
@@ -229,8 +229,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target">I am not visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -239,9 +239,9 @@ describe('dom.isHiddenWithCSS', function () {
     function () {
       fixture.innerHTML = '<div></div>';
       makeShadowTree(fixture.firstChild, 'visibility:hidden', '');
-      var tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'p')[0];
-      var actual = isHiddenWithCSS(el.actualNode);
+      let tree = axe.utils.getFlattenedTree(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'p')[0];
+      let actual = isHiddenWithCSS(el.actualNode);
       assert.isTrue(actual);
     }
   );
@@ -255,9 +255,9 @@ describe('dom.isHiddenWithCSS', function () {
         'visibility:hidden',
         'visibility:visible'
       );
-      var tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'p')[0];
-      var actual = isHiddenWithCSS(el.actualNode);
+      let tree = axe.utils.getFlattenedTree(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'p')[0];
+      let actual = isHiddenWithCSS(el.actualNode);
       assert.isFalse(actual);
     }
   );
@@ -270,8 +270,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target">I am not visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -282,8 +282,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target">I am visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isFalse(actual);
   });
 
@@ -294,8 +294,8 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target" style="visibility:hidden">I am not visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
@@ -306,19 +306,19 @@ describe('dom.isHiddenWithCSS', function () {
       '<div id="target" style="visibility:visible">I am not visible</div>' +
       '</div>' +
       '</div>';
-    var el = document.getElementById('target');
-    var actual = isHiddenWithCSS(el);
+    let el = document.getElementById('target');
+    let actual = isHiddenWithCSS(el);
     assert.isTrue(actual);
   });
 
   describe('with virtual nodes', function () {
     it('returns false when virtual nodes are visible', function () {
-      var vNode = queryFixture('<div id="target"></div>');
+      let vNode = queryFixture('<div id="target"></div>');
       assert.isFalse(isHiddenWithCSS(vNode));
     });
 
     it('returns true when virtual nodes are hidden', function () {
-      var vNode = queryFixture('<div id="target" style="display:none"></div>');
+      let vNode = queryFixture('<div id="target" style="display:none"></div>');
       assert.isTrue(isHiddenWithCSS(vNode));
     });
   });

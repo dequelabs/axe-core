@@ -1,7 +1,7 @@
-var path = require('path');
+let path = require('path');
 
 // allow running only certain directories
-var testDirs = [
+let testDirs = [
   'core',
   'commons',
   'rule-matches',
@@ -10,13 +10,13 @@ var testDirs = [
   'integration',
   'virtual-rules'
 ];
-var testFiles = [];
-var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
-var args = process.argv.slice(2);
+let testFiles = [];
+let debugPort = 9765; // arbitrary, sync with .vscode/launch.json
+let args = process.argv.slice(2);
 
 args.forEach(function (arg) {
   // pattern: testDir=commons,core
-  var parts = arg.split('=');
+  let parts = arg.split('=');
   if (parts[0] === 'testDirs') {
     testDirs = parts[1].split(',');
   }
@@ -30,11 +30,11 @@ args.forEach(function (arg) {
   }
 });
 
-var testPaths = [];
+let testPaths = [];
 if (testFiles.length) {
   testPaths = testFiles.map(function (file) {
-    var basename = path.basename(file);
-    var extname = path.extname(file);
+    let basename = path.basename(file);
+    let extname = path.extname(file);
 
     // do not transform test files unless it is the integration/rule
     // html, in which case run the json test file
@@ -47,7 +47,7 @@ if (testFiles.length) {
     } else if (basename.includes('-matches.js')) {
       return path.join('test/rule-matches', basename);
     } else {
-      var filePath = file.replace('lib/', 'test/');
+      let filePath = file.replace('lib/', 'test/');
 
       if (file.includes('-evaluate.js')) {
         return filePath.replace('-evaluate.js', '.js');

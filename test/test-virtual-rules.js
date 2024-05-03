@@ -1,9 +1,9 @@
-var path = require('path');
-var assert = require('chai').assert;
-var glob = require('glob');
-var axe = require('../axe');
+let path = require('path');
+let assert = require('chai').assert;
+let glob = require('glob');
+let axe = require('../axe');
 
-var files = glob.sync(path.join(__dirname, 'integration/virtual-rules/*.js'));
+let files = glob.sync(path.join(__dirname, 'integration/virtual-rules/*.js'));
 
 before(function () {
   global.axe = axe;

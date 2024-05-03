@@ -1,5 +1,5 @@
 describe('matches.fromPrimative', function () {
-  var fromPrimative = axe.commons.matches.fromPrimative;
+  let fromPrimative = axe.commons.matches.fromPrimative;
 
   it('returns true when strictly equal', function () {
     assert.isTrue(fromPrimative('foo', 'foo'));

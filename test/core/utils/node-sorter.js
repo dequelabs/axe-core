@@ -5,7 +5,7 @@ describe('axe.utils.nodeSorter', function () {
     return document.getElementById(id);
   }
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   it('should exist', function () {
     assert.isFunction(axe.utils.nodeSorter);

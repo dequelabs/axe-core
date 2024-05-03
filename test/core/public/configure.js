@@ -2,9 +2,9 @@ describe('axe.configure', function () {
   'use strict';
   // var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   // var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
-  var fixture = document.getElementById('fixture');
-  var axeVersion = axe.version;
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  let fixture = document.getElementById('fixture');
+  let axeVersion = axe.version;
+  let ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -389,8 +389,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.equal(localeData.rules.greeting.help, 'hi');
       assert.equal(localeData.rules.greeting.description, 'hello');
@@ -416,8 +416,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.equal(localeData.rules.greeting.help, 'ABCDEFGHIKLMNOPQRSTVXYZ');
       assert.equal(localeData.rules.greeting.description, 'hello');
@@ -459,8 +459,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.isTrue(
         typeof localeData.checks.banana.messages.fail === 'function'
@@ -480,8 +480,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.isTrue(typeof localeData.checks.banana.messages.fail === 'string');
     });
@@ -522,8 +522,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
       assert.equal(localeData.failureSummaries.none.failureMessage, 'bar');
@@ -562,8 +562,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
       assert.equal(
@@ -598,8 +598,8 @@ describe('axe.configure', function () {
         }
       });
 
-      var audit = axe._audit;
-      var localeData = audit.data;
+      let audit = axe._audit;
+      let localeData = audit.data;
 
       assert.equal(
         localeData.failureSummaries.any.failureMessage(['1', '2', '3']),
@@ -727,7 +727,7 @@ describe('axe.configure', function () {
         }
       });
 
-      var banana = axe._audit.data.checks.banana;
+      let banana = axe._audit.data.checks.banana;
       assert.equal(banana.impact, 'potato');
       assert.equal(banana.foo, 'bar');
       assert.equal(banana.messages.pass, 'yay banana');
@@ -801,8 +801,8 @@ describe('axe.configure', function () {
           ]
         });
 
-        var audit = axe._audit;
-        var localeData = audit.data;
+        let audit = axe._audit;
+        let localeData = audit.data;
 
         assert.equal(localeData.rules.greeting.help, 'hi');
       });
@@ -822,8 +822,8 @@ describe('axe.configure', function () {
             }
           });
 
-          var greeting = axe._audit.data.rules.greeting;
-          var value = greeting.help({
+          let greeting = axe._audit.data.rules.greeting;
+          let value = greeting.help({
             data: 'bar'
           });
           assert.equal(value, 'foo: bar.');
@@ -995,7 +995,7 @@ describe('axe.configure', function () {
           }
         });
 
-        var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+        let ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
         assert.equal(ariaAttr.type, 'string');
       });
 
@@ -1021,7 +1021,7 @@ describe('axe.configure', function () {
           }
         });
 
-        var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+        let ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
         assert.equal(ariaAttr.type, 'mntoken');
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
@@ -1048,7 +1048,7 @@ describe('axe.configure', function () {
           }
         });
 
-        var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+        let ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
         assert.equal(ariaAttr.type, 'mntokens');
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
@@ -1075,7 +1075,7 @@ describe('axe.configure', function () {
           }
         });
 
-        var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+        let ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
         assert.deepEqual(ariaAttr.values, ['baz']);
       });
     });

@@ -4,7 +4,7 @@ describe('table.isDataCell', function () {
     return document.getElementById(id);
   }
 
-  var fixture = $id('fixture');
+  let fixture = $id('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -14,7 +14,7 @@ describe('table.isDataCell', function () {
     fixture.innerHTML =
       '<table>' + '<tr><th id="target">1</th></tr>' + '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     assert.isFalse(axe.commons.table.isDataCell(target));
   });
@@ -23,7 +23,7 @@ describe('table.isDataCell', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td id="target">1</td></tr>' + '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     assert.isTrue(axe.commons.table.isDataCell(target));
   });
@@ -32,7 +32,7 @@ describe('table.isDataCell', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td id="target"></td></tr>' + '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     assert.isFalse(axe.commons.table.isDataCell(target));
   });
@@ -45,9 +45,9 @@ describe('table.isDataCell', function () {
       '<tr><td id="target3" role="presentation">heading</td></tr>' +
       '</table>';
 
-    var target1 = $id('target1');
-    var target2 = $id('target2');
-    var target3 = $id('target3');
+    let target1 = $id('target1');
+    let target2 = $id('target2');
+    let target3 = $id('target3');
     assert.isFalse(axe.commons.table.isDataCell(target1));
     assert.isFalse(axe.commons.table.isDataCell(target2));
     assert.isFalse(axe.commons.table.isDataCell(target3));
@@ -60,8 +60,8 @@ describe('table.isDataCell', function () {
       '<tr><th id="target2" role="gridcell">heading</th></tr>' +
       '</table>';
 
-    var target1 = $id('target1');
-    var target2 = $id('target2');
+    let target1 = $id('target1');
+    let target2 = $id('target2');
     assert.isTrue(axe.commons.table.isDataCell(target1));
     assert.isTrue(axe.commons.table.isDataCell(target2));
   });
@@ -73,8 +73,8 @@ describe('table.isDataCell', function () {
       '<tr><th id="target2" role="foobar">heading</th></tr>' +
       '</table>';
 
-    var target1 = $id('target1');
-    var target2 = $id('target2');
+    let target1 = $id('target1');
+    let target2 = $id('target2');
     assert.isTrue(axe.commons.table.isDataCell(target1));
     assert.isFalse(axe.commons.table.isDataCell(target2));
   });
@@ -86,8 +86,8 @@ describe('table.isDataCell', function () {
       '<tr><th id="target2" role="section">heading</th></tr>' +
       '</table>';
 
-    var target1 = $id('target1');
-    var target2 = $id('target2');
+    let target1 = $id('target1');
+    let target2 = $id('target2');
     assert.isTrue(axe.commons.table.isDataCell(target1));
     assert.isFalse(axe.commons.table.isDataCell(target2));
   });

@@ -1,8 +1,8 @@
 describe('dom.getTextElementStack', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var getTextElementStack = axe.commons.dom.getTextElementStack;
+  let fixture = document.getElementById('fixture');
+  let getTextElementStack = axe.commons.dom.getTextElementStack;
 
   function mapToIDs(stack) {
     return stack
@@ -26,8 +26,8 @@ describe('dom.getTextElementStack', function () {
       '</div>' +
       '</main>';
     axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var stacks = getTextElementStack(target).map(mapToIDs);
+    let target = fixture.querySelector('#target');
+    let stacks = getTextElementStack(target).map(mapToIDs);
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
@@ -40,8 +40,8 @@ describe('dom.getTextElementStack', function () {
       '</div>' +
       '</main>';
     axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var stacks = getTextElementStack(target).map(mapToIDs);
+    let target = fixture.querySelector('#target');
+    let stacks = getTextElementStack(target).map(mapToIDs);
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
@@ -54,8 +54,8 @@ describe('dom.getTextElementStack', function () {
       '</div>' +
       '</main>';
     axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var stacks = getTextElementStack(target).map(mapToIDs);
+    let target = fixture.querySelector('#target');
+    let stacks = getTextElementStack(target).map(mapToIDs);
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
@@ -67,8 +67,8 @@ describe('dom.getTextElementStack', function () {
       '</span>' +
       '</pre>';
     axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var stacks = getTextElementStack(target).map(mapToIDs);
+    let target = fixture.querySelector('#target');
+    let stacks = getTextElementStack(target).map(mapToIDs);
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 
@@ -78,8 +78,8 @@ describe('dom.getTextElementStack', function () {
       '<p id="target" style="max-height: 80px; overflow: hidden; line-height: 20px; font-size: 13px;">The Chandni Chowk (Moonlight Square) is one of the oldest and busiest markets in Old Delhi, India. Chandni Chowk is located close to Old Delhi Railway Station. The Red Fort monument is located within the market. It was built in the 17th century by Mughal Emperor of India Shah Jahan and designed by his daughter Jahanara. The market was once divided by canals (now closed) to reflect moonlight and remains one of India\'s largest wholesale markets.</p>' +
       '</div>';
     axe.testUtils.flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-    var stacks = getTextElementStack(target).map(mapToIDs);
+    let target = fixture.querySelector('#target');
+    let stacks = getTextElementStack(target).map(mapToIDs);
     assert.deepEqual(stacks, [['target', '1', 'fixture']]);
   });
 });

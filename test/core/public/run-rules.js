@@ -1,9 +1,9 @@
 describe('runRules', function () {
   'use strict';
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  let ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
   function iframeReady(src, context, id, cb) {
-    var i = document.createElement('iframe');
+    let i = document.createElement('iframe');
     i.addEventListener('load', function () {
       cb();
     });
@@ -13,9 +13,9 @@ describe('runRules', function () {
   }
 
   function createFrames(url, callback) {
-    var frame,
+    let frame,
       num = 2;
-    var loaded = 0;
+    let loaded = 0;
 
     if (typeof url === 'function') {
       callback = url;
@@ -42,9 +42,9 @@ describe('runRules', function () {
     return frame;
   }
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
-  var isNotCalled;
+  let isNotCalled;
   beforeEach(function () {
     isNotCalled = function (err) {
       throw err || new Error('Reject should not be called');
@@ -77,7 +77,7 @@ describe('runRules', function () {
       messages: {}
     });
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.src = '../mock/frames/frame-frame.html';
 
     frame.addEventListener('load', function () {
@@ -116,14 +116,14 @@ describe('runRules', function () {
       messages: {}
     });
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       setTimeout(function () {
         axe._runRules(
           document,
           {},
           function (r) {
-            var nodes = r[0].passes.map(function (detail) {
+            let nodes = r[0].passes.map(function (detail) {
               return detail.node.selector;
             });
             try {
@@ -190,7 +190,7 @@ describe('runRules', function () {
       fixture,
       'context-test',
       function () {
-        var div = document.createElement('div');
+        let div = document.createElement('div');
         fixture.appendChild(div);
 
         axe._runRules(
@@ -373,7 +373,7 @@ describe('runRules', function () {
     fixture.innerHTML =
       '<div id="t1"><span></span></div><div id="t2"><em></em></div>';
 
-    var $test = {
+    let $test = {
       0: fixture.querySelector('#t1'),
       1: fixture.querySelector('#t2'),
       length: 2
@@ -413,7 +413,7 @@ describe('runRules', function () {
     fixture.innerHTML =
       '<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
 
-    var test = fixture.querySelectorAll('.foo');
+    let test = fixture.querySelectorAll('.foo');
     axe.run(test, function (err, results) {
       assert.isNull(err);
       assert.lengthOf(results.violations, 1);
@@ -761,7 +761,7 @@ describe('runRules', function () {
       messages: {}
     });
     fixture.innerHTML = '<div id="outer"></div>';
-    var outer = document.getElementById('outer');
+    let outer = document.getElementById('outer');
 
     iframeReady('../mock/frames/context.html', outer, 'target', function () {
       axe._runRules(
@@ -783,7 +783,7 @@ describe('runRules', function () {
   });
 
   it('should not call reject when the resolve throws', function (done) {
-    var rejectCalled = false;
+    let rejectCalled = false;
     axe._load({
       rules: [
         {
@@ -815,7 +815,7 @@ describe('runRules', function () {
       rejectCalled = true;
     }
 
-    var log = axe.log;
+    let log = axe.log;
     axe.log = function (e) {
       assert.equal(e.message, 'err');
       axe.log = log;
@@ -843,7 +843,7 @@ describe('runRules', function () {
       messages: {}
     });
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.src = '../mock/frames/frame-frame.html';
 
     frame.addEventListener('load', function () {
@@ -990,7 +990,7 @@ describe('runRules', function () {
       document,
       {},
       function resolve(out, cleanup) {
-        var called = false;
+        let called = false;
         axe._memoizedFns = [
           {
             clear: function () {

@@ -1,11 +1,11 @@
 describe('standards.getAriaRolesByType', function () {
-  var getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
+  let getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
 
   it('should return a list of role names by type', function () {
     // first remove all role types
-    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
-    var ariaRoles = {};
-    for (var i = 0; i < roleNames.length; i++) {
+    let roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    let ariaRoles = {};
+    for (let i = 0; i < roleNames.length; i++) {
       ariaRoles[roleNames[i]] = { type: 'off' };
     }
 
@@ -21,7 +21,7 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    let structureRoles = getAriaRolesByType('structure');
     assert.deepEqual(structureRoles, [
       'article',
       'blockquote',
@@ -41,7 +41,7 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    let structureRoles = getAriaRolesByType('structure');
     assert.include(structureRoles, 'myRole');
   });
 
@@ -56,7 +56,7 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    let structureRoles = getAriaRolesByType('structure');
     assert.notInclude(structureRoles, 'article');
   });
 });

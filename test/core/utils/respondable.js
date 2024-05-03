@@ -1,11 +1,11 @@
 describe('axe.utils.respondable', function () {
-  var fixture = document.querySelector('#fixture');
-  var respondable = axe.utils.respondable;
-  var noop = sinon.spy();
-  var frameWin;
+  let fixture = document.querySelector('#fixture');
+  let respondable = axe.utils.respondable;
+  let noop = sinon.spy();
+  let frameWin;
 
   beforeEach(function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
     frame.addEventListener('load', function () {
       frameWin = frame.contentWindow;
@@ -49,7 +49,7 @@ describe('axe.utils.respondable', function () {
   });
 
   it('should call the open function and pass the listener', function () {
-    var open = sinon.spy();
+    let open = sinon.spy();
     respondable.updateMessenger({
       open: open,
       post: noop
@@ -60,7 +60,7 @@ describe('axe.utils.respondable', function () {
   });
 
   it('should call previous close function', function () {
-    var close = sinon.spy();
+    let close = sinon.spy();
     respondable.updateMessenger({
       open: function () {
         return close;
@@ -77,7 +77,7 @@ describe('axe.utils.respondable', function () {
   });
 
   it('should use the post function when making a frame post', function () {
-    var post = sinon.spy();
+    let post = sinon.spy();
     respondable.updateMessenger({
       open: noop,
       post: post
@@ -88,8 +88,8 @@ describe('axe.utils.respondable', function () {
   });
 
   it('should pass the post function the correct parameters', function () {
-    var post = sinon.spy();
-    var callback = sinon.spy();
+    let post = sinon.spy();
+    let callback = sinon.spy();
 
     respondable.updateMessenger({
       open: noop,
@@ -111,8 +111,8 @@ describe('axe.utils.respondable', function () {
   });
 
   it('should work as a full integration', function () {
-    var listeners = {};
-    var listener = sinon.spy();
+    let listeners = {};
+    let listener = sinon.spy();
 
     respondable.updateMessenger({
       open: function () {

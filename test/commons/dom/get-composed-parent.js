@@ -1,9 +1,9 @@
 /* global xit */
 describe('dom.getComposedParent', function () {
   'use strict';
-  var getComposedParent = axe.commons.dom.getComposedParent;
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
+  let getComposedParent = axe.commons.dom.getComposedParent;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport.v1;
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -12,7 +12,7 @@ describe('dom.getComposedParent', function () {
   it('returns the parentNode normally', function () {
     fixture.innerHTML = '<div id="parent"><div id="target"></div></div>';
 
-    var actual = getComposedParent(document.getElementById('target'));
+    let actual = getComposedParent(document.getElementById('target'));
     assert.instanceOf(actual, Node);
     assert.equal(actual, document.getElementById('parent'));
   });
@@ -25,13 +25,13 @@ describe('dom.getComposedParent', function () {
     'skip the slot node for slotted content',
     function () {
       fixture.innerHTML = '<div id="shadow"><div id="target"></div></div>';
-      var shadowRoot = document
+      let shadowRoot = document
         .getElementById('shadow')
         .attachShadow({ mode: 'open' });
       shadowRoot.innerHTML =
         '<div id="grand-parent">' + '<slot id="parent"></slot>' + '</div>';
 
-      var actual = getComposedParent(fixture.querySelector('#target'));
+      let actual = getComposedParent(fixture.querySelector('#target'));
       assert.instanceOf(actual, Node);
       assert.equal(actual, shadowRoot.querySelector('#grand-parent'));
     }
@@ -42,7 +42,7 @@ describe('dom.getComposedParent', function () {
     function () {
       fixture.innerHTML =
         '<div id="shadow"><div id="target" slot="bar"></div></div>';
-      var shadowRoot = document
+      let shadowRoot = document
         .getElementById('shadow')
         .attachShadow({ mode: 'open' });
       shadowRoot.innerHTML =
@@ -51,7 +51,7 @@ describe('dom.getComposedParent', function () {
         '<div id="parent"><slot name="bar"></slot></div>' +
         '</div>';
 
-      var actual = getComposedParent(fixture.querySelector('#target'));
+      let actual = getComposedParent(fixture.querySelector('#target'));
       assert.instanceOf(actual, Node);
       assert.equal(actual, shadowRoot.querySelector('#parent'));
     }
@@ -61,13 +61,13 @@ describe('dom.getComposedParent', function () {
     'returns elements within a shadow tree',
     function () {
       fixture.innerHTML = '<div id="shadow"> content </div>';
-      var shadowRoot = document
+      let shadowRoot = document
         .getElementById('shadow')
         .attachShadow({ mode: 'open' });
       shadowRoot.innerHTML =
         '<div id="parent">' + '<slot id="target"></slot>' + '</div>';
 
-      var actual = getComposedParent(shadowRoot.querySelector('#target'));
+      let actual = getComposedParent(shadowRoot.querySelector('#target'));
       assert.instanceOf(actual, Node);
       assert.equal(actual, shadowRoot.querySelector('#parent'));
     }
@@ -77,12 +77,12 @@ describe('dom.getComposedParent', function () {
     'returns the host when it reaches the shadow root',
     function () {
       fixture.innerHTML = '<div id="parent"> content </div>';
-      var shadowRoot = document
+      let shadowRoot = document
         .getElementById('parent')
         .attachShadow({ mode: 'open' });
       shadowRoot.innerHTML = '<div id="target"> <slot></slot> </div>';
 
-      var actual = getComposedParent(shadowRoot.querySelector('#target'));
+      let actual = getComposedParent(shadowRoot.querySelector('#target'));
       assert.instanceOf(actual, Node);
       assert.equal(actual, fixture.querySelector('#parent'));
     }

@@ -1,7 +1,7 @@
 /*eslint-env node */
 'use strict';
-var clone = require('clone');
-var buildManual = require('../build-manual');
+let clone = require('clone');
+let buildManual = require('../build-manual');
 
 module.exports = function (grunt) {
   function mergeMessages(newMessages, oldMessages) {
@@ -10,8 +10,8 @@ module.exports = function (grunt) {
         return;
       }
 
-      var newValue = newMessages[key];
-      var oldValue = oldMessages[key];
+      let newValue = newMessages[key];
+      let oldValue = oldMessages[key];
 
       if (typeof newValue === 'object') {
         // the message format might be changed, ignore old message
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
     'add-locale',
     'Task for localizing messages in rules and checks',
     function () {
-      var options = this.options({
+      let options = this.options({
         rules: ['lib/rules/**/*.json'],
         checks: ['lib/checks/**/*.json'],
         misc: ['lib/misc/**/*.json'],
@@ -42,10 +42,10 @@ module.exports = function (grunt) {
       });
 
       this.files.forEach(function (file) {
-        var commons = file.src[0];
+        let commons = file.src[0];
 
         buildManual(grunt, options, commons, function (result) {
-          var locale = {
+          let locale = {
             lang: options.lang,
             rules: result.rules.reduce(function (out, rule) {
               out[rule.id] = rule.metadata;
@@ -69,9 +69,9 @@ module.exports = function (grunt) {
           };
 
           // update locale file if exists
-          var localeFile = './locales/' + options.lang + '.json';
+          let localeFile = './locales/' + options.lang + '.json';
           if (grunt.file.exists(localeFile)) {
-            var oldMessages = grunt.file.readJSON(localeFile);
+            let oldMessages = grunt.file.readJSON(localeFile);
 
             // mergeMessages mutates out
             mergeMessages(locale, oldMessages);

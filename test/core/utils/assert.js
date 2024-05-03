@@ -25,7 +25,7 @@ describe('axe.utils.assert', function () {
   });
 
   it('sets second argument as the error message', function () {
-    var message = 'Something went wrong';
+    let message = 'Something went wrong';
     try {
       axe.utils.assert(false, message);
     } catch (e) {

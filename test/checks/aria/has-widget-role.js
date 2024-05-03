@@ -1,9 +1,9 @@
 describe('has-widget-role', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var node;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let fixture = document.getElementById('fixture');
+  let node;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     node.innerHTML = '';

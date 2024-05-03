@@ -1,7 +1,7 @@
 describe('aria.getOwnedVirtual', function () {
   'use strict';
-  var aria = axe.commons.aria;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let aria = axe.commons.aria;
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   it('returns a list of children in order', function () {
     fixtureSetup(
@@ -11,8 +11,8 @@ describe('aria.getOwnedVirtual', function () {
         '<h3>heading 3</h3>' +
         '</div>'
     );
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -28,8 +28,8 @@ describe('aria.getOwnedVirtual', function () {
         '<h4 id="hdr4">heading 4</h4>' +
         '<h3 id="hdr3">heading 3</h3>'
     );
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 4);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -45,8 +45,8 @@ describe('aria.getOwnedVirtual', function () {
         '<h3>heading 3</h3>' +
         '</div>'
     );
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -61,8 +61,8 @@ describe('aria.getOwnedVirtual', function () {
         '<h3>heading 3</h3>' +
         '</div>'
     );
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -79,8 +79,8 @@ describe('aria.getOwnedVirtual', function () {
         ' \t\n' +
         '</div>'
     );
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
 
     assert.lengthOf(owned, 5);
     assert.equal(owned[0].actualNode.textContent, 'text 1');
@@ -92,8 +92,8 @@ describe('aria.getOwnedVirtual', function () {
 
   it('returns an empty array if there are no owned elements', function () {
     fixtureSetup('<div id="target" aria-owns="nonexisting reference"></div>');
-    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    var owned = aria.getOwnedVirtual(target);
+    let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    let owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 0);
   });
 });

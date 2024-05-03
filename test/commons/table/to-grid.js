@@ -4,7 +4,7 @@ describe('table.toGrid', function () {
     return document.getElementById(id);
   }
 
-  var fixture = $id('fixture');
+  let fixture = $id('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -17,7 +17,7 @@ describe('table.toGrid', function () {
       '<tr><td id="t3">2</td><td id="t4">ok</td></tr>' +
       '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
       [$id('t1'), $id('t2')],
@@ -32,7 +32,7 @@ describe('table.toGrid', function () {
       '<tr><td id="t3" colspan="3">2</td></tr>' +
       '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
       [$id('t1'), $id('t1'), $id('t2')],
@@ -47,7 +47,7 @@ describe('table.toGrid', function () {
       '<tr><td id="t4">4</td><td id="t5">5</td></tr>' +
       '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
       [$id('t1'), $id('t2'), $id('t3')],
@@ -62,7 +62,7 @@ describe('table.toGrid', function () {
       '<tr><td id="t3">ok</td></tr>' +
       '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
       [$id('t1'), $id('t1'), $id('t2')],
@@ -77,7 +77,7 @@ describe('table.toGrid', function () {
       '<tr><td id="t4">4</td><td id="t5">5</td></tr>' +
       '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
       [$id('t1'), $id('t2'), $id('t3')],
@@ -89,7 +89,7 @@ describe('table.toGrid', function () {
     fixture.innerHTML =
       '<table>' + '<tr></tr>' + '<tr><td id="t1">ok</td></tr>' + '</table>';
 
-    var target = fixture.querySelector('table');
+    let target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [[], [$id('t1')]]);
   });

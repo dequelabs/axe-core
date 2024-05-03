@@ -1,7 +1,7 @@
 describe('aria.getRoleType', function () {
   'use strict';
-  var queryFixture = axe.testUtils.queryFixture;
-  var getRoleType = axe.commons.aria.getRoleType;
+  let queryFixture = axe.testUtils.queryFixture;
+  let getRoleType = axe.commons.aria.getRoleType;
 
   beforeEach(function () {
     axe._load({});
@@ -37,12 +37,12 @@ describe('aria.getRoleType', function () {
   });
 
   it('returns the type from the role of a virtual node', function () {
-    var vNode = queryFixture('<span id="target" role="cats"></span>');
+    let vNode = queryFixture('<span id="target" role="cats"></span>');
     assert.equal(getRoleType(vNode), 'stuff');
   });
 
   it('returns the type from the role of a DOM node', function () {
-    var domNode = queryFixture(
+    let domNode = queryFixture(
       '<span id="target" role="cats"></span>'
     ).actualNode;
     assert.equal(getRoleType(domNode), 'stuff');

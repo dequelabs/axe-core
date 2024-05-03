@@ -2,7 +2,7 @@ describe('helpers.incompleteFallbackMessage', function () {
   'use strict';
 
   it('returns a non-empty string by default', function () {
-    var summary = helpers.incompleteFallbackMessage();
+    let summary = helpers.incompleteFallbackMessage();
     assert.typeOf(summary, 'string');
     assert.notEqual(summary, '');
   });
@@ -15,7 +15,7 @@ describe('helpers.incompleteFallbackMessage', function () {
         incompleteFallbackMessage: 'Dogs are the best'
       }
     });
-    var summary = helpers.incompleteFallbackMessage();
+    let summary = helpers.incompleteFallbackMessage();
     assert.equal(summary, 'Dogs are the best');
   });
 
@@ -30,7 +30,7 @@ describe('helpers.incompleteFallbackMessage', function () {
       }
     });
 
-    var summary = helpers.incompleteFallbackMessage();
+    let summary = helpers.incompleteFallbackMessage();
     assert.equal(summary, 'Dogs are the best');
   });
 

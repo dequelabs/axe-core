@@ -1,8 +1,8 @@
 describe('SerialVirtualNode', function () {
-  var SerialVirtualNode = axe.SerialVirtualNode;
+  let SerialVirtualNode = axe.SerialVirtualNode;
 
   it('extends AbstractVirtualNode', function () {
-    var vNode = new SerialVirtualNode({
+    let vNode = new SerialVirtualNode({
       nodeName: 'div'
     });
     assert.instanceOf(vNode, axe.AbstractVirtualNode);
@@ -10,23 +10,23 @@ describe('SerialVirtualNode', function () {
 
   describe('props', function () {
     it('assigns any properties to .props', function () {
-      var props = {
+      let props = {
         nodeType: 1,
         nodeName: 'div',
         someType: 'bar',
         somethingElse: 'baz'
       };
-      var vNode = new SerialVirtualNode(props);
+      let vNode = new SerialVirtualNode(props);
       assert.deepEqual(vNode.props, props);
     });
 
     it('returns a frozen object', function () {
-      var vNode = new SerialVirtualNode({ nodeName: 'div' });
+      let vNode = new SerialVirtualNode({ nodeName: 'div' });
       assert.isTrue(Object.isFrozen(vNode.props), 'Expect object to be frozen');
     });
 
     it('takes 1 as its nodeType', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeType: 1,
         nodeName: 'div'
       });
@@ -34,7 +34,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('takes 3 as its nodeType', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeType: 3,
         nodeName: '#text'
       });
@@ -42,7 +42,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('has a default nodeType of 1', function () {
-      var vNode = new SerialVirtualNode({ nodeName: 'div' });
+      let vNode = new SerialVirtualNode({ nodeName: 'div' });
       assert.equal(vNode.props.nodeType, 1);
     });
 
@@ -71,7 +71,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts nodeNames to lower case', function () {
-      var htmlNodes = [
+      let htmlNodes = [
         'DIV',
         'SPAN',
         'INPUT',
@@ -82,36 +82,36 @@ describe('SerialVirtualNode', function () {
         'Foo'
       ];
       htmlNodes.forEach(function (nodeName) {
-        var vNode = new SerialVirtualNode({ nodeName: nodeName });
+        let vNode = new SerialVirtualNode({ nodeName: nodeName });
         assert.equal(vNode.props.nodeName, nodeName.toLowerCase());
       });
     });
 
     it('defaults to the correct nodeType for certain nodeNames', function () {
-      var vNode1 = new SerialVirtualNode({ nodeName: 'DIV' });
+      let vNode1 = new SerialVirtualNode({ nodeName: 'DIV' });
       assert.equal(vNode1.props.nodeType, 1);
-      var vNode2 = new SerialVirtualNode({ nodeName: '#cdata-section' });
+      let vNode2 = new SerialVirtualNode({ nodeName: '#cdata-section' });
       assert.equal(vNode2.props.nodeType, 2);
-      var vNode3 = new SerialVirtualNode({ nodeName: '#text' });
+      let vNode3 = new SerialVirtualNode({ nodeName: '#text' });
       assert.equal(vNode3.props.nodeType, 3);
-      var vNode8 = new SerialVirtualNode({ nodeName: '#comment' });
+      let vNode8 = new SerialVirtualNode({ nodeName: '#comment' });
       assert.equal(vNode8.props.nodeType, 8);
-      var vNode9 = new SerialVirtualNode({ nodeName: '#document' });
+      let vNode9 = new SerialVirtualNode({ nodeName: '#document' });
       assert.equal(vNode9.props.nodeType, 9);
-      var vNode11 = new SerialVirtualNode({ nodeName: '#document-fragment' });
+      let vNode11 = new SerialVirtualNode({ nodeName: '#document-fragment' });
       assert.equal(vNode11.props.nodeType, 11);
     });
 
     it('defaults to the correct nodeName for certain nodeTypes', function () {
-      var vNode2 = new SerialVirtualNode({ nodeType: 2 });
+      let vNode2 = new SerialVirtualNode({ nodeType: 2 });
       assert.equal(vNode2.props.nodeName, '#cdata-section');
-      var vNode3 = new SerialVirtualNode({ nodeType: 3 });
+      let vNode3 = new SerialVirtualNode({ nodeType: 3 });
       assert.equal(vNode3.props.nodeName, '#text');
-      var vNode8 = new SerialVirtualNode({ nodeType: 8 });
+      let vNode8 = new SerialVirtualNode({ nodeType: 8 });
       assert.equal(vNode8.props.nodeName, '#comment');
-      var vNode9 = new SerialVirtualNode({ nodeType: 9 });
+      let vNode9 = new SerialVirtualNode({ nodeType: 9 });
       assert.equal(vNode9.props.nodeName, '#document');
-      var vNode11 = new SerialVirtualNode({ nodeType: 11 });
+      let vNode11 = new SerialVirtualNode({ nodeType: 11 });
       assert.equal(vNode11.props.nodeName, '#document-fragment');
     });
 
@@ -125,7 +125,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('ignores the `attributes` property', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           foo: 'foo',
@@ -137,9 +137,9 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts type prop to lower case', function () {
-      var types = ['text', 'COLOR', 'Month', 'uRL'];
+      let types = ['text', 'COLOR', 'Month', 'uRL'];
       types.forEach(function (type) {
-        var vNode = new SerialVirtualNode({
+        let vNode = new SerialVirtualNode({
           nodeName: 'input',
           type: type
         });
@@ -148,9 +148,9 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts type attribute to lower case', function () {
-      var types = ['text', 'COLOR', 'Month', 'uRL'];
+      let types = ['text', 'COLOR', 'Month', 'uRL'];
       types.forEach(function (type) {
-        var vNode = new SerialVirtualNode({
+        let vNode = new SerialVirtualNode({
           nodeName: 'input',
           attributes: {
             type: type
@@ -161,14 +161,14 @@ describe('SerialVirtualNode', function () {
     });
 
     it('defaults type prop to "text"', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'input'
       });
       assert.equal(vNode.props.type, 'text');
     });
 
     it('default type prop to "text" if type is invalid', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'input',
         attributes: {
           type: 'woohoo'
@@ -178,7 +178,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('uses the type property over the type attribute', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'input',
         type: 'month',
         attributes: {
@@ -189,7 +189,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('reflects checkbox properties', () => {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'input',
         type: 'checkbox',
         checked: true,
@@ -202,7 +202,7 @@ describe('SerialVirtualNode', function () {
 
   describe('attr', function () {
     it('returns a string value for the attribute', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           foo: 'foo',
@@ -218,7 +218,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('returns null if the attribute is null', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { foo: null }
       });
@@ -226,7 +226,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('returns null if the attribute is not set', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div'
       });
       assert.isNull(vNode.attr('foo'));
@@ -245,7 +245,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts `className` to `class`', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           className: 'foo bar baz'
@@ -255,7 +255,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts `htmlFor` to `for`', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           htmlFor: 'foo'
@@ -267,7 +267,7 @@ describe('SerialVirtualNode', function () {
 
   describe('hasAttr', function () {
     it('returns true if the attribute has a value', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           foo: '',
@@ -281,7 +281,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('returns true if the attribute is null', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { foo: null }
       });
@@ -289,7 +289,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('returns false if the attribute is undefined', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { foo: undefined }
       });
@@ -298,11 +298,11 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts `htmlFor` to `for`', function () {
-      var nodeWithoutFor = new SerialVirtualNode({
+      let nodeWithoutFor = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {}
       });
-      var nodeWithFor = new SerialVirtualNode({
+      let nodeWithFor = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { htmlFor: 'foo' }
       });
@@ -312,11 +312,11 @@ describe('SerialVirtualNode', function () {
     });
 
     it('converts `className` to `class`', function () {
-      var nodeWithoutClass = new SerialVirtualNode({
+      let nodeWithoutClass = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {}
       });
-      var nodeWithClass = new SerialVirtualNode({
+      let nodeWithClass = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { className: 'foo bar baz' }
       });
@@ -328,7 +328,7 @@ describe('SerialVirtualNode', function () {
 
   describe('attrNames', function () {
     it('should return a list of attribute names', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: { foo: 'bar' }
       });
@@ -337,7 +337,7 @@ describe('SerialVirtualNode', function () {
     });
 
     it('should return an empty array if there are no attributes', function () {
-      var vNode = new SerialVirtualNode({
+      let vNode = new SerialVirtualNode({
         nodeName: 'div'
       });
       assert.deepEqual(vNode.attrNames, []);

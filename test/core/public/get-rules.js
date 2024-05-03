@@ -1,6 +1,6 @@
 describe('axe.getRules', function () {
   'use strict';
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  let ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
   beforeEach(function () {
     axe._load({
@@ -40,7 +40,7 @@ describe('axe.getRules', function () {
   });
 
   it('should return rules', function () {
-    var retValue = axe.getRules(['tag1']);
+    let retValue = axe.getRules(['tag1']);
     assert.isArray(retValue);
     assert.lengthOf(retValue, 2);
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
@@ -83,13 +83,13 @@ describe('axe.getRules', function () {
   });
 
   it('should not return nothing', function () {
-    var retValue = axe.getRules(['bob']);
+    let retValue = axe.getRules(['bob']);
     assert.isArray(retValue);
     assert.lengthOf(retValue, 0);
   });
 
   it('should return all rules if given no tags - undefined', function () {
-    var retValue = axe.getRules();
+    let retValue = axe.getRules();
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
     assert.equal(retValue[0].description, 'some interesting information');
     assert.equal(retValue[0].help, 'halp');
@@ -115,7 +115,7 @@ describe('axe.getRules', function () {
   });
 
   it('should return all rules if given empty array', function () {
-    var retValue = axe.getRules([]);
+    let retValue = axe.getRules([]);
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
     assert.equal(retValue[0].description, 'some interesting information');
     assert.equal(retValue[0].help, 'halp');

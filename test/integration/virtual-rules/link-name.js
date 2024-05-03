@@ -1,6 +1,6 @@
 describe('link-name virtual-rule', function () {
   it('should pass for aria-label', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -8,7 +8,7 @@ describe('link-name virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -16,7 +16,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should incomplete for aria-labelledby', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -24,7 +24,7 @@ describe('link-name virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -32,7 +32,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should pass for title', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -41,7 +41,7 @@ describe('link-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -49,14 +49,14 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should incomplete when aria-label and children are missing', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html'
       }
     });
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -64,7 +64,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should fail when aria-label contains only whitespace', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -73,7 +73,7 @@ describe('link-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -81,7 +81,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should fail when aria-label is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -90,7 +90,7 @@ describe('link-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -98,7 +98,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should incomplete if anchor is still focusable and missing children', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -106,7 +106,7 @@ describe('link-name virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -114,7 +114,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should fail if anchor is still focusable and no children', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -123,7 +123,7 @@ describe('link-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -131,7 +131,7 @@ describe('link-name virtual-rule', function () {
   });
 
   it('should fail when title is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         href: '/foo.html',
@@ -140,7 +140,7 @@ describe('link-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('link-name', node);
+    let results = axe.runVirtualRule('link-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);

@@ -1,7 +1,7 @@
 describe('aria.implicitNodes', function () {
   'use strict';
 
-  var orig;
+  let orig;
   beforeEach(function () {
     orig = axe.commons.aria.lookupTable.role;
   });
@@ -21,7 +21,7 @@ describe('aria.implicitNodes', function () {
 
   it('should return null if there are no implicit roles', function () {
     axe.commons.aria.lookupTable.role = {};
-    var result = axe.commons.aria.implicitNodes('cats');
+    let result = axe.commons.aria.implicitNodes('cats');
 
     assert.isNull(result);
   });

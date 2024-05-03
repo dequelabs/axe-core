@@ -41,7 +41,7 @@ describe('axe.utils.isValidLang', function () {
     });
 
     it('should include valid langs', function () {
-      var langs = axe.utils.validLangs();
+      let langs = axe.utils.validLangs();
       assert.isTrue(langs.indexOf('aaa') !== -1);
       assert.isTrue(langs.indexOf('aa') !== -1);
       assert.isTrue(langs.indexOf('en') !== -1);

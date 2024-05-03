@@ -1,11 +1,11 @@
 // this file is purposefully written without mocha and in es5 syntax in order
 // to be compatible with node 4+
 
-var axe = require('../../');
-var assert = require('assert');
-var spawn = require('child_process').spawn;
-var fs = require('fs');
-var path = require('path');
+let axe = require('../../');
+let assert = require('assert');
+let spawn = require('child_process').spawn;
+let fs = require('fs');
+let path = require('path');
 
 initJsdom(function (err, window) {
   assert.equal(err, null);
@@ -33,7 +33,7 @@ initJsdom(function (err, window) {
  */
 function initJsdom(callback) {
   try {
-    var nodeToJsdomMatrix = {
+    let nodeToJsdomMatrix = {
       4: '9.12.0', // last jsdom version that supported this node version
       6: '11.12.0',
       8: '15.2.1',
@@ -43,12 +43,12 @@ function initJsdom(callback) {
       16: '22.1.0'
     };
 
-    var majorNodeVersion = process.versions.node.split('.')[0];
-    var jsdomVersion = nodeToJsdomMatrix[majorNodeVersion] || 'latest';
+    let majorNodeVersion = process.versions.node.split('.')[0];
+    let jsdomVersion = nodeToJsdomMatrix[majorNodeVersion] || 'latest';
 
     console.log('node version detected as: v' + majorNodeVersion);
     console.log('installing jsdom@' + jsdomVersion);
-    var child = spawn(
+    let child = spawn(
       'npm',
       ['install', 'jsdom@' + jsdomVersion, '--no-save'],
       {
@@ -65,8 +65,8 @@ function initJsdom(callback) {
     });
     child.on('close', function () {
       console.log('installed');
-      var jsdom = require('jsdom');
-      var domStr = fs.readFileSync(
+      let jsdom = require('jsdom');
+      let domStr = fs.readFileSync(
         path.join('test', 'integration', 'full', 'all-rules', 'all-rules.html'),
         'utf8'
       );
@@ -83,7 +83,7 @@ function initJsdom(callback) {
       }
       // jsdom 11+
       else {
-        var dom = new jsdom.JSDOM(domStr);
+        let dom = new jsdom.JSDOM(domStr);
         callback(null, dom.window);
       }
     });

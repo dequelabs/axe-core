@@ -1,7 +1,7 @@
 describe('table.isDataTable', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -15,7 +15,7 @@ describe('table.isDataTable', function () {
       '<tbody><tr><td>One</td><td>Two</td></tr></tbody>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -27,7 +27,7 @@ describe('table.isDataTable', function () {
       '<tbody><tr><td>One</td><td>Two</td></tr></tbody>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -41,7 +41,7 @@ describe('table.isDataTable', function () {
       '</table>' +
       '</div>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -49,7 +49,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a role of grid', function () {
     fixture.innerHTML = '<table role="grid"></table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -57,7 +57,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a role of treegrid', function () {
     fixture.innerHTML = '<table role="treegrid"></table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -65,7 +65,7 @@ describe('table.isDataTable', function () {
   it('should be true if the element has a role of table', function () {
     fixture.innerHTML = '<div role="table"></div>';
 
-    var node = fixture.querySelector('[role="table"]');
+    let node = fixture.querySelector('[role="table"]');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -74,56 +74,56 @@ describe('table.isDataTable', function () {
     it('application', function () {
       fixture.innerHTML = '<table role="application"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('banner', function () {
       fixture.innerHTML = '<table role="banner"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('complementary', function () {
       fixture.innerHTML = '<table role="complementary"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('contentinfo', function () {
       fixture.innerHTML = '<table role="contentinfo"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('form', function () {
       fixture.innerHTML = '<table role="form"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('main', function () {
       fixture.innerHTML = '<table role="main"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('navigation', function () {
       fixture.innerHTML = '<table role="navigation"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
     it('search', function () {
       fixture.innerHTML = '<table role="search"></table>';
 
-      var node = fixture.querySelector('table');
+      let node = fixture.querySelector('table');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.isTrue(axe.commons.table.isDataTable(node));
     });
@@ -136,7 +136,7 @@ describe('table.isDataTable', function () {
       '<tbody><tr><td>One</td><td>Two</td></tr></tbody>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -144,7 +144,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a summary attribute', function () {
     fixture.innerHTML = '<table summary="Hello">' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -152,7 +152,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a caption element', function () {
     fixture.innerHTML = '<table>' + '<caption>Hello</caption>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -160,7 +160,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a col element', function () {
     fixture.innerHTML = '<table>' + '<col>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -168,7 +168,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a colgroup element', function () {
     fixture.innerHTML = '<table>' + '<colgroup></colgroup>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -176,7 +176,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a thead element', function () {
     fixture.innerHTML = '<table>' + '<thead></thead>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -184,7 +184,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a tfoot element', function () {
     fixture.innerHTML = '<table>' + '<tfoot></tfoot>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -192,7 +192,7 @@ describe('table.isDataTable', function () {
   it('should be true if the table has a th element', function () {
     fixture.innerHTML = '<table>' + '<tr><th></th></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -201,7 +201,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td role="rowheader"></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -210,7 +210,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td role="columnheader"></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -219,7 +219,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td headers="yes"></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -228,7 +228,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td scope="col"></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -237,7 +237,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td abbr="yes"></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -246,7 +246,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td><div><abbr>ok</abbr></div></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
 
@@ -271,7 +271,7 @@ describe('table.isDataTable', function () {
       '<table><tr><td></td></tr></table>' +
       '</td></tr></table>';
 
-    var node = fixture.querySelector('#out');
+    let node = fixture.querySelector('#out');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -280,7 +280,7 @@ describe('table.isDataTable', function () {
     fixture.innerHTML =
       '<table>' + '<tr><td></td></tr>' + '<tr><td></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -288,7 +288,7 @@ describe('table.isDataTable', function () {
   it('should be false if it has only one row', function () {
     fixture.innerHTML = '<table>' + '<tr><td></td><td></td></tr>' + '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -300,7 +300,7 @@ describe('table.isDataTable', function () {
       '<tr><td></td><td></td><td></td><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -312,7 +312,7 @@ describe('table.isDataTable', function () {
       '<tr><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -325,7 +325,7 @@ describe('table.isDataTable', function () {
       '<tr><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -341,7 +341,7 @@ describe('table.isDataTable', function () {
       '<tr><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -351,7 +351,7 @@ describe('table.isDataTable', function () {
       new Array(21).join('<tr><td></td><td></td><td></td></tr>') +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });
@@ -361,7 +361,7 @@ describe('table.isDataTable', function () {
       new Array(3).join('<tr><td></td><td></td><td></td></tr>') +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -372,7 +372,7 @@ describe('table.isDataTable', function () {
       new Array(4).join('<tr><td></td><td></td><td></td></tr>') +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -384,7 +384,7 @@ describe('table.isDataTable', function () {
       '<tr><td><iframe src="javascript: void 0;"></iframe></td><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -396,7 +396,7 @@ describe('table.isDataTable', function () {
       '<tr><td><object></object></td><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -408,7 +408,7 @@ describe('table.isDataTable', function () {
       '<tr><td><embed></td><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -421,7 +421,7 @@ describe('table.isDataTable', function () {
       '<tr><td><applet></applet></td><td></td><td></td></tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isFalse(axe.commons.table.isDataTable(node));
   });
@@ -432,7 +432,7 @@ describe('table.isDataTable', function () {
       new Array(4).join('<tr><td></td><td></td><td></td><td></td></tr>') +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isTrue(axe.commons.table.isDataTable(node));
   });

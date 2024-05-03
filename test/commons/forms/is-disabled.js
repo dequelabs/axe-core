@@ -1,9 +1,9 @@
 describe('forms.isDisabled', function () {
   'use strict';
-  var isDisabled = axe.commons.forms.isDisabled;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
+  let isDisabled = axe.commons.forms.isDisabled;
+  let fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport;
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -12,28 +12,28 @@ describe('forms.isDisabled', function () {
   describe('with disabled attr', function () {
     it('returns false when not set', function () {
       fixtureSetup('<input type="text" />');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
 
       assert.isFalse(isDisabled(node));
     });
 
     it('returns true for an element that can be disabled', function () {
       fixtureSetup('<input type="text" disabled />');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
 
       assert.isTrue(isDisabled(node));
     });
 
     it('returns false for an element that can not be disabled', function () {
       fixtureSetup('<span disabled>Hello</span>');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isFalse(isDisabled(node));
     });
 
     it('returns true when disabled has a value', function () {
       fixtureSetup('<input type="text" disabled="yes" />');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
 
       assert.isTrue(isDisabled(node));
     });
@@ -42,7 +42,7 @@ describe('forms.isDisabled', function () {
       fixtureSetup(
         '<fieldset disabled>' + '<span>Hello world</span>' + '</fieldset>'
       );
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isTrue(isDisabled(node));
     });
@@ -51,7 +51,7 @@ describe('forms.isDisabled', function () {
       fixtureSetup(
         '<button disabled>' + '<span>Hello world</span>' + '</button>'
       );
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isTrue(isDisabled(node));
     });
@@ -60,13 +60,13 @@ describe('forms.isDisabled', function () {
       'returns true for an ancestor in the flat tree that can be disabled',
       function () {
         fixture.innerHTML = '<fieldset disabled><section></section</fieldset>';
-        var shadowRoot = fixture
+        let shadowRoot = fixture
           .querySelector('section')
           .attachShadow({ mode: 'open' });
         shadowRoot.innerHTML = '<input type="text" />';
         axe._tree = axe.utils.getFlattenedTree(fixture);
 
-        var node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+        let node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
         assert.isTrue(isDisabled(node));
       }
     );
@@ -75,14 +75,14 @@ describe('forms.isDisabled', function () {
   describe('with aria-disabled attr', function () {
     it('returns true for an element with aria-disabled=true', function () {
       fixtureSetup('<span aria-disabled="true">hello</span>');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isTrue(isDisabled(node));
     });
 
     it('returns false for an element when aria-disabled is not true', function () {
       fixtureSetup('<span aria-disabled="not true">hello</span>');
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isFalse(isDisabled(node));
     });
@@ -93,7 +93,7 @@ describe('forms.isDisabled', function () {
           '<div aria-disabled="true"><span>hello</span></div>' +
           '</section>'
       );
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isTrue(isDisabled(node));
     });
@@ -104,7 +104,7 @@ describe('forms.isDisabled', function () {
           '<div aria-disabled="false"><span>hello</span></div>' +
           '</section>'
       );
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isFalse(isDisabled(node));
     });
@@ -117,7 +117,7 @@ describe('forms.isDisabled', function () {
           '<span>hello</span>' +
           '</fieldset>'
       );
-      var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      let node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
       assert.isTrue(isDisabled(node));
     });

@@ -7,12 +7,12 @@ describe('axe.utils.queue', function () {
 
   describe('defer', function () {
     it('should be a function', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.isFunction(q.defer);
     });
 
     it('should push onto the "axe.utils.queue"', function (done) {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
 
       q.defer(function (resolve) {
         setTimeout(function () {
@@ -33,7 +33,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('should execute resolve immediately if defered functions are already complete', function () {
-      var q = axe.utils.queue(),
+      let q = axe.utils.queue(),
         complete = false;
 
       q.defer(function (resolve) {
@@ -53,7 +53,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('is chainable', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.equal(
         q,
         q.defer(function () {})
@@ -62,7 +62,7 @@ describe('axe.utils.queue', function () {
 
     it('throws if then was already called', function () {
       assert.throws(function () {
-        var q = axe.utils.queue();
+        let q = axe.utils.queue();
         q.defer(function (resolve) {
           resolve();
         });
@@ -76,8 +76,8 @@ describe('axe.utils.queue', function () {
     });
 
     it('can await another queue', function (done) {
-      var q1 = axe.utils.queue();
-      var q2 = axe.utils.queue();
+      let q1 = axe.utils.queue();
+      let q2 = axe.utils.queue();
 
       q1.defer(function (resolve) {
         setTimeout(function () {
@@ -96,13 +96,13 @@ describe('axe.utils.queue', function () {
 
   describe('then', function () {
     it('should be a function', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.isFunction(q.then);
     });
 
     it('should execute immediately if axe.utils.queue is complete', function () {
-      var q = axe.utils.queue();
-      var result = false;
+      let q = axe.utils.queue();
+      let result = false;
 
       q.then(function () {
         result = true;
@@ -112,7 +112,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('is chainable', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.equal(
         q,
         q.then(function () {})
@@ -121,7 +121,7 @@ describe('axe.utils.queue', function () {
 
     it('throws when called more than once', function () {
       assert.throws(function () {
-        var q = axe.utils.queue();
+        let q = axe.utils.queue();
         q.defer(function () {});
         q.then(function () {});
         q.then(function () {});
@@ -131,12 +131,12 @@ describe('axe.utils.queue', function () {
 
   describe('abort', function () {
     it('should be a function', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.isFunction(q.abort);
     });
 
     it('stops `then` from being called', function (done) {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
 
       q.defer(function (resolve) {
         setTimeout(function () {
@@ -150,7 +150,7 @@ describe('axe.utils.queue', function () {
       q.catch(function () {});
 
       setTimeout(function () {
-        var data = q.abort();
+        let data = q.abort();
         assert.ok(true, 'Queue aborted');
         assert.isFunction(data[0]);
         done();
@@ -158,7 +158,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('sends a message to `catch`', function (done) {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       q.defer(function () {});
 
       q.then(function () {});
@@ -173,7 +173,7 @@ describe('axe.utils.queue', function () {
 
   describe('catch', function () {
     it('is called when defer throws an error', function (done) {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       q.defer(function () {
         throw 'error! 1';
       });
@@ -185,8 +185,8 @@ describe('axe.utils.queue', function () {
     });
 
     it('can catch error synchronously', function (done) {
-      var q = axe.utils.queue();
-      var sync = true;
+      let q = axe.utils.queue();
+      let sync = true;
       q.defer(function () {
         throw 'error! 2';
       });
@@ -201,8 +201,8 @@ describe('axe.utils.queue', function () {
 
     it('is called when the reject method is called', function (done) {
       /*eslint no-unused-vars: 0*/
-      var q = axe.utils.queue();
-      var errorsCaught = 0;
+      let q = axe.utils.queue();
+      let errorsCaught = 0;
 
       q.defer(function (resolve, reject) {
         setTimeout(function () {
@@ -218,7 +218,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('will not run `then` if an error is thrown', function (done) {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       q.defer(function () {
         throw 'error! 3';
       });
@@ -233,8 +233,8 @@ describe('axe.utils.queue', function () {
     });
 
     it('does not continue other tasks if an error occurs', function (done) {
-      var q = axe.utils.queue();
-      var aborted;
+      let q = axe.utils.queue();
+      let aborted;
       q.defer(function () {
         throw 'error! 3';
       });
@@ -255,7 +255,7 @@ describe('axe.utils.queue', function () {
     });
 
     it('is chainable', function () {
-      var q = axe.utils.queue();
+      let q = axe.utils.queue();
       assert.equal(
         q,
         q.catch(function () {})
@@ -264,7 +264,7 @@ describe('axe.utils.queue', function () {
 
     it('throws when called more than once', function () {
       assert.throws(function () {
-        var q = axe.utils.queue();
+        let q = axe.utils.queue();
         q.defer(function () {});
         q.catch(function () {});
         q.catch(function () {});

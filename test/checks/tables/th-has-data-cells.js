@@ -1,9 +1,9 @@
 describe('th-has-data-cells', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport.v1;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -18,7 +18,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -34,7 +34,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -50,7 +50,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -66,7 +66,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -81,7 +81,7 @@ describe('th-has-data-cells', function () {
       '  <tr> <th></th> <th></th> </tr>' +
       '</table>';
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -102,7 +102,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -118,7 +118,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -134,7 +134,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -149,7 +149,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -171,7 +171,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')
@@ -181,7 +181,7 @@ describe('th-has-data-cells', function () {
 
   (shadowSupport ? it : xit)('recognizes shadow tree content', function () {
     fixture.innerHTML = '<div id="shadow"> <b>data</b> </div>';
-    var shadow = fixture
+    let shadow = fixture
       .querySelector('#shadow')
       .attachShadow({ mode: 'open' });
     shadow.innerHTML =
@@ -191,7 +191,7 @@ describe('th-has-data-cells', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
+    let node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')

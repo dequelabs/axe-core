@@ -1,6 +1,6 @@
 describe('role-img-alt virtual-rule', function () {
   it('should pass for aria-label', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -8,7 +8,7 @@ describe('role-img-alt virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -16,7 +16,7 @@ describe('role-img-alt virtual-rule', function () {
   });
 
   it('should incomplete for aria-labelledby', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -24,7 +24,7 @@ describe('role-img-alt virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -32,7 +32,7 @@ describe('role-img-alt virtual-rule', function () {
   });
 
   it('should pass for title', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -44,7 +44,7 @@ describe('role-img-alt virtual-rule', function () {
     // in accessible name calculation
     node.children = [];
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -52,7 +52,7 @@ describe('role-img-alt virtual-rule', function () {
   });
 
   it('should fail when aria-label contains only whitespace', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -61,7 +61,7 @@ describe('role-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -69,7 +69,7 @@ describe('role-img-alt virtual-rule', function () {
   });
 
   it('should fail when aria-label is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -78,7 +78,7 @@ describe('role-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -86,7 +86,7 @@ describe('role-img-alt virtual-rule', function () {
   });
 
   it('should fail when title is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'img',
@@ -95,7 +95,7 @@ describe('role-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('role-img-alt', node);
+    let results = axe.runVirtualRule('role-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);

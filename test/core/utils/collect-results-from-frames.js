@@ -1,13 +1,13 @@
 describe('axe.utils.collectResultsFromFrames', function () {
   'use strict';
 
-  var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
-  var fixture = document.getElementById('fixture');
-  var noop = function () {};
-  var origSetTimeout = window.setTimeout;
+  let Context = axe._thisWillBeDeletedDoNotUse.base.Context;
+  let fixture = document.getElementById('fixture');
+  let noop = function () {};
+  let origSetTimeout = window.setTimeout;
 
   function contextSetup(scope) {
-    var context = new Context(scope);
+    let context = new Context(scope);
     axe._tree = context.flatTree;
     axe._selectorData = axe.utils.getSelectorData(context.flatTree);
 
@@ -24,7 +24,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
   it('should timeout the ping request after 500ms', function (done) {
     this.timeout = 1000;
 
-    var timeoutSet = false;
+    let timeoutSet = false;
     window.setTimeout = function (fn, to) {
       if (to === 500) {
         timeoutSet = true;
@@ -36,9 +36,9 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+      let context = contextSetup(document);
 
       axe.utils.collectResultsFromFrames(
         context,
@@ -61,7 +61,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
   it('should override the ping timeout with `options.pingWaitTime`, if provided', function (done) {
     this.timeout = 1000;
 
-    var timeoutSet = false;
+    let timeoutSet = false;
     window.setTimeout = function (fn, to) {
       if (to === 90000) {
         timeoutSet = true;
@@ -73,10 +73,10 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
-      var params = { pingWaitTime: 90000 };
+      let context = contextSetup(document);
+      let params = { pingWaitTime: 90000 };
 
       axe.utils.collectResultsFromFrames(
         context,
@@ -108,9 +108,9 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+      let context = contextSetup(document);
       axe.utils.collectResultsFromFrames(
         context,
         {},
@@ -142,10 +142,10 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
-      var params = { frameWaitTime: 90000 };
+      let context = contextSetup(document);
+      let params = { frameWaitTime: 90000 };
 
       axe.utils.collectResultsFromFrames(
         context,
@@ -185,9 +185,9 @@ describe('axe.utils.collectResultsFromFrames', function () {
       messages: {}
     });
 
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+      let context = contextSetup(document);
 
       axe.utils.collectResultsFromFrames(
         context,
@@ -210,9 +210,9 @@ describe('axe.utils.collectResultsFromFrames', function () {
   });
 
   it('returns errors send from the frame', function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+      let context = contextSetup(document);
       axe.utils.collectResultsFromFrames(
         context,
         {},

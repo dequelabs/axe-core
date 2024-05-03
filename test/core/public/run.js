@@ -1,9 +1,9 @@
 describe('axe.run', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var noop = function () {};
-  var origRunRules = axe._runRules;
+  let fixture = document.getElementById('fixture');
+  let noop = function () {};
+  let origRunRules = axe._runRules;
 
   beforeEach(function () {
     axe._load({
@@ -35,7 +35,7 @@ describe('axe.run', function () {
 
   it('takes context, options and callback as parameters', function (done) {
     fixture.innerHTML = '<div id="t1"></div>';
-    var options = {
+    let options = {
       runOnly: {
         type: 'rule',
         values: ['test']
@@ -66,7 +66,7 @@ describe('axe.run', function () {
   });
 
   it('does not mutate the options object', function (done) {
-    var options = {};
+    let options = {};
     axe.run(options, function () {
       assert.deepEqual(options, {});
       done();
@@ -163,12 +163,12 @@ describe('axe.run', function () {
     });
 
     it('does not run the callback twice if it throws', function (done) {
-      var calls = 0;
+      let calls = 0;
       axe._runRules = function (ctxt, opt, resolve) {
         resolve([], noop);
       };
 
-      var log = axe.log;
+      let log = axe.log;
       axe.log = function (e) {
         assert.equal(e.message, 'err');
         axe.log = log;
@@ -187,7 +187,7 @@ describe('axe.run', function () {
     });
 
     it('is called after cleanup', function (done) {
-      var isClean = false;
+      let isClean = false;
       axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         // Check that cleanup is called before the callback is executed
@@ -227,7 +227,7 @@ describe('axe.run', function () {
 
   describe('promise result', function () {
     /*eslint indent: 0*/
-    var promiseIt = window.Promise ? it : it.skip;
+    let promiseIt = window.Promise ? it : it.skip;
 
     promiseIt('returns an error to catch if axe fails', function (done) {
       axe._runRules = function (ctxt, opt, resolve, reject) {
@@ -235,7 +235,7 @@ describe('axe.run', function () {
         reject('I surrender!');
       };
 
-      var p = axe.run({ reporter: 'raw' });
+      let p = axe.run({ reporter: 'raw' });
       p.then(noop).catch(function (err) {
         assert.equal(err, 'I surrender!');
         done();
@@ -250,7 +250,7 @@ describe('axe.run', function () {
         resolve('World party', noop);
       };
 
-      var p = axe.run({ reporter: 'raw' });
+      let p = axe.run({ reporter: 'raw' });
       p.then(function (result) {
         assert.equal(result, 'World party');
         done();
@@ -282,7 +282,7 @@ describe('axe.run', function () {
     });
 
     promiseIt('is called after cleanup', function (done) {
-      var isClean = false;
+      let isClean = false;
       axe._runRules = function (ctxt, opt, resolve) {
         axe._runRules = origRunRules;
         // Check that cleanup is called before the callback is executed
@@ -439,9 +439,9 @@ describe('axe.run', function () {
 describe('axe.run iframes', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var origRunRules = axe._runRules;
-  var captureError = axe.testUtils.captureError;
+  let fixture = document.getElementById('fixture');
+  let origRunRules = axe._runRules;
+  let captureError = axe.testUtils.captureError;
 
   beforeEach(function () {
     fixture.innerHTML = '<div id="target">Target in top frame</div>';
@@ -471,14 +471,14 @@ describe('axe.run iframes', function () {
   });
 
   it('includes iframes by default', function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         {},
         captureError(function (err, result) {
           assert.equal(result.violations.length, 1);
-          var violation = result.violations[0];
+          let violation = result.violations[0];
           assert.equal(
             violation.nodes.length,
             2,
@@ -506,14 +506,14 @@ describe('axe.run iframes', function () {
   });
 
   it('excludes iframes if iframes is false', function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
         { iframes: false },
         captureError(function (err, result) {
           assert.equal(result.violations.length, 1);
-          var violation = result.violations[0];
+          let violation = result.violations[0];
           assert.equal(violation.nodes.length, 1, 'only top frame');
           assert.equal(violation.nodes[0].target.length, 1);
           assert.equal(violation.nodes[0].target[0], '#target');
@@ -527,7 +527,7 @@ describe('axe.run iframes', function () {
   });
 
   it('ignores unexpected messages from non-axe iframes', function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       axe.run(
         '#fixture',
@@ -545,7 +545,7 @@ describe('axe.run iframes', function () {
   });
 
   it('ignores unexpected messages from axe iframes', function (done) {
-    var frame = document.createElement('iframe');
+    let frame = document.createElement('iframe');
 
     frame.addEventListener('load', function () {
       axe.run(

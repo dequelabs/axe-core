@@ -1,17 +1,17 @@
 describe('forms.isNativeSelect', function () {
   'use strict';
-  var isNativeSelect = axe.commons.forms.isNativeSelect;
-  var queryFixture = axe.testUtils.queryFixture;
+  let isNativeSelect = axe.commons.forms.isNativeSelect;
+  let queryFixture = axe.testUtils.queryFixture;
 
   it('returns true for a select element', function () {
-    var node = queryFixture('<select id="target"></select>');
+    let node = queryFixture('<select id="target"></select>');
     assert.isTrue(isNativeSelect(node));
   });
 
   it('returns false for non-select elements', function () {
-    var nonSelectElements = ['a', 'h1', 'div', 'span', 'main'];
+    let nonSelectElements = ['a', 'h1', 'div', 'span', 'main'];
     nonSelectElements.forEach(function (nodeName) {
-      var node = queryFixture(
+      let node = queryFixture(
         '<' + nodeName + ' id="target"></' + nodeName + '>'
       );
       assert.isFalse(

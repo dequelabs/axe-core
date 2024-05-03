@@ -1,8 +1,8 @@
 describe('table.isRowHeader', function () {
   'use strict';
 
-  var table = axe.commons.table;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let table = axe.commons.table;
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   beforeEach(function () {
     fixtureSetup(
@@ -24,22 +24,22 @@ describe('table.isRowHeader', function () {
   });
 
   it('returns false if not a row header', function () {
-    var cell = document.querySelector('#cell1');
+    let cell = document.querySelector('#cell1');
     assert.isFalse(table.isRowHeader(cell));
   });
 
   it('returns true if scope="auto"', function () {
-    var cell = document.querySelector('#rh1');
+    let cell = document.querySelector('#rh1');
     assert.isTrue(table.isRowHeader(cell));
   });
 
   it('returns false if scope="col"', function () {
-    var cell = document.querySelector('#ch1');
+    let cell = document.querySelector('#ch1');
     assert.isFalse(table.isRowHeader(cell));
   });
 
   it('returns true if scope="row"', function () {
-    var cell = document.querySelector('#rh2');
+    let cell = document.querySelector('#rh2');
     assert.isTrue(table.isRowHeader(cell));
   });
 });

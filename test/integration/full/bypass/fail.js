@@ -1,8 +1,8 @@
 describe('bypass fail test', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
-    var mocha = document.getElementById('mocha'),
+    let mocha = document.getElementById('mocha'),
       html = mocha.innerHTML;
     mocha.innerHTML = '';
     axe.testUtils.awaitNestedLoad(function () {

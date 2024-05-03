@@ -1,8 +1,8 @@
 describe('dom.shadowElementsFromPoint', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
+  let fixture = document.getElementById('fixture');
+  let shadowSupported = axe.testUtils.shadowSupport.v1;
 
   afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
@@ -13,27 +13,27 @@ describe('dom.shadowElementsFromPoint', function () {
     function () {
       fixture.innerHTML =
         '<div id="container" style="background-color:#000;position:relative;"></div>';
-      var container = fixture.querySelector('#container');
-      var shadow1 = container.attachShadow({ mode: 'open' });
+      let container = fixture.querySelector('#container');
+      let shadow1 = container.attachShadow({ mode: 'open' });
       shadow1.innerHTML =
         '<p style="background-color:red;">Text</p>' +
         '<div id="shadowHost2" style="position:absolute;"></div>';
-      var paragraph = shadow1.querySelector('p');
-      var container2 = shadow1.querySelector('#shadowHost2');
-      var shadow2 = container2.attachShadow({ mode: 'open' });
+      let paragraph = shadow1.querySelector('p');
+      let container2 = shadow1.querySelector('#shadowHost2');
+      let shadow2 = container2.attachShadow({ mode: 'open' });
       shadow2.innerHTML = '<span>Text</span>';
-      var shadowSpan = shadow2.querySelector('span');
+      let shadowSpan = shadow2.querySelector('span');
       axe.testUtils.flatTreeSetup(fixture);
 
       container.scrollIntoView();
 
-      var spanCoords = shadowSpan.getBoundingClientRect();
-      var result = axe.commons.dom.shadowElementsFromPoint(
+      let spanCoords = shadowSpan.getBoundingClientRect();
+      let result = axe.commons.dom.shadowElementsFromPoint(
         spanCoords.x,
         spanCoords.y
       );
-      var pCoords = paragraph.getBoundingClientRect();
-      var result2 = axe.commons.dom.shadowElementsFromPoint(
+      let pCoords = paragraph.getBoundingClientRect();
+      let result2 = axe.commons.dom.shadowElementsFromPoint(
         pCoords.x,
         pCoords.y
       );
@@ -46,12 +46,12 @@ describe('dom.shadowElementsFromPoint', function () {
   );
 
   it('does not throw when elementsFromPoints returns null', function () {
-    var mockDocument = {
+    let mockDocument = {
       elementsFromPoint: function () {
         return null;
       }
     };
-    var out;
+    let out;
     assert.doesNotThrow(function () {
       out = axe.commons.dom.shadowElementsFromPoint(10, 10, mockDocument);
     });

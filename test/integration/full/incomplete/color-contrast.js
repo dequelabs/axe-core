@@ -1,6 +1,6 @@
 describe('contrast cantTell test', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       axe.run(
@@ -33,14 +33,14 @@ describe('contrast cantTell test', function () {
 
     describe('indicating specific reasons', function () {
       it('works for image nodes', function () {
-        var resultNodes = results.incomplete[0].nodes;
+        let resultNodes = results.incomplete[0].nodes;
         resultNodes[0].any.forEach(function (check) {
           assert.match(check.message, /image node/);
         });
       });
 
       it('works for background gradients', function () {
-        var resultNodes = results.incomplete[0].nodes;
+        let resultNodes = results.incomplete[0].nodes;
         resultNodes[1].any.forEach(function (check) {
           assert.match(check.message, /background gradient/);
         });

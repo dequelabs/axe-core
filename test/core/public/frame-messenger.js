@@ -1,5 +1,5 @@
 describe('frameMessenger', function () {
-  var stub;
+  let stub;
 
   after(function () {
     stub.restore();

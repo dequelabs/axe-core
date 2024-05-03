@@ -1,7 +1,7 @@
 describe('landmark-is-unique-after', function () {
   'use strict';
 
-  var checkContext = axe.testUtils.MockCheckContext();
+  let checkContext = axe.testUtils.MockCheckContext();
   function createResult(result, data) {
     return {
       result: result,
@@ -27,7 +27,7 @@ describe('landmark-is-unique-after', function () {
   });
 
   it('should update duplicate landmarks with failed result', function () {
-    var result = checks['landmark-is-unique'].after([
+    let result = checks['landmark-is-unique'].after([
       createResultWithSameRelatedNodes(true, {
         role: 'some role',
         accessibleText: 'some accessibleText'
@@ -46,7 +46,7 @@ describe('landmark-is-unique-after', function () {
       })
     ]);
 
-    var expectedResult = [
+    let expectedResult = [
       createResultWithProvidedRelatedNodes(
         false,
         {

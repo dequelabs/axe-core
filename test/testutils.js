@@ -2,8 +2,8 @@
 
 // these are global to the entire test suite so need to be declared at the global
 // level (old architecture that should not be relied on in any new code)
-var checks;
-var commons;
+let checks;
+let commons;
 
 (() => {
   // Let the user know they need to disable their axe/attest extension before running the tests.

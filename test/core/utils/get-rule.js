@@ -13,7 +13,7 @@ describe('axe.utils.getRule', function () {
   });
 
   it('should return the rule by the id', function () {
-    var rule = axe.utils.getRule('rule1');
+    let rule = axe.utils.getRule('rule1');
     assert.isTrue(rule.id === 'rule1');
   });
 

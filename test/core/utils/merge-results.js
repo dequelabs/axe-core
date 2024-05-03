@@ -1,9 +1,9 @@
 describe('axe.utils.mergeResults', function () {
   'use strict';
-  var queryFixture = axe.testUtils.queryFixture;
+  let queryFixture = axe.testUtils.queryFixture;
 
   it('should normalize empty results', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       { results: [] },
       { results: [{ id: 'a', result: 'b' }] }
     ]);
@@ -16,14 +16,14 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('merges frame content, including all selector types', function () {
-    var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
-    var node = {
+    let iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
+    let node = {
       selector: ['#foo'],
       xpath: ['html/#foo'],
       ancestry: ['html > div'],
       nodeIndexes: [123]
     };
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         frameElement: iframe,
         results: [
@@ -39,7 +39,7 @@ describe('axe.utils.mergeResults', function () {
     assert.lengthOf(result, 1);
     assert.lengthOf(result[0].nodes, 1);
 
-    var node = result[0].nodes[0].node;
+    node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
     assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
@@ -50,15 +50,15 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('merges frame specs', function () {
-    var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
-    var frameSpec = new axe.utils.DqElement(iframe).toJSON();
-    var node = {
+    let iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
+    let frameSpec = new axe.utils.DqElement(iframe).toJSON();
+    let node = {
       selector: ['#foo'],
       xpath: ['html/#foo'],
       ancestry: ['html > div'],
       nodeIndexes: [123]
     };
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         frameSpec: frameSpec,
         results: [
@@ -74,7 +74,7 @@ describe('axe.utils.mergeResults', function () {
     assert.lengthOf(result, 1);
     assert.lengthOf(result[0].nodes, 1);
 
-    var node = result[0].nodes[0].node;
+    node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
     assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
@@ -85,7 +85,7 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('sorts results from iframes into their correct DOM position', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         results: [
           {
@@ -142,14 +142,14 @@ describe('axe.utils.mergeResults', function () {
       }
     ]);
 
-    var ids = result[0].nodes.map(function (el) {
+    let ids = result[0].nodes.map(function (el) {
       return el.node.selector.join(' >> ');
     });
     assert.deepEqual(ids, ['h1', 'iframe1 >> h2', 'iframe1 >> h3', 'h4']);
   });
 
   it('sorts nested iframes', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         results: [
           {
@@ -207,7 +207,7 @@ describe('axe.utils.mergeResults', function () {
       }
     ]);
 
-    var ids = result[0].nodes.map(function (el) {
+    let ids = result[0].nodes.map(function (el) {
       return el.node.selector.join(' >> ');
     });
     assert.deepEqual(ids, [
@@ -220,7 +220,7 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('sorts results even if nodeIndexes are empty', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         results: [
           {
@@ -282,7 +282,7 @@ describe('axe.utils.mergeResults', function () {
       }
     ]);
 
-    var ids = result[0].nodes.map(function (el) {
+    let ids = result[0].nodes.map(function (el) {
       return el.node.selector.join(' >> ');
     });
     // Order of "nill" varies in IE
@@ -297,7 +297,7 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('sorts results even if nodeIndexes are undefined', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         results: [
           {
@@ -356,7 +356,7 @@ describe('axe.utils.mergeResults', function () {
       }
     ]);
 
-    var ids = result[0].nodes.map(function (el) {
+    let ids = result[0].nodes.map(function (el) {
       return el.node.selector.join(' >> ');
     });
     // Order of "nill" varies in IE
@@ -371,7 +371,7 @@ describe('axe.utils.mergeResults', function () {
   });
 
   it('sorts nodes all placed on the same result', function () {
-    var result = axe.utils.mergeResults([
+    let result = axe.utils.mergeResults([
       {
         results: [
           {
@@ -408,7 +408,7 @@ describe('axe.utils.mergeResults', function () {
       }
     ]);
 
-    var ids = result[0].nodes.map(function (el) {
+    let ids = result[0].nodes.map(function (el) {
       return el.node.selector.join(' >> ');
     });
 

@@ -53,6 +53,7 @@ module.exports = {
     'no-new-func': 0,
     'no-new-wrappers': 0,
     'no-shadow': 2,
+    'no-var': 'error',
     'no-restricted-syntax': [
       'error',
       {

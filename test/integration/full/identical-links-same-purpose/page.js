@@ -1,7 +1,7 @@
 describe('identical-links-same-purpose test', function () {
   'use strict';
 
-  var config = {
+  let config = {
     runOnly: {
       type: 'rule',
       values: ['identical-links-same-purpose']

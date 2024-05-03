@@ -1,7 +1,7 @@
 describe('color-contrast code highlighting test', function () {
   'use strict';
 
-  var results;
+  let results;
   function run(done) {
     axe.run(
       '#fixture',

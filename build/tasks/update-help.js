@@ -6,16 +6,16 @@ module.exports = function (grunt) {
     'update-help',
     'Task for updating Deque University helpUrls based on rule JSON files',
     function () {
-      var options = this.options({
+      let options = this.options({
         version: '1.0.0'
       });
-      var v = options.version.split('.');
+      let v = options.version.split('.');
       v.pop();
-      var baseUrl =
+      let baseUrl =
         'https://dequeuniversity.com/rules/axe/' + v.join('.') + '/';
       this.files.forEach(function (f) {
         f.src.forEach(function (filepath) {
-          var config = grunt.file.readJSON(filepath);
+          let config = grunt.file.readJSON(filepath);
           config.metadata.helpUrl = baseUrl + config.id;
           grunt.file.write(filepath, JSON.stringify(config, null, '  '));
         });

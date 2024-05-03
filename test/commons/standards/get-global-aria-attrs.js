@@ -1,5 +1,5 @@
 describe('standards.getGlobalAriaAttrs', function () {
-  var getGlobalAriaAttrs = axe.commons.standards.getGlobalAriaAttrs;
+  let getGlobalAriaAttrs = axe.commons.standards.getGlobalAriaAttrs;
 
   before(function () {
     axe._load({});
@@ -11,7 +11,7 @@ describe('standards.getGlobalAriaAttrs', function () {
 
   it('should return global attrs', function () {
     // Source: https://www.w3.org/TR/wai-aria-1.1/#global_states
-    var globalAttrs = getGlobalAriaAttrs();
+    let globalAttrs = getGlobalAriaAttrs();
     assert.deepEqual(globalAttrs, [
       'aria-atomic',
       'aria-braillelabel',
@@ -51,7 +51,7 @@ describe('standards.getGlobalAriaAttrs', function () {
       }
     });
 
-    var globalAttrs = getGlobalAriaAttrs();
+    let globalAttrs = getGlobalAriaAttrs();
     assert.include(globalAttrs, 'myAttr');
   });
 
@@ -66,7 +66,7 @@ describe('standards.getGlobalAriaAttrs', function () {
       }
     });
 
-    var globalAttrs = getGlobalAriaAttrs();
+    let globalAttrs = getGlobalAriaAttrs();
     assert.notInclude(globalAttrs, 'aria-atomic');
   });
 });

@@ -1,10 +1,10 @@
 describe('bypass iframe test fail', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       // Stop messing with my tests Mocha!
-      var heading = document.querySelector('#mocha h1');
+      let heading = document.querySelector('#mocha h1');
       if (heading) {
         heading.outerHTML = '<div><b>bypass iframe test fail</b></div>';
       }

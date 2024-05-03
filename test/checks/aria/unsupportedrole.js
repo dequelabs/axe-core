@@ -1,9 +1,9 @@
 describe('unsupportedrole', function () {
   'use strict';
 
-  var checkContext = axe.testUtils.MockCheckContext();
-  var checkSetup = axe.testUtils.checkSetup;
-  var check = checks.unsupportedrole;
+  let checkContext = axe.testUtils.MockCheckContext();
+  let checkSetup = axe.testUtils.checkSetup;
+  let check = checks.unsupportedrole;
   afterEach(function () {
     checkContext.reset();
     axe.reset();
@@ -21,7 +21,7 @@ describe('unsupportedrole', function () {
       }
     });
 
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" role="mccheddarton">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -29,17 +29,19 @@ describe('unsupportedrole', function () {
   });
 
   it('should return false if applied to a supported role', function () {
-    var params = checkSetup('<div id="target" role="alert">Contents</div>');
+    let params;
+
+    params = checkSetup('<div id="target" role="alert">Contents</div>');
     assert.isFalse(check.evaluate.apply(checkContext, params));
     assert.isNull(checkContext._data);
 
-    var params = checkSetup('<button id="target">Contents</button>');
+    params = checkSetup('<button id="target">Contents</button>');
     assert.isFalse(check.evaluate.apply(checkContext, params));
     assert.isNull(checkContext._data);
   });
 
   it('should return false if applied to an invalid role', function () {
-    var params = checkSetup('<input id="target" role="foo">');
+    let params = checkSetup('<input id="target" role="foo">');
     assert.isFalse(check.evaluate.apply(checkContext, params));
     assert.isNull(checkContext._data);
   });
@@ -56,7 +58,7 @@ describe('unsupportedrole', function () {
       }
     });
 
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" role="doc-abstract">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -75,7 +77,7 @@ describe('unsupportedrole', function () {
       }
     });
 
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" role="unsupported alert">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));

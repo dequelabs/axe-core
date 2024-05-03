@@ -1,10 +1,10 @@
 describe('autocomplete-valid', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var checkSetup = axe.testUtils.checkSetup;
-  var checkContext = axe.testUtils.MockCheckContext();
-  var evaluate = axe.testUtils.getCheckEvaluate('autocomplete-valid');
+  let fixture = document.getElementById('fixture');
+  let checkSetup = axe.testUtils.checkSetup;
+  let checkContext = axe.testUtils.MockCheckContext();
+  let evaluate = axe.testUtils.getCheckEvaluate('autocomplete-valid');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -12,18 +12,18 @@ describe('autocomplete-valid', function () {
   });
 
   it('returns true if autocomplete is valid', function () {
-    var params = checkSetup('<input autocomplete="on" id="target" />');
+    let params = checkSetup('<input autocomplete="on" id="target" />');
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
   it('returns false if autocomplete is not valid', function () {
-    var params = checkSetup('<input autocomplete="foo" id="target" />');
+    let params = checkSetup('<input autocomplete="foo" id="target" />');
     assert.isFalse(evaluate.apply(checkContext, params));
   });
 
   it('uses options to change what is valid autocomplete', function () {
-    var options = { stateTerms: ['foo'] };
-    var params = checkSetup(
+    let options = { stateTerms: ['foo'] };
+    let params = checkSetup(
       '<input autocomplete="foo" id="target" />',
       options
     );

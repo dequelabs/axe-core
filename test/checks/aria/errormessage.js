@@ -1,17 +1,17 @@
 describe('aria-errormessage', function () {
   'use strict';
 
-  var queryFixture = axe.testUtils.queryFixture;
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let queryFixture = axe.testUtils.queryFixture;
+  let shadowSupported = axe.testUtils.shadowSupport.v1;
+  let shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     checkContext.reset();
   });
 
   it('should return false if aria-errormessage value is invalid', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="plain" aria-invalid="true">' +
         '<div id="plain"></div>'
     );
@@ -23,7 +23,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return undefined if aria-errormessage references an element that does not exist', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="plain" aria-invalid="true">' +
         '<div></div>'
     );
@@ -35,7 +35,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true if aria-errormessage id is alert', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="alert" aria-invalid="true">' +
         '<div id="alert" role="alert"></div>'
     );
@@ -47,7 +47,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true if aria-errormessage id is aria-live=assertive', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="live" aria-invalid="true">' +
         '<div id="live" aria-live="assertive"></div>'
     );
@@ -59,7 +59,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true if aria-errormessage id is aria-describedby', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="plain" aria-describedby="plain" aria-invalid="true">' +
         '<div id="plain"></div>'
     );
@@ -71,7 +71,7 @@ describe('aria-errormessage', function () {
   });
 
   it('sets an array of IDs in data', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
         '<div id="plain"></div>'
     );
@@ -91,7 +91,7 @@ describe('aria-errormessage', function () {
         }
       }
     });
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage=" " aria-invalid="true"></div>'
     );
     assert.isTrue(
@@ -102,7 +102,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true when aria-invalid is not set', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="plain">' + '<div id="plain"></div>'
     );
     assert.isTrue(
@@ -113,7 +113,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true when aria-invalid=false', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage="plain" aria-invalid="false">' +
         '<div id="plain"></div>'
     );
@@ -134,7 +134,7 @@ describe('aria-errormessage', function () {
         }
       }
     });
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" aria-errormessage=" " aria-invalid="true"></div>'
     );
     assert.isFalse(
@@ -145,7 +145,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return false when hidden attribute is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" hidden>Error message 1</div>'
     );
@@ -161,7 +161,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return false when display: "none" is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" style="display: none">Error message 1</div>'
     );
@@ -177,7 +177,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return false when visibility: "hidden" is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" style="visibility: hidden">Error message 1</div>'
     );
@@ -193,7 +193,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return false when aria-hidden=true is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-hidden="true">Error message 1</div>'
     );
@@ -209,7 +209,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true when aria-hidden=false is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-live="assertive" aria-hidden="false">Error message 1</div>'
     );
@@ -221,7 +221,7 @@ describe('aria-errormessage', function () {
   });
 
   it('should return true when no hidden functionality is used', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-live="assertive">Error message 1</div>'
     );
@@ -235,7 +235,7 @@ describe('aria-errormessage', function () {
   (shadowSupported ? it : xit)(
     'should return undefined if aria-errormessage value crosses shadow boundary',
     function () {
-      var params = shadowCheckSetup(
+      let params = shadowCheckSetup(
         '<div id="target" aria-errormessage="live" aria-invalid="true"></div>',
         '<div id="live" aria-live="assertive"></div>'
       );
@@ -250,7 +250,7 @@ describe('aria-errormessage', function () {
   (shadowSupported ? it : xit)(
     'should return false if aria-errormessage and invalid reference are both inside shadow dom',
     function () {
-      var params = shadowCheckSetup(
+      let params = shadowCheckSetup(
         '<div></div>',
         '<div id="target" aria-errormessage="live" aria-invalid="true"></div>' +
           '<div id="live"></div>'
@@ -266,7 +266,7 @@ describe('aria-errormessage', function () {
   (shadowSupported ? it : xit)(
     'should return true if aria-errormessage and valid reference are both inside shadow dom',
     function () {
-      var params = shadowCheckSetup(
+      let params = shadowCheckSetup(
         '<div></div>',
         '<div id="target" aria-errormessage="live" aria-invalid="true"></div>' +
           '<div id="live" aria-live="assertive"></div>'
@@ -281,7 +281,7 @@ describe('aria-errormessage', function () {
 
   describe('SerialVirtualNode', function () {
     it('should return undefined', function () {
-      var vNode = new axe.SerialVirtualNode({
+      let vNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           'aria-invalid': 'true',

@@ -1,11 +1,11 @@
 describe('same-caption-summary', function () {
   'use strict';
 
-  var checkSetup = axe.testUtils.checkSetup;
-  var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-  var shadowSupport = axe.testUtils.shadowSupport;
+  let checkSetup = axe.testUtils.checkSetup;
+  let shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  let shadowSupport = axe.testUtils.shadowSupport;
 
-  var checkContext = axe.testUtils.MockCheckContext();
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     checkContext.reset();
@@ -13,7 +13,7 @@ describe('same-caption-summary', function () {
   });
 
   it('should return false there is no caption', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<table summary="hi" id="target"><tr><td></td></tr></table>'
     );
 
@@ -25,7 +25,7 @@ describe('same-caption-summary', function () {
   });
 
   it('should return false there is no summary', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<table id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
 
@@ -37,7 +37,7 @@ describe('same-caption-summary', function () {
   });
 
   it('should return false if summary and caption are different', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<table summary="bye" id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
 
@@ -49,7 +49,7 @@ describe('same-caption-summary', function () {
   });
 
   it('should return true if summary and caption are the same', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<table summary="Hi" id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
 
@@ -61,7 +61,7 @@ describe('same-caption-summary', function () {
   });
 
   it('should return true if summary and caption are the same with mixed casing', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<table summary="My Table" id="target">' +
         '<caption> my table </caption>' +
         '<thead>' +
@@ -83,7 +83,7 @@ describe('same-caption-summary', function () {
   (shadowSupport.v1 ? it : xit)(
     'should match slotted caption elements',
     function () {
-      var params = shadowCheckSetup(
+      let params = shadowCheckSetup(
         '<div>' +
           '<span slot="caption">Caption</span>' +
           '<span slot="one">Data element 1</span>' +

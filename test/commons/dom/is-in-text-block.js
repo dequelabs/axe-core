@@ -1,9 +1,9 @@
 describe('dom.isInTextBlock', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport;
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -15,7 +15,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isTrue(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -25,13 +25,13 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link" style="display:block">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
   it('returns false if the element has the only text in the block', function () {
     fixtureSetup('<p><a href="" id="link">link</a></p>');
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -41,7 +41,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">on a link with a very long text</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -52,7 +52,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="">other link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -63,7 +63,7 @@ describe('dom.isInTextBlock', function () {
         '  <span style="display:none">some hidden text</span>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -74,7 +74,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -85,7 +85,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -96,7 +96,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -106,7 +106,7 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -117,7 +117,7 @@ describe('dom.isInTextBlock', function () {
         '  Some paragraph with text ' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -128,7 +128,7 @@ describe('dom.isInTextBlock', function () {
         '  Some paragraph with text ' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -143,7 +143,7 @@ describe('dom.isInTextBlock', function () {
         '  <select><option>My first choice</option></select>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -154,7 +154,7 @@ describe('dom.isInTextBlock', function () {
         '  Some paragraph with text ' +
         '</div>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
@@ -164,44 +164,44 @@ describe('dom.isInTextBlock', function () {
         '  <a href="" id="link">link</a>' +
         '</p>'
     );
-    var link = document.getElementById('link');
+    let link = document.getElementById('link');
     assert.isFalse(axe.commons.dom.isInTextBlock(link));
   });
 
   (shadowSupport.v1 ? it : xit)('can reach outside a shadow tree', function () {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.innerHTML = 'Some paragraph with text <span></span> ';
-    var shadow = div.querySelector('span').attachShadow({ mode: 'open' });
+    let shadow = div.querySelector('span').attachShadow({ mode: 'open' });
     shadow.innerHTML = '<a href="" id="link">link</a>';
     fixtureSetup(div);
 
-    var link = shadow.querySelector('#link');
+    let link = shadow.querySelector('#link');
     assert.isTrue(axe.commons.dom.isInTextBlock(link));
   });
 
   (shadowSupport.v1 ? it : xit)('can reach into a shadow tree', function () {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.innerHTML = '<a href="" id="link">link</a>';
-    var shadow = div.attachShadow({ mode: 'open' });
+    let shadow = div.attachShadow({ mode: 'open' });
     shadow.innerHTML = '<p>Some paragraph with text <slot></slot> </p>';
     fixtureSetup(div);
 
-    var link = fixture.querySelector('#link');
+    let link = fixture.querySelector('#link');
     assert.isTrue(axe.commons.dom.isInTextBlock(link));
   });
 
   (shadowSupport.v1 ? it : xit)(
     'treats shadow DOM slots as siblings',
     function () {
-      var div = document.createElement('div');
+      let div = document.createElement('div');
       div.innerHTML = '<br>';
-      var shadow = div.attachShadow({ mode: 'open' });
+      let shadow = div.attachShadow({ mode: 'open' });
       shadow.innerHTML =
         '<p>Some paragraph with text ' +
         '<slot></slot> <a href="" id="link">link</a></p>';
       fixtureSetup(div);
 
-      var link = shadow.querySelector('#link');
+      let link = shadow.querySelector('#link');
       assert.isFalse(axe.commons.dom.isInTextBlock(link));
     }
   );
@@ -209,7 +209,7 @@ describe('dom.isInTextBlock', function () {
   describe('options.noLengthCompare', function () {
     it('returns true if there is any text outside the link', function () {
       fixtureSetup('<p>amy <a href="" id="link">link text is longer</a></p>');
-      var link = document.getElementById('link');
+      let link = document.getElementById('link');
       assert.isTrue(
         axe.commons.dom.isInTextBlock(link, {
           noLengthCompare: true
@@ -226,7 +226,7 @@ describe('dom.isInTextBlock', function () {
           ' <a href="">link 4</a>' +
           '</p>'
       );
-      var link = document.getElementById('link');
+      let link = document.getElementById('link');
       assert.isFalse(
         axe.commons.dom.isInTextBlock(link, {
           noLengthCompare: true

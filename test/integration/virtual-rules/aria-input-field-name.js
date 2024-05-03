@@ -1,6 +1,6 @@
 describe('aria-input-field-name virtual-rule', function () {
   it('should pass for aria-label', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'combobox',
@@ -9,7 +9,7 @@ describe('aria-input-field-name virtual-rule', function () {
     });
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -17,7 +17,7 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should incomplete for aria-labelledby', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'listbox',
@@ -26,7 +26,7 @@ describe('aria-input-field-name virtual-rule', function () {
     });
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -34,7 +34,7 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should pass for title', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'searchbox',
@@ -46,7 +46,7 @@ describe('aria-input-field-name virtual-rule', function () {
     node.children = [];
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -54,7 +54,7 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should fail when aria-label contains only whitespace', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'spinbutton',
@@ -63,7 +63,7 @@ describe('aria-input-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -71,7 +71,7 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should fail when aria-label is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'textbox',
@@ -80,7 +80,7 @@ describe('aria-input-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -88,7 +88,7 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should fail when title is empty', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'combobox',
@@ -97,7 +97,7 @@ describe('aria-input-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
@@ -105,17 +105,17 @@ describe('aria-input-field-name virtual-rule', function () {
   });
 
   it('should incomplete if has explicit and implicit label', function () {
-    var node = new axe.SerialVirtualNode({
+    let node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'listbox',
         'aria-label': 'name'
       }
     });
-    var parent = new axe.SerialVirtualNode({
+    let parent = new axe.SerialVirtualNode({
       nodeName: 'label'
     });
-    var child = new axe.SerialVirtualNode({
+    let child = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'first name'
@@ -124,7 +124,7 @@ describe('aria-input-field-name virtual-rule', function () {
     node.children = [];
     parent.children = [child, node];
 
-    var results = axe.runVirtualRule('aria-input-field-name', node);
+    let results = axe.runVirtualRule('aria-input-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

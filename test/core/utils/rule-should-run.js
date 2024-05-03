@@ -210,7 +210,7 @@ describe('axe.utils.ruleShouldRun', function () {
   });
 
   describe('default axe._tagExclude', function () {
-    var origTagExclude;
+    let origTagExclude;
     before(function () {
       axe._load({});
       origTagExclude = axe._audit.tagExclude;

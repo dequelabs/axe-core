@@ -1,24 +1,24 @@
 /*eslint-env node */
 'use strict';
-var http = require('http');
+let http = require('http');
 module.exports = function (grunt) {
   function getLine(data, start) {
-    var len = data.length;
-    var index = start;
+    let len = data.length;
+    let index = start;
     while (index < len) {
       if (data.charAt(index) === '\n') {
         break;
       }
       index += 1;
     }
-    var retVal = data.substring(start, index + 1);
+    let retVal = data.substring(start, index + 1);
     return retVal;
   }
   function getEntry(data, start) {
-    var entry = [];
-    var line;
-    var len = data.length;
-    var index = start;
+    let entry = [];
+    let line;
+    let len = data.length;
+    let index = start;
     while (index < len) {
       line = getLine(data, index);
       if (line.indexOf('%') === 0) {
@@ -34,8 +34,8 @@ module.exports = function (grunt) {
     return entry;
   }
   function generateOutput(langs, checkPath) {
-    var path = checkPath + '.js';
-    var template = [
+    let path = checkPath + '.js';
+    let template = [
       '/* global axe */\n',
       '/*eslint quotes: 0*/\n',
       'var langs = ' + JSON.stringify(langs, null, '\t') + ';\n\n',
@@ -57,17 +57,17 @@ module.exports = function (grunt) {
     'langs',
     'Task for generating commons language codes from IANA registry',
     function () {
-      var done = this.async();
-      var ianaLangsURL =
+      let done = this.async();
+      let ianaLangsURL =
         'http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry';
       if (!this.data.check) {
         done(false);
         return;
       }
-      var check = this.data.check;
-      var langs = [];
+      let check = this.data.check;
+      let langs = [];
       new Promise(function (resolve, reject) {
-        var data = '';
+        let data = '';
         http
           .get(ianaLangsURL, function (res) {
             res
@@ -84,8 +84,8 @@ module.exports = function (grunt) {
           });
       })
         .then(function (data) {
-          var entry = getEntry(data, 0);
-          var pos = entry.used;
+          let entry = getEntry(data, 0);
+          let pos = entry.used;
           while (true) {
             entry = getEntry(data, pos);
             pos += entry.used;
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
             if (entry[0] !== 'Type: language') {
               continue;
             }
-            var lang = entry[1].replace('Subtag: ', '').trim();
+            let lang = entry[1].replace('Subtag: ', '').trim();
             langs.push(lang);
           }
           generateOutput(langs, check);

@@ -2,20 +2,20 @@
 /*eslint max-len: off */
 'use strict';
 
-var clone = require('clone');
-var doT = require('@deque/dot');
-var templates = require('./templates');
-var buildManual = require('./build-manual');
-var { encode } = require('html-entities');
-var packageJSON = require('../package.json');
-var doTRegex = /\{\{.+?\}\}/g;
+let clone = require('clone');
+let doT = require('@deque/dot');
+let templates = require('./templates');
+let buildManual = require('./build-manual');
+let { encode } = require('html-entities');
+let packageJSON = require('../package.json');
+let doTRegex = /\{\{.+?\}\}/g;
 
-var axeVersion = packageJSON.version.substring(
+let axeVersion = packageJSON.version.substring(
   0,
   packageJSON.version.lastIndexOf('.')
 );
 
-var descriptionTableHeader =
+let descriptionTableHeader =
   '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 // prevent striping newline characters from strings (e.g. failure
@@ -23,7 +23,7 @@ var descriptionTableHeader =
 doT.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
-  var localeFile;
+  let localeFile;
   if (options.locale) {
     localeFile = './locales/' + options.locale + '.json';
   }
@@ -38,15 +38,15 @@ function makeHeaderLink(title) {
 }
 
 function buildRules(grunt, options, commons, callback) {
-  var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
-  var locale = getLocale(grunt, options);
+  let axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
+  let locale = getLocale(grunt, options);
   options.getFiles = false;
   buildManual(grunt, options, commons, function (build) {
-    var metadata = {
+    let metadata = {
       rules: {},
       checks: {}
     };
-    var descriptions = {
+    let descriptions = {
       wcag20: {
         title: 'WCAG 2.0 Level A & AA Rules',
         rules: []
@@ -87,7 +87,7 @@ function buildRules(grunt, options, commons, callback) {
       }
     };
 
-    var TOC = Object.keys(descriptions)
+    let TOC = Object.keys(descriptions)
       .map(key => {
         return `- [${descriptions[key].title}](#${makeHeaderLink(
           descriptions[key].title
@@ -95,9 +95,9 @@ function buildRules(grunt, options, commons, callback) {
       })
       .join('\n');
 
-    var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-    var rules = build.rules;
-    var checks = build.checks;
+    let tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
+    let rules = build.rules;
+    let checks = build.checks;
 
     // Translate checks before parsing them so that translations
     // get applied to the metadata object
@@ -112,12 +112,12 @@ function buildRules(grunt, options, commons, callback) {
     parseChecks(checks);
 
     function parseMetaData(source, propType) {
-      var data = source.metadata;
-      var id = source.id || source.type;
+      let data = source.metadata;
+      let id = source.id || source.type;
       if (id && locale && locale[propType] && propType !== 'checks') {
         data = locale[propType][id] || data;
       }
-      var result = clone(data) || {};
+      let result = clone(data) || {};
 
       if (result.messages) {
         Object.keys(result.messages).forEach(function (key) {
@@ -141,7 +141,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function createFailureSummaryObject(summaries) {
-      var result = {};
+      let result = {};
       summaries.forEach(function (summary) {
         if (summary.type) {
           result[summary.type] = parseMetaData(summary, 'failureSummaries');
@@ -151,7 +151,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function getIncompleteMsg(summaries) {
-      var summary = summaries.find(function (element) {
+      let summary = summaries.find(function (element) {
         return typeof element.incompleteFallbackMessage === 'string';
       });
       return summary ? summary.incompleteFallbackMessage : '';
@@ -201,9 +201,9 @@ function buildRules(grunt, options, commons, callback) {
 
     function parseChecks(collection) {
       return collection.map(function (check) {
-        var c = {};
-        var id = typeof check === 'string' ? check : check.id;
-        var definition = clone(findCheck(checks, id));
+        let c = {};
+        let id = typeof check === 'string' ? check : check.id;
+        let definition = clone(findCheck(checks, id));
         if (!definition) {
           grunt.log.error('check ' + id + ' not found');
         }
@@ -220,8 +220,8 @@ function buildRules(grunt, options, commons, callback) {
 
     function traverseChecks(checkCollection, predicate, startValue) {
       return checkCollection.reduce(function (out, check) {
-        var id = typeof check === 'string' ? check : check.id;
-        var definition = clone(findCheck(checks, id));
+        let id = typeof check === 'string' ? check : check.id;
+        let definition = clone(findCheck(checks, id));
         if (!definition) {
           grunt.log.error('check ' + id + ' not found');
         }
@@ -245,14 +245,14 @@ function buildRules(grunt, options, commons, callback) {
 
       function getImpactScores(definition, out) {
         if (definition && definition.metadata && definition.metadata.impact) {
-          var impactScore = axeImpact.indexOf(definition.metadata.impact);
+          let impactScore = axeImpact.indexOf(definition.metadata.impact);
           out.push(impactScore);
         }
         return out;
       }
 
       function getScore(checkCollection, onlyHighestScore) {
-        var scores = traverseChecks(checkCollection, getImpactScores, []);
+        let scores = traverseChecks(checkCollection, getImpactScores, []);
         if (scores && scores.length) {
           return onlyHighestScore
             ? [Math.max.apply(null, scores)]
@@ -262,13 +262,13 @@ function buildRules(grunt, options, commons, callback) {
         }
       }
 
-      var highestImpactForRuleTypeAny = getScore(rule.any, true);
-      var allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
-      var allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
-      var cumulativeImpacts = highestImpactForRuleTypeAny
+      let highestImpactForRuleTypeAny = getScore(rule.any, true);
+      let allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
+      let allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
+      let cumulativeImpacts = highestImpactForRuleTypeAny
         .concat(allUniqueImpactsForRuleTypeAll)
         .concat(allUniqueImpactsForRuleTypeNone);
-      var cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
+      let cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
 
       return cumulativeScores.reduce(function (out, cV) {
         return out.length
@@ -316,8 +316,8 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function createActLinksForRule(rule) {
-      var actIds = rule.actIds || [];
-      var actLinks = [];
+      let actIds = rule.actIds || [];
+      let actLinks = [];
       actIds.forEach(id =>
         actLinks.push(`[${id}](https://act-rules.github.io/rules/${id})`)
       );
@@ -325,9 +325,9 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     rules.map(function (rule) {
-      var impact = parseImpactForRule(rule);
-      var canFail = parseFailureForRule(rule);
-      var canIncomplete = parseIncompleteForRule(rule);
+      let impact = parseImpactForRule(rule);
+      let canFail = parseFailureForRule(rule);
+      let canIncomplete = parseIncompleteForRule(rule);
 
       rule.any = parseChecks(rule.any);
       rule.all = parseChecks(rule.all);
@@ -336,7 +336,7 @@ function buildRules(grunt, options, commons, callback) {
         metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
       }
 
-      var result;
+      let result;
       if (rule.tags.includes('deprecated')) {
         result = descriptions.deprecated.rules;
       } else if (rule.tags.includes('experimental')) {
@@ -353,7 +353,7 @@ function buildRules(grunt, options, commons, callback) {
         result = descriptions.wcag22.rules;
       }
 
-      var issueType = [];
+      let issueType = [];
       if (canFail) {
         issueType.push('failure');
       }
@@ -361,7 +361,7 @@ function buildRules(grunt, options, commons, callback) {
         issueType.push('needs&nbsp;review');
       }
 
-      var actLinks = createActLinksForRule(rule);
+      let actLinks = createActLinksForRule(rule);
 
       result.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
@@ -379,9 +379,9 @@ function buildRules(grunt, options, commons, callback) {
       return rule;
     });
 
-    var ruleTables = Object.keys(descriptions)
+    let ruleTables = Object.keys(descriptions)
       .map(key => {
-        var description = descriptions[key];
+        let description = descriptions[key];
 
         return `
 ## ${description.title}
@@ -400,7 +400,7 @@ ${
       })
       .join('\n\n');
 
-    var descriptions = `
+    descriptions = `
 <!--- This file is automatically generated using build/configure.js --->
 
 # Rule Descriptions

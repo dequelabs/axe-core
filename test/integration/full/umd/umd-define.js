@@ -7,13 +7,13 @@ describe('UMD define', function () {
   });
 
   it('calls define and passes it axe', function () {
-    var call = defineCalls[defineCalls.length - 1];
+    let call = defineCalls[defineCalls.length - 1];
     assert.isFunction(call[2]);
     assert.strictEqual(call[2](), axe);
   });
 
   it('defines module name as axe-core', function () {
-    var call = defineCalls[defineCalls.length - 1];
+    let call = defineCalls[defineCalls.length - 1];
     assert.equal(call[0], 'axe-core');
   });
 });

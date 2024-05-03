@@ -4,7 +4,7 @@ describe('aria-allowed-role virtual-rule', function () {
   });
 
   it('should pass for allowed role', function () {
-    var results = axe.runVirtualRule('aria-allowed-role', {
+    let results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'div',
       attributes: {
         role: 'checkbox',
@@ -18,7 +18,7 @@ describe('aria-allowed-role virtual-rule', function () {
   });
 
   it('should fail for unallowed role', function () {
-    var results = axe.runVirtualRule('aria-allowed-role', {
+    let results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',
       attributes: {
         role: 'link'
@@ -42,7 +42,7 @@ describe('aria-allowed-role virtual-rule', function () {
       ]
     });
 
-    var results = axe.runVirtualRule('aria-allowed-role', {
+    let results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',
       attributes: {
         role: 'link'
@@ -55,7 +55,7 @@ describe('aria-allowed-role virtual-rule', function () {
   });
 
   it('should incomplete for hidden element', function () {
-    var results = axe.runVirtualRule('aria-allowed-role', {
+    let results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',
       attributes: {
         'aria-hidden': true,
@@ -69,13 +69,13 @@ describe('aria-allowed-role virtual-rule', function () {
   });
 
   it('should incomplete for hidden element parent', function () {
-    var vNode = new axe.SerialVirtualNode({
+    let vNode = new axe.SerialVirtualNode({
       nodeName: 'dd',
       attributes: {
         role: 'link'
       }
     });
-    var parent = new axe.SerialVirtualNode({
+    let parent = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         'aria-hidden': true
@@ -84,7 +84,7 @@ describe('aria-allowed-role virtual-rule', function () {
     parent.children = [vNode];
     vNode.parent = parent;
 
-    var results = axe.runVirtualRule('aria-allowed-role', vNode);
+    let results = axe.runVirtualRule('aria-allowed-role', vNode);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

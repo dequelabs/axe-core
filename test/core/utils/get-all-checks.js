@@ -6,7 +6,7 @@ describe('axe.utils.getAllChecks', function () {
   });
 
   it('should concatenate all 3 check collections', function () {
-    var r = {
+    let r = {
       any: ['any:foo', 'any:bar'],
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
@@ -22,7 +22,7 @@ describe('axe.utils.getAllChecks', function () {
   });
 
   it('should safely ignore missing collections - all', function () {
-    var r = {
+    let r = {
       any: ['any:foo', 'any:bar'],
       none: ['none:foo', 'none:bar']
     };
@@ -35,7 +35,7 @@ describe('axe.utils.getAllChecks', function () {
   });
 
   it('should safely ignore missing collections - any', function () {
-    var r = {
+    let r = {
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
     };
@@ -48,7 +48,7 @@ describe('axe.utils.getAllChecks', function () {
   });
 
   it('should safely ignore missing collections - none', function () {
-    var r = {
+    let r = {
       any: ['any:foo', 'any:bar'],
       all: ['all:foo', 'all:bar']
     };

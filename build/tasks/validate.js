@@ -1,7 +1,7 @@
 /*eslint-env node */
 'use strict';
 
-var revalidator = require('revalidator').validate,
+let revalidator = require('revalidator').validate,
   fs = require('fs'),
   path = require('path');
 
@@ -10,8 +10,8 @@ function fileExists(v, o) {
     return true;
   }
 
-  var file = path.resolve(path.dirname(o._path), v);
-  var exists;
+  let file = path.resolve(path.dirname(o._path), v);
+  let exists;
   try {
     exists = fs.existsSync(file);
   } catch (e) {
@@ -21,7 +21,7 @@ function fileExists(v, o) {
 }
 
 function hasUniqueId() {
-  var seen = {};
+  let seen = {};
   return function (v, o) {
     if (!seen[v]) {
       seen[v] = o;
@@ -51,7 +51,7 @@ function hasMultipleOutcomes(messages) {
 }
 
 function createSchemas() {
-  var schemas = {};
+  let schemas = {};
 
   schemas.tool = {
     properties: {
@@ -237,12 +237,12 @@ function createSchemas() {
 }
 
 function validateFiles(grunt, files, schema, type) {
-  var valid = true;
+  let valid = true;
   files.forEach(function (f) {
     f.src.forEach(function (pathArg) {
-      var file = grunt.file.readJSON(pathArg);
+      let file = grunt.file.readJSON(pathArg);
       file._path = pathArg;
-      var result = revalidator(file, schema);
+      let result = revalidator(file, schema);
       if (!result.valid) {
         result.errors.forEach(function (err) {
           grunt.log.error(pathArg, err.property + ' ' + err.message);

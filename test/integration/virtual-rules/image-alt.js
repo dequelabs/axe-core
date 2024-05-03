@@ -1,6 +1,6 @@
 describe('image-alt virtual-rule', function () {
   it('should pass for alt', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         alt: 'foobar'
@@ -13,7 +13,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should pass for empty alt', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         alt: ''
@@ -26,7 +26,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should pass for aria-label', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         'aria-label': 'foobar'
@@ -39,7 +39,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should incomplete for aria-labelledby', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         'aria-labelledby': 'foobar'
@@ -52,7 +52,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should pass for title', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         title: 'foobar'
@@ -65,7 +65,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should pass for role=presentation', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         role: 'presentation'
@@ -78,7 +78,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should pass for role=none', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         role: 'none'
@@ -91,7 +91,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should fail when alt is missing', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {}
     });
@@ -102,7 +102,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should fail when alt contains only whitespace', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         alt: ' \t   \n   '
@@ -115,7 +115,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should fail when aria-label is empty', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         'aria-label': ''
@@ -128,7 +128,7 @@ describe('image-alt virtual-rule', function () {
   });
 
   it('should fail when title is empty', function () {
-    var results = axe.runVirtualRule('image-alt', {
+    let results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',
       attributes: {
         title: ''

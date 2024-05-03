@@ -43,7 +43,7 @@ describe('axe._cache', function () {
   describe('get', function () {
     it('should get an item from the cache', function () {
       axe._cache.set('foo', 'bar');
-      var value = axe._cache.get('foo');
+      let value = axe._cache.get('foo');
       assert.equal(value, 'bar');
     });
 
@@ -82,7 +82,7 @@ describe('axe._cache', function () {
           })
         );
 
-        var obj = { foo: 'bar' };
+        let obj = { foo: 'bar' };
         assert.equal(
           axe._cache.get('object', function () {
             return obj;
@@ -90,7 +90,7 @@ describe('axe._cache', function () {
           obj
         );
 
-        var arr = [1, 2, 3];
+        let arr = [1, 2, 3];
         assert.equal(
           axe._cache.get('array', function () {
             return arr;
@@ -116,14 +116,14 @@ describe('axe._cache', function () {
       });
 
       it('should not evaluate creator if key already exists', function () {
-        var spy = sinon.spy();
+        let spy = sinon.spy();
         axe._cache.set('foo', 'bar');
         axe._cache.get('foo', spy);
         assert.isTrue(spy.notCalled);
       });
 
       it('should evaluate creator once', function () {
-        var spy = sinon.spy(function () {
+        let spy = sinon.spy(function () {
           return true;
         });
         axe._cache.get('foo', spy);
@@ -162,7 +162,7 @@ describe('axe._cache', function () {
     it('should clear the cache', function () {
       axe._cache.set('foo', 'bar');
       axe._cache.clear();
-      var value = axe._cache.get('foo');
+      let value = axe._cache.get('foo');
       assert.isUndefined(value);
     });
   });

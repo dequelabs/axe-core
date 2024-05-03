@@ -6,7 +6,7 @@ describe('rerun axe in the same tick' + window.location.pathname, function () {
   });
 
   it('can run multiple times without interfering with itself', function (done) {
-    var options = {
+    let options = {
       runOnly: {
         type: 'rule',
         values: ['html-has-lang']

@@ -1,16 +1,16 @@
 describe('run-partial, context-size-focusable', function () {
   'use strict';
-  var ruleName = 'frame-focusable-content';
-  var runPartialRecursive = axe.testUtils.runPartialRecursive;
-  var clone = axe.utils.clone;
+  let ruleName = 'frame-focusable-content';
+  let runPartialRecursive = axe.testUtils.runPartialRecursive;
+  let clone = axe.utils.clone;
 
   beforeEach(function (done) {
     axe.testUtils.awaitNestedLoad(done);
   });
 
   it('gives the same passed results as axe.run when context.size and context.focusable are used', function (done) {
-    var options = { runOnly: ruleName };
-    var context = {
+    let options = { runOnly: ruleName };
+    let context = {
       exclude: [['#fail1'], ['#fail2', 'iframe']]
     };
 
@@ -22,8 +22,8 @@ describe('run-partial, context-size-focusable', function () {
         ]);
       })
       .then(function (results) {
-        var axeRunPartialResult = results[0];
-        var axeRunResult = results[1];
+        let axeRunPartialResult = results[0];
+        let axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.violations, 0);
         axeRunPartialResult.testEnvironment = axeRunResult.testEnvironment;
         axeRunPartialResult.timestamp = axeRunResult.timestamp;
@@ -34,7 +34,7 @@ describe('run-partial, context-size-focusable', function () {
   });
 
   it('gives the same failed results as axe.run when context.size and context.focusable are used', function (done) {
-    var options = { runOnly: ruleName };
+    let options = { runOnly: ruleName };
     Promise.all(runPartialRecursive({ exclude: [] }, options))
       .then(function (partialResults) {
         return Promise.all([
@@ -43,13 +43,13 @@ describe('run-partial, context-size-focusable', function () {
         ]);
       })
       .then(function (results) {
-        var axeRunPartialResult = results[0];
-        var axeRunResult = results[1];
+        let axeRunPartialResult = results[0];
+        let axeRunResult = results[1];
 
         assert.isObject(axeRunPartialResult);
         assert.isObject(axeRunResult);
         // Check the node is the one we expect
-        var nodes = axeRunPartialResult.violations[0].nodes;
+        let nodes = axeRunPartialResult.violations[0].nodes;
         assert.lengthOf(nodes, 2);
         assert.deepEqual(nodes[0].target, ['#fail1', 'html']);
         assert.deepEqual(nodes[1].target, ['#fail2', 'iframe', 'html']);

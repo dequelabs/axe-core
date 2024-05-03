@@ -1,6 +1,6 @@
 describe('axe.utils.getFriendlyUriEnd', function () {
   'use strict';
-  var getFriendlyUriEnd = axe.utils.getFriendlyUriEnd;
+  let getFriendlyUriEnd = axe.utils.getFriendlyUriEnd;
 
   it('returns a domain name', function () {
     assert.equal('deque.com', getFriendlyUriEnd('http://deque.com'));

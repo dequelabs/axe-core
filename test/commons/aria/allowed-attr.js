@@ -1,7 +1,7 @@
 describe('aria.allowedAttr', function () {
   'use strict';
 
-  var globalAttrs;
+  let globalAttrs;
   before(function () {
     axe._load({});
     globalAttrs = axe.commons.standards.getGlobalAriaAttrs();

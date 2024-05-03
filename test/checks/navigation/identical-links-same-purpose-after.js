@@ -1,20 +1,20 @@
 describe('identical-links-same-purpose-after tests', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var check = checks['identical-links-same-purpose'];
+  let fixture = document.getElementById('fixture');
+  let check = checks['identical-links-same-purpose'];
 
   afterEach(function () {
     fixture.innerHTML = '';
   });
 
   it('returns results by clearing relatedNodes after ignoring nodes which has no data (or result is undefined)', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: null,
       relatedNodes: ['nodeOne'],
       result: undefined
     };
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'read more',
         urlProps: { hostname: 'abc.com' }
@@ -22,19 +22,19 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
+    let checkResults = [nodeOneData, nodeTwoData];
 
-    var results = check.after(checkResults);
+    let results = check.after(checkResults);
     assert.lengthOf(results, 1);
 
-    var result = results[0];
+    let result = results[0];
     assert.deepEqual(result.data, nodeTwoData.data);
     assert.deepEqual(result.relatedNodes, []);
     assert.equal(result.result, true);
   });
 
   it('sets results of check result to `undefined` one of the native links do not have `urlProps` (and therefore removed as relatedNode)', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: {
         name: 'read more',
         urlProps: undefined
@@ -42,7 +42,7 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeOne'],
       result: true
     };
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'read more',
         urlProps: { hostname: 'abc.com' }
@@ -50,19 +50,19 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
+    let checkResults = [nodeOneData, nodeTwoData];
 
-    var results = check.after(checkResults);
+    let results = check.after(checkResults);
     assert.lengthOf(results, 1);
 
-    var result = results[0];
+    let result = results[0];
     assert.deepEqual(result.data, nodeOneData.data);
     assert.deepEqual(result.relatedNodes, ['nodeTwo']);
     assert.equal(result.result, undefined);
   });
 
   it('sets results of check result to `undefined` if native links do not have same `urlProps` (values are different)', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: {
         name: 'follow us',
         urlProps: { hostname: 'facebook.com' }
@@ -70,7 +70,7 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeOne'],
       result: true
     };
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'follow us',
         urlProps: { hostname: 'instagram.com' }
@@ -78,19 +78,19 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
+    let checkResults = [nodeOneData, nodeTwoData];
 
-    var results = check.after(checkResults);
+    let results = check.after(checkResults);
     assert.lengthOf(results, 1);
 
-    var result = results[0];
+    let result = results[0];
     assert.deepEqual(result.data, nodeOneData.data);
     assert.deepEqual(result.relatedNodes, ['nodeTwo']);
     assert.equal(result.result, undefined);
   });
 
   it('sets results of check result to `undefined` if native links do not have same `urlProps` (keys are different)', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: {
         name: 'follow us',
         urlProps: { abc: 'abc.com' }
@@ -98,7 +98,7 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeOne'],
       result: true
     };
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'follow us',
         urlProps: { xyz: 'abc.com' }
@@ -106,19 +106,19 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
+    let checkResults = [nodeOneData, nodeTwoData];
 
-    var results = check.after(checkResults);
+    let results = check.after(checkResults);
     assert.lengthOf(results, 1);
 
-    var result = results[0];
+    let result = results[0];
     assert.deepEqual(result.data, nodeOneData.data);
     assert.deepEqual(result.relatedNodes, ['nodeTwo']);
     assert.equal(result.result, undefined);
   });
 
   it('sets results of check result to `true` if native links serve identical purpose', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: {
         name: 'Axe Core',
         urlProps: { hostname: 'deque.com', pathname: 'axe-core' }
@@ -126,7 +126,7 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeOne'],
       result: true
     };
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'Axe Core',
         urlProps: { hostname: 'deque.com', pathname: 'axe-core' }
@@ -134,20 +134,20 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
+    let checkResults = [nodeOneData, nodeTwoData];
 
-    var results = check.after(checkResults);
+    let results = check.after(checkResults);
 
     assert.lengthOf(results, 1);
 
-    var result = results[0];
+    let result = results[0];
     assert.deepEqual(result.data, nodeOneData.data);
     assert.deepEqual(result.relatedNodes, ['nodeTwo']);
     assert.equal(result.result, true);
   });
 
   it('sets results of check result to `true` if ARIA links have different accessible names', function () {
-    var nodeOneData = {
+    let nodeOneData = {
       data: {
         name: 'earth',
         urlProps: {}
@@ -156,7 +156,7 @@ describe('identical-links-same-purpose-after tests', function () {
       result: true
     };
 
-    var nodeTwoData = {
+    let nodeTwoData = {
       data: {
         name: 'venus',
         urlProps: {}
@@ -164,8 +164,8 @@ describe('identical-links-same-purpose-after tests', function () {
       relatedNodes: ['nodeTwo'],
       result: true
     };
-    var checkResults = [nodeOneData, nodeTwoData];
-    var results = check.after(checkResults);
+    let checkResults = [nodeOneData, nodeTwoData];
+    let results = check.after(checkResults);
     assert.lengthOf(results, 2);
 
     assert.deepEqual(results[0].data, nodeOneData.data);

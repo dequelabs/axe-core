@@ -1,7 +1,7 @@
 describe('axe.utils.getStyleSheetFactory', function () {
   'use strict';
 
-  var dynamicDoc = document.implementation.createHTMLDocument(
+  let dynamicDoc = document.implementation.createHTMLDocument(
     'Dynamic document for testing axe.utils.getStyleSheetFactory'
   );
 
@@ -12,13 +12,13 @@ describe('axe.utils.getStyleSheetFactory', function () {
   });
 
   it('returns a function when passed argument of dynamicDocument', function () {
-    var actual = axe.utils.getStyleSheetFactory(dynamicDoc);
+    let actual = axe.utils.getStyleSheetFactory(dynamicDoc);
     assert.isFunction(actual);
   });
 
   it('returns a CSSOM stylesheet, when invoked with data (text)', function () {
-    var stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
-    var actual = stylesheetFactory({
+    let stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
+    let actual = stylesheetFactory({
       data: '.someStyle{background-color:red;}',
       root: document,
       priority: [1, 0]

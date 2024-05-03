@@ -1,7 +1,7 @@
 describe('landmark-no-duplicate-main test failure', function () {
   'use strict';
 
-  var results;
+  let results;
 
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
@@ -20,7 +20,7 @@ describe('landmark-no-duplicate-main test failure', function () {
     it('should find 5', function () {
       assert.isDefined(results.passes);
 
-      var passNodes = results.passes[0].nodes;
+      let passNodes = results.passes[0].nodes;
       assert.lengthOf(passNodes, 5);
       assert.deepEqual(passNodes[0].target, ['#pass1']);
       assert.deepEqual(passNodes[1].target, ['#pass2']);
@@ -42,7 +42,7 @@ describe('landmark-no-duplicate-main test failure', function () {
     it('should find 4', function () {
       assert.isDefined(results.incomplete);
 
-      var incompleteNodes = results.incomplete[0].nodes;
+      let incompleteNodes = results.incomplete[0].nodes;
       assert.lengthOf(incompleteNodes, 4);
       assert.deepEqual(incompleteNodes[0].target, ['#incomplete1']);
       assert.deepEqual(incompleteNodes[1].target, ['#incomplete2']);

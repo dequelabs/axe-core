@@ -2,10 +2,10 @@
 
 describe('isolated-env test', function () {
   'use strict';
-  var fixture = document.querySelector('#fixture');
-  var origPartialResults;
-  var partialResults;
-  var win;
+  let fixture = document.querySelector('#fixture');
+  let origPartialResults;
+  let partialResults;
+  let win;
 
   // just a nicer assertion error rather than just doing
   // done(err)
@@ -14,7 +14,7 @@ describe('isolated-env test', function () {
       return done(err);
     }
 
-    var error = new chai.AssertionError(
+    let error = new chai.AssertionError(
       "expected [Function] to not throw an error but '" +
         err.toString() +
         "' was thrown"
@@ -35,11 +35,11 @@ describe('isolated-env test', function () {
   }
 
   before(function (done) {
-    var nestedLoadPromise = new Promise(function (resolve, reject) {
+    let nestedLoadPromise = new Promise(function (resolve, reject) {
       axe.testUtils.awaitNestedLoad(resolve, reject);
     });
 
-    var isloadedPromise = new Promise(function (resolve, reject) {
+    let isloadedPromise = new Promise(function (resolve, reject) {
       window.addEventListener('message', function (msg) {
         if (msg.data === 'axe-loaded') {
           resolve();
@@ -53,10 +53,10 @@ describe('isolated-env test', function () {
     Promise.all([nestedLoadPromise, isloadedPromise])
       .then(function () {
         win = fixture.querySelector('#isolated-frame').contentWindow;
-        var focusableFrame = fixture.querySelector('#focusable-iframe');
+        let focusableFrame = fixture.querySelector('#focusable-iframe');
 
         // trigger frame-focusable-content rule
-        var iframePromise = focusableFrame.contentWindow.axe.runPartial({
+        let iframePromise = focusableFrame.contentWindow.axe.runPartial({
           include: [],
           exclude: [],
           initiator: false,
@@ -118,7 +118,7 @@ describe('isolated-env test', function () {
   });
 
   describe('reporters', function () {
-    var reporters = axe._thisWillBeDeletedDoNotUse.public.reporters;
+    let reporters = axe._thisWillBeDeletedDoNotUse.public.reporters;
     Object.keys(reporters).forEach(function (reporterName) {
       it(
         reporterName +

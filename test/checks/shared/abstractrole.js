@@ -1,9 +1,9 @@
 describe('abstractrole', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var queryFixture = axe.testUtils.queryFixture;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let fixture = document.getElementById('fixture');
+  let queryFixture = axe.testUtils.queryFixture;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -11,7 +11,7 @@ describe('abstractrole', function () {
   });
 
   it('should return false if applied to a concrete role', function () {
-    var virtualNode = queryFixture(
+    let virtualNode = queryFixture(
       '<div id="target" role="alert">Contents</div>'
     );
     assert.isFalse(
@@ -26,7 +26,7 @@ describe('abstractrole', function () {
   });
 
   it('should return false if applied to a nonsensical role', function () {
-    var virtualNode = queryFixture(
+    let virtualNode = queryFixture(
       '<div id="target" role="foo">Contents</div>'
     );
     assert.isFalse(
@@ -41,7 +41,7 @@ describe('abstractrole', function () {
   });
 
   it('should return true if applied to an abstract role', function () {
-    var virtualNode = queryFixture(
+    let virtualNode = queryFixture(
       '<div id="target" role="widget">Contents</div>'
     );
     assert.isTrue(
@@ -56,7 +56,7 @@ describe('abstractrole', function () {
   });
 
   it('should return false if applied to multiple concrete roles', function () {
-    var virtualNode = queryFixture(
+    let virtualNode = queryFixture(
       '<div id="target" role="alert button">Contents</div>'
     );
     assert.isFalse(
@@ -71,7 +71,7 @@ describe('abstractrole', function () {
   });
 
   it('should return true if applied to at least one abstract role', function () {
-    var virtualNode = queryFixture(
+    let virtualNode = queryFixture(
       '<div id="target" role="alert widget structure">Contents</div>'
     );
     assert.isTrue(

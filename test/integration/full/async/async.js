@@ -1,13 +1,13 @@
 describe('async rule test', function () {
   'use strict';
-  var results;
+  let results;
 
   function AsyncCheck(node) {
     /*eslint indent: 0*/
-    var check = this;
-    var done = check.async();
+    let check = this;
+    let done = check.async();
     setTimeout(function () {
-      var dataOut = node.getAttribute('data-out');
+      let dataOut = node.getAttribute('data-out');
       check.data(dataOut);
       switch (dataOut) {
         case 'true':

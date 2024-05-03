@@ -4,7 +4,7 @@ describe('table.getHeaders', function () {
     return document.getElementById(id);
   }
 
-  var fixture = $id('fixture');
+  let fixture = $id('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -18,7 +18,7 @@ describe('table.getHeaders', function () {
       '<tr><th id="t2">2</th><td id="target">ok</td><td></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -34,7 +34,7 @@ describe('table.getHeaders', function () {
       '<tr><th scope="row" id="t2">1</th><td id="target">ok</td><td></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -51,7 +51,7 @@ describe('table.getHeaders', function () {
       '<tr><th scope="row" id="t3">1</th><td id="target">ok</td><td></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -68,7 +68,7 @@ describe('table.getHeaders', function () {
       '<tr><th scope="row" id="t2">1</th><th scope="row" id="t3">2</th><td id="target">ok</td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -85,7 +85,7 @@ describe('table.getHeaders', function () {
       '<tr><td colspan="2"></td><td id="target"></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
@@ -98,7 +98,7 @@ describe('table.getHeaders', function () {
       '<tr><th scope="row" id="t2"></th><td id="target"></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -114,7 +114,7 @@ describe('table.getHeaders', function () {
       '<tr><th scope="row" id="t2"></th><td id="target"></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -130,7 +130,7 @@ describe('table.getHeaders', function () {
       '<tr><td id="t3">t3</td><td id="target" headers="t1 t2 t3"></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -153,7 +153,7 @@ describe('table.getHeaders', function () {
       '</tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
@@ -172,7 +172,7 @@ describe('table.getHeaders', function () {
       '</tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
@@ -185,7 +185,7 @@ describe('table.getHeaders', function () {
       '<tr><td id="t3">t3</td><td headers="t1 t2 t3"></td><td id="target"></td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), []);
@@ -206,7 +206,7 @@ describe('table.getHeaders', function () {
       '</thead>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -227,7 +227,7 @@ describe('table.getHeaders', function () {
       '</thead>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
@@ -251,7 +251,7 @@ describe('table.getHeaders', function () {
       '</thead>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
@@ -269,7 +269,7 @@ describe('table.getHeaders', function () {
       '</thead>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);

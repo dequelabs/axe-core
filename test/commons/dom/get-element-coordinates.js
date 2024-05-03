@@ -1,14 +1,14 @@
 //@todo better coverage
 describe('dom.getElementCoordinates', function () {
   'use strict';
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
   });
 
   it('should calculate bounding box based on element position', function () {
-    var el, coords;
+    let el, coords;
 
     fixture.innerHTML =
       '<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
@@ -32,7 +32,7 @@ describe('dom.getElementCoordinates', function () {
   });
 
   it('should take into account scroll offsets', function () {
-    var el,
+    let el,
       coords,
       offset = axe.commons.dom.getScrollOffset(window.document);
 

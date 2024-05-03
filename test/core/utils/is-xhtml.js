@@ -6,7 +6,7 @@ describe('axe.utils.isXHTML', function () {
   });
 
   it('should return true on any document that is XHTML', function () {
-    var doc = document.implementation.createDocument(
+    let doc = document.implementation.createDocument(
       'http://www.w3.org/1999/xhtml',
       'html',
       null
@@ -15,7 +15,7 @@ describe('axe.utils.isXHTML', function () {
   });
 
   it('should return false on any document that is HTML', function () {
-    var doc = document.implementation.createHTMLDocument('Monkeys');
+    let doc = document.implementation.createHTMLDocument('Monkeys');
     assert.isFalse(axe.utils.isXHTML(doc));
   });
 

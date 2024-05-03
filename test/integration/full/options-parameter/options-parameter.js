@@ -11,7 +11,7 @@ describe('Options parameter', function () {
 
   describe('iframes', function () {
     it('should include iframes if `iframes` is true', function (done) {
-      var config = { iframes: true };
+      let config = { iframes: true };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -38,7 +38,7 @@ describe('Options parameter', function () {
     });
 
     it('should exclude iframes if `iframes` is false', function (done) {
-      var config = { iframes: false };
+      let config = { iframes: false };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -65,7 +65,7 @@ describe('Options parameter', function () {
     });
 
     it('should include iframes by default', function (done) {
-      var config = {};
+      let config = {};
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -94,7 +94,7 @@ describe('Options parameter', function () {
 
   describe('elementRef', function () {
     it('should not return an elementRef by default', function (done) {
-      var config = {};
+      let config = {};
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -114,7 +114,7 @@ describe('Options parameter', function () {
     });
 
     it('should not return an elementRef if `elementRef` is false', function (done) {
-      var config = { elementRef: false };
+      let config = { elementRef: false };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -138,7 +138,7 @@ describe('Options parameter', function () {
     });
 
     it('should return element refs for the top frame only if `elementRef` is true', function (done) {
-      var config = { elementRef: true };
+      let config = { elementRef: true };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -163,7 +163,7 @@ describe('Options parameter', function () {
 
   describe('no selectors', function () {
     it('should return a selector by default', function (done) {
-      var config = {};
+      let config = {};
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -183,7 +183,7 @@ describe('Options parameter', function () {
     });
 
     it('should return a selector if `selectors` is true', function (done) {
-      var config = { selectors: true };
+      let config = { selectors: true };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
@@ -203,7 +203,7 @@ describe('Options parameter', function () {
     });
 
     it('should return no selector in top frame if `selectors` is false', function (done) {
-      var config = { selectors: false };
+      let config = { selectors: false };
       axe.run(document, config, function (err, results) {
         try {
           assert.lengthOf(results.violations, 0, 'violations');

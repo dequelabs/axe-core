@@ -1,6 +1,6 @@
 describe('document-title test failure', function () {
   'use strict';
-  var results;
+  let results;
 
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {

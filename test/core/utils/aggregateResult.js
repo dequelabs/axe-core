@@ -1,7 +1,7 @@
 describe('axe.utils.aggregateResult', function () {
   'use strict';
 
-  var results,
+  let results,
     _results = [
       {
         id: 'gimmeLabel',
@@ -153,7 +153,7 @@ describe('axe.utils.aggregateResult', function () {
   });
 
   it('creates an object with arrays as properties for each result', function () {
-    var resultObject = axe.utils.aggregateResult(results);
+    let resultObject = axe.utils.aggregateResult(results);
 
     assert.isArray(resultObject.passes);
     assert.isArray(resultObject.violations);
@@ -163,8 +163,8 @@ describe('axe.utils.aggregateResult', function () {
 
   it('copies failures and passes to their respective arrays on the result object', function () {
     // insert 1 pass and 1 fail
-    var input = [results[0], results[1]];
-    var resultObject = axe.utils.aggregateResult(input);
+    let input = [results[0], results[1]];
+    let resultObject = axe.utils.aggregateResult(input);
 
     assert.lengthOf(resultObject.passes, 1);
     assert.lengthOf(resultObject.violations, 1);
@@ -182,8 +182,8 @@ describe('axe.utils.aggregateResult', function () {
 
   it('creates a duplicate of the result for each outcome it has', function () {
     // insert 1 fail, containing a pass, a fail and a cantTell result
-    var input = [results[2]];
-    var resultObject = axe.utils.aggregateResult(input);
+    let input = [results[2]];
+    let resultObject = axe.utils.aggregateResult(input);
 
     assert.lengthOf(resultObject.passes, 1);
     assert.lengthOf(resultObject.violations, 1);
@@ -198,8 +198,8 @@ describe('axe.utils.aggregateResult', function () {
 
   it('moves inapplicable results only to the inapplicable array', function () {
     // insert 1 fail, containing a pass, a fail and a cantTell result
-    var input = [results[3]];
-    var resultObject = axe.utils.aggregateResult(input);
+    let input = [results[3]];
+    let resultObject = axe.utils.aggregateResult(input);
 
     assert.lengthOf(resultObject.passes, 0);
     assert.lengthOf(resultObject.violations, 0);

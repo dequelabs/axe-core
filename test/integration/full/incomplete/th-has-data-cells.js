@@ -1,6 +1,6 @@
 describe('th-has-data-cells cantTell test', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       axe.run(
@@ -28,7 +28,7 @@ describe('th-has-data-cells cantTell test', function () {
 
   describe('incomplete data', function () {
     it('should be incomplete for missing or empty data cells', function () {
-      var resultNodes = results.incomplete[0].nodes;
+      let resultNodes = results.incomplete[0].nodes;
       assert.lengthOf(resultNodes, 2);
       resultNodes[0].any.forEach(function (check) {
         assert.match(check.message, 'Table data cells are missing or empty');

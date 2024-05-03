@@ -1,15 +1,15 @@
 describe('aria-valid-attr', function () {
   'use strict';
 
-  var queryFixture = axe.testUtils.queryFixture;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let queryFixture = axe.testUtils.queryFixture;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     checkContext.reset();
   });
 
   it('should return false if any invalid ARIA attributes are found', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" tabindex="1" aria-cats="true" aria-dogs="true"></div>'
     );
     assert.isFalse(
@@ -21,7 +21,7 @@ describe('aria-valid-attr', function () {
   });
 
   it('should return true if no invalid ARIA attributes are found', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true"></div>'
     );
     assert.isTrue(
@@ -43,7 +43,7 @@ describe('aria-valid-attr', function () {
       }
     });
 
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" tabindex="1" aria-mccheddarton="true"></div>'
     );
     assert.isTrue(
@@ -56,7 +56,7 @@ describe('aria-valid-attr', function () {
 
   describe('options', function () {
     it('should exclude provided attribute names', function () {
-      var vNode = queryFixture(
+      let vNode = queryFixture(
         '<div id="target" aria-bats="cat" aria-puppies="2"></div>'
       );
       assert.isTrue(

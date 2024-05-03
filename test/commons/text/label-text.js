@@ -1,23 +1,23 @@
 describe('text.labelText', function () {
-  var labelText = axe.commons.text.labelText;
-  var queryFixture = axe.testUtils.queryFixture;
+  let labelText = axe.commons.text.labelText;
+  let queryFixture = axe.testUtils.queryFixture;
 
   it('returns the text of an implicit label', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label>' + 'My implicit label<input id="target" />' + '</label>'
     );
     assert.equal(labelText(target), 'My implicit label');
   });
 
   it('returns the text of an explicit label', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label for="target">My explicit label</label>' + '<input id="target" />'
     );
     assert.equal(labelText(target), 'My explicit label');
   });
 
   it('ignores the text of nested implicit labels', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label>My outer label' +
         '<label>My inner label' +
         '<input id="target" />' +
@@ -28,7 +28,7 @@ describe('text.labelText', function () {
   });
 
   it('concatinates multiple explicit labels', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label for="target">My label 1</label>' +
         '<label for="target">My label 2</label>' +
         '<input id="target" />'
@@ -37,7 +37,7 @@ describe('text.labelText', function () {
   });
 
   it('concatinates explicit and implicit labels', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label for="target">My explicit label</label>' +
         '<label for="target">My implicit label' +
         '<input id="target" />' +
@@ -47,7 +47,7 @@ describe('text.labelText', function () {
   });
 
   it('returns label text in the DOM order', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label for="target">Label 1</label>' +
         '<label for="target">My implicit ' +
         '<label for="target">Label 2</label>' +
@@ -59,7 +59,7 @@ describe('text.labelText', function () {
   });
 
   it('does not return the same label twice', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label for="target">' +
         'My implicit and explicit label' +
         '<input id="target" />' +
@@ -69,7 +69,7 @@ describe('text.labelText', function () {
   });
 
   it('ignores the value of a textbox', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label>My label' +
         '<input value="without text" id="target" />' +
         '</label>'
@@ -78,7 +78,7 @@ describe('text.labelText', function () {
   });
 
   it('ignores the content of a textarea', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label>My label' +
         '<textarea id="target">Without text</textarea' +
         '</label>'
@@ -87,7 +87,7 @@ describe('text.labelText', function () {
   });
 
   it('ignores the options of a select element', function () {
-    var target = queryFixture(
+    let target = queryFixture(
       '<label>My label' +
         '<select id="target">' +
         '<option selected>Without</option>' +
@@ -100,7 +100,7 @@ describe('text.labelText', function () {
 
   describe('with context = { inControlContext: true }', function () {
     it('returns `` ', function () {
-      var target = queryFixture(
+      let target = queryFixture(
         '<label for="target">My explicit label</label>' +
           '<input id="target" />'
       );
@@ -110,7 +110,7 @@ describe('text.labelText', function () {
 
   describe('with context = { inLabelledByContext: true }', function () {
     it('returns `` ', function () {
-      var target = queryFixture(
+      let target = queryFixture(
         '<label for="target">My explicit label</label>' +
           '<input id="target" />'
       );

@@ -1,6 +1,6 @@
 describe('reporters - v1', function () {
   'use strict';
-  var runResults,
+  let runResults,
     _results = [
       {
         id: 'gimmeLabel',
@@ -143,10 +143,10 @@ describe('reporters - v1', function () {
         failureSummaries: {
           none: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix any of the following: \n';
-              var arr1 = it;
+              let out = 'Fix any of the following: \n';
+              let arr1 = it;
               if (arr1) {
-                var value,
+                let value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
@@ -164,10 +164,10 @@ describe('reporters - v1', function () {
           },
           any: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix all of the following: \n';
-              var arr1 = it;
+              let out = 'Fix all of the following: \n';
+              let arr1 = it;
               if (arr1) {
-                var value,
+                let value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
@@ -297,7 +297,7 @@ describe('reporters - v1', function () {
     });
   });
   it('uses the environmentData option instead of environment data if specified', function () {
-    var environmentData = {
+    let environmentData = {
       myReporter: 'hello world'
     };
     axe.getReporter('v1')(

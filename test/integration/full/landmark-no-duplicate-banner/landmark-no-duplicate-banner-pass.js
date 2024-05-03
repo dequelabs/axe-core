@@ -1,6 +1,6 @@
 describe('landmark-no-duplicate-banner test pass', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       axe.run(

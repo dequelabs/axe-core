@@ -1,8 +1,8 @@
 describe('aria.labelVirtual', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = document.getElementById('fixture');
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -14,7 +14,7 @@ describe('aria.labelVirtual', function () {
       '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
         '<input id="target" aria-labelledby="monkeys bananas">'
     );
-    var target = fixture.querySelector('#target');
+    let target = fixture.querySelector('#target');
 
     assert.equal(axe.commons.aria.label(target), 'monkeys bananas');
   });
@@ -25,7 +25,7 @@ describe('aria.labelVirtual', function () {
         '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
           '<input id="target" aria-labelledby="monkeys bananas">'
       );
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.equal(axe.commons.aria.labelVirtual(target), 'monkeys bananas');
     });
@@ -35,7 +35,7 @@ describe('aria.labelVirtual', function () {
         '<div id="monkeys">monkeys</div><div id="bananas" style="display: none">bananas</div>' +
           '<input id="target" aria-labelledby="monkeys bananas">'
       );
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.equal(axe.commons.aria.labelVirtual(target), 'monkeys');
     });
@@ -45,7 +45,7 @@ describe('aria.labelVirtual', function () {
         '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
           '<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">'
       );
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.equal(axe.commons.aria.labelVirtual(target), 'monkeys bananas');
     });
@@ -55,7 +55,7 @@ describe('aria.labelVirtual', function () {
         '<div id="monkeys">	\n  </div><div id="bananas"></div>' +
           '<input id="target" aria-labelledby="monkeys bananas">'
       );
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.isNull(axe.commons.aria.labelVirtual(target));
     });
@@ -64,14 +64,14 @@ describe('aria.labelVirtual', function () {
   describe('aria-label', function () {
     it('should detect it', function () {
       fixtureSetup('<input id="target" aria-label="monkeys">');
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.equal(axe.commons.aria.labelVirtual(target), 'monkeys');
     });
 
     it('should ignore whitespace only labels', function () {
       fixtureSetup('<input id="target" aria-label="   \n	">');
-      var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      let target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
 
       assert.isNull(axe.commons.aria.labelVirtual(target));
     });

@@ -1,9 +1,9 @@
 describe('td-has-header', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport.v1;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -38,8 +38,8 @@ describe('td-has-header', function () {
       '  </tbody>' +
       '</table>';
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
-    var result = axe.testUtils
+    let node = fixture.querySelector('table');
+    let result = axe.testUtils
       .getCheckEvaluate('td-has-header')
       .call(checkContext, node);
 
@@ -52,7 +52,7 @@ describe('td-has-header', function () {
       '<table>' + '  <tr> <th>hi</th> <td>hello</td> </tr>' + '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -66,7 +66,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -80,7 +80,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -95,7 +95,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -111,7 +111,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -125,7 +125,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -136,7 +136,7 @@ describe('td-has-header', function () {
       '<table>' + '  <tr> <td></td> <td></td> </tr>' + '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -147,7 +147,7 @@ describe('td-has-header', function () {
       '<table>' + '  <tr> <td>hi</td> <td>hello</td> </tr>' + '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
 
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
@@ -166,7 +166,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
 
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
@@ -186,7 +186,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
 
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
@@ -200,7 +200,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
 
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
@@ -215,7 +215,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
@@ -223,7 +223,7 @@ describe('td-has-header', function () {
 
   (shadowSupport ? it : xit)('recognizes shadow tree content', function () {
     fixture.innerHTML = '<div id="shadow"> <b>header</b> </div>';
-    var shadow = fixture
+    let shadow = fixture
       .querySelector('#shadow')
       .attachShadow({ mode: 'open' });
     shadow.innerHTML =
@@ -233,7 +233,7 @@ describe('td-has-header', function () {
       '</table>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    var node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
+    let node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );

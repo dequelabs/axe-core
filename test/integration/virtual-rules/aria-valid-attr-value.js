@@ -1,6 +1,6 @@
 describe('aria-valid-attr-value virtual-rule', function () {
   it('should pass for valid values', function () {
-    var results = axe.runVirtualRule('aria-valid-attr-value', {
+    let results = axe.runVirtualRule('aria-valid-attr-value', {
       nodeName: 'div',
       attributes: {
         role: 'slider',
@@ -18,7 +18,7 @@ describe('aria-valid-attr-value virtual-rule', function () {
   });
 
   it('should fail for invalid values', function () {
-    var results = axe.runVirtualRule('aria-valid-attr-value', {
+    let results = axe.runVirtualRule('aria-valid-attr-value', {
       nodeName: 'div',
       attributes: {
         role: 'slider',
@@ -37,7 +37,7 @@ describe('aria-valid-attr-value virtual-rule', function () {
   });
 
   it('should only mark invalid values', function () {
-    var results = axe.runVirtualRule('aria-valid-attr-value', {
+    let results = axe.runVirtualRule('aria-valid-attr-value', {
       nodeName: 'div',
       attributes: {
         role: 'slider',
@@ -59,7 +59,7 @@ describe('aria-valid-attr-value virtual-rule', function () {
   });
 
   it('should incomplete for idref attributes', function () {
-    var results = axe.runVirtualRule('aria-valid-attr-value', {
+    let results = axe.runVirtualRule('aria-valid-attr-value', {
       nodeName: 'div',
       attributes: {
         role: 'slider',
@@ -73,7 +73,7 @@ describe('aria-valid-attr-value virtual-rule', function () {
   });
 
   it('should pass for empty idref attributes', function () {
-    var results = axe.runVirtualRule('aria-valid-attr-value', {
+    let results = axe.runVirtualRule('aria-valid-attr-value', {
       nodeName: 'div',
       attributes: {
         role: 'slider',

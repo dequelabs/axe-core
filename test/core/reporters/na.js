@@ -1,6 +1,6 @@
 describe('reporters - na', function () {
   'use strict';
-  var runResults,
+  let runResults,
     _results = [
       {
         id: 'noMatch',
@@ -216,7 +216,7 @@ describe('reporters - na', function () {
     });
   });
   it('uses the environmentData option instead of environment data if specified', function () {
-    var environmentData = {
+    let environmentData = {
       myReporter: 'hello world'
     };
     axe.getReporter('na')(

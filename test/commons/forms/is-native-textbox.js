@@ -1,10 +1,10 @@
 describe('forms.isNativeTextbox', function () {
   'use strict';
-  var isNativeTextbox = axe.commons.forms.isNativeTextbox;
-  var queryFixture = axe.testUtils.queryFixture;
+  let isNativeTextbox = axe.commons.forms.isNativeTextbox;
+  let queryFixture = axe.testUtils.queryFixture;
 
   it('returns true for a text inputs', function () {
-    var textInputs = [
+    let textInputs = [
       'date',
       'datetime',
       'datetime-local',
@@ -20,7 +20,7 @@ describe('forms.isNativeTextbox', function () {
       'week'
     ];
     textInputs.forEach(function (type) {
-      var node = queryFixture('<input id="target" type="' + type + '"/>');
+      let node = queryFixture('<input id="target" type="' + type + '"/>');
       assert.isTrue(
         isNativeTextbox(node),
         '<input type="' + type + '"> is a native text input'
@@ -29,12 +29,12 @@ describe('forms.isNativeTextbox', function () {
   });
 
   it('returns true for a textarea element', function () {
-    var node = queryFixture('<textarea id="target"/>');
+    let node = queryFixture('<textarea id="target"/>');
     assert.isTrue(isNativeTextbox(node));
   });
 
   it('returns false for non-text inputs', function () {
-    var nonTextInputs = [
+    let nonTextInputs = [
       'button',
       'checkbox',
       'file',
@@ -47,7 +47,7 @@ describe('forms.isNativeTextbox', function () {
       'color'
     ];
     nonTextInputs.forEach(function (type) {
-      var node = queryFixture('<input id="target" type="' + type + '"/>');
+      let node = queryFixture('<input id="target" type="' + type + '"/>');
 
       assert.isFalse(
         isNativeTextbox(node),
@@ -57,12 +57,12 @@ describe('forms.isNativeTextbox', function () {
   });
 
   it('return false for aria textbox elements', function () {
-    var node = queryFixture('<div id="target" role="textbox"></div>');
+    let node = queryFixture('<div id="target" role="textbox"></div>');
     assert.isFalse(isNativeTextbox(node));
   });
 
   it('should ignore type case', function () {
-    var node = queryFixture('<input id="target" type="TEXT"/>');
+    let node = queryFixture('<input id="target" type="TEXT"/>');
     assert.isTrue(isNativeTextbox(node));
   });
 });

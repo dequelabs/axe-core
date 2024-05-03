@@ -32,13 +32,13 @@ describe('aria.requiredOwned', function () {
   });
 
   it('should return null if there are no required context nodes', function () {
-    var result = axe.commons.aria.requiredOwned('cats');
+    let result = axe.commons.aria.requiredOwned('cats');
 
     assert.isNull(result);
   });
 
   it('should return a unique copy of the context', function () {
-    var context = ['yes', 'no'];
+    let context = ['yes', 'no'];
 
     axe.configure({
       standards: {
@@ -50,7 +50,7 @@ describe('aria.requiredOwned', function () {
       }
     });
 
-    var result = axe.commons.aria.requiredOwned('cats');
+    let result = axe.commons.aria.requiredOwned('cats');
     assert.notEqual(result, context);
   });
 });

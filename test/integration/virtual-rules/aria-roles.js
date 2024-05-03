@@ -1,6 +1,6 @@
 describe('aria-roles virtual-rule', function () {
   it('should pass for valid role', function () {
-    var results = axe.runVirtualRule('aria-roles', {
+    let results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
         role: 'alert'
@@ -13,7 +13,7 @@ describe('aria-roles virtual-rule', function () {
   });
 
   it('should fail for abstract role', function () {
-    var results = axe.runVirtualRule('aria-roles', {
+    let results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
         role: 'command'
@@ -26,7 +26,7 @@ describe('aria-roles virtual-rule', function () {
   });
 
   it('should fail for invalid role', function () {
-    var results = axe.runVirtualRule('aria-roles', {
+    let results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
         role: 'foobar'
@@ -39,7 +39,7 @@ describe('aria-roles virtual-rule', function () {
   });
 
   it('should pass for fallback role', function () {
-    var results = axe.runVirtualRule('aria-roles', {
+    let results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
         role: 'presentation none'
@@ -62,7 +62,7 @@ describe('aria-roles virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('aria-roles', {
+    let results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
         role: 'alert'

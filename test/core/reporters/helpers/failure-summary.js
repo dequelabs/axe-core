@@ -8,10 +8,10 @@ describe('helpers.failureSummary', function () {
         failureSummaries: {
           none: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix all of the following: \n';
-              var arr1 = it;
+              let out = 'Fix all of the following: \n';
+              let arr1 = it;
               if (arr1) {
-                var value,
+                let value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
@@ -29,10 +29,10 @@ describe('helpers.failureSummary', function () {
           },
           any: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix any of the following: \n';
-              var arr1 = it;
+              let out = 'Fix any of the following: \n';
+              let arr1 = it;
               if (arr1) {
-                var value,
+                let value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
@@ -49,7 +49,7 @@ describe('helpers.failureSummary', function () {
   });
 
   it('should concatenate none and all', function () {
-    var summary = helpers.failureSummary({
+    let summary = helpers.failureSummary({
       result: 'failed',
       any: [],
       all: [
@@ -74,7 +74,7 @@ describe('helpers.failureSummary', function () {
   });
 
   it('should return a list of ANYs if none return true', function () {
-    var summary = helpers.failureSummary({
+    let summary = helpers.failureSummary({
       result: 'failed',
       any: [
         {
@@ -98,7 +98,7 @@ describe('helpers.failureSummary', function () {
   });
 
   it('should concatenate anys', function () {
-    var summary = helpers.failureSummary({
+    let summary = helpers.failureSummary({
       result: 'failed',
       any: [
         {

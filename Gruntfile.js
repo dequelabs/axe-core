@@ -1,4 +1,4 @@
-var execSync = require('child_process').execSync;
+let execSync = require('child_process').execSync;
 
 /*eslint
 camelcase: ["error", {"properties": "never"}]
@@ -14,14 +14,14 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bytesize');
   grunt.loadTasks('build/tasks');
 
-  var langs;
+  let langs;
   if (grunt.option('lang')) {
     langs = (grunt.option('lang') || '').split(/[,;]/g).map(function (lang) {
       lang = lang.trim();
       return lang !== 'en' ? '.' + lang : '';
     });
   } else if (grunt.option('all-lang')) {
-    var localeFiles = require('fs').readdirSync('./locales');
+    let localeFiles = require('fs').readdirSync('./locales');
     langs = localeFiles.map(function (file) {
       return '.' + file.replace('.json', '');
     });

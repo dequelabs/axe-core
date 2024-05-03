@@ -1,16 +1,16 @@
 describe('run-partial, after-method', function () {
   'use strict';
-  var ruleName = 'heading-order';
-  var runPartialRecursive = axe.testUtils.runPartialRecursive;
-  var clone = axe.utils.clone;
+  let ruleName = 'heading-order';
+  let runPartialRecursive = axe.testUtils.runPartialRecursive;
+  let clone = axe.utils.clone;
 
   beforeEach(function (done) {
     axe.testUtils.awaitNestedLoad(done);
   });
 
   it('gives the same passed results as axe.run with a complex "after" method', function (done) {
-    var options = { runOnly: ruleName };
-    var context = { exclude: [] };
+    let options = { runOnly: ruleName };
+    let context = { exclude: [] };
     Promise.all(runPartialRecursive(clone(context), options))
       .then(function (partialResults) {
         return Promise.all([
@@ -19,8 +19,8 @@ describe('run-partial, after-method', function () {
         ]);
       })
       .then(function (results) {
-        var axeRunPartialResult = results[0];
-        var axeRunResult = results[1];
+        let axeRunPartialResult = results[0];
+        let axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.violations, 0);
         axeRunPartialResult.testEnvironment = axeRunResult.testEnvironment;
         axeRunPartialResult.timestamp = axeRunResult.timestamp;
@@ -31,8 +31,8 @@ describe('run-partial, after-method', function () {
   });
 
   it('gives the same failed results as axe.run with a complex "after" method', function (done) {
-    var options = { runOnly: ruleName };
-    var context = { exclude: [['#frame1', '#frame1a']] };
+    let options = { runOnly: ruleName };
+    let context = { exclude: [['#frame1', '#frame1a']] };
     Promise.all(runPartialRecursive(clone(context), options))
       .then(function (partialResults) {
         return Promise.all([
@@ -41,13 +41,13 @@ describe('run-partial, after-method', function () {
         ]);
       })
       .then(function (results) {
-        var axeRunPartialResult = results[0];
-        var axeRunResult = results[1];
+        let axeRunPartialResult = results[0];
+        let axeRunResult = results[1];
 
         assert.isObject(axeRunPartialResult);
         assert.isObject(axeRunResult);
         // Check the node is the one we expect
-        var nodes = axeRunPartialResult.violations[0].nodes;
+        let nodes = axeRunPartialResult.violations[0].nodes;
         assert.lengthOf(nodes, 1);
         assert.deepEqual(nodes[0].target, ['#frame1', 'h3']);
 

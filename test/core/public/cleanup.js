@@ -3,7 +3,7 @@ describe('cleanup', function () {
   'use strict';
 
   function createFrames(callback) {
-    var frame;
+    let frame;
     frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
     frame.addEventListener('load', function () {
@@ -12,9 +12,9 @@ describe('cleanup', function () {
     fixture.appendChild(frame);
   }
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
-  var assertNotCalled = function () {
+  let assertNotCalled = function () {
     assert.ok(false, 'Should not be called');
   };
 
@@ -39,7 +39,7 @@ describe('cleanup', function () {
 
   it('should call cleanup on all plugins', function (done) {
     /*eslint no-unused-vars: 0*/
-    var cleaned = false;
+    let cleaned = false;
     axe._load({
       rules: []
     });
@@ -62,7 +62,7 @@ describe('cleanup', function () {
   });
 
   it('should not throw exception if no arguments are provided', function (done) {
-    var cleaned = false;
+    let cleaned = false;
     axe._load({
       rules: []
     });
@@ -88,10 +88,10 @@ describe('cleanup', function () {
     createFrames(function () {
       axe._load({});
 
-      var frame = fixture.querySelector('iframe');
-      var win = frame.contentWindow;
+      let frame = fixture.querySelector('iframe');
+      let win = frame.contentWindow;
       win.addEventListener('message', function (message) {
-        var data = JSON.parse(message.data);
+        let data = JSON.parse(message.data);
         if (data.topic === 'axe.start') {
           assert.deepEqual(data.payload, { command: 'cleanup-plugin' });
           done();

@@ -1,12 +1,12 @@
 describe('standards.getAriaRolesSupportingNameFromContent', function () {
-  var getAriaRolesSupportingNameFromContent =
+  let getAriaRolesSupportingNameFromContent =
     axe.commons.standards.getAriaRolesSupportingNameFromContent;
 
   it('should return a list of role names which are named from content', function () {
     // first remove all namedFromContent
-    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
-    var ariaRoles = {};
-    for (var i = 0; i < roleNames.length; i++) {
+    let roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    let ariaRoles = {};
+    for (let i = 0; i < roleNames.length; i++) {
       ariaRoles[roleNames[i]] = { nameFromContent: false };
     }
 
@@ -22,7 +22,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    let contentRoles = getAriaRolesSupportingNameFromContent();
     assert.deepEqual(contentRoles, [
       'button',
       'cell',
@@ -42,7 +42,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    let contentRoles = getAriaRolesSupportingNameFromContent();
     assert.include(contentRoles, 'myRole');
   });
 
@@ -57,7 +57,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    let contentRoles = getAriaRolesSupportingNameFromContent();
     assert.notInclude(contentRoles, 'button');
   });
 });

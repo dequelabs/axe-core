@@ -1,5 +1,5 @@
 describe('frame-messenger', function () {
-  var fixture,
+  let fixture,
     axeVersion,
     axeApplication,
     frame,
@@ -7,8 +7,8 @@ describe('frame-messenger', function () {
     respondable,
     frameSubscribe,
     axeLog;
-  var postMessage = window.postMessage;
-  var captureError = axe.testUtils.captureError;
+  let postMessage = window.postMessage;
+  let captureError = axe.testUtils.captureError;
 
   beforeEach(function (done) {
     respondable = axe.utils.respondable;
@@ -45,7 +45,7 @@ describe('frame-messenger', function () {
   });
 
   it('forwards the message', function (done) {
-    var expected = { hello: 'world' };
+    let expected = { hello: 'world' };
     frameSubscribe(
       'greeting',
       captureError(function (actual) {
@@ -79,7 +79,7 @@ describe('frame-messenger', function () {
   });
 
   it('can not publish to a parent frame', function (done) {
-    var isCalled = false;
+    let isCalled = false;
     axe.utils.respondable.subscribe('greeting', function () {
       isCalled = true;
     });
@@ -96,7 +96,7 @@ describe('frame-messenger', function () {
   });
 
   it('does not expose private methods', function () {
-    var methods = Object.keys(respondable).sort();
+    let methods = Object.keys(respondable).sort();
     assert.deepEqual(
       methods,
       ['subscribe', 'isInFrame', 'updateMessenger'].sort()
@@ -104,7 +104,7 @@ describe('frame-messenger', function () {
   });
 
   it('passes serialized information only', function (done) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     frameSubscribe(
       'greeting',
       captureError(function (message) {
@@ -121,8 +121,8 @@ describe('frame-messenger', function () {
       allowedOrigins: [window.location.origin, 'http://customOrigin.com']
     });
 
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isTrue(posted);
     assert.equal(spy.callCount, 2);
     assert.deepEqual(spy.firstCall.args[1], window.location.origin);
@@ -134,8 +134,8 @@ describe('frame-messenger', function () {
       allowedOrigins: ['<same_origin>']
     });
 
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isTrue(posted);
     assert.equal(spy.callCount, 1);
     assert.deepEqual(spy.firstCall.args[1], window.location.origin);
@@ -146,8 +146,8 @@ describe('frame-messenger', function () {
       allowedOrigins: ['http://customOrigin.com', '<unsafe_all_origins>']
     });
 
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isTrue(posted);
     assert.equal(spy.callCount, 1);
     assert.equal(spy.firstCall.args[1], '*');
@@ -157,16 +157,16 @@ describe('frame-messenger', function () {
     axe.configure({
       allowedOrigins: []
     });
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isFalse(posted);
     assert.isFalse(spy.called);
   });
 
   it('does not post message if no allowed origins', function () {
     axe._audit.allowedOrigins = null;
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isFalse(posted);
     assert.isFalse(spy.called);
   });
@@ -175,8 +175,8 @@ describe('frame-messenger', function () {
     axe.configure({
       allowedOrigins: []
     });
-    var spy = sinon.spy(frameWin, 'postMessage');
-    var posted = respondable(frameWin, 'greeting');
+    let spy = sinon.spy(frameWin, 'postMessage');
+    let posted = respondable(frameWin, 'greeting');
     assert.isFalse(posted);
     assert.isFalse(spy.called);
   });
@@ -194,7 +194,7 @@ describe('frame-messenger', function () {
     axe.configure({
       allowedOrigins: ['<unsafe_all_origins>']
     });
-    var called = false;
+    let called = false;
     frameWin.axe.log = function () {
       called = true;
     };
@@ -213,13 +213,13 @@ describe('frame-messenger', function () {
 
   describe('isInFrame', function () {
     it('is false for the page window', function () {
-      var frameRespondable = frameWin.axe.utils.respondable;
+      let frameRespondable = frameWin.axe.utils.respondable;
       assert.isFalse(respondable.isInFrame());
       assert.isFalse(frameRespondable.isInFrame(window));
     });
 
     it('is true for iframes', function () {
-      var frameRespondable = frameWin.axe.utils.respondable;
+      let frameRespondable = frameWin.axe.utils.respondable;
       assert.isTrue(frameRespondable.isInFrame());
       assert.isTrue(respondable.isInFrame(frameWin));
     });

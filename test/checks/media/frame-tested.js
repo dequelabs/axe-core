@@ -1,8 +1,8 @@
 describe('frame-tested', function () {
   'use strict';
 
-  var checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
-  var frameTestedAfter = checks['frame-tested'].after;
+  let checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
+  let frameTestedAfter = checks['frame-tested'].after;
 
   describe('evaluate', function () {
     it('returns undefined', function () {
@@ -16,7 +16,7 @@ describe('frame-tested', function () {
 
   describe('after', function () {
     it('changes result to true if frame has been tested', function () {
-      var results = [
+      let results = [
         {
           result: undefined,
           node: {
@@ -49,7 +49,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      let afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
 
       assert.isTrue(afterResults[0].result);
@@ -64,7 +64,7 @@ describe('frame-tested', function () {
     });
 
     it('does not change result when iframe has not been tested', function () {
-      var results = [
+      let results = [
         {
           result: undefined,
           node: {
@@ -97,7 +97,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      let afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 3);
 
       assert.isTrue(afterResults[0].result);
@@ -117,7 +117,7 @@ describe('frame-tested', function () {
     });
 
     it('works with shadow DOM', function () {
-      var results = [
+      let results = [
         {
           result: undefined,
           node: {
@@ -144,7 +144,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      let afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
 
       assert.isTrue(afterResults[0].result);
@@ -159,7 +159,7 @@ describe('frame-tested', function () {
     });
 
     it('works with nested shadow DOM and iframes', function () {
-      var results = [
+      let results = [
         {
           result: undefined,
           node: {
@@ -220,7 +220,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      let afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 4);
 
       assert.isTrue(afterResults[0].result);

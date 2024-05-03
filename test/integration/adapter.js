@@ -12,7 +12,7 @@ function flattenTitles(test) {
 (function () {
   'use strict';
 
-  var runner = mocha.run();
+  let runner = mocha.run();
   runner.on('end', function () {
     window.mochaResults = runner.stats;
     window.mochaResults.reports = failedTests;

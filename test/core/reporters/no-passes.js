@@ -1,6 +1,6 @@
 describe('reporters - no-passes', function () {
   'use strict';
-  var runResults,
+  let runResults,
     _results = [
       {
         id: 'gimmeLabel',
@@ -180,7 +180,7 @@ describe('reporters - no-passes', function () {
     });
   });
   it('uses the environmentData option instead of environment data if specified', function () {
-    var environmentData = {
+    let environmentData = {
       myReporter: 'hello world'
     };
     axe.getReporter('no-passes')(

@@ -1,6 +1,6 @@
 describe('RuleResult', function () {
   'use strict';
-  var RuleResult = axe._thisWillBeDeletedDoNotUse.base.RuleResult;
+  let RuleResult = axe._thisWillBeDeletedDoNotUse.base.RuleResult;
 
   it('should be a function', function () {
     assert.isFunction(RuleResult);
@@ -11,7 +11,7 @@ describe('RuleResult', function () {
   });
 
   it('should grab id from passed in rule', function () {
-    var result = new RuleResult({ id: 'monkeys' });
+    let result = new RuleResult({ id: 'monkeys' });
     assert.equal(result.id, 'monkeys');
   });
 });

@@ -22,7 +22,7 @@ describe('axe.setup', function () {
   });
 
   it('should return the root node', function () {
-    var vNode = axe.setup(document.body);
+    let vNode = axe.setup(document.body);
     assert.equal(vNode.actualNode, document.body);
   });
 

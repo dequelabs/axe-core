@@ -1,8 +1,8 @@
 describe('axe.utils.preloadMedia', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = document.getElementById('fixture');
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   afterEach(function () {
     fixture.innerHTML = '';

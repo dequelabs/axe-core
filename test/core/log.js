@@ -5,12 +5,12 @@ describe('axe.log', function () {
     assert.isFunction(axe.log);
   });
   it('should invoke console.log', function () {
-    var orig = window.console;
+    let orig = window.console;
     if (!window.console || window.console.log) {
       window.console = { log: function () {} };
     }
-    var expected = ['hi', 'hello'];
-    var success = false;
+    let expected = ['hi', 'hello'];
+    let success = false;
 
     window.console.log = function () {
       success = true;

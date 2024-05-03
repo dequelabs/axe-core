@@ -2,14 +2,14 @@
 describe('unique-frame-title-after', function () {
   'use strict';
 
-  var checkContext = axe.testUtils.MockCheckContext();
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     checkContext.reset();
   });
 
   it('should remove any check whose data only appears once', function () {
-    var result = checks['unique-frame-title'].after([
+    let result = checks['unique-frame-title'].after([
       {
         data: 'bananas'
       },

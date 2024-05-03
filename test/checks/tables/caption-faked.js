@@ -1,13 +1,13 @@
 describe('caption-faked', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  var captionFaked;
+  let captionFaked;
   beforeEach(function () {
     captionFaked = checks['caption-faked'];
   });
@@ -19,7 +19,7 @@ describe('caption-faked', function () {
       '  <tr> <td></td> <td></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
 
@@ -30,7 +30,7 @@ describe('caption-faked', function () {
       '  <tr> <td></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
 
@@ -41,7 +41,7 @@ describe('caption-faked', function () {
       '  <tr> <td rowspan="2" colspan="2"></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
 
@@ -52,7 +52,7 @@ describe('caption-faked', function () {
       '  <tr> <td></td> <td></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
 
@@ -63,7 +63,7 @@ describe('caption-faked', function () {
       '  <tr> <td></td> <td></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isFalse(captionFaked.evaluate(node));
   });
 
@@ -74,7 +74,7 @@ describe('caption-faked', function () {
       '  <tr> <td></td> <td></td> </tr>' +
       '</table>';
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isFalse(captionFaked.evaluate(node));
   });
 });

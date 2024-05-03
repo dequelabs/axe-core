@@ -1,13 +1,13 @@
 describe('tabindex virtual-rule', function () {
   it('should pass for tabindex = 0', function () {
-    var node = {
+    let node = {
       nodeName: 'div',
       attributes: {
         tabindex: 0
       }
     };
 
-    var results = axe.runVirtualRule('tabindex', node);
+    let results = axe.runVirtualRule('tabindex', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -15,14 +15,14 @@ describe('tabindex virtual-rule', function () {
   });
 
   it('should pass for tabindex = -1', function () {
-    var node = {
+    let node = {
       nodeName: 'div',
       attributes: {
         tabindex: -1
       }
     };
 
-    var results = axe.runVirtualRule('tabindex', node);
+    let results = axe.runVirtualRule('tabindex', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
@@ -30,14 +30,14 @@ describe('tabindex virtual-rule', function () {
   });
 
   it('should fail for tabindex > 0', function () {
-    var node = {
+    let node = {
       nodeName: 'div',
       attributes: {
         tabindex: 1
       }
     };
 
-    var results = axe.runVirtualRule('tabindex', node);
+    let results = axe.runVirtualRule('tabindex', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);

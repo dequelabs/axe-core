@@ -1,8 +1,8 @@
 describe('xml-lang-mismatch', function () {
   'use strict';
 
-  var checkContext = axe.testUtils.MockCheckContext();
-  var queryFixture = axe.testUtils.queryFixture;
+  let checkContext = axe.testUtils.MockCheckContext();
+  let queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(function () {
     // using a div element (instead of html), as the check is agnostic of element type
@@ -17,7 +17,7 @@ describe('xml-lang-mismatch', function () {
   // rather than node type match - hence the check can be re-used.
 
   it('should return false if a only lang is supplied', function () {
-    var vNode = queryFixture('<div id="target" lang="en"></div>');
+    let vNode = queryFixture('<div id="target" lang="en"></div>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('xml-lang-mismatch')
@@ -26,7 +26,7 @@ describe('xml-lang-mismatch', function () {
   });
 
   it('should return false if a only xml:lang is supplied albeit with region', function () {
-    var vNode = queryFixture('<div id="target" xml:lang="fr-FR"></div>');
+    let vNode = queryFixture('<div id="target" xml:lang="fr-FR"></div>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('xml-lang-mismatch')
@@ -35,9 +35,9 @@ describe('xml-lang-mismatch', function () {
   });
 
   it('should return false if lang is undefined', function () {
-    var node = document.createElement('div');
+    let node = document.createElement('div');
     node.setAttribute('lang', undefined);
-    var tree = axe.testUtils.flatTreeSetup(node);
+    let tree = axe.testUtils.flatTreeSetup(node);
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('xml-lang-mismatch')
@@ -46,7 +46,7 @@ describe('xml-lang-mismatch', function () {
   });
 
   it('should return true if lang and xml:lang is identical', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" xml:lang="en-GB" lang="en-GB"></div>'
     );
     assert.isTrue(
@@ -57,7 +57,7 @@ describe('xml-lang-mismatch', function () {
   });
 
   it('should return true if lang and xml:lang have identical primary sub tag', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" xml:lang="en-US" lang="en-GB"></div>'
     );
     assert.isTrue(
@@ -68,10 +68,10 @@ describe('xml-lang-mismatch', function () {
   });
 
   it('should return false if lang and xml:lang are not identical', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" xml:lang="fr-FR" lang="en"></div>'
     );
-    var actual = axe.testUtils
+    let actual = axe.testUtils
       .getCheckEvaluate('xml-lang-mismatch')
       .call(checkContext, null, {}, vNode);
     assert.isFalse(actual);

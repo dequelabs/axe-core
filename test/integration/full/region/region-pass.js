@@ -1,6 +1,6 @@
 describe('region pass test', function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       axe.run({ runOnly: ['region'] }, function (err, r) {

@@ -7,8 +7,8 @@ describe('UMD module.export', function () {
   });
 
   it('does not use `require` functions', function () {
-    var result;
-    var requireRegex = /[^.]require\(([^\)])\)/g;
+    let result;
+    let requireRegex = /[^.]require\(([^\)])\)/g;
 
     // This is to avoid colliding with Cypress.js which overloads all
     // uses of variables named `require`.
@@ -23,7 +23,7 @@ describe('UMD module.export', function () {
   });
 
   it('should include doT', function () {
-    var doT = axe.imports.doT;
+    let doT = axe.imports.doT;
     assert(doT, 'doT is registered on axe.imports');
     assert.equal(doT.name, 'doT');
   });

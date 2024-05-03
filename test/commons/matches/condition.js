@@ -1,8 +1,8 @@
 describe('matches.condition', function () {
-  var condition = axe.commons.matches.condition;
+  let condition = axe.commons.matches.condition;
 
   it('passes the first argument to the condition', function () {
-    var count = 0;
+    let count = 0;
     condition('foo', function (foo) {
       assert.equal('foo', foo);
       count++;

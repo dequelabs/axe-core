@@ -1,6 +1,6 @@
 describe('bypass aria header test ' + window.location.pathname, function () {
   'use strict';
-  var results;
+  let results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
       axe.run(

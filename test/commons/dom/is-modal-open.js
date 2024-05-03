@@ -1,9 +1,9 @@
 describe('dom.isModalOpen', function () {
   'use strict';
 
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var isModalOpen = axe.commons.dom.isModalOpen;
-  var dialogElSupport =
+  let fixtureSetup = axe.testUtils.fixtureSetup;
+  let isModalOpen = axe.commons.dom.isModalOpen;
+  let dialogElSupport =
     typeof document.createElement('dialog').open !== 'undefined';
 
   it('returns true if there is a visible element with role=dialog', function () {

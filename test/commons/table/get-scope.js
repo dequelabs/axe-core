@@ -5,8 +5,8 @@ describe('table.getScope', function () {
     return document.getElementById(id);
   }
 
-  var fixture = $id('fixture');
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = $id('fixture');
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   it('returns false for TD without scope attribute', function () {
     fixture.innerHTML =
@@ -15,7 +15,7 @@ describe('table.getScope', function () {
       '<tr><th>2</th><td>ok</td></tr>' +
       '</table>';
 
-    var target = $id('target');
+    let target = $id('target');
     fixtureSetup();
     assert.equal(axe.commons.table.getScope(target), false);
   });
@@ -25,7 +25,7 @@ describe('table.getScope', function () {
       axe.commons.table.getScope();
     }, TypeError);
 
-    var node = document.createElement('tr');
+    let node = document.createElement('tr');
     axe.utils.getFlattenedTree(node);
 
     assert.throws(function () {
@@ -34,7 +34,7 @@ describe('table.getScope', function () {
   });
 
   it('does not throw if it is passed a data cell', function () {
-    var node = document.createElement('td');
+    let node = document.createElement('td');
     axe.utils.getFlattenedTree(node);
     assert.doesNotThrow(function () {
       axe.commons.table.getScope(node);
@@ -49,7 +49,7 @@ describe('table.getScope', function () {
         '<tr><td>ok</td><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
@@ -61,7 +61,7 @@ describe('table.getScope', function () {
         '<tr><th>2</th><td>ok</td><td></td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
@@ -73,13 +73,13 @@ describe('table.getScope', function () {
         '<tr><th id="target">2</th><td>ok</td><td></td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
     it('return `auto` without an actualNode or in the tree', function () {
-      var serialNode = new axe.SerialVirtualNode({
+      let serialNode = new axe.SerialVirtualNode({
         nodeName: 'th'
       });
 
@@ -95,7 +95,7 @@ describe('table.getScope', function () {
         '<tr><th>2</th><td>ok</td><td></td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -107,7 +107,7 @@ describe('table.getScope', function () {
         '<tr><th>2</th><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -119,7 +119,7 @@ describe('table.getScope', function () {
         '<tr><th>2</th><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -131,7 +131,7 @@ describe('table.getScope', function () {
         '<tr><td>2</td><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -143,7 +143,7 @@ describe('table.getScope', function () {
         '<tr><th>2</th><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -155,7 +155,7 @@ describe('table.getScope', function () {
         '<tr> <th id="target"></th> <th></th> </tr>' +
         '<tr> <td></td> <td></td> </tr>' +
         '</table>';
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -166,7 +166,7 @@ describe('table.getScope', function () {
         '<tr> <th id="target" colspan="2"></th> </tr>' +
         '<tr> <td></td> <td></td> </tr>' +
         '</table>';
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
@@ -180,7 +180,7 @@ describe('table.getScope', function () {
         '<tr><th id="target" scope="row">2</th><td>ok</td><td></td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -192,7 +192,7 @@ describe('table.getScope', function () {
         '<tr><td id="target" scope="row">2</td><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -204,7 +204,7 @@ describe('table.getScope', function () {
         '<tr><td id="target" scope="col" role="rowheader">2</td><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -216,7 +216,7 @@ describe('table.getScope', function () {
         '<tr><th id="target">2</th><td>ok</td></tr>' +
         '</table>';
 
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -227,7 +227,7 @@ describe('table.getScope', function () {
         '<tr> <th rowspan="2"></th> <th></th> <th></th> </tr>' +
         '<tr> <th id="target"></th> <td></td> </tr>' +
         '</table>';
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -239,7 +239,7 @@ describe('table.getScope', function () {
         '<tr> <th id="target" rowspan="2"></th> <td></td> </tr>' +
         '<tr> <td></td> </tr>' +
         '</table>';
-      var target = $id('target');
+      let target = $id('target');
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
@@ -251,7 +251,7 @@ describe('table.getScope', function () {
       '<tr> </tr>' +
       '<tr> <th id="target">foo</th> <td>bar</td> </tr>' +
       '</table>';
-    var target = $id('target');
+    let target = $id('target');
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.equal(axe.commons.table.getScope(target), 'auto');
   });

@@ -1,103 +1,103 @@
 describe('aria.isAriaRoleAllowedOnElement', function () {
   'use strict';
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
+  let flatTreeSetup = axe.testUtils.flatTreeSetup;
 
   it('returns true for SECTION with role alert', function () {
-    var node = document.createElement('section');
-    var role = 'alert';
+    let node = document.createElement('section');
+    let role = 'alert';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
-    var expected = true;
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
+    let expected = true;
     assert.equal(actual, expected);
   });
 
   it('returns false for SECTION with role checkbox', function () {
-    var node = document.createElement('section');
-    var role = 'checkbox';
+    let node = document.createElement('section');
+    let role = 'checkbox';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
-    var expected = false;
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
+    let expected = false;
     assert.equal(actual, expected);
   });
 
   it('returns true for SVG with role alertdialog', function () {
-    var node = document.createElement('svg');
-    var role = 'alertdialog';
+    let node = document.createElement('svg');
+    let role = 'alertdialog';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for OBJECT with role application', function () {
-    var node = document.createElement('object');
-    var role = 'application';
+    let node = document.createElement('object');
+    let role = 'application';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
     assert.isTrue(actual);
   });
 
   it('returns false for A with role button', function () {
-    var node = document.createElement('a');
-    var role = 'button';
+    let node = document.createElement('a');
+    let role = 'button';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns false for ARTICLE with role cell', function () {
-    var node = document.createElement('article');
-    var role = 'cell';
+    let node = document.createElement('article');
+    let role = 'cell';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for BUTTON with role checkbox', function () {
-    var node = document.createElement('button');
-    var role = 'checkbox';
+    let node = document.createElement('button');
+    let role = 'checkbox';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for IFRAME with role document', function () {
-    var node = document.createElement('iframe');
-    var role = 'document';
+    let node = document.createElement('iframe');
+    let role = 'document';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for ASIDE with role feed', function () {
-    var node = document.createElement('aside');
-    var role = 'feed';
+    let node = document.createElement('aside');
+    let role = 'feed';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for FIGURE with role group', function () {
-    var node = document.createElement('figure');
-    var role = 'group';
+    let node = document.createElement('figure');
+    let role = 'group';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for SVG with role img', function () {
-    var node = document.createElement('svg');
-    var role = 'img';
+    let node = document.createElement('svg');
+    let role = 'img';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for INPUT with type image and role link', function () {
-    var node = document.createElement('input');
-    var role = 'link';
+    let node = document.createElement('input');
+    let role = 'link';
     node.setAttribute('role', role);
     node.setAttribute('type', 'image');
     flatTreeSetup(node);
@@ -105,39 +105,39 @@ describe('aria.isAriaRoleAllowedOnElement', function () {
   });
 
   it('returns true for HEADER with role none', function () {
-    var node = document.createElement('header');
-    var role = 'none';
+    let node = document.createElement('header');
+    let role = 'none';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for LI with role option', function () {
-    var node = document.createElement('li');
-    var role = 'option';
+    let node = document.createElement('li');
+    let role = 'option';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for H1 with role tab', function () {
-    var node = document.createElement('h1');
-    var role = 'tab';
+    let node = document.createElement('h1');
+    let role = 'tab';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for OL with role tablist', function () {
-    var node = document.createElement('ol');
-    var role = 'tablist';
+    let node = document.createElement('ol');
+    let role = 'tablist';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true when A has namespace as svg and role menuitem', function () {
-    var node = document.createElementNS('http://www.w3.org/2000/svg', 'a');
+    let node = document.createElementNS('http://www.w3.org/2000/svg', 'a');
     flatTreeSetup(node);
     assert.isTrue(
       axe.commons.aria.isAriaRoleAllowedOnElement(node, 'menuitem')
@@ -145,8 +145,8 @@ describe('aria.isAriaRoleAllowedOnElement', function () {
   });
 
   it('returns true when BUTTON has type menu and role as menuitem', function () {
-    var node = document.createElement('button');
-    var role = 'menuitem';
+    let node = document.createElement('button');
+    let role = 'menuitem';
     node.setAttribute('type', 'menu');
     node.setAttribute('role', role);
     flatTreeSetup(node);
@@ -154,8 +154,8 @@ describe('aria.isAriaRoleAllowedOnElement', function () {
   });
 
   it('returns false when MENU has type context and role navigation', function () {
-    var node = document.createElement('menu');
-    var role = 'navigation';
+    let node = document.createElement('menu');
+    let role = 'navigation';
     node.setAttribute('type', 'context');
     node.setAttribute('role', role);
     flatTreeSetup(node);
@@ -163,64 +163,64 @@ describe('aria.isAriaRoleAllowedOnElement', function () {
   });
 
   it('returns true when B has role navigation', function () {
-    var node = document.createElement('b');
-    var role = 'navigation';
+    let node = document.createElement('b');
+    let role = 'navigation';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true when NAV has role menubar', function () {
-    var node = document.createElement('nav');
-    var role = 'menubar';
+    let node = document.createElement('nav');
+    let role = 'menubar';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true when NAV has role tablist', function () {
-    var node = document.createElement('nav');
-    var role = 'tablist';
+    let node = document.createElement('nav');
+    let role = 'tablist';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns false when PROGRESS has role button', function () {
-    var node = document.createElement('progress');
-    var role = 'button';
+    let node = document.createElement('progress');
+    let role = 'button';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true if given element can have any role', function () {
-    var node = document.createElement('div');
+    let node = document.createElement('div');
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
     assert.isTrue(actual);
   });
 
   it('returns false if given element cannot have any role', function () {
-    var node = document.createElement('main');
+    let node = document.createElement('main');
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'alert'); // changed this
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'alert'); // changed this
     assert.isFalse(actual);
   });
 
   it('returns false if given element cannot have any role', function () {
-    var node = document.createElement('track');
+    let node = document.createElement('track');
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
     assert.isFalse(actual);
   });
 
   it('returns false if elements implicit role matches the role', function () {
-    var node = document.createElement('area');
+    let node = document.createElement('area');
     node.setAttribute('href', '#yay');
     node.setAttribute('role', 'link');
     flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
+    let actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
     assert.isFalse(actual);
   });
 });

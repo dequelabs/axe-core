@@ -1,10 +1,10 @@
 describe('focusable-modal-open', function () {
   'use strict';
 
-  var check;
-  var fixture = document.getElementById('fixture');
-  var checkContext = axe.testUtils.MockCheckContext();
-  var checkSetup = axe.testUtils.checkSetup;
+  let check;
+  let fixture = document.getElementById('fixture');
+  let checkContext = axe.testUtils.MockCheckContext();
+  let checkSetup = axe.testUtils.checkSetup;
 
   before(function () {
     check = checks['focusable-modal-open'];
@@ -18,28 +18,28 @@ describe('focusable-modal-open', function () {
   });
 
   it('returns true when no modal is open', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-hidden="true">' +
         '<button>Some button</button>' +
         '</div>'
     );
-    var actual = check.evaluate.apply(checkContext, params);
+    let actual = check.evaluate.apply(checkContext, params);
     assert.isTrue(actual);
   });
 
   it('returns undefined if a modal is open', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-hidden="true">' +
         '<button>Some button</button>' +
         '</div>' +
         '<div role="dialog">Modal</div>'
     );
-    var actual = check.evaluate.apply(checkContext, params);
+    let actual = check.evaluate.apply(checkContext, params);
     assert.isUndefined(actual);
   });
 
   it('sets the tabbable elements as related nodes', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-hidden="true">' +
         '<button>Some button</button>' +
         '</div>' +

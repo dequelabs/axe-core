@@ -1,6 +1,6 @@
 describe('dom.isMultiline', function () {
-  var isMultiline = axe.commons.dom.isMultiline;
-  var fixture = document.querySelector('#fixture');
+  let isMultiline = axe.commons.dom.isMultiline;
+  let fixture = document.querySelector('#fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';

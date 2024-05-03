@@ -1,15 +1,15 @@
 describe('aria-allowed-attr', function () {
   'use strict';
 
-  var queryFixture = axe.testUtils.queryFixture;
-  var checkContext = axe.testUtils.MockCheckContext();
+  let queryFixture = axe.testUtils.queryFixture;
+  let checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
     checkContext.reset();
   });
 
   it('should detect incorrectly used attributes', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div role="link" id="target" tabindex="1" aria-selected="true"></div>'
     );
 
@@ -22,7 +22,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should not report on required attributes', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div role="checkbox" id="target" tabindex="1" aria-checked="true"></div>'
     );
 
@@ -34,7 +34,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should detect incorrectly used attributes - implicit role', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<a href="#" id="target" tabindex="1" aria-selected="true"></a>'
     );
 
@@ -47,7 +47,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should return true for global attributes if there is no role', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" tabindex="1" aria-busy="true" aria-owns="foo"></div>'
     );
 
@@ -60,7 +60,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should return false for non-global attributes if there is no role', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
     );
 
@@ -73,7 +73,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should not report on invalid attributes', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div role="dialog" id="target" tabindex="1" aria-cats="true"></div>'
     );
 
@@ -86,7 +86,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should not report on allowed attributes', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<div role="radio" id="target" tabindex="1" aria-required="true" aria-checked="true"></div>'
     );
 
@@ -99,7 +99,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should return undefined for custom element that has no role and is not focusable', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<my-custom-element id="target" aria-expanded="true"></my-custom-element>'
     );
 
@@ -112,7 +112,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it("should return false for custom element that has a role which doesn't allow the attribute", function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<my-custom-element role="insertion" id="target" aria-expanded="true"></my-custom-element>'
     );
 
@@ -125,7 +125,7 @@ describe('aria-allowed-attr', function () {
   });
 
   it('should return false for custom element that is focusable', function () {
-    var vNode = queryFixture(
+    let vNode = queryFixture(
       '<my-custom-element tabindex="1" id="target" aria-expanded="true"></my-custom-element>'
     );
 
@@ -149,7 +149,7 @@ describe('aria-allowed-attr', function () {
         }
       });
 
-      var vNode = queryFixture(
+      let vNode = queryFixture(
         '<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>'
       );
 
@@ -185,10 +185,10 @@ describe('aria-allowed-attr', function () {
         }
       });
 
-      var vNode = queryFixture(
+      let vNode = queryFixture(
         '<div role="bagley" id="target" aria-selected="true"></div>'
       );
-      var options = {
+      let options = {
         mccheddarton: ['aria-selected'],
         bagley: ['aria-selected']
       };

@@ -33,13 +33,13 @@ describe('aria.requiredAttr', function () {
   });
 
   it('should return an empty array if there are no required attributes', function () {
-    var result = axe.commons.aria.requiredAttr('cats');
+    let result = axe.commons.aria.requiredAttr('cats');
 
     assert.deepEqual(result, []);
   });
 
   it('should return a unique copy of the attributes', function () {
-    var attrs = ['yes', 'no'];
+    let attrs = ['yes', 'no'];
 
     axe.configure({
       standards: {
@@ -51,7 +51,7 @@ describe('aria.requiredAttr', function () {
       }
     });
 
-    var result = axe.commons.aria.requiredAttr('cats');
+    let result = axe.commons.aria.requiredAttr('cats');
     assert.notEqual(result, attrs);
   });
 });

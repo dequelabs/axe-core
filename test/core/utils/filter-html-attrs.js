@@ -1,9 +1,9 @@
 describe('axe.utils.filterHtmlAttrs', function () {
   'use strict';
-  var fixture = document.querySelector('#fixture');
+  let fixture = document.querySelector('#fixture');
 
-  var filterHtmlAttrs = axe.utils.filterHtmlAttrs;
-  var html, expected;
+  let filterHtmlAttrs = axe.utils.filterHtmlAttrs;
+  let html, expected;
 
   beforeEach(function () {
     fixture.innerHTML =
@@ -32,7 +32,7 @@ describe('axe.utils.filterHtmlAttrs', function () {
   });
 
   it('should not change the original element', function () {
-    var outerHTML = html.outerHTML;
+    let outerHTML = html.outerHTML;
     assert.isTrue(filterHtmlAttrs(html, { type: true }) !== html);
     assert.equal(html.outerHTML, outerHTML);
   });

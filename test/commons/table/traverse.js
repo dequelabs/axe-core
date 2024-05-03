@@ -1,6 +1,6 @@
 /* global fixture */
 describe('table.traverse', function () {
-  var table, dummyTable, topRight, bottomLeft;
+  let table, dummyTable, topRight, bottomLeft;
   beforeEach(function () {
     table = axe.commons.table;
     dummyTable = [
@@ -17,8 +17,8 @@ describe('table.traverse', function () {
   });
 
   it('traverses in the `right` direction', function () {
-    var iterations = 0;
-    var expect = ['1b', '1c'];
+    let iterations = 0;
+    let expect = ['1b', '1c'];
 
     table.traverse({ x: 1, y: 0 }, topRight, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);
@@ -28,13 +28,13 @@ describe('table.traverse', function () {
   });
 
   it('returns an array of traversed cells', function () {
-    var result = table.traverse({ x: 1, y: 0 }, topRight, dummyTable);
+    let result = table.traverse({ x: 1, y: 0 }, topRight, dummyTable);
     assert.deepEqual(result, ['1b', '1c']);
   });
 
   it('traverses in the `down` direction', function () {
-    var iterations = 0;
-    var expect = ['2a', '3a'];
+    let iterations = 0;
+    let expect = ['2a', '3a'];
 
     table.traverse({ x: 0, y: 1 }, topRight, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);
@@ -44,8 +44,8 @@ describe('table.traverse', function () {
   });
 
   it('traverses in the `left` direction', function () {
-    var iterations = 0;
-    var expect = ['3b', '3a'];
+    let iterations = 0;
+    let expect = ['3b', '3a'];
 
     table.traverse({ x: -1, y: 0 }, bottomLeft, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);
@@ -55,8 +55,8 @@ describe('table.traverse', function () {
   });
 
   it('traverses in the `up` direction', function () {
-    var iterations = 0;
-    var expect = ['2c', '1c'];
+    let iterations = 0;
+    let expect = ['2c', '1c'];
 
     table.traverse({ x: 0, y: -1 }, bottomLeft, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);
@@ -66,8 +66,8 @@ describe('table.traverse', function () {
   });
 
   it('takes string values as directions', function () {
-    var iterations = 0;
-    var expect = ['1b', '1c'];
+    let iterations = 0;
+    let expect = ['1b', '1c'];
     table.traverse('right', topRight, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);
       iterations += 1;
@@ -96,7 +96,7 @@ describe('table.traverse', function () {
   });
 
   it('stops when the callback returned true', function () {
-    var iterations = 0;
+    let iterations = 0;
     table.traverse({ x: 1, y: 1 }, topRight, dummyTable, function (cell) {
       assert.equal(cell, '2b'); // or not, to be?
       iterations += 1;
@@ -106,8 +106,8 @@ describe('table.traverse', function () {
   });
 
   it('starts at top-right of no position is given', function () {
-    var iterations = 0;
-    var expect = ['1b', '1c'];
+    let iterations = 0;
+    let expect = ['1b', '1c'];
 
     table.traverse({ x: 1, y: 0 }, dummyTable, function (cell) {
       assert.equal(cell, expect[iterations]);

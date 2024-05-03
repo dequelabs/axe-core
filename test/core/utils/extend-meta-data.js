@@ -2,7 +2,7 @@ describe('axe.utils.extend', function () {
   'use strict';
 
   it('should merge properties', function () {
-    var src = {
+    let src = {
       cats: 'fail',
       dogs: 'fail'
     };
@@ -17,7 +17,7 @@ describe('axe.utils.extend', function () {
   });
 
   it('should execute any found functions', function () {
-    var src = {
+    let src = {
       cats: 'fail',
       dogs: 'fail'
     };
@@ -33,7 +33,7 @@ describe('axe.utils.extend', function () {
     assert.equal(src.dogs, 'woof');
   });
   it('should catch exceptions in functions and default to `null`', function () {
-    var src = {
+    let src = {
       cats: 'fail',
       dogs: 'fail'
     };

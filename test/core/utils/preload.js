@@ -1,17 +1,17 @@
 describe('axe.utils.preload', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   beforeEach(function () {
     axe.setup(fixture);
   });
 
   it('returns `undefined` when `preload` option is set to false.', function (done) {
-    var options = {
+    let options = {
       preload: false
     };
-    var actual = axe.utils.preload(options);
+    let actual = axe.utils.preload(options);
     actual
       .then(function (results) {
         assert.isUndefined(results);
@@ -23,12 +23,12 @@ describe('axe.utils.preload', function () {
   });
 
   it('returns assets with `cssom`, verify result is same output from `preloadCssom` fn', function (done) {
-    var options = {
+    let options = {
       preload: {
         assets: ['cssom']
       }
     };
-    var actual = axe.utils.preload(options);
+    let actual = axe.utils.preload(options);
     actual
       .then(function (results) {
         assert.isDefined(results);
@@ -44,7 +44,7 @@ describe('axe.utils.preload', function () {
 
   describe('axe.utils.shouldPreload', function () {
     it('should return true if preload configuration is valid', function () {
-      var actual = axe.utils.shouldPreload({
+      let actual = axe.utils.shouldPreload({
         preload: {
           assets: ['cssom']
         }
@@ -53,74 +53,74 @@ describe('axe.utils.preload', function () {
     });
 
     it('should return true if preload is undefined', function () {
-      var actual = axe.utils.shouldPreload({
+      let actual = axe.utils.shouldPreload({
         preload: undefined
       });
       assert.isTrue(actual);
     });
 
     it('should return true if preload is null', function () {
-      var actual = axe.utils.shouldPreload({
+      let actual = axe.utils.shouldPreload({
         preload: null
       });
       assert.isTrue(actual);
     });
 
     it('should return true if preload is not set', function () {
-      var actual = axe.utils.shouldPreload({});
+      let actual = axe.utils.shouldPreload({});
       assert.isTrue(actual);
     });
 
     it('should return false if preload configuration is invalid', function () {
-      var options = {
+      let options = {
         preload: {
           errorProperty: ['cssom']
         }
       };
-      var actual = axe.utils.shouldPreload(options);
+      let actual = axe.utils.shouldPreload(options);
       assert.isFalse(actual);
     });
   });
 
   describe('axe.utils.getPreloadConfig', function () {
     it('should return default assets if preload configuration is not set', function () {
-      var actual = axe.utils.getPreloadConfig({}).assets;
-      var expected = ['cssom', 'media'];
+      let actual = axe.utils.getPreloadConfig({}).assets;
+      let expected = ['cssom', 'media'];
       assert.deepEqual(actual, expected);
     });
 
     it('should return default assets if preload options is set to true', function () {
-      var actual = axe.utils.getPreloadConfig({}).assets;
-      var expected = ['cssom', 'media'];
+      let actual = axe.utils.getPreloadConfig({}).assets;
+      let expected = ['cssom', 'media'];
       assert.deepEqual(actual, expected);
     });
 
     it('should return default timeout value if not configured', function () {
-      var actual = axe.utils.getPreloadConfig({}).timeout;
-      var expected = 10000;
+      let actual = axe.utils.getPreloadConfig({}).timeout;
+      let expected = 10000;
       assert.equal(actual, expected);
     });
 
     it('should throw error if requested asset type is not supported', function () {
-      var options = {
+      let options = {
         preload: {
           assets: ['some-unsupported-asset']
         }
       };
-      var actual = function () {
+      let actual = function () {
         axe.utils.getPreloadConfig(options);
       };
-      var expected = Error;
+      let expected = Error;
       assert.throws(actual, expected);
     });
 
     it('should remove any duplicate assets passed via preload configuration', function () {
-      var options = {
+      let options = {
         preload: {
           assets: ['cssom', 'cssom']
         }
       };
-      var actual = axe.utils.getPreloadConfig(options);
+      let actual = axe.utils.getPreloadConfig(options);
       assert.property(actual, 'assets');
       assert.containsAllKeys(actual, ['assets', 'timeout']);
       assert.lengthOf(actual.assets, 1);

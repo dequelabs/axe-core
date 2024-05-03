@@ -1,10 +1,10 @@
 describe('td-headers-attr', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var checkContext = axe.testUtils.MockCheckContext();
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var check = axe.testUtils.getCheckEvaluate('td-headers-attr');
+  let fixture = document.getElementById('fixture');
+  let checkContext = axe.testUtils.MockCheckContext();
+  let fixtureSetup = axe.testUtils.fixtureSetup;
+  let check = axe.testUtils.getCheckEvaluate('td-headers-attr');
 
   afterEach(function () {
     checkContext.reset();
@@ -18,7 +18,7 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 
@@ -30,7 +30,7 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 
@@ -42,7 +42,7 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 
@@ -54,7 +54,7 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 
@@ -66,12 +66,12 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isUndefined(check.call(checkContext, node));
   });
 
   it('returns false if the header is a table cell', function () {
-    var node;
+    let node;
 
     fixtureSetup(
       '<table>' +
@@ -110,7 +110,7 @@ describe('td-headers-attr', function () {
         '</table>'
     );
 
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isFalse(check.call(checkContext, node));
   });
 
@@ -120,7 +120,7 @@ describe('td-headers-attr', function () {
         '  <tr> <th>Hello</th> <td headers="h1" hidden>goodbye</td> </tr>' +
         '</table>'
     );
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 
@@ -130,7 +130,7 @@ describe('td-headers-attr', function () {
         '  <tr> <th>Hello</th> <td headers="h1" aria-hidden="true">goodbye</td> </tr>' +
         '</table>'
     );
-    var node = fixture.querySelector('table');
+    let node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
 });

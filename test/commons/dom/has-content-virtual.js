@@ -1,10 +1,10 @@
 /* global xit */
 describe('dom.hasContentVirtual', function () {
   'use strict';
-  var hasContentVirtual = axe.commons.dom.hasContentVirtual;
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
-  var tree;
+  let hasContentVirtual = axe.commons.dom.hasContentVirtual;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport.v1;
+  let tree;
 
   it('returns false if there is no content', function () {
     fixture.innerHTML = '<div id="target">	</div>';
@@ -76,7 +76,7 @@ describe('dom.hasContentVirtual', function () {
   });
 
   it('is called through hasContent, with a DOM node', function () {
-    var hasContent = axe.commons.dom.hasContent;
+    let hasContent = axe.commons.dom.hasContent;
     fixture.innerHTML = '<div id="target"> text </div>';
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(hasContent(fixture.querySelector('#target')));
@@ -99,7 +99,7 @@ describe('dom.hasContentVirtual', function () {
     'looks at content of shadow dom elements',
     function () {
       fixture.innerHTML = '<div id="target"></div>';
-      var shadow = fixture
+      let shadow = fixture
         .querySelector('#target')
         .attachShadow({ mode: 'open' });
       shadow.innerHTML = 'Some text';
@@ -115,7 +115,7 @@ describe('dom.hasContentVirtual', function () {
     'looks at the slots in a shadow tree',
     function () {
       fixture.innerHTML = '<div id="shadow">some text</div>';
-      var shadow = fixture
+      let shadow = fixture
         .querySelector('#shadow')
         .attachShadow({ mode: 'open' });
       shadow.innerHTML = '<div class="target"><slot></slot></div>';

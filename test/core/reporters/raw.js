@@ -1,15 +1,15 @@
 describe('reporters - raw', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   function createDqElement() {
-    var node = document.createElement('div');
+    let node = document.createElement('div');
     fixture.appendChild(node);
     return new axe.utils.DqElement(node);
   }
 
-  var runResults;
+  let runResults;
 
   beforeEach(function () {
     runResults = [
@@ -124,10 +124,10 @@ describe('reporters - raw', function () {
 
   it('should serialize DqElements', function (done) {
     axe.getReporter('rawEnv')(runResults, {}, function (results) {
-      for (var i = 0; i < results.length; i++) {
-        var result = results[i];
-        for (var j = 0; j < result.passes.length; j++) {
-          var p = result.passes[j];
+      for (let i = 0; i < results.length; i++) {
+        let result = results[i];
+        for (let j = 0; j < result.passes.length; j++) {
+          let p = result.passes[j];
           assert.notInstanceOf(p.node, axe.utils.DqElement);
         }
       }
@@ -136,7 +136,7 @@ describe('reporters - raw', function () {
   });
 
   it('does not throw on serialized nodes', function (done) {
-    var rawReporter = axe.getReporter('rawEnv');
+    let rawReporter = axe.getReporter('rawEnv');
     rawReporter(runResults, {}, function (serializedResults) {
       assert.doesNotThrow(function () {
         rawReporter(serializedResults, {}, function () {
@@ -147,8 +147,8 @@ describe('reporters - raw', function () {
   });
 
   it('uses nodeSerializer', done => {
-    var rawReporter = axe.getReporter('raw');
-    var spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
+    let rawReporter = axe.getReporter('raw');
+    let spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
     rawReporter(
       runResults,
       {},

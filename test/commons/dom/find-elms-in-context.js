@@ -1,12 +1,12 @@
 describe('dom.findElmsInContext', function () {
   'use strict';
 
-  var shadowSupport = axe.testUtils.shadowSupport;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var findElmsInContext = axe.commons.dom.findElmsInContext;
+  let shadowSupport = axe.testUtils.shadowSupport;
+  let fixtureSetup = axe.testUtils.fixtureSetup;
+  let findElmsInContext = axe.commons.dom.findElmsInContext;
 
   it('returns an array or elements in the same context', function () {
-    var rootNode = fixtureSetup(
+    let rootNode = fixtureSetup(
       '<b name="foo">1</b>' +
         '<b name="foo">2</b>' +
         '<b name="bar">3</b>' +
@@ -27,13 +27,13 @@ describe('dom.findElmsInContext', function () {
   (shadowSupport.v1 ? it : xit)(
     'ignores elements inside shadow tree',
     function () {
-      var node = document.createElement('div');
+      let node = document.createElement('div');
       node.innerHTML = '<b name="foo">1</b>';
-      var shadow = node.attachShadow({ mode: 'open' });
+      let shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<b name="foo">2</b> <slot></slot>';
-      var rootNode = fixtureSetup(node);
+      let rootNode = fixtureSetup(node);
 
-      var result = findElmsInContext({
+      let result = findElmsInContext({
         elm: 'b',
         attr: 'name',
         value: 'foo',
@@ -47,13 +47,13 @@ describe('dom.findElmsInContext', function () {
   (shadowSupport.v1 ? it : xit)(
     'can search elements limited to the shadow tree',
     function () {
-      var node = document.createElement('div');
+      let node = document.createElement('div');
       node.innerHTML = '<b name="foo">1</b>';
-      var shadow = node.attachShadow({ mode: 'open' });
+      let shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<b name="foo">2</b><slot></slot>';
       fixtureSetup(node);
 
-      var result = findElmsInContext({
+      let result = findElmsInContext({
         elm: 'b',
         attr: 'name',
         value: 'foo',

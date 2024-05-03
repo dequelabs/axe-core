@@ -1,7 +1,7 @@
 describe('html-xml-lang-mismatch test', function () {
   'use strict';
 
-  var results;
+  let results;
   before(function (done) {
     axe.run(
       {

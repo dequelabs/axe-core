@@ -1,6 +1,6 @@
 describe('aria-allowed-attr virtual-rule', function () {
   it('should pass for required attributes', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         role: 'checkbox',
@@ -14,7 +14,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should pass for allowed attributes', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         role: 'radio',
@@ -29,7 +29,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should pass for invalid attributes', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         role: 'dialog',
@@ -43,7 +43,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should pass for global attributes and element with no role', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         'aria-busy': true
@@ -56,7 +56,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should fail for non-global attributes and element with no role', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         'aria-checked': true
@@ -69,7 +69,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should fail for unallowed attributes', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         role: 'link',
@@ -83,7 +83,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should fail for unallowed attributes - implicit role', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'a',
       attributes: {
         href: '#',
@@ -107,7 +107,7 @@ describe('aria-allowed-attr virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
         role: 'checkbox',
@@ -121,7 +121,7 @@ describe('aria-allowed-attr virtual-rule', function () {
   });
 
   it('should incomplete for non-global attributes and custom element', function () {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
+    let results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'custom-elm1',
       attributes: {
         'aria-checked': true

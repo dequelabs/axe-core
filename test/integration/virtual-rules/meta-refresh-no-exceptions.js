@@ -1,6 +1,6 @@
 describe('meta-refresh-no-exceptions virtual-rule', function () {
   it('should be inapplicable for missing content', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh'
@@ -14,7 +14,7 @@ describe('meta-refresh-no-exceptions virtual-rule', function () {
   });
 
   it('should pass for content=0', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -28,7 +28,7 @@ describe('meta-refresh-no-exceptions virtual-rule', function () {
   });
 
   it('should pass for content=0 and url', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -42,7 +42,7 @@ describe('meta-refresh-no-exceptions virtual-rule', function () {
   });
 
   it('should pass for content equal to 72000', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -56,7 +56,7 @@ describe('meta-refresh-no-exceptions virtual-rule', function () {
   });
 
   it('should fail for content other greater than 72000', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -70,7 +70,7 @@ describe('meta-refresh-no-exceptions virtual-rule', function () {
   });
 
   it('should fail for content other than 0 and url', function () {
-    var results = axe.runVirtualRule('meta-refresh-no-exceptions', {
+    let results = axe.runVirtualRule('meta-refresh-no-exceptions', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',

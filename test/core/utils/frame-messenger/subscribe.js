@@ -1,5 +1,5 @@
 function afterMessage(win, callback) {
-  var handler = function () {
+  let handler = function () {
     win.removeEventListener('message', handler);
     // Wait one more tick for stuff to resolve
     setTimeout(function () {
@@ -10,7 +10,7 @@ function afterMessage(win, callback) {
 }
 
 function once(callback) {
-  var called = false;
+  let called = false;
   return function () {
     if (!called) {
       callback.apply(this, arguments);
@@ -20,7 +20,7 @@ function once(callback) {
 }
 
 describe('frame-messenger', function () {
-  var fixture,
+  let fixture,
     axeVersion,
     axeApplication,
     frame,
@@ -28,9 +28,9 @@ describe('frame-messenger', function () {
     respondable,
     frameSubscribe,
     axeLog;
-  var postMessage = window.postMessage;
-  var captureError = axe.testUtils.captureError;
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
+  let postMessage = window.postMessage;
+  let captureError = axe.testUtils.captureError;
+  let shadowSupported = axe.testUtils.shadowSupport.v1;
 
   beforeEach(function (done) {
     respondable = axe.utils.respondable;
@@ -61,7 +61,7 @@ describe('frame-messenger', function () {
 
   describe('subscribe', function () {
     it('is called with the same topic', function (done) {
-      var called = false;
+      let called = false;
       frameSubscribe('greeting', function () {
         called = true;
       });
@@ -79,14 +79,14 @@ describe('frame-messenger', function () {
       'works with frames in shadow DOM',
       function (done) {
         fixture.innerHTML = '<div id="shadow-root"></div>';
-        var shadowRoot = fixture
+        let shadowRoot = fixture
           .querySelector('#shadow-root')
           .attachShadow({ mode: 'open' });
         frame = document.createElement('iframe');
         frame.src = '../mock/frames/test.html';
 
         frame.addEventListener('load', function () {
-          var called = false;
+          let called = false;
           frameWin = frame.contentWindow;
           frameSubscribe = frameWin.axe.utils.respondable.subscribe;
 
@@ -108,7 +108,7 @@ describe('frame-messenger', function () {
     );
 
     it('is not called on a different topic', function (done) {
-      var called = false;
+      let called = false;
       frameSubscribe('otherTopic', function () {
         called = true;
       });
@@ -123,7 +123,7 @@ describe('frame-messenger', function () {
     });
 
     it('is not called for different axe-core versions', function (done) {
-      var called = false;
+      let called = false;
       axe.version = '1.0.0';
       frameSubscribe('greeting', function () {
         called = true;
@@ -139,7 +139,7 @@ describe('frame-messenger', function () {
     });
 
     it('is not called with the "x.y.z" wildcard', function (done) {
-      var called = false;
+      let called = false;
       axe.version = 'x.y.z';
       frameSubscribe('greeting', function () {
         called = true;
@@ -155,7 +155,7 @@ describe('frame-messenger', function () {
     });
 
     it('is not called for different applications', function (done) {
-      var called = false;
+      let called = false;
       axe._audit.application = 'Coconut';
       frameSubscribe('greeting', function () {
         called = true;
@@ -190,8 +190,8 @@ describe('frame-messenger', function () {
     });
 
     it('is not called when the source is not a frame in the page', function (done) {
-      var doneOnce = once(done);
-      var called = false;
+      let doneOnce = once(done);
+      let called = false;
       frameWin.axe.log = function () {
         called = true;
       };
@@ -222,8 +222,8 @@ describe('frame-messenger', function () {
     });
 
     it('throws when targeting a window that is not a frame in the page', function () {
-      var blankPage = window.open('');
-      var frameCopy = window.open(frameWin.location.href);
+      let blankPage = window.open('');
+      let frameCopy = window.open(frameWin.location.href);
 
       // seems ie11 can't open new windows?
       if (!blankPage) {
@@ -245,7 +245,7 @@ describe('frame-messenger', function () {
     });
 
     it('is not triggered by "repeaters"', function (done) {
-      var calls = 0;
+      let calls = 0;
       frameSubscribe('greeting', function () {
         calls++;
       });
@@ -269,7 +269,7 @@ describe('frame-messenger', function () {
       axe.configure({
         allowedOrigins: ['http://customOrigin.com']
       });
-      var spy = sinon.spy();
+      let spy = sinon.spy();
 
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');
@@ -284,7 +284,7 @@ describe('frame-messenger', function () {
       axe.configure({
         allowedOrigins: ['<unsafe_all_origins>']
       });
-      var spy = sinon.spy();
+      let spy = sinon.spy();
 
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');

@@ -1,7 +1,7 @@
 describe('utils.getEnvironmentData', function () {
   'use strict';
-  var __audit;
-  var getEnvironmentData = axe.utils.getEnvironmentData;
+  let __audit;
+  let getEnvironmentData = axe.utils.getEnvironmentData;
   before(function () {
     __audit = axe._audit;
     axe._audit = { brand: 'Deque' };
@@ -12,31 +12,31 @@ describe('utils.getEnvironmentData', function () {
   });
 
   it('returns the first argument, if it is truthy', function () {
-    var input = {
+    let input = {
       testEngine: {
         name: 'axe-core',
         version: axe.version
       }
     };
-    var output = getEnvironmentData(input);
+    let output = getEnvironmentData(input);
     assert.equal(input, output);
   });
 
   it('should return a `testEngine` property', function () {
-    var data = getEnvironmentData();
+    let data = getEnvironmentData();
     assert.isObject(data.testEngine);
     assert.equal(data.testEngine.name, 'axe-core');
     assert.equal(data.testEngine.version, axe.version);
   });
 
   it('should return a `testRunner` property', function () {
-    var data = getEnvironmentData();
+    let data = getEnvironmentData();
     assert.isObject(data.testRunner);
     assert.equal(data.testRunner.name, axe._audit.brand);
   });
 
   it('should return a `testEnvironment` property', function () {
-    var data = getEnvironmentData();
+    let data = getEnvironmentData();
     assert.isObject(data.testEnvironment);
     assert.ok(data.testEnvironment.userAgent);
     assert.ok(data.testEnvironment.windowWidth);
@@ -46,12 +46,12 @@ describe('utils.getEnvironmentData', function () {
   });
 
   it('should return a `timestamp` property`', function () {
-    var data = getEnvironmentData();
+    let data = getEnvironmentData();
     assert.isDefined(data.timestamp);
   });
 
   it('should return a `url` property', function () {
-    var data = getEnvironmentData();
+    let data = getEnvironmentData();
     assert.isDefined(data.url);
   });
 
@@ -59,7 +59,7 @@ describe('utils.getEnvironmentData', function () {
   // other supported environments as what this is testing should be done in
   // those environment tests
   it('gets data from the `win` parameter when passed', function () {
-    var data = getEnvironmentData(null, {
+    let data = getEnvironmentData(null, {
       screen: {
         orientation: {
           type: 'fictional',

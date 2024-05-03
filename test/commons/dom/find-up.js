@@ -2,8 +2,8 @@
 describe('dom.findUp', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport;
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport;
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -15,7 +15,7 @@ describe('dom.findUp', function () {
       '<div class="target"><div id="target" class="target"><span><span><span><div>' +
       '<div><div id="start"></div></div></div></span></span></span></div></div>';
 
-    var start = document.getElementById('start'),
+    let start = document.getElementById('start'),
       target = document.getElementById('target');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
@@ -28,7 +28,7 @@ describe('dom.findUp', function () {
 
   it('should return null if it cant find a match anywhere in the document', function () {
     fixture.innerHTML = '<div id="start"></div>';
-    var start = document.getElementById('start');
+    let start = document.getElementById('start');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isNull(axe.commons.dom.findUp(start, '.nomatchyplzkthx'));
@@ -36,7 +36,7 @@ describe('dom.findUp', function () {
 
   it('should return null if it cant find a match anywhere above the start', function () {
     fixture.innerHTML = '<div id="start"></div><div class="target"></div>';
-    var start = document.getElementById('start');
+    let start = document.getElementById('start');
 
     axe.testUtils.flatTreeSetup(fixture.firstChild);
     assert.isNull(axe.commons.dom.findUp(start, '.target'));
@@ -46,22 +46,22 @@ describe('dom.findUp', function () {
     'should walk up the assigned content (v0)',
     function () {
       function createContentSlotted() {
-        var group = document.createElement('div');
+        let group = document.createElement('div');
         group.innerHTML =
           '<div id="target" style="display:none;">Stuff<content></content></div>';
         return group;
       }
       function makeShadowTree(node) {
-        var root = node.createShadowRoot();
-        var div = document.createElement('div');
+        let root = node.createShadowRoot();
+        let div = document.createElement('div');
         root.appendChild(div);
         div.appendChild(createContentSlotted());
       }
 
       fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
       makeShadowTree(fixture.querySelector('div'));
-      var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'a')[0];
+      let tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'a')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'label'),
         fixture.firstChild
@@ -73,21 +73,21 @@ describe('dom.findUp', function () {
     'should walk down the shadow DOM v0',
     function () {
       function createContent() {
-        var group = document.createElement('div');
+        let group = document.createElement('div');
         group.innerHTML = '<a>thing</a>';
         return group;
       }
       function makeShadowTree(node) {
-        var root = node.createShadowRoot();
-        var div = document.createElement('div');
+        let root = node.createShadowRoot();
+        let div = document.createElement('div');
         div.appendChild(createContent());
         root.appendChild(div);
       }
 
       fixture.innerHTML = '<label><div></div></label>';
       makeShadowTree(fixture.querySelector('div'));
-      var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'a')[0];
+      let tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'a')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'label'),
         fixture.firstChild
@@ -99,10 +99,10 @@ describe('dom.findUp', function () {
     'should work on shadow root children',
     function () {
       fixture.innerHTML = '<div role="list" id="something"></div>';
-      var shadow = fixture.querySelector('#something').createShadowRoot();
+      let shadow = fixture.querySelector('#something').createShadowRoot();
 
       shadow.innerHTML = '<div role="listitem">item 1</div>';
-      var listItem = shadow.querySelector('[role=listitem]');
+      let listItem = shadow.querySelector('[role=listitem]');
 
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(
@@ -116,22 +116,22 @@ describe('dom.findUp', function () {
     'should walk up the assigned slot',
     function () {
       function createContentSlotted() {
-        var group = document.createElement('div');
+        let group = document.createElement('div');
         group.innerHTML =
           '<div id="target" style="display:none;">Stuff<slot></slot></div>';
         return group;
       }
       function makeShadowTree(node) {
-        var root = node.attachShadow({ mode: 'open' });
-        var div = document.createElement('div');
+        let root = node.attachShadow({ mode: 'open' });
+        let div = document.createElement('div');
         root.appendChild(div);
         div.appendChild(createContentSlotted());
       }
 
       fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
       makeShadowTree(fixture.querySelector('div'));
-      var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'a')[0];
+      let tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'a')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'label'),
         fixture.firstChild
@@ -143,24 +143,24 @@ describe('dom.findUp', function () {
     'should find element in assigned slot, not in the host document',
     function () {
       function createContentSlotted() {
-        var group = document.createElement('div');
+        let group = document.createElement('div');
         group.className = 'target';
-        var slot = document.createElement('slot');
+        let slot = document.createElement('slot');
         group.appendChild(slot);
         return group;
       }
       function makeShadowTree(node) {
-        var root = node.attachShadow({ mode: 'open' });
-        var div = document.createElement('div');
+        let root = node.attachShadow({ mode: 'open' });
+        let div = document.createElement('div');
         root.appendChild(div);
         div.appendChild(createContentSlotted());
       }
 
       fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
       makeShadowTree(fixture.querySelector('div'));
-      var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
-      var el = axe.utils.querySelectorAll(tree, 'a')[0];
-      var target = axe.utils.querySelectorAll(tree, '.target')[0];
+      let tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+      let el = axe.utils.querySelectorAll(tree, 'a')[0];
+      let target = axe.utils.querySelectorAll(tree, '.target')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'div'),
         target.actualNode
@@ -170,21 +170,21 @@ describe('dom.findUp', function () {
 
   (shadowSupport.v1 ? it : xit)('should walk up the shadow DOM', function () {
     function createContent() {
-      var group = document.createElement('div');
+      let group = document.createElement('div');
       group.innerHTML = '<a>thing</a>';
       return group;
     }
     function makeShadowTree(node) {
-      var root = node.attachShadow({ mode: 'open' });
-      var div = document.createElement('div');
+      let root = node.attachShadow({ mode: 'open' });
+      let div = document.createElement('div');
       root.appendChild(div);
       div.appendChild(createContent());
     }
 
     fixture.innerHTML = '<label><div></div></label>';
     makeShadowTree(fixture.querySelector('div'));
-    var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
-    var el = axe.utils.querySelectorAll(tree, 'a')[0];
+    let tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+    let el = axe.utils.querySelectorAll(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
       fixture.firstChild
@@ -195,12 +195,12 @@ describe('dom.findUp', function () {
     'should work on shadow root children',
     function () {
       fixture.innerHTML = '<div role="list" id="something"></div>';
-      var shadow = fixture
+      let shadow = fixture
         .querySelector('#something')
         .attachShadow({ mode: 'open' });
 
       shadow.innerHTML = '<div role="listitem">item 1</div>';
-      var listItem = shadow.querySelector('[role=listitem]');
+      let listItem = shadow.querySelector('[role=listitem]');
 
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(

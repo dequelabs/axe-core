@@ -1,6 +1,6 @@
 describe('aria-required-attr virtual-rule', function () {
   it('should pass for required attributes', function () {
-    var results = axe.runVirtualRule('aria-required-attr', {
+    let results = axe.runVirtualRule('aria-required-attr', {
       nodeName: 'div',
       attributes: {
         role: 'checkbox',
@@ -14,7 +14,7 @@ describe('aria-required-attr virtual-rule', function () {
   });
 
   it('should fail for missing attributes', function () {
-    var results = axe.runVirtualRule('aria-required-attr', {
+    let results = axe.runVirtualRule('aria-required-attr', {
       nodeName: 'div',
       attributes: {
         role: 'switch'

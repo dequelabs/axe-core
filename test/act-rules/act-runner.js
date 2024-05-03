@@ -73,7 +73,7 @@ module.exports = ({ id, title, axeRules, skipTests = [] }) => {
             `Expected 0 violations for testcase ${testcase.testcaseId}`
           );
         } else {
-          var issues = results.violations[0] || results.incomplete[0];
+          let issues = results.violations[0] || results.incomplete[0];
           assert.isDefined(
             issues,
             `Expected violations or incomplete for testcase ${testcase.testcaseId}`

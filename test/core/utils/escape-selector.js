@@ -1,6 +1,6 @@
 describe('utils.escapeSelector', function () {
   'use strict';
-  var escapeSelector = axe.utils.escapeSelector;
+  let escapeSelector = axe.utils.escapeSelector;
 
   it('leaves characters that do not need to escape alone', function () {
     assert.equal(escapeSelector('a0b'), 'a0b');

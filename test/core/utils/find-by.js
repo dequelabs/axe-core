@@ -2,7 +2,7 @@ describe('axe.utils.findBy', function () {
   'use strict';
 
   it('should find the first matching object', function () {
-    var array = [
+    let array = [
       {
         id: 'monkeys',
         foo: 'bar'
@@ -20,7 +20,7 @@ describe('axe.utils.findBy', function () {
   });
 
   it('should return undefined with no match', function () {
-    var array = [
+    let array = [
       {
         id: 'monkeys',
         foo: 'bar'

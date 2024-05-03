@@ -32,13 +32,13 @@ describe('aria.requiredContext', function () {
   });
 
   it('should return null if there are no required context nodes', function () {
-    var result = axe.commons.aria.requiredContext('cats');
+    let result = axe.commons.aria.requiredContext('cats');
 
     assert.isNull(result);
   });
 
   it('should return a unique copy of the context', function () {
-    var context = ['yes', 'no'];
+    let context = ['yes', 'no'];
 
     axe.configure({
       standards: {
@@ -50,7 +50,7 @@ describe('aria.requiredContext', function () {
       }
     });
 
-    var result = axe.commons.aria.requiredContext('cats');
+    let result = axe.commons.aria.requiredContext('cats');
     assert.notEqual(result, context);
   });
 });

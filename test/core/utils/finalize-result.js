@@ -1,6 +1,6 @@
 describe('axe.utils.finalizeRuleResult', function () {
   'use strict';
-  var original = axe._audit;
+  let original = axe._audit;
 
   beforeEach(function () {
     axe._audit = {
@@ -17,10 +17,10 @@ describe('axe.utils.finalizeRuleResult', function () {
   });
 
   it('returns the first param object', function () {
-    var goingIn = {
+    let goingIn = {
       nodes: []
     };
-    var comingOut = axe.utils.finalizeRuleResult(goingIn);
+    let comingOut = axe.utils.finalizeRuleResult(goingIn);
 
     assert.equal(goingIn, comingOut);
   });
@@ -30,7 +30,7 @@ describe('axe.utils.finalizeRuleResult', function () {
       rules: [{ id: 'foo', impact: 'critical' }]
     };
 
-    var output = axe.utils.finalizeRuleResult({
+    let output = axe.utils.finalizeRuleResult({
       id: 'foo',
       nodes: [
         {
@@ -56,7 +56,7 @@ describe('axe.utils.finalizeRuleResult', function () {
       rules: [{ id: 'foo', impact: 'critical' }]
     };
 
-    var output = axe.utils.finalizeRuleResult({
+    let output = axe.utils.finalizeRuleResult({
       id: 'foo',
       nodes: [
         {

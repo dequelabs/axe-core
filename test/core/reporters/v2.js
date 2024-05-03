@@ -1,6 +1,6 @@
 describe('reporters - v2', function () {
   'use strict';
-  var runResults,
+  let runResults,
     _results = [
       {
         id: 'gimmeLabel',
@@ -198,7 +198,7 @@ describe('reporters - v2', function () {
     });
   });
   it('uses the environmentData option instead of environment data if specified', function () {
-    var environmentData = {
+    let environmentData = {
       myReporter: 'hello world'
     };
     axe.getReporter('v2')(

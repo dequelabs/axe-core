@@ -2,7 +2,7 @@
 describe('axe.utils.areStylesSet', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  let fixture = document.getElementById('fixture');
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -16,7 +16,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div id="target" style="display:none;">Display None</div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -30,7 +30,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div style="display:none;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -44,7 +44,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div style="visibility:hidden;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -58,7 +58,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div id="target" style="visibility:hidden;">Display None</div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -72,7 +72,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div id="target" style="visibility:hidden;">Display None</div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -95,7 +95,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div style="visibility:hidden;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -118,7 +118,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div style="display:none;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -141,7 +141,7 @@ describe('axe.utils.areStylesSet', function () {
     fixture.innerHTML =
       '<div style=""><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    let el = document.getElementById('target');
     assert.isFalse(
       axe.utils.areStylesSet(
         el,

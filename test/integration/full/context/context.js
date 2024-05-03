@@ -1,8 +1,8 @@
 describe('context test', function () {
   'use strict';
 
-  var config = { runOnly: { type: 'rule', values: ['html-lang-valid'] } };
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
+  let config = { runOnly: { type: 'rule', values: ['html-lang-valid'] } };
+  let shadowSupported = axe.testUtils.shadowSupport.v1;
 
   before(function (done) {
     axe.testUtils.awaitNestedLoad(done);
@@ -163,7 +163,7 @@ describe('context test', function () {
     (shadowSupported ? it : xit)(
       'should find no nodes in Shadow DOM',
       function (done) {
-        var sConfig = { runOnly: { type: 'rule', values: ['color-contrast'] } };
+        let sConfig = { runOnly: { type: 'rule', values: ['color-contrast'] } };
         axe.run(
           { include: [['#shadow-container']], exclude: [['#shadow-host']] },
           sConfig,

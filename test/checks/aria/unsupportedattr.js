@@ -1,9 +1,9 @@
 describe('unsupportedattr', function () {
   'use strict';
 
-  var checkContext = axe.testUtils.MockCheckContext();
-  var checkSetup = axe.testUtils.checkSetup;
-  var check = checks['aria-unsupported-attr'];
+  let checkContext = axe.testUtils.MockCheckContext();
+  let checkSetup = axe.testUtils.checkSetup;
+  let check = checks['aria-unsupported-attr'];
 
   afterEach(function () {
     checkContext.reset();
@@ -21,7 +21,7 @@ describe('unsupportedattr', function () {
       }
     });
 
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-mccheddarton="true">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -40,7 +40,7 @@ describe('unsupportedattr', function () {
         }
       }
     });
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-mccheddarton="true" aria-bagleypants="false" aria-label="Nope">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -51,14 +51,14 @@ describe('unsupportedattr', function () {
   });
 
   it('should return false if applied to a supported attribute', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-label="This is fine">Contents</div>'
     );
     assert.isFalse(check.evaluate.apply(checkContext, params));
   });
 
   it('should return false if all ARIA attributes are supported', function () {
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-label="This is fine" aria-haspopup="true">Contents</div>'
     );
     assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -76,7 +76,7 @@ describe('unsupportedattr', function () {
         }
       }
     });
-    var params = checkSetup(
+    let params = checkSetup(
       '<button id="target" aria-mccheddarton="true">Contents</button>'
     );
     assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -101,7 +101,7 @@ describe('unsupportedattr', function () {
         }
       }
     });
-    var params = checkSetup(
+    let params = checkSetup(
       '<input type="checkbox" id="target" aria-mccheddarton="true">'
     );
     assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -119,7 +119,7 @@ describe('unsupportedattr', function () {
         }
       }
     });
-    var params = checkSetup(
+    let params = checkSetup(
       '<div id="target" aria-mccheddarton="true">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -144,7 +144,7 @@ describe('unsupportedattr', function () {
         }
       }
     });
-    var params = checkSetup(
+    let params = checkSetup(
       '<input type="radio" id="target" aria-mccheddarton="true">'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
