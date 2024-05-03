@@ -1,8 +1,8 @@
-let fixture = document.getElementById('fixture');
-let shadowSupport = axe.testUtils.shadowSupport;
-
 describe('axe.utils.isShadowRoot', function () {
   'use strict';
+
+  let fixture = document.getElementById('fixture');
+  let shadowSupport = axe.testUtils.shadowSupport;
 
   function createStyle(box) {
     let style = document.createElement('style');
