@@ -46,12 +46,85 @@ describe('region', function () {
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
-  it('should return false when img content is outside the region', function () {
-    var checkArgs = checkSetup(
-      '<img id="target" src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
-    );
+  it('should return false when img content is outside the region, no alt attribute at all', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7">
+      <div role="main">Content</div>
+    `);
 
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when img content outside of the region is decorative, via an empty alt attr', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" alt="" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when img content outside of the region is explicitly decorative, via a presentation role', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" role="presentation" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when img content outside of the region is focusable (implicit role=img)', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" tabindex="0" alt="" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when img content outside of the region has a global aria attribute (implicit role=img)', function () {
+    const checkArgs = checkSetup(`
+      <img id="target" src="#" aria-atomic="true" alt="" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when canvas role=none', function () {
+    const checkArgs = checkSetup(`
+      <canvas id="target" role="none" />
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when object has an aria-label', function () {
+    const checkArgs = checkSetup(`
+      <object id="target" aria-label="bar"></object>
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return false when a non-landmark has text content but a role=none', function () {
+    const checkArgs = checkSetup(`
+      <div id="target" role="none">apples</div>
+      <div role="main">Content</div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when a non-landmark does NOT have text content and a role=none', function () {
+    const checkArgs = checkSetup(`
+      <div id="target" role="none"></div>
+      <div role="main">Content</div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('should return true when textless text content is outside the region', function () {
@@ -162,6 +235,15 @@ describe('region', function () {
     var checkArgs = checkSetup(
       '<main id="target" role="none">Content</main><div role="main">Content</div>'
     );
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('ignores native landmark elements with an overwriting role with a nested child', function () {
+    var checkArgs = checkSetup(`
+      <main id="target" role="none"><p>Content</p></main>
+			<div role="main">Content</div>
+    `);
 
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });

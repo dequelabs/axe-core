@@ -19,7 +19,7 @@
     },
     "aria-braille-equivalent": {
       "description": "aria-braillelabelとaria-brailleroledescriptionには、点字以外の同等のものが存在することを確認します",
-      "help": "aria-braille属性には、点じ以外の同等のものがなければなりません "
+      "help": "aria-braille属性には、点字以外の同等のものがなければなりません "
     },
     "aria-command-name": {
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認します",

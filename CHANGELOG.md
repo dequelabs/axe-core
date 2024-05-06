@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.1](https://github.com/dequelabs/axe-core/compare/v4.9.0...v4.9.1) (2024-05-06)
+
+### Bug Fixes
+
+- Prevent errors when loading axe in a page with prototype.js
+- **aria-allowed-attr:** allow meter role allowed aria-\* attributes on meter element ([#4435](https://github.com/dequelabs/axe-core/issues/4435)) ([7ac6392](https://github.com/dequelabs/axe-core/commit/7ac63921e7fab21f3359dcfc8affa7585bc9c25b))
+- **aria-allowed-role:** add gridcell, separator, slider and treeitem to allowed roles of button element ([#4398](https://github.com/dequelabs/axe-core/issues/4398)) ([4788bf8](https://github.com/dequelabs/axe-core/commit/4788bf8d6fd963d7b017dad950b122ffcea8d151))
+- **aria-roles:** correct abstract roles (types) for aria-roles([#4421](https://github.com/dequelabs/axe-core/pull/4421))
+- **aria-valid-attr-value:** aria-controls & aria-haspopup incomplete ([#4418](https://github.com/dequelabs/axe-core/pull/4418))
+- fix building axe-core translation files with region locales ([#4396](https://github.com/dequelabs/axe-core/issues/4396)) ([5c318f3](https://github.com/dequelabs/axe-core/commit/5c318f3537056be5779cb53374bc6f4785947c91)), closes [#4388](https://github.com/dequelabs/axe-core/issues/4388)
+- **invalidrole:** allow upper and mixed case role names ([#4358](https://github.com/dequelabs/axe-core/issues/4358)) ([105016c](https://github.com/dequelabs/axe-core/commit/105016cfe9d82876cfed2ff5c656a7842c5b3761)), closes [#2695](https://github.com/dequelabs/axe-core/issues/2695)
+- **isVisibleOnScreen:** account for position: absolute elements inside overflow container ([#4405](https://github.com/dequelabs/axe-core/issues/4405)) ([2940f6e](https://github.com/dequelabs/axe-core/commit/2940f6ee36ba52d8cf089be2a3c8e7c516c81dd6)), closes [#4016](https://github.com/dequelabs/axe-core/issues/4016)
+- **label-content-name-mismatch:** better dismiss and wysiwyg symbolic text characters ([#4402](https://github.com/dequelabs/axe-core/issues/4402))
+- **region:** Decorative images ignored by region rule ([#4412](https://github.com/dequelabs/axe-core/pull/4412))
+- **target-size:** ignore descendant elements in shadow dom ([#4410](https://github.com/dequelabs/axe-core/issues/4410)) ([6091367](https://github.com/dequelabs/axe-core/commit/6091367a20f70e536fc7e8d77eae4fa7232bc7c0))
+- **target-size:** pass for element that has nearby elements that are obscured ([#4422](https://github.com/dequelabs/axe-core/issues/4422)) ([3a90bb7](https://github.com/dequelabs/axe-core/commit/3a90bb70c8db087b2f03cc30a4aee756995c311c)), closes [#4387](https://github.com/dequelabs/axe-core/issues/4387)
+
 ## [4.9.0](https://github.com/dequelabs/axe-core/compare/v4.8.4...v4.9.0) (2024-03-25)
 
 ### Features

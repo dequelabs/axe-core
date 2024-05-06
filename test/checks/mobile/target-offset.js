@@ -98,6 +98,21 @@ describe('target-offset tests', () => {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
+  it('ignores obscured widget elements as neighbors', () => {
+    const checkArgs = checkSetup(`
+      <div style="position: fixed; bottom: 0">
+        <a href="#">Go to top</a>
+      </div>
+      <div id="target" style="position: fixed; bottom: 0; left: 0; right: 0; background: #eee">
+        Cookies: <a href="#">Accept all cookies</a>
+      </div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+  });
+
   it('sets all elements that are too close as related nodes', () => {
     const checkArgs = checkSetup(
       '<a href="#" id="left" style="' +
@@ -120,7 +135,7 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
-  it('returns false if there are too many focusable widgets', () => {
+  it('returns undefined if there are too many focusable widgets', () => {
     let html = '';
     for (let i = 0; i < 100; i++) {
       html += `
@@ -137,8 +152,9 @@ describe('target-offset tests', () => {
         <table id="tab-table">${html}</table>
       </div>
     `);
-    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
+      messageKey: 'tooManyRects',
       closestOffset: 0,
       minOffset: 24
     });

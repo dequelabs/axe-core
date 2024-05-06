@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -30,6 +30,11 @@
     },
     {
       "name": "Marcy Sutton",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Ava Gaiety Wroten",
       "organization": "Deque Systems, Inc.",
       "url": "http://deque.com/"
     }
@@ -75,7 +80,7 @@
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
-    "test:debug": "npm run test:unit -- --no-single-run --browsers=Chrome",
+    "test:debug": "npm run test:unit -- --no-single-run --browsers=ChromeDebugging",
     "test:unit:core": "npm run test:unit -- testDirs=core",
     "test:unit:commons": "npm run test:unit -- testDirs=commons",
     "test:unit:rule-matches": "npm run test:unit -- testDirs=rule-matches",
@@ -125,7 +130,7 @@
     "chromedriver": "latest",
     "clean-jsdoc-theme": "^4.2.17",
     "clone": "^2.1.2",
-    "colorjs.io": "^0.5.0",
+    "colorjs.io": "^0.4.3",
     "conventional-commits-parser": "^5.0.0",
     "core-js": "^3.27.1",
     "css-selector-parser": "^1.4.1",

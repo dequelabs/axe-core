@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Target-size shadow DOM test</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <main id="mocha"></main>
+    <script>
+      const shadowTemplate = document.createElement('template');
+      shadowTemplate.innerHTML =
+        '<div id="shadow-container"><slot></slot></div>';
+      class ShadowOpenWebComponent extends HTMLElement {
+        connectedCallback() {
+          const shadowRoot = this.attachShadow({ mode: 'open' });
+          shadowRoot.appendChild(shadowTemplate.content.cloneNode(true));
+        }
+      }
+
+      customElements.define('shadow-open', ShadowOpenWebComponent);
+    </script>
+    <style>
+      #container {
+        font-size: 16px;
+      }
+      #title {
+        background-color: #cff;
+      }
+      #content {
+        background-color: #cfc;
+        margin-top: 10px;
+      }
+    </style>
+    <div id="container">
+      <div id="title">
+        <a id="title-link" href="#target">
+          <shadow-open>
+            <div>Title</div>
+          </shadow-open>
+        </a>
+      </div>
+      <div id="content">
+        <a id="content-link" href="#target">
+          <div>Content</div>
+        </a>
+      </div>
+    </div>
+    <script src="/test/testutils.js"></script>
+    <script src="shadow-dom.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
