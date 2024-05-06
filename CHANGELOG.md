@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.1](https://github.com/dequelabs/axe-core/compare/v4.9.0...v4.9.1) (2024-05-06)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** allow meter role allowed aria-\* attributes on meter element ([#4435](https://github.com/dequelabs/axe-core/issues/4435)) ([7ac6392](https://github.com/dequelabs/axe-core/commit/7ac63921e7fab21f3359dcfc8affa7585bc9c25b))
+- **aria-allowed-role:** add gridcell, separator, slider and treeitem to allowed roles of button element ([#4398](https://github.com/dequelabs/axe-core/issues/4398)) ([4788bf8](https://github.com/dequelabs/axe-core/commit/4788bf8d6fd963d7b017dad950b122ffcea8d151))
+- **aria-roles:** address pr comments ([2d185f6](https://github.com/dequelabs/axe-core/commit/2d185f65e11c79cddcd48ac66a672866e3f083a3)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** correct abstract roles (types) for aria-roles ([69f778b](https://github.com/dequelabs/axe-core/commit/69f778b71b4c78f89334dcb0c75bedc2005609f5)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** correct abstract roles (types) for aria-roles ([#4421](https://github.com/dequelabs/axe-core/issues/4421)) ([19bde94](https://github.com/dequelabs/axe-core/commit/19bde947907189c22dd34ffd2d5d939aabddbd78)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** exception for focus-order-semantics ([facd65f](https://github.com/dequelabs/axe-core/commit/facd65f6f528122ba9c748e587ae3cf1ebd2a22a)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** inline widgets consider composite type ([aa1aa20](https://github.com/dequelabs/axe-core/commit/aa1aa20043b03bb24783a46e040931804f2a1c5a))
+- **aria-roles:** log and status allowed in focus-order-semantics ([9b15ae0](https://github.com/dequelabs/axe-core/commit/9b15ae0bccbe1dccc637c2de13085f6b7da7f74b))
+- **aria-roles:** reverted test change as well ([417e6b1](https://github.com/dequelabs/axe-core/commit/417e6b1a03d3359db37d87a67f5b2ee9687107c2)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** support window role in valid-scrollable-semantics ([f11c03f](https://github.com/dequelabs/axe-core/commit/f11c03fc73f6a932e320415d8a060dbd17b4a98a))
+- **aria-roles:** table with role application is structure ([ffe37f6](https://github.com/dequelabs/axe-core/commit/ffe37f6f3dfe58f945718581dcdc5c2aef74f498)), closes [#4421](https://github.com/dequelabs/axe-core/issues/4421)
+- **aria-roles:** target-size tests consider changed aria roles ([5594d8f](https://github.com/dequelabs/axe-core/commit/5594d8f1ff45703bed81e4a137afb42b6449d0ee))
+- **aria-roles:** updated locales ([bfa95ae](https://github.com/dequelabs/axe-core/commit/bfa95ae2ff233de32390777f735cd35ef1e50fa4)), closes [#4371](https://github.com/dequelabs/axe-core/issues/4371)
+- **aria-roles:** window roles and marque/timer expectations in focus-order-semantics ([d856316](https://github.com/dequelabs/axe-core/commit/d85631696321b0c2def1336d070f188011b779bc))
+- **aria-valid-attr-value:** aria-controls & aria-haspopup incomplete ([551ba24](https://github.com/dequelabs/axe-core/commit/551ba24efa4108c18fe1a81ae9107d694fa9a5aa)), closes [#4363](https://github.com/dequelabs/axe-core/issues/4363)
+- **aria-valid-attr-value:** aria-controls & aria-haspopup incomplete ([#4418](https://github.com/dequelabs/axe-core/issues/4418)) ([ef1e09d](https://github.com/dequelabs/axe-core/commit/ef1e09db3cb566e1c243ad797389a1821a4f8361)), closes [#4363](https://github.com/dequelabs/axe-core/issues/4363)
+- **aria-valid-attr-value:** more thorough test coverage ([a823712](https://github.com/dequelabs/axe-core/commit/a82371226d202899325ac661106519e70008cefe)), closes [#4363](https://github.com/dequelabs/axe-core/issues/4363)
+- fix building axe-core translation files with region locales ([#4396](https://github.com/dequelabs/axe-core/issues/4396)) ([5c318f3](https://github.com/dequelabs/axe-core/commit/5c318f3537056be5779cb53374bc6f4785947c91)), closes [#4388](https://github.com/dequelabs/axe-core/issues/4388)
+- **invalidrole:** allow upper and mixed case role names ([#4358](https://github.com/dequelabs/axe-core/issues/4358)) ([105016c](https://github.com/dequelabs/axe-core/commit/105016cfe9d82876cfed2ff5c656a7842c5b3761)), closes [#2695](https://github.com/dequelabs/axe-core/issues/2695)
+- **isVisibleOnScreen:** account for position: absolute elements inside overflow container ([#4405](https://github.com/dequelabs/axe-core/issues/4405)) ([2940f6e](https://github.com/dequelabs/axe-core/commit/2940f6ee36ba52d8cf089be2a3c8e7c516c81dd6)), closes [#4016](https://github.com/dequelabs/axe-core/issues/4016)
+- **label-content-name-mismatch:** 0 for all single char, cjk & x test, ignore cap ([30d8388](https://github.com/dequelabs/axe-core/commit/30d8388976118a0cdc85de2bc939a3c6f9c601ef)), closes [#4402](https://github.com/dequelabs/axe-core/issues/4402) [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **label-content-name-mismatch:** better dismiss and wysiwyg symbolic text characters ([c215a9d](https://github.com/dequelabs/axe-core/commit/c215a9d4888a3702a4d426cd8cddd8dbaeea8640)), closes [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **label-content-name-mismatch:** better dismiss and wysiwyg symbolic text characters ([#4402](https://github.com/dequelabs/axe-core/issues/4402)) ([56e139a](https://github.com/dequelabs/axe-core/commit/56e139a6873c33544e946f5060e72cb541ab72c2)), closes [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **label-content-name-mismatch:** fewer blocklists, handle all single char alpha the same ([0cd9d71](https://github.com/dequelabs/axe-core/commit/0cd9d71fa3b53bca33905b2a676db522aa923912)), closes [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **label-content-name-mismatch:** refactor isHumanInterpretable, tests var -> const ([9ed16e6](https://github.com/dequelabs/axe-core/commit/9ed16e6ffad5343331b46011b27dc2ad28b42cac)), closes [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **label-content-name-mismatch:** simpler non-digit check, test added ([c4aa062](https://github.com/dequelabs/axe-core/commit/c4aa0620468573777e43e1914f9995bc6cfb6d89)), closes [#4386](https://github.com/dequelabs/axe-core/issues/4386)
+- **region:** Decorative images ignored by region rule ([#4412](https://github.com/dequelabs/axe-core/issues/4412)) ([f8c918d](https://github.com/dequelabs/axe-core/commit/f8c918d221a78f202fe506c33a4f2e782e98c80d)), closes [/github.com/dequelabs/axe-core/issues/4145#issuecomment-1710302690](https://github.com/dequelabs//github.com/dequelabs/axe-core/issues/4145/issues/issuecomment-1710302690) [#4145](https://github.com/dequelabs/axe-core/issues/4145)
+- **region:** img alt='' ignored by region rule ([ace25cd](https://github.com/dequelabs/axe-core/commit/ace25cd51fab327a9a5239608bdfba3bdad2f0ee)), closes [#4145](https://github.com/dequelabs/axe-core/issues/4145)
+- **region:** replaces tabs for spaces in prior commit ([7c810e2](https://github.com/dequelabs/axe-core/commit/7c810e2462f41a7181218c108a5d5f8c95e122ba)), closes [#4145](https://github.com/dequelabs/axe-core/issues/4145)
+- **target-size:** ignore descendant elements in shadow dom ([#4410](https://github.com/dequelabs/axe-core/issues/4410)) ([6091367](https://github.com/dequelabs/axe-core/commit/6091367a20f70e536fc7e8d77eae4fa7232bc7c0))
+- **target-size:** pass for element that has nearby elements that are obscured ([#4422](https://github.com/dequelabs/axe-core/issues/4422)) ([3a90bb7](https://github.com/dequelabs/axe-core/commit/3a90bb70c8db087b2f03cc30a4aee756995c311c)), closes [#4387](https://github.com/dequelabs/axe-core/issues/4387)
+
 ## [4.9.0](https://github.com/dequelabs/axe-core/compare/v4.8.4...v4.9.0) (2024-03-25)
 
 ### Features
