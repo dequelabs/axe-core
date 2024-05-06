@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
+- Prevent errors when loading axe in a page with prototype.js
 - **aria-allowed-attr:** allow meter role allowed aria-\* attributes on meter element ([#4435](https://github.com/dequelabs/axe-core/issues/4435)) ([7ac6392](https://github.com/dequelabs/axe-core/commit/7ac63921e7fab21f3359dcfc8affa7585bc9c25b))
 - **aria-allowed-role:** add gridcell, separator, slider and treeitem to allowed roles of button element ([#4398](https://github.com/dequelabs/axe-core/issues/4398)) ([4788bf8](https://github.com/dequelabs/axe-core/commit/4788bf8d6fd963d7b017dad950b122ffcea8d151))
 - **aria-roles:** correct abstract roles (types) for aria-roles([#4421](https://github.com/dequelabs/axe-core/pull/4421))
