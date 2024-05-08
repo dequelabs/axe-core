@@ -5,6 +5,8 @@
   const ruleId = testObj.rule;
   const testName = testObj.description || ruleId + ' test';
 
+  // axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+
   function flattenResult(results) {
     return {
       passes: results.passes[0],
@@ -58,6 +60,12 @@
           test[collection].forEach(selector => {
             it('should find ' + JSON.stringify(selector), () => {
               if (!nodes) {
+                console.log(
+                  JSON.stringify(results, null, 4),
+                  ' ---- ',
+                  JSON.stringify(test, null, 4)
+                );
+
                 assert(false, 'there are no ' + collection);
                 return;
               }
@@ -76,10 +84,22 @@
               });
 
               if (matches.length === 0) {
+                console.log(
+                  JSON.stringify(results, null, 4),
+                  ' ---- ',
+                  JSON.stringify(test, null, 4)
+                );
+
                 assert(false, 'Element not found');
               } else if (matches.length === 1) {
                 assert(true, 'Element found');
               } else {
+                console.log(
+                  JSON.stringify(results, null, 4),
+                  ' ---- ',
+                  JSON.stringify(test, null, 4)
+                );
+
                 assert(
                   false,
                   'Found ' + matches.length + ' elements which match the target'
@@ -88,6 +108,8 @@
             });
           });
 
+          // DAISY-AXE TODO+CHECK
+          //expected '[["#fail2"]]' to equal '[]'
           it('should not return other results', () => {
             if (typeof nodes !== 'undefined') {
               const targets = nodes.map(node => {

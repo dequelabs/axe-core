@@ -10,10 +10,8 @@ var { encode } = require('html-entities');
 var packageJSON = require('../package.json');
 var doTRegex = /\{\{.+?\}\}/g;
 
-var axeVersion = packageJSON.version.substring(
-  0,
-  packageJSON.version.lastIndexOf('.')
-);
+var _v = packageJSON.version.replace(/-\w+\.\w+$/, '');
+var axeVersion = _v.substring(0, _v.lastIndexOf('.'));
 
 var descriptionTableHeader =
   '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';

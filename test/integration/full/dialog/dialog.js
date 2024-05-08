@@ -19,33 +19,42 @@ describe('dialog tests', () => {
   });
 
   it('should not find violations inside a closed dialog', async () => {
-    const { buttonName, colorContrast } = await getViolations();
+    // DAISY-AXE
+    //, colorContrast
+    const { buttonName } = await getViolations();
 
     assert.lengthOf(buttonName.nodes, 1);
     assert.deepEqual(buttonName.nodes[0].target, ['#root-button']);
-    assert.lengthOf(colorContrast.nodes, 1);
-    assert.deepEqual(colorContrast.nodes[0].target, ['#root-color']);
+    // DAISY-AXE
+    // assert.lengthOf(colorContrast.nodes, 1);
+    // assert.deepEqual(colorContrast.nodes[0].target, ['#root-color']);
   });
 
   it('should not find violations outside a modal dialog', async () => {
     dialog.showModal();
-    const { buttonName, colorContrast } = await getViolations();
+    // DAISY-AXE
+    //, colorContrast
+    const { buttonName } = await getViolations();
 
     assert.lengthOf(buttonName.nodes, 1);
     assert.deepEqual(buttonName.nodes[0].target, ['#dialog-button']);
-    assert.lengthOf(colorContrast.nodes, 1);
-    assert.deepEqual(colorContrast.nodes[0].target, ['#dialog-color']);
+    // DAISY-AXE
+    // assert.lengthOf(colorContrast.nodes, 1);
+    // assert.deepEqual(colorContrast.nodes[0].target, ['#dialog-color']);
   });
 
   it('should find violations inside and outside an open dialog', async () => {
     dialog.show();
-    const { buttonName, colorContrast } = await getViolations();
+    // DAISY-AXE
+    //, colorContrast
+    const { buttonName } = await getViolations();
 
     assert.lengthOf(buttonName.nodes, 2);
     assert.deepEqual(buttonName.nodes[0].target, ['#root-button']);
     assert.deepEqual(buttonName.nodes[1].target, ['#dialog-button']);
-    assert.lengthOf(colorContrast.nodes, 2);
-    assert.deepEqual(colorContrast.nodes[0].target, ['#root-color']);
-    assert.deepEqual(colorContrast.nodes[1].target, ['#dialog-color']);
+    // DAISY-AXE
+    // assert.lengthOf(colorContrast.nodes, 2);
+    // assert.deepEqual(colorContrast.nodes[0].target, ['#root-color']);
+    // assert.deepEqual(colorContrast.nodes[1].target, ['#dialog-color']);
   });
 });

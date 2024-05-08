@@ -1,0 +1,13 @@
+{
+  "id": "epub-type-has-matching-role",
+  "impact": "moderate",
+  "matches": "epub-type-has-matching-role-matches",
+  "tags": ["cat.aria", "best-practice"],
+  "metadata": {
+    "description": "Ensure the element has an ARIA role matching its epub:type",
+    "help": "ARIA role should be used in addition to epub:type"
+  },
+  "all": [],
+  "any": ["matching-aria-role"],
+  "none": []
+}

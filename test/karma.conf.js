@@ -42,6 +42,9 @@ if (testFiles.length) {
       if (file.includes('integration/rules') && extname === '.html') {
         return file.replace('.html', '.json');
       }
+      if (file.includes('integration/rules') && extname === '.xhtml') {
+        return file.replace('.xhtml', '.json');
+      }
 
       return file;
     } else if (basename.includes('-matches.js')) {
@@ -104,6 +107,9 @@ module.exports = function (config) {
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],
+    specReporter: {
+      failFast: true
+    },
     preprocessors: {
       'test/integration/rules/**/*.json': ['integration']
     },

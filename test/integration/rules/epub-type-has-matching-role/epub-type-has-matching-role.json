@@ -1,0 +1,23 @@
+{
+  "description": "epub-type-has-matching-role test",
+  "rule": "epub-type-has-matching-role",
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]],
+  "passes": [
+    ["#sec"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass6"],
+    ["#pass5"],
+    ["#id-landmarks"],
+    ["#pass0"],
+    ["#ok1"],
+    ["#deprecated1_"],
+    ["#ok2"],
+    ["#deprecated2_"],
+    ["#ok3"],
+    ["#deprecated3_"],
+    ["#ok4"],
+    ["#deprecated4_"]
+  ]
+}

@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+
+<head>
+    <title>pagebreak-label test</title>
+    <meta charset="utf8" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+        mocha.setup({
+            timeout: 10000,
+            ui: 'bdd'
+        });
+        var assert = chai.assert;
+    </script>
+</head>
+<body>
+
+<h1>Loomings</h1>
+<p>Call me Ishmael.</p>
+
+    <span id="p1" role="doc-pagebreak" title="p1"/>
+    <span id="p2" epub:type="pagebreak" title="p2"/>
+    <span id="p3" role="doc-pagebreak"/>
+    <span id="p4" epub:type="pagebreak"/>
+
+<div id="mocha"></div>
+<script src="/test/testutils.js"></script>
+<script src="pagebreak-label.js"></script>
+<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
