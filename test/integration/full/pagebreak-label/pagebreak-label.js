@@ -7,7 +7,7 @@ describe('pagebreak-label test fail', function () {
   var results;
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
-      // axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+      // axe.configure({}); // DAISY-AXE BREAKPOINT AXE CONFIGURE
 
       axe.run(
         { runOnly: { type: 'rule', values: ['pagebreak-label'] } },

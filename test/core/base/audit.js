@@ -1,7 +1,6 @@
 describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-  // DAISY-AXE TODO+CHECK
   var _v = axe.version.replace(/-\w+\.\w+$/, '');
   const ver = axe.version.substring(0, _v.lastIndexOf('.'));
   const { fixtureSetup } = axe.testUtils;

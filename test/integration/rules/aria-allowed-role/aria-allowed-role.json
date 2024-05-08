@@ -97,14 +97,6 @@
     ["#pass-li-role-doc-endnote2"],
     ["#pass-li-role-doc-endnote"]
   ],
-  "DAISY-AXE TODO+CHECK": [
-    ["#fail-dpub-6"],
-    ["#fail-dpub-7"],
-    ["#pass-figure-doc-example"],
-    ["#pass-li-role-doc-biblioentry2"],
-    ["#pass-li-role-doc-endnote2"],
-    ["#pass-li-role-doc-endnote"]
-  ],
   "violations": [
     ["#fail-dd-no-role"],
     ["#fail-dt-no-role"],

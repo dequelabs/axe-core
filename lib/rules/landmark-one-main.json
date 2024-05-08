@@ -7,7 +7,6 @@
     "description": "Ensures the document has a unique main landmark",
     "help": "Document should have one unique main landmark"
   },
-  "// DAISY-AXE all": ["page-has-main", "page-no-duplicate-main"],
   "all": ["page-no-duplicate-main"],
   "any": [],
   "none": []

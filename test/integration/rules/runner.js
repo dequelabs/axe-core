@@ -5,7 +5,7 @@
   const ruleId = testObj.rule;
   const testName = testObj.description || ruleId + ' test';
 
-  // axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+  // axe.configure({}); // DAISY-AXE BREAKPOINT AXE CONFIGURE
 
   function flattenResult(results) {
     return {
@@ -108,8 +108,6 @@
             });
           });
 
-          // DAISY-AXE TODO+CHECK
-          //expected '[["#fail2"]]' to equal '[]'
           it('should not return other results', () => {
             if (typeof nodes !== 'undefined') {
               const targets = nodes.map(node => {

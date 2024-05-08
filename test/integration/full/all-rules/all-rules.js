@@ -8,8 +8,6 @@ describe('all rules test', () => {
   });
 
   it('should run all rules', () => {
-    // DAISY-AXE
-    // 0
     assert.lengthOf(results.inapplicable, 2);
   });
 
