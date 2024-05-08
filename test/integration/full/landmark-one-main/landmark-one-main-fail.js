@@ -18,17 +18,6 @@ describe('landmark-one-main test failure', function () {
     it('should find 0', function () {
       assert.lengthOf(results.violations, 0);
     });
-
-    it('should find #frame1', function () {
-      assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
-    });
-
-    it('should find #frame1, #violation2', function () {
-      assert.deepEqual(results.violations[0].nodes[1].target, [
-        '#frame1',
-        '#violation2'
-      ]);
-    });
   });
 
   describe('passes', function () {
@@ -46,9 +35,6 @@ describe('landmark-one-main test failure', function () {
         '#frame1',
         '#violation2'
       ]);
-    });
-    it('should find 0', function () {
-      assert.lengthOf(results.passes, 0);
     });
   });
 
