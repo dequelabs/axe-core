@@ -5,9 +5,13 @@ var testDirs = [
   'core',
   'commons',
   'rule-matches',
-  'checks',
+  'checks', // npm run test -- --browsers Chrome testDirs=checks
+  // npm run test -- --browsers Chrome testFiles=test/checks/color/color-contrast.js
   'api',
   'integration',
+  // npm run test -- --browsers Chrome testFiles=test/integration/rules/color-contrast/color-contrast.json
+  // npm run test -- --browsers Chrome testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
+  // npm run test -- --browsers Chrome testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
   'virtual-rules'
 ];
 var testFiles = [];

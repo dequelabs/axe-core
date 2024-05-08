@@ -154,8 +154,8 @@ function start(options) {
 
   const testUrls = globSync(
     [
-      // 'test/integration/full/**/*.{html,xhtml}'
-      'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+      'test/integration/full/**/*.{html,xhtml}'
+      // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
 
       // 'test/integration/full/**/*__.xhtml',
       // 'test/integration/full/**/*.html',

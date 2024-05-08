@@ -110,6 +110,13 @@
 
           it('should not return other results', () => {
             if (typeof nodes !== 'undefined') {
+              // console.log(
+              //   JSON.stringify(results, null, 4),
+              //   ' ---- ',
+              //   JSON.stringify(test, null, 4),
+              //   ' +++++++++++ ',
+              //   JSON.stringify(nodes, null, 4),
+              // );
               const targets = nodes.map(node => {
                 return node.target;
               });
