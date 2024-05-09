@@ -156,6 +156,7 @@ function start(options) {
     [
       'test/integration/full/**/*.{html,xhtml}'
       // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+      // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
 
       // 'test/integration/full/**/*__.xhtml',
       // 'test/integration/full/**/*.html',

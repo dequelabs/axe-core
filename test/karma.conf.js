@@ -1,22 +1,37 @@
 var path = require('path');
+const { globSync } = require('glob');
 
 // allow running only certain directories
 var testDirs = [
   'core',
   'commons',
   'rule-matches',
-  'checks', // npm run test -- --browsers Chrome testDirs=checks
-  // npm run test -- --browsers Chrome testFiles=test/checks/color/color-contrast.js
+  'checks',
+  // npm run test:unit -- --browsers Chrome testDirs=checks
+  // npm run test:unit -- --browsers ChromeHeadless testDirs=checks
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/checks/color/color-contrast.js
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/checks/color/color-contrast.js
   'api',
   'integration',
-  // npm run test -- --browsers Chrome testFiles=test/integration/rules/color-contrast/color-contrast.json
-  // npm run test -- --browsers Chrome testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
-  // npm run test -- --browsers Chrome testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
+  // npm run test:unit -- --browsers Chrome testDirs=integration
+  // npm run test:unit -- --browsers ChromeHeadless testDirs=integration
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/color-contrast/color-contrast.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/color-contrast/color-contrast.json
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
+
   'virtual-rules'
 ];
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
 var args = process.argv.slice(2);
+const isHeadless = args.includes('ChromeHeadless') || !args.includes('Chrome');
 
 args.forEach(function (arg) {
   // pattern: testDir=commons,core
@@ -73,7 +88,33 @@ if (testFiles.length) {
     }
     return path.join('test', dir, '**/*.js');
   });
+  testPaths = globSync(testPaths, {
+    ignore: '**/*-HEADLESS.{json}'
+  });
+  // .filter((tp) => {
+  //   return !tp.includes("-HEADLESS");
+  // })
 }
+
+console.log(isHeadless, JSON.stringify(args, null, 4));
+if (isHeadless) {
+  console.log('HEADLESS...');
+  for (let i = 0; i < testPaths.length; i++) {
+    testPaths[i] = testPaths[i].replace(
+      'link-in-text-block.json',
+      'link-in-text-block-HEADLESS.json'
+    );
+    testPaths[i] = testPaths[i].replace(
+      'color-contrast.json',
+      'color-contrast-HEADLESS.json'
+    );
+    testPaths[i] = testPaths[i].replace(
+      'color-contrast-enhanced.json',
+      'color-contrast-enhanced-HEADLESS.json'
+    );
+  }
+}
+console.log(JSON.stringify(testPaths, null, 4));
 
 module.exports = function (config) {
   config.set({
@@ -121,7 +162,7 @@ module.exports = function (config) {
       useIframe: false,
       mocha: {
         timeout: 4000,
-        reporter: 'html'
+        reporter: 'htmlss'
       }
     },
     customLaunchers: {
