@@ -85,8 +85,19 @@ module.exports = function (config) {
     ],
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
+      {
+        pattern: 'node_modules/colorjs.io/dist/*',
+        included: false,
+        served: true
+      },
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
+      {
+        pattern: 'test/integration/**/*.mjs',
+        included: true,
+        served: true,
+        type: 'module'
+      },
       { pattern: 'test/assets/**/*.*', included: false, served: true },
       {
         pattern: 'test/integration/rules/**/*.html',
