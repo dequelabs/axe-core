@@ -79,21 +79,34 @@ if (testFiles.length) {
     }
   });
 } else if (testDirs.length) {
-  testPaths = testDirs.map(function (dir) {
-    if (dir === 'integration') {
-      return path.join('test', dir, '**/*.json');
-    }
-    if (['virtual-rules', 'api'].includes(dir)) {
-      return path.join('test', 'integration', dir, '**/*.js');
-    }
-    return path.join('test', dir, '**/*.js');
-  });
-  testPaths = globSync(testPaths, {
-    ignore: '**/*-HEADLESS.{json}'
-  });
-  // .filter((tp) => {
-  //   return !tp.includes("-HEADLESS");
-  // })
+  testPaths = testDirs
+    .map(function (dir) {
+      if (dir === 'integration') {
+        return path.join('test', dir, '**/*.json');
+      }
+      if (['virtual-rules', 'api'].includes(dir)) {
+        return path.join('test', 'integration', dir, '**/*.js');
+      }
+      return path.join('test', dir, '**/*.js');
+    })
+    .reduce((acc, cur) => {
+      if (cur.includes('integration/**/*.json')) {
+        const globbed = globSync(
+          cur
+          // {
+          //   ignore: '**/*-HEADLESS.{json}'
+          // }
+        ).filter(tp => {
+          return !tp.includes('-HEADLESS');
+        });
+        for (const g of globbed) {
+          acc.push(g);
+        }
+      } else {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
 }
 
 console.log(isHeadless, JSON.stringify(args, null, 4));
@@ -161,8 +174,8 @@ module.exports = function (config) {
     client: {
       useIframe: false,
       mocha: {
-        timeout: 4000,
-        reporter: 'htmlss'
+        timeout: 10000,
+        reporter: 'html'
       }
     },
     customLaunchers: {
