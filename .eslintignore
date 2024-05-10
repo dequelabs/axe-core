@@ -4,8 +4,9 @@
 build/tasks/aria-supported.js
 
 doc/api/*
-doc/examples/jest_react/*.js
+doc/examples/**/*.js
 
 lib/core/imports/*.js
+lib/core/utils/uuid.js
 axe.js
 axe.min.js
