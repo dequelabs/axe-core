@@ -16,7 +16,7 @@ function mockWindowCSS() {
 describe('patch test', function () {
   it('when not mocked, imports and works as expected', async function () {
 		try {
-			const { default: Color } = await import(`${karmaBaseURL}/node_modules/colorjs.io/dist/color.js`);
+			const { default: Color } = await import('./color-unpatched.js');
 			let color = new Color("slategray");
 			assert.ok(color);
 		} catch(error) {
@@ -40,11 +40,22 @@ describe('patch test', function () {
 
 		it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
 			try {
-				await import(`${karmaBaseURL}/node_modules/colorjs.io/dist/color.js`);
+				await import('./color-unpatched.js');
 			} catch({ name, message }) {
 				assert.equal(name, 'TypeError');
 				assert.equal(message, `Cannot read properties of null (reading 'supports')`);
 			}
 		});
+
+		it('patched: `CSS?.supports` optional chaining does not fail importing when `window.CSS === null`', async function () {
+			try {
+				const { default: Color } = await import(`${karmaBaseURL}/node_modules/colorjs.io/dist/color.js`);
+				let color = new Color("slategray");
+				assert.ok(color);
+			} catch(error) {
+				// Should not hit this assertion
+				assert.notOk(error);
+			}
+  });
 	});
 });

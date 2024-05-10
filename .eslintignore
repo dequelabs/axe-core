@@ -6,6 +6,7 @@ build/tasks/aria-supported.js
 doc/api/*
 doc/examples/jest_react/*.js
 
+test/integration/full/patch/color-unpatched.js
 lib/core/imports/*.js
 axe.js
 axe.min.js
