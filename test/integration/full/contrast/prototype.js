@@ -1,14 +1,7 @@
 describe('color-contrast prototype.js test', () => {
-  'use strict';
   let results;
 
   before(done => {
-    console.log(
-      'cannot reproduce locally... debugging in CI',
-      axe,
-      axe.testUtils,
-      axe.testUtils.awaitNestedLoad
-    );
     axe.testUtils.awaitNestedLoad(async () => {
       const options = {
         runOnly: ['color-contrast'],
