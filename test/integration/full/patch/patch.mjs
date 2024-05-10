@@ -6,56 +6,63 @@ const karmaBaseURL = '/base';
 const originalWindowCSS = window.CSS;
 
 function resetWindowCSSMock() {
-	Object.defineProperty(window, 'CSS', { value: originalWindowCSS });
+  Object.defineProperty(window, 'CSS', { value: originalWindowCSS });
 }
 
 function mockWindowCSS() {
-	Object.defineProperty(window, 'CSS', { value: null });
+  Object.defineProperty(window, 'CSS', { value: null });
 }
 
 describe('patch test', function () {
   it('when not mocked, imports and works as expected', async function () {
-		try {
-			const { default: Color } = await import(`${karmaBaseURL}/patches/color.unpatched.js`);
-			let color = new Color("slategray");
-			assert.ok(color);
-		} catch(error) {
-			// Should not hit this assertion
-			assert.notOk(error);
-		}
+    try {
+      const { default: Color } = await import(
+        `${karmaBaseURL}/patches/color.unpatched.js`
+      );
+      let color = new Color('slategray');
+      assert.ok(color);
+    } catch (error) {
+      // Should not hit this assertion
+      assert.notOk(error);
+    }
   });
 
-	describe('mocked, `window.CSS === null`', function () {
-		beforeEach(mockWindowCSS);
-		afterEach(resetWindowCSSMock);
+  describe('mocked, `window.CSS === null`', function () {
+    beforeEach(mockWindowCSS);
+    afterEach(resetWindowCSSMock);
 
-		it('can mock window.CSS to `null` on its own', function () {
-			assert.isNull(window.CSS);
-		});
+    it('can mock window.CSS to `null` on its own', function () {
+      assert.isNull(window.CSS);
+    });
 
-		it('resets css window mock', function () {
-			resetWindowCSSMock();
-			assert.equal(window.CSS, originalWindowCSS);
-		});
+    it('resets css window mock', function () {
+      resetWindowCSSMock();
+      assert.equal(window.CSS, originalWindowCSS);
+    });
 
-		it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
-			try {
-				await import(`${karmaBaseURL}/patches/color.unpatched.js`);
-			} catch({ name, message }) {
-				assert.equal(name, 'TypeError');
-				assert.equal(message, `Cannot read properties of null (reading 'supports')`);
-			}
-		});
+    it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
+      try {
+        await import(`${karmaBaseURL}/patches/color.unpatched.js`);
+      } catch ({ name, message }) {
+        assert.equal(name, 'TypeError');
+        assert.equal(
+          message,
+          `Cannot read properties of null (reading 'supports')`
+        );
+      }
+    });
 
-		it('patched: `CSS?.supports` optional chaining does not fail importing when `window.CSS === null`', async function () {
-			try {
-				const { default: Color } = await import(`${karmaBaseURL}/node_modules/colorjs.io/dist/color.js`);
-				let color = new Color("slategray");
-				assert.ok(color);
-			} catch(error) {
-				// Should not hit this assertion
-				assert.notOk(error);
-			}
+    it('patched: `CSS?.supports` optional chaining does not fail importing when `window.CSS === null`', async function () {
+      try {
+        const { default: Color } = await import(
+          `${karmaBaseURL}/node_modules/colorjs.io/dist/color.js`
+        );
+        let color = new Color('slategray');
+        assert.ok(color);
+      } catch (error) {
+        // Should not hit this assertion
+        assert.notOk(error);
+      }
+    });
   });
-	});
 });
