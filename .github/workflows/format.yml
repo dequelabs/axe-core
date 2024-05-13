@@ -21,6 +21,6 @@ jobs:
       - run: npm run fmt
       # Prevent the prettierignore change from being committed.
       - run: git checkout .prettierignore
-      - uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # tag=v5
+      - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # tag=v5
         with:
           commit_message: ':robot: Automated formatting fixes'
