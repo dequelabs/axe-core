@@ -111,9 +111,9 @@
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
     "prepare": "husky",
-    "prebuild": "node ./build/check-node-version.js && patch-package --reverse",
+    "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
-    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md && patch-package"
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.9.0",
@@ -150,6 +150,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "^1.1.0",
+    "grunt-exec": "^3.0.0",
     "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
     "husky": "^9.0.7",
