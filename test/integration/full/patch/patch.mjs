@@ -42,7 +42,7 @@ describe('patch test', function () {
 
     it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
       try {
-				`${karmaBaseURL}/patches/unpatched/color.js`
+        `${karmaBaseURL}/patches/unpatched/color.js`;
       } catch ({ name, message }) {
         assert.equal(name, 'TypeError');
         assert.equal(
