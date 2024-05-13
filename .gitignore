@@ -29,3 +29,5 @@ typings/axe-core/axe-core-tests.js
 # doc
 doc/rule-descriptions.*.md
 
+# unpatched files, made from a build step
+patches/unpatched/*

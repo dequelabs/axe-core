@@ -9,6 +9,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-bytesize');
@@ -184,6 +185,14 @@ module.exports = function (grunt) {
         src: 'lib/rules/**/*.json'
       }
     },
+    copy: {
+      main: {
+        expand: true,
+        cwd: 'node_modules/colorjs.io/dist/',
+        src: 'color.{js,cjs}',
+        dest: 'patches/unpatched/'
+      }
+    },
     uglify: {
       beautify: {
         files: langs.map(function (lang, i) {
@@ -271,6 +280,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:core',
     'validate',
+    'copy',
     'metadata-function-map',
     'esbuild',
     'configure',

@@ -90,7 +90,7 @@ module.exports = function (config) {
         included: false,
         served: true
       },
-      { pattern: 'patches/*.unpatched.js', included: false, served: true },
+      { pattern: 'patches/unpatched/*{js,cjs}', included: false, served: true },
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
       {

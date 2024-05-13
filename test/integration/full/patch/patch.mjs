@@ -17,7 +17,7 @@ describe('patch test', function () {
   it('when not mocked, imports and works as expected', async function () {
     try {
       const { default: Color } = await import(
-        `${karmaBaseURL}/patches/color.unpatched.js`
+        `${karmaBaseURL}/patches/unpatched/color.js`
       );
       let color = new Color('slategray');
       assert.ok(color);
@@ -42,7 +42,7 @@ describe('patch test', function () {
 
     it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
       try {
-        await import(`${karmaBaseURL}/patches/color.unpatched.js`);
+				`${karmaBaseURL}/patches/unpatched/color.js`
       } catch ({ name, message }) {
         assert.equal(name, 'TypeError');
         assert.equal(
