@@ -498,7 +498,8 @@
     },
     "aria-required-children": {
       "pass": {
-        "default": "必須のARIA子ロールが存在します"
+        "default": "必須のARIA子ロールが存在します",
+        "aria-busy": "要素にはaria-busy属性が指定されているため、必要な子要素を省略することが許可されています"
       },
       "fail": {
         "singular": "必須のARIA子ロールが提供されていません: ${data.values}",
@@ -537,7 +538,8 @@
         "noIdShadow": "ARIA属性で指定されている要素のIDがページ上に存在しないか、別のshadow DOMツリーの小要素です: ${data.needsReview}",
         "ariaCurrent": "ARIA属性値が無効であるため、\"aria-current=true\"として扱われます: ${data.needsReview}",
         "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}",
-        "empty": "ARIA属性値が空のときは無視されます: ${data.needsReview}"
+        "empty": "ARIA属性値が空のときは無視されます: ${data.needsReview}",
+        "controlsWithinPopup": "aria-haspopupを使用している際にaria-controlsが参照するIDがページ上に存在するかどうかを判断できません: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -821,7 +823,7 @@
       "pass": "リスト項目に<ul>、<ol>、またはrole=\"list\"の親要素が存在します",
       "fail": {
         "default": "リスト項目に <ul>、<ol> 親要素が存在しません",
-        "roleNotValid": "リスト項目にroleが指定されていない<ul>や<ol>親要素、またはrole=\"list\"の親要素が存在しません"
+        "roleNotValid": "リスト項目の親要素に、role=\"list\"以外のロールが指定されています"
       }
     },
     "only-dlitems": {
@@ -864,17 +866,22 @@
       "fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
     },
     "target-offset": {
-      "pass": "ターゲットに最も近い隣接要素との間の空白の大きさは十分です。クリッカブルな領域として十分な大きさは、直径${data.minOffset}pxで、${data.minOffset}px以上です。",
+      "pass": {
+        "default": "ターゲットは最も近い隣接する要素との間に充分な大きさの空白があります。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上で直径${data.closestOffset}pxです。",
+        "large": "ターゲットの大きさは、最低${data.minOffset}pxの基準を大きく上回っています。"
+      },
       "fail": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。",
       "incomplete": {
         "default": "tabindexが負の要素において、最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。これがターゲットであるか確認しましょう。",
-        "nonTabbableNeighbor": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。隣接要素がターゲットであるか確認しましょう。"
+        "nonTabbableNeighbor": "ターゲットに最も近い隣接要素との間の空白の大きさが不十分です。クリッカブルな領域として十分な大きさは、${data.minOffset}px以上ではなく、直径${data.closestOffset}pxです。隣接要素がターゲットであるか確認しましょう。",
+        "tooManyRects": "重複する要素が多すぎるため、ターゲットの大きさを取得できません。"
       }
     },
     "target-size": {
       "pass": {
         "default": "コントロールには十分なサイズがあります (${data.width}px x ${data.height}pxであり、${data.minSize}px x ${data.minSize}px以上です)",
-        "obscured": "コントロールは完全に隠されていてクリックできないため無視されます"
+        "obscured": "コントロールは完全に隠されていてクリックできないため無視されます",
+        "large": "ターゲットの大きさはは最低${data.minSize}pxの基準を大きく上回っています。"
       },
       "fail": {
         "default": "ターゲットのサイズが不十分です (${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)",
@@ -884,7 +891,8 @@
         "default": "tabindexが負の要素のサイズが不十分です (${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)。これがターゲットであるか確認しましょう",
         "contentOverflow": "コンテンツがオーバーフローしたため、要素のサイズを正確に決定できませんでした",
         "partiallyObscured": "tabindexが負の要素は、部分的に隠れているためサイズが不十分です (最小のスペースは${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)。これがターゲットであるか確認しましょう",
-        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これはtabindexが負の隣接オブジェクトによって部分的に隠されているためです (最小のスペースは${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)。隣接要素がターゲットであるか確認しましょう"
+        "partiallyObscuredNonTabbable": "ターゲットのサイズが不十分です。これはtabindexが負の隣接オブジェクトによって部分的に隠されているためです (最小のスペースは${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)。隣接要素がターゲットであるか確認しましょう",
+        "tooManyRects": "重複する要素が多すぎるため、ターゲットの大きさを取得できません。"
       }
     },
     "header-present": {
