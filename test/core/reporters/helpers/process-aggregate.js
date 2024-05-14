@@ -317,7 +317,7 @@ describe('helpers.processAggregate', function () {
             );
           });
 
-          it('should not call DqElement.selector', () => {
+          it('should not call the nodes selector property', () => {
             const dqElm = new axe.utils.DqElement(fixture);
             Object.defineProperty(dqElm, 'selector', {
               get() {
@@ -381,7 +381,7 @@ describe('helpers.processAggregate', function () {
           );
         });
 
-        it('should not call DqElement.ancestry', () => {
+        it('should not call the nodes ancestry property', () => {
           const dqElm = new axe.utils.DqElement(fixture, options, {
             selector: ['div'] // prevent axe._selectorData error
           });
@@ -446,7 +446,7 @@ describe('helpers.processAggregate', function () {
           );
         });
 
-        it('should not call DqElement.xpath', () => {
+        it('should not call the nodes xpath property', () => {
           const dqElm = new axe.utils.DqElement(fixture, options, {
             selector: ['div'] // prevent axe._selectorData error
           });
