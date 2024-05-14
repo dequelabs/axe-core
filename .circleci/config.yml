@@ -61,7 +61,7 @@ jobs:
           paths:
             - node_modules
 
-  # Build and cache axe.js
+  # Build and cache built files
   build_unix:
     <<: *defaults
     <<: *unix_box
@@ -74,6 +74,7 @@ jobs:
           paths:
             - axe.js
             - axe.min.js
+            - patches/unpatched
 
   # Run ESLINT
   lint:
