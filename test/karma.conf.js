@@ -110,7 +110,7 @@ module.exports = function (config) {
     ].concat(testPaths),
     proxies: {
       '/color.js': '/base/node_modules/colorjs.io/dist/color.js',
-      '/unpatched-color.js': '/base/patches/unpatched/color.js',
+      '/unpatched': '/base/patches/unpatched',
       '/test': '/base/test',
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
