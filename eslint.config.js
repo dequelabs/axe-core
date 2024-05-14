@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-undef
 const prettier = require('eslint-config-prettier');
+const globals = require('globals');
 
-// eslint-disable-next-line no-undef
 module.exports = [
   prettier,
   {
@@ -93,8 +92,8 @@ module.exports = [
       globals: {
         axe: true,
         Promise: true,
-        node: true,
-        es6: true
+        ...globals.node,
+        ...globals.es2015
       }
     }
   },
@@ -104,10 +103,9 @@ module.exports = [
       sourceType: 'module',
       globals: {
         window: true,
-        node: true,
-        es6: true,
-        // do not access global window properties without going through window
-        browser: false
+        document: true,
+        ...globals.node,
+        ...globals.es2015
       }
     },
     rules: {
@@ -117,13 +115,18 @@ module.exports = [
     }
   },
   {
+    files: ['doc/examples/chrome-debugging-protocol/axe-cdp.js'],
+    languageOptions: {
+      globals: {
+        window: true
+      }
+    }
+  },
+  {
     // after functions and reporters will not be run inside the same context as axe.run so should not access browser globals that require context specific information (window.location, window.getComputedStyles, etc.)
     files: ['lib/**/*-after.js', 'lib/core/reporters/**/*.js'],
     languageOptions: {
-      sourceType: 'module',
-      globals: {
-        browser: false
-      }
+      sourceType: 'module'
     }
   },
   {
@@ -132,11 +135,6 @@ module.exports = [
       'lib/core/imports/polyfills.js',
       'lib/core/utils/pollyfill-elements-from-point.js'
     ],
-    languageOptions: {
-      globals: {
-        browser: false
-      }
-    },
     rules: {
       'func-names': 0,
       'no-bitwise': 0,
@@ -148,7 +146,7 @@ module.exports = [
     files: ['test/act-rules/**/*.js', 'test/aria-practices/**/*.js'],
     languageOptions: {
       globals: {
-        mocha: true
+        ...globals.mocha
       }
     },
     rules: {
@@ -160,9 +158,10 @@ module.exports = [
     files: ['test/**/*.js'],
     languageOptions: {
       globals: {
-        mocha: true,
-        browser: true,
-        es6: false,
+        ...globals.mocha,
+        ...globals.browser,
+        ...globals.es2015,
+        ...globals.node,
         assert: true,
         helpers: true,
         checks: true,
