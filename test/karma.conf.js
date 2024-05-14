@@ -86,11 +86,11 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
       {
-        pattern: 'node_modules/colorjs.io/dist/*',
+        pattern: 'node_modules/colorjs.io/dist/color.js',
         included: false,
         served: true
       },
-      { pattern: 'patches/unpatched/*{js,cjs}', included: false, served: true },
+      { pattern: 'patches/unpatched/*.js', included: false, served: true },
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
       {
@@ -109,6 +109,8 @@ module.exports = function (config) {
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
+      '/color.js': '/base/node_modules/colorjs.io/dist/color.js',
+      '/unpatched': '/base/patches/unpatched',
       '/test': '/base/test',
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
