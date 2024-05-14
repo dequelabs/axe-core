@@ -39,7 +39,7 @@ describe('patch test', function () {
 
     it('not patched: `CSS.supports` fails to load when `window.CSS === null`', async function () {
       try {
-				await import('/unpatched/color.js');
+        await import('/unpatched/color.js');
       } catch ({ name, message }) {
         assert.equal(name, 'TypeError');
         assert.equal(
