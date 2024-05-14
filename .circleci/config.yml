@@ -75,6 +75,7 @@ jobs:
             - axe.js
             - axe.min.js
             - patches/unpatched
+            - node_modules/colorjs.io/dist/color.js
 
   # Run ESLINT
   lint:
