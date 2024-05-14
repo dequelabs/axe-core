@@ -1,38 +1,8 @@
-diff --git a/node_modules/colorjs.io/dist/color.cjs b/node_modules/colorjs.io/dist/color.cjs
-index 3835d9a..5b8e8e1 100644
---- a/node_modules/colorjs.io/dist/color.cjs
-+++ b/node_modules/colorjs.io/dist/color.cjs
-@@ -2010,14 +2010,14 @@ var P3 = new RGBColorSpace({
- // Default space for CSS output. Code in Color.js makes this wider if there's a DOM available
- defaults.display_space = sRGB;
- 
--if (typeof CSS !== "undefined" && CSS.supports) {
-+if (typeof CSS !== "undefined" && CSS?.supports) {
- 	// Find widest supported color space for CSS
- 	for (let space of [lab, REC2020, P3]) {
- 		let coords = space.getMinCoords();
- 		let color = {space, coords, alpha: 1};
- 		let str = serialize(color);
- 
--		if (CSS.supports("color", str)) {
-+		if (CSS?.supports("color", str)) {
- 			defaults.display_space = space;
- 			break;
- 		}
-@@ -2039,7 +2039,7 @@ if (typeof CSS !== "undefined" && CSS.supports) {
- function display (color, {space = defaults.display_space, ...options} = {}) {
- 	let ret = serialize(color, options);
- 
--	if (typeof CSS === "undefined" || CSS.supports("color", ret) || !defaults.display_space) {
-+	if (typeof CSS === "undefined" || CSS?.supports("color", ret) || !defaults.display_space) {
- 		ret = new String(ret);
- 		ret.color = color;
- 	}
 diff --git a/node_modules/colorjs.io/dist/color.js b/node_modules/colorjs.io/dist/color.js
-index 4023dbf..c6db7e1 100644
+index 4023dbf..66dfb9c 100644
 --- a/node_modules/colorjs.io/dist/color.js
 +++ b/node_modules/colorjs.io/dist/color.js
-@@ -2006,14 +2006,14 @@ var P3 = new RGBColorSpace({
+@@ -2006,7 +2006,7 @@ var P3 = new RGBColorSpace({
  // Default space for CSS output. Code in Color.js makes this wider if there's a DOM available
  defaults.display_space = sRGB;
  
@@ -41,14 +11,6 @@ index 4023dbf..c6db7e1 100644
  	// Find widest supported color space for CSS
  	for (let space of [lab, REC2020, P3]) {
  		let coords = space.getMinCoords();
- 		let color = {space, coords, alpha: 1};
- 		let str = serialize(color);
- 
--		if (CSS.supports("color", str)) {
-+		if (CSS?.supports("color", str)) {
- 			defaults.display_space = space;
- 			break;
- 		}
 @@ -2035,7 +2035,7 @@ if (typeof CSS !== "undefined" && CSS.supports) {
  function display (color, {space = defaults.display_space, ...options} = {}) {
  	let ret = serialize(color, options);

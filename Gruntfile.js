@@ -190,7 +190,7 @@ module.exports = function (grunt) {
       main: {
         expand: true,
         cwd: 'node_modules/colorjs.io/dist/',
-        src: 'color.{js,cjs}',
+        src: 'color.js',
         dest: 'patches/unpatched/'
       }
     },
