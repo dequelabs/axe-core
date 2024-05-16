@@ -2,8 +2,6 @@ const prettier = require('eslint-config-prettier');
 const globals = require('globals');
 const mochaNoOnly = require('eslint-plugin-mocha-no-only');
 
-console.log(mochaNoOnly);
-
 module.exports = [
   prettier,
   {
@@ -90,14 +88,7 @@ module.exports = [
       ]
     },
     plugins: {
-      'mocha-no-only': {
-        ...mochaNoOnly,
-        rules: {
-          'mocha-no-only': {
-            create: mochaNoOnly.rules['mocha-no-only']
-          }
-        }
-      }
+      'mocha-no-only': mochaNoOnly
     }
   },
   {
