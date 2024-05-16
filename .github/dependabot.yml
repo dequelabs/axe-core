@@ -39,7 +39,7 @@ updates:
       # Prevent colorjs.io issue caused by >v0.4.3
       # @see https://github.com/dequelabs/axe-core/issues/4428
       - dependency-name: 'colorjs.io'
-        version: ['>0.4.3']
+        versions: ['>0.4.3']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:
