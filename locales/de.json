@@ -538,7 +538,8 @@
         "noIdShadow": "ARIA-Attribut Element-ID existiert nicht auf der Seite oder ist ein Nachkomme (descendant) eines anderen Schatten-DOM-tree: ${data.needsReview}",
         "ariaCurrent": "Folgendes ARIA Attributwert ist ungültig und wird wie \"aria-current=true\" gesehen: ${data.needsReview}",
         "idrefs": "Es konnte nicht festgestellt werden, ob das ARIA-Attribut element ID auf der Seite existiert: ${data.needsReview}",
-        "empty": "ARIA-Attributwert wird ignoriert, wenn leer: ${data.needsReview}"
+        "empty": "ARIA-Attributwert wird ignoriert, wenn leer: ${data.needsReview}",
+        "controlsWithinPopup": "Bei der Verwendung von aria-haspopup konnte nicht festgestellt werden, ob die von aria-controls referenzierte ID auf der Seite existiert: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -872,7 +873,8 @@
       "fail": "Das Ziel hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px.",
       "incomplete": {
         "default": "Element mit negativem Tabindex hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px. Ist dies ein Ziel?",
-        "nonTabbableNeighbor": "Das Ziel hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px. Ist der Nachbar ein Ziel?"
+        "nonTabbableNeighbor": "Das Ziel hat nicht genügend Abstand zu seinen nächsten Nachbarn. Der sichere klickbare Bereich hat einen Durchmesser von ${data.closestOffset}px statt mindestens ${data.minOffset}px. Ist der Nachbar ein Ziel?",
+        "tooManyRects": "Die Zielgröße konnte nicht ermittelt werden, da zu viele überlappende Elemente vorhanden sind."
       }
     },
     "target-size": {
