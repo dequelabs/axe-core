@@ -36,10 +36,10 @@ updates:
       # @see https://github.com/dequelabs/axe-core/issues/3771
       - dependency-name: 'esbuild'
         versions: ['>=0.11.0']
-      # Prevent colorjs.io issue caused by v0.5.0+
+      # Prevent colorjs.io issue caused by >v0.4.3
       # @see https://github.com/dequelabs/axe-core/issues/4428
       - dependency-name: 'colorjs.io'
-        version: ['>=0.5.0']
+        version: ['>0.4.3']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:
