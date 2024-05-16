@@ -1,10 +1,14 @@
 const prettier = require('eslint-config-prettier');
 const globals = require('globals');
+const mochaNoOnly = require('eslint-plugin-mocha-no-only');
+
+console.log(mochaNoOnly);
 
 module.exports = [
   prettier,
   {
     rules: {
+      'mocha-no-only/mocha-no-only': ['error'],
       'no-bitwise': 2,
       camelcase: 2,
       curly: 2,
@@ -84,6 +88,16 @@ module.exports = [
             "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
         }
       ]
+    },
+    plugins: {
+      'mocha-no-only': {
+        ...mochaNoOnly,
+        rules: {
+          'mocha-no-only': {
+            create: mochaNoOnly.rules['mocha-no-only']
+          }
+        }
+      }
     }
   },
   {
