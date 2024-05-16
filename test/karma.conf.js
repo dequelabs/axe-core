@@ -95,7 +95,7 @@ module.exports = function (config) {
       { pattern: 'test/integration/**/*.css', included: false, served: true },
       {
         pattern: 'test/integration/**/*.mjs',
-        included: true,
+        included: false,
         served: true,
         type: 'module'
       },
