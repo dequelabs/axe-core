@@ -22,7 +22,7 @@ var createIntegrationPreprocessor = function (logger) {
       var html = fs.readFileSync(htmlpath, 'utf-8');
       try {
         var test = JSON.parse(content);
-      } catch (e) {
+      } catch {
         throw new Error('Unable to parse content of ' + file.originalPath);
       }
       test.content = html;
