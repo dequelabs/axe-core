@@ -104,8 +104,11 @@ module.exports = [
   },
   {
     files: ['lib/**/*.js'],
+    // reporters and check after methods should not have access to window or document
+    ignores: ['lib/core/reporters/**/*.js', 'lib/**/*-after.js'],
     languageOptions: {
       sourceType: 'module',
+      // lib files should not access global window properties without going through window (i.e. do not add globals.browser)
       globals: {
         window: true,
         document: true,
