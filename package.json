@@ -76,6 +76,8 @@
     "develop": "grunt dev --force",
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
+    "patch": "npx patch-package",
+    "unpatch": "npx patch-package --reverse && mkdir -p patches/unpatched && cp node_modules/colorjs.io/dist/color.js patches/unpatched/",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
@@ -111,9 +113,11 @@
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
     "prepare": "husky",
-    "prebuild": "node ./build/check-node-version.js",
+    "prebuild": "node ./build/check-node-version.js && npm run unpatch",
+    "predevelop": "npm run unpatch",
     "pretest": "node ./build/check-node-version.js",
-    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md && npm run patch",
+    "postdevelop": "npm run patch"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.9.0",
@@ -148,10 +152,8 @@
     "grunt-bytesize": "^0.2.0",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-concat": "^2.1.0",
-    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-exec": "^3.0.0",
     "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
     "husky": "^9.0.7",

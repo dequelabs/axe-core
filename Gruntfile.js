@@ -6,14 +6,12 @@ camelcase: ["error", {"properties": "never"}]
 module.exports = function (grunt) {
   'use strict';
 
-  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-babel');
-  grunt.loadNpmTasks('grunt-bytesize');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-bytesize');
   grunt.loadTasks('build/tasks');
 
   var langs;
@@ -186,22 +184,6 @@ module.exports = function (grunt) {
         src: 'lib/rules/**/*.json'
       }
     },
-    copy: {
-      main: {
-        expand: true,
-        cwd: 'node_modules/colorjs.io/dist/',
-        src: 'color.js',
-        dest: 'patches/unpatched/'
-      }
-    },
-    exec: {
-      unpatch: {
-        command: 'npx patch-package --reverse'
-      },
-      patch: {
-        command: 'npx patch-package'
-      }
-    },
     uglify: {
       beautify: {
         files: langs.map(function (lang, i) {
@@ -286,11 +268,9 @@ module.exports = function (grunt) {
     'esbuild',
     'add-locale:newLang'
   ]);
-  grunt.registerTask('patch', ['exec:unpatch', 'copy', 'exec:patch']);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
-    'patch',
     'metadata-function-map',
     'esbuild',
     'configure',
