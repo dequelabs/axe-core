@@ -68,6 +68,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npm run prepare
       - run: npm run build
       - save_cache:
           key: v9-cache-build-<< pipeline.git.revision >>
