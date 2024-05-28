@@ -49,11 +49,29 @@ describe('patch test', function () {
       }
     });
 
-    it('patched: `CSS?.supports` optional chaining does not fail importing when `window.CSS === null`', async function () {
+    it('patched: `CSS?.supports` does not fail importing when `window.CSS === null` via color.js directly', async function () {
       try {
         const { default: Color } = await import('/color.js');
         let color = new Color('slategray');
         assert.ok(color);
+      } catch (error) {
+        // Should not hit this assertion
+        assert.notOk(error);
+      }
+    });
+
+    it('patched: `CSS?.supports` does not fail importing when `window.CSS === null` via importing axe.js', async function () {
+      try {
+        await import('/axe.js');
+      } catch (error) {
+        // Should not hit this assertion
+        assert.notOk(error);
+      }
+    });
+
+    it('patched: `CSS?.supports` does not fail importing when `window.CSS === null` via importing axe.min.js', async function () {
+      try {
+        await import('/axe.min.js');
       } catch (error) {
         // Should not hit this assertion
         assert.notOk(error);

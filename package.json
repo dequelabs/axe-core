@@ -112,12 +112,10 @@
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
-    "prepare": "husky",
-    "prebuild": "node ./build/check-node-version.js && npm run unpatch",
-    "predevelop": "npm run unpatch",
+    "prepare": "husky && npm run unpatch && npm run patch",
+    "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
-    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md && npm run patch",
-    "postdevelop": "npm run patch"
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.9.0",

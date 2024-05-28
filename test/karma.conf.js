@@ -106,6 +106,7 @@ module.exports = function (config) {
         served: true
       },
       'axe.js',
+      'axe.min.js',
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
@@ -114,7 +115,8 @@ module.exports = function (config) {
       '/test': '/base/test',
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
-      '/axe.js': '/base/axe.js'
+      '/axe.js': '/base/axe.js',
+      '/axe.min.js': '/base/axe.min.js'
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],
