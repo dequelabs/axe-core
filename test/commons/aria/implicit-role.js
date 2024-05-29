@@ -209,6 +209,22 @@ describe('aria.implicitRole', function () {
     assert.isNull(implicitRole(node));
   });
 
+  it('should return complementary for sectioned aside with title', function () {
+    fixture.innerHTML =
+      '<section><aside id="target" title="test title"></aside></section>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'complementary');
+  });
+
+  it('should return null for sectioned aside with empty title', function () {
+    fixture.innerHTML =
+      '<section><aside id="target" title=" "></aside></section>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.isNull(implicitRole(node));
+  });
+
   it('should return banner for "body header"', function () {
     fixture.innerHTML = '<header id="target"></header>';
     var node = fixture.querySelector('#target');
