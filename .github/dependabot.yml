@@ -32,10 +32,16 @@ updates:
         versions: ['>=9.0.0']
       - dependency-name: 'chai'
         versions: ['>=5.0.0']
+      - dependency-name: 'conventional-commits-parser'
+        versions: ['>=6.0.0']
       # Prevent Webpack error caused by v0.11+ of esbuild
       # @see https://github.com/dequelabs/axe-core/issues/3771
       - dependency-name: 'esbuild'
         versions: ['>=0.11.0']
+      # Prevent colorjs.io issue caused by >v0.4.3
+      # @see https://github.com/dequelabs/axe-core/issues/4428
+      - dependency-name: 'colorjs.io'
+        versions: ['>0.4.3']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:

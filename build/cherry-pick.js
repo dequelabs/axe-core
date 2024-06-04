@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { execSync } = require('child_process');
 const conventionalCommitsParser = require('conventional-commits-parser');
 const chalk = require('chalk');
