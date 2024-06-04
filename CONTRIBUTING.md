@@ -7,7 +7,7 @@ In order to contribute, you must accept the [contributor license agreement](http
 ## Contribution Guidelines
 
 Submitting code to the project? Please review and follow our
-[Git commit and pull request guidelines](doc/code-submission-guidelines.md).
+[Git commit and pull request guidelines](code-submission-guidelines.md).
 
 ### Code Quality
 
