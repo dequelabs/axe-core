@@ -189,6 +189,7 @@ module.exports = [
       'doc/api/*',
       'doc/examples/jest_react/*.js',
       'lib/core/imports/*.js',
+      'lib/core/utils/uuid.js',
       'axe.js',
       'axe.min.js'
     ]
