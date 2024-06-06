@@ -1,0 +1,67 @@
+name: Publish generated docs
+
+on:
+  push:
+    branches:
+      - generated-docs # TODO: switch to develop
+
+env:
+  BRANCH_NAME: publish-generated-docs
+
+jobs:
+  generate_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate docs files
+        run: |
+          npm ci
+          npm run build -- --all-lang
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-docs
+          path: tmp/doc
+
+  push_to_axe_site_repo:
+    needs: generate_docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout axe site repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.AXE_SITE_REPO }}
+          token: ${{ secrets.AXE_SITE_REPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-docs
+          path: ../generated-docs
+
+      - name: Copy docs files to target branch
+        run: |
+          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
+          cp -r ../generated-docs/* src/pages/docs/markdown/
+
+      - name: Check for changes
+        id: changes
+        run: |
+          changes=$(git status --porcelain)
+          # see https://unix.stackexchange.com/a/509498
+          echo $changes | grep . && echo "Changes detected" || echo "No changes"
+          echo changes="$changes" >> "$GITHUB_OUTPUT"
+          
+      - name: Push branch to axe site repository
+        if: steps.changes.outputs.changes != ''
+        run: |
+          git add .
+          git commit -m "chore(docs): publish generated docs"
+          git push origin $BRANCH_NAME

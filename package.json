@@ -65,7 +65,7 @@
   ],
   "standard-version": {
     "scripts": {
-      "postbump": "npm ci && npm run sri-update && git add doc/rule-descriptions.md"
+      "postbump": "npm ci && npm run sri-update"
     },
     "skip": {
       "tag": true
@@ -113,7 +113,7 @@
     "prepare": "husky",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
-    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
+    "postbuild": "prettier --write ./locales/_template.json"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.9.0",

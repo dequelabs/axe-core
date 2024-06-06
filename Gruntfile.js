@@ -129,7 +129,7 @@ module.exports = function (grunt) {
     'aria-supported': {
       data: {
         entry: 'lib/commons/aria/index.js',
-        destFile: 'doc/aria-supported.md',
+        destFile: 'tmp/doc/aria-supported.md',
         options: {
           langs: langs
         },
@@ -147,7 +147,7 @@ module.exports = function (grunt) {
             src: [''],
             dest: {
               auto: 'tmp/rules' + lang + '.js',
-              descriptions: 'doc/rule-descriptions' + lang + '.md'
+              descriptions: 'tmp/doc/rule-descriptions' + lang + '.md'
             }
           };
         })
