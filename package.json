@@ -77,7 +77,7 @@
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
     "patch": "npx patch-package",
-    "unpatch": "npx patch-package --reverse && mkdir -p patches/unpatched && cp node_modules/colorjs.io/dist/color.js patches/unpatched/",
+    "unpatch": "npx patch-package --reverse",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
