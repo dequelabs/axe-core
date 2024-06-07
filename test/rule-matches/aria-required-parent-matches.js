@@ -1,8 +1,8 @@
 describe('aria-required-parent-matches', function () {
   'use strict';
 
-  let fixture = document.getElementById('fixture');
-  let queryFixture = axe.testUtils.queryFixture;
+  const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
   let rule;
 
   beforeEach(function () {
@@ -14,12 +14,12 @@ describe('aria-required-parent-matches', function () {
   });
 
   it('should return true for a role that requires parent', function () {
-    let vNode = queryFixture('<div id="target" role="listitem"></div>');
+    const vNode = queryFixture('<div id="target" role="listitem"></div>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
   it('should return false for a role that does not require parent', function () {
-    let vNode = queryFixture('<div id="target" role="alert"></div>');
+    const vNode = queryFixture('<div id="target" role="alert"></div>');
     assert.isFalse(rule.matches(null, vNode));
   });
 });

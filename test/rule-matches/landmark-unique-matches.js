@@ -3,15 +3,15 @@ describe('landmark-unique-matches', function () {
   let rule;
   let fixture;
   let axeFixtureSetup;
-  let shadowSupport = axe.testUtils.shadowSupport.v1;
-  let excludedDescendantsForHeadersFooters = [
+  const shadowSupport = axe.testUtils.shadowSupport.v1;
+  const excludedDescendantsForHeadersFooters = [
     'article',
     'aside',
     'main',
     'nav',
     'section'
   ];
-  let headerFooterElements = ['header', 'footer'];
+  const headerFooterElements = ['header', 'footer'];
 
   beforeEach(function () {
     fixture = document.getElementById('fixture');
@@ -21,30 +21,30 @@ describe('landmark-unique-matches', function () {
 
   it('should not match because not a landmark', function () {
     axeFixtureSetup('<h1>some heading</h1>');
-    let node = fixture.querySelector('h1');
-    let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+    const node = fixture.querySelector('h1');
+    const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
   it('should pass because is a landmark', function () {
     axeFixtureSetup('<div role="banner">some banner</div>');
-    let node = fixture.querySelector('div');
+    const node = fixture.querySelector('div');
     fixture.appendChild(node);
-    let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+    const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isTrue(rule.matches(node, virtualNode));
   });
 
   it('should not match because landmark is hidden', function () {
     axeFixtureSetup('<div role="banner">some banner</div>');
-    let node = fixture.querySelector('div');
+    const node = fixture.querySelector('div');
     node.style.display = 'none';
     fixture.appendChild(node);
-    let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+    const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
   describe('form and section elements must have accessible names to be matched', function () {
-    let sectionFormElements = ['section', 'form'];
+    const sectionFormElements = ['section', 'form'];
 
     sectionFormElements.forEach(function (elementType) {
       it(
@@ -59,8 +59,8 @@ describe('landmark-unique-matches', function () {
               elementType +
               '>'
           );
-          let node = fixture.querySelector(elementType);
-          let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
           assert.isTrue(rule.matches(node, virtualNode));
         }
       );
@@ -77,8 +77,8 @@ describe('landmark-unique-matches', function () {
               elementType +
               '>'
           );
-          let node = fixture.querySelector(elementType);
-          let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
           assert.isFalse(rule.matches(node, virtualNode));
         }
       );
@@ -105,8 +105,8 @@ describe('landmark-unique-matches', function () {
                 exclusionType +
                 '>'
             );
-            let node = fixture.querySelector(elementType);
-            let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+            const node = fixture.querySelector(elementType);
+            const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
             assert.isFalse(rule.matches(node, virtualNode));
           }
         );
@@ -120,8 +120,8 @@ describe('landmark-unique-matches', function () {
           axeFixtureSetup(
             '<' + elementType + '>an element</' + elementType + '>'
           );
-          let node = fixture.querySelector(elementType);
-          let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
           assert.isTrue(rule.matches(node, virtualNode));
         }
       );
@@ -130,12 +130,12 @@ describe('landmark-unique-matches', function () {
 
   if (shadowSupport) {
     it('return true for landmarks contained within shadow dom', function () {
-      let container = document.createElement('div');
-      let shadow = container.attachShadow({ mode: 'open' });
+      const container = document.createElement('div');
+      const shadow = container.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<footer></footer>';
 
       axeFixtureSetup(container);
-      let vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+      const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
       assert.isTrue(rule.matches(vNode.actualNode, vNode));
     });
 
@@ -169,7 +169,7 @@ describe('landmark-unique-matches', function () {
                 '>';
 
               axeFixtureSetup(container);
-              let virtualNode = axe.utils.querySelectorAll(
+              const virtualNode = axe.utils.querySelectorAll(
                 axe._tree[0],
                 elementType
               )[0];
@@ -186,7 +186,7 @@ describe('landmark-unique-matches', function () {
             shadow.innerHTML =
               '<' + elementType + '>an element</' + elementType + '>';
             axeFixtureSetup(container);
-            let virtualNode = axe.utils.querySelectorAll(
+            const virtualNode = axe.utils.querySelectorAll(
               axe._tree[0],
               elementType
             )[0];

@@ -8,7 +8,7 @@ describe('is-initiator-matches', function () {
   });
 
   afterEach(function () {
-    let fixture = document.getElementById('fixture');
+    const fixture = document.getElementById('fixture');
     fixture.innerHTML = '';
   });
 

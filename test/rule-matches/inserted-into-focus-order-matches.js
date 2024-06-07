@@ -1,8 +1,8 @@
 describe('inserted-into-focus-order-matches', function () {
   'use strict';
 
-  let fixture = document.getElementById('fixture');
-  let flatTreeSetup = axe.testUtils.flatTreeSetup;
+  const fixture = document.getElementById('fixture');
+  const flatTreeSetup = axe.testUtils.flatTreeSetup;
   let rule;
 
   beforeEach(function () {
@@ -16,35 +16,35 @@ describe('inserted-into-focus-order-matches', function () {
   it('should return true for a non-focusable element with tabindex > -1', function () {
     fixture.innerHTML = '<div tabindex="0"></div>';
     flatTreeSetup(fixture);
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isTrue(rule.matches(node));
   });
 
   it('should return false for a non-focusable element with tabindex == -1', function () {
     fixture.innerHTML = '<div tabindex="-1"></div>';
     flatTreeSetup(fixture);
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 
   it('should return false for a native focusable element with tabindex > 0', function () {
     fixture.innerHTML = '<button tabindex="0"></button>';
     flatTreeSetup(fixture);
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 
   it('should return false for a native focusable element with no tabindex', function () {
     fixture.innerHTML = '<a href="#"></a>';
     flatTreeSetup(fixture);
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 
   it('should return false for non-numeric tabindex value', function () {
     fixture.innerHTML = '<div tabindex="abc"></div>';
     flatTreeSetup(fixture);
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 });

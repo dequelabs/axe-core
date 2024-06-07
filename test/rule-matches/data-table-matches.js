@@ -1,8 +1,8 @@
 describe('data-table-matches', function () {
   'use strict';
 
-  let fixture = document.getElementById('fixture');
-  let fixtureSetup = axe.testUtils.fixtureSetup;
+  const fixture = document.getElementById('fixture');
+  const fixtureSetup = axe.testUtils.fixtureSetup;
   let rule;
 
   beforeEach(function () {
@@ -25,7 +25,7 @@ describe('data-table-matches', function () {
         '</table>'
     );
 
-    let vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
+    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -37,7 +37,7 @@ describe('data-table-matches', function () {
         '</table>'
     );
 
-    let vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
+    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -50,7 +50,7 @@ describe('data-table-matches', function () {
         '</table>'
     );
 
-    let vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
+    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'table')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 });

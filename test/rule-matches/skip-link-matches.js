@@ -2,7 +2,7 @@ describe('skip-link-matches', function () {
   'use strict';
 
   let rule, link;
-  let fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
 
   beforeEach(function () {
     rule = axe.utils.getRule('skip-link');

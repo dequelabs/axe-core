@@ -2,8 +2,8 @@ describe('has-implicit-chromium-role-matches', function () {
   'use strict';
 
   let rule;
-  let fixture = document.getElementById('fixture');
-  let queryFixture = axe.testUtils.queryFixture;
+  const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(function () {
     rule = axe.utils.getRule('presentation-role-conflict');
@@ -18,22 +18,22 @@ describe('has-implicit-chromium-role-matches', function () {
   });
 
   it('matches elements with an implicit role', function () {
-    let vNode = queryFixture('<main id="target"></main>');
+    const vNode = queryFixture('<main id="target"></main>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
   it('does not match elements with no implicit role', function () {
-    let vNode = queryFixture('<div id="target"></div>');
+    const vNode = queryFixture('<div id="target"></div>');
     assert.isFalse(rule.matches(null, vNode));
   });
 
   it('matches elements with an implicit role in chromium', function () {
-    let vNode = queryFixture('<svg id="target"></svg>');
+    const vNode = queryFixture('<svg id="target"></svg>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
   it('does not match elements with no implicit role even if they are focusable and have an explicit role', function () {
-    let vNode = queryFixture(
+    const vNode = queryFixture(
       '<div id="target" role="none" tabindex="1"></div>'
     );
     assert.isFalse(rule.matches(null, vNode));

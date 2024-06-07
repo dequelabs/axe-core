@@ -1,7 +1,7 @@
 describe('layout-table-matches', function () {
   'use strict';
 
-  let fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
   let rule;
 
   beforeEach(function () {
@@ -14,19 +14,19 @@ describe('layout-table-matches', function () {
 
   it('should return true if title attribute has text', function () {
     fixture.innerHTML = '<iframe title="hello"></iframe>';
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isTrue(rule.matches(node));
   });
 
   it('should return false if title attribute is empty', function () {
     fixture.innerHTML = '<iframe title=""></iframe>';
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 
   it('should return false if title attribute contains only whitespace', function () {
     fixture.innerHTML = '<iframe title="    "></iframe>';
-    let node = fixture.firstChild;
+    const node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
 });

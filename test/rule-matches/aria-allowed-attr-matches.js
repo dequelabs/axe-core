@@ -1,7 +1,7 @@
 describe('aria-allowed-attr-matches', function () {
   'use strict';
 
-  let queryFixture = axe.testUtils.queryFixture;
+  const queryFixture = axe.testUtils.queryFixture;
   let rule;
 
   beforeEach(function () {
@@ -13,7 +13,7 @@ describe('aria-allowed-attr-matches', function () {
   });
 
   it('should return true on elements that have aria attributes', function () {
-    let vNode = queryFixture(
+    const vNode = queryFixture(
       '<div role="button" id="target" aria-label="Thing 1" aria-mccheddarton="Unsupported thing 2"></div>'
     );
 
@@ -21,7 +21,7 @@ describe('aria-allowed-attr-matches', function () {
   });
 
   it('should return false on elements that have no aria attributes', function () {
-    let vNode = queryFixture('<div role="button" id="target"></div>');
+    const vNode = queryFixture('<div role="button" id="target"></div>');
 
     assert.isFalse(rule.matches(null, vNode));
   });
