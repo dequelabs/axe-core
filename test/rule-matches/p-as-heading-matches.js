@@ -55,7 +55,7 @@ describe('p-as-heading-matches', function () {
   it('ignores siblings that are not p elements', function () {
     fixture.innerHTML =
       '<p id="target">some text</p><div></div><p>some other text</p>';
-    const target = fixture.querySelector('#target');
+    let target = fixture.querySelector('#target');
 
     assert.isTrue(rule.matches(target));
 

@@ -23,7 +23,7 @@ describe('heading-matches', function () {
   });
 
   it('should return true on regular headings without roles', function () {
-    for (const i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 6; i++) {
       const vNode = queryFixture('<h' + i + ' id="target"></h' + i + '>');
       assert.isTrue(rule.matches(null, vNode));
     }
