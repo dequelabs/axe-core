@@ -13,37 +13,37 @@ function mockWindowCSS() {
 }
 
 describe('patch', function () {
-	'use strict';
+  'use strict';
 
-	beforeEach(mockWindowCSS);
-	afterEach(resetWindowCSSMock);
+  beforeEach(mockWindowCSS);
+  afterEach(resetWindowCSSMock);
 
-	it('can mock window.CSS to `null` on its own', function () {
-		assert.isNull(window.CSS);
-	});
+  it('can mock window.CSS to `null` on its own', function () {
+    assert.isNull(window.CSS);
+  });
 
-	it('resets css window mock', function () {
-		resetWindowCSSMock();
-		assert.equal(window.CSS, originalWindowCSS);
-	});
+  it('resets css window mock', function () {
+    resetWindowCSSMock();
+    assert.equal(window.CSS, originalWindowCSS);
+  });
 
-	it('imports axe.js and works while patched and mocked', async function () {
-		assert.isNull(window.CSS);
-		try {
-			await import('/axe.js');
-		} catch (error) {
-			// Should not hit this assertion
-			assert.notOk(error);
-		}
-	});
+  it('imports axe.js and works while patched and mocked', async function () {
+    assert.isNull(window.CSS);
+    try {
+      await import('/axe.js');
+    } catch (error) {
+      // Should not hit this assertion
+      assert.notOk(error);
+    }
+  });
 
-	it('imports axe.min.js and works while patched and mocked', async function () {
-		assert.isNull(window.CSS);
-		try {
-			await import('/axe.min.js');
-		} catch (error) {
-			// Should not hit this assertion
-			assert.notOk(error);
-		}
-	});
+  it('imports axe.min.js and works while patched and mocked', async function () {
+    assert.isNull(window.CSS);
+    try {
+      await import('/axe.min.js');
+    } catch (error) {
+      // Should not hit this assertion
+      assert.notOk(error);
+    }
+  });
 });
