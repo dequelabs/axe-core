@@ -5,7 +5,7 @@
   "tags": ["cat.tables", "best-practice"],
   "metadata": {
     "description": "Ensure the <caption> element does not contain the same text as the summary attribute",
-    "help": "tables should not have the same summary and caption"
+    "help": "Tables should not have the same summary and caption"
   },
   "all": [],
   "any": [],

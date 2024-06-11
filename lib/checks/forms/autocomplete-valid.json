@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "the autocomplete attribute is correctly formatted",
-      "fail": "the autocomplete attribute is incorrectly formatted"
+      "pass": "The autocomplete attribute is correctly formatted",
+      "fail": "The autocomplete attribute is incorrectly formatted"
     }
   },
   "options": {
