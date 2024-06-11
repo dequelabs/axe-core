@@ -2,6 +2,7 @@
   "description": "autocomplete-valid tests",
   "rule": "autocomplete-valid",
   "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]],
+  "incomplete": [["#incomplete1"]],
   "passes": [
     ["#pass1"],
     ["#pass2"],

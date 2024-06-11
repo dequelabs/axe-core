@@ -5,7 +5,8 @@
     "impact": "serious",
     "messages": {
       "pass": "the autocomplete attribute is correctly formatted",
-      "fail": "the autocomplete attribute is incorrectly formatted"
+      "fail": "the autocomplete attribute is incorrectly formatted",
+      "incomplete": "the autocomplete attribute is incorrect but safe to use"
     }
   },
   "options": {
