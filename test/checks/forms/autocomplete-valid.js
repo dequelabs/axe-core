@@ -21,7 +21,7 @@ describe('autocomplete-valid', function () {
     assert.isFalse(evaluate.apply(checkContext, params));
   });
 
-  it('returns undefined (incomplete) if autocomplete is not valid but safe', function () {
+  it('returns undefined (incomplete) if autocomplete is ignored', function () {
     var params = checkSetup('<input autocomplete="text" id="target" />');
     assert.isUndefined(evaluate.apply(checkContext, params));
   });

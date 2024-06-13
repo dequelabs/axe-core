@@ -684,7 +684,7 @@
     "autocomplete-valid": {
       "pass": "the autocomplete attribute is correctly formatted",
       "fail": "the autocomplete attribute is incorrectly formatted",
-      "incomplete": "the autocomplete attribute is incorrect but safe to use"
+      "incomplete": "check that this invalid autocomplete attribute does not necessary for accessibility"
     },
     "accesskeys": {
       "pass": "Accesskey attribute value is unique",
