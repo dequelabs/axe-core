@@ -185,6 +185,7 @@ module.exports = [
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',
+      'patches/*',
       'build/tasks/aria-supported.js',
       'doc/api/*',
       'doc/examples/jest_react/*.js',
