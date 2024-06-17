@@ -1,14 +1,14 @@
 describe('is-initiator-matches', function () {
   'use strict';
 
-  var rule;
+  let rule;
 
   beforeEach(function () {
     rule = axe.utils.getRule('html-has-lang');
   });
 
   afterEach(function () {
-    var fixture = document.getElementById('fixture');
+    const fixture = document.getElementById('fixture');
     fixture.innerHTML = '';
   });
 
