@@ -282,8 +282,8 @@
       "help": "Document should have one main landmark"
     },
     "landmark-unique": {
-      "help": "Ensures landmarks are unique",
-      "description": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination"
+      "description": "Ensures landmarks are unique",
+      "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination"
     },
     "link-in-text-block": {
       "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
@@ -383,14 +383,14 @@
     },
     "table-duplicate-name": {
       "description": "Ensure the <caption> element does not contain the same text as the summary attribute",
-      "help": "tables should not have the same summary and caption"
+      "help": "Tables should not have the same summary and caption"
     },
     "table-fake-caption": {
       "description": "Ensure that tables with a caption use the <caption> element.",
       "help": "Data or header cells must not be used to give caption to a data table."
     },
     "target-size": {
-      "description": "Ensure touch target have sufficient size and space",
+      "description": "Ensure touch targets have sufficient size and space",
       "help": "All touch targets must be 24px large, or leave sufficient space"
     },
     "td-has-header": {
@@ -461,9 +461,9 @@
         "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
-        "singular": "ensure aria-errormessage value `${data.values}` references an existing element",
-        "plural": "ensure aria-errormessage values `${data.values}` reference existing elements",
-        "idrefs": "unable to determine if aria-errormessage element exists on the page: ${data.values}"
+        "singular": "Ensure aria-errormessage value `${data.values}` references an existing element",
+        "plural": "Ensure aria-errormessage values `${data.values}` reference existing elements",
+        "idrefs": "Unable to determine if aria-errormessage element exists on the page: ${data.values}"
       }
     },
     "aria-hidden-body": {
@@ -678,8 +678,8 @@
       }
     },
     "autocomplete-appropriate": {
-      "pass": "the autocomplete value is on an appropriate element",
-      "fail": "the autocomplete value is inappropriate for this type of input"
+      "pass": "The autocomplete value is on an appropriate element",
+      "fail": "The autocomplete value is inappropriate for this type of input"
     },
     "autocomplete-valid": {
       "pass": "the autocomplete attribute is correctly formatted",
@@ -962,7 +962,7 @@
     "aria-labelledby": {
       "pass": "aria-labelledby attribute exists and references elements that are visible to screen readers",
       "fail": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty",
-      "incomplete": "ensure aria-labelledby references an existing element"
+      "incomplete": "Ensure aria-labelledby references an existing element"
     },
     "avoid-inline-spacing": {
       "pass": "No inline styles with '!important' that affect text spacing has been specified",
@@ -1045,7 +1045,7 @@
       }
     },
     "presentational-role": {
-      "pass": "Element's default semantics were overriden with role=\"${data.role}\"",
+      "pass": "Element's default semantics were overridden with role=\"${data.role}\"",
       "fail": {
         "default": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
         "globalAria": "Element's role is not presentational because it has a global ARIA attribute",
@@ -1055,11 +1055,11 @@
       }
     },
     "role-none": {
-      "pass": "Element's default semantics were overriden with role=\"none\"",
+      "pass": "Element's default semantics were overridden with role=\"none\"",
       "fail": "Element's default semantics were not overridden with role=\"none\""
     },
     "role-presentation": {
-      "pass": "Element's default semantics were overriden with role=\"presentation\"",
+      "pass": "Element's default semantics were overridden with role=\"presentation\"",
       "fail": "Element's default semantics were not overridden with role=\"presentation\""
     },
     "svg-non-empty-title": {

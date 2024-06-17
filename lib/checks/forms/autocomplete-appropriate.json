@@ -5,8 +5,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "the autocomplete value is on an appropriate element",
-      "fail": "the autocomplete value is inappropriate for this type of input"
+      "pass": "The autocomplete value is on an appropriate element",
+      "fail": "The autocomplete value is inappropriate for this type of input"
     }
   }
 }

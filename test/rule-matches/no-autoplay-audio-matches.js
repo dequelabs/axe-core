@@ -1,10 +1,10 @@
 describe('no-autoplay-audio-matches', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var queryFixture = axe.testUtils.queryFixture;
-  var preloadOptions = { preload: { assets: ['media'] } };
-  var rule;
+  const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
+  const preloadOptions = { preload: { assets: ['media'] } };
+  let rule;
 
   beforeEach(function () {
     rule = axe.utils.getRule('no-autoplay-audio');
@@ -15,37 +15,37 @@ describe('no-autoplay-audio-matches', function () {
   });
 
   it('returns false for <audio> element that has no src attribute', function (done) {
-    var vNode = queryFixture('<audio id="target"></audio>');
+    const vNode = queryFixture('<audio id="target"></audio>');
     axe.utils.preload(preloadOptions).then(function () {
-      var actual = rule.matches(vNode.actualNode);
+      const actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();
     });
   });
 
   it('returns false for <video> element that is paused', function (done) {
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<video id="target" autoplay="true" paused="true">' +
         '<source src="/test/assets/video.webm" type="video/webm" />' +
         '<source src="/test/assets/video.mp4" type="video/mp4" />' +
         '</video>'
     );
     axe.utils.preload(preloadOptions).then(function () {
-      var actual = rule.matches(vNode.actualNode);
+      const actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();
     });
   });
 
   it('returns false for <video> element that is muted', function (done) {
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<video id="target" autoplay="true" muted="true">' +
         '<source src="/test/assets/video.webm" type="video/webm" />' +
         '<source src="/test/assets/video.mp4" type="video/mp4" />' +
         '</video>'
     );
     axe.utils.preload(preloadOptions).then(function () {
-      var actual = rule.matches(vNode.actualNode);
+      const actual = rule.matches(vNode.actualNode);
       assert.isFalse(actual);
       done();
     });
