@@ -6,7 +6,7 @@
     "messages": {
       "pass": "the autocomplete attribute is correctly formatted",
       "fail": "the autocomplete attribute is incorrectly formatted",
-      "incomplete": "check that this invalid autocomplete attribute does not necessary for accessibility"
+      "incomplete": "the autocomplete attribute has a non-standard value. Check whether any standard value could be used instead."
     }
   },
   "options": {
@@ -18,6 +18,7 @@
       "enabled",
       "undefined",
       "null"
-    ]
+    ],
+    "ignoredValues": ["text", "pronouns", "gender", "message", "content"]
   }
 }
