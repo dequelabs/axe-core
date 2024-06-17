@@ -12,7 +12,7 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "Element's default semantics were overriden with role=\"none\"",
+      "pass": "Element's default semantics were overridden with role=\"none\"",
       "fail": "Element's default semantics were not overridden with role=\"none\""
     }
   }
