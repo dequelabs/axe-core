@@ -682,8 +682,9 @@
       "fail": "The autocomplete value is inappropriate for this type of input"
     },
     "autocomplete-valid": {
-      "pass": "The autocomplete attribute is correctly formatted",
-      "fail": "The autocomplete attribute is incorrectly formatted"
+      "pass": "the autocomplete attribute is correctly formatted",
+      "fail": "the autocomplete attribute is incorrectly formatted",
+      "incomplete": "the autocomplete attribute has a non-standard value. Check whether any standard value could be used instead."
     },
     "accesskeys": {
       "pass": "Accesskey attribute value is unique",
