@@ -1,0 +1,23 @@
+{
+  "description": "summary-name test",
+  "rule": "summary-name",
+  "violations": [
+    ["#empty-fail"],
+    ["#aria-label-fail"],
+    ["#aria-labelledby-fail"],
+    ["#aria-labelledby-empty-fail"],
+    ["#presentation-role-fail"],
+    ["#none-role-fail"],
+    ["#heading-role-fail"],
+    ["#value-attr-fail"],
+    ["#alt-attr-fail"],
+    ["#label-elm-fail"]
+  ],
+  "passes": [
+    ["#text-pass"],
+    ["#aria-label-pass"],
+    ["#aria-labelledby-pass"],
+    ["#combo-pass"],
+    ["#title-pass"]
+  ]
+}

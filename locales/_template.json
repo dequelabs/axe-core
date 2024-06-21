@@ -373,6 +373,10 @@
       "description": "Ensure all skip links have a focusable target",
       "help": "The skip-link target should exist and be focusable"
     },
+    "summary-name": {
+      "description": "Ensures summary elements have discernible text",
+      "help": "Summary elements must have discernible text"
+    },
     "svg-img-alt": {
       "description": "Ensures <svg> elements with an img, graphics-document or graphics-symbol role have an accessible text",
       "help": "<svg> elements with an img role must have an alternative text"
