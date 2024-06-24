@@ -1,6 +1,6 @@
-describe('summary-name virtual-rule', () => {
-  const { appendSerialChild } = axe.testUtils;
+const { appendSerialChild } = require('./_testUtils');
 
+describe('summary-name virtual-rule', () => {
   let vDetails;
   beforeEach(() => {
     vDetails = new axe.SerialVirtualNode({
