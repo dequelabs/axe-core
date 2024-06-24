@@ -1,4 +1,12 @@
-const { appendSerialChild } = require('./_testUtils');
+function appendSerialChild(parent, child) {
+  if (child instanceof axe.SerialVirtualNode === false) {
+    child = new axe.SerialVirtualNode(child);
+  }
+  child.parent = parent;
+  parent.children ??= [];
+  parent.children.push(child);
+  return child;
+}
 
 describe('summary-name virtual-rule', () => {
   let vDetails;
