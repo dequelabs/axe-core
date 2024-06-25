@@ -2,11 +2,11 @@
   "lang": "ja",
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "Ensure the element has an ARIA role matching its epub:type",
-      "help": "ARIA role should be used in addition to epub:type"
+      "desc": "要素のepub:typeに合ったARIA roleがあることを確認してください。",
+      "help": "epub:typeだけでなくARIA roleも使用する必要があります。"
     },
     "pagebreak-label": {
-      "desc": "Ensure page markers have an accessible label"
+      "desc": "ページマーカーにアクセシブルラベルがあるようにしてください。"
     },
     "accesskeys": {
       "description": "すべてのaccesskey属性値が一意であることを確認します",
@@ -407,8 +407,8 @@
   },
   "checks": {
     "matching-aria-role": {
-      "pass": "Element has an ARIA role matching its epub:type",
-      "fail": "Element has no ARIA role matching its epub:type"
+      "pass": "要素のepub:typeに合ったARIA roleがあります。",
+      "fail": "要素のepub:typeに合ったARIA roleがありません。"
     },
     "abstractrole": {
       "pass": "抽象ロールは使用されていません",
