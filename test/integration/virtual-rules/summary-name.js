@@ -46,22 +46,6 @@ describe('summary-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('is inapplicable without siblings to summary', () => {
-    const vSummary = new axe.SerialVirtualNode({
-      nodeName: 'summary',
-      attributes: {}
-    });
-    appendSerialChild(vSummary, { nodeName: '#text', nodeValue: 'text' });
-    vSummary.parent = vDetails;
-    vDetails.children = [vSummary];
-
-    const results = axe.runVirtualRule('summary-name', vSummary);
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-    assert.lengthOf(results.inapplicable, 1);
-  });
-
   it('passes with aria-label', () => {
     const vSummary = new axe.SerialVirtualNode({
       nodeName: 'summary',

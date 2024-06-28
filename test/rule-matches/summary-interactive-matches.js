@@ -43,15 +43,21 @@ describe('summary-interactive-matches', () => {
     assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('is false for s details parent in a different DOM tree', () => {
-    const vNode = queryShadowFixture(
+  it('is false for details parent in a different DOM tree', () => {
+    const vFixture = queryShadowFixture(
       html`
         <div id="shadow">
-          <details><slot></slot></details>
+          <summary>Hello World</summary>
         </div>
       `,
-      html` <summary id="target">Hello World</summary> `
+      html`
+        <details>
+          <slot></slot>
+          text
+        </details>
+      `
     );
+    const vNode = axe.utils.querySelectorAll(vFixture, 'summary')[0];
     assert.isFalse(rule.matches(null, vNode));
   });
 
@@ -95,66 +101,12 @@ describe('summary-interactive-matches', () => {
     assert.isTrue(rule.matches(null, vNode));
   });
 
-  describe('details has no content', () => {
-    it('is false if summary is the only child', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-        </details>
-      `);
-      assert.isFalse(rule.matches(null, vNode));
-    });
-
-    it('is false with a comment sibling', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-          <!-- Comments don't count -->
-        </details>
-      `);
-      assert.isFalse(rule.matches(null, vNode));
-    });
-
-    it('is false with an empty sibling elm', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-          <div><span></span></div>
-        </details>
-      `);
-      assert.isFalse(rule.matches(null, vNode));
-    });
-
-    it('is false with a hidden text element', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-          <script>
-            const hello = 'world';
-          </script>
-        </details>
-      `);
-      assert.isFalse(rule.matches(null, vNode));
-    });
-
-    it('is true if the content is a graphic', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-          <div><img alt="" /></div>
-        </details>
-      `);
-      assert.isTrue(rule.matches(null, vNode));
-    });
-
-    it('is true if there are is a second summary with content', () => {
-      const vNode = queryFixture(html`
-        <details>
-          <summary id="target">Summary</summary>
-          <summary>actual content</summary>
-        </details>
-      `);
-      assert.isTrue(rule.matches(null, vNode));
-    });
+  it('is true even if summary is the only child', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target">Summary</summary>
+      </details>
+    `);
+    assert.isTrue(rule.matches(null, vNode));
   });
 });
