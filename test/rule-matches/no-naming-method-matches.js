@@ -51,6 +51,12 @@ describe('no-naming-method-matches', function () {
     assert.isFalse(actual);
   });
 
+  it('returns false when node is SUMMARY', function () {
+    const vNode = queryFixture('<summary id="target"></summary>');
+    const actual = rule.matches(null, vNode);
+    assert.isFalse(actual);
+  });
+
   it('returns false for INPUT of type `BUTTON`, `SUBMIT` or `RESET`', function () {
     ['button', 'submit', 'reset'].forEach(function (type) {
       const vNode = queryFixture(

@@ -236,8 +236,8 @@ var commons;
     }
 
     // query the composed tree AFTER shadowDOM has been attached
-    axe.setup(fixtureNode);
-    return axe.utils.getNodeFromTree(targetCandidate);
+    const vFixture = axe.setup(fixtureNode);
+    return axe.utils.getNodeFromTree(targetCandidate) || vFixture;
   };
 
   /**
