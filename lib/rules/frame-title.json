@@ -16,7 +16,7 @@
   ],
   "actIds": ["cae760"],
   "metadata": {
-    "description": "Ensures <iframe> and <frame> elements have an accessible name",
+    "description": "Ensure <iframe> and <frame> elements have an accessible name",
     "help": "Frames must have an accessible name"
   },
   "all": [],

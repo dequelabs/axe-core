@@ -17,7 +17,7 @@
   ],
   "actIds": ["7d6734"],
   "metadata": {
-    "description": "Ensures <svg> elements with an img, graphics-document or graphics-symbol role have an accessible text",
+    "description": "Ensure <svg> elements with an img, graphics-document or graphics-symbol role have an accessible text",
     "help": "<svg> elements with an img role must have an alternative text"
   },
   "all": [],

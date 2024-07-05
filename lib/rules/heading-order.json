@@ -5,7 +5,7 @@
   "matches": "heading-matches",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {
-    "description": "Ensures the order of headings is semantically correct",
+    "description": "Ensure the order of headings is semantically correct",
     "help": "Heading levels should only increase by one"
   },
   "all": [],

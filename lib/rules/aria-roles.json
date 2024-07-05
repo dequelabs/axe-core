@@ -6,7 +6,7 @@
   "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
   "actIds": ["674b10"],
   "metadata": {
-    "description": "Ensures all elements with a role attribute use a valid value",
+    "description": "Ensure all elements with a role attribute use a valid value",
     "help": "ARIA roles used must conform to valid values"
   },
   "all": [],

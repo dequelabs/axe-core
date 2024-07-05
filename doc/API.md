@@ -146,7 +146,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 ```js
 [
   {
-    description: "Ensures <area> elements of image maps have alternate text",
+    description: "Ensure <area> elements of image maps have alternate text",
     help: "Active <area> elements must have alternate text",
     helpUrl: "https://dequeuniversity.com/rules/axe/3.5/area-alt?application=axeAPI",
     ruleId: "area-alt",
@@ -162,7 +162,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
     actIds: ['c487ae']
   },
   {
-    description: "Ensures ARIA attributes are allowed for an element's role",
+    description: "Ensure ARIA attributes are allowed for an element's role",
     help: "Elements must only use allowed ARIA attributes",
     helpUrl: "https://dequeuniversity.com/rules/axe/3.5/aria-allowed-attr?application=axeAPI",
     ruleId: "aria-allowed-attr",
