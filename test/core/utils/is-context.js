@@ -124,6 +124,14 @@ describe('axe.utils isContext* methods', () => {
     it('is true for an object with both `include` and `exclude`', () => {
       assert.isTrue(isContextObject({ include: 'string', exclude: 'string' }));
     });
+
+    it('is true for an object with a valid `include` and invalid `exclude`', () => {
+      assert.isTrue(isContextObject({ include: [], exclude: 1 }));
+    });
+
+    it('is true for an object with a valid `exclude` and invalid `include`', () => {
+      assert.isTrue(isContextObject({ exclude: [], include: 1 }));
+    });
   });
 
   describe('isContextSpec', () => {
