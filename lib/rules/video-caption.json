@@ -15,7 +15,7 @@
   ],
   "actIds": ["eac66b"],
   "metadata": {
-    "description": "Ensures <video> elements have captions",
+    "description": "Ensure <video> elements have captions",
     "help": "<video> elements must have captions"
   },
   "all": [],

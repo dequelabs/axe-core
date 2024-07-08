@@ -15,7 +15,7 @@
   ],
   "actIds": ["2779a5"],
   "metadata": {
-    "description": "Ensures each HTML document contains a non-empty <title> element",
+    "description": "Ensure each HTML document contains a non-empty <title> element",
     "help": "Documents must have <title> element to aid in navigation"
   },
   "all": [],

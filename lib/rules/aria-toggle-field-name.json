@@ -15,7 +15,7 @@
   ],
   "actIds": ["e086e5"],
   "metadata": {
-    "description": "Ensures every ARIA toggle field has an accessible name",
+    "description": "Ensure every ARIA toggle field has an accessible name",
     "help": "ARIA toggle fields must have an accessible name"
   },
   "all": [],

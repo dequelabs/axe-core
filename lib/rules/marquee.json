@@ -13,7 +13,7 @@
     "EN-9.2.2.2"
   ],
   "metadata": {
-    "description": "Ensures <marquee> elements are not used",
+    "description": "Ensure <marquee> elements are not used",
     "help": "<marquee> elements are deprecated and must not be used"
   },
   "all": [],

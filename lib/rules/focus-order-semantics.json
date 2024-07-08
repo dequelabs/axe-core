@@ -5,7 +5,7 @@
   "matches": "inserted-into-focus-order-matches",
   "tags": ["cat.keyboard", "best-practice", "experimental"],
   "metadata": {
-    "description": "Ensures elements in the focus order have a role appropriate for interactive content",
+    "description": "Ensure elements in the focus order have a role appropriate for interactive content",
     "help": "Elements in the focus order should have an appropriate role"
   },
   "all": [],

@@ -6,7 +6,7 @@
   "tags": ["cat.aria", "wcag2a", "wcag131", "EN-301-549", "EN-9.1.3.1"],
   "actIds": ["bc4a75", "ff89c9"],
   "metadata": {
-    "description": "Ensures elements with an ARIA role that require child roles contain them",
+    "description": "Ensure elements with an ARIA role that require child roles contain them",
     "help": "Certain ARIA roles must contain particular children"
   },
   "all": [],

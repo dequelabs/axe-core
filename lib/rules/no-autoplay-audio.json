@@ -17,7 +17,7 @@
   ],
   "actIds": ["80f0bf"],
   "metadata": {
-    "description": "Ensures <video> or <audio> elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio",
+    "description": "Ensure <video> or <audio> elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio",
     "help": "<video> or <audio> elements must not play automatically"
   },
   "preload": true,

@@ -16,7 +16,7 @@
   ],
   "actIds": ["e086e5"],
   "metadata": {
-    "description": "Ensures select element has an accessible name",
+    "description": "Ensure select element has an accessible name",
     "help": "Select element must have an accessible name"
   },
   "all": [],
