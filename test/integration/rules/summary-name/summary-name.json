@@ -11,7 +11,8 @@
     ["#heading-role-fail"],
     ["#value-attr-fail"],
     ["#alt-attr-fail"],
-    ["#label-elm-fail"]
+    ["#label-elm-fail"],
+    ["#button-role-fail"]
   ],
   "passes": [
     ["#text-pass"],
