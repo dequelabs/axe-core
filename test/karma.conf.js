@@ -100,7 +100,7 @@ module.exports = function (config) {
         served: true
       },
       'axe.js',
-      'axe.min.js',
+      { pattern: 'axe.min.js', included: false, served: true },
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
