@@ -282,8 +282,8 @@
       "help": "Seite muss eine main landmark enthalten."
     },
     "landmark-unique": {
-      "description": "Landmarks müssen eine einzigartige role oder role/label/title Kombination (bzw. zugänglicher Name / accessible name) besitzen.",
-      "help": "Stellt sicher, dass landmarks einzigartig sind."
+      "description": "Stellt sicher, dass landmarks einzigartig sind.",
+      "help": "Landmarks müssen eine einzigartige role oder role/label/title Kombination (bzw. zugänglicher Name / accessible name) besitzen."
     },
     "link-in-text-block": {
       "description": "Stellt sicher, dass Links vom umgebenden Text nicht allein durch die Farbe unterschieden werden können.",
