@@ -269,7 +269,7 @@ describe('axe.configure', function () {
 
   it('overrides the default value of audit.tagExclude', function () {
     axe._load({});
-    assert.deepEqual(axe._audit.tagExclude, ['experimental']);
+    assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
 
     axe.configure({
       tagExclude: ['ninjas']
