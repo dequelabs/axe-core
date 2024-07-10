@@ -431,6 +431,18 @@ axe.cleanup();
 const dqElement = new axe.utils.DqElement(document.body);
 const element = axe.utils.shadowSelect(dqElement.selector[0]);
 const uuid = axe.utils.uuid() as string;
+let unknownContext: unknown = JSON.parse('{ foo: "bar" }');
+if (axe.utils.isLabelledShadowDomSelector(unknownContext)) {
+  let context: axe.LabelledShadowDomSelector = unknownContext;
+} else if (axe.utils.isLabelledFramesSelector(unknownContext)) {
+  let context: axe.LabelledFramesSelector = unknownContext;
+} else if (axe.utils.isContextObject(unknownContext)) {
+  let context: axe.ContextObject = unknownContext;
+} else if (axe.utils.isContextProp(unknownContext)) {
+  let context: axe.ContextProp = unknownContext;
+} else if (axe.utils.isContextSpec(unknownContext)) {
+  let context: axe.ContextSpec = unknownContext;
+}
 
 // Commons
 axe.commons.aria.getRoleType('img');
