@@ -124,6 +124,56 @@ describe('aria-allowed-attr', () => {
     assert.deepEqual(checkContext._data, ['aria-required="true"']);
   });
 
+  it('should not report on aria-multiline=false with contenteditable', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="combobox" aria-multiline="false" contenteditable></div>'
+    );
+
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data);
+  });
+
+  it('should return false for unallowed aria-multiline=true and contenteditable', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="combobox" aria-multiline="true" contenteditable></div>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
+  });
+
+  it('should return false for unallowed aria-multiline=false', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="combobox" aria-multiline="false"></div>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-multiline="false"']);
+  });
+
+  it('should return false for unallowed aria-multiline=true', () => {
+    const vNode = queryFixture('<div id="target" aria-multiline="true"></div>');
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
+  });
+
   it('should return undefined for custom element that has no role and is not focusable', () => {
     const vNode = queryFixture(
       '<my-custom-element id="target" aria-expanded="true"></my-custom-element>'
