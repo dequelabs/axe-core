@@ -138,4 +138,37 @@ describe('aria-prohibited-attr', function () {
     var params = checkSetup('<svg id="target" aria-label="hello world"></svg>');
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
+
+  it('should not allow aria-label on divs that have an invalid role', function () {
+    var params = checkSetup(
+      '<div id="target" role="foo" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should allow aria-label on divs with a valid fallback role', function () {
+    var params = checkSetup(
+      '<div id="target" role="foo dialog" aria-label="foo"></div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should not allow aria-label on divs with no valid fallback roles', function () {
+    var params = checkSetup(
+      '<div id="target" role="foo bar" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
 });
