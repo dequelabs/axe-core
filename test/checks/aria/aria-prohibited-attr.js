@@ -139,38 +139,84 @@ describe('aria-prohibited-attr', function () {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should allow aria-label on descendant of widget', () => {
-    var params = checkSetup(`
-      <button>
-        <span>
-          <span id="target" aria-label="hello world"></span>
-        </span>
-      </button>
-    `);
-    assert.isFalse(checkEvaluate.apply(checkContext, params));
-  });
+  describe('widget ancestor', () => {
+    it('should allow aria-label', () => {
+      var params = checkSetup(`
+        <button>
+          <span>
+            <span id="target" aria-label="hello world"></span>
+          </span>
+        </button>
+      `);
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
 
-  it('should allow aria-labelledby on descendant of widget', () => {
-    var params = checkSetup(`
-      <div id="foo">hello world</div>
-      <button>
-        <span>
-          <span id="target" aria-labelledby="foo"></span>
-        </span>
-      </button>
-    `);
-    assert.isFalse(checkEvaluate.apply(checkContext, params));
-  });
+    it('should allow aria-labelledby', () => {
+      var params = checkSetup(`
+        <div id="foo">hello world</div>
+        <button>
+          <span>
+            <span id="target" aria-labelledby="foo"></span>
+          </span>
+        </button>
+      `);
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
 
-  it('should not allow aria-label on descendant of non-widget', () => {
-    var params = checkSetup(`
-      <div id="foo">hello world</div>
-      <div role="grid">
-        <span>
-          <span id="target" aria-labelledby="foo"></span>
-        </span>
-      </div>
-    `);
-    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    it('should skip "role=none" roles in between ancestor', () => {
+      var params = checkSetup(`
+        <button>
+          <h1 role="none">
+            <span id="target" aria-label="hello world"></span>
+          </h1>
+        </button>
+      `);
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should skip "role=presentation" roles in between ancestor', () => {
+      var params = checkSetup(`
+        <button>
+          <h1 role="presentation">
+            <span id="target" aria-label="hello world"></span>
+          </h1>
+        </button>
+      `);
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should not allow aria-label on descendant of non-widget', () => {
+      var params = checkSetup(`
+        <div role="grid">
+          <span>
+            <span id="target" aria-label="foo"></span>
+          </span>
+        </div>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should not allow aria-labelledby on descendant of non-widget', () => {
+      var params = checkSetup(`
+        <div id="foo">hello world</div>
+        <div role="grid">
+          <span>
+            <span id="target" aria-labelledby="foo"></span>
+          </span>
+        </div>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should use closet non-presentational ancestor', () => {
+      var params = checkSetup(`
+        <button>
+          <span role="grid">
+            <span id="target" aria-label="foo"></span>
+          </span>
+        </button>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
   });
 });
