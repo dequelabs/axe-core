@@ -138,4 +138,39 @@ describe('aria-prohibited-attr', function () {
     var params = checkSetup('<svg id="target" aria-label="hello world"></svg>');
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
+
+  it('should allow aria-label on descendant of widget', () => {
+    var params = checkSetup(`
+      <button>
+        <span>
+          <span id="target" aria-label="hello world"></span>
+        </span>
+      </button>
+    `);
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should allow aria-labelledby on descendant of widget', () => {
+    var params = checkSetup(`
+      <div id="foo">hello world</div>
+      <button>
+        <span>
+          <span id="target" aria-labelledby="foo"></span>
+        </span>
+      </button>
+    `);
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should not allow aria-label on descendant of non-widget', () => {
+    var params = checkSetup(`
+      <div id="foo">hello world</div>
+      <div role="grid">
+        <span>
+          <span id="target" aria-labelledby="foo"></span>
+        </span>
+      </div>
+    `);
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
 });
