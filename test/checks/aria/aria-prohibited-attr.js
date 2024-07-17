@@ -176,11 +176,11 @@ describe('aria-prohibited-attr', function () {
 
     it('should skip "role=presentation" roles in between ancestor', () => {
       var params = checkSetup(`
-        <button>
+        <a href="#">
           <h1 role="presentation">
             <span id="target" aria-label="hello world"></span>
           </h1>
-        </button>
+        </a>
       `);
       assert.isFalse(checkEvaluate.apply(checkContext, params));
     });
