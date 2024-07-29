@@ -10,15 +10,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- **all-rules:** fix flakey all-rules firefox test ([#4467](https://github.com/dequelabs/axe-core/issues/4467)) ([3f13aa1](https://github.com/dequelabs/axe-core/commit/3f13aa10ff58f48e2eeb7fd5c35596c247cd2dfc))
 - **aria-allowed-attr:** allow aria-multiline=false for element with contenteditable ([#4537](https://github.com/dequelabs/axe-core/issues/4537)) ([f019068](https://github.com/dequelabs/axe-core/commit/f0190685722495d00be644cabb1c9741d74acdea))
 - **aria-allowed-attr:** allow aria-required=false when normally not allowed ([#4532](https://github.com/dequelabs/axe-core/issues/4532)) ([2e242e1](https://github.com/dequelabs/axe-core/commit/2e242e146929902c97e181e41fa45e656cf3eb51))
-- **aria-prohibited-attr:** allow aria-label/ledby on decendants of widget ([#4541](https://github.com/dequelabs/axe-core/issues/4541)) ([07c5d91](https://github.com/dequelabs/axe-core/commit/07c5d91c658bda6bcd2743950bf70f25abd1f9ae))
+- **aria-prohibited-attr:** allow aria-label/ledby on descendants of widget ([#4541](https://github.com/dequelabs/axe-core/issues/4541)) ([07c5d91](https://github.com/dequelabs/axe-core/commit/07c5d91c658bda6bcd2743950bf70f25abd1f9ae))
 - **aria-roledescription:** keep disabled with { runOnly: 'wcag2a' } ([#4526](https://github.com/dequelabs/axe-core/issues/4526)) ([5b4cb9d](https://github.com/dequelabs/axe-core/commit/5b4cb9d7992a4c07745e64708040777de64874bd)), closes [#4523](https://github.com/dequelabs/axe-core/issues/4523)
 - **autocomplete-valid:** incomplete for invalid but safe values ([#4500](https://github.com/dequelabs/axe-core/issues/4500)) ([e31a974](https://github.com/dequelabs/axe-core/commit/e31a974de395845c08af345f9458a8091e2b1c4b)), closes [#4492](https://github.com/dequelabs/axe-core/issues/4492)
 - **build:** limit locales to valid files when using the --all-lang option ([#4486](https://github.com/dequelabs/axe-core/issues/4486)) ([d3db593](https://github.com/dequelabs/axe-core/commit/d3db593991261ad44eef1c142d8a4646edde93fa)), closes [#4485](https://github.com/dequelabs/axe-core/issues/4485)
-- colorio.js patch mocking CSS ([#4456](https://github.com/dequelabs/axe-core/issues/4456)) ([3ef9353](https://github.com/dequelabs/axe-core/commit/3ef93531a574c2be76a92d59599d978714cca9d0)), closes [#4400](https://github.com/dequelabs/axe-core/issues/4400)
-- correct typos in texts ([#4499](https://github.com/dequelabs/axe-core/issues/4499)) ([11fad59](https://github.com/dequelabs/axe-core/commit/11fad598c25eadd29f35ef6be382d907057d4537))
+- Prevent errors when loading axe in Angular + Jest ([#4456](https://github.com/dequelabs/axe-core/issues/4456)) ([3ef9353](https://github.com/dequelabs/axe-core/commit/3ef93531a574c2be76a92d59599d978714cca9d0)), closes [#4400](https://github.com/dequelabs/axe-core/issues/4400)
+- Minor grammatical fixes for some rules and checks ([#4499](https://github.com/dequelabs/axe-core/issues/4499)) ([11fad59](https://github.com/dequelabs/axe-core/commit/11fad598c25eadd29f35ef6be382d907057d4537))
 - **landmark-unique:** follow spec, aside -> landmark ([#4469](https://github.com/dequelabs/axe-core/issues/4469)) ([e32f803](https://github.com/dequelabs/axe-core/commit/e32f8034246a92e4132dc04f6310e2b414d6d43f)), closes [#4460](https://github.com/dequelabs/axe-core/issues/4460)
 - **required-attr:** allow aria-valuetext on slider instead of valuenow ([#4518](https://github.com/dequelabs/axe-core/issues/4518)) ([135898b](https://github.com/dequelabs/axe-core/commit/135898b38d5eb46c42170527a0ac9add425c5c3d)), closes [#4515](https://github.com/dequelabs/axe-core/issues/4515)
 
