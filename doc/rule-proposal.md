@@ -18,7 +18,7 @@ All Github issues that propose a rule must be tagged as _rule_, and must use the
 
 In one sentence, describe what the rule does.
 
-Example: "Ensures ARIA attributes are allowed for an element's role"\
+Example: "Ensure ARIA attributes are allowed for an element's role"
 
 #### Rule help
 

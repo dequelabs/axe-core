@@ -5,7 +5,8 @@
     "impact": "serious",
     "messages": {
       "pass": "the autocomplete attribute is correctly formatted",
-      "fail": "the autocomplete attribute is incorrectly formatted"
+      "fail": "the autocomplete attribute is incorrectly formatted",
+      "incomplete": "the autocomplete attribute has a non-standard value. Check whether any standard value could be used instead."
     }
   },
   "options": {
@@ -17,6 +18,7 @@
       "enabled",
       "undefined",
       "null"
-    ]
+    ],
+    "ignoredValues": ["text", "pronouns", "gender", "message", "content"]
   }
 }

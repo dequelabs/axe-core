@@ -4,7 +4,7 @@
   "selector": "html",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {
-    "description": "Ensures the document has a main landmark",
+    "description": "Ensure the document has a main landmark",
     "help": "Document should have one main landmark"
   },
   "all": ["page-has-main"],

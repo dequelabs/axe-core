@@ -1,0 +1,29 @@
+{
+  "id": "summary-name",
+  "impact": "serious",
+  "selector": "summary",
+  "matches": "summary-interactive-matches",
+  "tags": [
+    "cat.name-role-value",
+    "wcag2a",
+    "wcag412",
+    "section508",
+    "section508.22.a",
+    "TTv5",
+    "TT6.a",
+    "EN-301-549",
+    "EN-9.4.1.2"
+  ],
+  "metadata": {
+    "description": "Ensure summary elements have discernible text",
+    "help": "Summary elements must have discernible text"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title"
+  ],
+  "none": []
+}

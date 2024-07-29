@@ -18,10 +18,9 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
+      - run: npm run prepare
       - run: npm run build
-      # v4 download seems to have some flakiness with the download of artifacts so pinning to v3 for now
-      # @see https://github.com/actions/download-artifact/issues/249
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: axe-core
           path: axe.js
@@ -39,7 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node}}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: axe-core
       - run: npm run test:node

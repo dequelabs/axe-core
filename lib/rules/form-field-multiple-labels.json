@@ -13,7 +13,7 @@
     "EN-9.3.3.2"
   ],
   "metadata": {
-    "description": "Ensures form field does not have multiple label elements",
+    "description": "Ensure form field does not have multiple label elements",
     "help": "Form field must not have multiple label elements"
   },
   "all": [],

@@ -70,16 +70,19 @@ declare namespace axe {
     | LabelledShadowDomSelector
     | LabelledFramesSelector;
   type SelectorList = Array<Selector | FramesSelector> | NodeList;
+  type ContextProp = Selector | SelectorList;
   type ContextObject =
     | {
-        include: Selector | SelectorList;
-        exclude?: Selector | SelectorList;
+        include: ContextProp;
+        exclude?: ContextProp;
       }
     | {
-        exclude: Selector | SelectorList;
-        include?: Selector | SelectorList;
+        exclude: ContextProp;
+        include?: ContextProp;
       };
-  type ElementContext = Selector | SelectorList | ContextObject;
+  type ContextSpec = ContextProp | ContextObject;
+  /** Synonym to ContextSpec */
+  type ElementContext = ContextSpec;
 
   type SerialSelector =
     | BaseSelector
@@ -406,6 +409,16 @@ declare namespace axe {
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
     getStandards(): Required<Standards>;
+    isContextSpec: (context: unknown) => context is ContextSpec;
+    isContextObject: (context: unknown) => context is ContextObject;
+    isContextProp: (context: unknown) => context is ContextProp;
+    isLabelledFramesSelector: (
+      selector: unknown
+    ) => selector is LabelledFramesSelector;
+    isLabelledShadowDomSelector: (
+      selector: unknown
+    ) => selector is LabelledShadowDomSelector;
+
     DqElement: new (
       elm: Element,
       options?: { absolutePaths?: boolean }

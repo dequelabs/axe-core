@@ -1,0 +1,86 @@
+<details>
+  <summary id="empty-fail"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="text-pass">name</summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="aria-label-pass" aria-label="Name"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="aria-label-fail" aria-label=""></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="aria-labelledby-pass" aria-labelledby="labeldiv"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="aria-labelledby-fail" aria-labelledby="nonexistent"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="aria-labelledby-empty-fail" aria-labelledby="emptydiv"></summary>
+  Hello world
+</details>
+<div id="labeldiv">summary label</div>
+<div id="emptydiv"></div>
+
+<details>
+  <summary id="combo-pass" aria-label="Aria Name">Name</summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="title-pass" title="Title"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="presentation-role-fail" role="presentation"></summary>
+  Conflict resolution gets this to be ignored
+</details>
+
+<details>
+  <summary id="none-role-fail" role="none"></summary>
+  Conflict resolution gets this to be ignored
+</details>
+
+<details>
+  <summary id="heading-role-fail" role="heading"></summary>
+  Conflict resolution gets this to be ignored
+</details>
+
+<details>
+  <summary id="button-role-fail" role="button"></summary>
+  Hello world
+</details>
+
+<!-- Invalid naming methods -->
+
+<details>
+  <summary id="value-attr-fail" value="Button Name"></summary>
+  Not a valid method for giving a name
+</details>
+
+<details>
+  <summary id="alt-attr-fail" alt="Button Name"></summary>
+  Not a valid method for giving a name
+</details>
+
+<label>
+  <details>
+    <summary id="label-elm-fail"></summary>
+    Text here
+  </details>
+  Not a valid method for giving a name
+</label>

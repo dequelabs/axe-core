@@ -87,6 +87,12 @@ module.exports = function (config) {
     files: [
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
+      {
+        pattern: 'test/integration/**/*.mjs',
+        included: false,
+        served: true,
+        type: 'module'
+      },
       { pattern: 'test/assets/**/*.*', included: false, served: true },
       {
         pattern: 'test/integration/rules/**/*.html',
@@ -94,13 +100,15 @@ module.exports = function (config) {
         served: true
       },
       'axe.js',
+      { pattern: 'axe.min.js', included: false, served: true },
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
       '/test': '/base/test',
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
-      '/axe.js': '/base/axe.js'
+      '/axe.js': '/base/axe.js',
+      '/axe.min.js': '/base/axe.min.js'
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],

@@ -1,8 +1,8 @@
 describe('aria-hidden-focus-matches', function () {
   'use strict';
 
-  var rule;
-  var queryFixture = axe.testUtils.queryFixture;
+  let rule;
+  const queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(function () {
     rule = axe.utils.getRule('aria-hidden-focus');
@@ -13,24 +13,24 @@ describe('aria-hidden-focus-matches', function () {
   });
 
   it('return true when there is no parent with aria-hidden', function () {
-    var vNode = queryFixture('<div id="target">' + '</div>');
-    var actual = rule.matches(vNode.actualNode);
+    const vNode = queryFixture('<div id="target">' + '</div>');
+    const actual = rule.matches(vNode.actualNode);
     assert.isTrue(actual);
   });
 
   it('return false when has a parent element with aria-hidden', function () {
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div id="target" aria-hidden="true">' +
         '</div>' +
         '</div>'
     );
-    var actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 
   it('return false when has any parent element with aria-hidden', function () {
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div>' +
         '<div id="target" aria-hidden="true">' +
@@ -38,19 +38,19 @@ describe('aria-hidden-focus-matches', function () {
         '</div>' +
         '</div>'
     );
-    var actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 
   it('return false when has any parent element with aria-hidden', function () {
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div aria-hidden="true">' +
         '<button id="target">btn</button>' +
         '</div>' +
         '</div>'
     );
-    var actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 });

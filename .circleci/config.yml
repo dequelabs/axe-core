@@ -61,13 +61,14 @@ jobs:
           paths:
             - node_modules
 
-  # Build and cache axe.js
+  # Build and cache built files
   build_unix:
     <<: *defaults
     <<: *unix_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npm run prepare
       - run: npm run build
       - save_cache:
           key: v9-cache-build-<< pipeline.git.revision >>

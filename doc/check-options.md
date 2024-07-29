@@ -10,6 +10,7 @@
   - [aria-required-children](#aria-required-children)
   - [aria-required-parent](#aria-required-parent)
   - [aria-roledescription](#aria-roledescription)
+  - [autocomplete-valid](#autocomplete-valid)
   - [color-contrast](#color-contrast)
   - [page-has-heading-one](#page-has-heading-one)
   - [page-has-main](#page-has-main)
@@ -233,6 +234,52 @@ Previously supported properties `validTreeRowAttrs` is no longer available. `inv
 ]</code></pre>
         </td>
       <td align="left">List of ARIA attributes that are not allowed on <code>role=row</code> when a descendant of a table or a grid</td>
+    </tr>
+  </tbody>
+</table>
+
+### autocomplete-valid
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>stateTerms</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'none',
+  'false',
+  'true',
+  'disabled',
+  'enabled',
+  'undefined',
+  'null',
+]</code></pre>
+        </td>
+      <td align="left">List of allowed autocomplete state terms other than "on" and "off."</td>
+    </tr>
+    <tr>
+      <td>
+        <code>ignoredValues</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'text',
+  'pronouns',
+  'gender',
+  'message',
+  'content'
+]</code></pre>
+        </td>
+      <td align="left">List of autocomplete values that are technically invalid but will be ignored as they may not necessarily cause accessibility problems</td>
     </tr>
   </tbody>
 </table>

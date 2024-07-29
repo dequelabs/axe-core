@@ -15,7 +15,7 @@
   ],
   "actIds": ["b5c3f8"],
   "metadata": {
-    "description": "Ensures every HTML document has a lang attribute",
+    "description": "Ensure every HTML document has a lang attribute",
     "help": "<html> element must have a lang attribute"
   },
   "all": [],

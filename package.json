@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.9.1",
+  "version": "4.10.0",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -76,6 +76,8 @@
     "develop": "grunt dev --force",
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
+    "patch": "npx patch-package",
+    "unpatch": "npx patch-package --reverse",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
@@ -110,13 +112,13 @@
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
-    "prepare": "husky",
+    "prepare": "husky && npm run patch",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
-    "@axe-core/webdriverjs": "^4.5.2",
+    "@axe-core/webdriverjs": "^4.9.0",
     "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
@@ -130,18 +132,19 @@
     "chromedriver": "latest",
     "clean-jsdoc-theme": "^4.2.17",
     "clone": "^2.1.2",
-    "colorjs.io": "^0.4.3",
+    "colorjs.io": "0.4.3",
     "conventional-commits-parser": "^5.0.0",
     "core-js": "^3.27.1",
     "css-selector-parser": "^1.4.1",
     "emoji-regex": "^10.2.1",
     "es6-promise": "^4.2.8",
     "esbuild": "^0.10.x",
-    "eslint": "^8.31.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-mocha-no-only": "^1.1.1",
+    "eslint": "^9.2.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-mocha-no-only": "^1.2.0",
     "execa": "5.x",
     "glob": "^10.3.10",
+    "globals": "^15.2.0",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-bytesize": "^0.2.0",
@@ -170,11 +173,12 @@
     "node-notifier": "^10.0.1",
     "npm-run-all": "^4.1.5",
     "outdent": "^0.8.0",
+    "patch-package": "^8.0.0",
     "prettier": "^3.0.3",
     "revalidator": "^0.3.1",
     "selenium-webdriver": "^4.7.1",
     "serve-handler": "^6.1.5",
-    "sinon": "^17.0.0",
+    "sinon": "^18.0.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^9.5.0",
     "start-server-and-test": "^2.0.1",
@@ -189,8 +193,8 @@
       "prettier --write"
     ],
     "*.js": [
-      "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix"
     ]
   }
 }

@@ -1,0 +1,22 @@
+diff --git a/node_modules/colorjs.io/dist/color.js b/node_modules/colorjs.io/dist/color.js
+index fa7a099..b3ccb68 100644
+--- a/node_modules/colorjs.io/dist/color.js
++++ b/node_modules/colorjs.io/dist/color.js
+@@ -1967,7 +1967,7 @@ var P3 = new RGBColorSpace({
+ // Default space for CSS output. Code in Color.js makes this wider if there's a DOM available
+ defaults.display_space = sRGB;
+ 
+-if (typeof CSS !== "undefined" && CSS.supports) {
++if (typeof CSS !== "undefined" && CSS?.supports) {
+ 	// Find widest supported color space for CSS
+ 	for (let space of [lab, REC2020, P3]) {
+ 		let coords = space.getMinCoords();
+@@ -1996,7 +1996,7 @@ if (typeof CSS !== "undefined" && CSS.supports) {
+ function display (color, {space = defaults.display_space, ...options} = {}) {
+ 	let ret = serialize(color, options);
+ 
+-	if (typeof CSS === "undefined" || CSS.supports("color", ret) || !defaults.display_space) {
++	if (typeof CSS === "undefined" || CSS?.supports("color", ret) || !defaults.display_space) {
+ 		ret = new String(ret);
+ 		ret.color = color;
+ 	}

@@ -1,7 +1,15 @@
 {
   "description": "aria-prohibited-attr tests",
   "rule": "aria-prohibited-attr",
-  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"]],
+  "passes": [
+    ["#pass1"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass5"],
+    ["#pass6"],
+    ["#pass7"]
+  ],
   "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]],
   "violations": [
     ["#fail1"],
@@ -32,6 +40,8 @@
     ["#fail26"],
     ["#fail27"],
     ["#fail28"],
-    ["#fail29"]
+    ["#fail29"],
+    ["#fail30"],
+    ["#fail31"]
   ]
 }
