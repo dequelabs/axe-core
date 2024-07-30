@@ -35,6 +35,13 @@ axe.run(
     console.log(error || results);
   }
 );
+// axe.run preload: boolean
+axe.run({ preload: false });
+axe.run({ preload: true });
+// axe.run preload: options
+axe.run({ preload: { assets: ['cssom'] } });
+axe.run({ preload: { assets: ['cssom'], timeout: 50000 } });
+
 export async function runAsync() {
   await axe.run('main'); // Single selector
   await axe.run(['main']); // Array of one selector
