@@ -378,5 +378,9 @@
   "4.9.1": {
     "axe.js": "sha256-t7u8FiO2U54AN0dyGu2hAMcYdgpuXEkM6n+Eup6lMyQ=",
     "axe.min.js": "sha256-GCpA3F2CB+YmwJhhrWUCfUXoXjpW0BBF0Gji6I7kMuo="
+  },
+  "4.10.0": {
+    "axe.js": "sha256-n/KN+TQhojZXnh49uUEY3/Df5WszWcCEothu0P58qDY=",
+    "axe.min.js": "sha256-SDpP7Usv5Wz9lKWFZQIMhjmD+EFeKCfzSB3ONecO/7U="
   }
 }
