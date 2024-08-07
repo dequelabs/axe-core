@@ -450,6 +450,19 @@ if (axe.utils.isLabelledShadowDomSelector(unknownContext)) {
 } else if (axe.utils.isContextSpec(unknownContext)) {
   let context: axe.ContextSpec = unknownContext;
 }
+axe.utils.nodeSerializer.update({
+  toSpec(dqElm: axe.DqElement) {
+    return dqElm.toJSON();
+  },
+  mergeSpecs(childSpec: axe.SerialDqElement, parentSpec: axe.SerialDqElement) {
+    return axe.utils.DqElement.mergeSpecs(childSpec, parentSpec);
+  }
+});
+const spec2: axe.SerialDqElement = axe.utils.nodeSerializer.toSpec(element);
+const spec3: axe.SerialDqElement = axe.utils.nodeSerializer.dqElmToSpec(
+  dqElement,
+  options
+);
 
 // Commons
 axe.commons.aria.getRoleType('img');
