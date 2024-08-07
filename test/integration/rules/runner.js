@@ -110,34 +110,39 @@
       before(done => {
         fixture.innerHTML = testObj.content;
         waitForFrames(fixture, () => {
-          axe.run(
-            fixture,
-            {
-              /**
-               * The debug flag helps log errors in a fairly detailed fashion,
-               * when tests fail in webdriver
-               */
-              debug: true,
-              performanceTimer: false,
-              runOnly: { type: 'rule', values: [ruleId] }
-            },
-            (err, r) => {
-              // assert that there are no errors - if error exists a stack trace is logged.
-              const errStack = err && err.stack ? err.stack : '';
-              assert.isNull(err, 'Error should be null. ' + errStack);
-              // assert that result is defined
-              assert.isDefined(r, 'Results are defined.');
-              // assert that result has certain keys
-              assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
-              // assert incomplete(s) does not have error
-              r.incomplete.forEach(incomplete => {
-                assert.isUndefined(incomplete.error);
-              });
-              // flatten results
-              results = flattenResult(r);
-              done();
-            }
-          );
+          // The setTimeout is a workaround for a Firefox bug. See:
+          // - https://github.com/dequelabs/axe-core/issues/4556
+          // - https://bugzilla.mozilla.org/show_bug.cgi?id=1912115
+          setTimeout(() => {
+            axe.run(
+              fixture,
+              {
+                /**
+                 * The debug flag helps log errors in a fairly detailed fashion,
+                 * when tests fail in webdriver
+                 */
+                debug: true,
+                performanceTimer: false,
+                runOnly: { type: 'rule', values: [ruleId] }
+              },
+              (err, r) => {
+                // assert that there are no errors - if error exists a stack trace is logged.
+                const errStack = err && err.stack ? err.stack : '';
+                assert.isNull(err, 'Error should be null. ' + errStack);
+                // assert that result is defined
+                assert.isDefined(r, 'Results are defined.');
+                // assert that result has certain keys
+                assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
+                // assert incomplete(s) does not have error
+                r.incomplete.forEach(incomplete => {
+                  assert.isUndefined(incomplete.error);
+                });
+                // flatten results
+                results = flattenResult(r);
+                done();
+              }
+            );
+          }, 0);
         });
       });
       runTest(testObj, 'passes');
