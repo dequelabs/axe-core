@@ -408,16 +408,13 @@ declare namespace axe {
     boundingClientRect: DOMRect;
   }
 
-  interface CustomNodeSerializer {
-    toSpec: (dqElm: DqElement) => SerialDqElement;
-    mergeSpecs: (
-      nodeSpec: SerialDqElement,
-      parentFrameSpec: SerialDqElement
-    ) => SerialDqElement;
+  interface CustomNodeSerializer<T = SerialDqElement> {
+    toSpec: (dqElm: DqElement) => T;
+    mergeSpecs: (nodeSpec: T, parentFrameSpec: T) => T;
   }
 
   interface NodeSerializer {
-    update: (serializer: CustomNodeSerializer) => void;
+    update: <T>(serializer: CustomNodeSerializer<T>) => void;
     toSpec: (node: Element | VirtualNode) => SerialDqElement;
     dqElmToSpec: (
       dqElm: DqElement | SerialDqElement,
