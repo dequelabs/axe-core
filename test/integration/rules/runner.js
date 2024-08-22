@@ -62,13 +62,22 @@
               if (!nodes) {
                 console.log(
                   JSON.stringify(results, null, 4),
-                  ' ---- ',
+                  ' a---- ',
                   JSON.stringify(test, null, 4)
                 );
 
                 assert(false, 'there are no ' + collection);
                 return;
               }
+
+              const nodesBackup = [].concat(nodes);
+              // console.log(
+              //   collection,
+              //   selector,
+              //   '====',
+              //   JSON.stringify(nodes, null, 4),
+              //   JSON.stringify(nodesBackup, null, 4),
+              // );
 
               const matches = nodes.filter(node => {
                 for (let i = 0; i < selector.length; i++) {
@@ -86,8 +95,10 @@
               if (matches.length === 0) {
                 console.log(
                   JSON.stringify(results, null, 4),
-                  ' ---- ',
-                  JSON.stringify(test, null, 4)
+                  ' b---- ',
+                  JSON.stringify(test, null, 4),
+                  ' b---- ',
+                  JSON.stringify(nodesBackup, null, 4)
                 );
 
                 assert(false, 'Element not found');
@@ -96,8 +107,10 @@
               } else {
                 console.log(
                   JSON.stringify(results, null, 4),
-                  ' ---- ',
-                  JSON.stringify(test, null, 4)
+                  ' c---- ',
+                  JSON.stringify(test, null, 4),
+                  ' c---- ',
+                  JSON.stringify(nodesBackup, null, 4)
                 );
 
                 assert(
@@ -112,10 +125,12 @@
             if (typeof nodes !== 'undefined') {
               // console.log(
               //   JSON.stringify(results, null, 4),
-              //   ' ---- ',
+              //   ' d---- ',
               //   JSON.stringify(test, null, 4),
               //   ' +++++++++++ ',
               //   JSON.stringify(nodes, null, 4),
+              //   ' d---- ',
+              //   JSON.stringify(nodesBackup, null, 4)
               // );
               const targets = nodes.map(node => {
                 return node.target;

@@ -1,7 +1,7 @@
 {
   "description": "landmark-unique-pass_ tests",
   "rule": "landmark-unique",
-  "violations": [["#header-notes"], ["#pass-aside-footnote1"]],
+  "violations": [["#header-notes"]],
   "passes": [
     ["#pass-nav-toc"],
     ["#pass-nav-nav"],
