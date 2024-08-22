@@ -7,7 +7,7 @@
     "description": "Ensure the document has a main landmark",
     "help": "Document should have one main landmark"
   },
-  "all": ["page-has-main"],
+  "all": ["page-no-duplicate-main"],
   "any": [],
   "none": []
 }

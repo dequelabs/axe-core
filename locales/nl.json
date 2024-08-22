@@ -1,6 +1,10 @@
 {
   "lang": "nl",
   "checks": {
+    "matching-aria-role": {
+      "pass": "Element has an ARIA role matching its epub:type",
+      "fail": "Element has no ARIA role matching its epub:type"
+    },
     "abstractrole": {
       "pass": "Er zijn geen abstracte rollen (role) gebruikt",
       "fail": "Gebruik geen abstracte rollen (role)"
@@ -31,6 +35,13 @@
     }
   },
   "rules": {
+    "epub-type-has-matching-role": {
+      "desc": "Ensure the element has an ARIA role matching its epub:type",
+      "help": "ARIA role should be used in addition to epub:type"
+    },
+    "pagebreak-label": {
+      "desc": "Ensure page markers have an accessible label"
+    },
     "aria-required-attr": {
       "description": "Zorg dat elementen met ARIA rollen (role) de vereiste ARIA attributen hebben",
       "help": "Voorzien de vereiste ARIA attributen"

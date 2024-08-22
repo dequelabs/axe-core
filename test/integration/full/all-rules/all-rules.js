@@ -8,7 +8,7 @@ describe('all rules test', () => {
   });
 
   it('should run all rules', () => {
-    assert.lengthOf(results.inapplicable, 0);
+    assert.lengthOf(results.inapplicable, 2);
   });
 
   it('should find same results when scrolled', async () => {

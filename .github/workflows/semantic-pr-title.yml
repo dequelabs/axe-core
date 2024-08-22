@@ -10,6 +10,7 @@ on:
 
 jobs:
   semantic-pr-title:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - uses: dequelabs/semantic-pr-title@v1

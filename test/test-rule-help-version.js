@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('assert');
 var packageJSON = require(path.join(__dirname, '../package.json'));
 
-var versions = packageJSON.version.split('.');
+var versions = packageJSON.version.replace(/-\w+\.\w+$/, '').split('.');
 var version = versions[0] + '.' + versions[1];
 
 it(

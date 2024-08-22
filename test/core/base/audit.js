@@ -1,7 +1,8 @@
 describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-  const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  var _v = axe.version.replace(/-\w+\.\w+$/, '');
+  const ver = axe.version.substring(0, _v.lastIndexOf('.'));
   const { fixtureSetup } = axe.testUtils;
   let audit;
   const isNotCalled = function (err) {
