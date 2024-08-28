@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "axe-core": "^4.6.2",
-    "grunt": "^1.5.3",
-    "grunt-contrib-qunit": "^5.1.1",
-    "puppeteer": "^19.5.0",
-    "qunitjs": "^2.0.1"
+    "grunt": "^1.6.1",
+    "grunt-contrib-qunit": "^10.1.1",
+    "puppeteer": "^23.1.0",
+    "qunit": "^2.22.0"
   }
 }
