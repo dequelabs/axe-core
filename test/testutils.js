@@ -708,4 +708,85 @@ var commons;
       fixtureNode.appendChild(child.cloneNode(true));
     }
   }
+
+  testUtils.resultsDeepEqual = (
+    obj1,
+    obj2,
+    ignoredPaths = [],
+    keyPath = 'result'
+  ) => {
+    // timestamp should always be ignored
+    if (keyPath === 'result') {
+      ignoredPaths.push('timestamp');
+    }
+
+    const typeObj1 = getType(obj1);
+    const typeObj2 = getType(obj2);
+
+    axe.utils.assert(
+      typeObj1 === typeObj2,
+      `Expected type of ${keyPath} to equal ${typeObj1} but got ${typeObj2}`
+    );
+
+    if (typeObj1 === 'object') {
+      const res1Keys = Object.keys(obj1);
+      const res2Keys = Object.keys(obj2);
+
+      axe.utils.assert(
+        res1Keys.length === res2Keys.length &&
+          res1Keys.every(key => res2Keys.includes(key)),
+        `Expected ${keyPath} to have keys "${JSON.stringify(res1Keys)}" but got "${JSON.stringify(res2Keys)}"`
+      );
+
+      for (const key of res1Keys) {
+        if (ignoredPaths.includes(key)) {
+          continue;
+        }
+
+        testUtils.resultsDeepEqual(
+          obj1[key],
+          obj2[key],
+          ignoredPaths,
+          `${keyPath}.${key}`
+        );
+      }
+    } else if (typeObj1 === 'array') {
+      axe.utils.assert(
+        obj1.length === obj2.length,
+        `Expected ${keyPath} to have length of "${obj1.length}" but got "${obj2.length}"`
+      );
+
+      for (let i = 0; i < obj1.length; i++) {
+        testUtils.resultsDeepEqual(
+          obj1[i],
+          obj2[i],
+          ignoredPaths,
+          `${keyPath}[${i}]`
+        );
+      }
+    } else {
+      axe.utils.assert(
+        obj1 === obj2,
+        `Expected ${keyPath} to equal "${obj1}" but got "${obj2}"`
+      );
+    }
+  };
+
+  function isObject(obj) {
+    return obj && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+  function getType(obj) {
+    if (isObject(obj)) {
+      return 'object';
+    }
+    if (Array.isArray(obj)) {
+      return 'array';
+    }
+    if (obj === null) {
+      return 'null';
+    }
+
+    return typeof obj;
+  }
 })();
