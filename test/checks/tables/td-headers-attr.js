@@ -83,6 +83,15 @@ describe('td-headers-attr', function () {
     assert.isFalse(check.call(checkContext, node));
 
     fixtureSetup(
+      '<table>' +
+        '  <tr> <td id="hi">hello</td> </tr>' +
+        '  <tr> <td headers="hi">goodbye</td> </tr>' +
+        '</table>'
+    );
+    node = fixture.querySelector('table');
+    assert.isFalse(check.call(checkContext, node));
+
+    fixtureSetup(
       '<span id="hi">hello</span>' +
         '<table>' +
         '  <tr> <th></th> </tr>' +
