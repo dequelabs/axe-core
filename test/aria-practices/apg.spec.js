@@ -40,9 +40,9 @@ describe('aria-practices', function () {
     ]
   };
 
-  // Not an actual content file
   const skippedPages = [
-    'toolbar/examples/help.html' // Embedded into another page
+    'toolbar/examples/help.html', // Embedded into another page
+    'tabs/examples/tabs-actions.html' // dequelabs/axe-core#4584
   ];
 
   it('finds examples', () => {
