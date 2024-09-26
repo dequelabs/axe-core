@@ -342,6 +342,9 @@ declare namespace axe {
   interface DqElement extends SerialDqElement {
     element: Element;
     toJSON(): SerialDqElement;
+  }
+  interface DqElementConstructor {
+    new (elm: Element, options?: { absolutePaths?: boolean }): DqElement;
     mergeSpecs(
       childSpec: SerialDqElement,
       parentSpec: SerialDqElement
@@ -405,6 +408,24 @@ declare namespace axe {
     boundingClientRect: DOMRect;
   }
 
+  interface CustomNodeSerializer<T = SerialDqElement> {
+    toSpec: (dqElm: DqElement) => T;
+    mergeSpecs: (nodeSpec: T, parentFrameSpec: T) => T;
+  }
+
+  interface NodeSerializer {
+    update: <T>(serializer: CustomNodeSerializer<T>) => void;
+    toSpec: (node: Element | VirtualNode) => SerialDqElement;
+    dqElmToSpec: (
+      dqElm: DqElement | SerialDqElement,
+      options?: RunOptions
+    ) => SerialDqElement;
+    mergeSpecs: (
+      nodeSpec: SerialDqElement,
+      parentFrameSpec: SerialDqElement
+    ) => SerialDqElement;
+  }
+
   interface Utils {
     getFrameContexts: (
       context?: ElementContext,
@@ -423,15 +444,13 @@ declare namespace axe {
       selector: unknown
     ) => selector is LabelledShadowDomSelector;
 
-    DqElement: new (
-      elm: Element,
-      options?: { absolutePaths?: boolean }
-    ) => DqElement;
+    DqElement: DqElementConstructor;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
       buf?: Uint8Array | Array<number>,
       offset?: number
     ) => string | Uint8Array | Array<number>;
+    nodeSerializer: NodeSerializer;
   }
 
   interface Aria {
