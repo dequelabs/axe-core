@@ -2,7 +2,7 @@
 
 QUnit.module('axe');
 
-QUnit.test('should report that good HTML is good', function (assert) {
+QUnit.test('should pass accessibility test for valid HTML', function (assert) {
   var n = document.getElementById('working');
   assert.expect(2);
 
@@ -14,7 +14,7 @@ QUnit.test('should report that good HTML is good', function (assert) {
   });
 });
 
-QUnit.test('should report that bad HTML is bad', function (assert) {
+QUnit.test('should fail accessibility test for invalid HTML', function (assert) {
   var n = document.getElementById('broken');
   assert.expect(2);
 
