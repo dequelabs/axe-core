@@ -7,7 +7,6 @@ var options: axe.RunOptions = {
   selectors: false,
   elementRef: false
 };
-options.reporter = 'rawEnv';
 options.reporter = 'custom';
 
 axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
