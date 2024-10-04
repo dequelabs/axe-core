@@ -31,9 +31,7 @@ describe('run-partial, page-level', function () {
         var axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.incomplete, 0);
         assert.lengthOf(axeRunPartialResult.passes, 0);
-        axe.testUtils.resultsDeepEqual(axeRunPartialResult, axeRunResult, [
-          'testEnvironment'
-        ]);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);
@@ -60,9 +58,7 @@ describe('run-partial, page-level', function () {
         assert.lengthOf(nodes, 1);
         assert.deepEqual(nodes[0].target, ['html']);
 
-        axe.testUtils.resultsDeepEqual(axeRunPartialResult, axeRunResult, [
-          'testEnvironment'
-        ]);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);
