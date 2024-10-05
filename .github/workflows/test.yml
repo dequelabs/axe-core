@@ -26,6 +26,18 @@ jobs:
           path: axe.js
           retention-days: 1
 
+  fmt_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run fmt:check
+
   test_node:
     strategy:
       matrix:
