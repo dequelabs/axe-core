@@ -1,10 +1,18 @@
 name: Formatter
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   prettier:
+    # This conditional prevents running the job on PRs from forks; won't
+    # have permissions to commit changes, so the job would fail if it ran.
+    # PRs from forks will instead rely on failing the fmt_check job in test.yml
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
