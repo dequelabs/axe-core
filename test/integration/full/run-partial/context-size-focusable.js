@@ -25,9 +25,7 @@ describe('run-partial, context-size-focusable', function () {
         var axeRunPartialResult = results[0];
         var axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.violations, 0);
-        axe.testUtils.resultsDeepEqual(axeRunPartialResult, axeRunResult, [
-          'testEnvironment'
-        ]);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);
@@ -54,9 +52,7 @@ describe('run-partial, context-size-focusable', function () {
         assert.deepEqual(nodes[0].target, ['#fail1', 'html']);
         assert.deepEqual(nodes[1].target, ['#fail2', 'iframe', 'html']);
 
-        axe.testUtils.resultsDeepEqual(axeRunPartialResult, axeRunResult, [
-          'testEnvironment'
-        ]);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);

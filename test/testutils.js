@@ -709,19 +709,20 @@ var commons;
     }
   }
 
-  testUtils.resultsDeepEqual = (
-    obj1,
-    obj2,
-    ignoredPaths = [],
+  testUtils.assertResultsDeepEqual = (
+    expected,
+    actual,
+    ignoredPaths = [
+      'timestamp',
+      // testEnvironment is ignored by default because Chrome's UI animations for the
+      // "an automated test is controlling this browser" notification can cause
+      // inconsistencies in windowHeight for otherwise-identical scans.
+      'testEnvironment'
+    ],
     keyPath = 'result'
   ) => {
-    // timestamp should always be ignored
-    if (keyPath === 'result') {
-      ignoredPaths.push('timestamp');
-    }
-
-    const typeObj1 = getType(obj1);
-    const typeObj2 = getType(obj2);
+    const typeObj1 = getType(expected);
+    const typeObj2 = getType(actual);
 
     axe.utils.assert(
       typeObj1 === typeObj2,
@@ -729,8 +730,8 @@ var commons;
     );
 
     if (typeObj1 === 'object') {
-      const res1Keys = Object.keys(obj1);
-      const res2Keys = Object.keys(obj2);
+      const res1Keys = Object.keys(expected);
+      const res2Keys = Object.keys(actual);
 
       axe.utils.assert(
         res1Keys.length === res2Keys.length &&
@@ -743,31 +744,31 @@ var commons;
           continue;
         }
 
-        testUtils.resultsDeepEqual(
-          obj1[key],
-          obj2[key],
+        testUtils.assertResultsDeepEqual(
+          expected[key],
+          actual[key],
           ignoredPaths,
           `${keyPath}.${key}`
         );
       }
     } else if (typeObj1 === 'array') {
       axe.utils.assert(
-        obj1.length === obj2.length,
-        `Expected ${keyPath} to have length of "${obj1.length}" but got "${obj2.length}"`
+        expected.length === actual.length,
+        `Expected ${keyPath} to have length of "${expected.length}" but got "${actual.length}"`
       );
 
-      for (let i = 0; i < obj1.length; i++) {
-        testUtils.resultsDeepEqual(
-          obj1[i],
-          obj2[i],
+      for (let i = 0; i < expected.length; i++) {
+        testUtils.assertResultsDeepEqual(
+          expected[i],
+          actual[i],
           ignoredPaths,
           `${keyPath}[${i}]`
         );
       }
     } else {
       axe.utils.assert(
-        obj1 === obj2,
-        `Expected ${keyPath} to equal "${obj1}" but got "${obj2}"`
+        expected === actual,
+        `Expected ${keyPath} to equal "${expected}" but got "${actual}"`
       );
     }
   };
