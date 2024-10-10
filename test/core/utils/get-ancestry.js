@@ -54,16 +54,14 @@ describe('axe.utils.getAncestry', () => {
     const shadowRoot = node.attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = '<div>1</div> <div>2</div>';
 
-    let target = shadowRoot.children[0];
-    let sel = axe.utils.getAncestry(target);
-    assert.deepEqual(sel, [
+    const sel1 = axe.utils.getAncestry(shadowRoot.children[0]);
+    assert.deepEqual(sel1, [
       'html > body > div:nth-child(1) > section',
       'div:nth-child(1)'
     ]);
 
-    target = shadowRoot.children[1];
-    sel = axe.utils.getAncestry(target);
-    assert.deepEqual(sel, [
+    const sel2 = axe.utils.getAncestry(shadowRoot.children[1]);
+    assert.deepEqual(sel2, [
       'html > body > div:nth-child(1) > section',
       'div:nth-child(2)'
     ]);
