@@ -26,6 +26,8 @@
     "aria-label",
     "aria-labelledby",
     "non-empty-title",
+    "implicit-label",
+    "explicit-label",
     "presentational-role"
   ],
   "none": []
