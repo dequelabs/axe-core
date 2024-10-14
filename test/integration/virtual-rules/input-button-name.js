@@ -41,13 +41,16 @@ describe('input-button-name virtual-rule', () => {
   });
 
   it('should incomplete for aria-labelledby', () => {
-    const results = axe.runVirtualRule('input-button-name', {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'input',
       attributes: {
         type: 'button',
         'aria-labelledby': 'foobar'
       }
     });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('input-button-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

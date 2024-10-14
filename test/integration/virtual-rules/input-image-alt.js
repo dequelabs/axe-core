@@ -28,13 +28,16 @@ describe('input-image-alt virtual-rule', () => {
   });
 
   it('should incomplete for aria-labelledby', () => {
-    const results = axe.runVirtualRule('input-image-alt', {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'input',
       attributes: {
         type: 'image',
         'aria-labelledby': 'foobar'
       }
     });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('input-image-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

@@ -13,12 +13,15 @@ describe('button-name virtual-rule', () => {
   });
 
   it('should incomplete for aria-labelledby', () => {
-    const results = axe.runVirtualRule('button-name', {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'button',
       attributes: {
         'aria-labelledby': 'foobar'
       }
     });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('button-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -115,10 +118,13 @@ describe('button-name virtual-rule', () => {
   });
 
   it('should incomplete when alt and children are missing', () => {
-    const results = axe.runVirtualRule('button-name', {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'button',
       attributes: {}
     });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('button-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
@@ -220,6 +226,7 @@ describe('button-name virtual-rule', () => {
         id: 'foobar'
       }
     });
+    node.parent = null;
 
     const results = axe.runVirtualRule('button-name', node);
 
