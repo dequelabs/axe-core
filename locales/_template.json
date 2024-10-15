@@ -771,8 +771,8 @@
       "fail": "Element contains <img> element with alt text that duplicates existing text"
     },
     "explicit-label": {
-      "pass": "Form element has an explicit <label>",
-      "fail": "Form element does not have an explicit <label>",
+      "pass": "Element has an explicit <label>",
+      "fail": "Element does not have an explicit <label>",
       "incomplete": "Unable to determine if form element has an explicit <label>"
     },
     "help-same-as-label": {
@@ -785,8 +785,8 @@
       "incomplete": "Unable to determine if form element has explicit <label> that is hidden"
     },
     "implicit-label": {
-      "pass": "Form element has an implicit (wrapped) <label>",
-      "fail": "Form element does not have an implicit (wrapped) <label>",
+      "pass": "Element has an implicit (wrapped) <label>",
+      "fail": "Element does not have an implicit (wrapped) <label>",
       "incomplete": "Unable to determine if form element has an implicit (wrapped) <label>"
     },
     "label-content-name-mismatch": {

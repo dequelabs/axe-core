@@ -39,6 +39,20 @@ describe('text.nativeTextMethods', () => {
       const input = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
       assert.equal(buttonDefaultText(input), '');
     });
+
+    it('returns the default button text with mixed-case types', () => {
+      fixtureSetup(
+        '<input type="SUBMIT" />' +
+          '<input type="ImAGE" />' +
+          '<input type="ResET" />' +
+          '<input type="buTTON" />'
+      );
+      const inputs = axe.utils.querySelectorAll(axe._tree[0], 'input');
+      assert.equal(buttonDefaultText(inputs[0]), 'Submit');
+      assert.equal(buttonDefaultText(inputs[1]), 'Submit');
+      assert.equal(buttonDefaultText(inputs[2]), 'Reset');
+      assert.equal(buttonDefaultText(inputs[3]), '');
+    });
   });
 
   describe('altText', () => {
