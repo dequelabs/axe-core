@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.11.0](https://github.com/dequelabs/axe-core/compare/v4.10.0...v4.11.0) (2024-10-16)
+
+### Features
+
+- **axe.d.ts:** add nodeSerializer typings ([#4551](https://github.com/dequelabs/axe-core/issues/4551)) ([a2f3a48](https://github.com/dequelabs/axe-core/commit/a2f3a485d5e02993c0f35762cd9d80a6ce4ced5f)), closes [#4093](https://github.com/dequelabs/axe-core/issues/4093)
+- **locale:** Added ru locale ([#4565](https://github.com/dequelabs/axe-core/issues/4565)) ([067b01d](https://github.com/dequelabs/axe-core/commit/067b01d66db1d2c276f26743a8d13d5d60d33446))
+
+### Bug Fixes
+
+- **aria-allowed-role:** add form to allowed roles of form element ([#4588](https://github.com/dequelabs/axe-core/issues/4588)) ([8aa47ac](https://github.com/dequelabs/axe-core/commit/8aa47ac01f9959b9d47ac24dcd2fd8c88c9279f7)), closes [/github.com/dequelabs/axe-core/blob/develop/lib/standards/html-elms.js#L264](https://github.com/dequelabs//github.com/dequelabs/axe-core/blob/develop/lib/standards/html-elms.js/issues/L264)
+- **axe.d.ts:** add typings for preload options object ([#4543](https://github.com/dequelabs/axe-core/issues/4543)) ([cfd2974](https://github.com/dequelabs/axe-core/commit/cfd297498c0e34edd5ff7e62935060bb9dda4db7))
+- **button-name,input-button-name,input-img-alt:** allow label to give accessible name ([#4607](https://github.com/dequelabs/axe-core/issues/4607)) ([a9710d7](https://github.com/dequelabs/axe-core/commit/a9710d757c6ca6ee0ce5d26be3427bab54b87a7a)), closes [#4472](https://github.com/dequelabs/axe-core/issues/4472) [#3696](https://github.com/dequelabs/axe-core/issues/3696) [#3696](https://github.com/dequelabs/axe-core/issues/3696)
+- **get-ancestry:** add nth-child selector for multiple siblings of shadow root ([#4606](https://github.com/dequelabs/axe-core/issues/4606)) ([1cdd6c3](https://github.com/dequelabs/axe-core/commit/1cdd6c3e698a6a4c28604448284993c4c20ca272)), closes [#4563](https://github.com/dequelabs/axe-core/issues/4563)
+- **rules:** Change "alternate text" to "alternative text" ([#4582](https://github.com/dequelabs/axe-core/issues/4582)) ([b03ada3](https://github.com/dequelabs/axe-core/commit/b03ada3dd3b6490bb88e366bf807b10e1a4038a4))
+
 ## [4.10.0](https://github.com/dequelabs/axe-core/compare/v4.9.1...v4.10.0) (2024-07-29)
 
 ### Features
