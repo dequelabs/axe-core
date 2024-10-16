@@ -6,6 +6,8 @@ describe('heading-matches', function () {
 
   beforeEach(function () {
     rule = axe.utils.getRule('empty-heading');
+    assert.isObject(rule, 'Rule object should be available');
+    assert.isFunction(rule.matches, 'Rule should have a matches function');
   });
 
   it('is a function', function () {
@@ -29,22 +31,22 @@ describe('heading-matches', function () {
     }
   });
 
-  it('should return false on headings with their role changes', function () {
+  it('should return false on headings that no longer function as headings due to a valid role change', function () {
     const vNode = queryFixture('<h1 role="banner" id="target"></h1>');
     assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('should return true on headings with their role changes to an invalid role', function () {
+  it('should return true on headings with their role changed to an invalid role', function () {
     const vNode = queryFixture('<h1 role="bruce" id="target"></h1>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('should return true on headings with their role changes to an abstract role', function () {
+  it('should return true on headings with their role changed to an abstract role', function () {
     const vNode = queryFixture('<h1 role="widget" id="target"></h1>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('should return true on headings with explicit role="none" and an empty aria-label to account for presentation conflict resolution', function () {
+  it('should return true on headings with explicit role="none" and an empty aria-label (handling presentation conflict resolution)', function () {
     const vNode = queryFixture(
       '<h1 aria-label="" role="none" id="target"></h1>'
     );
