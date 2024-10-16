@@ -6,8 +6,8 @@
       "help": "accesskey attribute value should be unique"
     },
     "area-alt": {
-      "description": "Ensure <area> elements of image maps have alternate text",
-      "help": "Active <area> elements must have alternate text"
+      "description": "Ensure <area> elements of image maps have alternative text",
+      "help": "Active <area> elements must have alternative text"
     },
     "aria-allowed-attr": {
       "description": "Ensure an element's role supports its ARIA attributes",
@@ -222,8 +222,8 @@
       "help": "Links with the same name must have a similar purpose"
     },
     "image-alt": {
-      "description": "Ensure <img> elements have alternate text or a role of none or presentation",
-      "help": "Images must have alternate text"
+      "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+      "help": "Images must have alternative text"
     },
     "image-redundant-alt": {
       "description": "Ensure image alternative is not repeated as text",
@@ -234,8 +234,8 @@
       "help": "Input buttons must have discernible text"
     },
     "input-image-alt": {
-      "description": "Ensure <input type=\"image\"> elements have alternate text",
-      "help": "Image buttons must have alternate text"
+      "description": "Ensure <input type=\"image\"> elements have alternative text",
+      "help": "Image buttons must have alternative text"
     },
     "label-content-name-mismatch": {
       "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
@@ -330,8 +330,8 @@
       "help": "<video> or <audio> elements must not play automatically"
     },
     "object-alt": {
-      "description": "Ensure <object> elements have alternate text",
-      "help": "<object> elements must have alternate text"
+      "description": "Ensure <object> elements have alternative text",
+      "help": "<object> elements must have alternative text"
     },
     "p-as-heading": {
       "description": "Ensure bold, italic text and font-size is not used to style <p> elements as a heading",
@@ -350,7 +350,7 @@
       "help": "All page content should be contained by landmarks"
     },
     "role-img-alt": {
-      "description": "Ensure [role=\"img\"] elements have alternate text",
+      "description": "Ensure [role=\"img\"] elements have alternative text",
       "help": "[role=\"img\"] elements must have an alternative text"
     },
     "scope-attr-valid": {
@@ -771,8 +771,8 @@
       "fail": "Element contains <img> element with alt text that duplicates existing text"
     },
     "explicit-label": {
-      "pass": "Form element has an explicit <label>",
-      "fail": "Form element does not have an explicit <label>",
+      "pass": "Element has an explicit <label>",
+      "fail": "Element does not have an explicit <label>",
       "incomplete": "Unable to determine if form element has an explicit <label>"
     },
     "help-same-as-label": {
@@ -785,9 +785,9 @@
       "incomplete": "Unable to determine if form element has explicit <label> that is hidden"
     },
     "implicit-label": {
-      "pass": "Form element has an implicit (wrapped) <label>",
-      "fail": "Form element does not have an implicit (wrapped) <label>",
-      "incomplete": "Unable to determine if form element has an implicit (wrapped} <label>"
+      "pass": "Element has an implicit (wrapped) <label>",
+      "fail": "Element does not have an implicit (wrapped) <label>",
+      "incomplete": "Unable to determine if form element has an implicit (wrapped) <label>"
     },
     "label-content-name-mismatch": {
       "pass": "Element contains visible text as part of it's accessible name",

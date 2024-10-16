@@ -22,9 +22,7 @@ describe('run-partial, after-method', function () {
         var axeRunPartialResult = results[0];
         var axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.violations, 0);
-        axeRunPartialResult.testEnvironment = axeRunResult.testEnvironment;
-        axeRunPartialResult.timestamp = axeRunResult.timestamp;
-        assert.deepEqual(axeRunPartialResult, axeRunResult);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);
@@ -51,8 +49,7 @@ describe('run-partial, after-method', function () {
         assert.lengthOf(nodes, 1);
         assert.deepEqual(nodes[0].target, ['#frame1', 'h3']);
 
-        axeRunPartialResult.timestamp = axeRunResult.timestamp;
-        assert.deepEqual(axeRunPartialResult, axeRunResult);
+        axe.testUtils.assertResultsDeepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
       .catch(done);

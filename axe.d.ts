@@ -143,9 +143,13 @@ declare namespace axe {
     iframes?: boolean;
     elementRef?: boolean;
     frameWaitTime?: number;
-    preload?: boolean;
+    preload?: boolean | PreloadOptions;
     performanceTimer?: boolean;
     pingWaitTime?: number;
+  }
+  interface PreloadOptions {
+    assets: string[];
+    timeout?: number;
   }
   interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;
