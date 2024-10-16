@@ -32,4 +32,12 @@ describe('axe.constants', function () {
   it('should have groups for results', function () {
     assert.equal(axe.constants.FAIL_GROUP, 'violations');
   });
+
+  it('should have a gridSize', function () {
+    assert.equal(axe.constants.gridSize, 200);
+  });
+
+  it('should have a selectorSimilarFilterLimit', function () {
+    assert.equal(axe.constants.selectorSimilarFilterLimit, 700);
+  });
 });
