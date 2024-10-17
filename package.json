@@ -144,7 +144,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-mocha-no-only": "^1.2.0",
     "execa": "5.x",
-    "glob": "^10.3.10",
+    "glob": "^11.0.0",
     "globals": "^15.2.0",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
