@@ -26,6 +26,11 @@ describe('axe.utils.getAncestry', () => {
     assert.isNotNull(document.querySelector(sel1));
   });
 
+  it('should not throw when there is no parent', () => {
+    const node = document.createElement('section');
+    assert.doesNotThrow(() => axe.utils.getAncestry(node));
+  });
+
   it('generates selectors of nested shadow trees', () => {
     const node = document.createElement('section');
     fixture.appendChild(node);
