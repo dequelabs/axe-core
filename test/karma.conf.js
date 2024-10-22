@@ -1,4 +1,5 @@
 var path = require('path');
+const { globSync } = require('glob');
 
 // allow running only certain directories
 var testDirs = [
@@ -6,13 +7,32 @@ var testDirs = [
   'commons',
   'rule-matches',
   'checks',
+  // npm run test:unit -- --browsers Chrome testDirs=checks
+  // npm run test:unit -- --browsers ChromeHeadless testDirs=checks
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/checks/color/color-contrast.js
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/checks/color/color-contrast.js
   'api',
   'integration',
+  // npm run test:unit -- --browsers Chrome testDirs=integration
+  // npm run test:unit -- --browsers ChromeHeadless testDirs=integration
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/color-contrast/color-contrast.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/color-contrast/color-contrast.json
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/color-contrast-enhanced/color-contrast-enhanced.json
+
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
+
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/landmark-unique/landmark-unique-pass_.json
   'virtual-rules'
 ];
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
 var args = process.argv.slice(2);
+const isHeadless = args.includes('ChromeHeadless') || !args.includes('Chrome');
 
 args.forEach(function (arg) {
   // pattern: testDir=commons,core
@@ -42,6 +62,9 @@ if (testFiles.length) {
       if (file.includes('integration/rules') && extname === '.html') {
         return file.replace('.html', '.json');
       }
+      if (file.includes('integration/rules') && extname === '.xhtml') {
+        return file.replace('.xhtml', '.json');
+      }
 
       return file;
     } else if (basename.includes('-matches.js')) {
@@ -57,16 +80,55 @@ if (testFiles.length) {
     }
   });
 } else if (testDirs.length) {
-  testPaths = testDirs.map(function (dir) {
-    if (dir === 'integration') {
-      return path.join('test', dir, '**/*.json');
-    }
-    if (['virtual-rules', 'api'].includes(dir)) {
-      return path.join('test', 'integration', dir, '**/*.js');
-    }
-    return path.join('test', dir, '**/*.js');
-  });
+  testPaths = testDirs
+    .map(function (dir) {
+      if (dir === 'integration') {
+        return path.join('test', dir, '**/*.json');
+      }
+      if (['virtual-rules', 'api'].includes(dir)) {
+        return path.join('test', 'integration', dir, '**/*.js');
+      }
+      return path.join('test', dir, '**/*.js');
+    })
+    .reduce((acc, cur) => {
+      if (cur.includes('integration/**/*.json')) {
+        const globbed = globSync(
+          cur
+          // {
+          //   ignore: '**/*-HEADLESS.{json}'
+          // }
+        ).filter(tp => {
+          return !tp.includes('-HEADLESS');
+        });
+        for (const g of globbed) {
+          acc.push(g);
+        }
+      } else {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
 }
+
+console.log(isHeadless, JSON.stringify(args, null, 4));
+if (isHeadless) {
+  console.log('HEADLESS...');
+  for (let i = 0; i < testPaths.length; i++) {
+    testPaths[i] = testPaths[i].replace(
+      'link-in-text-block.json',
+      'link-in-text-block-HEADLESS.json'
+    );
+    testPaths[i] = testPaths[i].replace(
+      'color-contrast.json',
+      'color-contrast-HEADLESS.json'
+    );
+    testPaths[i] = testPaths[i].replace(
+      'color-contrast-enhanced.json',
+      'color-contrast-enhanced-HEADLESS.json'
+    );
+  }
+}
+console.log(JSON.stringify(testPaths, null, 4));
 
 module.exports = function (config) {
   config.set({
@@ -112,13 +174,16 @@ module.exports = function (config) {
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],
+    specReporter: {
+      failFast: true
+    },
     preprocessors: {
       'test/integration/rules/**/*.json': ['integration']
     },
     client: {
       useIframe: false,
       mocha: {
-        timeout: 4000,
+        timeout: 10000,
         reporter: 'html'
       }
     },

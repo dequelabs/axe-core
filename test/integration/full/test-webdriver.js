@@ -152,9 +152,19 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
-    ignore: '**/frames/**/*.{html,xhtml}'
-  }).map(url => {
+  const testUrls = globSync(
+    [
+      'test/integration/full/**/*.{html,xhtml}'
+      // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+      // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
+
+      // 'test/integration/full/**/*__.xhtml',
+      // 'test/integration/full/**/*.html',
+    ],
+    {
+      ignore: '**/frames/**/*.{html,xhtml}' // '**/frames/**/*.html'
+    }
+  ).map(url => {
     return 'http://localhost:9876/' + url;
   });
 

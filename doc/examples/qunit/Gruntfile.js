@@ -5,7 +5,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     qunit: {
-      all: ['test/**/*.html'],
+      all: ['test/**/*.html', 'test/**/*__.xhtml'],
       options: {
         puppeteer: {
           args: ['--disable-web-security', '--allow-file-access-from-files']

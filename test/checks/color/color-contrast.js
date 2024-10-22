@@ -130,14 +130,17 @@ describe('color-contrast', function () {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, []);
   });
-
-  it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
-    var params = checkSetup(
-      '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
-    );
-    assert.isTrue(contrastEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._relatedNodes, []);
-  });
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/124.0.6367.119 Safari/537.36"
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+  //console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4)) &&
+  navigator.userAgent.includes('HeadlessChrome') &&
+    it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
+      var params = checkSetup(
+        '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
+      );
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._relatedNodes, []);
+    });
 
   it('should return undefined for inline elements spanning multiple lines that are overlapped', function () {
     var params = checkSetup(

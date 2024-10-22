@@ -1,6 +1,13 @@
 {
   "lang": "ja",
   "rules": {
+    "epub-type-has-matching-role": {
+      "desc": "要素のepub:typeに合ったARIA roleがあることを確認してください。",
+      "help": "epub:typeだけでなくARIA roleも使用する必要があります。"
+    },
+    "pagebreak-label": {
+      "desc": "ページマーカーにアクセシブルラベルがあるようにしてください。"
+    },
     "accesskeys": {
       "description": "すべてのaccesskey属性の値が一意であることを確認します",
       "help": "accesskey属性の値は一意でなければなりません"
@@ -415,6 +422,10 @@
     }
   },
   "checks": {
+    "matching-aria-role": {
+      "pass": "要素のepub:typeに合ったARIA roleがあります。",
+      "fail": "要素のepub:typeに合ったARIA roleがありません。"
+    },
     "abstractrole": {
       "pass": "抽象ロールは使用されていません",
       "fail": {

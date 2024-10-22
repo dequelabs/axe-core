@@ -1,0 +1,21 @@
+{
+  "description": "link-in-text-block tests",
+  "rule": "link-in-text-block",
+  "violations": [
+    ["#fail-insufficient-text-contrast"],
+    ["#fail-insufficient-background-contrast"]
+  ],
+  "passes": [
+    ["#pass-default-styling"],
+    ["#pass-default-styling-aria-hidden"],
+    ["#pass-different-weight"],
+    ["#pass-different-size"],
+    ["#pass-background-color"],
+    ["#pass-text-color"],
+    ["#pass-same-colors"]
+  ],
+  "incomplete": [
+    ["#incomplete-low-contrast-parent-has-gradient"],
+    ["#incomplete-pseudo-before"]
+  ]
+}

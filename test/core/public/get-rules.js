@@ -1,6 +1,7 @@
 describe('axe.getRules', function () {
   'use strict';
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  var _v = axe.version.replace(/-\w+\.\w+$/, '');
+  var ver = _v.substring(0, _v.lastIndexOf('.'));
 
   beforeEach(function () {
     axe._load({
