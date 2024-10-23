@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.10.2](https://github.com/dequelabs/axe-core/compare/v4.10.1...v4.10.2) (2024-10-21)
+
+### Bug Fixes
+
+- **get-ancestry:** don't error when there is no parent ([#4617](https://github.com/dequelabs/axe-core/issues/4617)) ([6c07102](https://github.com/dequelabs/axe-core/commit/6c07102b1d29145b8dc5f1d96229f3d0b8b38068))
+
 ### [4.10.1](https://github.com/dequelabs/axe-core/compare/v4.10.0...v4.10.1) (2024-10-16)
 
 ### Bug Fixes
