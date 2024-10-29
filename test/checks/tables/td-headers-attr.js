@@ -83,15 +83,6 @@ describe('td-headers-attr', function () {
     assert.isFalse(check.call(checkContext, node));
 
     fixtureSetup(
-      '<table>' +
-        '  <tr> <td id="hi">hello</td> </tr>' +
-        '  <tr> <td headers="hi">goodbye</td> </tr>' +
-        '</table>'
-    );
-    node = fixture.querySelector('table');
-    assert.isFalse(check.call(checkContext, node));
-
-    fixtureSetup(
       '<span id="hi">hello</span>' +
         '<table>' +
         '  <tr> <th></th> </tr>' +
@@ -109,6 +100,42 @@ describe('td-headers-attr', function () {
     );
     node = fixture.querySelector('table');
     assert.isFalse(check.call(checkContext, node));
+  });
+
+  it('returns false if table cell referenced as header', function () {
+    fixtureSetup(
+      '<table>' +
+        '  <tr> <td id="hi">hello</td> </tr>' +
+        '  <tr> <td headers="hi">goodbye</td> </tr>' +
+        '</table>'
+    );
+
+    var node = fixture.querySelector('table');
+    assert.isFalse(check.call(checkContext, node));
+  });
+
+  it('returns true if table cell referenced as header with role rowheader or columnheader', function () {
+    var node;
+
+    fixtureSetup(
+      '<table>' +
+        '  <tr> <td role="rowheader" id="hi">hello</td> </tr>' +
+        '  <tr> <td headers="hi">goodbye</td> </tr>' +
+        '</table>'
+    );
+
+    node = fixture.querySelector('table');
+    assert.isTrue(check.call(checkContext, node));
+
+    fixtureSetup(
+      '<table>' +
+        '  <tr> <td role="columnheader" id="hi">hello</td> </tr>' +
+        '  <tr> <td headers="hi">goodbye</td> </tr>' +
+        '</table>'
+    );
+
+    node = fixture.querySelector('table');
+    assert.isTrue(check.call(checkContext, node));
   });
 
   it('returns false if the header refers to the same cell', function () {
