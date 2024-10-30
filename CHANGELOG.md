@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.10.1](https://github.com/dequelabs/axe-core/compare/v4.10.0...v4.10.1) (2024-10-16)
+
+### Bug Fixes
+
+- **aria-allowed-role:** add form to allowed roles of form element ([#4588](https://github.com/dequelabs/axe-core/issues/4588)) ([d462d67](https://github.com/dequelabs/axe-core/commit/d462d674bb7de0848ce2695f80b95d677c5016e0)), closes [/github.com/dequelabs/axe-core/blob/develop/lib/standards/html-elms.js#L264](https://github.com/dequelabs//github.com/dequelabs/axe-core/blob/develop/lib/standards/html-elms.js/issues/L264)
+- **axe.d.ts:** add typings for preload options object ([#4543](https://github.com/dequelabs/axe-core/issues/4543)) ([72e269f](https://github.com/dequelabs/axe-core/commit/72e269f1e6d6039e70e614005f04ebfd3fe5aca5))
+- **button-name,input-button-name,input-img-alt:** allow label to give accessible name ([#4607](https://github.com/dequelabs/axe-core/issues/4607)) ([364eb72](https://github.com/dequelabs/axe-core/commit/364eb72bb8f20b0ffc31be24cc96cbd349c301cb)), closes [#4472](https://github.com/dequelabs/axe-core/issues/4472) [#3696](https://github.com/dequelabs/axe-core/issues/3696) [#3696](https://github.com/dequelabs/axe-core/issues/3696)
+- **get-ancestry:** add nth-child selector for multiple siblings of shadow root ([#4606](https://github.com/dequelabs/axe-core/issues/4606)) ([bdd94a2](https://github.com/dequelabs/axe-core/commit/bdd94a227a95cd5b9f8e2a1e0fd259ddd702810c)), closes [#4563](https://github.com/dequelabs/axe-core/issues/4563)
+- **rules:** Change "alternate text" to "alternative text" ([#4582](https://github.com/dequelabs/axe-core/issues/4582)) ([31e0f61](https://github.com/dequelabs/axe-core/commit/31e0f61ca871b3df86468577c449a02c8ece12f0))
+
 ## [4.10.0](https://github.com/dequelabs/axe-core/compare/v4.9.1...v4.10.0) (2024-07-29)
 
 ### Features
