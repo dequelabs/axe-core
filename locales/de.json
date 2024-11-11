@@ -167,7 +167,7 @@
     },
     "empty-heading": {
       "description": "Stellt sicher, dass Überschriften einen wahrnehmbaren Text beinhalten.",
-      "help": "Überschriften dürfen nichtleer sein."
+      "help": "Überschriften dürfen nicht leer sein."
     },
     "empty-table-header": {
       "description": "Stellt sicher, dass Tabellenkopfzeilen einen wahrnehmbaren Text beinhalten.",
@@ -840,7 +840,7 @@
       "fail": "Das Aufzählungselement besitzt Kinder, die nicht erlaubt sind: ${data.values}"
     },
     "structured-dlitems": {
-      "pass": "Das Definitionslisten-Element enthält sowohl <dt> als auch <dd>-Elemente, falls es nichtleer sein sollte.",
+      "pass": "Das Definitionslisten-Element enthält sowohl <dt> als auch <dd>-Elemente, falls es nicht leer sein sollte.",
       "fail": "Das Definitionslisten-Element enthält kein <dt>-Element, welches von keinem <dd>-Element gefolgt wird."
     },
     "caption": {
@@ -960,7 +960,7 @@
       "fail": "Das Dokument besitzt mehrere Elemente mit demselben id-Attributwert: ${data}."
     },
     "aria-label": {
-      "pass": "Das aria-label-Attribut existiert und ist nichtleer.",
+      "pass": "Das aria-label-Attribut existiert und ist nicht leer.",
       "fail": "Es existiert kein aria-label-Attribut oder das Attribut ist leer."
     },
     "aria-labelledby": {
