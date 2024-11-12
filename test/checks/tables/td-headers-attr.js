@@ -110,7 +110,7 @@ describe('td-headers-attr', function () {
       <table>
         <tr> <td id="hi">hello</td> </tr>
         <tr> <td headers="hi">goodbye</td> </tr>
-      </table>'
+      </table>
     `);
 
     var node = fixture.querySelector('table');
