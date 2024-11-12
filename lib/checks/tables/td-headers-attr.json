@@ -8,7 +8,7 @@
       "incomplete": "The headers attribute is empty",
       "fail": {
         "cell-header-not-in-table": "The headers attribute is not exclusively used to refer to other header cells in the table",
-        "cell-header-not-th": "The header attribute refers a data cell, this must be a header cell so that all screen readers announce it",
+        "cell-header-not-th": "The headers attribute must refer to header cells, not data cells",
         "header-refs-self": "The element with headers attribute refers to itself"
       }
     }
