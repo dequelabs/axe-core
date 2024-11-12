@@ -401,8 +401,8 @@
       "help": "Non-empty <td> elements in larger <table> must have an associated table header"
     },
     "td-headers-attr": {
-      "description": "Ensure that each cell in a table that uses the headers attribute refers only to other cells in that table",
-      "help": "Table cells that use the headers attribute must only refer to cells in the same table"
+      "description": "Ensure that each cell in a table using the headers attribute refers only to header cells within that table",
+      "help": "Table cells using the headers attribute must refer only to header cells or data cells with the role=columnheader/rowheader within the same table."
     },
     "th-has-data-cells": {
       "description": "Ensure that <th> elements and elements with role=columnheader/rowheader have data cells they describe",
@@ -1099,7 +1099,7 @@
       "incomplete": "The headers attribute is empty",
       "fail": {
         "cell-header-not-in-table": "The headers attribute is not exclusively used to refer to other header cells in the table",
-        "cell-header-not-th": "The header attribute refers a data cell, this must be a header cell so that all screen readers announce it",
+        "cell-header-not-th": "The headers attribute must refer to header cells, not data cells",
         "header-refs-self": "The element with headers attribute refers to itself"
       }
     },
