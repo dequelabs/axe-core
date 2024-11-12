@@ -142,6 +142,22 @@ describe('td-headers-attr', function () {
     assert.isTrue(check.call(checkContext, node));
   });
 
+  it('relatedNodes contains each cell only once', function () {
+    fixtureSetup(`
+      <table>
+        <tr> <td id="hi1">hello</td> </tr>
+        <tr> <td id="hi2">hello</td> </tr>
+        <tr> <td id="bye" headers="hi1 hi2">goodbye</td> </tr>
+      </table>'
+    `);
+
+    var node = fixture.querySelector('table');
+    check.call(checkContext, node);
+    assert.deepEqual(checkContext._relatedNodes, [
+      fixture.querySelector('#bye')
+    ]);
+  });
+
   it('returns false if the header refers to the same cell', function () {
     fixtureSetup(
       '<table id="hi">' +
