@@ -29,7 +29,11 @@ describe('axe.utils.parseTabindex', function () {
     assert.strictEqual(axe.utils.parseTabindex('abc'), null);
   });
 
-  it('should return null for decimal numbers', function () {
-    assert.strictEqual(axe.utils.parseTabindex('2.5'), null);
+  it('should return the first valid digit(s) for decimal numbers', function () {
+    assert.strictEqual(axe.utils.parseTabindex('2.5'), 2);
+  });
+
+  it('should return 123 for "123abc"', function () {
+    assert.strictEqual(axe.utils.parseTabindex('123abc'), 123);
   });
 });
