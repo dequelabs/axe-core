@@ -1,2 +1,3 @@
 node_modules/
 doc/api
+test/integration/rules/td-headers-attr/td-headers-attr.html

@@ -1,4 +1,5 @@
 {
+  "lang": "xyz",
   "rules": {
     "accesskeys": {
       "description": "Ensure every accesskey attribute value is unique",
@@ -401,8 +402,8 @@
       "help": "Non-empty <td> elements in larger <table> must have an associated table header"
     },
     "td-headers-attr": {
-      "description": "Ensure that each cell in a table using the headers attribute refers only to header cells within that table",
-      "help": "Table cells using the headers attribute must refer only to header cells or data cells with the role=columnheader/rowheader within the same table."
+      "description": "Ensure that each cell in a table that uses the headers attribute refers only to other <th> elements in that table",
+      "help": "Table cell headers attributes must refer to other <th> elements in the same table."
     },
     "th-has-data-cells": {
       "description": "Ensure that <th> elements and elements with role=columnheader/rowheader have data cells they describe",
