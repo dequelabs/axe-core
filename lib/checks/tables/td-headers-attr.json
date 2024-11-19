@@ -4,9 +4,13 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "The headers attribute is exclusively used to refer to other cells in the table",
+      "pass": "The headers attribute is exclusively used to refer to other header cells in the table",
       "incomplete": "The headers attribute is empty",
-      "fail": "The headers attribute is not exclusively used to refer to other cells in the table"
+      "fail": {
+        "cell-header-not-in-table": "The headers attribute is not exclusively used to refer to other header cells in the table",
+        "cell-header-not-th": "The headers attribute must refer to header cells, not data cells",
+        "header-refs-self": "The element with headers attribute refers to itself"
+      }
     }
   }
 }
