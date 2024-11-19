@@ -16,8 +16,8 @@
   ],
   "actIds": ["a25f45"],
   "metadata": {
-    "description": "Ensure that each cell in a table that uses the headers attribute refers only to other cells in that table",
-    "help": "Table cells that use the headers attribute must only refer to cells in the same table"
+    "description": "Ensure that each cell in a table that uses the headers attribute refers only to other <th> elements in that table",
+    "help": "Table cell headers attributes must refer to other <th> elements in the same table"
   },
   "all": ["td-headers-attr"],
   "any": [],
