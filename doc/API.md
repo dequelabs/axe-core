@@ -1,4 +1,4 @@
-# Axe Javascript Accessibility API
+# Axe JavaScript Accessibility API
 
 ## Table of Contents
 
@@ -49,8 +49,8 @@ This section gives a quick description of how to use the axe APIs to analyze web
 The axe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
 
 1. Load page in testing system
-2. Optionally, set configuration options for the javascript API (`axe.configure`)
-3. Call analyze javascript API (`axe.run`)
+2. Optionally, set configuration options for the JavaScript API (`axe.configure`)
+3. Call analyze JavaScript API (`axe.run`)
 4. Either assert against results or save them for later processing
 5. Repeat for any inactive or non-rendered content after making it visible
 
@@ -58,7 +58,7 @@ The axe API can be used as part of a broader process that is performed on many, 
 
 ### Overview
 
-The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test, as well as each `iframe` under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
+The axe APIs are provided in the JavaScript file axe.js. It must be included in the web page under test, as well as each `iframe` under test. Parameters are sent as JavaScript function parameters. Results are returned in JSON format.
 
 ### Full API Reference for Developers
 
@@ -72,7 +72,7 @@ For a full listing of API offered by axe, clone the repository and run `npm run 
 
 ### Axe-core Tags
 
-Each rule in axe-core has a number of tags. These provide metadata about the rule. Each rule has one tag that indicates which WCAG version / level it belongs to, or if it doesn't it have the `best-practice` tag. If the rule is required by WCAG, there is a tag that references the success criterion number. For example, the `wcag111` tag means a rule is required for WCAG 2 success criterion 1.1.1.
+Each rule in axe-core has a number of tags. These provide metadata about the rule. Each rule has one tag that indicates which WCAG version / level it belongs to, or if it doesn't, it has the `best-practice` tag. If the rule is required by WCAG, there is a tag that references the success criterion number. For example, the `wcag111` tag means a rule is required for WCAG 2 success criterion 1.1.1.
 
 The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
@@ -182,7 +182,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 To configure the format of the data used by axe. This can be used to add new rules, which must be registered with the library to execute.
 
-**important**: `axe.configure()` does not communicate configuration calls into iframes. Instead `axe.configure()` must be called with the same argument in each `frame` / `iframe` individually.
+**Important**: `axe.configure()` does not communicate configuration calls into iframes. Instead `axe.configure()` must be called with the same argument in each `frame` / `iframe` individually.
 
 #### Description
 
@@ -213,7 +213,7 @@ axe.configure({
   - `reporter` - Used to set the output format that the axe.run function will pass to the callback function. Can pass a reporter name or a custom reporter function. Valid names are:
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
-    - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
+    - `raw` to return the raw result data without formatting: `axe.configure({ reporter: "raw" });`
     - `raw-env` to return the raw result data with environment data: `axe.configure({ reporter: "raw-env" });`
     - `no-passes` to return only violation results: `axe.configure({ reporter: "no-passes" });`
   - `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
@@ -567,7 +567,7 @@ The `resultTypes` option can be used to limit the number of nodes for a rule to 
 
 After axe has processed all rules normally, it generates a unique selector for all nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
 
-Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
+Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will cause rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
 axe.run(
@@ -670,7 +670,7 @@ The results of axe are grouped according to their outcome into the following arr
 - `passes`: These results indicate what elements passed the rules
 - `violations`: These results indicate what elements failed the rules
 - `inapplicable`: These results indicate which rules did not run because no matching content was found on the page. For example, with no video, those rules won't run.
-- `incomplete`: Also known as "needs review," these results were aborted and require further testing. This can happen either because of technical restrictions to what the rule can test, or because a javascript error occurred.
+- `incomplete`: Also known as "needs review," these results were aborted and require further testing. This can happen either because of technical restrictions to what the rule can test, or because a JavaScript error occurred.
 
 Each object returned in these arrays have the following properties:
 
@@ -834,7 +834,7 @@ axe.teardown();
 
 ### API Name: axe.frameMessenger
 
-Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
+Set up an alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
 
 ### API name: axe.runPartial / axe.finishRun
 
@@ -931,7 +931,7 @@ The top-level document or shadow DOM document fragment
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
-See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
+See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver JavaScript examples.
 
 ## Section 4: Performance
 

@@ -1,14 +1,14 @@
 # Issue Impacts
 
-Axe-core assigns an impact according to our assessment of the likely impact of an issue on a user with a disability that would be affected by this issue. In any given context the actual impact for the user could be lower; in some instances, it could be higher. For this reason, we encourage users of tools to evaluate each individual issue and assess the impact in the context of their application or content.
+Axe-core assigns an impact according to our assessment of the likely impact of an issue on users with disabilities who would be affected by this issue. In any given context, the actual impact for the user could be lower; in some instances, it could be higher. For this reason, we encourage users of tools to evaluate each individual issue and assess the impact in the context of their application or content.
 
-For a list of each rule and their associated impacts, see [rule-descriptions.md](./rule-descriptions.md)
+For a list of all rules and their associated impacts, see [rule-descriptions.md](./rule-descriptions.md)
 
 ## Definitions
 
 ### Minor
 
-Considered to be a nuisance or an annoyance bug. Prioritize fixing if the fix only takes a few minutes and the developer is working on the same screen/feature at the same time, otherwise the issue should not be prioritized. Will still get in the way of compliance if not fixed.
+Considered to be a nuisance or an annoyance bug. Prioritize fixing it if the fix only takes a few minutes and the developer is working on the same screen/feature at the same time, otherwise the issue should not be prioritized. This issue will still get in the way of compliance if not fixed.
 
 ### Moderate
 

@@ -8,7 +8,7 @@ The axe-core API includes:
 - The selectors generated and included in the node information in the results arrays for any given HTML page
 - The JSON structures passed into and out of any API functions
 - Any functions in the `axe.utils` and `axe.commons` collections that are used by one of our standard rules (this document refers to these as the “Public Utils”). This includes use in any of the “matches”, “eval” and “after” functions.
-- The implicit function signature of the matches, eval and after functions (the names of the parameters that are passed-to the functions and the values returned by them)
+- The implicit function signature of the matches, eval and after functions (the names of the parameters that are passed to the functions and the values returned by them)
 
 ## What is not included in the public axe-core API?
 
@@ -20,7 +20,7 @@ We guarantee that the API signatures and the return values of functions will not
 
 In a minor release, we may change the implementation of Public Utils to fix bugs or improve performance. This means that a call to a Public Util may return a different value across patch versions.
 
-We will not add or remove rules in a patch release. We will not add support for new technologies in a patch release. We will endeavour to return the exact same results across patch releases with the exception of changes that are due to bug fixes. This means that the likelihood of a patch release finding issues on a page that was clean in a previous release is very close to zero but not zero.
+We will not add or remove rules in a patch release. We will not add support for new technologies in a patch release. We will endeavor to return the exact same results across patch releases with the exception of changes that are due to bug fixes. This means that the likelihood of a patch release finding issues on a page that was clean in a previous release is very close to zero but not zero.
 
 In a minor release, we may add support for new technologies in the Public Utils or in existing rules and we may add or disable rules. We may also change an experimental rule to become a standard rule (essentially equivalent to adding rule). This means that pages that did not return violations in a particular minor release may return violations in a subsequent release. Rule tags, including the "wcag\*" tags, and whether or not something is reported as best-practice can be changed in minor releases.
 
@@ -44,7 +44,7 @@ Major releases may remove rules.
 | APIs removed                                  | May be removed (will remove previously deprecated APIs) | Will not be removed   | Will not be removed        |
 | **Public Utils**                              |                                                         |                       |                            |
 | Implementation of Public Utils                | May change                                              | May change            | Will not change            |
-| New public Utils                              | May add                                                 | May add               | Will not add               |
+| New Public Utils                              | May add                                                 | May add               | Will not add               |
 | **Rules**                                     |                                                         |                       |                            |
 | Add rules                                     | May add                                                 | May add               | Will not add               |
 | Disable or remove rules                       | May remove (will remove previously deprecated rules)    | May disable or remove | Will not disable or remove |
@@ -61,7 +61,7 @@ Patch release upgrades can be applied in CI environments with a high degree of c
 
 ### Custom Rules
 
-A custom rule configuration (with-or-without custom rules) is guaranteed to run on any newer version that shares the same major version number as the version for which it was created. A custom rule configuration (with-or-without custom rules) is not guaranteed to work with an older version of axe-core than the version for which it was created.
+A custom rule configuration (with or without custom rules) is guaranteed to run on any newer version that shares the same major version number as the version for which it was created. A custom rule configuration (with or without custom rules) is not guaranteed to work with an older version of axe-core than the version for which it was created.
 
 You can write custom rules that utilize the Public Utils and the parameters that are passed to a check function, secure in the knowledge that the API will not change unless a major version is released.
 

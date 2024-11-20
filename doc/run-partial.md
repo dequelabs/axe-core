@@ -1,8 +1,8 @@
 # axe runPartial / finishRun
 
-`axe.runPartial` and `axe.finishRun` are two methods which allow axe to test a page in two stages. This is different from `axe.run()`, in that `axe.runPartial` and `axe.finishRun` does not require communication between frames. This can be useful when frame communication is not possible or not secure. See [axe.frameMessenger](frame-messenger.md) for information on frame communication.
+`axe.runPartial` and `axe.finishRun` are two methods which allow axe to test a page in two stages. This is different from `axe.run()`, in that `axe.runPartial` and `axe.finishRun` do not require communication between frames. This can be useful when frame communication is not possible or not secure. See [axe.frameMessenger](frame-messenger.md) for information on frame communication.
 
-To use these methods, call `axe.runPartial()` in the top window, and in all nested frames and iframes. The results are then put into an array, and then passed to `axe.finishRun()`. `axe.finishRun()` then complete the test and generates the axe report.
+To use these methods, call `axe.runPartial()` in the top window, and in all nested frames and iframes. The results are put into an array, and then passed to `axe.finishRun()`. `axe.finishRun()` then completes the test and generates the axe report.
 
 This results in code that looks something like the following. The `context` and `options` arguments used are the same as would be passed to `axe.run`. See [API.md](api.md) for details.
 
@@ -42,7 +42,7 @@ function runPartialRecursive(context, options = {}, win = window) {
 
 **important**: The order in which these methods are called matters for performance. Internally, axe-core constructs a flattened tree when `axe.utils.getFrameContexts` is called. This is fairly slow, and so should not happen more than once per frame. When `axe.runPartial` is called, that tree will be used if it still exists. Since this tree can get out of sync with the actual DOM, it is important to call `axe.runPartial` immediately after `axe.utils.getFrameContexts`.
 
-To run efficiently, `axe.runPartial` calls should happen in parallel, so that when possible browsers can test multiple frames simultaneously.
+To run efficiently, axe.runPartial calls should happen in parallel, so that, when possible, browsers can test multiple frames simultaneously.
 
 ## axe.finishRun(partialResults, options): Promise<AxeResults>
 
@@ -84,7 +84,7 @@ The `options` object takes the same RunOptions object that axe.run accepts. When
 
 ## Custom Rulesets and Reporters
 
-Because `axe.finishRun` does not run inside the page, the `reporter` and `after` methods do not have access to the top-level `window` and `document` objects, and might not have access to common browser APIs. Axe-core reporter use the `environmentData` property that is set on the partialResult object of the initiator.
+Because `axe.finishRun` does not run inside the page, the `reporter` and `after` methods do not have access to the top-level `window` and `document` objects, and might not have access to common browser APIs. Axe-core reporters use the `environmentData` property that is set on the partialResult object of the initiator.
 
 Because of this constraint, custom reporters, and custom rulesets that add `after` methods must not rely on browser APIs or globals. Any data needed for either should either be taken from the `environmentData` property, or collected in an `evaluate` method of a check, and stored using its `.data()` method.
 
