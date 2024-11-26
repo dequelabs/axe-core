@@ -42,7 +42,7 @@ function runPartialRecursive(context, options = {}, win = window) {
 
 **important**: The order in which these methods are called matters for performance. Internally, axe-core constructs a flattened tree when `axe.utils.getFrameContexts` is called. This is fairly slow, and so should not happen more than once per frame. When `axe.runPartial` is called, that tree will be used if it still exists. Since this tree can get out of sync with the actual DOM, it is important to call `axe.runPartial` immediately after `axe.utils.getFrameContexts`.
 
-To run efficiently, `axe.runPartial` calls should happen in parallel so that, when possible, browsers can test multiple frames simultaneously.
+To run efficiently, `axe.runPartial` calls should happen in parallel, so that, when possible, browsers can test multiple frames simultaneously.
 
 ## axe.finishRun(partialResults, options): Promise<AxeResults>
 

@@ -24,4 +24,4 @@ In order to ensure the best quality from axe-core, we encourage everyone to regu
 
 Additionally, we recommend that you always use the latest patch version of whichever minor version you are on. For example if you are using axe-core 3.5.5, and 3.5.6 is released it is best to upgrade immediately. Patch releases of axe-core should not find new issues, although they occasionally resolve issues in the case of false positives.
 
-Ensuring that you always use the latest available patch version of axe-core on any minor line guarantees that you are using the most secure version. This minor line must have been released within the last 18 months. See [security updates](#security-updates).
+Ensuring that you always use the latest available patch version of axe-core guarantees that you are using the most secure version. This minor line must have been released within the last 18 months. See [security updates](#security-updates).
