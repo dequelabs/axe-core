@@ -8,7 +8,7 @@ For a list of all rules and their associated impacts, see [rule-descriptions.md]
 
 ### Minor
 
-Considered to be a nuisance or an annoyance bug. Prioritize fixing it if the fix only takes a few minutes and the developer is working on the same screen/feature at the same time, otherwise the issue should not be prioritized. This issue will still get in the way of compliance if not fixed.
+Considered to be a nuisance or an annoyance bug. Prioritize fixing it if the fix only takes a few minutes and the developer is working on the same screen/feature at the same time, otherwise the issue should not be prioritized. Will still get in the way of compliance if not fixed.
 
 ### Moderate
 
