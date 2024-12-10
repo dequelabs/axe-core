@@ -4,7 +4,7 @@ Axe-core uses a custom template to handle dynamic check messages (messages that 
 
 ## Simple Message
 
-A simple message is just a string that doesn't use the `data` property. Most checks uses this format.
+A simple message is just a string that doesn't use the `data` property. Most checks use this format.
 
 ```json
 {
@@ -51,7 +51,7 @@ this.data({
 
 ## Singular and Plural Messages
 
-If the message needs to to know how many items are in the `data` property to determine the type of language to use (singular or plural), you can structure the message to use `singular` and `plural` properties. Use the syntax `${data.values}` to have the message output a comma-separated list of the items (`data.values` is provided by the template code for you).
+If the message needs to know how many items are in the `data` property to determine the type of language to use (singular or plural), you can structure the message to use `singular` and `plural` properties. Use the syntax `${data.values}` to have the message output a comma-separated list of the items (`data.values` is provided by the template code for you).
 
 ```js
 // check.js
@@ -96,15 +96,15 @@ The messages can still use the syntax `${data.propName}` to access other propert
 
 ## Migrating From doT.js Template in Translations
 
-Axe-core use to use doT.js for it's temple library. To migrate from doT.js in a translation file, do the following:
+Axe-core formerly used doT.js for it's template library. To migrate from doT.js in a translation file, do the following:
 
 - If the message used `{{=it.data}}` or `{{=it.data.propName}}`, change the message to use the syntax `${data}` or `${data.propName}`.
 
 ```diff
 {
     "messages": {
--       "incomplete": "Check that the <label> does not need be part of the ARIA {{=it.data}} field's name"
-+       "incomplete": "Check that the <label> does not need be part of the ARIA ${data} field's name"
+-       "incomplete": "Check that the <label> does not need to be part of the ARIA {{=it.data}} field's name"
++       "incomplete": "Check that the <label> does not need to be part of the ARIA ${data} field's name"
     }
 }
 ```

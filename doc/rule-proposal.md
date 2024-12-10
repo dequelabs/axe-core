@@ -2,9 +2,9 @@
 
 This document outlines the process of proposing a rule. For a technical description on how to build a rule, read [Developing Axe-core Rules](./rule-development.md)
 
-Before you start coding a new rule for axe-core, you _must_ create a Github issue to document the rule you want to create. There are many considerations to writing a good rule. It must have no false positives, which is difficult, because there are always many many edge cases to consider. Additionally, a known problem of accessibility testing, is that not all testers hold the same interpretation of the accessibility guidelines. All rules _must_ be consistent with the interpretation of Deque Systems, the developer behind Axe-core.
+Before you start coding a new rule for axe-core, you _must_ create a GitHub issue to document the rule you want to create. There are many considerations to writing a good rule. It must have no false positives, which is difficult, because there are always many many edge cases to consider. Additionally, a known problem of accessibility testing is that not all testers hold the same interpretation of the accessibility guidelines. All rules _must_ be consistent with the interpretation of Deque Systems, the developer behind Axe-core.
 
-In addition to giving the axe-core development team an opportunity to provide feedback on the proposed rule, the Github Issue will serve as documentation of that rule for the future.
+In addition to giving the axe-core development team an opportunity to provide feedback on the proposed rule, the GitHub Issue will serve as documentation of that rule for the future.
 
 ## WCAG interpretation
 
@@ -12,7 +12,7 @@ Please read our [principles for deciding on rules](./accessibility-supported.md)
 
 ## Rules Format
 
-All Github issues that propose a rule must be tagged as _rule_, and must use the following format:
+All GitHub issues that propose a rule must be tagged as _rule_, and must use the following format:
 
 ### Intro
 
