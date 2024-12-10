@@ -6,7 +6,7 @@ In order to adhere to the manifesto and at the same time be useful to developers
 
 Accessibility supported means that in order for a technique to pass, it must work in some predefined set of browsers and assistive technologies. For axe-core this means that for a screen reader, browser, or environment to be added to the list of supported combinations, the following two criteria must be met:
 
-1. Be used by more than 1% of users (currently extrapolated from the [WebAims Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey10/#browsercombos))
+1. Be used by more than 1% of users (currently extrapolated from the [WebAim Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey10/#browsercombos))
 1. Introduce new coverage for a screen reader, browser, or environment not currently accessibility supported
 
 We currently test the following AT combinations for support
@@ -32,6 +32,6 @@ In addition, we disallow invalid attributes starting with `aria-` and invalid at
 
 ## Best practices
 
-We recognize that there are best practices that significantly improve the usability of application, even though they are not strictly required in order to conform with WCAG 2. We develop the best practice rules to help content developers to identify these and adhere to them.
+We recognize that there are best practices that significantly improve the usability of an application, even though they are not strictly required in order to conform with WCAG 2. We develop the best practice rules to help content developers to identify these and adhere to them.
 
 We recognize that this topic is somewhat controversial and the rules we have represent Deque's opinion on what constitutes a best practice.

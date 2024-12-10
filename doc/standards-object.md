@@ -1,6 +1,6 @@
 # Standards Object
 
-The [standards object](../lib/standards) is JSON object of ARIA and HTML spec information that axe-core uses to validate ARIA roles, attributes, and use. For example, the `aria-valid-attr` rule uses the [`ariaAttrs`](../lib/standards/aria-attrs.js) object to determine if the aria attribute is a valid ARIA attribute. To configure how axe-core validates ARIA information, you'll most likely configure the standards object to your needs. Below is a list of each object, their structure, and which rules will use that information
+The [standards object](../lib/standards) is a JSON object of ARIA and HTML spec information that axe-core uses to validate ARIA roles, attributes, and use. For example, the `aria-valid-attr` rule uses the [`ariaAttrs`](../lib/standards/aria-attrs.js) object to determine if the aria attribute is a valid ARIA attribute. To configure how axe-core validates ARIA information, you'll most likely configure the standards object to your needs. Below is a list of each object, its structure, and which rules will use that information
 
 ```js
 axe.configure({
@@ -108,7 +108,7 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
   - `phrasing`
   - `embedded`
   - `interactive`
-- `allowedRoles` - boolean or array(required). If element is allowed to use ARIA roles. A value of `true` means any role while a list of roles means only those are allowed. A value of `false` means no roles are allowed.
+- `allowedRoles` - boolean or array(required). If element is allowed to use ARIA roles, a value of `true` means any role while a list of roles means only those are allowed. A value of `false` means no roles are allowed.
 - `noAriaAttrs` - boolean(optional. Defaults `true`). If the element is allowed to use global ARIA attributes and any allowed for the elements role.
 - `shadowRoot` - boolean(optional. Default `false`). If the element is allowed to have a shadow root.
 - `implicitAttrs` - object(optional. Default `{}`). Any implicit ARIA attributes for the element and their default value.

@@ -4,11 +4,11 @@ Axe-core's `context` argument is a powerful tool for controlling precisely which
 
 1. [Test specific elements](#test-specific-elements)
 1. [Test DOM nodes](#test-dom-nodes)
-1. [Exclude elements from test](#exclude-elements-from-test)
+1. [Exclude Elements from Test](#exclude-elements-from-test)
 1. [Select from prior tests](#select-from-prior-tests)
 1. [Limit frame testing](#limit-frame-testing)
 1. [Limit shadow DOM testing](#limit-shadow-dom-testing)
-1. [Combine shadow DOM and frame context](#combine-shadow-dom-and-frame-context)
+1. [Combine Shadow DOM and Frame Context](#combine-shadow-dom-and-frame-context)
 1. [Implicit frame and shadow DOM selection](#implicit-frame-and-shadow-dom-selection)
 
 ## Test Specific Elements
@@ -23,7 +23,7 @@ await axe.run('nav, main');
 await axe.run(['nav', '.sideBar', '#header']);
 ```
 
-**Tip**: Sometimes pages are worked on by multiple teams. If you mark your team's sections up with a unique class, axe can use that class to only test the sections your team works on.
+**Tip**: Sometimes, pages are worked on by multiple teams. If you mark your team's sections up with a unique class, axe can use that class to only test the sections your team works on.
 
 Axe-core is commonly used through browser driver APIs such as Selenium, Puppeteer, and Playwright. Most of these APIs do not pass a context object in directly. Instead, the following is achieved through the `.include()` method. Visit the docs of your API for more information. For most cases, this will look like the following:
 
@@ -55,7 +55,7 @@ await axe.run([navbar, cookiePopup]);
 
 ### Component Frameworks
 
-Because axe requires a DOM to test, components such as those created for React, Vue and Angular must be rendered before they are tested. The following example shows how to render the `<MyApp>` React component before testing it with axe:
+Because axe requires a DOM to test, components such as those created for React, Vue, and Angular must be rendered before they are tested. The following example shows how to render the `<MyApp>` React component before testing it with axe:
 
 ```jsx
 const appRoot = document.getElementById('app');
