@@ -262,7 +262,7 @@
       "help": "문서는 하나를 초과하는 main 랜드마크를 가지지 않아야 합니다."
     },
     "landmark-one-main": {
-      "description": "문서가 main 랜드마크를 가지고 있는지 확인하세요,",
+      "description": "문서가 main 랜드마크를 가지고 있는지 확인하세요.",
       "help": "문서는 하나의 main 랜드마크를 가져야 합니다."
     },
     "landmark-unique": {
