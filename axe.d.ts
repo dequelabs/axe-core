@@ -15,7 +15,7 @@ declare namespace axe {
   type AriaAttrsType =
     | 'boolean'
     | 'nmtoken'
-    | 'mntokens'
+    | 'nmtokens'
     | 'idref'
     | 'idrefs'
     | 'string'

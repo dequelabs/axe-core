@@ -1014,7 +1014,7 @@ describe('axe.configure', function () {
           standards: {
             ariaAttrs: {
               newAttr: {
-                type: 'mntoken',
+                type: 'nmtoken',
                 values: ['foo', 'bar']
               }
             }
@@ -1022,7 +1022,7 @@ describe('axe.configure', function () {
         });
 
         var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
-        assert.equal(ariaAttr.type, 'mntoken');
+        assert.equal(ariaAttr.type, 'nmtoken');
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
 
@@ -1031,7 +1031,7 @@ describe('axe.configure', function () {
           standards: {
             ariaAttrs: {
               newAttr: {
-                type: 'mntoken',
+                type: 'nmtoken',
                 values: ['foo', 'bar']
               }
             }
@@ -1042,14 +1042,14 @@ describe('axe.configure', function () {
           standards: {
             ariaAttrs: {
               newAttr: {
-                type: 'mntokens'
+                type: 'nmtokens'
               }
             }
           }
         });
 
         var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
-        assert.equal(ariaAttr.type, 'mntokens');
+        assert.equal(ariaAttr.type, 'nmtokens');
         assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
       });
 
@@ -1058,7 +1058,7 @@ describe('axe.configure', function () {
           standards: {
             ariaAttrs: {
               newAttr: {
-                type: 'mntoken',
+                type: 'nmtoken',
                 values: ['foo', 'bar']
               }
             }
