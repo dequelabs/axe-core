@@ -845,7 +845,7 @@
     },
     "caption": {
       "pass": "The multimedia element has a captions track",
-      "incomplete": "Check that captions is available for the element"
+      "incomplete": "Check that captions are available for the element"
     },
     "frame-tested": {
       "pass": "The iframe was tested with axe-core",
