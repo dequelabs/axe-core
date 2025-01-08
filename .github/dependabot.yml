@@ -42,6 +42,9 @@ updates:
       # @see https://github.com/dequelabs/axe-core/issues/4428
       - dependency-name: 'colorjs.io'
         versions: ['>0.4.3']
+      # Still need to support node 18
+      - dependency-name: 'glob'
+        versions: ['>11.0.0']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:
