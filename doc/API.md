@@ -23,7 +23,7 @@
    1. [API Name: axe.setup](#api-name-axesetup)
    1. [API Name: axe.teardown](#api-name-axeteardown)
    1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
-   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial-/-axefinishrun)
+   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial--axefinishrun)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
