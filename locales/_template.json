@@ -351,7 +351,7 @@
     },
     "role-img-alt": {
       "description": "Ensure [role=\"img\"] elements have alternative text",
-      "help": "[role=\"img\"] elements must have an alternative text"
+      "help": "[role=\"img\"] elements must have alternative text"
     },
     "scope-attr-valid": {
       "description": "Ensure the scope attribute is used correctly on tables",
