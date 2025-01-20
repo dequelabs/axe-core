@@ -16,7 +16,7 @@ var axeVersion = packageJSON.version.substring(
 );
 
 var descriptionTableHeader =
-  '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
+  '| Rule ID | Description | Impact | Tags | Issue Type | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 // prevent striping newline characters from strings (e.g. failure
 // summaries). must be synced with lib/core/imports/index.js
