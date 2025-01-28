@@ -688,7 +688,7 @@
     "autocomplete-valid": {
       "pass": "autocomplete属性は正しくフォーマットされています",
       "fail": "autocomplete属性は誤ってフォーマットされています",
-      "incomplete": "the autocomplete attribute has a non-standard value. Check whether any standard value could be used instead."
+      "incomplete": "autocomplete属性に、標準的ではない値が指定されています。代わりに指定できる標準的な値がないか確認してください。"
     },
     "accesskeys": {
       "pass": "accesskey属性の値は一意です",
