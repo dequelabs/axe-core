@@ -1099,9 +1099,9 @@
       "pass": "headers属性はテーブル内の他のセルを参照するためだけに使用されています",
       "incomplete": "headers属性が空です",
       "fail": {
-        "cell-header-not-in-table": "The headers attribute is not exclusively used to refer to other header cells in the table",
-        "cell-header-not-th": "The headers attribute must refer to header cells, not data cells",
-        "header-refs-self": "The element with headers attribute refers to itself"
+        "cell-header-not-in-table": "headers属性がテーブル内の他のヘッダーセルのみを参照するために使用されていません",
+        "cell-header-not-th": "headers属性はデータセルではなく、ヘッダーセルを参照しなければなりません",
+        "header-refs-self": "headers属性を持つ要素が自分自身を参照しています"
       }
     },
     "th-has-data-cells": {
