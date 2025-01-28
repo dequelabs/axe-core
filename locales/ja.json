@@ -374,8 +374,8 @@
       "help": "スキップリンクのターゲットが存在し、フォーカス可能でなければなりません"
     },
     "summary-name": {
-      "description": "Ensure summary elements have discernible text",
-      "help": "Summary elements must have discernible text"
+      "description": "summary要素に認識可能なテキストが存在することを確認します",
+      "help": "summary要素には認識可能なテキストがなければなりません"
     },
     "svg-img-alt": {
       "description": "img、graphics-documentまたはgraphics-symbolロールを持つsvg要素にアクセシブルなテキストがあることを確認します",
