@@ -282,8 +282,8 @@
       "help": "ドキュメントにはmainランドマークが1つ含まれていなければなりません"
     },
     "landmark-unique": {
-      "help": "ランドマークが一意であることを確認します",
-      "description": "ランドマークには一意のロール又はロール／ラベル／タイトル (すなわちアクセシブルな名前) の組み合わせがなければなりません"
+      "description": "ランドマークには一意のロール又はロール／ラベル／タイトル (すなわちアクセシブルな名前) の組み合わせがなければなりません",
+      "help": "ランドマークが一意であることを確認します"
     },
     "link-in-text-block": {
       "description": "リンクが色に依存しない形で周囲のテキストと区別できることを確認します",
@@ -372,6 +372,10 @@
     "skip-link": {
       "description": "すべてのスキップリンクにフォーカス可能なターゲットがあることを確認します",
       "help": "スキップリンクのターゲットが存在し、フォーカス可能でなければなりません"
+    },
+    "summary-name": {
+      "description": "Ensure summary elements have discernible text",
+      "help": "Summary elements must have discernible text"
     },
     "svg-img-alt": {
       "description": "img、graphics-documentまたはgraphics-symbolロールを持つsvg要素にアクセシブルなテキストがあることを確認します",
@@ -683,7 +687,8 @@
     },
     "autocomplete-valid": {
       "pass": "autocomplete属性は正しくフォーマットされています",
-      "fail": "autocomplete属性は誤ってフォーマットされています"
+      "fail": "autocomplete属性は誤ってフォーマットされています",
+      "incomplete": "the autocomplete attribute has a non-standard value. Check whether any standard value could be used instead."
     },
     "accesskeys": {
       "pass": "accesskey属性の値は一意です",
@@ -1093,7 +1098,11 @@
     "td-headers-attr": {
       "pass": "headers属性はテーブル内の他のセルを参照するためだけに使用されています",
       "incomplete": "headers属性が空です",
-      "fail": "headers属性がテーブル内の他のセルを参照するためだけに使用されていません"
+      "fail": {
+        "cell-header-not-in-table": "The headers attribute is not exclusively used to refer to other header cells in the table",
+        "cell-header-not-th": "The headers attribute must refer to header cells, not data cells",
+        "header-refs-self": "The element with headers attribute refers to itself"
+      }
     },
     "th-has-data-cells": {
       "pass": "すべてのテーブルヘッダーセルがデータセルを参照しています",
