@@ -785,8 +785,8 @@
       "incomplete": "フォームの要素に明示的で非表示の <label> があるか判定できませんでした"
     },
     "implicit-label": {
-      "pass": "フォームの要素に暗黙の（包含された）<label>が存在します",
-      "fail": "フォームの要素に暗黙の（包含された）<label>が存在しません",
+      "pass": "要素に暗黙の（包含された）<label>が存在します",
+      "fail": "要素に暗黙の（包含された）<label>が存在しません",
       "incomplete": "フォームの要素に暗黙の（包含された）<label>が存在するか判定できません"
     },
     "label-content-name-mismatch": {
