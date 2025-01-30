@@ -202,7 +202,7 @@
       "help": "Heading levels should only increase by one"
     },
     "hidden-content": {
-      "description": "Informs users about hidden content.",
+      "description": "Inform users about hidden content.",
       "help": "Hidden content on the page should be analyzed"
     },
     "html-has-lang": {
@@ -342,8 +342,8 @@
       "help": "Page should contain a level-one heading"
     },
     "presentation-role-conflict": {
-      "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
-      "help": "Ensure elements marked as presentational are consistently ignored"
+      "description": "Ensure elements marked as presentational are consistently ignored",
+      "help": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them"
     },
     "region": {
       "description": "Ensure all page content is contained by landmarks",
