@@ -13,7 +13,7 @@ unix_nightly_box: &unix_nightly_box
 
 orbs:
   puppeteer: threetreeslight/puppeteer@0.1.2
-  browser-tools: circleci/browser-tools@1.4.8
+  browser-tools: circleci/browser-tools@1.5.1
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -184,8 +184,9 @@ jobs:
       - run:
           name: Install Firefox Nightly
           command: |
-            wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
-            tar xf firefox-nightly.tar.bz2
+            # Assumes Firefox >= 135; in earlier versions, this resolves to a .tar.bz2 instead
+            wget -O firefox-nightly.tar.xz "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+            tar xf firefox-nightly.tar.xz
       - run:
           name: Set Environment Variable
           command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
