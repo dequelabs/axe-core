@@ -2,7 +2,7 @@
 
 Before you start writing axe-core rules, be sure to create a proposal for them in a GitHub issue. Read [Proposing Axe-core rules](./rule-proposal.md) for details.
 
-A rule is a JSON Object that defines a test for axe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule.
+A rule is a JSON Object that defines a test for axe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule. The code for rules is in the [`lib/rules`](../lib/rules/) and the checks in [`lib/checks`](../lib/checks/).
 
 ## Rule Select and Matches
 
@@ -20,20 +20,22 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 
 ## Rule Properties
 
-| Prop. Name           | Description                                                         |
-| -------------------- | ------------------------------------------------------------------- |
-| id                   | Unique identifier for the rule                                      |
-| selector             | CSS Selector that matches elements to test                          |
-| matches              | Function to further filter the outcome of the selector              |
-| excludeHidden        | Should hidden elements be excluded                                  |
-| all                  | Checks that must all return true                                    |
-| any                  | Checks of which at least one must return true                       |
-| none                 | Checks that must all return false                                   |
-| pageLevel            | Should the rule only run on the main window                         |
-| enabled              | Does the rule run by default                                        |
-| tags                 | Grouping for the rule, such as wcag2a, best-practice                |
-| metadata.description | Description of what a rule does                                     |
-| metadata.help        | Short description of a violation, used in the axe extension sidebar |
+| Prop. Name           | Description                                                                  |
+| -------------------- | ---------------------------------------------------------------------------- |
+| id                   | Unique identifier for the rule                                               |
+| selector             | CSS Selector that matches elements to test                                   |
+| matches              | Function to further filter the outcome of the selector                       |
+| excludeHidden        | Should hidden elements be excluded (default: true)                           |
+| reviewOnFail         | Whether any fail on the rule should be reported as needs review / incomplete |
+| impact               | "minor", "serious", "critical"                                               |
+| all                  | Checks that must all return true                                             |
+| any                  | Checks of which at least one must return true                                |
+| none                 | Checks that must all return false                                            |
+| pageLevel            | Should the rule only run on the main window                                  |
+| enabled              | Does the rule run by default                                                 |
+| tags                 | Grouping for the rule, such as wcag2a, best-practice                         |
+| metadata.description | Description of what a rule does                                              |
+| metadata.help        | Short description of a violation, used in the axe extension sidebar          |
 
 ## Check Properties
 
@@ -43,7 +45,6 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | evaluate                     | Evaluating function, returning a boolean value |
 | options                      | Configurable value for the check               |
 | after                        | Cleanup function, run after check is done      |
-| metadata.impact              | "minor", "serious", "critical"                 |
 | metadata.messages.pass       | Describes why the check passed                 |
 | metadata.messages.fail       | Describes why the check failed                 |
 | metadata.messages.incomplete | Describes why the check didn’t complete        |
@@ -121,3 +122,7 @@ Rules of thumb for determining whether an `after` function is required - if any 
 2. Does the rule evaluate hierarchy of things across a whole page?
 
 Rules that use an `after` function MUST have iframe test cases that assert correct data passing between iframes and handle all the relevant cases across iframes.
+
+## rule generation
+
+Axe comes with a script to help generate rule files. To use this, call `npm run rule-gem` from the root of the project. If you haven't already, make sure to call `npm install` before to get all dependencies installed first.
