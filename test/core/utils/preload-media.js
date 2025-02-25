@@ -65,9 +65,9 @@ describe('axe.utils.preloadMedia', () => {
   it('returns media nodes (audio, video) after their metadata has been preloaded', async () => {
     fixtureSetup(
       // 1 audio elm
-      '<audio src="/test/assets/moon-speech.mp3"></audio>' +
+      '<audio src="/test/assets/moon-speech.mp3" autoplay="true"></audio>' +
         // 1 video elm
-        '<video>' +
+        '<video autoplay="true">' +
         '<source src="/test/assets/video.mp4" type="video/mp4" />' +
         '<source src="/test/assets/video.webm" type="video/webm" />' +
         '</video>'
