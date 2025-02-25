@@ -16,14 +16,14 @@ describe('axe.utils.preloadMedia', () => {
   });
 
   it('returns empty array when <video> has no source', async () => {
-    fixtureSetup('<video id="target"><source src=""/></video>');
+    fixtureSetup('<video id="target" autoplay="true"><source src=""/></video>');
     const result = await axe.utils.preloadMedia({ treeRoot: axe._tree[0] });
     assert.equal(result.length, 0);
   });
 
   it('returns empty array when media node does not preload', async () => {
     fixtureSetup(`
-      <video id="target" preload="none">
+      <video id="target" autoplay="true" preload="none">
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
     `);
@@ -33,7 +33,7 @@ describe('axe.utils.preloadMedia', () => {
 
   it('returns empty array when media node is muted', async () => {
     fixtureSetup(`
-      <video id="target" muted>
+      <video id="target" autoplay="true" muted>
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
     `);
@@ -43,7 +43,7 @@ describe('axe.utils.preloadMedia', () => {
 
   it('returns empty array when media node is paused', async () => {
     fixtureSetup(`
-      <video id="target" paused>
+      <video id="target" autoplay="true" paused>
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
     `);
