@@ -1,6 +1,6 @@
 # Developing Axe-core Rules
 
-Before you start writing axe-core rules, be sure to create a proposal for them in a github issue. Read [Proposing Axe-core rules](./rule-proposal.md) for details.
+Before you start writing axe-core rules, be sure to create a proposal for them in a GitHub issue. Read [Proposing Axe-core rules](./rule-proposal.md) for details.
 
 A rule is a JSON Object that defines a test for axe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule.
 
@@ -8,14 +8,14 @@ A rule is a JSON Object that defines a test for axe-core to run. At a high level
 
 Each rule has a `selector` and optionally a `matches` property. The selector is a CSS selector. Each element matching this selector will be tested by the rule, unless the matches function says otherwise. The `matches` property is a reference to a function that returns a boolean, which indicates if the element should be tested.
 
-The last thing that may influence if an element is selected for testing in the rule is it's visibility. By default, hidden elements are ignored by the rule, unless the `excludeHidden` is set to 'false'.
+The last thing that may influence if an element is selected for testing in the rule is its visibility. By default, hidden elements are ignored by the rule, unless `excludeHidden` is set to 'false'.
 
 ## Using Checks in Rules
 
 The actual testing of elements in axe-core is done by checks. A rule has one or more checks which end up generating a result. There are three properties with which to define a rule's checks. Each of them deals differently:
 
 - **All**: Takes an array of check names, **all** of which has to return true for the rule to pass.
-- **none**: Takes an array of check names, **none** of which can to return true for the rule to pass.
+- **none**: Takes an array of check names, **none** of which can return true for the rule to pass.
 - **any**: Takes an array of check names, **at least one** of which has to return true for the rule to pass.
 
 ## Rule Properties
@@ -49,7 +49,7 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | metadata.messages.incomplete | Describes why the check didn’t complete        |
 
 Incomplete results occur when axe-core can’t produce a clear pass or fail result,
-giving users the opportunity to review it manually. Incomplete messages can take
+giving users the opportunity to manually review the result. Incomplete messages can take
 the form of a string, or an object with arbitrary keys matching the data returned
 from the check.
 
@@ -57,7 +57,7 @@ A pass message is required, while fail and incomplete are dependent on the check
 
 ### Incomplete message string
 
-As one example, the audio and video caption checks return an incomplete string:
+For example, the audio and video caption checks return an incomplete string:
 
 ```js
 messages: {
@@ -84,7 +84,7 @@ messages: {
 ```
 
 To wire up an incomplete message with a specific reason it returned undefined,
-the check needs matching data. Otherwise, it will fall back to the `default` message.
+the check needs matching data. Otherwise, it falls back to the `default` message.
 Reasons are arbitrary for the check (such as 'bgImage') but they must match the
 data returned:
 
@@ -100,7 +100,7 @@ Axe-core handles shadow DOM and cross-domain iframe rules very well - as long as
 
 The rule callbacks all receive both a `node` and a `virtualNode` argument (in addition to the `options` argument). `node` points to the DOM Node that is to be evaluated, whereas `virtualNode` points to the node in the flattened tree (the hierarchy that shadow DOM creates that is used for parent child relationships across shadow DOM boundaries).
 
-If your rule looks at any hierarchical context (parents or children) then you need to operate on the `virtualNode` for those operations. Calls to `isHidden` and the accessible name calculation calls will all evaluate the hierarchy. The commons and utils functions will all fetch the `virtualNode` from the flattened tree if you use the `node` implementation (and then simply call the virtualNode one) and are there for backwards compatibility. This backwards compatibility comes at a performance cost that can be avoided by simply using the `virtualNode` to start with. We will ask you to change this during PR review, so you might as well just start out by using the `virtualNode`.
+If your rule looks at any hierarchical context (parents or children) then you need to operate on the `virtualNode` for those operations. Calls to `isHidden` and the accessible name calculation calls will all evaluate the hierarchy. The commons and utils functions will all fetch the `virtualNode` from the flattened tree if you use the `node` implementation (and then simply call the virtualNode one) and are there for backward compatibility. This backward compatibility comes at a performance cost that can be avoided by simply using the `virtualNode` to start with. We will ask you to change this during PR review, so you might as well just start out by using the `virtualNode`.
 
 ## iframes
 

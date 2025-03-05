@@ -14,7 +14,7 @@ Axe is an accessibility testing engine for websites and other HTML-based user in
 
 ## The Accessibility Rules
 
-Axe-core has different types of rules, for WCAG 2.0, 2.1, 2.2 on level A, AA and AAA as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored. The complete list of rules, grouped WCAG level and best practice, can found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
+Axe-core has different types of rules, for WCAG 2.0, 2.1, 2.2 on level A, AA and AAA as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored. The complete list of rules, grouped WCAG level and best practice, can be found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
 
 With axe-core, you can find **on average 57% of WCAG issues automatically**. Additionally, axe-core will return elements as "incomplete" where axe-core could not be certain, and manual review is needed.
 
@@ -65,7 +65,7 @@ Axe was built to reflect how web development actually works. It works with all m
 - It's actively supported by [Deque Systems](https://www.deque.com), a major accessibility vendor.
 - It integrates with your existing functional/acceptance automated tests.
 - It automatically determines which rules to run based on the evaluation context.
-- Axe supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth.
+- Axe supports in-memory fixtures, static fixtures, integration tests, and iframes of infinite depth.
 - Axe is highly configurable.
 
 ## Supported Browsers
