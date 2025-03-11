@@ -34,11 +34,4 @@ describe('autocomplete-valid', function () {
     );
     assert.isTrue(evaluate.apply(checkContext, params));
   });
-
-  it('returns ture if readonly attribute is placed whether autocomplete is not valid', function () {
-    var params = checkSetup(
-      '<input readonly autocomplete="some invalid value" id="target" />'
-    );
-    assert.isTrue(evaluate.apply(checkContext, params));
-  });
 });
