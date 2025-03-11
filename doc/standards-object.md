@@ -39,13 +39,13 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 - `type` - string(required). The attribute type which dictates the valid values of the attribute. Valid types are:
   - `boolean` - Boolean attributes only accept `true` or `false` as valid values (e.g. `aria-selected`).
   - `nmtoken` - Name token attributes accept a single value from a list of valid values (e.g. `aria-orientation`).
-  - `mntokens` - Name tokens attributes accept a space separated list of values from a list of valid values (e.g. `aria-relevant`).
+  - `nmtokens` - Name tokens attributes accept a space separated list of values from a list of valid values (e.g. `aria-relevant`).
   - `idref` - ID reference attributes accept an ID to point to another element in the DOM (e.g. `aria-activedescendant`).
   - `idrefs` - ID references attributes accept a space separated list of IDs that point to multiple elements in the DOM (e.g. `aria-labelledby`).
   - `string` - String attributes accept any string (e.g. `aria-label`).
   - `decimal` - Decimal attributes accept any number or decimal value (e.g. `aria-valuemax`).
   - `int` - Integer attributes only accept whole number values (e.g. `aria-level`).
-- `values` - array(required for only `mntoken` and `mntokens`). The list of valid values for the attribute.
+- `values` - array(required for only `nmtoken` and `nmtokens`). The list of valid values for the attribute.
 - `minValue` - number(required for only `int`). The minimum value allowed for the attribute.
 - `allowEmpty` - boolean(optional, default `false`). If the attribute is allowed to have no value.
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
