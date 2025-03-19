@@ -45,6 +45,9 @@ updates:
       # Still need to support node 18
       - dependency-name: 'glob'
         versions: ['>=11.0.0']
+      # Use node 4 types for backward compatibility
+      - dependency-name: '@types/node'
+        versions: ['>=5.0.0']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:
