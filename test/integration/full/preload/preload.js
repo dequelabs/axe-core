@@ -2,7 +2,7 @@ describe('axe.utils.preload integration test', () => {
   const styleSheets = {
     crossOriginLinkHref: {
       id: 'crossOriginLinkHref',
-      href: 'https://unpkg.com/gutenberg-css@0.4'
+      href: 'https://unpkg.com/gutenberg-css@0.4.0/dist/gutenberg.css'
     },
     crossOriginDoesNotExist: {
       id: 'styleTag',
@@ -33,7 +33,7 @@ describe('axe.utils.preload integration test', () => {
 
   function detachStylesheets(done) {
     if (!stylesForPage) {
-      done();
+      return done();
     }
     axe.testUtils
       .removeStyleSheets(stylesForPage)
