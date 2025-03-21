@@ -146,8 +146,8 @@ describe('autocomplete-matches', function () {
 
   it('returns true if aria-readonly attribute is false whether autocomplete is not valid', function () {
     var vNode = queryFixture(
-      '<input aria-readonly="true" autocomplete="some invalid value" id="target" />'
+      '<input aria-readonly="false" autocomplete="some invalid value" id="target" />'
     );
-    assert.isFalse(rule.matches(null, vNode));
+    assert.isTrue(rule.matches(null, vNode));
   });
 });
