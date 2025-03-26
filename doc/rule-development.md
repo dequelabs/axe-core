@@ -125,4 +125,4 @@ Rules that use an `after` function MUST have iframe test cases that assert corre
 
 ## rule generation
 
-Axe comes with a script to help generate rule files. To use this, call `npm run rule-gem` from the root of the project. If you haven't already, make sure to call `npm install` before to get all dependencies installed first.
+Axe comes with a script to help generate rule files. To use this, call `npm run rule-gen` from the root of the project. If you haven't already, make sure to call `npm install` before to get all dependencies installed first.
