@@ -286,7 +286,7 @@ describe('link-in-text-block', () => {
     it('should return the proper values stored in data (fgContrast)', () => {
       fixture.innerHTML =
         '<div> <span style="display:block; color: #100" id="parent">' +
-        ' <p style="display:inline"><a href="" id="link">' +
+        ' <p style="display:inline"><a href="" id="link" style="color: #00e">' +
         '    link text ' +
         ' </a> inside block </p> inside block' +
         '</span> outside block </div>';

@@ -5,7 +5,7 @@
   "excludeHidden": false,
   "tags": ["cat.structure", "best-practice", "experimental", "review-item"],
   "metadata": {
-    "description": "Informs users about hidden content.",
+    "description": "Inform users about hidden content.",
     "help": "Hidden content on the page should be analyzed"
   },
   "all": [],

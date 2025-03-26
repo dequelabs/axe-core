@@ -60,7 +60,12 @@ this should not effect their outcome -->
 
 <div>
   <button id="pass15">x</button>
-  <div role="timer" tabindex="0" id="ignore6">Timer</div>
+  <div role="tabpanel" tabindex="0" id="ignore6">Tabpanel</div>
+</div>
+
+<div>
+  <button id="pass16">x</button>
+  <div role="timer" tabindex="0" id="ignore7">Timer</div>
 </div>
 
 <!-- Nested controls-->
@@ -87,6 +92,11 @@ this should not effect their outcome -->
     Wide link <button id="fail7">y</button>
   </a>
 </p>
+
+<div role="tabpanel" tabindex="0">
+  Focusable tabpanel containing small control
+  <button id="pass17">x</button>
+</div>
 
 <!-- Failed examples -->
 <p>

@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.10.2",
+  "version": "4.10.3",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -142,7 +142,7 @@
     "es6-promise": "^4.2.8",
     "esbuild": "^0.10.x",
     "eslint": "^9.2.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-mocha-no-only": "^1.2.0",
     "execa": "5.x",
     "glob": "^10.3.10",
@@ -160,7 +160,7 @@
     "inquirer": "^8.2.5",
     "jquery": "^3.6.3",
     "jsdoc": "^4.0.2",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.1",
@@ -171,7 +171,7 @@
     "karma-spec-reporter": "^0.0.36",
     "lint-staged": "^15.0.2",
     "memoizee": "^0.4.15",
-    "mocha": "^10.2.0",
+    "mocha": "^11.1.0",
     "node-notifier": "^10.0.1",
     "npm-run-all": "^4.1.5",
     "outdent": "^0.8.0",
