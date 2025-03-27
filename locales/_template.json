@@ -342,8 +342,8 @@
       "help": "Page should contain a level-one heading"
     },
     "presentation-role-conflict": {
-      "description": "Ensure elements marked as presentational are consistently ignored",
-      "help": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them"
+      "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
+      "help": "Ensure elements marked as presentational are consistently ignored"
     },
     "region": {
       "description": "Ensure all page content is contained by landmarks",
