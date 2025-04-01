@@ -146,7 +146,7 @@
     "eslint-plugin-mocha-no-only": "^1.2.0",
     "execa": "5.x",
     "glob": "^10.3.10",
-    "globals": "^15.2.0",
+    "globals": "^16.0.0",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-bytesize": "^0.2.0",
