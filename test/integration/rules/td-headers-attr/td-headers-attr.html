@@ -19,6 +19,11 @@
   <td id="self" headers="self" hidden>World</td>
 </table>
 
+<table id="pass5">
+  <td role="rowheader" id="hdr1">Hello</td>
+  <td headers="hdr1">World</td>
+</table>
+
 <table id="fail1">
   <th id="f1h1">Hello</th>
   <td headers="f1h1 non-existing">World</td>
@@ -30,6 +35,21 @@
 
 <table id="fail3" role="none" tabindex="0">
   <td id="self" headers="self">World</td>
+</table>
+
+<table id="fail4">
+  <td id="hdr1">Hello</td>
+  <td headers="hdr1">World</td>
+</table>
+
+<table id="fail5">
+  <th role="cell" id="th-role-cell-hdr">Hello</th>
+  <td headers="th-role-cell-hdr">World</td>
+</table>
+
+<table id="fail6">
+  <th role="button" id="th-role-button-hdr">Hello</th>
+  <td headers="th-role-button-hdr">World</td>
 </table>
 
 <table id="inapplicable1" role="none">

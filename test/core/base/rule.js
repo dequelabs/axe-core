@@ -903,7 +903,7 @@ describe('Rule', () => {
             {}
           );
           isNotCalled();
-        } catch (err) {
+        } catch {
           assert.isFalse(success);
         }
       });

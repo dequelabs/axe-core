@@ -28,6 +28,46 @@ this should not effect their outcome -->
   </textarea>
 </p>
 
+<div>
+  <button id="pass9">x</button>
+  <div role="alertdialog" tabindex="0" id="ignore1">Cookies</div>
+</div>
+
+<div>
+  <button id="pass10">x</button>
+  <div role="dialog" tabindex="0" id="ignore2">Cookies</div>
+</div>
+
+<div>
+  <button id="pass11">x</button>
+  <div role="alert" tabindex="0" id="ignore3">Cookies</div>
+</div>
+
+<div>
+  <button id="pass12">x</button>
+  <div role="log" tabindex="0" id="ignore4">Log</div>
+</div>
+
+<div>
+  <button id="pass13">x</button>
+  <div role="marquee" tabindex="0" id="ignore4">Marquee</div>
+</div>
+
+<div>
+  <button id="pass14">x</button>
+  <div role="status" tabindex="0" id="ignore5">Status</div>
+</div>
+
+<div>
+  <button id="pass15">x</button>
+  <div role="tabpanel" tabindex="0" id="ignore6">Tabpanel</div>
+</div>
+
+<div>
+  <button id="pass16">x</button>
+  <div role="timer" tabindex="0" id="ignore7">Timer</div>
+</div>
+
 <!-- Nested controls-->
 <p>
   <a
@@ -52,6 +92,11 @@ this should not effect their outcome -->
     Wide link <button id="fail7">y</button>
   </a>
 </p>
+
+<div role="tabpanel" tabindex="0">
+  Focusable tabpanel containing small control
+  <button id="pass17">x</button>
+</div>
 
 <!-- Failed examples -->
 <p>

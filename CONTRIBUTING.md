@@ -162,7 +162,7 @@ If you need to debug the unit tests in a browser, you can run:
 npm run test:debug
 ```
 
-This will start the Karma server and open up the Chrome browser. Click the `Debug` button to start debugging the tests. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
+This will start the Karma server and open up the Chrome browser. Click the `Debug` button to start debugging the tests. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](./.vscode/launch.json) is provided. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
 
 Because the amount of tests is so large, it's recommended to debug only a specific set of unit tests rather than the whole test suite. You can use the `testDirs` argument when using the debug command and pass a specific test directory. The test directory names are the same as those used for `test:unit:*`:
 

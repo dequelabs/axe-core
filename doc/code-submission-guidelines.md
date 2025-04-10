@@ -14,7 +14,7 @@ will kindly ask you to resubmit it in the correct format.
 
 ### Default Export at Top
 
-When coding using [JavaScipt modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), the `default export` should be at the top of the file right after any import statements and module level variables. This ensures that when you open the file the main code path is the first thing you read.
+When coding using [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), the `default export` should be at the top of the file right after any import statements and module level variables. This ensures that when you open the file the main code path is the first thing you read.
 
 If you encounter any code that we maintain that does not put the `default export` at the top, you should update the file to do so.
 
@@ -109,12 +109,12 @@ export default async function validateAxeReport(filePath = '') {
 
 </details>
 
-### Docblock Comments
+### DocBlock Comments
 
-We use [Docblock comments](https://en.wikipedia.org/wiki/Docblock) in our code. Docblock comments are a way to describe what a function does, its signature, and describe its inputs.
+We use [DocBlock comments](https://en.wikipedia.org/wiki/Docblock) in our code. DocBlock comments are a way to describe what a function does, its signature, and describe its inputs.
 
 <details>
-  <summary>Example of Docblock comment</summary>
+  <summary>Example of DocBlock comment</summary>
 
 ```ts
 /**
@@ -134,7 +134,7 @@ function distance(pointA, pointB) {
 
 All code changes should include tests to validate that the code works as expected. Both unit tests and integration tests (where applicable) should be included in all `fix` and `feat` pull requests. `chore` pull requests do not typically need tests.
 
-#### Integrations Test
+#### Integration Test
 
 All changes that affect a rule should include an integration test. Most rules integration tests can be found in `test/integration/rules`. When updating tests in this directory, you'll need to write the new HTML code to be tested and give the element that should trigger the rule a unique `id`. Then you'll need to update the companion JSON file to add the id to either the `violations` or `passes` array.
 
@@ -201,7 +201,7 @@ Closes issue #1
 
 **Note:** We do not link issues to be closed as we have our QA team verify the issue is resolved before closing. Instead use `Closes issue #` to link to the issue the pr resolves but won't close it once merged.
 
-> Commit messages should be 100 characters or less to make them easy to read on Github and
+> Commit messages should be 100 characters or less to make them easy to read on GitHub and
 > various git tools.
 
 ### How to structure your commits:
@@ -243,7 +243,7 @@ Use the imperative, present tense: "change" not "changed" nor "changes", just li
 
 #### Footer
 
-Reference any issue that this commit closes with its fully qualified URL to support both Bitbucket and Github.
+Reference any issue that this commit closes with its fully qualified URL to support both Bitbucket and GitHub.
 
 If needed, the footer should contain any information about [Breaking Changes](https://www.conventionalcommits.org/en/v1.0.0/). Deprecation notices or breaking changes in the Changelog should inform users if they'll need to modify their code after this commit.
 
@@ -275,7 +275,7 @@ git push origin head -f
 
 If a pull request has many commits (especially if they don't follow our [commit policy](#git-commits)), you'll want to squash them into one clean commit.
 
-In the Github UI, you can use the new [Squash and Merge](https://github.com/blog/2141-squash-your-commits) feature to make this easy. If there are merge conflicts preventing this, either ask the committer to rebase from develop following the [PR submission steps above](#submitting-a-pull-request), or use the manual method below.
+In the GitHub UI, you can use the new [Squash and Merge](https://github.com/blog/2141-squash-your-commits) feature to make this easy. If there are merge conflicts preventing this, either ask the committer to rebase from develop following the [PR submission steps above](#submitting-a-pull-request), or use the manual method below.
 
 To apply a pull request manually, make sure your local develop branch is up to date. Then, create a new branch for that pull request.
 

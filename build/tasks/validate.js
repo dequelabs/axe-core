@@ -14,7 +14,7 @@ function fileExists(v, o) {
   var exists;
   try {
     exists = fs.existsSync(file);
-  } catch (e) {
+  } catch {
     return false;
   }
   return exists;

@@ -18,14 +18,25 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
+      - run: npm run prepare
       - run: npm run build
-      # v4 download seems to have some flakiness with the download of artifacts so pinning to v3 for now
-      # @see https://github.com/actions/download-artifact/issues/249
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: axe-core
           path: axe.js
           retention-days: 1
+
+  fmt_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run fmt:check
 
   test_node:
     strategy:
@@ -39,7 +50,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node}}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: axe-core
       - run: npm run test:node

@@ -376,7 +376,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Eskatutako ARIA semeak bertan daude",
+      "pass": {
+        "default": "Eskatutako ARIA semeak bertan daude"
+      },
       "fail": {
         "singular": "Esktatutako ARIARren semeak ez daude : ${data.values}",
         "plural": "Esktatutako ARIARren semeaez dago : ${data.values}"

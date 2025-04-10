@@ -19,8 +19,8 @@
   ],
   "actIds": ["c487ae"],
   "metadata": {
-    "description": "Ensures <area> elements of image maps have alternate text",
-    "help": "Active <area> elements must have alternate text"
+    "description": "Ensure <area> elements of image maps have alternative text",
+    "help": "Active <area> elements must have alternative text"
   },
   "all": [],
   "any": ["non-empty-alt", "aria-label", "aria-labelledby", "non-empty-title"],

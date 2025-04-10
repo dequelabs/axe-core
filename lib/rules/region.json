@@ -4,7 +4,7 @@
   "selector": "body *",
   "tags": ["cat.keyboard", "best-practice"],
   "metadata": {
-    "description": "Ensures all page content is contained by landmarks",
+    "description": "Ensure all page content is contained by landmarks",
     "help": "All page content should be contained by landmarks"
   },
   "all": [],

@@ -11,9 +11,9 @@
         "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
-        "singular": "ensure aria-errormessage value `${data.values}` references an existing element",
-        "plural": "ensure aria-errormessage values `${data.values}` reference existing elements",
-        "idrefs": "unable to determine if aria-errormessage element exists on the page: ${data.values}"
+        "singular": "Ensure aria-errormessage value `${data.values}` references an existing element",
+        "plural": "Ensure aria-errormessage values `${data.values}` reference existing elements",
+        "idrefs": "Unable to determine if aria-errormessage element exists on the page: ${data.values}"
       }
     }
   }

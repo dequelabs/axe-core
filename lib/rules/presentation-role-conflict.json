@@ -6,8 +6,8 @@
   "tags": ["cat.aria", "best-practice", "ACT"],
   "actIds": ["46ca7f"],
   "metadata": {
-    "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
-    "help": "Ensure elements marked as presentational are consistently ignored"
+    "description": "Ensure elements marked as presentational do not have global ARIA or tabindex so that all screen readers ignore them",
+    "help": "Elements marked as presentational should be consistently ignored"
   },
   "all": [],
   "any": [],

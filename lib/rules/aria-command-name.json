@@ -15,7 +15,7 @@
   ],
   "actIds": ["97a4e1"],
   "metadata": {
-    "description": "Ensures every ARIA button, link and menuitem has an accessible name",
+    "description": "Ensure every ARIA button, link and menuitem has an accessible name",
     "help": "ARIA commands must have an accessible name"
   },
   "all": [],

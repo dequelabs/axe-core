@@ -49,6 +49,13 @@ describe('aria-required-attr', () => {
     assert.isTrue(requiredAttrCheck.apply(checkContext, params));
   });
 
+  it('passes aria-valuenow if element has aria-valuetext', () => {
+    const params = checkSetup(
+      '<div id="target" role="slider" aria-valuetext="foo"></div>'
+    );
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
+  });
+
   it('passes aria-checkbox if element has checked property', () => {
     const params = checkSetup(
       '<input id="target" type="checkbox" role="switch">'

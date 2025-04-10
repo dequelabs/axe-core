@@ -51,7 +51,7 @@ describe('axe.utils.sendCommandToFrame', () => {
       frame.contentWindow.addEventListener('message', function (event) {
         try {
           topics.push(JSON.parse(event.data).topic);
-        } catch (_) {
+        } catch {
           /* ignore */
         }
       });

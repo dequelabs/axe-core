@@ -15,7 +15,7 @@
   ],
   "actIds": ["e086e5"],
   "metadata": {
-    "description": "Ensures every ARIA input field has an accessible name",
+    "description": "Ensure every ARIA input field has an accessible name",
     "help": "ARIA input fields must have an accessible name"
   },
   "all": [],

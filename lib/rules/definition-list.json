@@ -5,7 +5,7 @@
   "matches": "no-role-matches",
   "tags": ["cat.structure", "wcag2a", "wcag131", "EN-301-549", "EN-9.1.3.1"],
   "metadata": {
-    "description": "Ensures <dl> elements are structured correctly",
+    "description": "Ensure <dl> elements are structured correctly",
     "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements"
   },
   "all": [],

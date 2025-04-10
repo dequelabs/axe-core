@@ -1,10 +1,10 @@
 # axe-core
 
-[![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
+[![License](https://img.shields.io/npm/l/axe-core.svg?color=c41)](LICENSE)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
-[![Total npm downloads](https://img.shields.io/npm/dt/axe-core.svg)](https://www.npmjs.com/package/axe-core)
+[![NPM downloads](https://img.shields.io/npm/dw/axe-core.svg?color=080)![](https://img.shields.io/npm/dy/axe-core.svg?color=080&label=)](https://npm-stat.com/charts.html?package=axe-core&from=2017-01-01)
 [![Commits](https://img.shields.io/github/commit-activity/y/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/commits/develop)
-[![GitHub contributors](https://img.shields.io/github/contributors/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/dequelabs/axe-core.svg?color=080)](https://github.com/dequelabs/axe-core/graphs/contributors)
 [![Join our Slack chat](https://img.shields.io/badge/slack-chat-purple.svg?logo=slack)](https://accessibility.deque.com/axe-community)
 [![Package Quality](https://npm.packagequality.com/shield/axe-core.svg)](https://packagequality.com/#?package=axe-core)
 
@@ -14,7 +14,7 @@ Axe is an accessibility testing engine for websites and other HTML-based user in
 
 ## The Accessibility Rules
 
-Axe-core has different types of rules, for WCAG 2.0, 2.1, 2.2 on level A, AA and AAA as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored. The complete list of rules, grouped WCAG level and best practice, can found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
+Axe-core has different types of rules, for WCAG 2.0, 2.1, 2.2 on level A, AA and AAA as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored. The complete list of rules, grouped WCAG level and best practice, can be found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
 
 With axe-core, you can find **on average 57% of WCAG issues automatically**. Additionally, axe-core will return elements as "incomplete" where axe-core could not be certain, and manual review is needed.
 
@@ -65,7 +65,7 @@ Axe was built to reflect how web development actually works. It works with all m
 - It's actively supported by [Deque Systems](https://www.deque.com), a major accessibility vendor.
 - It integrates with your existing functional/acceptance automated tests.
 - It automatically determines which rules to run based on the evaluation context.
-- Axe supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth.
+- Axe supports in-memory fixtures, static fixtures, integration tests, and iframes of infinite depth.
 - Axe is highly configurable.
 
 ## Supported Browsers
@@ -103,9 +103,9 @@ or equivalently:
 
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build all localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of languages to the `--lang` flag, like `--lang=nl,ja`.
 
-To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. Alternatively, you could copy `./locales/_template.json`. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file in the `./locales` directory, with the default English text in it for you to translate. Alternatively, you could copy `./locales/_template.json`. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/doc/check-message-template.md).
 
-To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
+To update an existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
 Additionally, locale can be applied at runtime by passing a `locale` object to `axe.configure()`. The locale object must be of the same shape as existing locales in the `./locales` directory. For example:
 
@@ -149,6 +149,10 @@ Axe-core supports the following locales. Do note that since locales are contribu
 - Polish
 - Portuguese (Brazilian)
 - Spanish
+- Greek
+- Italian
+- Simplified Chinese
+- Traditional Chinese
 
 ## Updates & Security
 

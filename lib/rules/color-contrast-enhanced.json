@@ -7,7 +7,7 @@
   "tags": ["cat.color", "wcag2aaa", "wcag146", "ACT"],
   "actIds": ["09o5cg"],
   "metadata": {
-    "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA enhanced contrast ratio thresholds",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AAA enhanced contrast ratio thresholds",
     "help": "Elements must meet enhanced color contrast ratio thresholds"
   },
   "all": [],

@@ -59,3 +59,4 @@ Add your project/integration to this file and submit a pull request.
 1. [mitm-play](https://github.com/mitmplay/mitm-play)
 1. [Sitebulb](https://sitebulb.com/hints/accessibility/)
 1. [Webatool](https://github.com/balajihambeere/webatool)
+1. [A11y Audit Elixir](https://github.com/angelikatyborska/a11y-audit-elixir)

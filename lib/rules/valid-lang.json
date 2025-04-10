@@ -14,7 +14,7 @@
   ],
   "actIds": ["de46e4"],
   "metadata": {
-    "description": "Ensures lang attributes have valid values",
+    "description": "Ensure lang attributes have valid values",
     "help": "lang attribute must have a valid value"
   },
   "all": [],

@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "Element's default semantics were overriden with role=\"${data.role}\"",
+      "pass": "Element's default semantics were overridden with role=\"${data.role}\"",
       "fail": {
         "default": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
         "globalAria": "Element's role is not presentational because it has a global ARIA attribute",

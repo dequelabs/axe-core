@@ -15,7 +15,7 @@
     "EN-9.2.2.2"
   ],
   "metadata": {
-    "description": "Ensures <blink> elements are not used",
+    "description": "Ensure <blink> elements are not used",
     "help": "<blink> elements are deprecated and must not be used"
   },
   "all": [],

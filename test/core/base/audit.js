@@ -439,12 +439,12 @@ describe('Audit', () => {
     });
     it('should reset brand tagExlcude', () => {
       axe._load({});
-      assert.deepEqual(axe._audit.tagExclude, ['experimental']);
+      assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
       axe.configure({
         tagExclude: ['ninjas']
       });
       axe._audit.resetRulesAndChecks();
-      assert.deepEqual(axe._audit.tagExclude, ['experimental']);
+      assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
     });
 
     it('should reset noHtml', () => {

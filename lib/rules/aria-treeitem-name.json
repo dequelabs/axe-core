@@ -5,7 +5,7 @@
   "matches": "no-naming-method-matches",
   "tags": ["cat.aria", "best-practice"],
   "metadata": {
-    "description": "Ensures every ARIA treeitem node has an accessible name",
+    "description": "Ensure every ARIA treeitem node has an accessible name",
     "help": "ARIA treeitem nodes should have an accessible name"
   },
   "all": [],

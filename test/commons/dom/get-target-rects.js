@@ -1,6 +1,7 @@
 describe('get-target-rects', () => {
   const getTargetRects = axe.commons.dom.getTargetRects;
   const { queryFixture } = axe.testUtils;
+  const fixture = document.getElementById('fixture');
 
   it('returns the bounding rect when unobscured', () => {
     const vNode = queryFixture('<button id="target">x</button>');
@@ -74,10 +75,25 @@ describe('get-target-rects', () => {
       </button>
     `);
     const rects = getTargetRects(vNode);
-    console.log(JSON.stringify(rects));
     assert.deepEqual(rects, [
       new DOMRect(10, 5, 30, 7),
       new DOMRect(10, 5, 7, 40)
     ]);
+  });
+
+  it('ignores non-tabbable descendants of the target that are in shadow dom', () => {
+    fixture.innerHTML =
+      '<button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px"><span id="shadow"></span></button>';
+    const target = fixture.querySelector('#target');
+    const shadow = fixture
+      .querySelector('#shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<div style="position: absolute; left: 5px; top: 5px; width: 50px; height: 50px;"></div>';
+
+    axe.setup(fixture);
+    const vNode = axe.utils.getNodeFromTree(target);
+    const rects = getTargetRects(vNode);
+    assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
   });
 });

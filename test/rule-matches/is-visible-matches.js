@@ -1,12 +1,12 @@
 describe('is-visible-matches', function () {
   'use strict';
 
-  var isVisibleMatches =
+  let isVisibleMatches =
     axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap[
       'is-visible-matches'
     ];
-  var fixture = document.getElementById('fixture');
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  let fixture = document.getElementById('fixture');
+  let fixtureSetup = axe.testUtils.fixtureSetup;
 
   it('returns true for visible elements', function () {
     fixtureSetup('<p id="target">Hello world</p>');

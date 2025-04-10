@@ -1,5 +1,14 @@
 {
   "description": "aria-allowed-attr failing tests",
   "rule": "aria-allowed-attr",
-  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]]
+  "violations": [
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"],
+    ["#fail4"],
+    ["#fail5"],
+    ["#fail6"],
+    ["#fail7"],
+    ["#fail8"]
+  ]
 }

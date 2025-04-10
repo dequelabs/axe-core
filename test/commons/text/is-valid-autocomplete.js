@@ -206,4 +206,14 @@ describe('text.isValidAutocomplete', () => {
       );
     });
   });
+
+  describe('options.ignoredValues', () => {
+    it('returns undefined if value is invalid and ignored', () => {
+      assert.isUndefined(
+        isValidAutocomplete('bad-term', {
+          ignoredValues: ['bad-term']
+        })
+      );
+    });
+  });
 });

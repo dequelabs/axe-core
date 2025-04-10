@@ -14,7 +14,7 @@
   ],
   "actIds": ["bc659a", "bisz58"],
   "metadata": {
-    "description": "Ensures <meta http-equiv=\"refresh\"> is not used for delayed refresh",
+    "description": "Ensure <meta http-equiv=\"refresh\"> is not used for delayed refresh",
     "help": "Delayed refresh under 20 hours must not be used"
   },
   "all": [],

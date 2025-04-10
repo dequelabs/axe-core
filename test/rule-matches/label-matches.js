@@ -1,9 +1,9 @@
 describe('label-matches', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var queryFixture = axe.testUtils.queryFixture;
-  var rule;
+  const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
+  let rule;
 
   beforeEach(function () {
     fixture.innerHTML = '';
@@ -11,25 +11,25 @@ describe('label-matches', function () {
   });
 
   it('returns true for non-input elements', function () {
-    var vNode = queryFixture('<textarea id="target"></textarea>');
+    const vNode = queryFixture('<textarea id="target"></textarea>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
   it('returns true for input elements without type', function () {
-    var vNode = queryFixture('<input id="target" />');
+    const vNode = queryFixture('<input id="target" />');
 
     assert.isTrue(rule.matches(null, vNode));
   });
 
   it('returns false for input buttons', function () {
     ['button', 'submit', 'image', 'reset'].forEach(function (type) {
-      var vNode = queryFixture('<input id="target" type="' + type + '" />');
+      const vNode = queryFixture('<input id="target" type="' + type + '" />');
       assert.isFalse(rule.matches(null, vNode));
     });
   });
 
   it('returns false for input elements type=hidden', function () {
-    var vNode = queryFixture('<input id="target" type="hidden" />');
+    const vNode = queryFixture('<input id="target" type="hidden" />');
 
     assert.isFalse(rule.matches(null, vNode));
   });
@@ -37,7 +37,7 @@ describe('label-matches', function () {
   it('returns true for other input types', function () {
     ['text', 'password', 'url', 'range', 'date', 'checkbox', 'radio'].forEach(
       function (type) {
-        var vNode = queryFixture('<input id="target" type="' + type + '" />');
+        const vNode = queryFixture('<input id="target" type="' + type + '" />');
         assert.isTrue(rule.matches(null, vNode));
       }
     );

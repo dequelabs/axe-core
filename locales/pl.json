@@ -497,7 +497,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Wymagane dzieci ARIA istnieją.",
+      "pass": {
+        "default": "Wymagane dzieci ARIA istnieją."
+      },
       "fail": {
         "singular": "Wymagana rola dziecka ARIA nie istnieje: ${data.values}.",
         "plural": "Wymagane role dzieci ARIA nie istnieją: ${data.values",

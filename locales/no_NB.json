@@ -385,7 +385,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Påkrevde ARIA-under-elementer er til stede",
+      "pass": {
+        "default": "Påkrevde ARIA-under-elementer er til stede"
+      },
       "fail": {
         "singular": "Påkrevd ARIA-under-element sin rolle er ikke til stede: ${data.values}",
         "plural": "Påkrevde ARIA-under-elementer sine roller er ikke til stede: ${data.values}"

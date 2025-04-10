@@ -81,7 +81,7 @@ describe('aria.implicitRole', function () {
     assert.equal(implicitRole(node), 'contentinfo');
   });
 
-  it('should return null for footer with sectioning parent', function () {
+  it('should return null for footer with sectioning or main parent', function () {
     var nodes = ['article', 'aside', 'main', 'nav', 'section'];
     var roles = ['article', 'complementary', 'main', 'navigation', 'region'];
 
@@ -131,6 +131,100 @@ describe('aria.implicitRole', function () {
     assert.isNull(implicitRole(node));
   });
 
+  it('should return complementary for aside scoped to body', function () {
+    fixture.innerHTML = '<aside id="target"></aside>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'complementary');
+  });
+
+  it('should return complementary for aside scoped to main', function () {
+    fixture.innerHTML = '<main><aside id="target"></aside></main>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'complementary');
+  });
+
+  it('should return complementary for aside scoped to element with role=main', function () {
+    fixture.innerHTML =
+      '<article role="main"><aside id="target"></aside></article>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'complementary');
+  });
+
+  it('should return null for aside with sectioning parent', function () {
+    var nodes = ['article', 'aside', 'nav', 'section'];
+    var roles = ['article', 'complementary', 'navigation', 'region'];
+
+    for (var i = 0; i < nodes.length; i++) {
+      fixture.innerHTML =
+        '<' + nodes[i] + '><header id="target"></header></' + nodes[i] + '>';
+      var node = fixture.querySelector('#target');
+      flatTreeSetup(fixture);
+      assert.isNull(implicitRole(node), nodes[i] + ' not null');
+    }
+
+    for (var i = 0; i < roles.length; i++) {
+      fixture.innerHTML =
+        '<div role="' + roles[i] + '"><header id="target"></header></div>';
+      var node = fixture.querySelector('#target');
+      flatTreeSetup(fixture);
+      assert.isNull(implicitRole(node), '[' + roles[i] + '] not null');
+    }
+  });
+
+  it('should return complementary for aside with sectioning parent if aside has aria-label', function () {
+    var nodes = ['article', 'aside', 'nav', 'section'];
+    var roles = ['article', 'complementary', 'navigation', 'region'];
+
+    for (var i = 0; i < nodes.length; i++) {
+      fixture.innerHTML =
+        '<' +
+        nodes[i] +
+        '><aside id="target" aria-label="test label"></aside></' +
+        nodes[i] +
+        '>';
+      var node = fixture.querySelector('#target');
+      flatTreeSetup(fixture);
+      assert.equal(implicitRole(node), 'complementary');
+    }
+
+    for (var i = 0; i < roles.length; i++) {
+      fixture.innerHTML =
+        '<div role="' +
+        roles[i] +
+        '"><aside id="target" aria-label="test label"></aside></div>';
+      var node = fixture.querySelector('#target');
+      flatTreeSetup(fixture);
+      assert.equal(implicitRole(node), 'complementary');
+    }
+  });
+
+  it('should return null for sectioned aside with empty aria-label', function () {
+    fixture.innerHTML =
+      '<section><aside id="target" aria-label=" "></aside></section>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.isNull(implicitRole(node));
+  });
+
+  it('should return complementary for sectioned aside with title', function () {
+    fixture.innerHTML =
+      '<section><aside id="target" title="test title"></aside></section>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'complementary');
+  });
+
+  it('should return null for sectioned aside with empty title', function () {
+    fixture.innerHTML =
+      '<section><aside id="target" title=" "></aside></section>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.isNull(implicitRole(node));
+  });
+
   it('should return banner for "body header"', function () {
     fixture.innerHTML = '<header id="target"></header>';
     var node = fixture.querySelector('#target');
@@ -138,7 +232,7 @@ describe('aria.implicitRole', function () {
     assert.equal(implicitRole(node), 'banner');
   });
 
-  it('should return null for header with sectioning parent', function () {
+  it('should return null for header with sectioning or main parent', function () {
     var nodes = ['article', 'aside', 'main', 'nav', 'section'];
     var roles = ['article', 'complementary', 'main', 'navigation', 'region'];
 

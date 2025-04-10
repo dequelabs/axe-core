@@ -172,15 +172,6 @@ describe('has-widget-role', function () {
     );
   });
 
-  it('should return true for role=tabpanel', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'tabpanel');
-    fixture.appendChild(node);
-    assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
-    );
-  });
-
   it('should return true for role=textbox', function () {
     node = document.createElement('div');
     node.setAttribute('role', 'textbox');
@@ -473,6 +464,15 @@ describe('has-widget-role', function () {
   it('should return false for role=table', function () {
     node = document.createElement('div');
     node.setAttribute('role', 'table');
+    fixture.appendChild(node);
+    assert.isFalse(
+      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+    );
+  });
+
+  it('should return false for role=tabpanel', function () {
+    node = document.createElement('div');
+    node.setAttribute('role', 'tabpanel');
     fixture.appendChild(node);
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)

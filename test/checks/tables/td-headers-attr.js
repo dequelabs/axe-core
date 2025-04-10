@@ -91,6 +91,9 @@ describe('td-headers-attr', function () {
     );
     node = fixture.querySelector('table');
     assert.isFalse(check.call(checkContext, node));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'cell-header-not-in-table'
+    });
 
     fixtureSetup(
       '<table id="hi">' +
@@ -100,6 +103,59 @@ describe('td-headers-attr', function () {
     );
     node = fixture.querySelector('table');
     assert.isFalse(check.call(checkContext, node));
+  });
+
+  it('returns false if table cell referenced as header', function () {
+    fixtureSetup(`
+      <table>
+        <tr> <td id="hi">hello</td> </tr>
+        <tr> <td headers="hi">goodbye</td> </tr>
+      </table>
+    `);
+
+    var node = fixture.querySelector('table');
+    assert.isFalse(check.call(checkContext, node));
+    assert.deepEqual(checkContext._data, { messageKey: 'cell-header-not-th' });
+  });
+
+  it('returns true if table cell referenced as header with role rowheader or columnheader', function () {
+    var node;
+
+    fixtureSetup(`
+      <table>
+        <tr> <td role="rowheader" id="hi">hello</td> </tr>
+        <tr> <td headers="hi">goodbye</td> </tr>
+      </table>
+    `);
+
+    node = fixture.querySelector('table');
+    assert.isTrue(check.call(checkContext, node));
+
+    fixtureSetup(`
+      <table>
+        <tr> <td role="columnheader" id="hi">hello</td> </tr>
+        <tr> <td headers="hi">goodbye</td> </tr>
+      </table>
+    `);
+
+    node = fixture.querySelector('table');
+    assert.isTrue(check.call(checkContext, node));
+  });
+
+  it('relatedNodes contains each cell only once', function () {
+    fixtureSetup(`
+      <table>
+        <tr> <td id="hi1">hello</td> </tr>
+        <tr> <td id="hi2">hello</td> </tr>
+        <tr> <td id="bye" headers="hi1 hi2">goodbye</td> </tr>
+      </table>'
+    `);
+
+    var node = fixture.querySelector('table');
+    check.call(checkContext, node);
+    assert.deepEqual(checkContext._relatedNodes, [
+      fixture.querySelector('#bye')
+    ]);
   });
 
   it('returns false if the header refers to the same cell', function () {
@@ -112,6 +168,7 @@ describe('td-headers-attr', function () {
 
     var node = fixture.querySelector('table');
     assert.isFalse(check.call(checkContext, node));
+    assert.deepEqual(checkContext._data, { messageKey: 'header-refs-self' });
   });
 
   it('returns true if td[headers] is hidden', function () {

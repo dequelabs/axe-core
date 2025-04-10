@@ -18,8 +18,8 @@
   ],
   "actIds": ["23a2a8"],
   "metadata": {
-    "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-    "help": "Images must have alternate text"
+    "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+    "help": "Images must have alternative text"
   },
   "all": [],
   "any": [

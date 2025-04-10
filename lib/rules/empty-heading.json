@@ -6,7 +6,7 @@
   "tags": ["cat.name-role-value", "best-practice"],
   "actIds": ["ffd0e9"],
   "metadata": {
-    "description": "Ensures headings have discernible text",
+    "description": "Ensure headings have discernible text",
     "help": "Headings should not be empty"
   },
   "all": [],

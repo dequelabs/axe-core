@@ -9,7 +9,8 @@ describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG package.json main file does not exist
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
   const filePaths = globSync(
-    `${apgPath}/content/patterns/*/**/examples/*.html`
+    `${apgPath}/content/patterns/*/**/examples/*.html`,
+    { posix: true }
   );
   const testFiles = filePaths.map(
     fileName => fileName.split('/aria-practices/content/patterns/')[1]
@@ -39,9 +40,9 @@ describe('aria-practices', function () {
     ]
   };
 
-  // Not an actual content file
   const skippedPages = [
-    'toolbar/examples/help.html' // Embedded into another page
+    'toolbar/examples/help.html', // Embedded into another page
+    'tabs/examples/tabs-actions.html' // dequelabs/axe-core#4584
   ];
 
   it('finds examples', () => {

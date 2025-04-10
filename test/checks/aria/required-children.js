@@ -111,6 +111,53 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._data, ['listitem']);
   });
 
+  it('should pass when missing required children but aria-busy', () => {
+    const params = checkSetup(
+      '<div id="target" role="list" aria-busy="true"><span>Item 1</span></div>'
+    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, { messageKey: 'aria-busy' });
+  });
+
+  it('should treat aria-busy="false" as not aria-busy', () => {
+    const params = checkSetup(
+      '<div id="target" role="list" aria-busy="false"><span>Item 1</span></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should treat valueless aria-busy as not aria-busy', () => {
+    const params = checkSetup(
+      '<div id="target" role="list" aria-busy><span>Item 1</span></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should fail list with an unallowed child', () => {
+    const params = checkSetup(`
+      <div id="target" role="list"><div role="tabpanel"></div></div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=tabpanel]'
+    });
+  });
+
+  it('should fail list with an unallowed child, even if aria-busy="true"', () => {
+    const params = checkSetup(`
+      <div id="target" role="list" aria-busy="true"><div role="tabpanel"></div></div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=tabpanel]'
+    });
+  });
+
   it('should fail when list has intermediate child with role that is not a required role', () => {
     const params = checkSetup(
       '<div id="target" role="list"><div role="tabpanel"><div role="listitem">List item 1</div></div></div>'
@@ -376,6 +423,14 @@ describe('aria-required-children', () => {
           reviewEmpty: ['grid']
         };
         assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+
+      it('should return true if aria-busy preempts a reviewEmpty case', () => {
+        const params = checkSetup(
+          '<div role="grid" id="target" aria-busy="true"></div>',
+          { reviewEmpty: ['grid'] }
+        );
+        assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
       });
 
       it('should return undefined when the element has empty children', () => {

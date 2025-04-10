@@ -111,4 +111,33 @@ describe('invalidrole', function () {
     );
     assert.deepEqual(checkContext._data, ['foo', 'bar']);
   });
+
+  it('should return true if applied to an uppercase nonsensical role', function () {
+    var virtualNode = queryFixture(
+      '<div id="target" role="FOO">Contents</div>'
+    );
+    assert.isTrue(
+      checks.invalidrole.evaluate.call(
+        checkContext,
+        virtualNode.actualNode,
+        null,
+        virtualNode
+      )
+    );
+    assert.deepEqual(checkContext._data, ['FOO']);
+  });
+
+  it('should return false if applied to an uppercase valid role', function () {
+    var virtualNode = queryFixture(
+      '<div id="target" role="BUTTON">Contents</div>'
+    );
+    assert.isFalse(
+      checks.invalidrole.evaluate.call(
+        checkContext,
+        virtualNode.actualNode,
+        null,
+        virtualNode
+      )
+    );
+  });
 });

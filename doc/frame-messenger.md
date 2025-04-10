@@ -33,7 +33,7 @@ axe.frameMessenger({
 
 ## axe.frameMessenger({ open })
 
-`open` is a function that should setup the communication channel with iframes. It is passed a `topicHandler` function, which must be called when a message is received from another frame.
+`open` is a function that should set up the communication channel with iframes. It is passed a `topicHandler` function, which must be called when a message is received from another frame.
 
 The `topicHandler` function takes two arguments: the `data` object and a callback function that is called when the subscribed listener completes. The `data` object is exclusively passed data that can be serialized with `JSON.stringify()`, which depending on the system may need to be used.
 
@@ -45,7 +45,7 @@ The `open` function can `return` an optional `close` function. Axe-core will onl
 
 Currently, axe-core will only require `replyHandler` to be called once, so promises can also be used here. This may change in the future, so it is preferable to make it possible for `replyHandler` to be called multiple times. Some axe-core [plugins](plugins.md) may rely on this feature.
 
-A second frameMessenger feature available to plugins, but not used in axe-core by default is to reply to a reply. This works by passing `replyHandler` a `responder` callback as a second argument. This requires a different setup, in which callbacks are stored based on their `channelId` property.
+A second frameMessenger feature available to plugins, but not used in axe-core by default is to reply to a reply. This works by passing `replyHandler` a `responder` callback as a second argument. This requires a different setup in which callbacks are stored based on their `channelId` property.
 
 ```js
 // store handlers based on channelId
@@ -100,9 +100,9 @@ function createResponder(frameWin, channelId) {
 
 ## Error handling & Timeouts
 
-If for some reason the frameMessenger fails to open, post, or close you should not throw an error. Axe-core will handle missing results by reporting on them in the `frame-tested` rule. It should not be possible for the `topicHandler` and `replyHandler` callbacks to throw an error. If this happens, please file an issue.
+If for some reason the frameMessenger fails to open, post, or close you should not throw an error. Axe-core will handle missing results by reporting them in the `frame-tested` rule. It should not be possible for the `topicHandler` and `replyHandler` callbacks to throw an error. If this happens, please file an issue.
 
-Axe-core has a timeout mechanism built in, which pings frames to see if they respond before instructing them to run. There is no retry behavior in axe-core, which assumes that whatever channel is used is stable. If this isn't the case, this will need to be built into frameMessenger.
+Axe-core has a built-in timeout mechanism, which pings frames to see if they respond before instructing them to run. There is no retry behavior in axe-core, which assumes that whatever channel is used is stable. If this isn't the case, this will need to be built into frameMessenger.
 
 The `message` passed to responder may be an `Error`. If axe-core passes an `Error`, this should be propagated "as is". If this is not possible because the message needs to be serialized, a new `Error` object must be constructed as part of deserialization.
 
@@ -113,7 +113,7 @@ When axe-core tests frames, it first sends a ping to that frame, to check that t
 In situations where communication between frames can be slow, it may be necessary to increase the ping timeout. This can be done with the `pingWaitTime` option. By default, this is 500ms. This can be configured in the following way:
 
 ```js
-const results = await axe.run(context, { pingWaitTime: 1000 }));
+const results = await axe.run(context, { pingWaitTime: 1000 });
 ```
 
-It is possible to skip this ping altogether by setting `pingWaitTime` to `0`. This can slightly speed up performance, but should only be used when long wait times for unresponsive frames can be avoided. Axe-core handles timeout errors the same way it handles any other frame communication errors. Therefore if a custom frame messenger has a timeout, it can inform axe by calling `replyHandler` with an `Error` object.
+It is possible to skip this ping altogether by setting `pingWaitTime` to `0`. This can slightly speed up performance, but should only be used when long wait times for unresponsive frames are avoided. Axe-core handles timeout errors the same way it handles any other frame communication errors. Therefore if a custom frame messenger has a timeout, it can inform axe by calling `replyHandler` with an `Error` object.

@@ -121,7 +121,47 @@ describe('color-contrast blending test', () => {
     'rgb(255, 0, 77)',
     'rgb(165, 176, 81)',
     'rgb(150, 157, 119)',
-    'rgb(198, 198, 198)'
+    'rgb(198, 198, 198)',
+    // hue
+    'rgb(212, 212, 196)',
+    'rgb(255, 255, 255)',
+    'rgb(255, 255, 255)',
+    'rgb(125, 32, 54)',
+    'rgb(179, 39, 0)',
+    'rgb(195, 16, 77)',
+    'rgb(147, 180, 84)',
+    'rgb(150, 156, 117)',
+    'rgb(221, 221, 221)',
+    // saturation
+    'rgb(168, 239, 168)',
+    'rgb(255, 255, 255)',
+    'rgb(255, 255, 255)',
+    'rgb(169, 5, 76)',
+    'rgb(228, 11, 11)',
+    'rgb(255, 0, 0)',
+    'rgb(165, 171, 81)',
+    'rgb(150, 157, 112)',
+    'rgb(221, 221, 221)',
+    // color
+    'rgb(223, 207, 191)',
+    'rgb(255, 255, 255)',
+    'rgb(255, 255, 255)',
+    'rgb(125, 32, 54)',
+    'rgb(179, 39, 0)',
+    'rgb(195, 16, 77)',
+    'rgb(144, 182, 81)',
+    'rgb(150, 156, 120)',
+    'rgb(221, 221, 221)',
+    // luminosity
+    'rgb(124, 156, 124)',
+    'rgb(166, 166, 166)',
+    'rgb(210, 210, 210)',
+    'rgb(183, 4, 81)',
+    'rgb(254, 0, 0)',
+    'rgb(207, 0, 0)',
+    'rgb(171, 177, 87)',
+    'rgb(148, 154, 112)',
+    'rgb(221, 221, 221)'
   ];
 
   const fixture = document.querySelector('#fixture');
@@ -137,7 +177,11 @@ describe('color-contrast blending test', () => {
     'hard-light',
     'soft-light',
     'difference',
-    'exclusion'
+    'exclusion',
+    'hue',
+    'saturation',
+    'color',
+    'luminosity'
   ].forEach(blendMode => {
     const nodes = testGroup.cloneNode(true);
     const group = testGroup.cloneNode();

@@ -465,7 +465,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "ילדי ARIA הדרושים נמצאים",
+      "pass": {
+        "default": "ילדי ARIA הדרושים נמצאים"
+      },
       "fail": {
         "singular": "תפקיד ילד ARIA הדרוש אינו נמצא: ${data.values}",
         "plural": "תפקיד ילדי ARIA הדרושים אינם נמצאים: ${data.values}"

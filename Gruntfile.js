@@ -22,9 +22,13 @@ module.exports = function (grunt) {
     });
   } else if (grunt.option('all-lang')) {
     var localeFiles = require('fs').readdirSync('./locales');
-    langs = localeFiles.map(function (file) {
-      return '.' + file.replace('.json', '');
-    });
+    langs = localeFiles
+      .filter(function (file) {
+        return !file.startsWith('_') && file.endsWith('.json');
+      })
+      .map(function (file) {
+        return '.' + file.replace('.json', '');
+      });
     langs.unshift(''); // Add default
   } else {
     langs = [''];

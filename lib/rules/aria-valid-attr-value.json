@@ -5,7 +5,7 @@
   "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
   "actIds": ["6a7281"],
   "metadata": {
-    "description": "Ensures all ARIA attributes have valid values",
+    "description": "Ensure all ARIA attributes have valid values",
     "help": "ARIA attributes must conform to valid values"
   },
   "all": ["aria-valid-attr-value", "aria-errormessage", "aria-level"],

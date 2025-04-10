@@ -297,4 +297,88 @@ describe('color.flattenColors ', function () {
     assert.equal(flattenTwo.blue, 180);
     assert.equal(flattenTwo.alpha, 1);
   });
+
+  it('should flatten colors correctly using blend mode: hue', function () {
+    var flatten = axe.commons.color.flattenColors(colourTwo, colourOne, 'hue');
+    assert.equal(flatten.red, 162);
+    assert.equal(flatten.green, 50);
+    assert.equal(flatten.blue, 17);
+    assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'hue'
+    );
+    assert.equal(flattenTwo.red, 188);
+    assert.equal(flattenTwo.green, 177);
+    assert.equal(flattenTwo.blue, 162);
+    assert.equal(flattenTwo.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: saturation', function () {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'saturation'
+    );
+    assert.equal(flatten.red, 185);
+    assert.equal(flatten.green, 35);
+    assert.equal(flatten.blue, 35);
+    assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'saturation'
+    );
+    assert.equal(flattenTwo.red, 233);
+    assert.equal(flattenTwo.green, 151);
+    assert.equal(flattenTwo.blue, 181);
+    assert.equal(flattenTwo.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: color', function () {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'color'
+    );
+    assert.equal(flatten.red, 180);
+    assert.equal(flatten.green, 38);
+    assert.equal(flatten.blue, 34);
+    assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'color'
+    );
+    assert.equal(flattenTwo.red, 161);
+    assert.equal(flattenTwo.green, 204);
+    assert.equal(flattenTwo.blue, 90);
+    assert.equal(flattenTwo.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: luminosity', function () {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'luminosity'
+    );
+    assert.equal(flatten.red, 226);
+    assert.equal(flatten.green, 33);
+    assert.equal(flatten.blue, 33);
+    assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'luminosity'
+    );
+    assert.equal(flattenTwo.red, 214);
+    assert.equal(flattenTwo.green, 165);
+    assert.equal(flattenTwo.blue, 183);
+    assert.equal(flattenTwo.alpha, 1);
+  });
 });

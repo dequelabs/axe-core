@@ -5,7 +5,7 @@
   "matches": "landmark-has-body-context-matches",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {
-    "description": "Ensures the contentinfo landmark is at top level",
+    "description": "Ensure the contentinfo landmark is at top level",
     "help": "Contentinfo landmark should not be contained in another landmark"
   },
   "all": [],

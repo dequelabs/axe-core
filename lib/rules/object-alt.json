@@ -14,8 +14,8 @@
   ],
   "actIds": ["8fc3b6"],
   "metadata": {
-    "description": "Ensures <object> elements have alternate text",
-    "help": "<object> elements must have alternate text"
+    "description": "Ensure <object> elements have alternative text",
+    "help": "<object> elements must have alternative text"
   },
   "all": [],
   "any": [

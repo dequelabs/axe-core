@@ -12,7 +12,7 @@
   ],
   "actIds": ["b33eff"],
   "metadata": {
-    "description": "Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations",
+    "description": "Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations",
     "help": "CSS Media queries must not lock display orientation"
   },
   "all": ["css-orientation-lock"],

@@ -12,7 +12,7 @@
   ],
   "actIds": ["2ee8b8"],
   "metadata": {
-    "description": "Ensures that elements labelled through their content must have their visible text as part of their accessible name",
+    "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
     "help": "Elements must have their visible text as part of their accessible name"
   },
   "all": [],

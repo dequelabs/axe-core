@@ -14,7 +14,7 @@
   ],
   "actIds": ["akn7bn"],
   "metadata": {
-    "description": "Ensures <frame> and <iframe> elements with focusable content do not have tabindex=-1",
+    "description": "Ensure <frame> and <iframe> elements with focusable content do not have tabindex=-1",
     "help": "Frames with focusable content must not have tabindex=-1"
   },
   "all": [],

@@ -91,14 +91,19 @@ describe('nodeSerializer', () => {
     });
 
     it('skips computing props turned off with runOptions', () => {
-      const dqElm = new DqElement(fixture);
-
       const throws = () => {
         throw new Error('Should not be called');
       };
-      Object.defineProperty(dqElm, 'selector', { get: throws });
-      Object.defineProperty(dqElm, 'ancestry', { get: throws });
-      Object.defineProperty(dqElm, 'xpath', { get: throws });
+
+      const dqElm = new DqElement(
+        fixture,
+        {},
+        {
+          selector: { get: throws },
+          ancestry: { get: throws },
+          xpath: { get: throws }
+        }
+      );
 
       assert.doesNotThrow(() => {
         nodeSerializer.dqElmToSpec(dqElm, {

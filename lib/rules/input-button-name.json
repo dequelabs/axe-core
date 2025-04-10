@@ -17,7 +17,7 @@
   ],
   "actIds": ["97a4e1"],
   "metadata": {
-    "description": "Ensures input buttons have discernible text",
+    "description": "Ensure input buttons have discernible text",
     "help": "Input buttons must have discernible text"
   },
   "all": [],
@@ -27,6 +27,8 @@
     "aria-label",
     "aria-labelledby",
     "non-empty-title",
+    "implicit-label",
+    "explicit-label",
     "presentational-role"
   ],
   "none": []

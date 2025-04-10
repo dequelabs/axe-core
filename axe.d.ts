@@ -70,16 +70,19 @@ declare namespace axe {
     | LabelledShadowDomSelector
     | LabelledFramesSelector;
   type SelectorList = Array<Selector | FramesSelector> | NodeList;
+  type ContextProp = Selector | SelectorList;
   type ContextObject =
     | {
-        include: Selector | SelectorList;
-        exclude?: Selector | SelectorList;
+        include: ContextProp;
+        exclude?: ContextProp;
       }
     | {
-        exclude: Selector | SelectorList;
-        include?: Selector | SelectorList;
+        exclude: ContextProp;
+        include?: ContextProp;
       };
-  type ElementContext = Selector | SelectorList | ContextObject;
+  type ContextSpec = ContextProp | ContextObject;
+  /** Synonym to ContextSpec */
+  type ElementContext = ContextSpec;
 
   type SerialSelector =
     | BaseSelector
@@ -140,9 +143,13 @@ declare namespace axe {
     iframes?: boolean;
     elementRef?: boolean;
     frameWaitTime?: number;
-    preload?: boolean;
+    preload?: boolean | PreloadOptions;
     performanceTimer?: boolean;
     pingWaitTime?: number;
+  }
+  interface PreloadOptions {
+    assets: string[];
+    timeout?: number;
   }
   interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;
@@ -335,6 +342,9 @@ declare namespace axe {
   interface DqElement extends SerialDqElement {
     element: Element;
     toJSON(): SerialDqElement;
+  }
+  interface DqElementConstructor {
+    new (elm: Element, options?: { absolutePaths?: boolean }): DqElement;
     mergeSpecs(
       childSpec: SerialDqElement,
       parentSpec: SerialDqElement
@@ -398,6 +408,24 @@ declare namespace axe {
     boundingClientRect: DOMRect;
   }
 
+  interface CustomNodeSerializer<T = SerialDqElement> {
+    toSpec: (dqElm: DqElement) => T;
+    mergeSpecs: (nodeSpec: T, parentFrameSpec: T) => T;
+  }
+
+  interface NodeSerializer {
+    update: <T>(serializer: CustomNodeSerializer<T>) => void;
+    toSpec: (node: Element | VirtualNode) => SerialDqElement;
+    dqElmToSpec: (
+      dqElm: DqElement | SerialDqElement,
+      options?: RunOptions
+    ) => SerialDqElement;
+    mergeSpecs: (
+      nodeSpec: SerialDqElement,
+      parentFrameSpec: SerialDqElement
+    ) => SerialDqElement;
+  }
+
   interface Utils {
     getFrameContexts: (
       context?: ElementContext,
@@ -406,15 +434,23 @@ declare namespace axe {
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
     shadowSelectAll: (selector: CrossTreeSelector) => Element[];
     getStandards(): Required<Standards>;
-    DqElement: new (
-      elm: Element,
-      options?: { absolutePaths?: boolean }
-    ) => DqElement;
+    isContextSpec: (context: unknown) => context is ContextSpec;
+    isContextObject: (context: unknown) => context is ContextObject;
+    isContextProp: (context: unknown) => context is ContextProp;
+    isLabelledFramesSelector: (
+      selector: unknown
+    ) => selector is LabelledFramesSelector;
+    isLabelledShadowDomSelector: (
+      selector: unknown
+    ) => selector is LabelledShadowDomSelector;
+
+    DqElement: DqElementConstructor;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
       buf?: Uint8Array | Array<number>,
       offset?: number
     ) => string | Uint8Array | Array<number>;
+    nodeSerializer: NodeSerializer;
   }
 
   interface Aria {

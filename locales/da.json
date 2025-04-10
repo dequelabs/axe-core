@@ -385,7 +385,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "Krævet ARIA-under-elementer er til stede",
+      "pass": {
+        "default": "Krævet ARIA-under-elementer er til stede"
+      },
       "fail": {
         "singular": "Krævet ARIA-under-elementers rolle er ikke til stede: ${data.values}",
         "plural": "Krævet ARIA-under-elements rolle er ikke til stede: ${data.values}"

@@ -18,7 +18,7 @@
   ],
   "actIds": ["cf77f2", "047fe0", "b40fd1", "3e12e1", "ye5d6e"],
   "metadata": {
-    "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+    "description": "Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
     "help": "Page must have means to bypass repeated blocks"
   },
   "all": [],

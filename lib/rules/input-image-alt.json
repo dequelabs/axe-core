@@ -19,10 +19,17 @@
   ],
   "actIds": ["59796f"],
   "metadata": {
-    "description": "Ensures <input type=\"image\"> elements have alternate text",
-    "help": "Image buttons must have alternate text"
+    "description": "Ensure <input type=\"image\"> elements have alternative text",
+    "help": "Image buttons must have alternative text"
   },
   "all": [],
-  "any": ["non-empty-alt", "aria-label", "aria-labelledby", "non-empty-title"],
+  "any": [
+    "non-empty-alt",
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title",
+    "implicit-label",
+    "explicit-label"
+  ],
   "none": []
 }

@@ -5,7 +5,7 @@
   "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
   "actIds": ["5c01ea"],
   "metadata": {
-    "description": "Ensures an element's role supports its ARIA attributes",
+    "description": "Ensure an element's role supports its ARIA attributes",
     "help": "Elements must only use supported ARIA attributes"
   },
   "all": ["aria-allowed-attr"],

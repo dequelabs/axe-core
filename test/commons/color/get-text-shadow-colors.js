@@ -202,14 +202,13 @@ describe('axe.commons.color.getTextShadowColors', function () {
         ">Hello world</span>
       `;
       const shadowColors = getTextShadowColors(fixture.firstElementChild, opt);
-      assert.deepEqual(shadowColors, [
-        {
-          red: 255,
-          green: 0,
-          blue: 0,
-          alpha: 1
-        }
-      ]);
+      assert.lengthOf(shadowColors, 1);
+      assert.deepEqual(shadowColors[0].toJSON(), {
+        red: 255,
+        green: 0,
+        blue: 0,
+        alpha: 1
+      });
     });
 
     it('only combines shadows thinner than minRatio', () => {

@@ -4,7 +4,7 @@
   "selector": "th:not([role]), [role=\"rowheader\"], [role=\"columnheader\"]",
   "tags": ["cat.name-role-value", "best-practice"],
   "metadata": {
-    "description": "Ensures table headers have discernible text",
+    "description": "Ensure table headers have discernible text",
     "help": "Table header text should not be empty"
   },
   "all": [],

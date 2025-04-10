@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { execSync } = require('child_process');
 const conventionalCommitsParser = require('conventional-commits-parser');
 const chalk = require('chalk');
@@ -129,7 +131,7 @@ commitsToCherryPick.forEach(({ hash, type, scope, subject }) => {
 
   try {
     execSync(`git cherry-pick ${hash} -X theirs`);
-  } catch (e) {
+  } catch {
     console.error(
       chalk.red.bold('\nAborting cherry-pick and reseting to master')
     );

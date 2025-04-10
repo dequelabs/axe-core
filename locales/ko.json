@@ -166,7 +166,7 @@
       "help": "form 필드는 반드시 여러 개의 레이블 엘리먼트를 가지지 않아야 합니다."
     },
     "frame-focusable-content": {
-      "description": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 <frame>과 <iframe> 엘리먼트에 tabindex=-1이 없게 하세요",
+      "description": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 <frame>과 <iframe> 엘리먼트에 tabindex=-1이 없게 하세요.",
       "help": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 프레임에는 반드시 tabindex=-1 이 없어야 합니다."
     },
     "frame-tested": {
@@ -262,7 +262,7 @@
       "help": "문서는 하나를 초과하는 main 랜드마크를 가지지 않아야 합니다."
     },
     "landmark-one-main": {
-      "description": "문서가 main 랜드마크를 가지고 있는지 확인하세요,",
+      "description": "문서가 main 랜드마크를 가지고 있는지 확인하세요.",
       "help": "문서는 하나의 main 랜드마크를 가져야 합니다."
     },
     "landmark-unique": {
@@ -461,7 +461,9 @@
       }
     },
     "aria-required-children": {
-      "pass": "필수 ARIA 하위 항목들이 존재합니다.",
+      "pass": {
+        "default": "필수 ARIA 하위 항목들이 존재합니다."
+      },
       "fail": {
         "singular": "필수 ARIA 하위 역할(role)이 없습니다: ${data.values}",
         "plural": "필수 ARIA 하위 역할(role)들이 없습니다: ${data.values}"
@@ -608,7 +610,7 @@
       }
     },
     "autocomplete-appropriate": {
-      "pass": "autocomplete 값이 적절한 엘리먼트에 있습니다",
+      "pass": "autocomplete 값이 적절한 엘리먼트에 있습니다.",
       "fail": "autocomplete 값은 이 유형의 입력에는 적절하지 않습니다."
     },
     "autocomplete-valid": {
@@ -633,7 +635,7 @@
     },
     "focusable-modal-open": {
       "pass": "modal이 열려 있는 동안 초점을 얻을 수 있는(focusable) 엘리먼트가 없습니다.",
-      "incomplete": "현재 상태에서 초점을 얻을 수 있는(focusable) 엘리먼트가 키보드로 초점을 얻을 수(tabbable) 없는지 확인하세요"
+      "incomplete": "현재 상태에서 초점을 얻을 수 있는(focusable) 엘리먼트가 키보드로 초점을 얻을 수(tabbable) 없는지 확인하세요."
     },
     "focusable-no-name": {
       "pass": "엘리먼트가 탭 순서(tab order)에 없거나 접근 가능한 텍스트를 가지고 있습니다.",

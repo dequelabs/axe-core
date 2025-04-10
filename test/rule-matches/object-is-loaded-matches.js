@@ -3,7 +3,7 @@ describe('object-is-loaded-matches', () => {
   const data = `data:text/html,Object%20content`;
 
   // Give enough time for the browser to load / decide it cannot load objects
-  async function delayedQueryFixture(html, delay = 50) {
+  async function delayedQueryFixture(html, delay = 250) {
     fixture.innerHTML = html;
     await new Promise(r => setTimeout(r, delay));
     const tree = axe.setup();

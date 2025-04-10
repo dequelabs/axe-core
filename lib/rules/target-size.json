@@ -6,7 +6,7 @@
   "matches": "widget-not-inline-matches",
   "tags": ["cat.sensory-and-visual-cues", "wcag22aa", "wcag258"],
   "metadata": {
-    "description": "Ensure touch target have sufficient size and space",
+    "description": "Ensure touch targets have sufficient size and space",
     "help": "All touch targets must be 24px large, or leave sufficient space"
   },
   "all": [],

@@ -8,7 +8,7 @@
   "enabled": false,
   "actIds": ["3ea0c8"],
   "metadata": {
-    "description": "Ensures every id attribute value of active elements is unique",
+    "description": "Ensure every id attribute value of active elements is unique",
     "help": "IDs of active elements must be unique"
   },
   "all": [],
