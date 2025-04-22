@@ -1,572 +1,573 @@
-describe('has-widget-role', function () {
-  'use strict';
+describe('has-widget-role', () => {
+  const queryFixture = axe.testUtils.queryFixture;
+  const checkContext = axe.testUtils.MockCheckContext();
 
-  var fixture = document.getElementById('fixture');
-  var node;
-  var checkContext = axe.testUtils.MockCheckContext();
-
-  afterEach(function () {
-    node.innerHTML = '';
+  afterEach(() => {
     checkContext._data = null;
   });
 
-  it('should return false for elements with no role', function () {
-    node = document.createElement('div');
-    fixture.appendChild(node);
+  it('should return false for elements with no role', () => {
+    const vNode = queryFixture('<div id="target"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for elements with nonsensical roles', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'buttonbuttonbutton');
-    fixture.appendChild(node);
+  it('should return false for elements with nonsensical roles', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="buttonbuttonbutton"></div>'
+    );
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
   // Widget roles
-  it('should return true for role=button', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'button');
-    fixture.appendChild(node);
+  it('should return true for role=button', () => {
+    const vNode = queryFixture('<div id="target" role="button"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=checkbox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'checkbox');
-    fixture.appendChild(node);
+  it('should return true for role=checkbox', () => {
+    const vNode = queryFixture('<div id="target" role="checkbox"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=gridcell', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'gridcell');
-    fixture.appendChild(node);
+  it('should return true for role=gridcell', () => {
+    const vNode = queryFixture('<div id="target" role="gridcell"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=link', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'link');
-    fixture.appendChild(node);
+  it('should return true for role=link', () => {
+    const vNode = queryFixture('<div id="target" role="link"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=menuitem', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'menuitem');
-    fixture.appendChild(node);
+  it('should return true for role=menuitem', () => {
+    const vNode = queryFixture('<div id="target" role="menuitem"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=menuitemcheckbox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'menuitemcheckbox');
-    fixture.appendChild(node);
+  it('should return true for role=menuitemcheckbox', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="menuitemcheckbox"></div>'
+    );
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=menuitemradio', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'menuitemradio');
-    fixture.appendChild(node);
+  it('should return true for role=menuitemradio', () => {
+    const vNode = queryFixture('<div id="target" role="menuitemradio"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=option', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'option');
-    fixture.appendChild(node);
+  it('should return true for role=option', () => {
+    const vNode = queryFixture('<div id="target" role="option"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=progressbar', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'progressbar');
-    fixture.appendChild(node);
+  it('should return true for role=progressbar', () => {
+    const vNode = queryFixture('<div id="target" role="progressbar"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=radio', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'radio');
-    fixture.appendChild(node);
+  it('should return true for role=radio', () => {
+    const vNode = queryFixture('<div id="target" role="radio"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=scrollbar', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'scrollbar');
-    fixture.appendChild(node);
+  it('should return true for role=scrollbar', () => {
+    const vNode = queryFixture('<div id="target" role="scrollbar"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=searchbox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'searchbox');
-    fixture.appendChild(node);
+  it('should return true for role=searchbox', () => {
+    const vNode = queryFixture('<div id="target" role="searchbox"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=slider', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'slider');
-    fixture.appendChild(node);
+  it('should return true for role=slider', () => {
+    const vNode = queryFixture('<div id="target" role="slider"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=spinbutton', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'spinbutton');
-    fixture.appendChild(node);
+  it('should return true for role=spinbutton', () => {
+    const vNode = queryFixture('<div id="target" role="spinbutton"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=switch', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'switch');
-    fixture.appendChild(node);
+  it('should return true for role=switch', () => {
+    const vNode = queryFixture('<div id="target" role="switch"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=tab', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'tab');
-    fixture.appendChild(node);
+  it('should return true for role=tab', () => {
+    const vNode = queryFixture('<div id="target" role="tab"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=textbox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'textbox');
-    fixture.appendChild(node);
+  it('should return true for role=textbox', () => {
+    const vNode = queryFixture('<div id="target" role="textbox"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=treeitem', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'treeitem');
-    fixture.appendChild(node);
+  it('should return true for role=treeitem', () => {
+    const vNode = queryFixture('<div id="target" role="treeitem"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
   // Composite widget roles
-  it('should return true for role=combobox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'combobox');
-    fixture.appendChild(node);
+  it('should return true for role=combobox', () => {
+    const vNode = queryFixture('<div id="target" role="combobox"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=grid', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'grid');
-    fixture.appendChild(node);
+  it('should return true for role=grid', () => {
+    const vNode = queryFixture('<div id="target" role="grid"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=listbox', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'listbox');
-    fixture.appendChild(node);
+  it('should return true for role=listbox', () => {
+    const vNode = queryFixture('<div id="target" role="listbox"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=menu', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'menu');
-    fixture.appendChild(node);
+  it('should return true for role=menu', () => {
+    const vNode = queryFixture('<div id="target" role="menu"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=menubar', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'menubar');
-    fixture.appendChild(node);
+  it('should return true for role=menubar', () => {
+    const vNode = queryFixture('<div id="target" role="menubar"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=radiogroup', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'radiogroup');
-    fixture.appendChild(node);
+  it('should return true for role=radiogroup', () => {
+    const vNode = queryFixture('<div id="target" role="radiogroup"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=tablist', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'tablist');
-    fixture.appendChild(node);
+  it('should return true for role=tablist', () => {
+    const vNode = queryFixture('<div id="target" role="tablist"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=tree', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'tree');
-    fixture.appendChild(node);
+  it('should return true for role=tree', () => {
+    const vNode = queryFixture('<div id="target" role="tree"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return true for role=treegrid', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'treegrid');
-    fixture.appendChild(node);
+  it('should return true for role=treegrid', () => {
+    const vNode = queryFixture('<div id="target" role="treegrid"></div>');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=application', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'application');
-    fixture.appendChild(node);
+  it('should return false for role=application', () => {
+    const vNode = queryFixture('<div id="target" role="application"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=article', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'article');
-    fixture.appendChild(node);
+  it('should return false for role=article', () => {
+    const vNode = queryFixture('<div id="target" role="article"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=cell', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'cell');
-    fixture.appendChild(node);
+  it('should return false for role=cell', () => {
+    const vNode = queryFixture('<div id="target" role="cell"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=columnheader', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'columnheader');
-    fixture.appendChild(node);
+  it('should return false for role=columnheader', () => {
+    const vNode = queryFixture('<div id="target" role="columnheader"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=definition', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'definition');
-    fixture.appendChild(node);
+  it('should return false for role=definition', () => {
+    const vNode = queryFixture('<div id="target" role="definition"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=directory', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'directory');
-    fixture.appendChild(node);
+  it('should return false for role=directory', () => {
+    const vNode = queryFixture('<div id="target" role="directory"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=document', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'document');
-    fixture.appendChild(node);
+  it('should return false for role=document', () => {
+    const vNode = queryFixture('<div id="target" role="document"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=feed', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'feed');
-    fixture.appendChild(node);
+  it('should return false for role=feed', () => {
+    const vNode = queryFixture('<div id="target" role="feed"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=figure', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'figure');
-    fixture.appendChild(node);
+  it('should return false for role=figure', () => {
+    const vNode = queryFixture('<div id="target" role="figure"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=group', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'group');
-    fixture.appendChild(node);
+  it('should return false for role=group', () => {
+    const vNode = queryFixture('<div id="target" role="group"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=heading', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'heading');
-    fixture.appendChild(node);
+  it('should return false for role=heading', () => {
+    const vNode = queryFixture('<div id="target" role="heading"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=img', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'img');
-    fixture.appendChild(node);
+  it('should return false for role=img', () => {
+    const vNode = queryFixture('<div id="target" role="img"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=list', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'list');
-    fixture.appendChild(node);
+  it('should return false for role=list', () => {
+    const vNode = queryFixture('<div id="target" role="list"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=listitem', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'listitem');
-    fixture.appendChild(node);
+  it('should return false for role=listitem', () => {
+    const vNode = queryFixture('<div id="target" role="listitem"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=math', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'math');
-    fixture.appendChild(node);
+  it('should return false for role=math', () => {
+    const vNode = queryFixture('<div id="target" role="math"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=none', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'none');
-    fixture.appendChild(node);
+  it('should return false for role=none', () => {
+    const vNode = queryFixture('<div id="target" role="none"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=note', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'note');
-    fixture.appendChild(node);
+  it('should return false for role=note', () => {
+    const vNode = queryFixture('<div id="target" role="note"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=presentation', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'presentation');
-    fixture.appendChild(node);
+  it('should return false for role=presentation', () => {
+    const vNode = queryFixture('<div id="target" role="presentation"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=row', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'row');
-    fixture.appendChild(node);
+  it('should return false for role=row', () => {
+    const vNode = queryFixture('<div id="target" role="row"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=rowgroup', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'rowgroup');
-    fixture.appendChild(node);
+  it('should return false for role=rowgroup', () => {
+    const vNode = queryFixture('<div id="target" role="rowgroup"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=rowheader', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'rowheader');
-    fixture.appendChild(node);
+  it('should return false for role=rowheader', () => {
+    const vNode = queryFixture('<div id="target" role="rowheader"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=table', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'table');
-    fixture.appendChild(node);
+  it('should return false for role=table', () => {
+    const vNode = queryFixture('<div id="target" role="table"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=tabpanel', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'tabpanel');
-    fixture.appendChild(node);
+  it('should return false for role=tabpanel', () => {
+    const vNode = queryFixture('<div id="target" role="tabpanel"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=term', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'term');
-    fixture.appendChild(node);
+  it('should return false for role=term', () => {
+    const vNode = queryFixture('<div id="target" role="term"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=toolbar', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'toolbar');
-    fixture.appendChild(node);
+  it('should return false for role=toolbar', () => {
+    const vNode = queryFixture('<div id="target" role="toolbar"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
   // Landmark Roles
-  it('should return false for role=banner', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'banner');
-    fixture.appendChild(node);
+  it('should return false for role=banner', () => {
+    const vNode = queryFixture('<div id="target" role="banner"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=complementary', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'complementary');
-    fixture.appendChild(node);
+  it('should return false for role=complementary', () => {
+    const vNode = queryFixture('<div id="target" role="complementary"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=contentinfo', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'contentinfo');
-    fixture.appendChild(node);
+  it('should return false for role=contentinfo', () => {
+    const vNode = queryFixture('<div id="target" role="contentinfo"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=form', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'form');
-    fixture.appendChild(node);
+  it('should return false for role=form', () => {
+    const vNode = queryFixture('<div id="target" role="form"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=main', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'main');
-    fixture.appendChild(node);
+  it('should return false for role=main', () => {
+    const vNode = queryFixture('<div id="target" role="main"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=navigation', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'navigation');
-    fixture.appendChild(node);
+  it('should return false for role=navigation', () => {
+    const vNode = queryFixture('<div id="target" role="navigation"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=region', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'region');
-    fixture.appendChild(node);
+  it('should return false for role=region', () => {
+    const vNode = queryFixture('<div id="target" role="region"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 
-  it('should return false for role=search', function () {
-    node = document.createElement('div');
-    node.setAttribute('role', 'search');
-    fixture.appendChild(node);
+  it('should return false for role=search', () => {
+    const vNode = queryFixture('<div id="target" role="search"></div>');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('has-widget-role').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('has-widget-role')
+        .call(checkContext, null, null, vNode)
     );
   });
 });
