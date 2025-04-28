@@ -25,7 +25,7 @@ npm run eslint
 
 Axe-core uses an internal copy of the HTML page for most things internal to axe-core (called the Virtual Tree). Each HTML element on the page has an equivalent [Virtual Node](./lib/core/base/virtual-node) element, which allows us to cache or normalize information about the HTML element without mutating the actual DOM node.
 
-Typically we use the Virtual Node when possible, but understand that's not always possible (such as accessing DOM only APIs). Furthermore, any function within the [utils directory](./lib/core/utils/) should not use Virtual Nodes. The reason for this is that using Virtual Nodes requires that axe first be [setup](./lib/core/public/setup.js) and create the Virtual Tree. For the most part, util functions are functions that can be run when no Virtual Tree exists.
+Typically we use the Virtual Node when possible, but understand that's not always possible (such as accessing DOM only APIs like `getRootNode` or `getBoundingClientRect`). Furthermore, any function within the [utils directory](./lib/core/utils/) should not use Virtual Nodes. The reason for this is that using Virtual Nodes requires that axe first be [setup](./lib/core/public/setup.js) and create the Virtual Tree. For the most part, util functions are functions that can be run when no Virtual Tree exists.
 
 ### Directory Structure
 
