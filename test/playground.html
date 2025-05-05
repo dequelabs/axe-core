@@ -3,27 +3,279 @@
   <title>Axe Playground</title>
   <!-- The playground is used for quick local host axe-core during development -->
 
-  <main>
-    <h1>Hello World</h1>
-  </main>
+  <select id="foo" aria-label="foo"></select>
+  <button class="foo bar baz">foo bar baz</button>
+  <button class="unique foo bin">unique foo bin</button>
+  <button class="bar baz bin">bar baz</button>
+  <button class="bin bar">bin bar</button>
+  <button id="thing">thing</button>
+  <button class="bar" aria-label="label">label</button>
 
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    axe.testUtils.awaitNestedLoad(
-      window,
-      () => {
-        axe.run(
-          {
-            runOnly: 'color-contrast',
-            elementRef: true
-          },
-          (err, results) => {
-            console.log(err || results);
+    const urlParams = new URLSearchParams(window.location.search);
+    const nodes = urlParams.get('nodes') ?? 100;
+
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < nodes; i++) {
+      const option = document.createElement('option');
+      option.textContent = 'Option #' + (i + 1);
+      fragment.append(option);
+    }
+
+    foo.append(fragment);
+    // axe.setup();
+
+function generateFrequency(nodes) {
+  const ret = {};
+
+  nodes.forEach(node => {
+    // count the tag
+    const tag = node.nodeName;
+    if (node.id) {
+      ret[`#${node.id}`] ??= [];
+      ret[`#${node.id}`].push(node);
+    }
+
+    // count all the classes
+    if (node.classList) {
+      Array.from(node.classList).forEach(cl => {
+        const ind = escapeSelector(cl);
+        ret[`.${ind}`] ??= [];
+        ret[`.${ind}`].push(node);
+      });
+    }
+
+    // count all the filtered attributes
+    if (node.hasAttributes()) {
+      Array.from(node.attributes)
+        .filter(filterAttributes)
+        .forEach(at => {
+          const atnv = getAttributeNameValue(node, at);
+          if (atnv) {
+            ret[`[${atnv}]`] ??= [];
+            ret[`[${atnv}]`].push(node);
           }
-        );
-      },
-      err => console.error(err)
-    );
+        });
+    }
+  });
+
+  return ret;
+}
+
+function leastFrequent(node, freqList) {
+  let selector = node.nodeName.toLowerCase();
+
+  // unique by default
+  if (selector === 'body' || selector === 'html') {
+    return {
+      selector,
+      unique: true
+    }
+  }
+
+  const values = freqList.get(node);
+  let freq = axe._selectorData.otherFreq[node.nodeName];
+  let min = Infinity;
+
+  while (min > 1) {
+    let group;
+    let value = '';
+    for (let i = 0; i < values.length; i++) {
+      const count = freq[ values[i] ].size
+      if (count < min) {
+        min = count;
+        value = values[i];
+        group = freq[ values[i] ];
+      }
+    }
+
+    selector += value;
+
+    // TODO: does 1 more path
+    if (!group) {
+      return {
+        selector,
+        unique: false
+      };
+    }
+
+    if (min > 1) {
+      const newFreq = {}
+      for (let i = 0; i < values.length; i++) {
+        if (values[i] === value) {
+          newFreq[ values[i] ] = freq[ values[i] ]
+        }
+        else {
+          newFreq[ values[i] ] = freq[ values[i] ].intersection( freq[value] )
+        }
+      }
+      freq = newFreq;
+    }
+  }
+
+  return {
+    selector,
+    unique: true
+  };
+}
+
+// const attrCharsRegex = /([\\"])/g;
+// const newlineChars = /(\r\n|\r|\n)/g;
+
+// /**
+//  * Escape an attribute selector string.
+//  * @param {String} str
+//  * @return {String}
+//  */
+// function escapeAttribute(str) {
+//   return (
+//     str
+//       // @see https://www.py4u.net/discuss/286669
+//       .replace(attrCharsRegex, '\\$1')
+//       // @see https://stackoverflow.com/a/20354013/2124254
+//       .replace(newlineChars, '\\a ')
+//   );
+// }
+
+// function getAttributeNameValue(node, at) {
+//   const name = at.name;
+//   let atnv;
+
+//   if (name.indexOf('href') !== -1 || name.indexOf('src') !== -1) {
+//     const friendly = getFriendlyUriEnd(node.getAttribute(name));
+//     if (friendly) {
+//       atnv = escapeSelector(at.name) + '$="' + escapeAttribute(friendly) + '"';
+//     } else {
+//       atnv =
+//         escapeSelector(at.name) +
+//         '="' +
+//         escapeAttribute(node.getAttribute(name)) +
+//         '"';
+//     }
+//   } else {
+//     atnv = escapeSelector(name) + '="' + escapeAttribute(at.value) + '"';
+//   }
+//   return atnv;
+// }
+
+// function escapeSelector(value) {
+//   /*eslint no-bitwise: 0, eqeqeq: 0, one-var: 0 */
+//   const string = String(value);
+//   const length = string.length;
+//   let index = -1;
+//   let codeUnit;
+//   let result = '';
+//   const firstCodeUnit = string.charCodeAt(0);
+//   while (++index < length) {
+//     codeUnit = string.charCodeAt(index);
+//     // Note: there’s no need to special-case astral symbols, surrogate
+//     // pairs, or lone surrogates.
+
+//     // If the character is NULL (U+0000), then the REPLACEMENT CHARACTER
+//     // (U+FFFD).
+//     if (codeUnit == 0x0000) {
+//       result += '\uFFFD';
+//       continue;
+//     }
+
+//     if (
+//       // If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
+//       // U+007F, […]
+//       (codeUnit >= 0x0001 && codeUnit <= 0x001f) ||
+//       codeUnit == 0x007f ||
+//       // If the character is the first character and is in the range [0-9]
+//       // (U+0030 to U+0039), […]
+//       (index == 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
+//       // If the character is the second character and is in the range [0-9]
+//       // (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
+//       (index == 1 &&
+//         codeUnit >= 0x0030 &&
+//         codeUnit <= 0x0039 &&
+//         firstCodeUnit == 0x002d)
+//     ) {
+//       // https://drafts.csswg.org/cssom/#escape-a-character-as-code-point
+//       result += '\\' + codeUnit.toString(16) + ' ';
+//       continue;
+//     }
+
+//     // If the character is the first character and is a `-` (U+002D), and
+//     // there is no second character, […]
+//     if (index == 0 && length == 1 && codeUnit == 0x002d) {
+//       result += '\\' + string.charAt(index);
+//       continue;
+//     }
+
+//     // If the character is not handled by one of the above rules and is
+//     // greater than or equal to U+0080, is `-` (U+002D) or `_` (U+005F), or
+//     // is in one of the ranges [0-9] (U+0030 to U+0039), [A-Z] (U+0041 to
+//     // U+005A), or [a-z] (U+0061 to U+007A), […]
+//     if (
+//       codeUnit >= 0x0080 ||
+//       codeUnit == 0x002d ||
+//       codeUnit == 0x005f ||
+//       (codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
+//       (codeUnit >= 0x0041 && codeUnit <= 0x005a) ||
+//       (codeUnit >= 0x0061 && codeUnit <= 0x007a)
+//     ) {
+//       // the character itself
+//       result += string.charAt(index);
+//       continue;
+//     }
+
+//     // Otherwise, the escaped character.
+//     // https://drafts.csswg.org/cssom/#escape-a-character
+//     result += '\\' + string.charAt(index);
+//   }
+//   return result;
+// }
+
+// const MAXATTRIBUTELENGTH = 31;
+// const ignoredAttributes = [
+//   'class',
+//   'style',
+//   'id',
+//   'selected',
+//   'checked',
+//   'disabled',
+//   'tabindex',
+//   'aria-checked',
+//   'aria-selected',
+//   'aria-invalid',
+//   'aria-activedescendant',
+//   'aria-busy',
+//   'aria-disabled',
+//   'aria-expanded',
+//   'aria-grabbed',
+//   'aria-pressed',
+//   'aria-valuenow',
+//   'xmlns'
+// ];
+// function filterAttributes(at) {
+//   return (
+//     !ignoredAttributes.includes(at.name) &&
+//     at.name.indexOf(':') === -1 &&
+//     (!at.value || at.value.length < MAXATTRIBUTELENGTH)
+//   );
+// }
+
+  </script>
+  <script>
+    // axe.testUtils.awaitNestedLoad(
+    //   window,
+    //   () => {
+    //     axe.run(
+    //       {
+    //         runOnly: 'button-name',
+    //         elementRef: true
+    //       },
+    //       (err, results) => {
+    //         console.log(err || results);
+    //       }
+    //     );
+    //   },
+    //   err => console.error(err)
+    // );
   </script>
 </html>
