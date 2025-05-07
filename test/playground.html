@@ -3,7 +3,7 @@
   <title>Axe Playground</title>
   <!-- The playground is used for quick local host axe-core during development -->
 
-  <select id="foo" aria-label="foo"></select>
+  <!-- <select id="foo" aria-label="foo"></select> -->
   <button class="foo bar baz">foo bar baz</button>
   <button class="unique foo bin">unique foo bin</button>
   <button class="bar baz bin">bar baz</button>
@@ -14,17 +14,17 @@
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const nodes = urlParams.get('nodes') ?? 100;
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const nodes = urlParams.get('nodes') ?? 100;
 
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < nodes; i++) {
-      const option = document.createElement('option');
-      option.textContent = 'Option #' + (i + 1);
-      fragment.append(option);
-    }
+    // const fragment = document.createDocumentFragment();
+    // for (let i = 0; i < nodes; i++) {
+    //   const option = document.createElement('option');
+    //   option.textContent = 'Option #' + (i + 1);
+    //   fragment.append(option);
+    // }
 
-    foo.append(fragment);
+    // foo.append(fragment);
     // axe.setup();
 
 function generateFrequency(nodes) {
