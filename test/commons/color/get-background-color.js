@@ -1063,7 +1063,7 @@ describe('color.getBackgroundColor', function () {
 
     it('returns the html background when body does not cover the element', function () {
       fixture.innerHTML =
-        '<div id="target" style="position: absolute; top: 1000px;">elm<input></div>';
+        '<div id="target" style="position: absolute; top: 10000px;">elm<input></div>';
       document.documentElement.style.background = '#0F0';
       document.body.style.background = '#00F';
 

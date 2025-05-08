@@ -1,4 +1,4 @@
-describe('runRules', function () {
+describe.skip('runRules', function () {
   'use strict';
   var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 

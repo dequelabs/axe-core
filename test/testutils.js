@@ -613,7 +613,54 @@ var commons;
       // reset html and body styles
       document.body.removeAttribute('style');
       document.documentElement.removeAttribute('style');
+
+      // ensure we always reset scroll position otherwise tests that assume we're at
+      // the top of the page (e.g. get-target-rects) will fail if another test scrolls
+      if (window.scrollY !== 0) {
+        window.scrollTo(0, 0);
+      }
     });
+
+    // running in debug mode causes all sorts of problems for our tests as the
+    // presence of the #mocha div causes issues with selector generation and
+    // our grid tests. fix that by moving mocha into a closed shadow dom and
+    // removing it from the grid
+    if (document.querySelector('#mocha')) {
+      before(() => {
+        const mochaElm = document.querySelector('#mocha');
+        const parent = mochaElm.parentElement;
+
+        const shadowElm = document.createElement('div');
+        shadowElm.style = `height: ${window.innerHeight}px; overflow-y: scroll;`;
+        const shadowHost = shadowElm.attachShadow({ mode: 'closed' });
+
+        // hide the element from the grid so stacking context tests don't include it
+        shadowElm.getBoundingClientRect = () => new DOMRect(0, 0, 0, 0);
+        shadowElm.getClientRects = () => [new DOMRect(0, 0, 0, 0)];
+
+        // add mocha styles to shadow dom and also fix mocha filtering by pass
+        // or fail as the javascript that should add `.hidden` to any suite without
+        // one or the other doesn't seem to work
+        shadowHost.innerHTML = `<link
+          rel="stylesheet"
+          type="text/css"
+          href="/base/node_modules/mocha/mocha.css"
+        />
+        <style>
+        #mocha-report.pass .suite:not(:has(.test.pass)) {
+          display: none;
+        }
+
+        #mocha-report.fail .suite:not(:has(.test.fail)) {
+          display: none;
+        }
+        </style>
+        `;
+
+        mochaElm.replaceWith(shadowElm);
+        shadowHost.append(mochaElm);
+      });
+    }
   }
 
   testUtils.captureError = function captureError(cb, errorHandler) {
