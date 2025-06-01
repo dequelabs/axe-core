@@ -169,7 +169,7 @@
     "karma-mocha": "^2.0.1",
     "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "^0.0.36",
-    "lint-staged": "^15.0.2",
+    "lint-staged": "^16.1.0",
     "memoizee": "^0.4.15",
     "mocha": "^11.1.0",
     "node-notifier": "^10.0.1",
