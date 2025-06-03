@@ -21,7 +21,7 @@ jobs:
         run: npm ci
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version-file: .nvmrc
           cache: 'npm'
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
