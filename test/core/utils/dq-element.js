@@ -81,6 +81,28 @@ describe('DqElement', () => {
       assert.equal(result.source, '<div class="foo" id="target">');
     });
 
+    it('should truncate a large element and its attributes', () => {
+      let customElement = '<div id="target"';
+      for (let i = 0; i < 10; i++) {
+        customElement += ` attribute${Array(i + 1).join('A') + (i + 1)}="value${Array(i + 1).join('B') + (i + 1)}"`;
+      }
+      customElement += `><div>`;
+      const vNode = queryFixture(customElement);
+      const result = new DqElement(vNode);
+      assert.equal(
+        result.source,
+        `<div id="target" attribute1="value1" attributea2="valueB2" attributeaa3="valueBB3" attributeaaa4... ...>`
+      );
+    });
+
+    it('should truncate a large element with long custom tag', () => {
+      let longCustomElementTagName = new Array(300).join('b');
+      let customElement = `<${longCustomElementTagName} id="target">A</${longCustomElementTagName}>`;
+      const vNode = queryFixture(customElement);
+      const result = new DqElement(vNode);
+      assert.equal(result.source, `<${Array(99 + 1).join('b')}...>`);
+    });
+
     it('should use spec object over passed element', () => {
       const vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
       const spec = { source: 'woot' };
