@@ -412,7 +412,7 @@ declare namespace axe {
 
   interface Grid {
     container: VirtualNode | null;
-    cells: GridCell[] & { _negativeIndex?: number };
+    cells: GridCell[];
     boundaries?: DOMRect;
     toGridIndex(num: number): number;
     getCellFromPoint(point: { x: number; y: number }): GridCell;
