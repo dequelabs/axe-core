@@ -91,7 +91,7 @@ describe('DqElement', () => {
       const result = new DqElement(vNode);
       assert.equal(
         result.source,
-        `<div id="target" attribute="value" attribute1="value1" attribute22="value22" attribute333="value333" ...>`
+        `<div id="target" attribute="value" attribute1="value1" attribute22="value22" attribute333="value333"...>`
       );
     });
 
