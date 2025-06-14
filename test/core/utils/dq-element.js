@@ -84,14 +84,14 @@ describe('DqElement', () => {
     it('should truncate an element having a large number of attributes', () => {
       let customElement = '<div id="target"';
       for (let i = 0; i < 10; i++) {
-        customElement += ` attribute${Array(i + 1).join('A') + (i + 1)}="value${Array(i + 1).join('B') + (i + 1)}"`;
+        customElement += ` attribute${Array(i + 1).join(i)}="value${Array(i + 1).join(i)}"`;
       }
       customElement += `><div>`;
       const vNode = queryFixture(customElement);
       const result = new DqElement(vNode);
       assert.equal(
         result.source,
-        `<div id="target" attribute1="value1" attributea2="valueB2" attributeaa3="valueBB3" attributeaaaaaaaa...>`
+        `<div id="target" attribute="value" attribute1="value1" attribute22="value22" attribute333="value333" ...>`
       );
     });
 
