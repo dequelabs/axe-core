@@ -81,6 +81,21 @@ describe('DqElement', () => {
       assert.equal(result.source, '<div class="foo" id="target">');
     });
 
+    it('should truncate large attributes', () => {
+      const el = document.createElement('div');
+      let attributeName = 'data-';
+      for (let i = 0; i < 10000000; i++) {
+        attributeName += 'foo';
+      }
+      el.setAttribute(attributeName, 'bar');
+
+      const vNode = new DqElement(el);
+      assert.equal(
+        vNode.source,
+        `<div ${attributeName.substring(0, 20)}... ></div>`
+      );
+    });
+
     it('should truncate an element having a large number of attributes', () => {
       let customElement = '<div id="target"';
       for (let i = 0; i < 10; i++) {
