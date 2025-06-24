@@ -31,7 +31,8 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 ### Environment Pre-requisites
 
-1. You must have NodeJS version 18 or higher installed.
+1. You must have Node.js version 22 or higher installed.
+   If you have [nvm](https://github.com/nvm-sh/nvm) installed, simply do `nvm use` in the root of this repository.
 1. Install npm development dependencies. In the root folder of your axe-core repository, run `npm install`
 
 ### Building axe.js

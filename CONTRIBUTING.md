@@ -21,6 +21,46 @@ The files in this project are formatted by [Prettier](https://prettier.io/) and 
 npm run eslint
 ```
 
+### When to use HTMLElement vs Virtual Node
+
+Axe-core uses an internal copy of the HTML page for most things internal to axe-core (called the Virtual Tree). Each HTML element on the page has an equivalent [Virtual Node](./lib/core/base/virtual-node) element, which allows us to cache or normalize information about the HTML element without mutating the actual DOM node.
+
+Typically we use the Virtual Node when possible, but understand that's not always possible (such as accessing DOM only APIs like `getRootNode` or `getBoundingClientRect`). Furthermore, any function within the [utils directory](./lib/core/utils/) should not use Virtual Nodes. The reason for this is that using Virtual Nodes requires that axe first be [setup](./lib/core/public/setup.js) and create the Virtual Tree. For the most part, util functions are functions that can be run when no Virtual Tree exists.
+
+### Directory Structure
+
+Axe-core
+
+- `standards` - Data objects of the HTML, WCAG, and ARIA standards and specs.
+- `core/base` - Defines many of the internal object structures for axe-core (rules, checks, virtual node, etc.).
+- `core/imports` - Polyfills or imports from node modules.
+- `core/public` - Functions for how axe is run or configured.
+- `core/reporters` - The different reporters that configure what data is reported from a run.
+- `core/utils` - Utility functions that can be run without needing to set up the Virtual Tree.
+- `commons/aria` - Functions that are used to validate ARIA spec or implement ARIA calculations (role, value, etc.).
+- `commons/color` - Functions that are used to calculate the foreground or background color of an element.
+- `commons/dom` - Functions that access information about the page, DOM, nodes, or its visual state.
+- `commons/forms` - Functions for helping with forms and their associated inputs.
+- `commons/matches` - Functions used to match a virtual node against a special matcher object.
+- `commons/math` - Math functions mainly used for target size and position calculations.
+- `commons/standards` - Functions for querying information from `standards`.
+- `commons/tables` - Functions for helping with data tables.
+- `commons/text` - Functions for calculating the accessible name of an element and handling strings or text related attributes.
+- `rules` - JSON metadata files for each axe-core rule as well as their associated matches functions.
+- `checks` - JSON metadata files for each axe-core check as well as their associated evaluate functions.
+
+### Import Requirements
+
+Which functions can be imported and how they can be imported depends on where you are trying to import them from. The following is a list of directories and their import restrictions:
+
+- `standards` - Shouldn't use imports as they are just hard coded data objects.
+- `core/utils` - Can import other `core/utils`, `core`, `core/base`, or `standards` functions by direct file path (no import from index files).
+- `core/public` - Can import other `core/public` by direct file path, or any import allowed by `core/utils` by direct file path.
+- `core/imports` - The only files allowed to import from node modules, but shouldn't import from any other directory.
+- `core/reporters` Can import from `core/utils` by import from index files.
+- `commons` - Can import other `commons` by direct file path, or any import allowed by `core/utils` by import from index files.
+- `checks` and `rules` - Can import from any directory by import from index files.
+
 ### Shadow DOM
 
 For any proposed changes to rules, checks, commons, or other APIs to be accepted in axe-core, your code must support open Shadow DOM. See [API.md](./doc/API.md) and the [developer guide](./doc/developer-guide.md) for documentation on the available methods and test utilities. You can also look at existing tests for examples using our APIs.

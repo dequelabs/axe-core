@@ -468,4 +468,5 @@ const spec3: axe.SerialDqElement = axe.utils.nodeSerializer.dqElmToSpec(
 axe.commons.aria.getRoleType('img');
 axe.commons.dom.isFocusable(document.body);
 axe.commons.dom.isNativelyFocusable(document.body);
+axe.commons.dom.getNodeGrid(document.body);
 axe.commons.text.accessibleText(document.body);

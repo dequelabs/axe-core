@@ -408,6 +408,24 @@ declare namespace axe {
     boundingClientRect: DOMRect;
   }
 
+  type GridCell = VirtualNode[];
+
+  interface Grid {
+    container: VirtualNode | null;
+    cells: unknown; // opaque implementation detail
+    boundaries?: DOMRect;
+    toGridIndex(num: number): number;
+    getCellFromPoint(point: { x: number; y: number }): GridCell;
+    loopGridPosition(
+      gridPosition: DOMRect,
+      callback: (gridCell: GridCell, pos: { row: number; col: number }) => void
+    ): void;
+    getGridPositionOfRect(
+      rect: { top: number; right: number; bottom: number; left: number },
+      margin?: number
+    ): DOMRect;
+  }
+
   interface CustomNodeSerializer<T = SerialDqElement> {
     toSpec: (dqElm: DqElement) => T;
     mergeSpecs: (nodeSpec: T, parentFrameSpec: T) => T;
@@ -460,6 +478,7 @@ declare namespace axe {
   interface Dom {
     isFocusable: (node: Element | VirtualNode) => boolean;
     isNativelyFocusable: (node: Element | VirtualNode) => boolean;
+    getNodeGrid: (node: Node | VirtualNode) => Grid;
   }
 
   type AccessibleTextOptions = {
