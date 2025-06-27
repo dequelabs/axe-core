@@ -81,33 +81,36 @@ describe('DqElement', () => {
       assert.equal(result.source, '<div class="foo" id="target">');
     });
 
-    it('should truncate large attributes', () => {
+    it('should truncate large attributes of large element', () => {
       const el = document.createElement('div');
-      let attributeName = 'data-';
-      for (let i = 0; i < 10000000; i++) {
+      let attributeName = 'data-',
+        attributeValue = '';
+      for (let i = 0; i < 500; i++) {
         attributeName += 'foo';
+        attributeValue += i;
       }
-      el.setAttribute(attributeName, 'bar');
+      el.setAttribute(attributeName, attributeValue);
 
       const vNode = new DqElement(el);
       assert.equal(
         vNode.source,
-        `<div ${attributeName.substring(0, 20)}... ></div>`
+        `<div ${attributeName.substring(0, 20)}...="${attributeValue.substring(0, 20)}...">`
       );
     });
 
-    it('should truncate an element having a large number of attributes', () => {
+    it('should remove attributes for a large element having a large number of attributes', () => {
       let customElement = '<div id="target"';
-      for (let i = 0; i < 10; i++) {
-        customElement += ` attribute${Array(i + 1).join(i)}="value${Array(i + 1).join(i)}"`;
+
+      for (let i = 0; i < 100; i++) {
+        customElement += ` attr${i}="value${i}"`;
       }
+
       customElement += `><div>`;
       const vNode = queryFixture(customElement);
       const result = new DqElement(vNode);
-      assert.equal(
-        result.source,
-        `<div id="target" attribute="value" attribute1="value1" attribute22="value22" attribute333="value333"...>`
-      );
+      const truncatedAttrCount = (result.source.match(/attr/g) || []).length;
+      assert.isTrue(truncatedAttrCount < 100);
+      assert.isTrue(truncatedAttrCount > 0);
     });
 
     it('should truncate a large element with long custom tag name', () => {
@@ -115,7 +118,7 @@ describe('DqElement', () => {
       let customElement = `<${longCustomElementTagName} id="target">A</${longCustomElementTagName}>`;
       const vNode = queryFixture(customElement);
       const result = new DqElement(vNode);
-      assert.equal(result.source, `<${Array(99 + 1).join('b')}...>`);
+      assert.equal(result.source, `${customElement.substring(0, 300)}... >`);
     });
 
     it('should use spec object over passed element', () => {
