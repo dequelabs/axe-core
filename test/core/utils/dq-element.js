@@ -109,8 +109,8 @@ describe('DqElement', () => {
       const vNode = queryFixture(customElement);
       const result = new DqElement(vNode);
       const truncatedAttrCount = (result.source.match(/attr/g) || []).length;
-      assert.isTrue(truncatedAttrCount < 100);
-      assert.isTrue(truncatedAttrCount > 0);
+      assert.isBelow(truncatedAttrCount, 100);
+      assert.isAtLeast(truncatedAttrCount, 10);
     });
 
     it('should truncate a large element with long custom tag name', () => {
