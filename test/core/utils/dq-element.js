@@ -83,8 +83,8 @@ describe('DqElement', () => {
 
     it('should truncate large attributes of large element', () => {
       const el = document.createElement('div');
-      let attributeName = 'data-',
-        attributeValue = '';
+      let attributeName = 'data-';
+      let attributeValue = '';
       for (let i = 0; i < 500; i++) {
         attributeName += 'foo';
         attributeValue += i;
@@ -118,7 +118,22 @@ describe('DqElement', () => {
       let customElement = `<${longCustomElementTagName} id="target">A</${longCustomElementTagName}>`;
       const vNode = queryFixture(customElement);
       const result = new DqElement(vNode);
-      assert.equal(result.source, `${customElement.substring(0, 300)}... >`);
+      assert.equal(result.source, `${customElement.substring(0, 300)} ...>`);
+    });
+
+    it('should not truncate attributes if children are long but attribute itself is within limits', () => {
+      let el = document.createElement('div');
+      let attributeValue = '';
+      let innerHtml = '';
+      for (let i = 0; i < 50; i++) {
+        attributeValue += 'a';
+        innerHtml += 'foobar';
+      }
+      el.setAttribute('long-attribute', attributeValue);
+      el.innerHTML = innerHtml;
+
+      const vNode = new DqElement(el);
+      assert.equal(vNode.source, `<div long-attribute="${attributeValue}">`);
     });
 
     it('should use spec object over passed element', () => {
