@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 - **aria-allowed-role:** Add math to allowed roles for img element ([#4658](https://github.com/dequelabs/axe-core/issues/4658)) ([f6dddd9](https://github.com/dequelabs/axe-core/commit/f6dddd905bb86d2073d760d4c1ff39996e59a4f4)), closes [#4657](https://github.com/dequelabs/axe-core/issues/4657)
 - **captions:** fix grammar in captions check incomplete message ([#4661](https://github.com/dequelabs/axe-core/issues/4661)) ([3ef7058](https://github.com/dequelabs/axe-core/commit/3ef7058d3a16a6898eaed718e39b34b45f9ed74f))
-- consistently parse tabindex, following HTML 5 spec ([#4637](https://github.com/dequelabs/axe-core/issues/4637)) ([3b0a361](https://github.com/dequelabs/axe-core/commit/3b0a3619d5e6147d8885725cce196868dac89f7f)), closes [#4632](https://github.com/dequelabs/axe-core/issues/4632)
+- consistently parse tabindex, following HTML5 spec ([#4637](https://github.com/dequelabs/axe-core/issues/4637)) ([3b0a361](https://github.com/dequelabs/axe-core/commit/3b0a3619d5e6147d8885725cce196868dac89f7f)), closes [#4632](https://github.com/dequelabs/axe-core/issues/4632)
 - **core:** measure perf for async checks ([#4609](https://github.com/dequelabs/axe-core/issues/4609)) ([e7dc26e](https://github.com/dequelabs/axe-core/commit/e7dc26e6cbaf9089611853805e05216b6529e1f9))
 - **locale:** fixed typos in german (DE) locale ([#4631](https://github.com/dequelabs/axe-core/issues/4631)) ([0740980](https://github.com/dequelabs/axe-core/commit/07409802115c199a68f58dcaf7467e35b4867140))
 - **locale:** proofread and updated de.json ([#4643](https://github.com/dequelabs/axe-core/issues/4643)) ([910cdb2](https://github.com/dequelabs/axe-core/commit/910cdb20702ce116c781d58f021adc05095ffcbb))
