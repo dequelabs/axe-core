@@ -41,7 +41,7 @@ describe('axe.utils.mergeResults', function () {
 
     var node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
-    assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
+    assert.deepEqual(node.xpath, ["//iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
       'html > body > div:nth-child(1) > iframe',
       'html > div'
@@ -76,7 +76,7 @@ describe('axe.utils.mergeResults', function () {
 
     var node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
-    assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
+    assert.deepEqual(node.xpath, ["//iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
       'html > body > div:nth-child(1) > iframe',
       'html > div'
