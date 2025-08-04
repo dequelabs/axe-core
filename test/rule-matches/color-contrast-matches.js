@@ -431,6 +431,13 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should not match text with font-size: 0', () => {
+    fixture.innerHTML = '<div style="font-size: 0">hi</div>';
+    const target = fixture.querySelector('div');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   if (shadowSupport) {
     it('should match a descendant of an element across a shadow boundary', function () {
       fixture.innerHTML =
