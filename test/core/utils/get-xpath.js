@@ -3,6 +3,17 @@ describe('axe.utils.getXpath', () => {
 
   const fixture = document.getElementById('fixture');
 
+  // @see https://stackoverflow.com/a/14284815/2124254
+  function getElementByXPath(path) {
+    return document.evaluate(
+      path,
+      document,
+      () => 'http://www.w3.org/1998/Math/MathML',
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
+  }
+
   it('should be a function', () => {
     assert.isFunction(axe.utils.getXpath);
   });
@@ -14,16 +25,19 @@ describe('axe.utils.getXpath', () => {
     const sel = axe.utils.getXpath(node);
 
     assert.equal(sel, "//div[@id='fixture']/div");
+    assert.equal(node, getElementByXPath(sel));
   });
 
   it('should handle special characters', () => {
     const node = document.createElement('div');
     node.id = 'monkeys#are.animals\\ok';
     fixture.appendChild(node);
-    assert.equal(
-      axe.utils.getXpath(node),
-      "//div[@id='monkeys#are.animals\\ok']"
-    );
+
+    const sel = axe.utils.getXpath(node);
+
+    assert.equal(sel, "//div[@id='monkeys#are.animals\\ok']");
+
+    assert.equal(node, getElementByXPath(sel));
   });
 
   it('should stop on unique ID', () => {
@@ -33,6 +47,7 @@ describe('axe.utils.getXpath', () => {
 
     const sel = axe.utils.getXpath(node);
     assert.equal(sel, "//div[@id='monkeys']");
+    assert.equal(node, getElementByXPath(sel));
   });
 
   it('should use the nearest unique ID', () => {
@@ -51,6 +66,7 @@ describe('axe.utils.getXpath', () => {
 
     const sel = axe.utils.getXpath(node);
     assert.equal(sel, "//div[@id='monkeys']/div");
+    assert.equal(node, getElementByXPath(sel));
   });
 
   it('should not use ids if they are not unique', () => {
@@ -65,6 +81,7 @@ describe('axe.utils.getXpath', () => {
     const sel = axe.utils.getXpath(node);
 
     assert.equal(sel, "//div[@id='fixture']/div[2]");
+    assert.equal(node, getElementByXPath(sel));
   });
 
   it('should properly calculate number when siblings are of different type', () => {
@@ -91,23 +108,27 @@ describe('axe.utils.getXpath', () => {
     const sel = axe.utils.getXpath(target);
 
     assert.equal(sel, "//div[@id='fixture']/div[2]");
+    assert.equal(target, getElementByXPath(sel));
   });
 
   it('should work on the documentElement', () => {
     const sel = axe.utils.getXpath(document.documentElement);
     assert.equal(sel, '/html');
+    assert.equal(document.documentElement, getElementByXPath(sel));
   });
 
   it('should work on the body', () => {
     const sel = axe.utils.getXpath(document.body);
     assert.equal(sel, '/html/body');
+    assert.equal(document.body, getElementByXPath(sel));
   });
 
-  it('should work on namespaced elements', () => {
+  it('should work on namespaced elements', function () {
     fixture.innerHTML = '<hx:include>Hello</hx:include>';
-    const node = fixture.firstChild;
-    const sel = axe.utils.getXpath(node);
+    var node = fixture.firstChild;
+    var sel = axe.utils.getXpath(node);
 
     assert.equal(sel, "//div[@id='fixture']/hx:include");
+    // couldn't figure out how to use document.evaluate to select an element with namespace
   });
 });
