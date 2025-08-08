@@ -81,6 +81,21 @@ describe('performance timer', () => {
     assert.match(messages[0], /Measure audit_start_to_end took [0-9.]+ms/);
   });
 
+  describe('.measure', () => {
+    it('logs an error if the start mark is not present', () => {
+      performanceTimer.measure('foo', 'foo_start', 'foo_end');
+      assert.equal(messages.length, 1);
+      assert.match(messages[0], /The mark 'foo_start' does not exist./);
+    });
+
+    it('logs an error if the end mark is not present', () => {
+      performanceTimer.mark('foo_start');
+      performanceTimer.measure('foo', 'foo_start', 'foo_end');
+      assert.equal(messages.length, 1);
+      assert.match(messages[0], /The mark 'foo_end' does not exist./);
+    });
+  });
+
   describe('logMeasures', () => {
     beforeEach(() => {
       performanceTimer.start();
