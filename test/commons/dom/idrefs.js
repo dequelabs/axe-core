@@ -1,12 +1,10 @@
 function createContentIDR() {
-  'use strict';
   const group = document.createElement('div');
   group.id = 'target';
   return group;
 }
 
 function makeShadowTreeIDR(node) {
-  'use strict';
   const root = node.attachShadow({ mode: 'open' });
   const div = document.createElement('div');
   div.className = 'parent';
@@ -16,27 +14,22 @@ function makeShadowTreeIDR(node) {
 }
 
 describe('dom.idrefs', () => {
-  'use strict';
-
   const fixture = document.getElementById('fixture');
   const shadowSupported = axe.testUtils.shadowSupport.v1;
+  const idrefs = axe.commons.dom.idrefs;
 
   it('should find referenced nodes by ID', () => {
     fixture.innerHTML =
       '<div aria-cats="target1 target2" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';
 
-    const start = document.getElementById('start');
-    const expected = [
-      document.getElementById('target1'),
-      document.getElementById('target2')
-    ];
+    const start = document.getElementById('start'),
+      expected = [
+        document.getElementById('target1'),
+        document.getElementById('target2')
+      ];
 
-    assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
-      expected,
-      'Should find it!'
-    );
+    assert.deepEqual(idrefs(start, 'aria-cats'), expected, 'Should find it!');
   });
 
   (shadowSupported ? it : xit)(
@@ -50,7 +43,7 @@ describe('dom.idrefs', () => {
       const expected = [fixture.firstChild.shadowRoot.getElementById('target')];
 
       assert.deepEqual(
-        axe.commons.dom.idrefs(start, 'target'),
+        idrefs(start, 'target'),
         expected,
         'should only find stuff in the shadow DOM'
       );
@@ -69,7 +62,7 @@ describe('dom.idrefs', () => {
       const expected = [document.getElementById('target')];
 
       assert.deepEqual(
-        axe.commons.dom.idrefs(start, 'target'),
+        idrefs(start, 'target'),
         expected,
         'should only find stuff in the document'
       );
@@ -81,18 +74,14 @@ describe('dom.idrefs', () => {
       '<div aria-cats="target1 target2 target3" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';
 
-    const start = document.getElementById('start');
-    const expected = [
-      document.getElementById('target1'),
-      document.getElementById('target2'),
-      null
-    ];
+    const start = document.getElementById('start'),
+      expected = [
+        document.getElementById('target1'),
+        document.getElementById('target2'),
+        null
+      ];
 
-    assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
-      expected,
-      'Should find it!'
-    );
+    assert.deepEqual(idrefs(start, 'aria-cats'), expected, 'Should find it!');
   });
 
   it('should not fail when extra whitespace is used', () => {
@@ -100,19 +89,207 @@ describe('dom.idrefs', () => {
       '<div aria-cats="    \ttarget1 \n  target2  target3 \n\t" id="start"></div>' +
       '<div id="target1"></div><div id="target2"></div>';
 
-    const start = document.getElementById('start');
-    const expected = [
-      document.getElementById('target1'),
-      document.getElementById('target2'),
-      null
-    ];
+    const start = document.getElementById('start'),
+      expected = [
+        document.getElementById('target1'),
+        document.getElementById('target2'),
+        null
+      ];
 
-    assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
-      expected,
-      'Should find it!'
-    );
+    assert.deepEqual(idrefs(start, 'aria-cats'), expected, 'Should find it!');
   });
 
-  // virtual-node tests test throwing for non-DOM nodes and working with complete trees
+  describe('SerialVirtualNode', () => {
+    it('should find referenced nodes by ID', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const start = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-cats': 'target1 target2'
+        }
+      });
+      const target1 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target1'
+      });
+      const target2 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target2'
+      });
+
+      root.parent = null;
+      root.children = [start, target1, target2];
+
+      start.parent = root;
+      target1.parent = root;
+      target2.parent = root;
+
+      assert.deepEqual(
+        idrefs(start, 'aria-cats'),
+        [target1, target2],
+        'Should find it!'
+      );
+    });
+
+    it('should find only referenced nodes within the current root: shadow DOM', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const outsideTarget = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target'
+      });
+      const host = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const shadowParent = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          target: 'target'
+        }
+      });
+      const shadowTarget = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target'
+      });
+
+      root.parent = null;
+      root.children = [outsideTarget, host];
+
+      outsideTarget.parent = root;
+
+      host.parent = root;
+      host.children = [shadowParent, shadowTarget];
+
+      shadowParent.parent = host;
+      shadowParent.shadowId = 'abc123';
+
+      shadowTarget.parent = host;
+      shadowTarget.shadowId = 'abc123';
+
+      assert.deepEqual(
+        idrefs(shadowParent, 'target'),
+        [shadowTarget],
+        'should only find stuff in the shadow DOM'
+      );
+    });
+
+    it('should find only referenced nodes within the current root: document', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const outsideTarget = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target'
+      });
+      const start = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          target: 'target'
+        }
+      });
+      const host = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const shadowParent = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          target: 'target'
+        }
+      });
+      const shadowTarget = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target'
+      });
+
+      root.parent = null;
+      root.children = [outsideTarget, start, host];
+
+      outsideTarget.parent = root;
+      start.parent = root;
+
+      host.parent = root;
+      host.children = [shadowParent, shadowTarget];
+
+      shadowParent.parent = host;
+      shadowParent.shadowId = 'abc123';
+
+      shadowTarget.parent = host;
+      shadowTarget.shadowId = 'abc123';
+
+      assert.deepEqual(
+        idrefs(start, 'target'),
+        [outsideTarget],
+        'should only find stuff in the document'
+      );
+    });
+
+    it('should insert null if a reference is not found', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const start = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-cats': 'target1 target2 target3'
+        }
+      });
+      const target1 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target1'
+      });
+      const target2 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target2'
+      });
+
+      root.parent = null;
+      root.children = [start, target1, target2];
+
+      start.parent = root;
+      target1.parent = root;
+      target2.parent = root;
+
+      assert.deepEqual(
+        idrefs(start, 'aria-cats'),
+        [target1, target2, null],
+        'Should find it!'
+      );
+    });
+
+    it('should not fail when extra whitespace is used', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const start = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-cats': '    \ttarget1 \n  target2  target3 \n\t'
+        }
+      });
+      const target1 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target1'
+      });
+      const target2 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target2'
+      });
+
+      root.parent = null;
+      root.children = [start, target1, target2];
+
+      start.parent = root;
+      target1.parent = root;
+      target2.parent = root;
+
+      assert.deepEqual(
+        idrefs(start, 'aria-cats'),
+        [target1, target2, null],
+        'Should find it!'
+      );
+    });
+  });
 });
