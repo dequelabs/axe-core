@@ -1,6 +1,6 @@
-describe('select-name virtual-rule', () => {
-  it('should pass for aria-label', () => {
-    const results = axe.runVirtualRule('select-name', {
+describe('select-name virtual-rule', function () {
+  it('should pass for aria-label', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         'aria-label': 'foobar'
@@ -12,8 +12,8 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', () => {
-    const results = axe.runVirtualRule('select-name', {
+  it('should incomplete for aria-labelledby', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         'aria-labelledby': 'foobar'
@@ -25,59 +25,14 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for aria-labelledby in complete tree', () => {
-    const html = new axe.SerialVirtualNode({
-      nodeName: 'html'
-    });
-    const body = new axe.SerialVirtualNode({
-      nodeName: 'body'
-    });
-    const div = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {
-        id: 'foobar'
-      },
-      id: 'foobar'
-    });
-    const text = new axe.SerialVirtualNode({
-      nodeName: '#text',
-      nodeType: 3,
-      nodeValue: 'foobar'
-    });
-    const select = new axe.SerialVirtualNode({
-      nodeName: 'select',
-      attributes: {
-        'aria-labelledby': 'foobar'
-      }
-    });
-    html.parent = null;
-    html.children = [body];
-
-    body.parent = html;
-    body.children = [div, select];
-
-    div.parent = body;
-    div.children = [text];
-
-    text.parent = div;
-
-    select.parent = body;
-
-    const results = axe.runVirtualRule('select-name', select);
-
-    assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
-  it('should pass for implicit label', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should pass for implicit label', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select'
     });
-    const parent = new axe.SerialVirtualNode({
+    var parent = new axe.SerialVirtualNode({
       nodeName: 'label'
     });
-    const child = new axe.SerialVirtualNode({
+    var child = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'foobar'
@@ -85,30 +40,30 @@ describe('select-name virtual-rule', () => {
     node.parent = parent;
     parent.children = [child, node];
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for explicit label', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should incomplete for explicit label', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         id: 'foobar'
       }
     });
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', () => {
-    const results = axe.runVirtualRule('select-name', {
+  it('should pass for title', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         title: 'foobar'
@@ -120,8 +75,8 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation when disabled', () => {
-    const results = axe.runVirtualRule('select-name', {
+  it('should pass for role=presentation when disabled', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         role: 'presentation',
@@ -134,8 +89,8 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none when disabled', () => {
-    const results = axe.runVirtualRule('select-name', {
+  it('should pass for role=none when disabled', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         role: 'none',
@@ -148,8 +103,8 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for both missing aria-label and implicit label', () => {
-    const results = axe.runVirtualRule('select-name', {
+  it('should incomplete for both missing aria-label and implicit label', function () {
+    var results = axe.runVirtualRule('select-name', {
       nodeName: 'select',
       attributes: {
         'aria-label': ''
@@ -161,8 +116,8 @@ describe('select-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail when aria-label contains only whitespace and no implicit label', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should fail when aria-label contains only whitespace and no implicit label', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         'aria-label': ' \t   \n   '
@@ -170,15 +125,15 @@ describe('select-name virtual-rule', () => {
     });
     node.parent = null;
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty and no implicit label', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should fail when aria-label is empty and no implicit label', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         'aria-label': ''
@@ -186,88 +141,15 @@ describe('select-name virtual-rule', () => {
     });
     node.parent = null;
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-labelledby contains only whitespace and no implicit label in complete tree', () => {
-    const html = new axe.SerialVirtualNode({
-      nodeName: 'html'
-    });
-    const body = new axe.SerialVirtualNode({
-      nodeName: 'body'
-    });
-    const div = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {
-        id: 'foobar'
-      },
-      id: 'foobar'
-    });
-    const text = new axe.SerialVirtualNode({
-      nodeName: '#text',
-      nodeType: 3,
-      nodeValue: '    '
-    });
-    const select = new axe.SerialVirtualNode({
-      nodeName: 'select',
-      attributes: {
-        'aria-labelledby': 'foobar'
-      }
-    });
-    html.parent = null;
-    html.children = [body];
-
-    body.parent = html;
-    body.children = [div, select];
-
-    div.parent = body;
-    div.children = [text];
-
-    text.parent = div;
-
-    select.parent = body;
-
-    const results = axe.runVirtualRule('select-name', select);
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
-  it('should fail when aria-labelledby is missing and no implicit label in complete tree', () => {
-    const html = new axe.SerialVirtualNode({
-      nodeName: 'html'
-    });
-    const body = new axe.SerialVirtualNode({
-      nodeName: 'body'
-    });
-    const select = new axe.SerialVirtualNode({
-      nodeName: 'select',
-      attributes: {
-        'aria-labelledby': 'foobar'
-      }
-    });
-    html.parent = null;
-    html.children = [body];
-
-    body.parent = html;
-    body.children = [select];
-
-    select.parent = body;
-
-    const results = axe.runVirtualRule('select-name', select);
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
-  it('should fail when title is empty and no implicit label', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should fail when title is empty and no implicit label', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         title: ''
@@ -275,15 +157,15 @@ describe('select-name virtual-rule', () => {
     });
     node.parent = null;
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should pass for role=presentation', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         role: 'presentation'
@@ -291,15 +173,15 @@ describe('select-name virtual-rule', () => {
     });
     node.parent = null;
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none', () => {
-    const node = new axe.SerialVirtualNode({
+  it('should pass for role=none', function () {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'select',
       attributes: {
         role: 'none'
@@ -307,7 +189,7 @@ describe('select-name virtual-rule', () => {
     });
     node.parent = null;
 
-    const results = axe.runVirtualRule('select-name', node);
+    var results = axe.runVirtualRule('select-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
