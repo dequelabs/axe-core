@@ -291,5 +291,36 @@ describe('dom.idrefs', () => {
         'Should find it!'
       );
     });
+
+    it('should throw if in disconnected tree', () => {
+      const root = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const start = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-cats': 'target1 target2'
+        }
+      });
+      const target1 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target1'
+      });
+      const target2 = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        id: 'target2'
+      });
+
+      root.parent = undefined;
+      root.children = [start, target1, target2];
+
+      start.parent = root;
+      target1.parent = root;
+      target2.parent = root;
+
+      assert.throws(() => {
+        idrefs(start, 'aria-cats');
+      });
+    });
   });
 });
