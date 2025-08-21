@@ -61,4 +61,4 @@ Add your project/integration to this file and submit a pull request.
 1. [Webatool](https://github.com/balajihambeere/webatool)
 1. [A11y Audit Elixir](https://github.com/angelikatyborska/a11y-audit-elixir)
 
-AXE® and AXE_CORE® are registered trademarks of Deque Systems Inc.
+Axe® and axe-core® are registered trademarks of Deque Systems Inc.
