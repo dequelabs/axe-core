@@ -60,5 +60,6 @@ Add your project/integration to this file and submit a pull request.
 1. [Sitebulb](https://sitebulb.com/hints/accessibility/)
 1. [Webatool](https://github.com/balajihambeere/webatool)
 1. [A11y Audit Elixir](https://github.com/angelikatyborska/a11y-audit-elixir)
+1. [Accented](https://accented.dev)
 
 Axe® and axe-core® are registered trademarks of Deque Systems Inc.
