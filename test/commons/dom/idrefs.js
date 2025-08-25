@@ -133,7 +133,7 @@ describe('dom.idrefs', () => {
       );
     });
 
-    it('should find only referenced nodes within the current root: shadow DOM', () => {
+    it('should throw for elements in shadow DOM', () => {
       const root = new axe.SerialVirtualNode({
         nodeName: 'div'
       });
@@ -169,11 +169,9 @@ describe('dom.idrefs', () => {
       shadowTarget.parent = host;
       shadowTarget.shadowId = 'abc123';
 
-      assert.deepEqual(
-        idrefs(shadowParent, 'target'),
-        [shadowTarget],
-        'should only find stuff in the shadow DOM'
-      );
+      assert.throws(() => {
+        idrefs(shadowParent, 'target');
+      });
     });
 
     it('should find only referenced nodes within the current root: document', () => {
