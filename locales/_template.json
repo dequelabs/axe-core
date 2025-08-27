@@ -351,7 +351,7 @@
     },
     "role-img-alt": {
       "description": "Ensure [role=\"img\"] elements have alternative text",
-      "help": "[role=\"img\"] elements must have an alternative text"
+      "help": "[role=\"img\"] elements must have alternative text"
     },
     "scope-attr-valid": {
       "description": "Ensure the scope attribute is used correctly on tables",
@@ -378,8 +378,8 @@
       "help": "Summary elements must have discernible text"
     },
     "svg-img-alt": {
-      "description": "Ensure <svg> elements with an img, graphics-document or graphics-symbol role have an accessible text",
-      "help": "<svg> elements with an img role must have an alternative text"
+      "description": "Ensure <svg> elements with an img, graphics-document or graphics-symbol role have accessible text",
+      "help": "<svg> elements with an img role must have alternative text"
     },
     "tabindex": {
       "description": "Ensure tabindex attribute values are not greater than 0",

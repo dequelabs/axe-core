@@ -1,6 +1,4 @@
 describe('link-in-text-block-matches', () => {
-  'use strict';
-
   const { fixtureSetup } = axe.testUtils;
   const rule = axe.utils.getRule('link-in-text-block');
 
