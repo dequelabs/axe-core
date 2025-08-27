@@ -12,7 +12,9 @@
     "TT5.c",
     "EN-301-549",
     "EN-9.4.1.2",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-11.1.1"
   ],
   "actIds": ["e086e5"],
   "metadata": {

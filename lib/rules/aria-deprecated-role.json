@@ -3,7 +3,15 @@
   "impact": "minor",
   "selector": "[role]",
   "matches": "no-empty-role-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "RGAAv4",
+    "RGAA-7.1.1"
+  ],
   "actIds": ["674b10"],
   "metadata": {
     "description": "Ensure elements do not use deprecated roles",

@@ -349,6 +349,12 @@ const standardsTags = [
     standardRegex: /^EN-301-549$/,
     criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/,
     wcagLevelRegex: /^wcag21?aa?$/
+  },
+  {
+    name: 'RGAA',
+    standardRegex: /^RGAAv4$/,
+    criterionRegex: /^RGAA-\d{1,2}\.\d{1,2}\.\d{1,2}$/,
+    wcagLevelRegex: /^wcag21?aa?$/
   }
 ];
 

@@ -8,7 +8,9 @@
     "wcag135",
     "EN-301-549",
     "EN-9.1.3.5",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-11.13.1"
   ],
   "actIds": ["73f2c2"],
   "metadata": {

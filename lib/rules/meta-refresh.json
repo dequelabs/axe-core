@@ -10,7 +10,9 @@
     "TTv5",
     "TT8.a",
     "EN-301-549",
-    "EN-9.2.2.1"
+    "EN-9.2.2.1",
+    "RGAAv4",
+    "RGAA-13.1.2"
   ],
   "actIds": ["bc659a", "bisz58"],
   "metadata": {
