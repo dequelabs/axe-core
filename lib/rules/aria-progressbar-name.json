@@ -10,7 +10,7 @@
     "EN-301-549",
     "EN-9.1.1.1",
     "RGAAv4",
-    "RGAA-1.1.1"
+    "RGAA-11.1.1"
   ],
   "metadata": {
     "description": "Ensure every ARIA progressbar node has an accessible name",
