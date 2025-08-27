@@ -81,6 +81,61 @@ describe('DqElement', () => {
       assert.equal(result.source, '<div class="foo" id="target">');
     });
 
+    it('should truncate large attributes of large element', () => {
+      const el = document.createElement('div');
+      let attributeName = 'data-';
+      let attributeValue = '';
+      for (let i = 0; i < 500; i++) {
+        attributeName += 'foo';
+        attributeValue += i;
+      }
+      el.setAttribute(attributeName, attributeValue);
+
+      const vNode = new DqElement(el);
+      assert.equal(
+        vNode.source,
+        `<div ${attributeName.substring(0, 20)}...="${attributeValue.substring(0, 20)}...">`
+      );
+    });
+
+    it('should remove attributes for a large element having a large number of attributes', () => {
+      let customElement = '<div id="target"';
+
+      for (let i = 0; i < 100; i++) {
+        customElement += ` attr${i}="value${i}"`;
+      }
+
+      customElement += `><div>`;
+      const vNode = queryFixture(customElement);
+      const result = new DqElement(vNode);
+      const truncatedAttrCount = (result.source.match(/attr/g) || []).length;
+      assert.isBelow(truncatedAttrCount, 100);
+      assert.isAtLeast(truncatedAttrCount, 10);
+    });
+
+    it('should truncate a large element with long custom tag name', () => {
+      let longCustomElementTagName = new Array(300).join('b');
+      let customElement = `<${longCustomElementTagName} id="target">A</${longCustomElementTagName}>`;
+      const vNode = queryFixture(customElement);
+      const result = new DqElement(vNode);
+      assert.equal(result.source, `${customElement.substring(0, 300)} ...>`);
+    });
+
+    it('should not truncate attributes if children are long but attribute itself is within limits', () => {
+      let el = document.createElement('div');
+      let attributeValue = '';
+      let innerHtml = '';
+      for (let i = 0; i < 50; i++) {
+        attributeValue += 'a';
+        innerHtml += 'foobar';
+      }
+      el.setAttribute('long-attribute', attributeValue);
+      el.innerHTML = innerHtml;
+
+      const vNode = new DqElement(el);
+      assert.equal(vNode.source, `<div long-attribute="${attributeValue}">`);
+    });
+
     it('should use spec object over passed element', () => {
       const vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
       const spec = { source: 'woot' };
