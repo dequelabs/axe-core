@@ -900,6 +900,9 @@
         "tooManyRects": "Could not get the target size because there are too many overlapping elements"
       }
     },
+    "error-occurred": {
+      "incomplete": "An error occurred while running this rule"
+    },
     "header-present": {
       "pass": "Page has a heading",
       "fail": "Page does not have a heading"

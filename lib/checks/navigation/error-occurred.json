@@ -1,0 +1,8 @@
+{
+  "id": "error-occurred",
+  "metadata": {
+    "messages": {
+      "incomplete": "An error occurred while running this rule"
+    }
+  }
+}
