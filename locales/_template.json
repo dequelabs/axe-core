@@ -900,9 +900,6 @@
         "tooManyRects": "Could not get the target size because there are too many overlapping elements"
       }
     },
-    "error-occurred": {
-      "incomplete": "An error occurred while running this rule"
-    },
     "header-present": {
       "pass": "Page has a heading",
       "fail": "Page does not have a heading"
@@ -986,6 +983,10 @@
     "doc-has-title": {
       "pass": "Document has a non-empty <title> element",
       "fail": "Document does not have a non-empty <title> element"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "An error occurred while running this rule"
     },
     "exists": {
       "pass": "Element does not exist",

@@ -1,7 +1,9 @@
 {
   "id": "error-occurred",
+  "evaluate": "exists-evaluate",
   "metadata": {
     "messages": {
+      "pass": "",
       "incomplete": "An error occurred while running this rule"
     }
   }
