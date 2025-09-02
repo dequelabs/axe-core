@@ -213,8 +213,14 @@ declare namespace axe {
     stack: string;
     ruleId?: string;
     method?: string;
-    cause?: SupportError;
-    errorNode?: SerialDqElement;
+    cause?: SerialError;
+    errorNode?: DqElement;
+  }
+  interface SerialError {
+    message: string;
+    stack: string;
+    name: string;
+    cause?: SerialError;
   }
   interface CheckLocale {
     [key: string]: CheckMessages;
@@ -473,7 +479,13 @@ declare namespace axe {
     isLabelledShadowDomSelector: (
       selector: unknown
     ) => selector is LabelledShadowDomSelector;
-
+    SupportError: (
+      error: Error,
+      ruleId?: string,
+      method?: string,
+      errorNode?: DqElement
+    ) => SupportError;
+    serializeError: (error: Error) => SerialError;
     DqElement: DqElementConstructor;
     uuid: (
       options?: { random?: Uint8Array | Array<number> },
