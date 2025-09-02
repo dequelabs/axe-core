@@ -86,7 +86,6 @@ describe('error-occurred test', () => {
 
     describe('incomplete', () => {
       it('should find matches-error', () => {
-        console.log(results.incomplete);
         const matchesError = results.incomplete.find(
           result => result.id === 'matches-error'
         );
