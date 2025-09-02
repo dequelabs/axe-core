@@ -155,7 +155,7 @@ declare namespace axe {
     toolOptions: RunOptions;
     passes: Result[];
     violations: Result[];
-    incomplete: Result[];
+    incomplete: IncompleteResult[];
     inapplicable: Result[];
   }
   interface Result {
@@ -166,6 +166,9 @@ declare namespace axe {
     impact?: ImpactValue;
     tags: TagValue[];
     nodes: NodeResult[];
+  }
+  interface IncompleteResult extends Result {
+    error: Omit<SupportError, 'errorNode'>;
   }
   interface NodeResult {
     html: string;
@@ -203,6 +206,15 @@ declare namespace axe {
     pass: string | { [key: string]: string };
     fail: string | { [key: string]: string };
     incomplete?: string | { [key: string]: string };
+  }
+  interface SupportError {
+    name: string;
+    message: string;
+    stack: string;
+    ruleId?: string;
+    method?: string;
+    cause?: SupportError;
+    errorNode?: SerialDqElement;
   }
   interface CheckLocale {
     [key: string]: CheckMessages;
