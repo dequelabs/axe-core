@@ -701,17 +701,19 @@ describe('Rule', () => {
               throw new Error('this is an error');
             }
           });
+          axe.setup();
           rule.run(
             { include: [axe.utils.getFlattenedTree(fixture)[0]] },
             {},
             isNotCalled,
-            err => {
+            captureError(err => {
               assert.instanceOf(err, axe.utils.SupportError);
               assert.include(err.message, 'this is an error');
               assert.equal(err.ruleId, 'fizz');
               assert.equal(err.method, '#matches');
+              assert.deepEqual(err.errorNode.selector, ['#fixture']);
               done();
-            }
+            }, done)
           );
         });
 
@@ -740,6 +742,7 @@ describe('Rule', () => {
               assert.include(err.message, 'zombies ate my pants');
               assert.equal(err.ruleId, 'garden');
               assert.equal(err.method, 'plants#evaluate');
+              assert.deepEqual(err.errorNode.selector, ['#fixture']);
               done();
             }, done)
           );
@@ -1703,6 +1706,7 @@ describe('Rule', () => {
             }
           }
         );
+        axe.setup();
         try {
           rule.after(
             {
@@ -1711,7 +1715,8 @@ describe('Rule', () => {
                 {
                   all: [],
                   none: [],
-                  any: [{ id: 'cats', result: true }]
+                  any: [{ id: 'cats', result: true }],
+                  node: new axe.utils.DqElement(fixture)
                 }
               ]
             },
@@ -1723,6 +1728,7 @@ describe('Rule', () => {
           assert.include(err.message, 'this is an error');
           assert.equal(err.ruleId, 'dogs');
           assert.equal(err.method, 'cats#after');
+          assert.deepEqual(err.errorNode.selector, ['#fixture']);
         }
       });
     });

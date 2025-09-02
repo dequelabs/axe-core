@@ -9,7 +9,7 @@ describe('Audit', () => {
   };
   const noop = () => {};
 
-  const assertSupportErrorMatch = (actual, expect) => {
+  const assertEqualSupportError = (actual, expect) => {
     assert.include(actual.message, expect.message);
     assert.equal(actual.stack, expect.stack);
     assert.equal(actual.name, expect.name);
@@ -17,7 +17,7 @@ describe('Audit', () => {
 
   const assertErrorResults = (result, error, selector) => {
     assert.equal(result.result, 'cantTell');
-    assertSupportErrorMatch(result.error, error);
+    assertEqualSupportError(result.error, error);
 
     assert.lengthOf(result.nodes, 1);
     const node1 = result.nodes[0];
@@ -30,7 +30,7 @@ describe('Audit', () => {
     assert.equal(none.id, 'error-occurred');
     assert.equal(none.result, undefined);
     assert.isDefined(none.data);
-    assertSupportErrorMatch(none.data, error);
+    assertEqualSupportError(none.data, error);
     assert.lengthOf(none.relatedNodes, 0);
   };
 
@@ -85,10 +85,7 @@ describe('Audit', () => {
   ];
 
   const fixture = document.getElementById('fixture');
-
   let origAuditRun;
-  let origAxeLog;
-
   beforeEach(() => {
     audit = new Audit();
     mockRules.forEach(function (r) {
@@ -98,14 +95,11 @@ describe('Audit', () => {
       audit.addCheck(c);
     });
     origAuditRun = audit.run;
-    origAxeLog = axe.log;
-    axe.log = noop; // quiet axe.log
   });
 
   afterEach(() => {
     axe.teardown();
     audit.run = origAuditRun;
-    axe.log = origAxeLog;
   });
 
   it('should be a function', () => {
@@ -1249,7 +1243,7 @@ describe('Audit', () => {
         axe.setup();
       });
 
-      it('catches errors and passes them as a cantTell result', done => {
+      it('catches errors and resolves them as a cantTell result', done => {
         audit.run(
           { include: [axe._tree[0]] },
           { runOnly: { type: 'rule', values: ['throw1'] } },
@@ -1309,6 +1303,18 @@ describe('Audit', () => {
 
       audit.after(results, options);
       assert.isTrue(success);
+    });
+
+    it('does not run Rule#after if the result has an error', () => {
+      audit = new Audit();
+      const results = [{ id: 'throw1', error: new Error('La la la!') }];
+      let success = true;
+      audit.rules.push(new Rule({ id: 'throw1' }));
+      audit.rules[0].after = () => (success = false);
+      audit.after(results, {});
+      assert.lengthOf(results, 1);
+      assert.equal(results[0].error.message, 'La la la!');
+      assert.isTrue(success, 'Rule#after should not be called');
     });
 
     it('catches errors and passes them as a cantTell result', () => {
@@ -1379,7 +1385,7 @@ describe('Audit', () => {
         audit.after(results, options);
         assert.fail('Should have thrown');
       } catch (actual) {
-        assertSupportErrorMatch(actual, err);
+        assertEqualSupportError(actual, err);
       }
     });
   });
