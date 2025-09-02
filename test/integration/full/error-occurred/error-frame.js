@@ -69,7 +69,6 @@ describe('error-occurred test', () => {
           const partialResults = await Promise.all(
             runPartialRecursive(document, runOptions)
           );
-          console.log(partialResults);
           results = await axe.finishRun(partialResults, runOptions);
           resolve();
         });
