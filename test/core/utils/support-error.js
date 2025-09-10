@@ -19,21 +19,21 @@ describe('utils.SupportError', () => {
 
   it('includes the ruleId if provided', () => {
     const error = new Error('test');
-    const supportError = new SupportError({ error, ruleId: 'test' });
-    assert.equal(supportError.ruleId, 'test');
-    assert.include(supportError.message, 'Skipping test rule.');
+    const supportError = new SupportError({ error, ruleId: 'aria' });
+    assert.equal(supportError.ruleId, 'aria');
+    assert.include(supportError.message, 'Skipping aria rule.');
   });
 
   it('includes the method if provided', () => {
     const error = new Error('test');
-    const supportError = new SupportError({ error, method: 'test' });
-    assert.equal(supportError.method, 'test');
+    const supportError = new SupportError({ error, method: '#matches' });
+    assert.equal(supportError.method, '#matches');
   });
 
   it('includes the errorNode if provided', () => {
     const error = new Error('test');
-    const supportError = new SupportError({ error, errorNode: 'test' });
-    assert.equal(supportError.errorNode, 'test');
+    const supportError = new SupportError({ error, errorNode: 'err' });
+    assert.equal(supportError.errorNode, 'err');
   });
 
   it('includes a serialized cause if provided', () => {
