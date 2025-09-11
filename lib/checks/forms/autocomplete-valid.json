@@ -17,7 +17,9 @@
       "disabled",
       "enabled",
       "undefined",
-      "null"
+      "null",
+      "xoff",
+      "xon"
     ],
     "ignoredValues": ["text", "pronouns", "gender", "message", "content"]
   }
