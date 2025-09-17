@@ -40,7 +40,8 @@ function initJsdom(callback) {
       10: '16.7.0',
       12: '19.0.0',
       14: '21.1.2',
-      16: '22.1.0'
+      16: '22.1.0',
+      18: '26.1.0'
     };
 
     var majorNodeVersion = process.versions.node.split('.')[0];
