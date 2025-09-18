@@ -1,7 +1,7 @@
 describe('scrollable-region-focusable-matches', () => {
   'use strict';
 
-  const fixture = document.querySelector('#fixture');
+  const fixture = document.getElementById('fixture');
   const queryFixture = axe.testUtils.queryFixture;
   const shadowSupported = axe.testUtils.shadowSupport.v1;
   const rule = axe.utils.getRule('scrollable-region-focusable');
