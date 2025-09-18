@@ -4,7 +4,35 @@
   <!-- The playground is used for quick local host axe-core during development -->
 
   <main>
-    <h1>Hello World</h1>
+    <div
+      id="pass5"
+      style="height: 200px; overflow-y: auto"
+      contenteditable="true"
+    >
+      <div style="height: 2000px">
+        <div
+          id="pass6"
+          style="height: 100px; overflow-y: auto"
+          contenteditable="invalid"
+        >
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              tincidunt nisi quis elit volutpat dignissim. Vivamus quis bibendum
+              nisl. Duis id imperdiet quam. Sed cursus elit condimentum lectus
+              viverra, quis molestie erat ullamcorper. Ut ut elit nulla. Fusce
+              fermentum aliquam augue, vitae blandit diam dignissim ut. Aliquam
+              feugiat velit tempor molestie tempor. Nunc placerat et ante id
+              imperdiet. Integer volutpat, tortor ut facilisis tincidunt, sapien
+              ex molestie metus, vel eleifend tortor sapien vitae elit.
+              Pellentesque vel tristique odio. Duis ante augue, luctus eget
+              eleifend ut, malesuada sit amet diam. Duis viverra blandit erat ac
+              ornare. Quisque ut auctor justo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script src="/axe.js"></script>
@@ -15,7 +43,7 @@
       () => {
         axe.run(
           {
-            runOnly: 'color-contrast',
+            runOnly: 'scrollable-region-focusable',
             elementRef: true
           },
           (err, results) => {
