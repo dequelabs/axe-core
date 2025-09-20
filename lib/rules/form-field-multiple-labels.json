@@ -10,7 +10,9 @@
     "TTv5",
     "TT5.c",
     "EN-301-549",
-    "EN-9.3.3.2"
+    "EN-9.3.3.2",
+    "RGAAv4",
+    "RGAA-11.2.1"
   ],
   "metadata": {
     "description": "Ensure form field does not have multiple label elements",

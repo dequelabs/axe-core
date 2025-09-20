@@ -10,7 +10,9 @@
     "wcag144",
     "EN-301-549",
     "EN-9.1.4.4",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-10.4.2"
   ],
   "actIds": ["b4f0c3"],
   "metadata": {

@@ -10,7 +10,9 @@
     "TT11.a",
     "EN-301-549",
     "EN-9.3.1.1",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-8.4.1"
   ],
   "actIds": ["bf051a"],
   "metadata": {

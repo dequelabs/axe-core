@@ -138,21 +138,21 @@ axe.configure({
 Axe-core supports the following locales. Do note that since locales are contributed by our community, they are not guaranteed to include all translations needed in a release.
 
 - Basque
+- Chinese (Simplified)
+- Chinese (Traditional)
 - Danish
 - Dutch
 - French
 - German
+- Greek
 - Hebrew
+- Italian
 - Japanese
 - Korean
 - Norwegian (Bokmål)
 - Polish
 - Portuguese (Brazilian)
 - Spanish
-- Greek
-- Italian
-- Simplified Chinese
-- Traditional Chinese
 
 ## Updates & Security
 
