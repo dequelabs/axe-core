@@ -168,7 +168,7 @@ declare namespace axe {
     nodes: NodeResult[];
   }
   interface IncompleteResult extends Result {
-    error: Omit<SupportError, 'errorNode'>;
+    error?: Omit<SupportError, 'errorNode'>;
   }
   interface NodeResult {
     html: string;
