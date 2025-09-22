@@ -1,6 +1,6 @@
 {
   "id": "meta-viewport",
-  "impact": "critical",
+  "impact": "moderate",
   "selector": "meta[name=\"viewport\"]",
   "matches": "is-initiator-matches",
   "excludeHidden": false,
