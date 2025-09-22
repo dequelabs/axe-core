@@ -170,7 +170,7 @@ module.exports = [
             {
               // e.g. "../commons/aria/" or "../public/"
               regex:
-                '.*\\.\\.\\/(commons|imports|public|checks|rules)\\/|.*\\.\\.\\/reporters\\/.*?\\.js',
+                '.*\\.\\.\\/(commons|imports|public|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
               message:
                 'Util files should only import from other utils, core, or standard files'
             },
@@ -196,7 +196,7 @@ module.exports = [
             {
               // e.g. "../commons/aria/" or "../checks/"
               regex:
-                '.*\\.\\.\\/(commons|imports|checks|rules)\\/|.*\\.\\.\\/reporters\\/.*?\\.js',
+                '.*\\.\\.\\/(commons|imports|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
               message:
                 'Public files should only import from other public, util, core, or standard files'
             },
@@ -238,7 +238,8 @@ module.exports = [
           patterns: [
             {
               // e.g. "../commons/aria/" or "../checks/"
-              regex: '.*\\.\\.\\/(commons|base|imports|public|checks|rules)\\/',
+              regex:
+                '.*\\.\\.\\/(commons|base|imports|public|checks|rules)(\\/|$)',
               message: 'Reporter files should only import util functions'
             },
             // disallow imports from node modules
@@ -261,7 +262,7 @@ module.exports = [
           patterns: [
             {
               // e.g. ../checks/"
-              regex: '.*\\.\\.\\/(checks|rules)\\/',
+              regex: '.*\\.\\.\\/(checks|rules)(\\/|$)',
               message: 'Commons files cannot import from checks and rules'
             },
             // disallow imports from node modules
@@ -275,7 +276,7 @@ module.exports = [
     }
   },
   {
-    // generally don't use virtual node in utils
+    // Utils should be functions that can be used without setting up the virtual tree, as opposed to commons which require the virtual tree
     files: ['lib/core/utils/**/*.js'],
     // these are files with known uses of virtual node that are legacy before this rule was enforced
     ignores: [
@@ -289,11 +290,13 @@ module.exports = [
         'error',
         {
           selector: 'MemberExpression[object.name=vNode]',
-          message: "Don't use Virtual Node objects in utils."
+          message:
+            "Utils is meant for utility functions that work independently of axe's state; utilities that require the virtual tree to be set up should go in commons, not utils."
         },
         {
           selector: 'MemberExpression[object.name=virtualNode]',
-          message: "Don't use Virtual Node objects in utils."
+          message:
+            "Utils is meant for utility functions that work independently of axe's state; utilities that require the virtual tree to be set up should go in commons, not utils."
         }
       ]
     }
