@@ -160,14 +160,8 @@ module.exports = [
     }
   },
   {
-    // restrict imports to core/utils files to other core/utils, core, core/base, standards, or reporters/helpers
+    // restrict imports to core/utils files to other core/utils, core, core/base, standards, imports, or reporters/helpers
     files: ['lib/core/utils/**/*.js'],
-    ignores: [
-      // this configures the css-parser import and exports the created instance
-      'lib/core/utils/css-parser.js',
-      // wrapper that keeps track of each memoized function in order to reset them
-      'lib/core/utils/memoize.js'
-    ],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -176,7 +170,7 @@ module.exports = [
             {
               // e.g. "../commons/aria/" or "../public/"
               regex:
-                '.*\\.\\.\\/(commons|imports|public|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
+                '.*\\.\\.\\/(commons|public|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
               message:
                 'Util files should only import from other utils, core, or standard files'
             },
@@ -202,7 +196,7 @@ module.exports = [
             {
               // e.g. "../commons/aria/" or "../checks/"
               regex:
-                '.*\\.\\.\\/(commons|imports|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
+                '.*\\.\\.\\/(commons|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
               message:
                 'Public files should only import from other public, util, core, or standard files'
             },
@@ -244,8 +238,7 @@ module.exports = [
           patterns: [
             {
               // e.g. "../commons/aria/" or "../checks/"
-              regex:
-                '.*\\.\\.\\/(commons|base|imports|public|checks|rules)(\\/|$)',
+              regex: '.*\\.\\.\\/(commons|base|public|checks|rules)(\\/|$)',
               message: 'Reporter files should only import util functions'
             },
             // disallow imports from node modules
