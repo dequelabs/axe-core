@@ -11,7 +11,9 @@
     "TTv5",
     "TT13.a",
     "EN-301-549",
-    "EN-9.1.4.1"
+    "EN-9.1.4.1",
+    "RGAAv4",
+    "RGAA-10.6.1"
   ],
   "metadata": {
     "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",

@@ -4,6 +4,7 @@ describe('axe.run', function () {
   var fixture = document.getElementById('fixture');
   var noop = function () {};
   var origRunRules = axe._runRules;
+  var captureError = axe.testUtils.captureError;
 
   beforeEach(function () {
     axe._load({
@@ -347,12 +348,12 @@ describe('axe.run', function () {
         {
           xpath: true
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].xpath, [
-            "/div[@id='fixture']"
+            "//div[@id='fixture']"
           ]);
           done();
-        }
+        }, done)
       );
     });
 
@@ -362,13 +363,13 @@ describe('axe.run', function () {
         {
           xpath: true
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(
             result.violations[0].nodes[0].none[0].relatedNodes[0].xpath,
-            ["/div[@id='fixture']"]
+            ["//div[@id='fixture']"]
           );
           done();
-        }
+        }, done)
       );
     });
 
@@ -379,12 +380,12 @@ describe('axe.run', function () {
           xpath: true,
           reporter: 'no-passes'
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].xpath, [
-            "/div[@id='fixture']"
+            "//div[@id='fixture']"
           ]);
           done();
-        }
+        }, done)
       );
     });
   });
@@ -396,10 +397,10 @@ describe('axe.run', function () {
         {
           absolutePaths: 0
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].target, ['#fixture']);
           done();
-        }
+        }, done)
       );
     });
 
@@ -409,12 +410,12 @@ describe('axe.run', function () {
         {
           absolutePaths: 'yes please'
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(result.violations[0].nodes[0].target, [
             'html > body > #fixture'
           ]);
           done();
-        }
+        }, done)
       );
     });
 
@@ -424,13 +425,13 @@ describe('axe.run', function () {
         {
           absolutePaths: true
         },
-        function (err, result) {
+        captureError(function (err, result) {
           assert.deepEqual(
             result.violations[0].nodes[0].none[0].relatedNodes[0].target,
             ['html > body > #fixture']
           );
           done();
-        }
+        }, done)
       );
     });
   });

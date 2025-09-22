@@ -11,7 +11,9 @@
     "TT13.c",
     "EN-301-549",
     "EN-9.1.4.3",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-3.2.1"
   ],
   "actIds": ["afw4f7", "09o5cg"],
   "metadata": {

@@ -13,7 +13,9 @@
     "TT2.a",
     "EN-301-549",
     "EN-9.1.4.2",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-4.10.1"
   ],
   "actIds": ["80f0bf"],
   "metadata": {

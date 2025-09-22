@@ -1,4 +1,8 @@
 /* global chai */
+var messages = [];
+window.addEventListener('message', function (msg) {
+  messages.push(msg.data);
+});
 
 describe('isolated-env test', function () {
   'use strict';
@@ -40,11 +44,16 @@ describe('isolated-env test', function () {
     });
 
     var isloadedPromise = new Promise(function (resolve, reject) {
-      window.addEventListener('message', function (msg) {
-        if (msg.data === 'axe-loaded') {
-          resolve();
-        }
-      });
+      if (messages.includes('axe-loaded')) {
+        resolve();
+      } else {
+        window.addEventListener('message', function (msg) {
+          if (msg.data === 'axe-loaded') {
+            resolve();
+          }
+        });
+      }
+
       setTimeout(function () {
         reject(new Error('axe-loaded message not called'));
       }, 5000);

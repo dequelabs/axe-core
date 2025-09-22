@@ -11,7 +11,9 @@
     "TTv5",
     "TT4.a",
     "EN-301-549",
-    "EN-9.2.1.1"
+    "EN-9.2.1.1",
+    "RGAAv4",
+    "RGAA-1.1.4"
   ],
   "metadata": {
     "description": "Ensure that server-side image maps are not used",

@@ -221,8 +221,8 @@ describe('runRules', function () {
                           'html > body > div:nth-child(2)'
                         ],
                         xpath: [
-                          "/iframe[@id='context-test']",
-                          "/div[@id='target']"
+                          "//iframe[@id='context-test']",
+                          "//div[@id='target']"
                         ],
                         source: '<div id="target"></div>',
                         nodeIndexes: [12, 14],
@@ -264,8 +264,8 @@ describe('runRules', function () {
                           'html > body > div:nth-child(1)'
                         ],
                         xpath: [
-                          "/iframe[@id='context-test']",
-                          "/div[@id='foo']"
+                          "//iframe[@id='context-test']",
+                          "//div[@id='foo']"
                         ],
                         source:
                           '<div id="foo">\n      <div id="bar"></div>\n    </div>',
@@ -284,8 +284,8 @@ describe('runRules', function () {
                                 'html > body > div:nth-child(1)'
                               ],
                               xpath: [
-                                "/iframe[@id='context-test']",
-                                "/div[@id='foo']"
+                                "//iframe[@id='context-test']",
+                                "//div[@id='foo']"
                               ],
                               source:
                                 '<div id="foo">\n      <div id="bar"></div>\n    </div>',
@@ -536,7 +536,7 @@ describe('runRules', function () {
                     ancestry: [
                       'html > body > div:nth-child(1) > div:nth-child(1)'
                     ],
-                    xpath: ["/div[@id='target']"],
+                    xpath: ["//div[@id='target']"],
                     source: '<div id="target">Target!</div>',
                     nodeIndexes: [12],
                     fromFrame: false
@@ -578,7 +578,7 @@ describe('runRules', function () {
                   impact: null,
                   node: {
                     selector: ['#target'],
-                    xpath: ["/div[@id='target']"],
+                    xpath: ["//div[@id='target']"],
                     ancestry: [
                       'html > body > div:nth-child(1) > div:nth-child(1)'
                     ],
@@ -599,7 +599,7 @@ describe('runRules', function () {
                           ancestry: [
                             'html > body > div:nth-child(1) > div:nth-child(1)'
                           ],
-                          xpath: ["/div[@id='target']"],
+                          xpath: ["//div[@id='target']"],
                           source: '<div id="target">Target!</div>',
                           nodeIndexes: [12],
                           fromFrame: false
