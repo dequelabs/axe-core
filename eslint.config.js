@@ -162,6 +162,12 @@ module.exports = [
   {
     // restrict imports to core/utils files to other core/utils, core, core/base, standards, or reporters/helpers
     files: ['lib/core/utils/**/*.js'],
+    ignores: [
+      // this configures the css-parser import and exports the created instance
+      'lib/core/utils/css-parser.js',
+      // wrapper that keeps track of each memoized function in order to reset them
+      'lib/core/utils/memoize.js'
+    ],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -278,12 +284,16 @@ module.exports = [
   {
     // Utils should be functions that can be used without setting up the virtual tree, as opposed to commons which require the virtual tree
     files: ['lib/core/utils/**/*.js'],
-    // these are files with known uses of virtual node that are legacy before this rule was enforced
     ignores: [
+      // these are files with known uses of virtual node that are legacy before this rule was enforced
       'lib/core/utils/closest.js',
       'lib/core/utils/contains.js',
       'lib/core/utils/query-selector-all-filter.js',
-      'lib/core/utils/selector-cache.js'
+      'lib/core/utils/selector-cache.js',
+      // this will create a virtual node if one doesn't exist already in order to truncate the html output properly
+      'lib/core/utils/dq-element.js',
+      // this sets up the virtual tree so is allowed vNode
+      'lib/core/utils/get-flattened-tree.js'
     ],
     rules: {
       'no-restricted-syntax': [
