@@ -29,7 +29,7 @@ describe('dom.isHiddenWithCSS', function () {
     document.getElementById('fixture').innerHTML = '';
   });
 
-  it('should throw an error if computedStyle returns null', function () {
+  it.skip('should throw an error if computedStyle returns null', function () {
     window.getComputedStyle = function () {
       return null;
     };

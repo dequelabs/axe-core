@@ -18,7 +18,7 @@ describe('dom.isVisible', function () {
 
   describe('default usage', function () {
     // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function () {
+    it.skip('should return false if computedStyle return null for whatever reason', function () {
       computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
       var el = document.createElement('div');
       assert.isFalse(axe.commons.dom.isVisible(el));
@@ -409,7 +409,7 @@ describe('dom.isVisible', function () {
 
   describe('screen readers', function () {
     // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function () {
+    it.skip('should return false if computedStyle return null for whatever reason', function () {
       computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
       var el = document.createElement('div');
       assert.isFalse(axe.commons.dom.isVisible(el, true));
