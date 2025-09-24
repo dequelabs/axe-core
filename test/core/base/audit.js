@@ -9,7 +9,7 @@ describe('Audit', () => {
   };
   const noop = () => {};
 
-  const assertEqualSupportError = (actual, expect) => {
+  const assertEqualRuleError = (actual, expect) => {
     assert.include(actual.message, expect.message);
     assert.equal(actual.stack, expect.stack);
     assert.equal(actual.name, expect.name);
@@ -17,7 +17,7 @@ describe('Audit', () => {
 
   const assertErrorResults = (result, error, selector) => {
     assert.equal(result.result, 'cantTell');
-    assertEqualSupportError(result.error, error);
+    assertEqualRuleError(result.error, error);
 
     assert.lengthOf(result.nodes, 1);
     const node1 = result.nodes[0];
@@ -30,7 +30,7 @@ describe('Audit', () => {
     assert.equal(none.id, 'error-occurred');
     assert.equal(none.result, undefined);
     assert.isDefined(none.data);
-    assertEqualSupportError(none.data, error);
+    assertEqualRuleError(none.data, error);
     assert.lengthOf(none.relatedNodes, 0);
   };
 
@@ -1385,7 +1385,7 @@ describe('Audit', () => {
         audit.after(results, options);
         assert.fail('Should have thrown');
       } catch (actual) {
-        assertEqualSupportError(actual, err);
+        assertEqualRuleError(actual, err);
       }
     });
   });

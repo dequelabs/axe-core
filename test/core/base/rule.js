@@ -694,7 +694,7 @@ describe('Rule', () => {
       });
 
       describe('error handling', () => {
-        it('should return a SupportError if #matches throws', done => {
+        it('should return a RuleError if #matches throws', done => {
           const rule = new Rule({
             id: 'fizz',
             matches: () => {
@@ -707,7 +707,7 @@ describe('Rule', () => {
             {},
             isNotCalled,
             captureError(err => {
-              assert.instanceOf(err, axe.utils.SupportError);
+              assert.instanceOf(err, axe.utils.RuleError);
               assert.include(err.message, 'this is an error');
               assert.equal(err.ruleId, 'fizz');
               assert.equal(err.method, '#matches');
@@ -717,7 +717,7 @@ describe('Rule', () => {
           );
         });
 
-        it('should return a SupportError if check.evaluate throws', done => {
+        it('should return a RuleError if check.evaluate throws', done => {
           const rule = new Rule(
             { id: 'garden', any: ['plants'] },
             {
@@ -738,7 +738,7 @@ describe('Rule', () => {
             {},
             isNotCalled,
             captureError(err => {
-              assert.instanceOf(err, axe.utils.SupportError);
+              assert.instanceOf(err, axe.utils.RuleError);
               assert.include(err.message, 'zombies ate my pants');
               assert.equal(err.ruleId, 'garden');
               assert.equal(err.method, 'plants#evaluate');
@@ -1691,7 +1691,7 @@ describe('Rule', () => {
         assert.lengthOf(result.nodes, 1);
       });
 
-      it('should throw a SupportError if check.after throws', () => {
+      it('should throw a RuleError if check.after throws', () => {
         const rule = new Rule(
           { id: 'dogs', any: ['cats'] },
           {
@@ -1724,7 +1724,7 @@ describe('Rule', () => {
           );
           assert.fail('Should have thrown');
         } catch (err) {
-          assert.instanceOf(err, axe.utils.SupportError);
+          assert.instanceOf(err, axe.utils.RuleError);
           assert.include(err.message, 'this is an error');
           assert.equal(err.ruleId, 'dogs');
           assert.equal(err.method, 'cats#after');

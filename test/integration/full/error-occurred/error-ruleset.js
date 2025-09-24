@@ -2,6 +2,9 @@ window.assertIsErrorOccurred = function (result, { message, target }) {
   assert.isDefined(result);
   assert.isDefined(result.error);
   assert.include(result.error.message, message);
+  assert.isDefined(result.error.method);
+  assert.isDefined(result.error.errorNode);
+  assert.isUndefined(result.errorNode);
 
   assert.lengthOf(result.nodes, 1);
   const node = result.nodes[0];
@@ -10,7 +13,9 @@ window.assertIsErrorOccurred = function (result, { message, target }) {
   assert.lengthOf(node.none, 1);
   assert.equal(node.none[0].id, 'error-occurred');
   assert.include(node.none[0].message, 'Axe encountered an error');
+  assert.deepEqual(node.none[0].data, result.error);
   assert.deepEqual(node.target, target);
+  assert.isDefined(node.html);
 };
 
 axe.configure({

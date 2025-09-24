@@ -1,7 +1,7 @@
 describe('axe.utils.mergeResults', () => {
   'use strict';
   var queryFixture = axe.testUtils.queryFixture;
-  var SupportError = axe.utils.SupportError;
+  var RuleError = axe.utils.RuleError;
 
   it('should normalize empty results', () => {
     var result = axe.utils.mergeResults([
@@ -441,7 +441,7 @@ describe('axe.utils.mergeResults', () => {
             {
               id: 'error-occurred',
               result: undefined,
-              error: new SupportError({ error: new Error('test 1') }),
+              error: new RuleError({ error: new Error('test 1') }),
               nodes: [
                 {
                   node: {
@@ -455,7 +455,7 @@ describe('axe.utils.mergeResults', () => {
             {
               id: 'error-occurred',
               result: undefined,
-              error: new SupportError({ error: new Error('test 2') }),
+              error: new RuleError({ error: new Error('test 2') }),
               nodes: [
                 {
                   node: {
