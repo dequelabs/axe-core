@@ -2,7 +2,15 @@
   "id": "aria-conditional-attr",
   "impact": "serious",
   "matches": "aria-allowed-attr-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "RGAAv4",
+    "RGAA-7.1.1"
+  ],
   "actIds": ["5c01ea"],
   "metadata": {
     "description": "Ensure ARIA attributes are used as described in the specification of the element's role",

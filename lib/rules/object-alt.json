@@ -10,7 +10,9 @@
     "section508",
     "section508.22.a",
     "EN-301-549",
-    "EN-9.1.1.1"
+    "EN-9.1.1.1",
+    "RGAAv4",
+    "RGAA-1.1.6"
   ],
   "actIds": ["8fc3b6"],
   "metadata": {

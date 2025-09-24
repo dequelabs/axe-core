@@ -19,7 +19,7 @@
     },
     "aria-braille-equivalent": {
       "description": "aria-braillelabelとaria-brailleroledescriptionには、点字以外の同等のものが存在することを確認してください",
-      "help": "aria-braille属性には、点字以外の同等のものがなければなりません "
+      "help": "aria-braille属性には、点字以外の同等のものがなければなりません"
     },
     "aria-command-name": {
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認してください",
@@ -179,7 +179,7 @@
     },
     "form-field-multiple-labels": {
       "description": "フォームフィールドに複数のlabel要素が存在しないことを確認してください",
-      "help": "フォームフィールドに複数のlabel要素を付与してはなりりません"
+      "help": "フォームフィールドに複数のlabel要素を付与してはなりません"
     },
     "frame-focusable-content": {
       "description": "フォーカス可能な<frame>と<iframe>要素に、tabindex=-1が指定されていないことを確認してください",
@@ -386,7 +386,7 @@
       "help": "要素に指定するtabindexは0より大きい値であってはなりません"
     },
     "table-duplicate-name": {
-      "description": "<caption>要素の内用がsummary属性のテキストと同一ではないことを確認してください",
+      "description": "<caption>要素の内容がsummary属性のテキストと同一ではないことを確認してください",
       "help": "テーブルのキャプションとサマリーは同一であってはなりません"
     },
     "table-fake-caption": {
@@ -853,7 +853,7 @@
       "incomplete": "iframeはまだaxe-coreでテストする必要があります"
     },
     "no-autoplay-audio": {
-      "pass": "<video> または <audio> は許可された時間より長く音声を出力しない、もしくはコントールするメカニズムを持っています",
+      "pass": "<video> または <audio> は許可された時間より長く音声を出力しない、もしくはコントロールするメカニズムを持っています",
       "fail": "<video> または <audio> は許可された時間より長く音声を出力し、かつコントロールするメカニズムを持っていません",
       "incomplete": "<video> または <audio> が許可された時間より長く音声を出力しない、またはコントロールするメカニズムを提供していることを確認しましょう"
     },
@@ -886,7 +886,7 @@
       "pass": {
         "default": "コントロールには十分なサイズがあります (${data.width}px x ${data.height}pxであり、${data.minSize}px x ${data.minSize}px以上です)",
         "obscured": "コントロールは完全に隠されていてクリックできないため無視されます",
-        "large": "ターゲットの大きさはは最低${data.minSize}pxの基準を大きく上回っています。"
+        "large": "ターゲットの大きさは、最低${data.minSize}pxの基準を大きく上回っています。"
       },
       "fail": {
         "default": "ターゲットのサイズが不十分です (${data.width}px x ${data.height}pxですが、${data.minSize}px x ${data.minSize}px以上でなければなりません)",
@@ -1054,7 +1054,7 @@
         "default": "要素のデフォルトのセマンティクスはrole=\"none\"またはrole=\"presentation\"で上書きされませんでした",
         "globalAria": "要素にはグローバルなARIA属性が指定されているため、role=\"none\"またはrole=\"presentation\"にはなりません",
         "focusable": "要素がフォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
-        "both": "要素にはグローバナルARIA属性が指定されており、フォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
+        "both": "要素にはグローバルなARIA属性が指定されており、フォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
         "iframe": "プレゼンテーション用のロールを指定した${data.nodeName}要素に'title'属性を使用すると、スクリーンリーダー間で動作が一貫しません"
       }
     },

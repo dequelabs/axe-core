@@ -15,7 +15,9 @@
     "EN-301-549",
     "EN-9.2.4.4",
     "EN-9.4.1.2",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-1.1.2"
   ],
   "actIds": ["c487ae"],
   "metadata": {
