@@ -11,6 +11,19 @@ describe('utils.serializeError', function () {
     });
   });
 
+  it('should serialize known serializable properties', () => {
+    const error = new Error('test');
+    error.code = 'test';
+    error.ruleId = 'test';
+    error.method = 'test';
+    const serialized = serializeError(error);
+    assert.ownInclude(serialized, {
+      code: error.code,
+      ruleId: error.ruleId,
+      method: error.method
+    });
+  });
+
   it('should serialize an error with a cause', () => {
     const error = new Error('test');
     error.cause = new Error('cause');

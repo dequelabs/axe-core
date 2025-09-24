@@ -3,7 +3,8 @@ window.assertIsErrorOccurred = function (result, { message, target }) {
   assert.isDefined(result.error);
   assert.include(result.error.message, message);
   assert.isDefined(result.error.method);
-  assert.isDefined(result.error.errorNode);
+  // errorNode is not included as it can be unsafe to serialize
+  assert.isUndefined(result.error.errorNode);
   assert.isUndefined(result.errorNode);
 
   assert.lengthOf(result.nodes, 1);
