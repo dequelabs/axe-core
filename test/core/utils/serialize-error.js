@@ -13,15 +13,43 @@ describe('utils.serializeError', function () {
 
   it('should serialize known serializable properties', () => {
     const error = new Error('test');
-    error.code = 'test';
-    error.ruleId = 'test';
-    error.method = 'test';
+    error.code = 3;
+    error.ruleId = 'test1';
+    error.method = 'test2';
     const serialized = serializeError(error);
     assert.ownInclude(serialized, {
       code: error.code,
       ruleId: error.ruleId,
       method: error.method
     });
+  });
+
+  it('should not include nullish properties', () => {
+    const error = new Error('test');
+
+    // Neither an explicitly undefined nor an omitted property should be included
+    error.code = null;
+    error.method = undefined;
+    // error.ruleId = undefined;
+
+    const serialized = serializeError(error);
+    assert.doesNotHaveAnyKeys(serialized, ['code', 'method', 'ruleId']);
+  });
+
+  it('should not include non-scalar values even in allow-listed properties', () => {
+    const error = new Error('test');
+    error.code = { foo: 'bar' };
+    error.ruleId = ['baz', 'qux'];
+    const serialized = serializeError(error);
+    assert.doesNotHaveAnyKeys(serialized, ['method', 'ruleId']);
+  });
+
+  it('should not include non-allow-listed properties', () => {
+    const error = new Error('test');
+    error.someUnknownProp = 'test';
+    error.errorNode = 'test';
+    const serialized = serializeError(error);
+    assert.doesNotHaveAnyKeys(serialized, ['someUnknownProp', 'errorNode']);
   });
 
   it('should serialize an error with a cause', () => {
