@@ -63,7 +63,6 @@ describe('performance timer', () => {
     assert.equal(messages.length, 1);
     const actual = getNumber(messages[0]);
 
-    console.log(`PERF TIMER ACTUAL: ${actual}`);
     assert.isAtLeast(actual, 100);
 
     // The actual value might be significantly >100ms in a browser, especially on a
