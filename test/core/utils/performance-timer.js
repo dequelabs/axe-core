@@ -46,14 +46,32 @@ describe('performance timer', () => {
 
   it('measures time elapsed between marks', async () => {
     performanceTimer.start();
+
+    const timestampPreMarkStart = performance.now();
     performanceTimer.mark('foo_start');
+    const timestampPostMarkStart = performance.now();
+
     await sleep(100);
+
+    const timestampPreMarkEnd = performance.now();
     performanceTimer.mark('foo_end');
+    const timestampPostMarkEnd = performance.now();
+
     performanceTimer.measure('foo', 'foo_start', 'foo_end');
     performanceTimer.logMeasures('foo');
 
     assert.equal(messages.length, 1);
-    assert.closeTo(getNumber(messages[0]), 100, 10);
+    const actual = getNumber(messages[0]);
+
+    console.log(`PERF TIMER ACTUAL: ${actual}`);
+    assert.isAtLeast(actual, 100);
+
+    // The actual value might be significantly >100ms in a browser, especially on a
+    // CI agent with a slow CPU, but should be consistent with performance.now()
+    const maxExpected = timestampPostMarkEnd - timestampPreMarkStart;
+    const minExpected = timestampPreMarkEnd - timestampPostMarkStart;
+    assert.isAtLeast(actual, minExpected);
+    assert.isAtMost(actual, maxExpected);
   });
 
   it('measures time elapsed if auditStart() was called', () => {
@@ -144,23 +162,58 @@ describe('performance timer', () => {
 
   describe('timeElapsed', () => {
     it('returns the time elapsed since axe started', async () => {
+      const timestampPreStart = performance.now();
       performanceTimer.start();
+      const timestampPostStart = performance.now();
+
       await sleep(100);
-      assert.closeTo(performanceTimer.timeElapsed(), 100, 10);
+
+      const timestampPreTimeElapsed = performance.now();
+      const actual = performanceTimer.timeElapsed();
+      const timestampPostTimeElapsed = performance.now();
+
+      assert.isAtLeast(actual, 100);
+      const maxExpected = timestampPostTimeElapsed - timestampPreStart;
+      const minExpected = timestampPreTimeElapsed - timestampPostStart;
+      assert.isAtLeast(actual, minExpected);
+      assert.isAtMost(actual, maxExpected);
     });
 
     it('returns the time elapsed since auditStart() was called', async () => {
+      const timestampPreStart = performance.now();
       performanceTimer.auditStart();
+      const timestampPostStart = performance.now();
+
       await sleep(100);
-      assert.closeTo(performanceTimer.timeElapsed(), 100, 10);
+
+      const timestampPreTimeElapsed = performance.now();
+      const actual = performanceTimer.timeElapsed();
+      const timestampPostTimeElapsed = performance.now();
+
+      assert.isAtLeast(actual, 100);
+      const maxExpected = timestampPostTimeElapsed - timestampPreStart;
+      const minExpected = timestampPreTimeElapsed - timestampPostStart;
+      assert.isAtLeast(actual, minExpected);
+      assert.isAtMost(actual, maxExpected);
     });
 
     it('does not use auditStart if axe started', async () => {
+      const timestampPreStart = performance.now();
       performanceTimer.start();
-      await sleep(100);
+      const timestampPostStart = performance.now();
 
-      performanceTimer.auditStart();
-      assert.closeTo(performanceTimer.timeElapsed(), 100, 10);
+      await sleep(100);
+      performanceTimer.auditStart(); // Should be ignored
+
+      const timestampPreTimeElapsed = performance.now();
+      const actual = performanceTimer.timeElapsed();
+      const timestampPostTimeElapsed = performance.now();
+
+      assert.isAtLeast(actual, 100);
+      const maxExpected = timestampPostTimeElapsed - timestampPreStart;
+      const minExpected = timestampPreTimeElapsed - timestampPostStart;
+      assert.isAtLeast(actual, minExpected);
+      assert.isAtMost(actual, maxExpected);
     });
   });
 });
