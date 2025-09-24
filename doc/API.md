@@ -712,7 +712,6 @@ axe.run(document, function (err, results) {
 
 - `passes[0]`
   ...
-
   - `help` - `"Elements must have sufficient color contrast"`
   - `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
   - `id` - `"color-contrast"`
@@ -725,7 +724,6 @@ axe.run(document, function (err, results) {
 ###### `violations`
 
 - `violations[0]`
-
   - `help` - `"<button> elements must have alternate text"`
   - `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
   - `id` - `"button-name"`
