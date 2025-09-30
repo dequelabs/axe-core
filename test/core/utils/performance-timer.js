@@ -4,6 +4,9 @@ describe('performance timer', () => {
   let messages = [];
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+  // Browser sleeps can slop a bit (in either direction) to sync with other work on the main thread.
+  const ANIMATION_FRAME_TOLERANCE_MS = 17; // Math.ceil(time per frame at 60Hz)
+
   const getNumber = msg => {
     const match = msg.match(/([0-9.]+)ms/);
     return match ? parseFloat(match[1]) : 0;
@@ -63,7 +66,7 @@ describe('performance timer', () => {
     assert.equal(messages.length, 1);
     const actual = getNumber(messages[0]);
 
-    assert.isAtLeast(actual, 100);
+    assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
 
     // The actual value might be significantly >100ms in a browser, especially on a
     // CI agent with a slow CPU, but should be consistent with performance.now()
@@ -171,7 +174,7 @@ describe('performance timer', () => {
       const actual = performanceTimer.timeElapsed();
       const timestampPostTimeElapsed = performance.now();
 
-      assert.isAtLeast(actual, 100);
+      assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
       const maxExpected = timestampPostTimeElapsed - timestampPreStart;
       const minExpected = timestampPreTimeElapsed - timestampPostStart;
       assert.isAtLeast(actual, minExpected);
@@ -189,7 +192,7 @@ describe('performance timer', () => {
       const actual = performanceTimer.timeElapsed();
       const timestampPostTimeElapsed = performance.now();
 
-      assert.isAtLeast(actual, 100);
+      assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
       const maxExpected = timestampPostTimeElapsed - timestampPreStart;
       const minExpected = timestampPreTimeElapsed - timestampPostStart;
       assert.isAtLeast(actual, minExpected);
@@ -208,7 +211,7 @@ describe('performance timer', () => {
       const actual = performanceTimer.timeElapsed();
       const timestampPostTimeElapsed = performance.now();
 
-      assert.isAtLeast(actual, 100);
+      assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
       const maxExpected = timestampPostTimeElapsed - timestampPreStart;
       const minExpected = timestampPreTimeElapsed - timestampPostStart;
       assert.isAtLeast(actual, minExpected);
