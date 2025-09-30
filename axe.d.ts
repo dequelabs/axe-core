@@ -479,12 +479,12 @@ declare namespace axe {
     isLabelledShadowDomSelector: (
       selector: unknown
     ) => selector is LabelledShadowDomSelector;
-    RuleError: (
-      error: Error,
-      ruleId?: string,
-      method?: string,
-      errorNode?: DqElement
-    ) => RuleError;
+    RuleError: new (options: {
+      error: Error;
+      ruleId?: string;
+      method?: string;
+      errorNode?: DqElement;
+    }) => RuleError;
     serializeError: (error: Error) => SerialError;
     DqElement: DqElementConstructor;
     uuid: (
