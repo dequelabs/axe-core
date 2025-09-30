@@ -168,7 +168,7 @@ declare namespace axe {
     nodes: NodeResult[];
   }
   interface IncompleteResult extends Result {
-    error?: Omit<SupportError, 'errorNode'>;
+    error?: Omit<RuleError, 'errorNode'>;
   }
   interface NodeResult {
     html: string;
@@ -207,7 +207,7 @@ declare namespace axe {
     fail: string | { [key: string]: string };
     incomplete?: string | { [key: string]: string };
   }
-  interface SupportError {
+  interface RuleError {
     name: string;
     message: string;
     stack: string;
@@ -479,12 +479,12 @@ declare namespace axe {
     isLabelledShadowDomSelector: (
       selector: unknown
     ) => selector is LabelledShadowDomSelector;
-    SupportError: (
+    RuleError: (
       error: Error,
       ruleId?: string,
       method?: string,
       errorNode?: DqElement
-    ) => SupportError;
+    ) => RuleError;
     serializeError: (error: Error) => SerialError;
     DqElement: DqElementConstructor;
     uuid: (
