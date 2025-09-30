@@ -405,7 +405,7 @@ function findTagIssues(tags) {
       standardTag: standardTags[0] ?? null,
       criterionTags
     };
-    if (bestPracticeTags.length !== 0) {
+    if (name !== 'RGAA' && bestPracticeTags.length !== 0) {
       issues.push(`${name} tags cannot be used along side best-practice tag`);
     }
     if (standardTags.length === 0) {
@@ -417,7 +417,7 @@ function findTagIssues(tags) {
       issues.push(`Expected at least one ${name} criterion tag, got 0`);
     }
 
-    if (wcagLevelRegex) {
+    if (wcagLevelRegex && standards.WCAG) {
       const wcagLevel = standards.WCAG.standardTag;
       if (!wcagLevel.match(wcagLevelRegex)) {
         issues.push(`${name} rules not allowed on ${wcagLevel}`);
