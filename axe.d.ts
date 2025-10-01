@@ -214,7 +214,7 @@ declare namespace axe {
     ruleId?: string;
     method?: string;
     cause?: SerialError;
-    errorNode?: DqElement;
+    errorNode?: SerialDqElement;
   }
   interface SerialError {
     message: string;
@@ -483,7 +483,7 @@ declare namespace axe {
       error: Error;
       ruleId?: string;
       method?: string;
-      errorNode?: DqElement;
+      errorNode?: SerialDqElement;
     }) => RuleError;
     serializeError: (error: Error) => SerialError;
     DqElement: DqElementConstructor;
