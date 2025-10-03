@@ -386,23 +386,25 @@ declare namespace axe {
     frameContext: FrameContextObject;
   }
 
-  interface RawCheckResult extends Omit<CheckResult, 'relatedNodes'> {
+  interface RawCheckResult
+    extends Omit<CheckResult, 'relatedNodes' | 'impact'> {
     relatedNodes?: Array<SerialDqElement | DqElement>;
+    impact?: ImpactValue;
   }
 
-  interface RawNodeResult<T extends 'passed' | 'failed' | 'incomplete'> {
+  interface RawNodeResult<T extends 'passed' | 'failed' | 'cantTell'> {
     node: SerialDqElement | DqElement;
     any: RawCheckResult[];
     all: RawCheckResult[];
     none: RawCheckResult[];
-    impact: ImpactValue | null;
+    impact: ImpactValue | undefined;
     result: T;
   }
 
   interface RawResult extends Omit<Result, 'nodes'> {
     inapplicable: Array<never>;
     passes: RawNodeResult<'passed'>[];
-    incomplete: RawNodeResult<'incomplete'>[];
+    incomplete: RawNodeResult<'cantTell'>[];
     violations: RawNodeResult<'failed'>[];
     pageLevel: boolean;
     result: 'failed' | 'passed' | 'incomplete' | 'inapplicable';
