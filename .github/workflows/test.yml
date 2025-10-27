@@ -17,10 +17,8 @@ permissions:
 
 jobs:
   lint:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -35,7 +33,7 @@ jobs:
         run: npm run eslint
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -56,10 +54,8 @@ jobs:
           retention-days: 1
 
   fmt_check:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -133,10 +129,8 @@ jobs:
         run: npm run test:examples
 
   test_act:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -151,10 +145,8 @@ jobs:
         run: npm run test:act
 
   test_aria_practices:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -169,10 +161,8 @@ jobs:
         run: npm run test:apg
 
   test_locales:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -187,10 +177,8 @@ jobs:
         run: npm run test:locales
 
   test_virtual_rules:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -205,10 +193,8 @@ jobs:
         run: npm run test:virtual-rules
 
   test_jsdom:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -223,10 +209,8 @@ jobs:
         run: npm run test:jsdom
 
   build_api_docs:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
@@ -237,8 +221,6 @@ jobs:
         run: npm run api-docs
 
   test_node:
-    # Temporarily disabled while other parts are being built.
-    if: ${{ false }}
     strategy:
       matrix:
         node:
@@ -248,7 +230,7 @@ jobs:
           - 22
           - 24
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository
