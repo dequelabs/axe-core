@@ -3,9 +3,10 @@ name: Tests
 on:
   pull_request:
   push:
-    branches:
-      - master
-      - develop
+    # Temporarily disabled while the workflow is being built up more.
+    # branches:
+    #   - master
+    #   - develop
 
 jobs:
   build:
