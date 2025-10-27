@@ -18,7 +18,10 @@ const isValidURL = input => {
   let results;
   try {
     // Setup Puppeteer
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+      // CI has sandbox issues. We trust the content loading in.
+      args: ['--no-sandbox']
+    });
 
     // Get new page
     const page = await browser.newPage();

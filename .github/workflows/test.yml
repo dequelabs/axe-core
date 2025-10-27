@@ -72,7 +72,7 @@ jobs:
   test_chrome:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    needs: build
+    # needs: build
     env:
       DISPLAY: :99
     steps:
@@ -97,10 +97,14 @@ jobs:
         run: npm ci
       - name: Install Chromedriver
         run: npx browser-driver-manager install chromedriver --verbose
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      # - name: Restore axe-core Build Artifact
+      #   uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+      #   with:
+      #     name: axe-core
+      - name: Build
+        run: |
+          npm run prepare
+          npm run build
       - name: Start Xvfb
         run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
       - name: Run Tests Against Chrome
@@ -111,7 +115,7 @@ jobs:
   test_firefox:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    needs: build
+    # needs: build
     env:
       DISPLAY: :99
     steps:
@@ -127,10 +131,14 @@ jobs:
           node-version-file: .nvmrc
       - name: Install Dependencies
         run: npm ci
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      # - name: Restore axe-core Build Artifact
+      #   uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+      #   with:
+      #     name: axe-core
+      - name: Build
+        run: |
+          npm run prepare
+          npm run build
       - name: Start Xvfb
         run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
       - name: Run Tests Against Firefox
@@ -166,8 +174,6 @@ jobs:
         with:
           name: axe-core
       - name: Run Tests Against Examples
-        env:
-          CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
         run: npm run test:examples
 
   test_act:
