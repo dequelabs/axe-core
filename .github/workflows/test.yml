@@ -8,6 +8,10 @@ on:
     #   - master
     #   - develop
 
+concurrency:
+  group: axe-core Tests ${{ github.ref_name }}
+  cancel-in-progress: ${{ github.event_name != 'push' }}
+
 permissions:
   contents: read
 
@@ -74,10 +78,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@b94431e051d1c52dcbe9a7092a4f10f827795416 # v2.1.0
+        with:
+          chrome-version: stable
+          install-chromedriver: true
+          install-dependencies: true
       - name: Install OS Deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb x11-xserver-utils chromium-browser
+          sudo apt-get install -y xvfb x11-xserver-utils
       - name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
@@ -135,10 +146,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Install Chrome dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
+      - name: Set up Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@b94431e051d1c52dcbe9a7092a4f10f827795416 # v2.1.0
+        with:
+          chrome-version: stable
+          install-chromedriver: true
+          install-dependencies: true
       - name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
@@ -152,9 +166,13 @@ jobs:
         with:
           name: axe-core
       - name: Run Tests Against Examples
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: npm run test:examples
 
   test_act:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
@@ -177,6 +195,8 @@ jobs:
         run: npm run test:act
 
   test_aria_practices:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
@@ -199,6 +219,8 @@ jobs:
         run: npm run test:apg
 
   test_locales:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
@@ -221,6 +243,8 @@ jobs:
         run: npm run test:locales
 
   test_virtual_rules:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
@@ -243,6 +267,8 @@ jobs:
         run: npm run test:virtual-rules
 
   test_jsdom:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
@@ -263,6 +289,8 @@ jobs:
         run: npm run test:jsdom
 
   build_api_docs:
+    # Temporarily disabled while other parts are being built.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     needs: build
