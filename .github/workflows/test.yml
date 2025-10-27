@@ -45,8 +45,10 @@ jobs:
           node-version-file: .nvmrc
           cache: 'npm'
       - run: npm ci
-      - run: npm run prepare
-      - run: npm run build
+      - name: Build
+        run: &build |
+          npm run prepare
+          npm run build
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: axe-core
@@ -78,35 +80,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@b94431e051d1c52dcbe9a7092a4f10f827795416 # v2.1.0
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
         with:
-          chrome-version: stable
-          install-chromedriver: true
-          install-dependencies: true
-      - name: Install OS Deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb x11-xserver-utils
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
-      # - name: Restore axe-core Build Artifact
-      #   uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-      #   with:
-      #     name: axe-core
+          start-xvfb: ${{ env.DISPLAY }}
       - name: Build
-        run: |
-          npm run prepare
-          npm run build
-      - name: Start Xvfb
-        run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
+        run: *build
       - name: Run Tests Against Chrome
         run: npm run test -- --browsers Chrome
       - name: Run Chrome Integration Tests
@@ -121,26 +100,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Install OS Deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb x11-xserver-utils
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
         with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
+          start-xvfb: ${{ env.DISPLAY }}
       # - name: Restore axe-core Build Artifact
       #   uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       #   with:
       #     name: axe-core
       - name: Build
-        run: |
-          npm run prepare
-          npm run build
-      - name: Start Xvfb
-        run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
+        run: *build
       - name: Run Tests Against Firefox
         run: npm run test -- --browsers Firefox
       - name: Run Firefox Integration Tests
@@ -154,21 +123,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@b94431e051d1c52dcbe9a7092a4f10f827795416 # v2.1.0
-        with:
-          chrome-version: stable
-          install-chromedriver: true
-          install-dependencies: true
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -185,14 +141,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -209,14 +159,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -233,14 +177,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -257,14 +195,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
-      - name: Install Chromedriver
-        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -281,12 +213,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -303,12 +231,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-      - name: Install Dependencies
-        run: npm ci
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
       - name: Run API Docs Build
         run: npm run api-docs
 
