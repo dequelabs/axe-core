@@ -72,6 +72,8 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: axe-core
