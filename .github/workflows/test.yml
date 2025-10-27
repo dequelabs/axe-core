@@ -77,7 +77,9 @@ jobs:
       - name: Install OS Deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb x11-xserver-utils
+          sudo apt-get install -y xvfb x11-xserver-utils libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 \
+          libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 libappindicator1 libindicator7 \
+          fonts-liberation libnss3 libxss1 xdg-utils libappindicator3-1
       - name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
@@ -135,6 +137,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 \
+          libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 libappindicator1 libindicator7 \
+          fonts-liberation libnss3 libxss1 xdg-utils libappindicator3-1
       - name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
