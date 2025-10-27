@@ -167,7 +167,7 @@ jobs:
           name: axe-core
       - name: Run Tests Against Examples
         env:
-          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
         run: npm run test:examples
 
   test_act:
