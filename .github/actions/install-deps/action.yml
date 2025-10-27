@@ -65,4 +65,3 @@ runs:
       if: ${{ inputs.start-xvfb }}
       shell: bash
       run: Xvfb ${{ inputs.start-xvfb }} -screen 0 1280x1024x24 &
-
