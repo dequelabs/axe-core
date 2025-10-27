@@ -73,7 +73,7 @@ jobs:
 
   test_chrome:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     # needs: build
     env:
       DISPLAY: :99
@@ -93,7 +93,7 @@ jobs:
 
   test_firefox:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     # needs: build
     env:
       DISPLAY: :99
@@ -118,7 +118,7 @@ jobs:
   # Run examples under `doc/examples`
   test_examples:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Checkout repository

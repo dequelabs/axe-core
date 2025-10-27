@@ -3,7 +3,9 @@ const puppeteer = require('puppeteer');
 const axe = require('axe-core');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox']
+  });
   const page = await browser.newPage();
 
   await page.setContent(`
