@@ -93,10 +93,186 @@ jobs:
       - name: Start Xvfb
         run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
       - name: Run Tests Against Chrome
-        if: ${{ false }} # This is working, need to focus time on integration
         run: npm run test -- --browsers Chrome
       - name: Run Chrome Integration Tests
         run: npm run test:integration:chrome
+
+  test_firefox:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    env:
+      DISPLAY: :99
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install OS Deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb x11-xserver-utils
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Start Xvfb
+        run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &
+      - name: Run Tests Against Firefox
+        run: npm run test -- --browsers Firefox
+      - name: Run Firefox Integration Tests
+        run: npm run test:integration:firefox
+
+  # Run examples under `doc/examples`
+  test_examples:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Chromedriver
+        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run Tests Against Examples
+        run: npm run test:examples
+
+  test_act:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Chromedriver
+        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run ACT Tests
+        run: npm run test:act
+
+  test_aria_practices:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Chromedriver
+        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run ARIA Practices Tests
+        run: npm run test:apg
+
+  test_locales:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Chromedriver
+        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run Locale Tests
+        run: npm run test:locales
+
+  test_virtual_rules:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Chromedriver
+        run: npx browser-driver-manager install chromedriver --verbose
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run Virtual Rules Tests
+        run: npm run test:virtual-rules
+
+  test_jsdom:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Restore axe-core Build Artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
+      - name: Run jsdom Tests
+        run: npm run test:jsdom
+
+  build_api_docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run API Docs Build
+        run: npm run api-docs
 
   test_node:
     # Temporarily disabled while other parts are being built.
