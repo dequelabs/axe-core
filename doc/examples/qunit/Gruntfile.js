@@ -8,7 +8,11 @@ module.exports = function (grunt) {
       all: ['test/**/*.html'],
       options: {
         puppeteer: {
-          args: ['--disable-web-security', '--allow-file-access-from-files']
+          args: [
+            '--no-sandbox',
+            '--disable-web-security',
+            '--allow-file-access-from-files'
+          ]
         },
         timeout: 10000
       }
