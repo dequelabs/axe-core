@@ -21,6 +21,9 @@ jobs:
         uses: ./.github/actions/install-deps
         with:
           nightly: 'true'
+          start-xvfb: ':99'
+      - name: Install Chrome Beta
+        run: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
       - name: Build
         run: |
           npm run prepare
