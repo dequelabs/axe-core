@@ -1,0 +1,31 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    # Runs every day at 2:17 AM UTC
+    # Schedules should try to be offset from common times
+    # to avoid high contention times on GitHub runners.
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+  push:
+
+jobs:
+  nightly-browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install Dependencies
+        id: install-deps
+        uses: ./.github/actions/install-deps
+        with:
+          nightly: 'true'
+      - name: Build
+        run: |
+          npm run prepare
+          npm run build
+      - name: Run Nightly Browser Tests
+        env:
+          FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+        run: npm run test -- --browsers Chrome,FirefoxNightly
