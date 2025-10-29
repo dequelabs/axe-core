@@ -32,8 +32,6 @@ jobs:
           npm run prepare
           npm run build
       - name: Run Firefox Nightly Browser Tests
-        # skip for now since it is working
-        if: ${{ false }}
         env:
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
         run: npm run test -- --browsers FirefoxNightly
@@ -42,7 +40,4 @@ jobs:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
           CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
-        run: |
-          sudo chown root:root ${{ env.CHROME_DEVEL_SANDBOX }}
-          sudo chmod 4755 ${{ env.CHROME_DEVEL_SANDBOX }}
-          npm run test -- --browsers Chrome
+        run: npm run test -- --browsers Chrome

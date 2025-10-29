@@ -73,6 +73,7 @@ jobs:
     needs: build
     env:
       DISPLAY: :99
+      CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -83,8 +84,14 @@ jobs:
       - name: Build
         run: *build
       - name: Run Tests Against Chrome
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test -- --browsers Chrome
       - name: Run Chrome Integration Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:integration:chrome
 
   test_firefox:

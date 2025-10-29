@@ -40,6 +40,11 @@ runs:
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version == '' && '.nvmrc' || '' }}
         cache: npm
+    - name: Fix Chrome Sandbox Permissions
+      shell: bash
+      run: |
+        sudo chown root:root /opt/google/chrome/chrome-sandbox
+        sudo chmod 4755 /opt/google/chrome/chrome-sandbox
     - name: Install Xvfb
       shell: bash
       if: ${{ inputs.start-xvfb }}
@@ -61,9 +66,6 @@ runs:
     - name: Install Project Dependencies
       shell: bash
       run: npm ci
-    - name: Install Chromedriver Package
-      shell: bash
-      run: npx browser-driver-manager install chromedriver --verbose
     - name: Start Xvfb
       if: ${{ inputs.start-xvfb }}
       shell: bash
