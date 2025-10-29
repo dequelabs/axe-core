@@ -61,7 +61,9 @@ jobs:
         with:
           start-xvfb: ${{ env.DISPLAY }}
       - name: Build
-        run: *build
+        run: |
+          npm run prepare
+          npm run build
       - name: Run Tests Against Chrome
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
