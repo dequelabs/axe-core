@@ -148,10 +148,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
+        id: install-deps
         uses: ./.github/actions/install-deps
       - name: Build
         run: *build
       - name: Run ACT Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:act
 
   test_aria_practices:
