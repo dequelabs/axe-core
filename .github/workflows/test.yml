@@ -61,7 +61,7 @@ jobs:
         with:
           start-xvfb: ${{ env.DISPLAY }}
       - name: Build
-        run: |
+        run: &build |
           npm run prepare
           npm run build
       - name: Run Tests Against Chrome
