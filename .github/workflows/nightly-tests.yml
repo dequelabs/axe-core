@@ -24,8 +24,6 @@ jobs:
           node-version: '18'
           nightly: 'true'
           start-xvfb: ':99'
-      - name: Install Chrome Beta
-        run: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
       - name: Build
         run: |
           npm run prepare
@@ -33,4 +31,5 @@ jobs:
       - name: Run Nightly Browser Tests
         env:
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
         run: npm run test -- --browsers Chrome,FirefoxNightly
