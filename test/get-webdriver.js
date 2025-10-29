@@ -6,14 +6,16 @@ const chromedriver =
 const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriver);
 
-  const webdriver = new Builder()
-    .setChromeOptions(new chrome.Options().addArguments('--headless=new'))
-    .forBrowser('chrome')
-    .setChromeService(service);
+  const options = new chrome.Options().addArguments('--headless=new');
 
   if (process.env.CHROME_BIN) {
-    webdriver.setBinaryPath(process.env.CHROME_BIN);
+    options.setBinaryPath(process.env.CHROME_BIN);
   }
+
+  const webdriver = new Builder()
+    .setChromeOptions(options)
+    .forBrowser('chrome')
+    .setChromeService(service);
 
   return webdriver.build();
 };
