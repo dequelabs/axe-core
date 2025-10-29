@@ -31,27 +31,6 @@ jobs:
         run: npm ci
       - name: Run ESLint
         run: npm run eslint
-  build:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
-          cache: 'npm'
-      - run: npm ci
-      - name: Build
-        run: &build |
-          npm run prepare
-          npm run build
-      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: axe-core
-          path: axe.js
-          retention-days: 1
 
   fmt_check:
     runs-on: ubuntu-24.04
@@ -70,7 +49,6 @@ jobs:
   test_chrome:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     env:
       DISPLAY: :99
       CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
@@ -98,7 +76,6 @@ jobs:
   test_firefox:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     env:
       DISPLAY: :99
     steps:
@@ -122,7 +99,6 @@ jobs:
   test_examples:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -136,33 +112,27 @@ jobs:
   test_act:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run ACT Tests
         run: npm run test:act
 
   test_aria_practices:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         id: install-deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run ARIA Practices Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
@@ -172,55 +142,45 @@ jobs:
   test_locales:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run Locale Tests
         run: npm run test:locales
 
   test_virtual_rules:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run Virtual Rules Tests
         run: npm run test:virtual-rules
 
   test_jsdom:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe-core Build Artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run jsdom Tests
         run: npm run test:jsdom
 
   build_api_docs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -240,7 +200,6 @@ jobs:
           - 24
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -248,7 +207,7 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
-      - run: npm run test:node
+      - name: Build
+        run: *build
+      - name: Run Node.js Tests
+        run: npm run test:node
