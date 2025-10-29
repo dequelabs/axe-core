@@ -212,7 +212,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install Deps
-        uses: npm ci
+        run: npm ci
       - name: Build
         run: *build
       - name: Run Node.js Tests
