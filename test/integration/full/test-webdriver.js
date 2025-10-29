@@ -1,7 +1,8 @@
 const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
-const chromedriver = require('chromedriver');
+const chromedriverPath =
+  process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
 
 const args = process.argv.slice(2);
 
@@ -123,7 +124,7 @@ function buildWebDriver(browser) {
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
-    const service = new chrome.ServiceBuilder(chromedriver.path).build();
+    const service = new chrome.ServiceBuilder(chromedriverPath).build();
 
     const options = new chrome.Options().addArguments([
       'headless',
