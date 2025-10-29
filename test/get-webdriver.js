@@ -12,7 +12,7 @@ const getWebdriver = () => {
     .setChromeService(service);
 
   if (process.env.CHROME_BIN) {
-    webdriver.setChromeBinaryPath(process.env.CHROME_BIN);
+    webdriver.setBinaryPath(process.env.CHROME_BIN);
   }
 
   return webdriver.build();

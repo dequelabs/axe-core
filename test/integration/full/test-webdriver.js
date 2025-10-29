@@ -134,7 +134,7 @@ function buildWebDriver(browser) {
     ]);
 
     if (process.env.CHROME_BIN) {
-      options.setChromeBinaryPath(process.env.CHROME_BIN);
+      options.setBinaryPath(process.env.CHROME_BIN);
     }
 
     webdriver = chrome.Driver.createSession(options, service);
