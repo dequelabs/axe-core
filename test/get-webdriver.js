@@ -9,9 +9,13 @@ const getWebdriver = () => {
   const webdriver = new Builder()
     .setChromeOptions(new chrome.Options().addArguments('headless'))
     .forBrowser('chrome')
-    .setChromeService(service)
-    .build();
-  return webdriver;
+    .setChromeService(service);
+
+  if (process.env.CHROME_BIN) {
+    webdriver.setChromeBinaryPath(process.env.CHROME_BIN);
+  }
+
+  return webdriver.build();
 };
 
 module.exports.getWebdriver = getWebdriver;

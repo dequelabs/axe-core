@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   lint:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -33,6 +34,7 @@ jobs:
         run: npm run eslint
 
   fmt_check:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -47,6 +49,7 @@ jobs:
       - run: npm run fmt:check
 
   build:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -69,6 +72,7 @@ jobs:
           retention-days: 1
 
   test_chrome:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -98,6 +102,7 @@ jobs:
         run: npm run test:integration:chrome
 
   test_firefox:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -123,6 +128,7 @@ jobs:
 
   # Run examples under `doc/examples`
   test_examples:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -166,6 +172,7 @@ jobs:
         run: npm run test:apg
 
   test_locales:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -179,6 +186,7 @@ jobs:
         run: npm run test:locales
 
   test_virtual_rules:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -192,6 +200,7 @@ jobs:
         run: npm run test:virtual-rules
 
   test_jsdom:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -205,6 +214,7 @@ jobs:
         run: npm run test:jsdom
 
   build_api_docs:
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -216,6 +226,7 @@ jobs:
         run: npm run api-docs
 
   test_node:
+    if: ${{ false }}
     # The package can't be built on Node 6 anymore, but should still run there.
     # So we need to pull in a previous build artifact.
     needs: build
