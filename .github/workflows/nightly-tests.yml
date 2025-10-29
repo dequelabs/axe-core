@@ -9,6 +9,9 @@ on:
   workflow_dispatch:
   push:
 
+permissions:
+  contents: read
+
 jobs:
   nightly-browsers:
     runs-on: ubuntu-24.04
@@ -39,4 +42,7 @@ jobs:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
           CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
-        run: npm run test -- --browsers Chrome
+        run: |
+          sudo chown root:root ${{ env.CHROME_DEVEL_SANDBOX }}
+          sudo chmod 4755 ${{ env.CHROME_DEVEL_SANDBOX }}
+          npm run test -- --browsers Chrome
