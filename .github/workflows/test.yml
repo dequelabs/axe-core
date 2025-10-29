@@ -74,7 +74,6 @@ jobs:
   test_chrome:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     env:
       DISPLAY: :99
     steps:
@@ -85,10 +84,8 @@ jobs:
         id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Restore axe build
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run Tests Against Chrome
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
@@ -103,7 +100,6 @@ jobs:
   test_firefox:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     env:
       DISPLAY: :99
     steps:
@@ -114,10 +110,8 @@ jobs:
         id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Restore axe build
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run Tests Against Firefox
         env:
           FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
@@ -131,16 +125,13 @@ jobs:
   test_examples:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Restore axe build
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: axe-core
+      - name: Build
+        run: *build
       - name: Run Tests Against Examples
         run: npm run test:examples
 
