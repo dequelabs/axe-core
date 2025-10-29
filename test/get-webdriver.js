@@ -1,13 +1,13 @@
 const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const chromedriverPath =
+const chromedriver =
   process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
 
 const getWebdriver = () => {
-  const service = new chrome.ServiceBuilder(chromedriverPath);
+  const service = new chrome.ServiceBuilder(chromedriver);
 
   const webdriver = new Builder()
-    .setChromeOptions(new chrome.Options().addArguments('headless'))
+    .setChromeOptions(new chrome.Options().addArguments('--headless=new'))
     .forBrowser('chrome')
     .setChromeService(service);
 
