@@ -140,6 +140,11 @@ function buildWebDriver(browser) {
     webdriver = chrome.Driver.createSession(options, service);
   } else if (browser === 'firefox') {
     const options = new firefox.Options().addArguments('--headless');
+
+    if (process.env.FIREFOX_BIN) {
+      options.setBinary(process.env.FIREFOX_BIN);
+    }
+
     webdriver = firefox.Driver.createSession(options);
   }
 
