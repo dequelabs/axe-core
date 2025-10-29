@@ -38,4 +38,5 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+          CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
         run: npm run test -- --browsers Chrome
