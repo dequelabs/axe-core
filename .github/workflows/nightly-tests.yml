@@ -20,8 +20,6 @@ jobs:
         id: install-deps
         uses: ./.github/actions/install-deps
         with:
-          # replicate what was running in Circle CI
-          node-version: '18'
           nightly: 'true'
           start-xvfb: ':99'
       - name: Build
