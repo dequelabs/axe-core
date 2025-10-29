@@ -20,7 +20,6 @@ env:
 
 jobs:
   lint:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -37,7 +36,6 @@ jobs:
         run: npm run eslint
 
   fmt_check:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -52,7 +50,6 @@ jobs:
       - run: npm run fmt:check
 
   build:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -75,12 +72,11 @@ jobs:
           retention-days: 1
 
   test_chrome:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     env:
       DISPLAY: :99
-      CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -89,10 +85,10 @@ jobs:
         id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Build
-        run: &build |
-          npm run prepare
-          npm run build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run Tests Against Chrome
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
@@ -105,9 +101,9 @@ jobs:
         run: npm run test:integration:chrome
 
   test_firefox:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     env:
       DISPLAY: :99
     steps:
@@ -118,8 +114,10 @@ jobs:
         id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run Tests Against Firefox
         env:
           FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
@@ -131,30 +129,35 @@ jobs:
 
   # Run examples under `doc/examples`
   test_examples:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run Tests Against Examples
         run: npm run test:examples
 
   test_act:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         id: install-deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run ACT Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
@@ -164,14 +167,17 @@ jobs:
   test_aria_practices:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         id: install-deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run ARIA Practices Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
@@ -179,49 +185,54 @@ jobs:
         run: npm run test:apg
 
   test_locales:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run Locale Tests
         run: npm run test:locales
 
   test_virtual_rules:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run Virtual Rules Tests
         run: npm run test:virtual-rules
 
   test_jsdom:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs: build
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - name: Restore axe build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: axe-core
       - name: Run jsdom Tests
         run: npm run test:jsdom
 
   build_api_docs:
-    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -233,7 +244,6 @@ jobs:
         run: npm run api-docs
 
   test_node:
-    if: ${{ false }}
     # The package can't be built on Node 6 anymore, but should still run there.
     # So we need to pull in a previous build artifact.
     needs: build
