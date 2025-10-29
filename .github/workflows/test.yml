@@ -79,6 +79,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
+        id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
       - name: Build
@@ -105,11 +106,14 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
         uses: ./.github/actions/install-deps
+        id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
       - name: Build
         run: *build
       - name: Run Tests Against Firefox
+        env:
+          FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
         run: npm run test -- --browsers Firefox
       - name: Run Firefox Integration Tests
         run: npm run test:integration:firefox
@@ -153,12 +157,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Deps
+        id: install-deps
         uses: ./.github/actions/install-deps
       - name: Restore axe-core Build Artifact
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: axe-core
       - name: Run ARIA Practices Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:apg
 
   test_locales:
