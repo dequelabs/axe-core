@@ -7,7 +7,6 @@ on:
     # to avoid high contention times on GitHub runners.
     - cron: '17 2 * * *'
   workflow_dispatch:
-  push:
 
 permissions:
   contents: read

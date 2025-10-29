@@ -15,6 +15,9 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
+
 jobs:
   lint:
     if: ${{ false }}
