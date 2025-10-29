@@ -13,6 +13,8 @@ jobs:
   nightly-browsers:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
+    env:
+      DISPLAY: ':99'
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -21,13 +23,17 @@ jobs:
         uses: ./.github/actions/install-deps
         with:
           nightly: 'true'
-          start-xvfb: ':99'
+          start-xvfb: ${{ env.DISPLAY }}
       - name: Build
         run: |
           npm run prepare
           npm run build
-      - name: Run Nightly Browser Tests
+      - name: Run Firefox Nightly Browser Tests
         env:
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+        run: npm run test -- --browsers FirefoxNightly
+      - name: Run Chrome Beta Browser Tests
+        env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
-        run: npm run test -- --browsers Chrome,FirefoxNightly
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test -- --browsers ChromeBeta
