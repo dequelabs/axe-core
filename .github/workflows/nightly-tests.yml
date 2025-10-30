@@ -7,12 +7,13 @@ on:
     # to avoid high contention times on GitHub runners.
     - cron: '17 2 * * *'
   workflow_dispatch:
-
+  # For testing
+  push:
 permissions:
   contents: read
 
 jobs:
-  nightly-browsers:
+  browsers:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
@@ -27,7 +28,7 @@ jobs:
           nightly: 'true'
           start-xvfb: ${{ env.DISPLAY }}
       - name: Build
-        run: |
+        run: &build |
           npm run prepare
           npm run build
       - name: Run Firefox Nightly Browser Tests
@@ -40,3 +41,21 @@ jobs:
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
           CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
         run: npm run test -- --browsers Chrome
+  act:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install Deps
+        id: install-deps
+        uses: ./.github/actions/install-deps
+      - name: Build
+        run: *build
+      - name: Install Latest WCAG ACT Rules
+        run: npm install w3c/wcag-act-rules#main
+      - name: Run ACT Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:act
