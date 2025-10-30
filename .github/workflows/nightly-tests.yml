@@ -70,4 +70,7 @@ jobs:
       - name: Install Latest W3C Aria Practices
         run: npm install w3c/aria-practices#main
       - name: Run ARIA Practices Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:apg
