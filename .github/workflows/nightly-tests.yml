@@ -23,7 +23,8 @@ jobs:
     env:
       DISPLAY: ':99'
     steps:
-      - name: Checkout repository
+      - &checkout
+        name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Dependencies
         id: install-deps
@@ -31,8 +32,9 @@ jobs:
         with:
           nightly: 'true'
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Build
-        run: &build |
+      - &build
+        name: Build
+        run: |
           npm run prepare
           npm run build
       - name: Run Firefox Nightly Browser Tests
@@ -48,35 +50,24 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Install Deps
+      - *checkout
+      - &install-deps
+        name: Install Deps
         id: install-deps
         uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - *build
       - name: Install Latest WCAG ACT Rules
         run: npm install w3c/wcag-act-rules#main
       - name: Run ACT Tests
-        env:
-          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
-          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:act
   aria-practices:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Install Deps
-        id: install-deps
-        uses: ./.github/actions/install-deps
-      - name: Build
-        run: *build
+      - *checkout
+      - *install-deps
+      - *build
       - name: Install Latest W3C Aria Practices
         run: npm install w3c/aria-practices#main
       - name: Run ARIA Practices Tests
-        env:
-          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
-          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:apg
