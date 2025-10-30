@@ -9,6 +9,10 @@ on:
   workflow_dispatch:
   # For testing
   push:
+
+env:
+  CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
+
 permissions:
   contents: read
 
@@ -39,7 +43,6 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-          CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
         run: npm run test -- --browsers Chrome
   act:
     runs-on: ubuntu-24.04
@@ -59,3 +62,21 @@ jobs:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test:act
+  aria-practices:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install Deps
+        id: install-deps
+        uses: ./.github/actions/install-deps
+      - name: Build
+        run: *build
+      - name: Install Latest W3C Aria Practices
+        run: npm install w3c/aria-practices#main
+      - name: Run ARIA Practices Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:apg
