@@ -1,7 +1,7 @@
 const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromedriverPath =
-  process.env.CHROMEDRIVER_PATH ?? require('chromedriver').path;
+  process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
 
 const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);
