@@ -5,7 +5,7 @@ const chromedriverPath =
 
 const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);
-  const options = new chrome.Options().addArguments('--headless=new');
+  const options = new chrome.Options().addArguments('--headless');
 
   if (process.env.CHROME_BIN) {
     options.setBinaryPath(process.env.CHROME_BIN);

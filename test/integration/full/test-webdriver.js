@@ -127,7 +127,7 @@ function buildWebDriver(browser) {
     const service = new chrome.ServiceBuilder(chromedriver).build();
 
     const options = new chrome.Options().addArguments([
-      '--headless=new',
+      '--headless',
       '--no-sandbox',
       '--disable-extensions',
       '--disable-dev-shm-usage'
