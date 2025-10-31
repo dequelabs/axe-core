@@ -7,8 +7,6 @@ on:
     # to avoid high contention times on GitHub runners.
     - cron: '17 2 * * *'
   workflow_dispatch:
-  # For testing
-  push:
 
 env:
   CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
