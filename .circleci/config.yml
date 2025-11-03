@@ -7,10 +7,6 @@ unix_box: &unix_box
   docker:
     - image: cimg/node:22.16-browsers
 
-unix_nightly_box: &unix_nightly_box
-  docker:
-    - image: cimg/node:lts-browsers
-
 orbs:
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.5.1
@@ -168,61 +164,6 @@ jobs:
       - run: npx browser-driver-manager install chromedriver --verbose
       - <<: *restore_build
       - run: npm run test:virtual-rules
-
-  # Run the test suite for nightly builds.
-  test_nightly_browsers:
-    <<: *defaults
-    <<: *unix_nightly_box
-    steps:
-      - checkout
-      - <<: *restore_dependency_cache_unix
-      - run: sudo apt-get update -y
-      - <<: *restore_build
-      - run:
-          name: Install Chrome and ChromeDriver Beta
-          command: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
-      - run:
-          name: Install Firefox Nightly
-          command: |
-            # Assumes Firefox >= 135; in earlier versions, this resolves to a .tar.bz2 instead
-            wget -O firefox-nightly.tar.xz "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
-            tar xf firefox-nightly.tar.xz
-      - run:
-          name: Set Environment Variable
-          command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
-      - run: npm run test -- --browsers Chrome,FirefoxNightly
-
-  # Run the test suite for nightly builds.
-  test_nightly_act:
-    <<: *defaults
-    <<: *unix_nightly_box
-    steps:
-      - checkout
-      - <<: *restore_dependency_cache_unix
-      - browser-tools-job
-      # install ACT rules
-      # install first as for some reason installing a single package
-      # also re-installs all repo dependencies as well
-      - run: npm install w3c/wcag-act-rules#main
-      - run: npx browser-driver-manager install chromedriver --verbose
-      - <<: *restore_build
-      - run: npm run test:act
-
-  # Run the test suite for nightly builds.
-  test_nightly_aria_practices:
-    <<: *defaults
-    <<: *unix_nightly_box
-    steps:
-      - checkout
-      - <<: *restore_dependency_cache_unix
-      - browser-tools-job
-      # install ARIA practices
-      # install first as for some reason installing a single package
-      # also re-installs all repo dependencies as well
-      - run: npm install w3c/aria-practices#main
-      - run: npx browser-driver-manager install chromedriver --verbose
-      - <<: *restore_build
-      - run: npm run test:apg
 
   # Test api docs can be built
   build_api_docs:
@@ -433,26 +374,3 @@ workflows:
       - github_release:
           requires:
             - release
-  nightly:
-    triggers:
-      - schedule:
-          # run at 00:00 UTC every day
-          cron: '0 0 * * *'
-          filters:
-            branches:
-              only:
-                - develop
-    jobs:
-      - dependencies_unix
-      - build_unix:
-          requires:
-            - dependencies_unix
-      - test_nightly_browsers:
-          requires:
-            - build_unix
-      - test_nightly_act:
-          requires:
-            - build_unix
-      - test_nightly_aria_practices:
-          requires:
-            - build_unix
