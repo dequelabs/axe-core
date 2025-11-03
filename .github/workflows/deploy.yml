@@ -1,0 +1,108 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Tests
+    types:
+      - completed
+    branches:
+      - master
+      - develop
+
+concurrency:
+  group: deploy/${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-next:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'develop' }}
+    environment:
+      name: registry.npmjs.org
+    permissions:
+      contents: read
+      # Required for OIDC
+      id-token: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Install Dependencies
+        uses: ./.github/actions/install-deps
+      - name: Build
+        run: |
+          npm run prepare
+          npm run build
+      - name: Validate package has required files
+        env:
+          FILES_TO_CHECK: |
+            axe.js
+            axe.d.ts
+            axe.min.js
+            sri-history.json
+            LICENSE
+            LICENSE-3RD-PARTY.txt
+        run: |
+          echo '# Validate package contents' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+
+          # Get the list of files that would be packed without creating a tarball
+          PACK_OUTPUT=$(npm pack --dry-run)
+
+          echo '## Pack output' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```shell' >> $GITHUB_STEP_SUMMARY
+          echo "$PACK_OUTPUT" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+
+          # Start the markdown table
+          echo "| File | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          # Check each file
+          MISSING=()
+          for file in $FILES_TO_CHECK; do
+            if echo "$PACK_OUTPUT" | grep -q "$file"; then
+              echo "::notice:: $file found"
+              echo "| \`$file\` | ✓ Found |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "::error:: $file NOT found"
+              echo "| \`$file\` | ✗ Missing |" >> $GITHUB_STEP_SUMMARY
+              MISSING+=("$file")
+            fi
+          done
+
+          # Fail if any files are missing
+          if [ ${#MISSING[@]} -gt 0 ]; then
+            echo "" | tee -a $GITHUB_STEP_SUMMARY
+            echo "**Error: All missing files: ${MISSING[@]}**" >> $GITHUB_STEP_SUMMARY
+            echo "::error::All missing files: ${MISSING[@]}"
+            exit 1
+          fi
+      - name: Publish "next" version to NPM
+        run: npm publish --tag=next
+  prod-hold:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' }}
+    environment:
+      name: production-hold
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Awaiting approval to deploy to production
+        run: echo "Approval granted to proceed to production deployment."
+  prod-deploy:
+    needs: prod-hold
+    if: ${{ needs.prod-hold.result == 'success' }}
+    environment:
+      name: registry.npmjs.org
+    permissions:
+      contents: read
+      # Required for OIDC
+      id-token: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Deploy to Production
+        run: echo "Deploying to production..."

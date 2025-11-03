@@ -364,6 +364,20 @@ module.exports = [
     }
   },
   {
+    files: ['.github/bin/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.es2022
+      },
+      parserOptions: {
+        // This moves up with `.nvmrc` updates.
+        "ecmaVersion": 2024,
+        "sourceType": "module"
+      }
+    }
+  },
+  {
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',
