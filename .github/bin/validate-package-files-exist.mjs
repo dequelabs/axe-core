@@ -2,6 +2,7 @@
 
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createRequire} from 'node:module';
 import pkg from '../../package.json' with { type: 'json' };
 import {access, appendFile, readFile} from 'node:fs/promises';
 import {execSync} from 'node:child_process';
@@ -29,8 +30,15 @@ const missing = [];
 const summaryFile = process.env.GITHUB_STEP_SUMMARY;
 let summary = `# Package Validation
 
-**Package Name**: \`${pkg.name}\`
-**Package Version**: \`${pkg.version}\`
+<dl>
+  <dt>Package Name</dt>
+  <dd>${pkg.name}</dd>
+  <dt>Package Version</dt>
+  <dd>${pkg.version}</dd>
+  <dt>License</dt>
+  <dd>${pkg.license}</dd>
+</dl>
+
 `;
 
 /**
@@ -100,6 +108,51 @@ listed in the \`files\` array of \`package.json\`.
 };
 
 /**
+ * Validates that the main package file can be loaded via CommonJS require.
+ * This ensures backward compatibility for projects using CommonJS.
+ */
+const validateCommonJS = async () => {
+  summary += `\n## CommonJS Compatibility Check
+
+This check validates that the main package file can be loaded
+using CommonJS \`require()\`, ensuring backward compatibility.
+
+| File | Status |
+|------|--------|
+`;
+
+  const require = createRequire(import.meta.url);
+
+  console.log('Validating CommonJS compatibility:');
+
+  try {
+    const axe = require(`${pkg.name}`);
+    console.info(`✓ ${pkg.name} (CommonJS)`);
+    summary += `| \`${pkg.name}\` | ✓ CommonJS Compatible |\n`;
+
+    // Verify it actually exported something
+    if (!axe || typeof axe !== 'object') {
+      console.error(`✗ ${pkg.name} exported invalid value`);
+      summary += `| \`${pkg.name}\` export | ✗ Invalid export |\n`;
+      exitCode++;
+    }
+
+    if (axe.version !== pkg.version) {
+      console.error(`✗ ${pkg.name} version mismatch: expected ${pkg.version}, got ${axe.version}`);
+      summary += `| \`${pkg.name}\` version | ✗ Version Mismatch |\n`;
+      exitCode++;
+    }
+  } catch (error) {
+    console.error(`✗ ${pkg.name} (CommonJS):`, error.message);
+    summary += `| \`${pkg.name}\` | ✗ CommonJS Failed |\n`;
+    summary += `\n\`\`\`\n${error.message}\n\`\`\`\n`;
+    exitCode++;
+  }
+
+  await appendToSummaryFile(summary);
+};
+
+/**
  * Since this validation script is running under ESM, we can
  * import the package files without any extra scaffolding.
  * Allowing us to validate before publishing that the package
@@ -118,13 +171,23 @@ defined files in the \`files\` array of \`package.json\`.
 > package definition, then we can self reference imports and
 > the link will no longer be required.
 
-| File | Status |\n|------|--------|
+| File | Status | Version |\n|------|--------|--------|
 `;
 
   const importTargets = [...pkg.files.map((file) => `${pkg.name}/${file}`)];
   let anyCaught = false;
 
   console.log('Validating package files are importable:');
+
+  try {
+    const axe = await import(pkg.name);
+    console.info(`✓ ${pkg.name}`);
+    summary += `| \`${pkg.name}\` | ✓ Importable | ${axe.default.version} |\n`;
+  } catch (error) {
+    console.error(`✗ ${pkg.name}`);
+    summary += `| \`${pkg.name}\` | ✗ Not Importable | |\n`;
+    anyCaught = true;
+  }
 
   for (const target of importTargets) {
     // Skip things that can't be imported directly
@@ -142,13 +205,25 @@ defined files in the \`files\` array of \`package.json\`.
     }
 
     try {
+      let version = '';
       if (target.endsWith('.json')) {
-        await import(target, { with: { type: 'json' } });
+        const data = await import(target, { with: { type: 'json' } });
+        // Ensure version is empty since it doesn't apply to the json file.
+        // This keeps the table aligned and prevents it from showing a version
+        // when it might be set from a previous loop iteration.
+        version = Object.keys(data.default).at(-1);
       } else {
-        await import(target);
+        const axe = await import(target);
+        version = axe.default.version;
+        if (version !== pkg.version) {
+          console.error(`✗ ${target} version mismatch: expected ${pkg.version}, got ${version}`);
+          summary += `| \`${target}\` | ✗ Version Mismatch | ${version} |\n`;
+          anyCaught = true;
+          continue;
+        }
       }
       console.info(`✓ ${target}`);
-      summary += `| \`${target}\` | ✓ Importable |\n`;
+      summary += `| \`${target}\` | ✓ Importable | ${version} |\n`;
     } catch (error) {
       console.error(`✗ ${target}`);
       summary += `| \`${target}\` | ✗ Not Importable |\n`;
@@ -261,6 +336,7 @@ try {
   execSync(`npm link ${pkg.name}`, execOptions);
 
   // Run any checks that require the package to reference itself.
+  await validateCommonJS();
   await validateImportable();
   await validateSriHashes();
 } catch (error) {
