@@ -5,7 +5,23 @@ import pkg from '../../package.json' with { type: 'json' };
 import {access, appendFile} from 'node:fs/promises';
 
 const repoRoot = resolve(import.meta.dirname, '..', '..');
-
+/**
+ * Start the exit code at 0 for a successful run. If any checks
+ * fail, we increment by 1 for each failure. When every check is done,
+ * we exit with the final exit code.
+ *
+ * This means our exit code informs us of how many failures happened.
+ *
+ * For anyone unfamiliar with exit codes in shell programs,
+ * an exit code of `0` means success, and any non-zero exit code
+ * means failure.
+ *
+ * Special note as well, in theory this _could_ go above `255`,
+ * causing the actual exit code to wrap around back to `0` and
+ * keep counting. But, if we have that many checks in here down
+ * the road then all the validation will need a major refactor.
+ */
+const exitCode = 0;
 const missing = [];
 const summaryFile = process.env.GITHUB_STEP_SUMMARY;
 
@@ -36,22 +52,28 @@ const appendToSummaryFile = async (text) => {
   }
 };
 
-let summary = '# Package Files Validation\n';
+let summary = '# Package Validation\n\n';
 
-// The extra newlines are important for markdown parsing.
 summary += `
-  The following results table shows the status of files and folders
-  listed in the \`files\` array of \`package.json\`.
+**Package Name**: \`${pkg.name}\`
+**Package Version**: \`${pkg.version}\`
+`;
 
-  > ![INFO]
-  > This check only validates the existence of files and folders
-  > defined. It does not validate the contents. Thus a folder
-  > could exist but be empty and still pass this check. Or
-  > a file could exist but have incorrect syntax.
+summary += `
+\n## File Existence Check
+
+The following results table shows the status of files and folders
+listed in the \`files\` array of \`package.json\`.
+
+> ![INFO]
+> This check only validates the existence of files and folders
+> defined. It does not validate the contents. Thus a folder
+> could exist but be empty and still pass this check. Or
+> a file could exist but have incorrect syntax.
 
 `;
 
-summary += '| File | Status |\n|------|--------|\n';
+summary += '\n| File | Status |\n|------|--------|\n';
 
 for (const file of pkg.files) {
   if (await exists(file)) {
@@ -69,5 +91,7 @@ await appendToSummaryFile(summary);
 if (missing.length > 0) {
   await appendToSummaryFile(`\n**ERROR: Missing files: ${missing.join(', ')}**\n`);
   console.error(`::error::Missing files: ${missing.join(', ')}`);
-  process.exit(1);
+  exitCode++;
 }
+
+process.exit(exitCode);
