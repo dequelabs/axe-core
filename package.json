@@ -78,7 +78,7 @@
     "build": "grunt",
     "patch": "npx patch-package",
     "unpatch": "npx patch-package --reverse",
-    "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+    "eslint": "eslint --color --format stylish '{lib,test,build,doc,}/**/*.js' 'Gruntfile.js' '.github/bin/*.mjs'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
