@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import {resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import pkg from '../../package.json' with { type: 'json' };
-import {access, appendFile} from 'node:fs/promises';
+import {access, appendFile, readFile} from 'node:fs/promises';
+import {execSync} from 'node:child_process';
 
+const isDebug = process.env.RUNNER_DEBUG === '1' || process.env.DEBUG === 'true';
 const repoRoot = resolve(import.meta.dirname, '..', '..');
 /**
  * Start the exit code at 0 for a successful run. If any checks
@@ -54,6 +57,7 @@ const exists = async (path) => {
 const appendToSummaryFile = async (text) => {
   if (summaryFile) {
     await appendFile(summaryFile, text);
+    summary = '';
   }
 };
 
@@ -102,10 +106,17 @@ listed in the \`files\` array of \`package.json\`.
  * will be usable.
  */
 const validateImportable = async () => {
-  summary += `\n## Importability Check
+  summary += `\n## Importable Check
 
 This check attempts to import the package. As well as all
 defined files in the \`files\` array of \`package.json\`.
+
+> ![INFO]
+> This check fails anything that resolves to \`node_modules\`,
+> this is because \`axe-core\` should be linked before
+> this is called. When \`exports\` can be added to the
+> package definition, then we can self reference imports and
+> the link will no longer be required.
 
 | File | Status |\n|------|--------|
 `;
@@ -120,6 +131,13 @@ defined files in the \`files\` array of \`package.json\`.
     // One day we can hopefully import anything as bytes to validate.
     // Ref: https://github.com/tc39/proposal-import-bytes
     if (target.endsWith('.txt') || target.endsWith('/') || target.endsWith('.d.ts')) {
+      continue;
+    }
+
+    if (import.meta.resolve(target).includes('node_modules')) {
+      exitCode++;
+      summary += `| \`${target}\` | ✗ Resolves to node_modules |\n`;
+      console.error(`✗ ${target} resolves to node_modules`);
       continue;
     }
 
@@ -146,7 +164,118 @@ defined files in the \`files\` array of \`package.json\`.
   await appendToSummaryFile(summary);
 };
 
+/**
+ * When a PR targets `master` or a `release-*` branch,
+ * or these branches are pushed to, we run SRI validation.
+ * Otherwise, it is skipped since the SRI hashes are only
+ * updated when releasing.
+ *
+ * The history file is deprecated. However, until it is removed
+ * we should be prudent and continue to validate it.
+ */
+const validateSriHashes = async () => {
+  const currentBranch = process.env.GITHUB_REF_NAME ||
+    process.env.GITHUB_HEAD_REF ||
+    '';
+
+  if (
+    !/^release-.+/.test(currentBranch) &&
+    currentBranch !== 'master'
+  ) {
+    console.log(`Skipping SRI validation (current branch: ${currentBranch})`);
+    return;
+  }
+
+  summary += `\n## Subresource Integrity Check
+
+This check validates the current build against the SRI hash
+for the version defined in \`sri-history.json\`.
+
+| File | Status |
+|------|--------|
+`;
+
+  const sriHistory = await import(`${pkg.name}/sri-history.json`, { with: { type: 'json' } });
+  const expectedSri = sriHistory.default[pkg.version];
+  // calculate the SRI hash for `axe.js` and `axe.min.js`
+  // Using `sri-toolbox` as that is what is used in the build process
+  const { generate } = await import('sri-toolbox');
+
+  const filesToCheck = [
+    { name: 'axe.js', path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.js`)) },
+    { name: 'axe.min.js', path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.min.js`)) },
+  ];
+  const mismatches = [];
+
+  for (const file of filesToCheck) {
+    const calculatedSri = generate(
+      { algorithms: ['sha256'] },
+      await readFile(file.path),
+    );
+
+    console.log(`Expected SRI for ${file.name}:`, expectedSri[file.name]);
+    console.log(`Calculated SRI for ${file.name}:`, calculatedSri);
+    if (calculatedSri !== expectedSri[file.name]) {
+      console.error(`✗ ${file.name}`);
+      summary += `| \`${file.name}\` | ✗ Invalid SRI |\n`;
+      mismatches.push({
+        name: file.name,
+        expected: expectedSri[file.name],
+        calculated: calculatedSri
+      });
+      continue;
+    }
+
+    console.info(`✓ ${file.name}`);
+    summary += `| \`${file.name}\` | ✓ Valid SRI |\n`;
+  }
+
+  if (mismatches.length > 0) {
+    summary += `\n### SRI Mismatches\n\n`;
+
+    for (const mismatch of mismatches) {
+      summary += `**${mismatch.name}:**\n`;
+      summary += `- Expected: \`${mismatch.expected}\`\n`;
+      summary += `- Calculated: \`${mismatch.calculated}\`\n\n`;
+    }
+
+    exitCode++;
+  }
+
+  await appendToSummaryFile(summary);
+};
+
 await fileExistenceCheck();
-await validateImportable();
+
+const execOptions = {
+  cwd: repoRoot,
+  stdio: isDebug ? 'inherit' : 'pipe'
+};
+
+console.log('Creating npm link for package validation...');
+
+try {
+  // First, create the global link
+  execSync('npm link', execOptions);
+  // Then, link it to itself locally so imports resolve to the current package
+  execSync(`npm link ${pkg.name}`, execOptions);
+
+  // Run any checks that require the package to reference itself.
+  await validateImportable();
+  await validateSriHashes();
+} catch (error) {
+  console.error('Failed to create npm link:', error.message);
+  exitCode++;
+} finally {
+  console.log('Removing npm link...');
+  try {
+    // Unlink local symlink first
+    execSync(`npm unlink ${pkg.name}`, execOptions);
+    // Then remove global link
+    execSync('npm unlink -g', execOptions);
+  } catch (error) {
+    console.warn('Failed to remove npm link:', error.message);
+  }
+}
 
 process.exit(exitCode);
