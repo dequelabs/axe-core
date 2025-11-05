@@ -11,8 +11,7 @@ concurrency:
   group: axe-core Tests ${{ github.ref_name }}
   cancel-in-progress: ${{ github.event_name != 'push' }}
 
-permissions:
-  contents: read
+permissions: {}
 
 env:
   CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
