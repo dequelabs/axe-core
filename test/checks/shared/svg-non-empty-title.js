@@ -13,40 +13,40 @@ describe('svg-non-empty-title tests', function () {
 
   it('returns true if the element has a `title` child', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><title>Time II: Party</title></svg>'
+      '<svg id="target" role="img"><title>Time II: Party</title></svg>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('returns true if the `title` child has text nested in another element', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><title><g>Time II: Party</g></title></svg>'
+      '<svg id="target" role="img"><title><g>Time II: Party</g></title></svg>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('returns true if the element has a `title` child with `display:none`', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><title style="display: none;">Time II: Party</title></svg>'
+      '<svg id="target" role="img"><title style="display: none;">Time II: Party</title></svg>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('returns false if the element has no `title` child', function () {
-    var checkArgs = checkSetup('<svg id="target"></svg>');
+    var checkArgs = checkSetup('<svg id="target" role="img"></svg>');
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.messageKey, 'noTitle');
   });
 
   it('returns false if the `title` child is empty', function () {
-    var checkArgs = checkSetup('<svg id="target"><title></title></svg>');
+    var checkArgs = checkSetup('<svg id="target" role="img"><title></title></svg>');
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.messageKey, 'emptyTitle');
   });
 
   it('returns false if the `title` is a grandchild', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><circle><title>Time II: Party</title></circle></svg>'
+      '<svg id="target" role="img"><circle><title>Time II: Party</title></circle></svg>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.messageKey, 'noTitle');
@@ -54,7 +54,7 @@ describe('svg-non-empty-title tests', function () {
 
   it('returns false if the `title` child has only whitespace', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><title> \t\r\n </title></svg>'
+      '<svg id="target" role="img"><title> \t\r\n </title></svg>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.messageKey, 'emptyTitle');
@@ -62,7 +62,7 @@ describe('svg-non-empty-title tests', function () {
 
   it('returns false if there are multiple titles, and the first is empty', function () {
     var checkArgs = checkSetup(
-      '<svg id="target"><title></title><title>Time II: Party</title></svg>'
+      '<svg id="target" role="img"><title></title><title>Time II: Party</title></svg>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.messageKey, 'emptyTitle');
