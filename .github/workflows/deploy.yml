@@ -68,6 +68,9 @@ jobs:
       contents: read
       # Required for OIDC
       id-token: write
+    outputs:
+      version: ${{ steps.get-data.outputs.version }}
+      packageName: ${{ steps.get-data.outputs.name }}
     runs-on: ubuntu-24.04
     steps:
       - *checkout
@@ -76,3 +79,73 @@ jobs:
       - *validate-package
       - name: Publish stable version to NPM
         run: npm publish
+      - name: Get published package data
+        id: get-data
+        run: |
+          VERSION=$(npm pkg get version | tr -d '"')
+          NAME=$(npm pkg get name | tr -d '"')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+  validate-deploy:
+    needs: prod-deploy
+    if: ${{ needs.prod-deploy.result == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: '.nvmrc'
+      # In theory since this is a new job now, by the time
+      # this would kick off the package should be available.
+      # But, to be safe in case of delays in propagation,
+      # we'll implement a retry mechanism.
+      - name: Wait for package to be available on npm
+        env:
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
+          MAX_ATTEMPTS: 30
+          SLEEP_SECONDS: 10
+        run: |
+          echo "Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
+
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            echo "Attempt $i of $MAX_ATTEMPTS..."
+
+            # Try to get package info from npm registry
+            if npm view ${PACKAGE_NAME}@${VERSION} version > /dev/null 2>&1; then
+              PUBLISHED_VERSION=$(npm view ${PACKAGE_NAME}@${VERSION} version)
+              echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
+              exit 0
+            fi
+
+            if [ $i -lt $MAX_ATTEMPTS ]; then
+              echo "Package not yet available, waiting ${SLEEP_SECONDS} seconds..."
+              sleep $SLEEP_SECONDS
+            fi
+          done
+
+          echo "✗ Timeout: Package ${PACKAGE_NAME}@${VERSION} not available after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
+          exit 1
+      - name: Install ${{ needs.prod-deploy.outputs.packageName }}
+        run: npm install -g ${{ needs.prod-deploy.outputs.packageName }}@${{ needs.prod-deploy.outputs.version }}
+      - name: Verify CJS Import
+        run: |
+          node -pe "window={}; document={}; require('${{ needs.prod-deploy.outputs.packageName }}')"
+      - name: Get global npm root
+        id: npm-root
+        run: |
+          echo "path=$(npm root -g)" >> $GITHUB_OUTPUT
+      - name: Verify types are in package
+        working-directory: ${{ steps.npm-root.outputs.path }}/${{ needs.prod-deploy.outputs.packageName }}
+        run: |
+          types=$(node -pe "require('./package.json').types")
+          if [ "$types" == "undefined" ]
+          then
+            types=$(node -pe "require('./package.json').typings")
+          fi
+          if [ "$types" != "undefined" ] && [ ! -f "$types" ]
+          then
+            echo "::error::The types file is missing"
+            exit 1;
+          fi
+          echo ::success::Types file '$types' is present in the package
