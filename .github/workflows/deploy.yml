@@ -43,9 +43,11 @@ jobs:
           npm run build
       - &validate-package
         name: Validate package is consumable
-        # This script checks over consumption of the package as it is built.
-        # If any critical issues happen, a non-zero exit code will occur.
-        # That will prevent publishing until those issues are resolved.
+        env:
+          # Ref: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#runner-context
+          # Linting shows this context might be invalid, but it shouldn't be per docs.
+          # Probably something missing in the schema.
+          DEBUG: ${{ runner.debug == '1' }}
         run: node .github/bin/validate-package.mjs
       - name: Publish "next" version to NPM
         run: npm publish --tag=next

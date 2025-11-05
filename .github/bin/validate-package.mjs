@@ -1,5 +1,26 @@
 #!/usr/bin/env node
 
+/**
+ * @fileoverview Validates the package before publishing.
+ * This script performs several checks to ensure the package
+ * is correctly set up, including:
+ * - Verifying the existence of files listed in `package.json`'s `files` array.
+ * - Ensuring the package can be imported using both ESM `import` and CommonJS `require()`.
+ * - Validating Subresource Integrity (SRI) hashes for the built files.
+ *
+ * The script generates a summary report compatible with
+ * GitHub Actions, providing detailed feedback on each
+ * validation step.
+ *
+ * Running this script locally has a few implications to be
+ * aware of:
+ * 1. It links and unlinks the package globally. So this
+ * could impact other workspaces where current links are used.
+ * 2. To test the step summary, set the `GITHUB_STEP_SUMMARY`
+ * environment variable to a file path. If this file does not
+ * exist, it will be created.
+ */
+
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
@@ -7,7 +28,7 @@ import pkg from '../../package.json' with { type: 'json' };
 import {access, appendFile, readFile} from 'node:fs/promises';
 import {execSync} from 'node:child_process';
 
-const isDebug = process.env.RUNNER_DEBUG === '1' || process.env.DEBUG === 'true';
+const isDebug = process.env.DEBUG === 'true';
 const repoRoot = resolve(import.meta.dirname, '..', '..');
 /**
  * Start the exit code at 0 for a successful run. If any checks
@@ -58,9 +79,17 @@ const exists = async (path) => {
 };
 
 /**
- * Appends text to the GitHub Actions step summary file if it exists.
- * This is mostly useful for local testing where the summary file may not be set.
- * However if we want to set it for testing, we can.
+ * Appends text to the GitHub Actions step summary file if it
+ * exists. This is mostly useful for local testing where the
+ * summary file may not be set. However if we want to set it
+ * for testing, we can.
+ *
+ * Since we build the summary in chunks, this function
+ * appends the current summary and then clears it for the
+ * next section.
+ *
+ * @param {string} text - The text to append to the summary file
+ * @returns {Promise<void>}
  */
 const appendToSummaryFile = async (text) => {
   if (summaryFile) {
@@ -69,6 +98,10 @@ const appendToSummaryFile = async (text) => {
   }
 };
 
+/**
+ * Verifies that all files and folders listed in the `files`
+ * array of `package.json` exist in the repository.
+ */
 const fileExistenceCheck = async () => {
   summary += `
 \n## File Existence Check
@@ -108,8 +141,9 @@ listed in the \`files\` array of \`package.json\`.
 };
 
 /**
- * Validates that the main package file can be loaded via CommonJS require.
- * This ensures backward compatibility for projects using CommonJS.
+ * Validates that the main package file can be loaded via
+ * CommonJS require. This ensures backward compatibility
+ * for projects using CommonJS.
  */
 const validateCommonJS = async () => {
   summary += `\n## CommonJS Compatibility Check
@@ -153,10 +187,9 @@ using CommonJS \`require()\`, ensuring backward compatibility.
 };
 
 /**
- * Since this validation script is running under ESM, we can
- * import the package files without any extra scaffolding.
- * Allowing us to validate before publishing that the package
- * will be usable.
+ * Validates that the package and all files listed in the
+ * `files` array of `package.json` can be imported using
+ * ESM `import` statements.
  */
 const validateImportable = async () => {
   summary += `\n## Importable Check
@@ -320,6 +353,7 @@ for the version defined in \`sri-history.json\`.
   await appendToSummaryFile(summary);
 };
 
+// Start running checks that don't require linking first.
 await fileExistenceCheck();
 
 const execOptions = {
@@ -330,9 +364,15 @@ const execOptions = {
 console.log('Creating npm link for package validation...');
 
 try {
-  // First, create the global link
+  // Link the package globally, then update the package
+  // internally to use the linked version.
+  // This is needed because don't have `exports` defined
+  // yet, so self referencing imports won't work.
+  // We also have a circular dependency on the package.
+  // That means if we try to resolve the import without
+  // linking, it will resolve the version in `node_modules`
+  // from npm.
   execSync('npm link', execOptions);
-  // Then, link it to itself locally so imports resolve to the current package
   execSync(`npm link ${pkg.name}`, execOptions);
 
   // Run any checks that require the package to reference itself.
@@ -341,16 +381,33 @@ try {
   await validateSriHashes();
 } catch (error) {
   console.error('Failed to create npm link:', error.message);
+  await appendToSummaryFile(`
+    ## Failed to create npm link
+
+    <details><summary>Click to expand error details</summary>
+
+    \n\`\`\`\n${error.message}\n\`\`\`\n
+
+    </details>
+
+    This failure prevented running critical validation checks.
+    Therefore the entire validation has failed.
+  `);
+  console.error(`Failed to create npm link: ${error.message}`);
   exitCode++;
 } finally {
   console.log('Removing npm link...');
   try {
-    // Unlink local symlink first
     execSync(`npm unlink ${pkg.name}`, execOptions);
-    // Then remove global link
     execSync('npm unlink -g', execOptions);
   } catch (error) {
-    console.warn('Failed to remove npm link:', error.message);
+    // Not a hard failure if unlinking fails since all these
+    // checks are last. As long as they completed fine,
+    // validation is acceptable.
+    // This is more for when running locally to test if
+    // something goes wrong. As the developer's machine state
+    // is impacted and they need to know about it.
+    console.error('Failed to remove npm link:', error.message);
   }
 }
 
