@@ -194,7 +194,7 @@
     "*.{md,json,ts,html}": [
       "prettier --write"
     ],
-    "*.js": [
+    "*.{js,mjs}": [
       "prettier --write",
       "eslint --fix"
     ]

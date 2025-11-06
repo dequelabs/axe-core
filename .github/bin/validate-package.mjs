@@ -21,11 +21,11 @@
  * exist, it will be created.
  */
 
-import {resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
-import {createRequire} from 'node:module';
-import {access, appendFile, readFile} from 'node:fs/promises';
-import {execSync} from 'node:child_process';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import { access, appendFile, readFile } from 'node:fs/promises';
+import { execSync } from 'node:child_process';
 import pkg from '../../package.json' with { type: 'json' };
 
 const isDebug = process.env.DEBUG === 'true';
@@ -68,7 +68,7 @@ let summary = `# Package Validation
  * @param {string} path - The path to check (relative to repo root)
  * @returns {Promise<boolean>} True if the path exists, false otherwise
  */
-const exists = async (path) => {
+const exists = async path => {
   const absolutePath = resolve(repoRoot, path);
   try {
     await access(absolutePath);
@@ -91,7 +91,7 @@ const exists = async (path) => {
  * @param {string} text - The text to append to the summary file
  * @returns {Promise<void>}
  */
-const appendToSummaryFile = async (text) => {
+const appendToSummaryFile = async text => {
   if (summaryFile) {
     await appendFile(summaryFile, text);
     summary = '';
@@ -134,7 +134,9 @@ listed in the \`files\` array of \`package.json\`.
   await appendToSummaryFile(summary);
 
   if (missing.length > 0) {
-    await appendToSummaryFile(`\n**ERROR: Missing files: ${missing.join(', ')}**\n`);
+    await appendToSummaryFile(
+      `\n**ERROR: Missing files: ${missing.join(', ')}**\n`
+    );
     console.error(`::error::Missing files: ${missing.join(', ')}`);
     exitCode++;
   }
@@ -172,7 +174,9 @@ using CommonJS \`require()\`, ensuring backward compatibility.
     }
 
     if (axe.version !== pkg.version) {
-      console.error(`✗ ${pkg.name} version mismatch: expected ${pkg.version}, got ${axe.version}`);
+      console.error(
+        `✗ ${pkg.name} version mismatch: expected ${pkg.version}, got ${axe.version}`
+      );
       summary += `| \`${pkg.name}\` version | ✗ Version Mismatch |\n`;
       exitCode++;
     }
@@ -207,7 +211,7 @@ defined files in the \`files\` array of \`package.json\`.
 | File | Status | Version |\n|------|--------|--------|
 `;
 
-  const importTargets = [...pkg.files.map((file) => `${pkg.name}/${file}`)];
+  const importTargets = [...pkg.files.map(file => `${pkg.name}/${file}`)];
   let anyCaught = false;
 
   console.log('Validating package files are importable:');
@@ -226,7 +230,11 @@ defined files in the \`files\` array of \`package.json\`.
     // Skip things that can't be imported directly
     // One day we can hopefully import anything as bytes to validate.
     // Ref: https://github.com/tc39/proposal-import-bytes
-    if (target.endsWith('.txt') || target.endsWith('/') || target.endsWith('.d.ts')) {
+    if (
+      target.endsWith('.txt') ||
+      target.endsWith('/') ||
+      target.endsWith('.d.ts')
+    ) {
       continue;
     }
 
@@ -249,7 +257,9 @@ defined files in the \`files\` array of \`package.json\`.
         const axe = await import(target);
         version = axe.default.version;
         if (version !== pkg.version) {
-          console.error(`✗ ${target} version mismatch: expected ${pkg.version}, got ${version}`);
+          console.error(
+            `✗ ${target} version mismatch: expected ${pkg.version}, got ${version}`
+          );
           summary += `| \`${target}\` | ✗ Version Mismatch | ${version} |\n`;
           anyCaught = true;
           continue;
@@ -282,14 +292,10 @@ defined files in the \`files\` array of \`package.json\`.
  * we should be prudent and continue to validate it.
  */
 const validateSriHashes = async () => {
-  const currentBranch = process.env.GITHUB_REF_NAME ||
-    process.env.GITHUB_HEAD_REF ||
-    '';
+  const currentBranch =
+    process.env.GITHUB_REF_NAME || process.env.GITHUB_HEAD_REF || '';
 
-  if (
-    !/^release-.+/.test(currentBranch) &&
-    currentBranch !== 'master'
-  ) {
+  if (!/^release-.+/.test(currentBranch) && currentBranch !== 'master') {
     console.log(`Skipping SRI validation (current branch: ${currentBranch})`);
     return;
   }
@@ -303,22 +309,30 @@ for the version defined in \`sri-history.json\`.
 |------|--------|
 `;
 
-  const sriHistory = await import(`${pkg.name}/sri-history.json`, { with: { type: 'json' } });
+  const sriHistory = await import(`${pkg.name}/sri-history.json`, {
+    with: { type: 'json' }
+  });
   const expectedSri = sriHistory.default[pkg.version];
   // calculate the SRI hash for `axe.js` and `axe.min.js`
   // Using `sri-toolbox` as that is what is used in the build process
   const { generate } = await import('sri-toolbox');
 
   const filesToCheck = [
-    { name: 'axe.js', path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.js`)) },
-    { name: 'axe.min.js', path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.min.js`)) },
+    {
+      name: 'axe.js',
+      path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.js`))
+    },
+    {
+      name: 'axe.min.js',
+      path: fileURLToPath(import.meta.resolve(`${pkg.name}/axe.min.js`))
+    }
   ];
   const mismatches = [];
 
   for (const file of filesToCheck) {
     const calculatedSri = generate(
       { algorithms: ['sha256'] },
-      await readFile(file.path),
+      await readFile(file.path)
     );
 
     console.log(`Expected SRI for ${file.name}:`, expectedSri[file.name]);
