@@ -24,9 +24,9 @@
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
-import pkg from '../../package.json' with { type: 'json' };
 import {access, appendFile, readFile} from 'node:fs/promises';
 import {execSync} from 'node:child_process';
+import pkg from '../../package.json' with { type: 'json' };
 
 const isDebug = process.env.DEBUG === 'true';
 const repoRoot = resolve(import.meta.dirname, '..', '..');
@@ -216,7 +216,7 @@ defined files in the \`files\` array of \`package.json\`.
     const axe = await import(pkg.name);
     console.info(`✓ ${pkg.name}`);
     summary += `| \`${pkg.name}\` | ✓ Importable | ${axe.default.version} |\n`;
-  } catch (error) {
+  } catch {
     console.error(`✗ ${pkg.name}`);
     summary += `| \`${pkg.name}\` | ✗ Not Importable | |\n`;
     anyCaught = true;

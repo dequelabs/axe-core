@@ -366,13 +366,16 @@ module.exports = [
   {
     files: ['.github/bin/*.mjs'],
     languageOptions: {
-      // This moves up with `.nvmrc` updates.
-      ecmaVersion: 2024,
+      ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
         ...globals.node,
         ...globals.es2022
       }
+    },
+    rules: {
+      // Helper scripts for github can import from anywhere
+      'no-restricted-imports': ['off']
     }
   },
   {
