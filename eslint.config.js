@@ -365,9 +365,6 @@ module.exports = [
   },
   {
     files: ['.github/bin/*.mjs'],
-    env: {
-      node: true
-    },
     languageOptions: {
       // This moves up with `.nvmrc` updates.
       ecmaVersion: 2024,
