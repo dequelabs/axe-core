@@ -86,6 +86,22 @@ jobs:
           NAME=$(npm pkg get name | tr -d '"')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
+  create-github-release:
+    needs: prod-deploy
+    if: ${{ needs.prod-deploy.result == 'success' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - *checkout
+      - name: Install Release Helper
+        run: go get gopkg.in/aktau/github-release.v0
+      - name: Download Release Script
+        run: curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
+      - name: Make Release Script Executable
+        run: chmod +x ./node-github-release.sh
+      - name: Create GitHub Release
+        run: ./node-github-release.sh
   validate-deploy:
     needs: prod-deploy
     if: ${{ needs.prod-deploy.result == 'success' }}
