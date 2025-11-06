@@ -109,7 +109,7 @@ const fileExistenceCheck = async () => {
 The following results table shows the status of files and folders
 listed in the \`files\` array of \`package.json\`.
 
-> ![NOTE]
+> [!NOTE]
 > This check only validates the existence of files and folders
 > defined. It does not validate the contents. Thus a folder
 > could exist but be empty and still pass this check. Or
@@ -201,7 +201,7 @@ const validateImportable = async () => {
 This check attempts to import the package. As well as all
 defined files in the \`files\` array of \`package.json\`.
 
-> ![NOTE]
+> [!NOTE]
 > This check fails anything that resolves to \`node_modules\`,
 > this is because \`axe-core\` should be linked before
 > this is called. When \`exports\` can be added to the

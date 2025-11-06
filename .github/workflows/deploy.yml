@@ -95,7 +95,7 @@ jobs:
     steps:
       - *checkout
       - name: Install Release Helper
-        run: go get gopkg.in/aktau/github-release.v0
+        run: go install gopkg.in/aktau/github-release.v0@latest
       - name: Download Release Script
         run: curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
       - name: Make Release Script Executable
@@ -112,7 +112,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version-file: '.nvmrc'
+          # Perpetually test on the latest local LTS version.
+          node-version: lts/*
       # In theory since this is a new job now, by the time
       # this would kick off the package should be available.
       # But, to be safe in case of delays in propagation,
@@ -124,13 +125,14 @@ jobs:
           MAX_ATTEMPTS: 30
           SLEEP_SECONDS: 10
         run: |
-          echo "Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
+          echo "::group::Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
           for i in $(seq 1 $MAX_ATTEMPTS); do
             echo "Attempt $i of $MAX_ATTEMPTS..."
             # Try to get package info from npm registry
             if npm view ${PACKAGE_NAME}@${VERSION} version > /dev/null 2>&1; then
               PUBLISHED_VERSION=$(npm view ${PACKAGE_NAME}@${VERSION} version)
               echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
+              echo "::endgroup::"
               exit 0
             fi
             if [ $i -lt $MAX_ATTEMPTS ]; then
@@ -139,6 +141,7 @@ jobs:
             fi
           done
           echo "✗ Timeout: Package ${PACKAGE_NAME}@${VERSION} not available after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
+          echo "::endgroup::"
           exit 1
       - name: Install ${{ needs.prod-deploy.outputs.packageName }}
         run: npm install -g ${{ needs.prod-deploy.outputs.packageName }}@${{ needs.prod-deploy.outputs.version }}
@@ -162,4 +165,4 @@ jobs:
             echo "::error::The types file is missing"
             exit 1;
           fi
-          echo ::success::Types file '$types' is present in the package
+          echo "Types file '$types' is present in the package"
