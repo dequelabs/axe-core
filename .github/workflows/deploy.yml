@@ -91,6 +91,8 @@ jobs:
     if: ${{ needs.prod-deploy.result == 'success' }}
     runs-on: ubuntu-24.04
     steps:
+      # No checkout since we want to have a clean environment
+      # so we can validate module resolution.
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
@@ -107,23 +109,19 @@ jobs:
           SLEEP_SECONDS: 10
         run: |
           echo "Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
-
           for i in $(seq 1 $MAX_ATTEMPTS); do
             echo "Attempt $i of $MAX_ATTEMPTS..."
-
             # Try to get package info from npm registry
             if npm view ${PACKAGE_NAME}@${VERSION} version > /dev/null 2>&1; then
               PUBLISHED_VERSION=$(npm view ${PACKAGE_NAME}@${VERSION} version)
               echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
               exit 0
             fi
-
             if [ $i -lt $MAX_ATTEMPTS ]; then
               echo "Package not yet available, waiting ${SLEEP_SECONDS} seconds..."
               sleep $SLEEP_SECONDS
             fi
           done
-
           echo "✗ Timeout: Package ${PACKAGE_NAME}@${VERSION} not available after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
           exit 1
       - name: Install ${{ needs.prod-deploy.outputs.packageName }}
