@@ -238,6 +238,17 @@ defined files in the \`files\` array of \`package.json\`.
       continue;
     }
 
+    // `import.meta.resolve` is used here to determine
+    // where the import would be resolved from, following
+    // any symlinks. Since this package is linked, it
+    // should never have `node_modules` in the resolved
+    // path. It *could* happen if a dev is writing code
+    // within a parent folder named as such, but that is
+    // unsafe anyways.
+    // -------------------------------------------------
+    // If this is ever setup to run in the post-deploy
+    // test, then this will cause issues as that runs
+    // from this folder specifically.
     if (import.meta.resolve(target).includes('node_modules')) {
       exitCode++;
       summary += `| \`${target}\` | ✗ Resolves to node_modules |\n`;
