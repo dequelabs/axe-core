@@ -62,6 +62,12 @@ let summary = `# Package Validation
 
 `;
 
+console.group('Package Information');
+console.log('Name:', pkg.name);
+console.log('Version:', pkg.version);
+console.log('License:', pkg.license);
+console.groupEnd();
+
 /**
  * Checks if a file or folder exists on the filesystem.
  *
