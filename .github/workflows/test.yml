@@ -3,9 +3,9 @@ name: Tests
 on:
   pull_request:
   push:
-    # branches:
-    #   - master
-    #   - develop
+    branches:
+      - master
+      - develop
 
 concurrency:
   group: axe-core Tests ${{ github.ref_name }}
@@ -197,7 +197,7 @@ jobs:
   test_rule_help_version:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    # Lock to master once tested.
+    if: ${{ github.ref_name == 'master' }}
     steps:
       - *checkout
       - *install-deps
