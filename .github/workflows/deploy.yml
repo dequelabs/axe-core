@@ -2,7 +2,12 @@
 # NPM for trusted OIDC publishing.
 name: Deploy
 
-on:
+# This workflow has safeguards to prevent exploitation.
+# All non-blocked jobs MUST check that the event_name is
+# 'push' to prevent forked PRs from modifying enough to
+# trigger a deployment by force. Since those would always
+# only run with 'pull_request' events within our runs.
+on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
     workflows:
       - Tests
@@ -21,18 +26,20 @@ permissions:
 
 jobs:
   deploy-next:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'develop' }}
+    name: Deploy "next" to npm
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'develop' && github.event_name == 'push' }}
     environment:
       name: registry.npmjs.org
     permissions:
       contents: read
-      # Required for OIDC
-      id-token: write
+      id-token: write # Required for OIDC
     runs-on: ubuntu-24.04
     steps:
       - &checkout
         name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
       - &install-deps
         name: Install Dependencies
         uses: ./.github/actions/install-deps
@@ -52,7 +59,8 @@ jobs:
       - name: Publish "next" version to NPM
         run: npm publish --tag=next
   prod-hold:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' }}
+    name: Await approval to deploy to production
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' && github.event_name == 'push' }}
     environment:
       name: production-hold
     runs-on: ubuntu-24.04
@@ -60,14 +68,14 @@ jobs:
       - name: Awaiting approval to deploy to production
         run: echo "Approval granted to proceed to production deployment."
   prod-deploy:
+    name: Deploy stable to npm
     needs: prod-hold
     if: ${{ needs.prod-hold.result == 'success' }}
     environment:
       name: registry.npmjs.org
     permissions:
       contents: read
-      # Required for OIDC
-      id-token: write
+      id-token: write # Required for OIDC
     outputs:
       version: ${{ steps.get-data.outputs.version }}
       packageName: ${{ steps.get-data.outputs.name }}
@@ -87,11 +95,12 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
   create-github-release:
+    name: Create GitHub Release
     needs: prod-deploy
     if: ${{ needs.prod-deploy.result == 'success' }}
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: write # Required to create releases
     steps:
       - *checkout
       - name: Install Release Helper
@@ -103,6 +112,7 @@ jobs:
       - name: Create GitHub Release
         run: ./node-github-release.sh
   validate-deploy:
+    name: Validate Deployment
     needs: prod-deploy
     if: ${{ needs.prod-deploy.result == 'success' }}
     runs-on: ubuntu-24.04
@@ -144,10 +154,15 @@ jobs:
           echo "::endgroup::"
           exit 1
       - name: Install ${{ needs.prod-deploy.outputs.packageName }}
-        run: npm install -g ${{ needs.prod-deploy.outputs.packageName }}@${{ needs.prod-deploy.outputs.version }}
+        env:
+          PACKAGE: ${{ needs.prod-deploy.outputs.packageName }}@${{ needs.prod-deploy.outputs.version }}
+        run: npm install -g "$PACKAGE"
       - name: Verify CJS Import
+        env:
+          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
+        shell: bash
         run: |
-          node -pe "window={}; document={}; require('${{ needs.prod-deploy.outputs.packageName }}')"
+          node -pe "window={}; document={}; require('${PACKAGE_NAME}');"
       - name: Get global npm root
         id: npm-root
         run: |
