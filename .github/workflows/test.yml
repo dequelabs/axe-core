@@ -70,6 +70,9 @@ jobs:
   test_chrome:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    strategy:
+      matrix:
+        run: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     env:
       DISPLAY: :99
     steps:
@@ -95,6 +98,9 @@ jobs:
   test_firefox:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    strategy:
+      matrix:
+        run: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     env:
       DISPLAY: :99
     steps:
