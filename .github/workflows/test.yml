@@ -7,13 +7,13 @@ on:
       - master
       - develop
 
-# head_ref is only defined for PRs, not pushes, so this will cause all pull_request
-# events for a single PR to be grouped, but will leave different push events ungrouped
-# (even for the same branch). This enables linear processing of pull requests, while
-# still allowing pushes to run concurrently.
+# We want to group to the workflow for each branch.
+# Non-push events will be cancelled if a new one is started.
+# Push events will run sequentially. This helps ensure that
+# the `next` tag isn't out of sync.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions: {}
 
