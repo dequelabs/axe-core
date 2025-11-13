@@ -142,7 +142,7 @@ function buildWebDriver(browser) {
     const options = new firefox.Options().addArguments('--headless');
 
     if (process.env.FIREFOX_BIN) {
-      options.setBinaryPath(process.env.FIREFOX_BIN);
+      options.setBinary(process.env.FIREFOX_BIN);
     }
 
     webdriver = firefox.Driver.createSession(options);
