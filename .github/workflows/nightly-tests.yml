@@ -34,6 +34,7 @@ jobs:
           start-xvfb: ${{ env.DISPLAY }}
       - &build
         name: Build
+        id: build
         run: |
           npm run prepare
           npm run build
@@ -42,7 +43,7 @@ jobs:
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
         run: npm run test -- --browsers FirefoxNightly
       - name: Run Chrome Beta Browser Tests
-        if: ${{ always() }}
+        if: ${{ !cancelled() && steps.build.conclusion == 'success' }}
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}

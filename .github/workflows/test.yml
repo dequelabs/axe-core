@@ -7,9 +7,13 @@ on:
       - master
       - develop
 
+# We want to group to the workflow for each branch.
+# Non-push events will be cancelled if a new one is started.
+# Push events will run sequentially. This helps ensure that
+# the `next` tag isn't out of sync.
 concurrency:
-  group: axe-core Tests ${{ github.ref_name }}
-  cancel-in-progress: ${{ github.event_name != 'push' }}
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions: {}
 
