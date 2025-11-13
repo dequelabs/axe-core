@@ -1,5 +1,5 @@
 # Do not rename this file. The name "deploy.yml" is known to
-# NPM for trusted OIDC publishing.
+# npm for trusted OIDC publishing.
 name: Deploy
 
 # This workflow has safeguards to prevent exploitation.
@@ -59,7 +59,7 @@ jobs:
           # Probably something missing in the schema.
           DEBUG: ${{ runner.debug == '1' }}
         run: node .github/bin/validate-package.mjs
-      - name: Publish "next" version to NPM
+      - name: Publish "next" version to npm
         run: npm publish --tag=next
       - name: Get published package data
         id: get-data
@@ -165,7 +165,7 @@ jobs:
       - *install-deps
       - *build
       - *validate-package
-      - name: Publish stable version to NPM
+      - name: Publish stable version to npm
         run: npm publish
       - name: Get published package data
         id: get-data
