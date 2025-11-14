@@ -3,10 +3,10 @@
 name: Deploy
 
 # This workflow has safeguards to prevent exploitation.
-# All non-blocked jobs MUST check that the event_name is
-# 'push' to prevent forked PRs from modifying enough to
-# trigger a deployment by force. Since those would always
-# only run with 'pull_request' events within our runs.
+# All non-blocked jobs MUST check that the workflow_run event is
+# 'push' (i.e., github.event.workflow_run.event == 'push') to prevent
+# forked PRs from modifying enough to trigger a deployment by force.
+# Forked PRs will only run with 'pull_request' events within our runs.
 on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
     workflows:
