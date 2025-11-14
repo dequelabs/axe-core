@@ -397,7 +397,7 @@ console.log('Creating npm link for package validation...');
 try {
   // Link the package globally, then update the package
   // internally to use the linked version.
-  // This is needed because don't have `exports` defined
+  // This is needed because we don't have `exports` defined
   // yet, so self referencing imports won't work.
   // We also have a circular dependency on the package.
   // That means if we try to resolve the import without
