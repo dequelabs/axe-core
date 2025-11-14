@@ -140,7 +140,7 @@ jobs:
           echo "Types file '$types' is present in the package"
   prod-hold:
     name: Await approval to deploy to production
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' && github.event_name == 'push' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' && github.event.workflow_run.event == 'push' }}
     environment:
       name: production-hold
     runs-on: ubuntu-24.04
