@@ -179,6 +179,10 @@ using CommonJS \`require()\`, ensuring backward compatibility.
       exitCode++;
     }
 
+    if (!axe.version) {
+      throw new Error('Missing version property');
+    }
+
     if (axe.version !== pkg.version) {
       console.error(
         `✗ ${pkg.name} version mismatch: expected ${pkg.version}, got ${axe.version}`
@@ -225,6 +229,11 @@ defined files in the \`files\` array of \`package.json\`.
   try {
     const axe = await import(pkg.name);
     console.info(`✓ ${pkg.name}`);
+
+    if (!axe.default?.version) {
+      throw new Error('Missing version property');
+    }
+
     summary += `| \`${pkg.name}\` | ✓ Importable | ${axe.default.version} |\n`;
   } catch {
     console.error(`✗ ${pkg.name}`);
@@ -266,12 +275,14 @@ defined files in the \`files\` array of \`package.json\`.
       let version = '';
       if (target.endsWith('.json')) {
         const data = await import(target, { with: { type: 'json' } });
-        // Ensure version is empty since it doesn't apply to the json file.
-        // This keeps the table aligned and prevents it from showing a version
-        // when it might be set from a previous loop iteration.
         version = Object.keys(data.default).at(-1);
       } else {
         const axe = await import(target);
+
+        if (!axe.default?.version) {
+          throw new Error('Missing version property');
+        }
+
         version = axe.default.version;
         if (version !== pkg.version) {
           console.error(
