@@ -100,7 +100,7 @@ function getCommits(branch) {
       commitType[releaseType] &&
       !ignoreCommits.includes(hash)
     ) {
-      // add in reverse order (order commited)
+      // add in reverse order (order committed)
       commits.unshift({ hash, msg, type, scope, subject });
     }
   }
@@ -133,7 +133,7 @@ commitsToCherryPick.forEach(({ hash, type, scope, subject }) => {
     execSync(`git cherry-pick ${hash} -X theirs`);
   } catch {
     console.error(
-      chalk.red.bold('\nAborting cherry-pick and reseting to master')
+      chalk.red.bold('\nAborting cherry-pick and resetting to master')
     );
     console.error(
       '\nCannot auto-resolve cherry-pick commit. This can be caused by the commit already being applied or a file being edited in the cherry-pick branch that does not yet exist (the commit it depends on was not cherry-picked). Please review the commits being cherry-picked and either manually resolve or ignore the commit.'
