@@ -108,7 +108,6 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
-    "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",

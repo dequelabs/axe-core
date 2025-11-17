@@ -35,8 +35,8 @@ jobs:
       id-token: write # Required for OIDC
     runs-on: ubuntu-24.04
     outputs:
-      version: ${{ steps.get-data.outputs.version }}
-      packageName: ${{ steps.get-data.outputs.name }}
+      version: ${{ steps.determine-version.outputs.version }}
+      packageName: ${{ steps.determine-version.outputs.name }}
     steps:
       - &checkout
         name: Checkout repository
@@ -51,6 +51,26 @@ jobs:
         run: |
           npm run prepare
           npm run build
+      - name: Determine prerelease version
+        id: determine-version
+        run: |
+          echo "::group::Determining new prerelease version"
+          NAME=$(npm pkg get name | tr -d '"')
+          LATEST_VERSION=$(npm pkg get version | tr -d '"')
+          echo "Latest version in package.json: $LATEST_VERSION"
+
+          # add 8 characters from the current SHA as prerelease identifier
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-8)
+          NEW_VERSION="$LATEST_VERSION-canary.${SHORT_SHA}"
+          echo "New prerelease version: $NEW_VERSION"
+
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "::endgroup::"
+      - name: Bump version
+        env:
+          NEW_VERSION: ${{ steps.determine-version.outputs.version }}
+        run: npm version "$NEW_VERSION" --no-git-tag-version
       - &validate-package
         name: Validate package is consumable
         env:
@@ -61,13 +81,6 @@ jobs:
         run: node .github/bin/validate-package.mjs
       - name: Publish "next" version to npm
         run: npm publish --tag=next
-      - name: Get published package data
-        id: get-data
-        run: |
-          VERSION=$(npm pkg get version | tr -d '"')
-          NAME=$(npm pkg get name | tr -d '"')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "name=$NAME" >> $GITHUB_OUTPUT
   validate-next-deploy:
     name: Validate Next Deployment
     needs: deploy-next
