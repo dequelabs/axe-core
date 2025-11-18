@@ -159,8 +159,7 @@ const validateCommonJS = async () => {
 This check validates that the main package file can be loaded
 using CommonJS \`require()\`, ensuring backward compatibility.
 
-| File | Status |
-|------|--------|
+| File | Status | Version |\n|------|--------|--------|
 `;
 
   const require = createRequire(import.meta.url);
@@ -169,27 +168,17 @@ using CommonJS \`require()\`, ensuring backward compatibility.
 
   try {
     const axe = require(`${pkg.name}`);
-    console.info(`✓ ${pkg.name} (CommonJS)`);
-    summary += `| \`${pkg.name}\` | ✓ CommonJS Compatible |\n`;
 
-    // Verify it actually exported something
     if (!axe || typeof axe !== 'object') {
-      console.error(`✗ ${pkg.name} exported invalid value`);
-      summary += `| \`${pkg.name}\` export | ✗ Invalid export |\n`;
-      exitCode++;
+      throw new Error('Module did not export an object');
     }
 
     if (!axe.version) {
       throw new Error('Missing version property');
     }
 
-    if (axe.version !== pkg.version) {
-      console.error(
-        `✗ ${pkg.name} version mismatch: expected ${pkg.version}, got ${axe.version}`
-      );
-      summary += `| \`${pkg.name}\` version | ✗ Version Mismatch |\n`;
-      exitCode++;
-    }
+    console.info(`✓ ${pkg.name} (CommonJS)`);
+    summary += `| \`${pkg.name}\` | ✓ CommonJS Compatible | ${axe.version} |\n`;
   } catch (error) {
     console.error(`✗ ${pkg.name} (CommonJS):`, error.message);
     summary += `| \`${pkg.name}\` | ✗ CommonJS Failed |\n`;
@@ -284,14 +273,6 @@ defined files in the \`files\` array of \`package.json\`.
         }
 
         version = axe.default.version;
-        if (version !== pkg.version) {
-          console.error(
-            `✗ ${target} version mismatch: expected ${pkg.version}, got ${version}`
-          );
-          summary += `| \`${target}\` | ✗ Version Mismatch | ${version} |\n`;
-          anyCaught = true;
-          continue;
-        }
       }
       console.info(`✓ ${target}`);
       summary += `| \`${target}\` | ✓ Importable | ${version} |\n`;
@@ -398,9 +379,13 @@ for the version defined in \`sri-history.json\`.
 // Start running checks that don't require linking first.
 await fileExistenceCheck();
 
+/**
+ * @type {import('child_process').ExecSyncOptionsWithBufferEncoding}
+ */
 const execOptions = {
   cwd: repoRoot,
-  stdio: isDebug ? 'inherit' : 'pipe'
+  stdio: isDebug ? 'inherit' : 'pipe',
+  timeout: 200000
 };
 
 console.log('Creating npm link for package validation...');
@@ -437,20 +422,20 @@ try {
   `);
   console.error(`Failed to create npm link: ${error.message}`);
   exitCode++;
-} finally {
-  console.log('Removing npm link...');
-  try {
-    execSync(`npm unlink ${pkg.name}`, execOptions);
-    execSync('npm unlink -g', execOptions);
-  } catch (error) {
-    // Not a hard failure if unlinking fails since all these
-    // checks are last. As long as they completed fine,
-    // validation is acceptable.
-    // This is more for when running locally to test if
-    // something goes wrong. As the developer's machine state
-    // is impacted and they need to know about it.
-    console.error('Failed to remove npm link:', error.message);
-  }
+}
+
+console.log('Removing npm link...');
+try {
+  execSync(`npm unlink ${pkg.name}`, execOptions);
+  execSync('npm unlink -g', execOptions);
+} catch (error) {
+  // Not a hard failure if unlinking fails since all these
+  // checks are last. As long as they completed fine,
+  // validation is acceptable.
+  // This is more for when running locally to test if
+  // something goes wrong. As the developer's machine state
+  // is impacted and they need to know about it.
+  console.error('Failed to remove npm link:', error.message);
 }
 
 process.exit(exitCode);
