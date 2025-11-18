@@ -59,8 +59,8 @@ jobs:
           LATEST_VERSION=$(npm pkg get version | tr -d '"')
           echo "Latest version in package.json: $LATEST_VERSION"
 
-          # add 8 characters from the current SHA as prerelease identifier
-          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-8)
+          # add 7 characters from the current SHA as prerelease identifier
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
           NEW_VERSION="$LATEST_VERSION-canary.${SHORT_SHA}"
           echo "New prerelease version: $NEW_VERSION"
 
