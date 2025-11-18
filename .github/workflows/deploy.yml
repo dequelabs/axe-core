@@ -71,12 +71,11 @@ jobs:
   validate-next-deploy:
     name: Validate Next Deployment
     needs: deploy-next
-    if: ${{ needs.deploy-next.result == 'success' }}
     runs-on: ubuntu-24.04
     steps:
-      # No checkout since we want to have a clean environment
-      # so we can validate module resolution.
-      - name: Setup Node.js
+      - *checkout
+      - &setup-node
+        name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           # Perpetually test on the latest local LTS version.
@@ -89,55 +88,12 @@ jobs:
         env:
           VERSION: ${{ needs.deploy-next.outputs.version }}
           PACKAGE_NAME: ${{ needs.deploy-next.outputs.packageName }}
-          MAX_ATTEMPTS: 30
-          SLEEP_SECONDS: 10
-        run: |
-          echo "::group::Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
-          for i in $(seq 1 $MAX_ATTEMPTS); do
-            echo "Attempt $i of $MAX_ATTEMPTS..."
-            # Try to get package info from npm registry
-            if npm view ${PACKAGE_NAME}@${VERSION} version > /dev/null 2>&1; then
-              PUBLISHED_VERSION=$(npm view ${PACKAGE_NAME}@${VERSION} version)
-              echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
-              echo "::endgroup::"
-              exit 0
-            fi
-            if [ $i -lt $MAX_ATTEMPTS ]; then
-              echo "Package not yet available, waiting ${SLEEP_SECONDS} seconds..."
-              sleep $SLEEP_SECONDS
-            fi
-          done
-          echo "✗ Timeout: Package ${PACKAGE_NAME}@${VERSION} not available after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
-          echo "::endgroup::"
-          exit 1
-      - name: Install ${{ needs.deploy-next.outputs.packageName }}
-        env:
-          PACKAGE: ${{ needs.deploy-next.outputs.packageName }}@${{ needs.deploy-next.outputs.version }}
-        run: npm install -g "$PACKAGE"
-      - name: Verify CJS Import
+        run: ./.github/bin/wait-for-npm-ready.sh
+      - name: Validate installation of "next" version
         env:
           PACKAGE_NAME: ${{ needs.deploy-next.outputs.packageName }}
-        shell: bash
-        run: |
-          node -pe "window={}; document={}; require('${PACKAGE_NAME}');"
-      - name: Get global npm root
-        id: npm-root
-        run: |
-          echo "path=$(npm root -g)" >> $GITHUB_OUTPUT
-      - name: Verify types are in package
-        working-directory: ${{ steps.npm-root.outputs.path }}/${{ needs.deploy-next.outputs.packageName }}
-        run: |
-          types=$(node -pe "require('./package.json').types")
-          if [ "$types" == "undefined" ]
-          then
-            types=$(node -pe "require('./package.json').typings")
-          fi
-          if [ "$types" != "undefined" ] && [ ! -f "$types" ]
-          then
-            echo "::error::The types file is missing"
-            exit 1;
-          fi
-          echo "Types file '$types' is present in the package"
+          VERSION: ${{ needs.deploy-next.outputs.version }}
+        run: ./.github/bin/validate-npm-deploy.sh
   prod-hold:
     name: Await approval to deploy to production
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' && github.event.workflow_run.event == 'push' }}
@@ -177,7 +133,6 @@ jobs:
   create-github-release:
     name: Create GitHub Release
     needs: prod-deploy
-    if: ${{ needs.prod-deploy.result == 'success' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: write # Required to create releases
@@ -194,16 +149,10 @@ jobs:
   validate-deploy:
     name: Validate Deployment
     needs: prod-deploy
-    if: ${{ needs.prod-deploy.result == 'success' }}
     runs-on: ubuntu-24.04
     steps:
-      # No checkout since we want to have a clean environment
-      # so we can validate module resolution.
-      - name: Setup Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          # Perpetually test on the latest local LTS version.
-          node-version: lts/*
+      - *checkout
+      - *setup-node
       # In theory since this is a new job now, by the time
       # this would kick off the package should be available.
       # But, to be safe in case of delays in propagation,
@@ -212,52 +161,14 @@ jobs:
         env:
           VERSION: ${{ needs.prod-deploy.outputs.version }}
           PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
-          MAX_ATTEMPTS: 30
-          SLEEP_SECONDS: 10
-        run: |
-          echo "::group::Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
-          for i in $(seq 1 $MAX_ATTEMPTS); do
-            echo "Attempt $i of $MAX_ATTEMPTS..."
-            # Try to get package info from npm registry
-            if npm view ${PACKAGE_NAME}@${VERSION} version > /dev/null 2>&1; then
-              PUBLISHED_VERSION=$(npm view ${PACKAGE_NAME}@${VERSION} version)
-              echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
-              echo "::endgroup::"
-              exit 0
-            fi
-            if [ $i -lt $MAX_ATTEMPTS ]; then
-              echo "Package not yet available, waiting ${SLEEP_SECONDS} seconds..."
-              sleep $SLEEP_SECONDS
-            fi
-          done
-          echo "✗ Timeout: Package ${PACKAGE_NAME}@${VERSION} not available after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
-          echo "::endgroup::"
-          exit 1
-      - name: Install ${{ needs.prod-deploy.outputs.packageName }}
+        run: ./.github/bin/wait-for-npm-ready.sh
+      - name: Wait for package to be available on npm
         env:
-          PACKAGE: ${{ needs.prod-deploy.outputs.packageName }}@${{ needs.prod-deploy.outputs.version }}
-        run: npm install -g "$PACKAGE"
-      - name: Verify CJS Import
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
+        run: ./.github/bin/wait-for-npm-ready.sh
+      - name: Validate installation of stable version
         env:
           PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
-        shell: bash
-        run: |
-          node -pe "window={}; document={}; require('${PACKAGE_NAME}');"
-      - name: Get global npm root
-        id: npm-root
-        run: |
-          echo "path=$(npm root -g)" >> $GITHUB_OUTPUT
-      - name: Verify types are in package
-        working-directory: ${{ steps.npm-root.outputs.path }}/${{ needs.prod-deploy.outputs.packageName }}
-        run: |
-          types=$(node -pe "require('./package.json').types")
-          if [ "$types" == "undefined" ]
-          then
-            types=$(node -pe "require('./package.json').typings")
-          fi
-          if [ "$types" != "undefined" ] && [ ! -f "$types" ]
-          then
-            echo "::error::The types file is missing"
-            exit 1;
-          fi
-          echo "Types file '$types' is present in the package"
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+        run: ./.github/bin/validate-npm-deploy.sh
