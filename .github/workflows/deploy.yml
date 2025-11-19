@@ -3,6 +3,10 @@
 name: Deploy
 
 on:
+  # Run on push and not `workflow_run` after tests finish.
+  # Specifically because `workflow_run` only runs from the context
+  # of the default branch, regardless of which branch triggered the tests.
+  # That means no non-default branches could deploy.
   push:
     branches:
       - master
@@ -16,6 +20,9 @@ permissions:
   contents: read
 
 jobs:
+  # Since we can't run against `workflow_run`, we have to
+  # wait for for the Tests to succeed first before any
+  # processing can happen.
   wait-for-tests:
     name: Wait for Tests to Pass
     if: github.repository_owner == 'dequelabs'
