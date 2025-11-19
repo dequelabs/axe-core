@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 if [ -z "$PACKAGE_NAME" ] || [ -z "$VERSION" ]; then
   echo "::error::PACKAGE_NAME and VERSION environment variables must be set."
   exit 1

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 if [ -z "$REPOSITORY" ] || [ -z "$SHA" ] || [ -z "$WORKFLOW_NAME" ]; then
   echo "Error: REPOSITORY, SHA, or WORKFLOW_NAME is not set."
   exit 1
@@ -25,7 +27,7 @@ MAX_ATTEMPTS=${MAX_ATTEMPTS:-24}
 
 attempt=0
 
-while [ $attempt -lt $MAX_ATTEMPTS ]; do
+while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; do
   # Get the most recent workflow run for this SHA and workflow name
   # Workflow runs are returned in descending order by created_at (most recent first)
   workflow_data=$(gh api "repos/$REPOSITORY/actions/runs?head_sha=$SHA" \
@@ -51,7 +53,7 @@ while [ $attempt -lt $MAX_ATTEMPTS ]; do
   fi
 
   attempt=$((attempt + 1))
-  sleep $SLEEP_SECONDS
+  sleep "$SLEEP_SECONDS"
 done
 
 echo "::error::Timeout waiting for '$WORKFLOW_NAME' workflow to complete"
