@@ -87,8 +87,7 @@ jobs:
         name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          # Perpetually test on the latest local LTS version.
-          node-version: lts/*
+          node-version-file: .nvmrc
       # In theory since this is a new job now, by the time
       # this would kick off the package should be available.
       # But, to be safe in case of delays in propagation,
