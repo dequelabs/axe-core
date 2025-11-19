@@ -172,11 +172,6 @@ jobs:
           VERSION: ${{ needs.prod-deploy.outputs.version }}
           PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
         run: ./.github/bin/wait-for-npm-ready.sh
-      - name: Wait for package to be available on npm
-        env:
-          VERSION: ${{ needs.prod-deploy.outputs.version }}
-          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
-        run: ./.github/bin/wait-for-npm-ready.sh
       - name: Validate installation of stable version
         env:
           PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
