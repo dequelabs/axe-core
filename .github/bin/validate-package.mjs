@@ -181,7 +181,7 @@ using CommonJS \`require()\`, ensuring backward compatibility.
     summary += `| \`${pkg.name}\` | ✓ CommonJS Compatible | ${axe.version} |\n`;
   } catch (error) {
     console.error(`✗ ${pkg.name} (CommonJS):`, error.message);
-    summary += `| \`${pkg.name}\` | ✗ CommonJS Failed |\n`;
+    summary += `| \`${pkg.name}\` | ✗ CommonJS Failed | Not Found |\n`;
     summary += `\n\`\`\`\n${error.message}\n\`\`\`\n`;
     exitCode++;
   }
@@ -226,7 +226,7 @@ defined files in the \`files\` array of \`package.json\`.
     summary += `| \`${pkg.name}\` | ✓ Importable | ${axe.default.version} |\n`;
   } catch {
     console.error(`✗ ${pkg.name}`);
-    summary += `| \`${pkg.name}\` | ✗ Not Importable | |\n`;
+    summary += `| \`${pkg.name}\` | ✗ Not Importable | Not Found |\n`;
     anyCaught = true;
   }
 
@@ -278,7 +278,7 @@ defined files in the \`files\` array of \`package.json\`.
       summary += `| \`${target}\` | ✓ Importable | ${version} |\n`;
     } catch (error) {
       console.error(`✗ ${target}`);
-      summary += `| \`${target}\` | ✗ Not Importable |\n`;
+      summary += `| \`${target}\` | ✗ Not Importable | Not Found |\n`;
       summary += `\n\`\`\`\n${error.message}\n\`\`\`\n`;
       anyCaught = true;
     }
