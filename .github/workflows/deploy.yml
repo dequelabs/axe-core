@@ -6,7 +6,6 @@ name: Deploy
 # All non-blocked jobs MUST check that the workflow_run event is
 # 'push' (i.e., github.event.workflow_run.event == 'push') to prevent
 # forked PRs from modifying enough to trigger a deployment by force.
-# Forked PRs will only run with 'pull_request' events within our runs.
 on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
     workflows:
@@ -43,6 +42,11 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           persist-credentials: false
+          # Use repository and ref to checkout code from the point
+          # where the workflow_run was triggered. This ensures deployment
+          # does not include later commits that may have been pushed.
+          repository: ${{ github.event.workflow_run.repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
       - &install-deps
         name: Install Dependencies
         uses: ./.github/actions/install-deps
