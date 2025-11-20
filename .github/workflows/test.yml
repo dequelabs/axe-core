@@ -222,7 +222,7 @@ jobs:
       - *install-deps
       - *restore-axe-build
       - name: Validate Subresource Integrity
-        run: npm run sri:validate
+        run: npm run sri-validate
 
   test_node:
     # The package can't be built on Node 6 anymore, but should still run there.
