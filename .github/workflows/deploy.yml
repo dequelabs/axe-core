@@ -31,20 +31,24 @@ jobs:
       contents: read
       actions: read
       statuses: read
-    timeout-minutes: 14
+    timeout-minutes: 15
     steps:
       - &checkout
         name: Checkout repository
+        timeout-minutes: 2
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           persist-credentials: false
       - name: Wait for Tests workflow to complete
+        timeout-minutes: 13
         env:
           SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
           WORKFLOW_NAME: Tests
           DEBUG: ${{ runner.debug == '1' }}
+          # One minute less than the job timeout to allow for the script to do cleanup work.
+          TIMEOUT_MINUTES: 12
         run: ./.github/bin/wait-for-workflow-success.sh
   deploy-next:
     name: Deploy "next" to npm

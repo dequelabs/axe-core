@@ -49,12 +49,12 @@ fi
 
 echo "Waiting for '$WORKFLOW_NAME' workflow to complete for commit $SHA"
 
-# 30 seconds in between lookups. 24 attempts by default.
-# This gives up to 12 minutes for the workflow to complete.
-
-SLEEP_SECONDS=${SLEEP_SECONDS:-30}
-MAX_ATTEMPTS=${MAX_ATTEMPTS:-24}
-
+# If not provided, default to 5 minutes for the job runner to time out.
+TIMEOUT_MINUTES=${TIMEOUT_MINUTES:-5}
+# Round down if given a fractional number by just removing the decimal portion.
+TIMEOUT_MINUTES=${TIMEOUT_MINUTES%.*}
+sleep_seconds=30
+max_attempts=$(( (TIMEOUT_MINUTES * 60) / sleep_seconds ))
 attempt=0
 
 # We *could* do `status=success` as a query parameter. But then we lose visibility
@@ -81,8 +81,14 @@ cat >> "$GITHUB_STEP_SUMMARY" <<EOF
 * Repository: \`$REPOSITORY\`
 * Commit SHA: \`$SHA\`
 * Branch: \`$BRANCH\`
-* Sleep Seconds: \`$SLEEP_SECONDS\`
-* Max Attempts: \`$MAX_ATTEMPTS\`
+* Workflow Name: \`$WORKFLOW_NAME\`
+* Debug Mode: \`${DEBUG:-false}\`
+* Timeout Minutes: \`$TIMEOUT_MINUTES\`
+
+### Internal Configuration
+
+* Sleep Seconds: \`$sleep_seconds\`
+* Max Attempts: \`$max_attempts\`
 
 ### API Input
 
@@ -118,18 +124,18 @@ function writeLogToSummary() {
   } >> "$GITHUB_STEP_SUMMARY"
 }
 
-while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; do
+while [ "$attempt" -lt "$max_attempts" ]; do
   # Redirect errors to /dev/null to avoid unusable data in the variable in case of failure.
   # If we seem to be having issues in CI later, it would be valuable to setup debugging to log to $GITHUB_STEP_SUMMARY.
   workflow_data=$(gh api "$api_url" --jq "$jq_filter" 2>"$log_output" || echo "")
 
   if [ -z "$workflow_data" ]; then
-    echo "Attempt $((attempt + 1))/$MAX_ATTEMPTS - Workflow run not found yet"
+    echo "Attempt $((attempt + 1))/$max_attempts - Workflow run not found yet"
   else
     status=$(echo "$workflow_data" | jq -r '.status')
     conclusion=$(echo "$workflow_data" | jq -r '.conclusion')
 
-    echo "Attempt $((attempt + 1))/$MAX_ATTEMPTS - Status: $status, Conclusion: $conclusion"
+    echo "Attempt $((attempt + 1))/$max_attempts - Status: $status, Conclusion: $conclusion"
 
     if [ "$status" = "completed" ]; then
       # Write the result to the summary file
@@ -143,8 +149,8 @@ while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; do
 ### API Details
 
 * Total Attempts: \`$((attempt + 1))\`
-* Time Elapsed: \`$(((attempt + 1) * SLEEP_SECONDS)) seconds\`
-* Remaining allocated time: \`$(((MAX_ATTEMPTS - attempt - 1) * SLEEP_SECONDS)) seconds\`
+* Time Elapsed: \`$(((attempt + 1) * sleep_seconds)) seconds\`
+* Remaining allocated time: \`$(((max_attempts - attempt - 1) * sleep_seconds)) seconds\`
 
 EOF
       }
@@ -164,7 +170,7 @@ EOF
   fi
 
   attempt=$((attempt + 1))
-  sleep "$SLEEP_SECONDS"
+  sleep "$sleep_seconds"
 done
 
 cat >> "$GITHUB_STEP_SUMMARY" <<EOF
