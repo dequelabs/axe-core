@@ -42,7 +42,9 @@ jobs:
         env:
           SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
           WORKFLOW_NAME: Tests
+          DEBUG: ${{ runner.debug == '1' }}
         run: ./.github/bin/wait-for-workflow-success.sh
   deploy-next:
     name: Deploy "next" to npm
