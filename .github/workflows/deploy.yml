@@ -80,7 +80,7 @@ jobs:
       - name: Bump version
         env:
           NEW_VERSION: ${{ steps.determine-version.outputs.version }}
-        run: npm version "$NEW_VERSION" --no-git-tag-version
+        run: npm version "$NEW_VERSION" --no-git-tag-version --ignore-scripts
       - &validate-package
         name: Validate package is consumable
         env:
