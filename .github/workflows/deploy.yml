@@ -49,6 +49,7 @@ jobs:
           DEBUG: ${{ runner.debug == '1' }}
           # One minute less than the job timeout to allow for the script to do cleanup work.
           TIMEOUT_MINUTES: 12
+          GH_TOKEN: ${{ github.token }}
         run: ./.github/bin/wait-for-workflow-success.sh
   deploy-next:
     name: Deploy "next" to npm
