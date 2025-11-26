@@ -6,6 +6,7 @@ on:
     branches:
       - master
       - develop
+      - release-*
 
 # We want to group to the workflow for each branch.
 # Non-push events will be cancelled if a new one is started.
@@ -28,6 +29,8 @@ jobs:
       - &checkout
         name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
       - &setup-node
         name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -197,6 +200,29 @@ jobs:
       - *install-deps
       - name: Run API Docs Build
         run: npm run api-docs
+
+  test_rule_help_version:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    if: ${{ github.ref_name == 'master' }}
+    steps:
+      - *checkout
+      - *install-deps
+      - name: Run Rule Help Version Tests
+        run: npm run test:rule-help-version
+
+  sri-validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    # Run on master and RC branches along with PRs targeting those branches.
+    if: ${{ github.ref_name == 'master' || startsWith(github.ref_name, 'release-') || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'release-') }}
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Validate Subresource Integrity
+        run: npm run sri-validate
 
   test_node:
     # The package can't be built on Node 6 anymore, but should still run there.
