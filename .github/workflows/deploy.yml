@@ -66,9 +66,17 @@ jobs:
       packageName: ${{ steps.determine-version.outputs.name }}
     steps:
       - *checkout
-      - &install-deps
-        name: Install Dependencies
-        uses: ./.github/actions/install-deps
+      - &setup-node
+        name: Setup NodeJS
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version-file: .nvmrc
+          cache: npm
+      - &install-project-deps
+        name: Install Project Dependencies
+        shell: bash
+        run: npm ci
       - &build
         name: Build
         run: |
@@ -97,11 +105,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - *checkout
-      - &setup-node
-        name: Setup Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .nvmrc
+      - *setup-node
       # In theory since this is a new job now, by the time
       # this would kick off the package should be available.
       # But, to be safe in case of delays in propagation,
@@ -141,7 +145,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - *checkout
-      - *install-deps
+      - *setup-node
+      - *install-project-deps
       - *build
       - *validate-package
       - name: Publish stable version to npm
