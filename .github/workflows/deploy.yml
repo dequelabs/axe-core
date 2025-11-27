@@ -73,6 +73,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           node-version-file: .nvmrc
           cache: npm
+      - &install-npm
+        name: Install npm
+        run: npm install -g npm@11
       - &install-project-deps
         name: Install Project Dependencies
         shell: bash
@@ -146,6 +149,7 @@ jobs:
     steps:
       - *checkout
       - *setup-node
+      - *install-npm
       - *install-project-deps
       - *build
       - *validate-package
