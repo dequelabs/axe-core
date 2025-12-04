@@ -16,7 +16,7 @@ describe('Context', () => {
   it('should not mutate exclude in input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
     const context = { exclude: [['iframe', '#foo']] };
-     
+
     new Context(context);
     assert.deepEqual(context, { exclude: [['iframe', '#foo']] });
   });
@@ -24,7 +24,7 @@ describe('Context', () => {
   it('should not mutate its include input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
     const context = { include: [['#foo']] };
-     
+
     new Context(context);
     assert.deepEqual(context, { include: [['#foo']] });
   });
