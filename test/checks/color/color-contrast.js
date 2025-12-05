@@ -15,6 +15,23 @@ describe('color-contrast', function () {
     axe._tree = undefined;
   });
 
+  it('should return undefined if cannot handle color', function () {
+    var params = checkSetup(
+      '<div id="divundertest" style="color: oklch(0.961073 0.000047911 none / 0.2); background-color: black; font-size: 14pt; font-weight: 900;">' +
+        '<span id="target" style="font-weight:lighter;">My text</span></div>'
+    );
+
+    var expectedRelatedNodes = fixture.querySelector('#divundertest');
+    var result = contrastEvaluate.apply(checkContext, params);
+    assert.isUndefined(result);
+    assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
+    assert.deepEqual(checkContext._data.messageKey, 'colorParse');
+    assert.equal(
+      checkContext._data.colorParse,
+      'oklch(0.961073 0.000047911 none / 0.2)'
+    );
+  });
+
   it('should return true for hidden element', function () {
     var params = checkSetup(
       '<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100;">' +
