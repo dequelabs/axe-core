@@ -31,7 +31,7 @@ describe('color-contrast', function () {
     );
   });
 
-  it('should should return undefined if cannot handle backgroundcolor', function () {
+  it('should return undefined if cannot handle backgroundcolor', function () {
     var params = checkSetup(
       '<div style="color: gray; background-color: oklch(0.961073 0.000047911 none / 0.2); font-size: 14pt; font-weight: 900;">' +
         '<span id="target" style="font-weight:lighter;">My text</span></div>'
@@ -45,7 +45,7 @@ describe('color-contrast', function () {
     );
   });
 
-  it('should should return undefined if cannot handle text-shadow', function () {
+  it('should return undefined if cannot handle text-shadow', function () {
     var params = checkSetup(
       '<div id="target" style="background-color: #fff; color:#000; text-shadow: 1px 1px oklch(0.961073 0.000047911 none / 0.2);">My text</div>'
     );
