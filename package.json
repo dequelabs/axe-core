@@ -78,7 +78,7 @@
     "build": "grunt",
     "patch": "npx patch-package",
     "unpatch": "npx patch-package --reverse",
-    "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+    "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js' '.github/bin/*.mjs'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
@@ -108,7 +108,6 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
-    "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
@@ -194,7 +193,7 @@
     "*.{md,json,ts,html}": [
       "prettier --write"
     ],
-    "*.js": [
+    "*.{js,mjs}": [
       "prettier --write",
       "eslint --fix"
     ]
