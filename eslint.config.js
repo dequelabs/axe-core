@@ -370,7 +370,7 @@ module.exports = [
       sourceType: 'module',
       globals: {
         ...globals.node,
-        ...globals.es2022
+        ...globals.es2024
       }
     },
     rules: {
