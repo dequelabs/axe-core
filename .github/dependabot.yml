@@ -51,7 +51,7 @@ updates:
       - dependency-name: '@types/node'
         versions: ['>=5.0.0']
       # Breaking change that we need to handle in its own pr first
-      # See https://github.com/dequelabs/axe-core/pull/4264
+      # @see https://github.com/dequelabs/axe-core/pull/4264
       - dependency-name: 'css-selector-parser'
         versions: ['>=2.0.0']
     groups:
