@@ -1,7 +1,7 @@
 {
   "id": "css-orientation-lock",
   "impact": "serious",
-  "selector": "html",
+  "selector": "html:not(html *)",
   "tags": [
     "cat.structure",
     "wcag134",

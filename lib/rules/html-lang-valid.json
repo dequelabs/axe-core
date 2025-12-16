@@ -1,7 +1,7 @@
 {
   "id": "html-lang-valid",
   "impact": "serious",
-  "selector": "html[lang]:not([lang=\"\"]), html[xml\\:lang]:not([xml\\:lang=\"\"])",
+  "selector": "html[lang]:not([lang=\"\"]):not(html *), html[xml\\:lang]:not([xml\\:lang=\"\"]):not(html *)",
   "tags": [
     "cat.language",
     "wcag2a",

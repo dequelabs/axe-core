@@ -1,7 +1,7 @@
 {
   "id": "frame-focusable-content",
   "impact": "serious",
-  "selector": "html",
+  "selector": "html:not(html *)",
   "matches": "frame-focusable-content-matches",
   "tags": [
     "cat.keyboard",
