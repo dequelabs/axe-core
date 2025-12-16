@@ -1,7 +1,7 @@
 {
   "id": "html-has-lang",
   "impact": "serious",
-  "selector": "html",
+  "selector": "html:not(html *)",
   "matches": "is-initiator-matches",
   "tags": [
     "cat.language",
