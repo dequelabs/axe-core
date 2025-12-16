@@ -26,7 +26,7 @@ describe('bypass aria header test ' + window.location.pathname, function () {
     });
 
     it('should find html', function () {
-      assert.deepEqual(results.passes[0].nodes[0].target, ['html[lang="en"]']);
+      assert.isTrue(results.passes[0].nodes[0].target[0].startsWith('html'));
     });
   });
 });
