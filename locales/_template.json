@@ -628,7 +628,8 @@
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "shortTextContent": "Element content is too short to determine if it is actual text content",
         "nonBmp": "Element content contains only non-text characters",
-        "pseudoContent": "Element's background color could not be determined due to a pseudo element"
+        "pseudoContent": "Element's background color could not be determined due to a pseudo element",
+        "colorParse": "Could not parse color string ${data.colorParse}"
       }
     },
     "color-contrast": {
@@ -655,7 +656,8 @@
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "shortTextContent": "Element content is too short to determine if it is actual text content",
         "nonBmp": "Element content contains only non-text characters",
-        "pseudoContent": "Element's background color could not be determined due to a pseudo element"
+        "pseudoContent": "Element's background color could not be determined due to a pseudo element",
+        "colorParse": "Could not parse color string ${data.colorParse}"
       }
     },
     "link-in-text-block-style": {
