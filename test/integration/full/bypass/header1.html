@@ -24,9 +24,6 @@
     <h2>This header will make the test pass.</h2>
     <a href="http://www.deque.com">stuff</a>
     <div id="mocha"></div>
-    <script src="/test/testutils.js"></script>
-    <script src="pass-tests.js"></script>
-    <script src="/test/integration/adapter.js"></script>
     <div id="additional"></div>
     <script>
       // only way to get a 2nd html element on the page is to create it with createElement
@@ -34,5 +31,8 @@
       var root = document.createElement('html');
       document.getElementById('additional').append(root);
     </script>
+    <script src="/test/testutils.js"></script>
+    <script src="pass-tests.js"></script>
+    <script src="/test/integration/adapter.js"></script>
   </body>
 </html>
