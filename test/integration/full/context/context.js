@@ -362,6 +362,51 @@ describe('context test', function () {
         }
       );
     });
+
+    describe('Shadow DOM', function () {
+      var sConfig = {
+        runOnly: {
+          type: 'rule',
+          values: ['aria-allowed-attr', 'color-contrast']
+        }
+      };
+      it('when passed a shadow host, reports issues both on itself and in the shadow DOM', function (done) {
+        axe.run('#shadow-host', sConfig, function (err, results) {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 2, 'violations');
+          var allowedAttrsViolations = results.violations.filter(
+            function (violation) {
+              return violation.id === 'aria-allowed-attr';
+            }
+          );
+          assert.lengthOf(
+            allowedAttrsViolations,
+            1,
+            'aria allowed attrs violations'
+          );
+          done();
+        });
+      });
+      it('when passet a shadow root, reports issues in the shadow DOM, but not on the host', function (done) {
+        var host = document.querySelector('#shadow-host');
+        var shadowRoot = host.shadowRoot;
+        axe.run(shadowRoot, sConfig, function (err, results) {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 1, 'violations');
+          var allowedAttrsViolations = results.violations.filter(
+            function (violation) {
+              return violation.id === 'aria-allowed-attr';
+            }
+          );
+          assert.lengthOf(
+            allowedAttrsViolations,
+            0,
+            'aria allowed attrs violations'
+          );
+          done();
+        });
+      });
+    });
   });
 
   describe('indirect include', function () {
