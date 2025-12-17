@@ -387,7 +387,7 @@ describe('context test', function () {
           done();
         });
       });
-      it('when passet a shadow root, reports issues in the shadow DOM, but not on the host', function (done) {
+      it('when passed a shadow root, reports issues in the shadow DOM, but not on the host', function (done) {
         var host = document.querySelector('#shadow-host');
         var shadowRoot = host.shadowRoot;
         axe.run(shadowRoot, sConfig, function (err, results) {
