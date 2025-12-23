@@ -107,6 +107,7 @@ jobs:
       - name: Run Tests Against Firefox
         env:
           FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
         run: npm run test -- --browsers Firefox
       - name: Run Firefox Integration Tests
         env:
