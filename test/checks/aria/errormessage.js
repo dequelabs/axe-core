@@ -70,6 +70,32 @@ describe('aria-errormessage', function () {
     );
   });
 
+  it('should return true if aria-errormessage has multiple ids that are all in aria-describedby', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="error1 error2" aria-errormessage="error1 error2">' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
+  it('should return false if aria-errormessage has multiple ids but not all are in aria-describedby', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="error1" aria-errormessage="error1 error2">' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
   it('sets an array of IDs in data', function () {
     var vNode = queryFixture(
       '<div id="target" aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
