@@ -1,0 +1,81 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    # Runs every day at 2:17 AM UTC
+    # Schedules should try to be offset from common times
+    # to avoid high contention times on GitHub runners.
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+
+env:
+  CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
+
+permissions:
+  contents: read
+
+jobs:
+  browsers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DISPLAY: ':99'
+    steps:
+      - &checkout
+        name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Install Dependencies
+        id: install-deps
+        uses: ./.github/actions/install-deps
+        with:
+          nightly: 'true'
+          start-xvfb: ${{ env.DISPLAY }}
+      - &build
+        name: Build
+        id: build
+        run: |
+          npm run prepare
+          npm run build
+      - name: Run Firefox Nightly Browser Tests
+        env:
+          FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+        run: npm run test -- --browsers FirefoxNightly
+      - name: Run Chrome Beta Browser Tests
+        if: ${{ !cancelled() && steps.build.conclusion == 'success' }}
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test -- --browsers Chrome
+  act:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - &install-deps
+        name: Install Deps
+        id: install-deps
+        uses: ./.github/actions/install-deps
+      - *build
+      - name: Install Latest WCAG ACT Rules
+        run: npm install w3c/wcag-act-rules#main
+      - name: Run ACT Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:act
+  aria-practices:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - *checkout
+      - *install-deps
+      - *build
+      - name: Install Latest W3C Aria Practices
+        run: npm install w3c/aria-practices#main
+      - name: Run ARIA Practices Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:apg

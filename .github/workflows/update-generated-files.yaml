@@ -9,13 +9,17 @@ env:
   BRANCH_NAME: sync-generated-files
 
 jobs:
-  update_genereated_files:
+  update_generated_files:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
 
       - name: Build
         run: |
@@ -28,7 +32,7 @@ jobs:
           changes=$(git status --porcelain)
           # see https://unix.stackexchange.com/a/509498
           echo $changes | grep . && echo "Changes detected" || echo "No changes"
-          echo ::set-output name=changes::"$changes"
+          echo "changes=$changes" >> "$GITHUB_OUTPUT"
 
       - name: Check branch exists
         id: branchExists
@@ -36,7 +40,7 @@ jobs:
         run: |
           exists=$(git ls-remote --heads origin $BRANCH_NAME)
           echo $exists | grep . && echo "Branch '$BRANCH_NAME' already exists on remote" || echo "Branch does not exists in remote"
-          echo ::set-output name=exists::"$exists"
+          echo "exists=$exists" >> "$GITHUB_OUTPUT"
 
       - name: Create pull request
         if: ${{ steps.changes.outputs.changes && !steps.branchExists.outputs.exists }}

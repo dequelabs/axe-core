@@ -1,8 +1,9 @@
-describe('axe.utils.mergeResults', function () {
+describe('axe.utils.mergeResults', () => {
   'use strict';
   var queryFixture = axe.testUtils.queryFixture;
+  var RuleError = axe.utils.RuleError;
 
-  it('should normalize empty results', function () {
+  it('should normalize empty results', () => {
     var result = axe.utils.mergeResults([
       { results: [] },
       { results: [{ id: 'a', result: 'b' }] }
@@ -15,7 +16,7 @@ describe('axe.utils.mergeResults', function () {
     ]);
   });
 
-  it('merges frame content, including all selector types', function () {
+  it('merges frame content, including all selector types', () => {
     var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
     var node = {
       selector: ['#foo'],
@@ -41,7 +42,7 @@ describe('axe.utils.mergeResults', function () {
 
     var node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
-    assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
+    assert.deepEqual(node.xpath, ["//iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
       'html > body > div:nth-child(1) > iframe',
       'html > div'
@@ -49,7 +50,7 @@ describe('axe.utils.mergeResults', function () {
     assert.deepEqual(node.nodeIndexes, [1, 123]);
   });
 
-  it('merges frame specs', function () {
+  it('merges frame specs', () => {
     var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
     var frameSpec = new axe.utils.DqElement(iframe).toJSON();
     var node = {
@@ -76,7 +77,7 @@ describe('axe.utils.mergeResults', function () {
 
     var node = result[0].nodes[0].node;
     assert.deepEqual(node.selector, ['#target', '#foo']);
-    assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
+    assert.deepEqual(node.xpath, ["//iframe[@id='target']", 'html/#foo']);
     assert.deepEqual(node.ancestry, [
       'html > body > div:nth-child(1) > iframe',
       'html > div'
@@ -84,7 +85,7 @@ describe('axe.utils.mergeResults', function () {
     assert.deepEqual(node.nodeIndexes, [1, 123]);
   });
 
-  it('sorts results from iframes into their correct DOM position', function () {
+  it('sorts results from iframes into their correct DOM position', () => {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -148,7 +149,7 @@ describe('axe.utils.mergeResults', function () {
     assert.deepEqual(ids, ['h1', 'iframe1 >> h2', 'iframe1 >> h3', 'h4']);
   });
 
-  it('sorts nested iframes', function () {
+  it('sorts nested iframes', () => {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -219,7 +220,7 @@ describe('axe.utils.mergeResults', function () {
     ]);
   });
 
-  it('sorts results even if nodeIndexes are empty', function () {
+  it('sorts results even if nodeIndexes are empty', () => {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -296,7 +297,7 @@ describe('axe.utils.mergeResults', function () {
     ]);
   });
 
-  it('sorts results even if nodeIndexes are undefined', function () {
+  it('sorts results even if nodeIndexes are undefined', () => {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -370,7 +371,7 @@ describe('axe.utils.mergeResults', function () {
     ]);
   });
 
-  it('sorts nodes all placed on the same result', function () {
+  it('sorts nodes all placed on the same result', () => {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -418,5 +419,58 @@ describe('axe.utils.mergeResults', function () {
       '#level0 >> #level1 >> #level2a',
       '#level0 >> #level1 >> #level2b'
     ]);
+  });
+
+  describe('errors', () => {
+    it('sets error if it is present', () => {
+      const result = axe.utils.mergeResults([
+        { results: [{ id: 'a', result: 'b', error: new Error('test') }] }
+      ]);
+      assert.equal(result[0].error.message, 'test');
+    });
+
+    it('picks the first error if there are multiple', () => {
+      const result = axe.utils.mergeResults([
+        {
+          results: [
+            {
+              id: 'error-occurred',
+              result: undefined,
+              nodes: [{ node: { selector: ['h1'], nodeIndexes: [1] } }]
+            },
+            {
+              id: 'error-occurred',
+              result: undefined,
+              error: new RuleError({ error: new Error('test 1') }),
+              nodes: [
+                {
+                  node: {
+                    selector: ['iframe1', 'h2'],
+                    nodeIndexes: [2, 1],
+                    fromFrame: true
+                  }
+                }
+              ]
+            },
+            {
+              id: 'error-occurred',
+              result: undefined,
+              error: new RuleError({ error: new Error('test 2') }),
+              nodes: [
+                {
+                  node: {
+                    selector: ['iframe2', 'h3'],
+                    nodeIndexes: [3, 1],
+                    fromFrame: true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]);
+
+      assert.equal(result[0].error.message, 'test 1');
+    });
   });
 });

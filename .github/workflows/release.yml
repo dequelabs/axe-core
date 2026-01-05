@@ -7,12 +7,12 @@ jobs:
     name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version-file: .nvmrc
           cache: 'npm'
       - name: Run release script and open PR
         run: |

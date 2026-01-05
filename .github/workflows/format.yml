@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Install dependencies
         run: npm ci
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version-file: .nvmrc
           cache: 'npm'
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
@@ -29,6 +29,6 @@ jobs:
       - run: npm run fmt
       # Prevent the prettierignore change from being committed.
       - run: git checkout .prettierignore
-      - uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # tag=v5
+      - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # tag=v5
         with:
           commit_message: ':robot: Automated formatting fixes'

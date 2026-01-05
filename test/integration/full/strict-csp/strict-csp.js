@@ -2,7 +2,7 @@ describe('strict-csp', function () {
   'use strict';
 
   it('should parse without errors', function () {
-    assert.isDefined(window.axe), 'axe is not defined';
+    (assert.isDefined(window.axe), 'axe is not defined');
     assert.isDefined(window.axe.run, 'axe.run is not defined');
   });
 

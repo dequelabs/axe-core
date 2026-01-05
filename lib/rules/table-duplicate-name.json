@@ -2,7 +2,7 @@
   "id": "table-duplicate-name",
   "impact": "minor",
   "selector": "table",
-  "tags": ["cat.tables", "best-practice"],
+  "tags": ["cat.tables", "best-practice", "RGAAv4", "RGAA-5.2.1"],
   "metadata": {
     "description": "Ensure the <caption> element does not contain the same text as the summary attribute",
     "help": "Tables should not have the same summary and caption"

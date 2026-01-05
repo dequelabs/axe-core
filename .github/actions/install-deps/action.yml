@@ -1,0 +1,78 @@
+name: 'Install Dependencies'
+description: 'Install OS and Project dependencies'
+
+inputs:
+  node-version:
+    description: 'Node.js version to install'
+    required: false
+  start-xvfb:
+    description: 'If provided, this is the display number to run xvfb on. Should be in `:N` format, e.g., `:99`.'
+    required: false
+  nightly:
+    description: 'If true, installs the nightly versions of browsers.'
+    required: false
+outputs:
+  chrome-path:
+    description: 'Path to the installed Chrome binary'
+    value: ${{ steps.setup-chrome.outputs.chrome-path }}
+  firefox-path:
+    description: 'Path to the installed Firefox binary'
+    value: ${{ steps.setup-firefox.outputs.firefox-path }}
+  chromedriver-path:
+    description: 'Path to the installed ChromeDriver binary'
+    value: ${{ steps.setup-chrome.outputs.chromedriver-path }}
+  chrome-version:
+    description: 'Version of the installed Chrome binary'
+    value: ${{ steps.setup-chrome.outputs.chrome-version }}
+  chromedriver-version:
+    description: 'Version of the installed ChromeDriver binary'
+    value: ${{ steps.setup-chrome.outputs.chromedriver-version }}
+  firefox-version:
+    description: 'Version of the installed Firefox binary'
+    value: ${{ steps.setup-firefox.outputs.firefox-version }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      with:
+        registry-url: 'https://registry.npmjs.org'
+        node-version: ${{ inputs.node-version }}
+        node-version-file: ${{ inputs.node-version == '' && '.nvmrc' || '' }}
+        cache: npm
+    - name: Fix Chrome Sandbox Permissions
+      shell: bash
+      run: |
+        sudo chown root:root /opt/google/chrome/chrome-sandbox
+        sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+    - name: Install Xvfb
+      shell: bash
+      if: ${{ inputs.start-xvfb }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb x11-xserver-utils
+    - name: Install Google Chrome for Testing
+      id: setup-chrome
+      uses: browser-actions/setup-chrome@b94431e051d1c52dcbe9a7092a4f10f827795416 # v2.1.0
+      with:
+        chrome-version: ${{ inputs.nightly == 'true' && 'beta' || 'stable' }}
+        install-chromedriver: true
+        install-dependencies: true
+    - name: Install Firefox
+      id: setup-firefox
+      uses: browser-actions/setup-firefox@5914774dda97099441f02628f8d46411fcfbd208 # v1.7.0
+      with:
+        firefox-version: ${{ inputs.nightly == 'true' && 'latest-nightly' || 'latest' }}
+    - name: Install Project Dependencies
+      shell: bash
+      run: npm ci
+    - name: Start Xvfb
+      if: ${{ inputs.start-xvfb }}
+      env:
+        DISPLAY: ${{ inputs.start-xvfb }}
+      shell: bash
+      # This is the same resolution as what CircleCI used.
+      # Maintaining it for consistency between the environments
+      # since something may be resolution dependent.
+      run: Xvfb "$DISPLAY" -screen 0 1280x1024x24 &

@@ -1,8 +1,13 @@
 #! /usr/bin/env node
 
-const currentVersion = process.version.replace('v', '');
+const fs = require('fs');
+const path = require('path');
 
-const minimumVersionMajor = 18;
+const PATH_TO_NVMRC = path.join(__dirname, '..', '.nvmrc');
+const nvmrc = fs.readFileSync(PATH_TO_NVMRC, 'utf8');
+const minimumVersionMajor = parseInt(nvmrc.trim(), 10);
+
+const currentVersion = process.version.replace('v', '');
 const currentVersionMajor = parseInt(currentVersion.split('.')[0]);
 
 const usesMinimumVersion = currentVersionMajor >= minimumVersionMajor;

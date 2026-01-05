@@ -2,7 +2,7 @@
   "id": "region",
   "impact": "moderate",
   "selector": "body *",
-  "tags": ["cat.keyboard", "best-practice"],
+  "tags": ["cat.keyboard", "best-practice", "RGAAv4", "RGAA-9.2.1"],
   "metadata": {
     "description": "Ensure all page content is contained by landmarks",
     "help": "All page content should be contained by landmarks"

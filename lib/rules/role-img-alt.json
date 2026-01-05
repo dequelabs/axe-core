@@ -13,12 +13,14 @@
     "TT7.a",
     "EN-301-549",
     "EN-9.1.1.1",
-    "ACT"
+    "ACT",
+    "RGAAv4",
+    "RGAA-1.1.1"
   ],
   "actIds": ["23a2a8"],
   "metadata": {
     "description": "Ensure [role=\"img\"] elements have alternative text",
-    "help": "[role=\"img\"] elements must have an alternative text"
+    "help": "[role=\"img\"] elements must have alternative text"
   },
   "all": [],
   "any": ["aria-label", "aria-labelledby", "non-empty-title"],

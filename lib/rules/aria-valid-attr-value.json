@@ -2,7 +2,15 @@
   "id": "aria-valid-attr-value",
   "impact": "critical",
   "matches": "aria-has-attr-matches",
-  "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2"],
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag412",
+    "EN-301-549",
+    "EN-9.4.1.2",
+    "RGAAv4",
+    "RGAA-7.1.1"
+  ],
   "actIds": ["6a7281"],
   "metadata": {
     "description": "Ensure all ARIA attributes have valid values",

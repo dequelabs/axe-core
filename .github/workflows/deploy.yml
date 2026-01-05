@@ -1,0 +1,197 @@
+# Do not rename this file. The name "deploy.yml" is known to
+# npm for trusted OIDC publishing.
+name: Deploy
+
+on:
+  # Run on push and not `workflow_run` after tests finish.
+  # Specifically because `workflow_run` only runs from the context
+  # of the default branch, regardless of which branch triggered the tests.
+  # That means no non-default branches could deploy.
+  push:
+    branches:
+      - master
+      - develop
+
+concurrency:
+  group: deploy/${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  # Since we can't run against `workflow_run`, we have to
+  # wait for for the Tests to succeed first before any
+  # processing can happen.
+  wait-for-tests:
+    name: Wait for Tests to Pass
+    if: github.repository_owner == 'dequelabs'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      statuses: read
+    timeout-minutes: 15
+    steps:
+      - &checkout
+        name: Checkout repository
+        timeout-minutes: 2
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Wait for Tests workflow to complete
+        timeout-minutes: 13
+        env:
+          SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          WORKFLOW_NAME: Tests
+          DEBUG: ${{ runner.debug == '1' }}
+          # One minute less than the job timeout to allow for the script to do cleanup work.
+          TIMEOUT_MINUTES: 12
+          GH_TOKEN: ${{ github.token }}
+        run: ./.github/bin/wait-for-workflow-success.sh
+  deploy-next:
+    name: Deploy "next" to npm
+    needs: wait-for-tests
+    if: ${{ github.ref_name == 'develop' }}
+    environment:
+      name: registry.npmjs.org
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.determine-version.outputs.version }}
+      packageName: ${{ steps.determine-version.outputs.name }}
+    steps:
+      - *checkout
+      - &setup-node
+        name: Setup NodeJS
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version-file: .nvmrc
+          cache: npm
+      - &install-project-deps
+        name: Install Project Dependencies
+        shell: bash
+        run: npm ci
+      - &build
+        name: Build
+        run: |
+          npm run prepare
+          npm run build
+      - name: Determine prerelease version
+        id: determine-version
+        run: ./.github/bin/determine-version.sh
+      - name: Bump version
+        env:
+          NEW_VERSION: ${{ steps.determine-version.outputs.version }}
+        run: npm version "$NEW_VERSION" --no-git-tag-version --ignore-scripts
+      - &validate-package
+        name: Validate package is consumable
+        env:
+          # Ref: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#runner-context
+          # Linting shows this context might be invalid, but it shouldn't be per docs.
+          # Probably something missing in the schema.
+          DEBUG: ${{ runner.debug == '1' }}
+        run: node .github/bin/validate-package.mjs
+      - name: Publish "next" version to npm
+        run: npm publish --tag=next
+  validate-next-deploy:
+    name: Validate Next Deployment
+    needs: deploy-next
+    runs-on: ubuntu-24.04
+    steps:
+      - *checkout
+      - *setup-node
+      # In theory since this is a new job now, by the time
+      # this would kick off the package should be available.
+      # But, to be safe in case of delays in propagation,
+      # we'll implement a retry mechanism.
+      - name: Wait for package to be available on npm
+        env:
+          VERSION: ${{ needs.deploy-next.outputs.version }}
+          PACKAGE_NAME: ${{ needs.deploy-next.outputs.packageName }}
+        run: ./.github/bin/wait-for-npm-ready.sh
+      - name: Validate installation of "next" version
+        env:
+          PACKAGE_NAME: ${{ needs.deploy-next.outputs.packageName }}
+          VERSION: ${{ needs.deploy-next.outputs.version }}
+        run: ./.github/bin/validate-npm-deploy.sh
+  prod-hold:
+    name: Await approval to deploy to production
+    needs: wait-for-tests
+    if: ${{ github.ref_name == 'master' }}
+    environment:
+      name: production-hold
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Awaiting approval to deploy to production
+        run: echo "Approval granted to proceed to production deployment."
+  prod-deploy:
+    name: Deploy stable to npm
+    needs: prod-hold
+    if: ${{ needs.prod-hold.result == 'success' }}
+    environment:
+      name: registry.npmjs.org
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
+    outputs:
+      version: ${{ steps.get-data.outputs.version }}
+      packageName: ${{ steps.get-data.outputs.name }}
+    runs-on: ubuntu-24.04
+    steps:
+      - *checkout
+      - *setup-node
+      - *install-project-deps
+      - *build
+      - *validate-package
+      - name: Publish stable version to npm
+        run: npm publish
+      - name: Get published package data
+        id: get-data
+        run: |
+          VERSION=$(npm pkg get version | tr -d '"')
+          NAME=$(npm pkg get name | tr -d '"')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+  create-github-release:
+    name: Create GitHub Release
+    needs: prod-deploy
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # Required to create releases
+    steps:
+      - *checkout
+      - name: Install Release Helper
+        run: go install gopkg.in/aktau/github-release.v0@latest
+      - name: Download Release Script
+        run: curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
+      - name: Make Release Script Executable
+        run: chmod +x ./node-github-release.sh
+      - name: Create GitHub Release
+        run: ./node-github-release.sh
+  validate-deploy:
+    name: Validate Deployment
+    needs: prod-deploy
+    runs-on: ubuntu-24.04
+    steps:
+      - *checkout
+      - *setup-node
+      # In theory since this is a new job now, by the time
+      # this would kick off the package should be available.
+      # But, to be safe in case of delays in propagation,
+      # we'll implement a retry mechanism.
+      - name: Wait for package to be available on npm
+        env:
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
+        run: ./.github/bin/wait-for-npm-ready.sh
+      - name: Validate installation of stable version
+        env:
+          PACKAGE_NAME: ${{ needs.prod-deploy.outputs.packageName }}
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+        run: ./.github/bin/validate-npm-deploy.sh

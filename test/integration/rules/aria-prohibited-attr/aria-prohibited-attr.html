@@ -5,6 +5,7 @@
 <div role="row" aria-colcount="value" id="pass5"></div>
 <div role="button"><span id="pass6" aria-label="value"></span></div>
 <div role="button"><span id="pass7" aria-labelledby="value"></span></div>
+<div role="foo dialog" aria-label="foo" id="pass8"></div>
 
 <div role="caption" aria-label="value" id="fail1"></div>
 <div role="caption" aria-labelledby="value" id="fail2"></div>
@@ -26,7 +27,7 @@
 <div role="superscript" aria-labelledby="value" id="fail18"></div>
 <div aria-label="value" id="fail19"></div>
 <div aria-labelledby="value" id="fail20"></div>
-<!- aria-label(ledby) is prohibited on none / presentation. Axe-core considers this to trigger presentation role 
+<!- aria-label(ledby) is prohibited on none / presentation. Axe-core considers this to trigger presentation role
 conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has only been implemented in Chomium. -->
 <span aria-label="value" id="fail21"></span>
 <strong aria-label="value" id="fail22"></strong>
@@ -39,6 +40,8 @@ conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has on
 <div role="suggestion" aria-labelledby="value" id="fail29"></div>
 <div role="grid"><span id="fail30" aria-label="value"></span></div>
 <div role="grid"><span id="fail31" aria-labelledby="value"></span></div>
+<div role="foo" aria-label="foo" id="fail32"></div>
+<div role="foo bar" aria-label="foo" id="fail33"></div>
 
 <div id="incomplete1" aria-label="foo">Foo</div>
 <div id="incomplete2" aria-labelledby="missing">Foo</div>

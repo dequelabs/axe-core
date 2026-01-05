@@ -4,7 +4,7 @@ describe('Rule', () => {
   const metadataFunctionMap =
     axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
   const fixture = document.getElementById('fixture');
-  const { fixtureSetup } = axe.testUtils;
+  const { fixtureSetup, captureError } = axe.testUtils;
   const noop = () => {};
   const isNotCalled = function (err) {
     throw err || new Error('Reject should not be called');
@@ -230,30 +230,6 @@ describe('Rule', () => {
             done();
           },
           isNotCalled
-        );
-      });
-
-      it('should handle an error in #matches', done => {
-        const div = document.createElement('div');
-        div.setAttribute('style', '#fff');
-        fixture.appendChild(div);
-        let success = false,
-          rule = new Rule({
-            matches: () => {
-              throw new Error('this is an error');
-            }
-          });
-
-        rule.run(
-          {
-            include: [axe.utils.getFlattenedTree(div)[0]]
-          },
-          {},
-          isNotCalled,
-          () => {
-            assert.isFalse(success);
-            done();
-          }
         );
       });
 
@@ -618,9 +594,7 @@ describe('Rule', () => {
       it('should pass thrown errors to the reject param', done => {
         fixtureSetup('<blink>Hi</blink>');
         const rule = new Rule(
-          {
-            none: ['cats']
-          },
+          { none: ['cats'] },
           {
             checks: {
               cats: {
@@ -717,6 +691,62 @@ describe('Rule', () => {
           },
           isNotCalled
         );
+      });
+
+      describe('error handling', () => {
+        it('should return a RuleError if #matches throws', done => {
+          const rule = new Rule({
+            id: 'fizz',
+            matches: () => {
+              throw new Error('this is an error');
+            }
+          });
+          axe.setup();
+          rule.run(
+            { include: [axe.utils.getFlattenedTree(fixture)[0]] },
+            {},
+            isNotCalled,
+            captureError(err => {
+              assert.instanceOf(err, axe.utils.RuleError);
+              assert.include(err.message, 'this is an error');
+              assert.equal(err.ruleId, 'fizz');
+              assert.equal(err.method, '#matches');
+              assert.deepEqual(err.errorNode.selector, ['#fixture']);
+              done();
+            }, done)
+          );
+        });
+
+        it('should return a RuleError if check.evaluate throws', done => {
+          const rule = new Rule(
+            { id: 'garden', any: ['plants'] },
+            {
+              checks: {
+                plants: new Check({
+                  id: 'plants',
+                  enabled: true,
+                  evaluate: () => {
+                    throw new Error('zombies ate my pants');
+                  }
+                })
+              }
+            }
+          );
+          axe.setup();
+          rule.run(
+            { include: axe.utils.getFlattenedTree(fixture) },
+            {},
+            isNotCalled,
+            captureError(err => {
+              assert.instanceOf(err, axe.utils.RuleError);
+              assert.include(err.message, 'zombies ate my pants');
+              assert.equal(err.ruleId, 'garden');
+              assert.equal(err.method, 'plants#evaluate');
+              assert.deepEqual(err.errorNode.selector, ['#fixture']);
+              done();
+            }, done)
+          );
+        });
       });
 
       describe('NODE rule', () => {
@@ -1660,9 +1690,50 @@ describe('Rule', () => {
 
         assert.lengthOf(result.nodes, 1);
       });
+
+      it('should throw a RuleError if check.after throws', () => {
+        const rule = new Rule(
+          { id: 'dogs', any: ['cats'] },
+          {
+            checks: {
+              cats: {
+                id: 'cats',
+                enabled: true,
+                after: () => {
+                  throw new Error('this is an error');
+                }
+              }
+            }
+          }
+        );
+        axe.setup();
+        try {
+          rule.after(
+            {
+              id: 'cats',
+              nodes: [
+                {
+                  all: [],
+                  none: [],
+                  any: [{ id: 'cats', result: true }],
+                  node: new axe.utils.DqElement(fixture)
+                }
+              ]
+            },
+            {}
+          );
+          assert.fail('Should have thrown');
+        } catch (err) {
+          assert.instanceOf(err, axe.utils.RuleError);
+          assert.include(err.message, 'this is an error');
+          assert.equal(err.ruleId, 'dogs');
+          assert.equal(err.method, 'cats#after');
+          assert.deepEqual(err.errorNode.selector, ['#fixture']);
+        }
+      });
     });
 
-    describe('after', () => {
+    describe('reviewOnFail', () => {
       it('should mark checks as incomplete if reviewOnFail is set to true for all', () => {
         axe.setup();
         const rule = new Rule(

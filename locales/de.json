@@ -1098,7 +1098,11 @@
     "td-headers-attr": {
       "pass": "Das headers-Attribut wird ausschließlich dafür verwendet, um auf andere Kopfzellen in der Tabelle zu verweisen.",
       "incomplete": "Das headers-Attribut ist leer.",
-      "fail": "Das headers-Attribut wird nicht ausschließlich dafür verwendet, um auf andere Kopfzellen in der Tabelle zu verweisen."
+      "fail": {
+        "cell-header-not-in-table": "Das headers-Attribut wird nicht ausschließlich dafür verwendet, um auf andere Kopfzellen in der Tabelle zu verweisen.",
+        "cell-header-not-th": "Das headers-Attribut muss auf Kopfzellen verweisen, nicht auf Datenzellen.",
+        "header-refs-self": "Das Element mit dem headers-Attribut verweist auf sich selbst."
+      }
     },
     "th-has-data-cells": {
       "pass": "Alle Tabellenkopfzellen beziehen sich auf Datenzellen.",

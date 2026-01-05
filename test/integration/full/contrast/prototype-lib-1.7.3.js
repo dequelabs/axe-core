@@ -630,7 +630,7 @@ Object.extend(
           result += String.interpret(replacement(match));
           source = source.slice(match.index + match[0].length);
         } else {
-          (result += source), (source = '');
+          ((result += source), (source = ''));
         }
       }
       return result;
@@ -2730,11 +2730,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function _recursivelyFind(element, property, expression, index) {
-    (element = $(element)),
+    ((element = $(element)),
       (expression = expression || 0),
-      (index = index || 0);
+      (index = index || 0));
     if (Object.isNumber(expression)) {
-      (index = expression), (expression = null);
+      ((index = expression), (expression = null));
     }
 
     while ((element = element[property])) {
@@ -2756,11 +2756,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function down(element, expression, index) {
     if (arguments.length === 1) return firstDescendant(element);
-    (element = $(element)),
+    ((element = $(element)),
       (expression = expression || 0),
-      (index = index || 0);
+      (index = index || 0));
 
-    if (Object.isNumber(expression)) (index = expression), (expression = '*');
+    if (Object.isNumber(expression)) ((index = expression), (expression = '*'));
 
     var node = Prototype.Selector.select(expression, element)[index];
     return Element.extend(node);
@@ -2793,7 +2793,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function descendantOf_DOM(element, ancestor) {
-    (element = $(element)), (ancestor = $(ancestor));
+    ((element = $(element)), (ancestor = $(ancestor)));
     if (!element || !ancestor) return false;
     while ((element = element.parentNode))
       if (element === ancestor) return true;
@@ -2801,14 +2801,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function descendantOf_contains(element, ancestor) {
-    (element = $(element)), (ancestor = $(ancestor));
+    ((element = $(element)), (ancestor = $(ancestor)));
     if (!element || !ancestor) return false;
     if (!ancestor.contains) return descendantOf_DOM(element, ancestor);
     return ancestor.contains(element) && ancestor !== element;
   }
 
   function descendantOf_compareDocumentPosition(element, ancestor) {
-    (element = $(element)), (ancestor = $(ancestor));
+    ((element = $(element)), (ancestor = $(ancestor)));
     if (!element || !ancestor) return false;
     return (element.compareDocumentPosition(ancestor) & 8) === 8;
   }
@@ -6850,7 +6850,7 @@ Form.Methods = {
   },
 
   request: function (form, options) {
-    (form = $(form)), (options = Object.clone(options || {}));
+    ((form = $(form)), (options = Object.clone(options || {})));
 
     var params = options.parameters,
       action = form.readAttribute('action') || '';
@@ -7632,7 +7632,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   function on(element, eventName, selector, callback) {
     element = $(element);
     if (Object.isFunction(selector) && Object.isUndefined(callback)) {
-      (callback = selector), (selector = null);
+      ((callback = selector), (selector = null));
     }
 
     return new Event.Handler(element, eventName, selector, callback).start();

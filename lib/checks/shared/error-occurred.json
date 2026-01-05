@@ -1,0 +1,10 @@
+{
+  "id": "error-occurred",
+  "evaluate": "exists-evaluate",
+  "metadata": {
+    "messages": {
+      "pass": "",
+      "incomplete": "Axe encountered an error; test the page for this type of problem manually"
+    }
+  }
+}

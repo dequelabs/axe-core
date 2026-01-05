@@ -143,6 +143,39 @@ describe('aria-prohibited-attr', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
+  it('should not allow aria-label on divs that have an invalid role', function () {
+    const params = checkSetup(
+      '<div id="target" role="foo" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should allow aria-label on divs with a valid fallback role', function () {
+    const params = checkSetup(
+      '<div id="target" role="foo dialog" aria-label="foo"></div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should not allow aria-label on divs with no valid fallback roles', function () {
+    const params = checkSetup(
+      '<div id="target" role="foo bar" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
   describe('widget ancestor', () => {
     it('should allow aria-label', () => {
       const params = checkSetup(`

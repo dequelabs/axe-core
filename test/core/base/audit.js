@@ -2,37 +2,54 @@ describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
-  const { fixtureSetup } = axe.testUtils;
+  const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
-  const isNotCalled = function (err) {
+  const isNotCalled = err => {
     throw err || new Error('Reject should not be called');
   };
   const noop = () => {};
 
+  const assertEqualRuleError = (actual, expect) => {
+    assert.include(actual.message, expect.message);
+    assert.equal(actual.stack, expect.stack);
+    assert.equal(actual.name, expect.name);
+  };
+
+  const assertErrorResults = (result, error, selector) => {
+    assert.equal(result.result, 'cantTell');
+    assertEqualRuleError(result.error, error);
+
+    assert.lengthOf(result.nodes, 1);
+    const node1 = result.nodes[0];
+    assert.isEmpty(node1.any);
+    assert.isEmpty(node1.all);
+    assert.include(node1.node.selector, selector);
+
+    assert.lengthOf(node1.none, 1);
+    const none = node1.none[0];
+    assert.equal(none.id, 'error-occurred');
+    assert.equal(none.result, undefined);
+    assert.isDefined(none.data);
+    assertEqualRuleError(none.data, error);
+    assert.lengthOf(none.relatedNodes, 0);
+  };
+
   const mockChecks = [
     {
       id: 'positive1-check1',
-      evaluate: () => {
-        return true;
-      }
+      evaluate: () => true
     },
     {
       id: 'positive2-check1',
-      evaluate: () => {
-        return true;
-      }
+      evaluate: () => true
     },
     {
       id: 'negative1-check1',
-      evaluate: () => {
-        return true;
-      }
+      evaluate: () => true
     },
     {
       id: 'positive3-check1',
-      evaluate: () => {
-        return true;
-      }
+      evaluate: () => true
     }
   ];
 
@@ -68,9 +85,7 @@ describe('Audit', () => {
   ];
 
   const fixture = document.getElementById('fixture');
-
   let origAuditRun;
-
   beforeEach(() => {
     audit = new Audit();
     mockRules.forEach(function (r) {
@@ -1139,45 +1154,6 @@ describe('Audit', () => {
       );
     });
 
-    it('catches errors and passes them as a cantTell result', done => {
-      const err = new Error('Launch the super sheep!');
-      audit.addRule({
-        id: 'throw1',
-        selector: '*',
-        any: [
-          {
-            id: 'throw1-check1'
-          }
-        ]
-      });
-      audit.addCheck({
-        id: 'throw1-check1',
-        evaluate: () => {
-          throw err;
-        }
-      });
-      axe._tree = axe.utils.getFlattenedTree(fixture);
-      axe._selectorData = axe.utils.getSelectorData(axe._tree);
-      audit.run(
-        { include: [axe._tree[0]] },
-        {
-          runOnly: {
-            type: 'rule',
-            values: ['throw1']
-          }
-        },
-        function (results) {
-          assert.lengthOf(results, 1);
-          assert.equal(results[0].result, 'cantTell');
-          assert.equal(results[0].message, err.message);
-          assert.equal(results[0].stack, err.stack);
-          assert.equal(results[0].error, err);
-          done();
-        },
-        isNotCalled
-      );
-    });
-
     it('should not halt if errors occur', done => {
       audit.addRule({
         id: 'throw1',
@@ -1230,43 +1206,6 @@ describe('Audit', () => {
       assert.equal(checked, 'options validated');
     });
 
-    it('should halt if an error occurs when debug is set', done => {
-      audit.addRule({
-        id: 'throw1',
-        selector: '*',
-        any: [
-          {
-            id: 'throw1-check1'
-          }
-        ]
-      });
-      audit.addCheck({
-        id: 'throw1-check1',
-        evaluate: () => {
-          throw new Error('Launch the super sheep!');
-        }
-      });
-
-      // check error node requires _selectorCache to be setup
-      axe.setup();
-
-      audit.run(
-        { include: [axe.utils.getFlattenedTree(fixture)[0]] },
-        {
-          debug: true,
-          runOnly: {
-            type: 'rule',
-            values: ['throw1']
-          }
-        },
-        noop,
-        function (err) {
-          assert.equal(err.message, 'Launch the super sheep!');
-          done();
-        }
-      );
-    });
-
     it('propagates DqElement options', async () => {
       fixtureSetup('<input id="input">');
       const results = await new Promise((resolve, reject) => {
@@ -1281,6 +1220,59 @@ describe('Audit', () => {
       assert.equal(node.element, fixture.firstChild);
       assert.equal(node.selector, 'html > body > #fixture > #input');
     });
+
+    describe('when an error occurs', () => {
+      let err;
+      beforeEach(() => {
+        err = new Error('Launch the super sheep!');
+        audit.addRule({
+          id: 'throw1',
+          selector: '#fixture',
+          any: [
+            {
+              id: 'throw1-check1'
+            }
+          ]
+        });
+        audit.addCheck({
+          id: 'throw1-check1',
+          evaluate: () => {
+            throw err;
+          }
+        });
+        axe.setup();
+      });
+
+      it('catches errors and resolves them as a cantTell result', done => {
+        audit.run(
+          { include: [axe._tree[0]] },
+          { runOnly: { type: 'rule', values: ['throw1'] } },
+          captureError(results => {
+            assert.lengthOf(results, 1);
+            assertErrorResults(results[0], err, '#fixture');
+            done();
+          }, done),
+          isNotCalled
+        );
+      });
+
+      it('should halt if an error occurs when debug is set', done => {
+        const context = { include: [axe.utils.getFlattenedTree(fixture)[0]] };
+        const options = {
+          debug: true,
+          runOnly: { type: 'rule', values: ['throw1'] }
+        };
+        audit.run(
+          context,
+          options,
+          noop,
+          captureError(reject => {
+            assert.include(reject.message, err.message);
+            done();
+          }, done)
+        );
+      });
+    });
   });
 
   describe('Audit#after', () => {
@@ -1288,7 +1280,7 @@ describe('Audit', () => {
       /*eslint no-unused-vars:0*/
       audit = new Audit();
       let success = false;
-      const options = [{ id: 'hehe', enabled: true, monkeys: 'bananas' }];
+      const options = { runOnly: 'hehe' };
       const results = [
         {
           id: 'hehe',
@@ -1310,6 +1302,91 @@ describe('Audit', () => {
       };
 
       audit.after(results, options);
+      assert.isTrue(success);
+    });
+
+    it('does not run Rule#after if the result has an error', () => {
+      audit = new Audit();
+      const results = [{ id: 'throw1', error: new Error('La la la!') }];
+      let success = true;
+      audit.rules.push(new Rule({ id: 'throw1' }));
+      audit.rules[0].after = () => (success = false);
+      audit.after(results, {});
+      assert.lengthOf(results, 1);
+      assert.equal(results[0].error.message, 'La la la!');
+      assert.isTrue(success, 'Rule#after should not be called');
+    });
+
+    it('catches errors and passes them as a cantTell result', () => {
+      audit = new Audit();
+      const err = new SyntaxError('La la la!');
+      const results = [
+        {
+          id: 'throw1',
+          nodes: [
+            {
+              id: 'throw1-check1-after',
+              node: new axe.utils.DqElement(fixture),
+              any: [{ id: 'throw1-check1-after', result: false }],
+              all: [],
+              none: []
+            }
+          ]
+        }
+      ];
+      audit.addRule({
+        id: 'throw1',
+        selector: '#fixture',
+        any: [{ id: 'throw1-check1-after' }]
+      });
+      audit.addCheck({
+        id: 'throw1-check1-after',
+        after: () => {
+          throw err;
+        }
+      });
+      axe.setup();
+      const result = audit.after(results, {});
+      assert.lengthOf(result, 1);
+      assertErrorResults(result[0], err, '#fixture');
+    });
+
+    it('throws errors when debug is set', () => {
+      audit = new Audit();
+      const err = new SyntaxError('La la la!');
+      const options = { debug: true };
+      const results = [
+        {
+          id: 'throw1',
+          nodes: [
+            {
+              id: 'throw1-check1-after',
+              node: new axe.utils.DqElement(fixture),
+              any: [{ id: 'throw1-check1-after', result: false }],
+              all: [],
+              none: []
+            }
+          ]
+        }
+      ];
+      audit.addRule({
+        id: 'throw1',
+        selector: '#fixture',
+        any: [{ id: 'throw1-check1-after' }]
+      });
+      audit.addCheck({
+        id: 'throw1-check1-after',
+        after: () => {
+          throw err;
+        }
+      });
+      axe.setup();
+      try {
+        audit.after(results, options);
+        assert.fail('Should have thrown');
+      } catch (actual) {
+        assertEqualRuleError(actual, err);
+      }
     });
   });
 

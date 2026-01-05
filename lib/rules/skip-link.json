@@ -3,7 +3,7 @@
   "impact": "moderate",
   "selector": "a[href^=\"#\"], a[href^=\"/#\"]",
   "matches": "skip-link-matches",
-  "tags": ["cat.keyboard", "best-practice"],
+  "tags": ["cat.keyboard", "best-practice", "RGAAv4", "RGAA-12.7.1"],
   "metadata": {
     "description": "Ensure all skip links have a focusable target",
     "help": "The skip-link target should exist and be focusable"

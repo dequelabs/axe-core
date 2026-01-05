@@ -123,6 +123,188 @@ module.exports = [
     }
   },
   {
+    // disallow imports from node modules
+    ignores: ['lib/core/imports/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^[^.]',
+              message: 'Only core/imports files should import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // disallow imports in standards
+    files: ['lib/standards/**/*.js'],
+    // index file can import other standards and from utils
+    ignores: ['lib/standards/index.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['*'],
+              message:
+                "Standard files shouldn't use imports as they are just hard coded data objects"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // restrict imports to core/utils files to other core/utils, core, core/base, standards, imports, or reporters/helpers
+    files: ['lib/core/utils/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              // e.g. "../commons/aria/" or "../public/"
+              regex:
+                '.*\\.\\.\\/(commons|public|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
+              message:
+                'Util files should only import from other utils, core, or standard files'
+            },
+            // disallow imports from node modules
+            // seems only 1 regex pattern is allowed to match as not having this allows node module imports even while having the general rule above for all files)
+            {
+              regex: '^[^.]',
+              message: 'Only core/imports files should import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // restrict imports to core/public files to other core/public, or imports allowed by core/utils
+    files: ['lib/core/public/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              // e.g. "../commons/aria/" or "../checks/"
+              regex:
+                '.*\\.\\.\\/(commons|checks|rules)(\\/|$)|.*\\.\\.\\/reporters\\/.*?\\.js',
+              message:
+                'Public files should only import from other public, util, core, or standard files'
+            },
+            // disallow imports from node modules
+            {
+              regex: '^[^.]',
+              message: 'Only core/imports files should import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // disallow imports in core/imports files to any non-node module
+    files: ['lib/core/imports/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              // relative file paths
+              regex: '\\\.\\\.\\/',
+              message: 'Import files should only import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // disallow imports in core/reporters files to any non-util file
+    files: ['lib/core/reporters/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              // e.g. "../commons/aria/" or "../checks/"
+              regex: '.*\\.\\.\\/(commons|base|public|checks|rules)(\\/|$)',
+              message: 'Reporter files should only import util functions'
+            },
+            // disallow imports from node modules
+            {
+              regex: '^[^.]',
+              message: 'Only core/imports files should import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // disallow imports in commons files to any check or rule
+    files: ['lib/commons/**/*.js'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              // e.g. ../checks/"
+              regex: '.*\\.\\.\\/(checks|rules)(\\/|$)',
+              message: 'Commons files cannot import from checks and rules'
+            },
+            // disallow imports from node modules
+            {
+              regex: '^[^.]',
+              message: 'Only core/imports files should import from node modules'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    // Utils should be functions that can be used without setting up the virtual tree, as opposed to commons which require the virtual tree
+    files: ['lib/core/utils/**/*.js'],
+    ignores: [
+      // these are files with known uses of virtual node that are legacy before this rule was enforced
+      'lib/core/utils/closest.js',
+      'lib/core/utils/contains.js',
+      'lib/core/utils/query-selector-all-filter.js',
+      'lib/core/utils/selector-cache.js',
+      // this will create a virtual node if one doesn't exist already in order to truncate the html output properly
+      'lib/core/utils/dq-element.js',
+      // this sets up the virtual tree so is allowed vNode
+      'lib/core/utils/get-flattened-tree.js'
+    ],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'MemberExpression[object.name=vNode]',
+          message:
+            "Utils is meant for utility functions that work independently of axe's state; utilities that require the virtual tree to be set up should go in commons, not utils."
+        },
+        {
+          selector: 'MemberExpression[object.name=virtualNode]',
+          message:
+            "Utils is meant for utility functions that work independently of axe's state; utilities that require the virtual tree to be set up should go in commons, not utils."
+        }
+      ]
+    }
+  },
+  {
     files: ['doc/examples/chrome-debugging-protocol/axe-cdp.js'],
     languageOptions: {
       globals: {
@@ -182,6 +364,21 @@ module.exports = [
     }
   },
   {
+    files: ['.github/bin/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2024
+      }
+    },
+    rules: {
+      // Helper scripts for github can import from anywhere
+      'no-restricted-imports': ['off']
+    }
+  },
+  {
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',
@@ -189,7 +386,7 @@ module.exports = [
       'build/tasks/aria-supported.js',
       'doc/api/*',
       'doc/examples/jest_react/*.js',
-      'lib/core/imports/*.js',
+      'lib/core/imports/polyfills.js',
       'lib/core/utils/uuid.js',
       'axe.js',
       'axe.min.js'

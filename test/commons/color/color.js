@@ -301,6 +301,19 @@ describe('color.Color', () => {
         assert.equal(c.blue, 144);
         assert.equal(c.alpha, 0.5);
       });
+
+      it('clips out of gamut values', () => {
+        const c = new Color();
+        c.parseColorFnString('oklch(25% 0.75 345)');
+        assert.equal(c.red, 186);
+        assert.equal(c.green, 0);
+        assert.equal(c.blue, 103);
+        assert.equal(c.alpha, 1);
+
+        assert.equal(c.red, Math.round(c.r * 255));
+        assert.equal(c.green, Math.round(c.g * 255));
+        assert.equal(c.blue, Math.round(c.b * 255));
+      });
     });
   });
 
