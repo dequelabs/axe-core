@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.1](https://github.com/dequelabs/axe-core/compare/v4.11.0...v4.11.1) (2026-01-05)
+
+### Bug Fixes
+
+- color contrast fails for oklch and oklab with none ([#4959](https://github.com/dequelabs/axe-core/issues/4959)) ([8f249fd](https://github.com/dequelabs/axe-core/commit/8f249fdcffe379466fcff8ec8ac46e37b65fdbce))
+- **commons/color:** Match browser behavior for out-of-gamut oklch colors ([#4908](https://github.com/dequelabs/axe-core/issues/4908)) ([5036be8](https://github.com/dequelabs/axe-core/commit/5036be811e0ede4bf061ab1f970f78b7e9c7ec0c))
+- replaced luminance threshold constant 0.03928 with 0.04045 ([#4934](https://github.com/dequelabs/axe-core/issues/4934)) ([316967d](https://github.com/dequelabs/axe-core/commit/316967d50c554e71bcdf59ac945d1d5bb2f0684b)), closes [#4933](https://github.com/dequelabs/axe-core/issues/4933)
+- **rgaa:** adjust mapping of aria-hidden-\* and valid-lang ([#4935](https://github.com/dequelabs/axe-core/issues/4935)) ([77571f2](https://github.com/dequelabs/axe-core/commit/77571f2103a90a5703233729c78be008395f1572))
+
 ## [4.11.0](https://github.com/dequelabs/axe-core/compare/v4.10.3...v4.11.0) (2025-10-07)
 
 ### Features
