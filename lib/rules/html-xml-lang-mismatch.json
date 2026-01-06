@@ -1,7 +1,7 @@
 {
   "id": "html-xml-lang-mismatch",
   "impact": "moderate",
-  "selector": "html[lang][xml\\:lang]",
+  "selector": "html[lang][xml\\:lang]:not(html *)",
   "matches": "xml-lang-mismatch-matches",
   "tags": [
     "cat.language",

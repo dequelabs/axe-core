@@ -44,12 +44,16 @@ updates:
       # @see https://github.com/dequelabs/axe-core/issues/4428
       - dependency-name: 'colorjs.io'
         versions: ['>0.4.3']
-      # Still need to support node 18
+      # Still need to support node 18 in our tests
       - dependency-name: 'glob'
         versions: ['>=11.0.0']
       # Use node 4 types for backward compatibility
       - dependency-name: '@types/node'
         versions: ['>=5.0.0']
+      # Breaking change that we need to handle in its own pr first
+      # @see https://github.com/dequelabs/axe-core/pull/4264
+      - dependency-name: 'css-selector-parser'
+        versions: ['>=2.0.0']
     groups:
       # Any updates not caught by the group config will get individual PRs
       npm-low-risk:

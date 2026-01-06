@@ -364,6 +364,21 @@ module.exports = [
     }
   },
   {
+    files: ['.github/bin/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2024
+      }
+    },
+    rules: {
+      // Helper scripts for github can import from anywhere
+      'no-restricted-imports': ['off']
+    }
+  },
+  {
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',

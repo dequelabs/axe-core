@@ -6,51 +6,244 @@ on:
     branches:
       - master
       - develop
+      - release-*
+
+# We want to group to the workflow for each branch.
+# Non-push events will be cancelled if a new one is started.
+# Push events will run sequentially. This helps ensure that
+# the `next` tag isn't out of sync.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions: {}
+
+env:
+  CHROME_DEVEL_SANDBOX: /opt/google/chrome/chrome-sandbox
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+  lint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - &checkout
+        name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - &setup-node
+        name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
           cache: 'npm'
-      - run: npm ci
-      - run: npm run prepare
-      - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - &install-deps-directly
+        name: Install Dependencies
+        run: npm ci
+      - name: Run ESLint
+        run: npm run eslint
+
+  fmt_check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - *setup-node
+      - *install-deps-directly
+      - run: npm run fmt:check
+
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - *setup-node
+      - *install-deps-directly
+      - &build
+        name: Build
+        run: |
+          npm run prepare
+          npm run build
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: axe-core
           path: axe.js
           retention-days: 1
 
-  fmt_check:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+  test_chrome:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DISPLAY: :99
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - *checkout
+      - &install-deps-with-xvfb
+        name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
         with:
-          node-version-file: .nvmrc
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run fmt:check
+          start-xvfb: ${{ env.DISPLAY }}
+      - *build
+      - name: Run Tests Against Chrome
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test -- --browsers Chrome
+      - name: Run Chrome Integration Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:integration:chrome
 
-  test_node:
-    strategy:
-      matrix:
-        node: [6, 18, 20, 22]
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+  test_firefox:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DISPLAY: :99
+    steps:
+      - *checkout
+      - *install-deps-with-xvfb
+      - *build
+      - name: Run Tests Against Firefox
+        env:
+          FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+        run: npm run test -- --browsers Firefox
+      - name: Run Firefox Integration Tests
+        env:
+          FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
+        run: npm run test:integration:firefox
+
+  # Run examples under `doc/examples`
+  test_examples:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - &install-deps
+        name: Install Deps
+        id: install-deps
+        uses: ./.github/actions/install-deps
+      - *build
+      - name: Run Tests Against Examples
+        run: npm run test:examples
+
+  test_act:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     needs: build
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: ${{ matrix.node}}
-      - uses: actions/download-artifact@v5
+      - *checkout
+      - *install-deps
+      - &restore-axe-build
+        name: Restore axe build
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: axe-core
-      - run: npm run test:node
+      - name: Run ACT Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:act
+
+  test_aria_practices:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Run ARIA Practices Tests
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: npm run test:apg
+
+  test_locales:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Run Locale Tests
+        run: npm run test:locales
+
+  test_virtual_rules:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Run Virtual Rules Tests
+        run: npm run test:virtual-rules
+
+  test_jsdom:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Run jsdom Tests
+        run: npm run test:jsdom
+
+  build_api_docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - *install-deps
+      - name: Run API Docs Build
+        run: npm run api-docs
+
+  test_rule_help_version:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    if: ${{ github.ref_name == 'master' }}
+    steps:
+      - *checkout
+      - *install-deps
+      - name: Run Rule Help Version Tests
+        run: npm run test:rule-help-version
+
+  sri-validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    # Run on master and RC branches along with PRs targeting those branches.
+    if: ${{ github.ref_name == 'master' || startsWith(github.ref_name, 'release-') || github.event.pull_request.base.ref == 'master' || startsWith(github.event.pull_request.base.ref, 'release-') }}
+    steps:
+      - *checkout
+      - *install-deps
+      - *restore-axe-build
+      - name: Validate Subresource Integrity
+        run: npm run sri-validate
+
+  test_node:
+    # The package can't be built on Node 6 anymore, but should still run there.
+    # So we need to pull in a previous build artifact.
+    needs: build
+    strategy:
+      matrix:
+        node:
+          - 6
+          - 18
+          - 20
+          - 22
+          - 24
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - *checkout
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: ${{ matrix.node }}
+      - *restore-axe-build
+      - name: Run Node.js Tests
+        run: npm run test:node

@@ -1,7 +1,7 @@
 {
   "id": "frame-tested",
   "impact": "critical",
-  "selector": "html, frame, iframe",
+  "selector": "html:not(html *), frame, iframe",
   "tags": ["cat.structure", "best-practice", "review-item"],
   "metadata": {
     "description": "Ensure <iframe> and <frame> elements contain the axe-core script",

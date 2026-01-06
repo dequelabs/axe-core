@@ -1,7 +1,8 @@
 const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
-const chromedriver = require('chromedriver');
+const chromedriver =
+  process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
 
 const args = process.argv.slice(2);
 
@@ -118,22 +119,32 @@ function buildWebDriver(browser) {
   let webdriver;
   const mobileBrowser = browser.split('-mobile');
 
-  // fix chrome DevToolsActivePort file doesn't exist in CricleCI (as well as a
+  // fix chrome DevToolsActivePort file doesn't exist in CircleCI (as well as a
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
-    const service = new chrome.ServiceBuilder(chromedriver.path).build();
+    const service = new chrome.ServiceBuilder(chromedriver).build();
 
     const options = new chrome.Options().addArguments([
-      'headless',
+      '--headless',
       '--no-sandbox',
       '--disable-extensions',
       '--disable-dev-shm-usage'
     ]);
+
+    if (process.env.CHROME_BIN) {
+      options.setBinaryPath(process.env.CHROME_BIN);
+    }
+
     webdriver = chrome.Driver.createSession(options, service);
   } else if (browser === 'firefox') {
     const options = new firefox.Options().addArguments('--headless');
+
+    if (process.env.FIREFOX_BIN) {
+      options.setBinary(process.env.FIREFOX_BIN);
+    }
+
     webdriver = firefox.Driver.createSession(options);
   }
 

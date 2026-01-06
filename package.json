@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.11.0",
+  "version": "4.11.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -78,7 +78,7 @@
     "build": "grunt",
     "patch": "npx patch-package",
     "unpatch": "npx patch-package --reverse",
-    "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+    "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js' '.github/bin/*.mjs'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
@@ -108,7 +108,6 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
-    "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
@@ -128,7 +127,6 @@
     "@types/node": "^4.9.5",
     "aria-practices": "github:w3c/aria-practices#ce0336bd82d7d3651abcbde86af644197ddbc629",
     "aria-query": "^5.1.3",
-    "browser-driver-manager": "1.0.4",
     "chai": "^4.3.7",
     "chalk": "^4.x",
     "chromedriver": "latest",
@@ -194,7 +192,7 @@
     "*.{md,json,ts,html}": [
       "prettier --write"
     ],
-    "*.js": [
+    "*.{js,mjs}": [
       "prettier --write",
       "eslint --fix"
     ]

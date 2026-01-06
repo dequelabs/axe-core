@@ -357,7 +357,7 @@ var commons;
         doc.head.appendChild(link);
       });
     } else {
-      q.defer(function (resolve) {
+      q.defer(function (resolve, reject) {
         const style = doc.createElement('style');
         if (data.id) {
           style.id = data.id;
@@ -365,9 +365,25 @@ var commons;
         style.type = 'text/css';
         style.appendChild(doc.createTextNode(data.text));
         doc.head.appendChild(style);
-        setTimeout(function () {
-          resolve();
-        }, 100); // -> note: gives firefox to load (document.stylesheets), other browsers are fine.
+        // In Firefox, there is a delay between adding the element and it appearing in
+        // document.styleSheets, so we poll until we see it there.
+        const timeoutAt = Date.now() + 500;
+        const interval = setInterval(function () {
+          const isLoaded = Array.from(doc.styleSheets).some(
+            sheet => sheet.ownerNode === style
+          );
+          if (isLoaded) {
+            clearInterval(interval);
+            resolve();
+          } else if (Date.now() > timeoutAt) {
+            clearInterval(interval);
+            reject(
+              new Error(
+                'Added <style> element was not reflected in doc.styleSheets within timeout'
+              )
+            );
+          }
+        }, 5);
       });
     }
     return q;

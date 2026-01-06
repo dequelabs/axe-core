@@ -22,6 +22,13 @@
   <body>
     <iframe id="frame1" src="frames/level1.html"></iframe>
     <div id="mocha"></div>
+    <div id="additional"></div>
+    <script>
+      // only way to get a 2nd html element on the page is to create it with createElement
+      // if you try to do it through the html parser it won't work
+      var root = document.createElement('html');
+      document.getElementById('additional').append(root);
+    </script>
     <script src="/test/testutils.js"></script>
     <script src="document-title-pass.js"></script>
     <script src="/test/integration/adapter.js"></script>
