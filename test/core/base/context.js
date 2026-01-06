@@ -16,7 +16,7 @@ describe('Context', () => {
   it('should not mutate exclude in input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
     const context = { exclude: [['iframe', '#foo']] };
-    // eslint-disable-next-line no-new
+
     new Context(context);
     assert.deepEqual(context, { exclude: [['iframe', '#foo']] });
   });
@@ -24,7 +24,7 @@ describe('Context', () => {
   it('should not mutate its include input', () => {
     fixture.innerHTML = '<div id="foo"></div>';
     const context = { include: [['#foo']] };
-    // eslint-disable-next-line no-new
+
     new Context(context);
     assert.deepEqual(context, { include: [['#foo']] });
   });
@@ -107,6 +107,19 @@ describe('Context', () => {
       );
       const result = new Context([[['#fixture > article', 'section', 'h1']]]);
       assert.equal(result.include[0].props.id, 'target');
+    });
+
+    it('accepts a reference to a ShadowRoot', () => {
+      createNestedShadowDom(
+        fixture,
+        '<article id="shadowHost"></article>',
+        `<h1 id="h1">Heading</h1>
+				<p id="p">Content</p>`
+      );
+      const shadowHost = fixture.querySelector('#shadowHost');
+      const shadowRoot = shadowHost.shadowRoot;
+      const result = new Context(shadowRoot);
+      assert.deepEqual(selectors(result.include), ['#h1', '#p']);
     });
 
     it('accepts a node reference consisting of nested divs', () => {
