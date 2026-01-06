@@ -173,6 +173,8 @@ jobs:
       - name: Make Release Script Executable
         run: chmod +x ./node-github-release.sh
       - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: ./node-github-release.sh
   validate-deploy:
     name: Validate Deployment
