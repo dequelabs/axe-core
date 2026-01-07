@@ -83,9 +83,23 @@ describe('aria-errormessage', function () {
     );
   });
 
-  it('should return false if aria-errormessage has multiple ids but not all are in aria-describedby', function () {
+  it('should return true if aria-errormessage has multiple ids but at least one is in aria-describedby', function () {
     var vNode = queryFixture(
       '<input id="target" aria-invalid="true" aria-describedby="error1" aria-errormessage="error1 error2">' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
+  it('should return false if aria-errormessage has multiple ids but none are in aria-describedby', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="other" aria-errormessage="error1 error2">' +
+        '<div id="other">Other</div>' +
         '<div id="error1">Error 1</div>' +
         '<div id="error2">Error 2</div>'
     );
