@@ -1,7 +1,7 @@
 {
   "id": "page-has-heading-one",
   "impact": "moderate",
-  "selector": "html",
+  "selector": "html:not(html *)",
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {
     "description": "Ensure that the page, or at least one of its frames contains a level-one heading",

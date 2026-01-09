@@ -37,7 +37,8 @@
     ["#pass20"],
     ["#pass21"],
     ["#pass22"],
-    ["#pass23"]
+    ["#pass23"],
+    ["#pass24"]
   ],
   "incomplete": [
     ["#canttell1"],
@@ -59,6 +60,9 @@
     ["#canttell17"],
     ["#canttell18"],
     ["#canttell19"],
-    ["#canttell20"]
+    ["#canttell20"],
+    ["#canttell21"],
+    ["#canttell22"],
+    ["#canttell23"]
   ]
 }

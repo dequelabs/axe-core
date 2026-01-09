@@ -1017,6 +1017,18 @@ describe('color.getBackgroundColor', function () {
     assertColorsClose(actual, expected);
   });
 
+  it('calculates background of a textarea', () => {
+    fixture.innerHTML =
+      '<textarea id="target" style="background: red">Hello</textarea>';
+    var target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    var bgNodes = [];
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes, 1);
+
+    var expected = new axe.commons.color.Color(255, 0, 0, 1);
+    assertColorsClose(actual, expected);
+  });
+
   describe('body and document', function () {
     it('returns the body background', function () {
       fixture.innerHTML = '<div id="target">elm</div>';

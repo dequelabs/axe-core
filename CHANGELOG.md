@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.1](https://github.com/dequelabs/axe-core/compare/v4.11.0...v4.11.1) (2026-01-06)
+
+### Bug Fixes
+
+- allow shadow roots in axe.run contexts ([#4952](https://github.com/dequelabs/axe-core/issues/4952)) ([d4aee16](https://github.com/dequelabs/axe-core/commit/d4aee16494f3225e9f5065f23a9e1deccb46fc9a)), closes [#4941](https://github.com/dequelabs/axe-core/issues/4941)
+- color contrast fails for oklch and oklab with none ([#4959](https://github.com/dequelabs/axe-core/issues/4959)) ([8f249fd](https://github.com/dequelabs/axe-core/commit/8f249fdcffe379466fcff8ec8ac46e37b65fdbce))
+- **color-contrast:** do not incomplete on textarea ([#4968](https://github.com/dequelabs/axe-core/issues/4968)) ([d271788](https://github.com/dequelabs/axe-core/commit/d27178866d4962e1157b1be435143d028873f545)), closes [#4947](https://github.com/dequelabs/axe-core/issues/4947)
+- **commons/color:** Match browser behavior for out-of-gamut oklch colors ([#4908](https://github.com/dequelabs/axe-core/issues/4908)) ([5036be8](https://github.com/dequelabs/axe-core/commit/5036be811e0ede4bf061ab1f970f78b7e9c7ec0c))
+- don't runs rules that select `html` on nested `html` elements ([#4969](https://github.com/dequelabs/axe-core/issues/4969)) ([1e9a5c3](https://github.com/dequelabs/axe-core/commit/1e9a5c36812ff69a75f23fed3d290497f9fba37d))
+- replaced luminance threshold constant 0.03928 with 0.04045 ([#4934](https://github.com/dequelabs/axe-core/issues/4934)) ([316967d](https://github.com/dequelabs/axe-core/commit/316967d50c554e71bcdf59ac945d1d5bb2f0684b)), closes [#4933](https://github.com/dequelabs/axe-core/issues/4933)
+- **rgaa:** adjust mapping of aria-hidden-\* and valid-lang ([#4935](https://github.com/dequelabs/axe-core/issues/4935)) ([77571f2](https://github.com/dequelabs/axe-core/commit/77571f2103a90a5703233729c78be008395f1572))
+- **valid-lang:** update valid-langs for newer language codes ([#4966](https://github.com/dequelabs/axe-core/issues/4966)) ([c3f5446](https://github.com/dequelabs/axe-core/commit/c3f54464fd0995edc6619203b46b65d2984b218d)), closes [#4963](https://github.com/dequelabs/axe-core/issues/4963)
+
 ## [4.11.0](https://github.com/dequelabs/axe-core/compare/v4.10.3...v4.11.0) (2025-10-07)
 
 ### Features

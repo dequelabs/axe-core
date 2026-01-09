@@ -1,7 +1,7 @@
 {
   "id": "document-title",
   "impact": "serious",
-  "selector": "html",
+  "selector": "html:not(html *)",
   "matches": "is-initiator-matches",
   "tags": [
     "cat.text-alternatives",

@@ -386,8 +386,10 @@ declare namespace axe {
     frameContext: FrameContextObject;
   }
 
-  interface RawCheckResult
-    extends Omit<CheckResult, 'relatedNodes' | 'impact'> {
+  interface RawCheckResult extends Omit<
+    CheckResult,
+    'relatedNodes' | 'impact'
+  > {
     relatedNodes?: Array<SerialDqElement | DqElement>;
     impact?: ImpactValue;
   }
