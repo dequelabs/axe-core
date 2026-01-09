@@ -213,6 +213,121 @@ describe('aria-allowed-attr', () => {
     assert.isNotNull(checkContext._data);
   });
 
+  it('should return true for button element that has aria-expanded - base case', () => {
+    const vNode = queryFixture(
+      '<button tabindex="1" id="target" aria-expanded="true"></button>'
+    );
+
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data);
+  });
+
+  it('should return false for button element that has aria-expanded and has popovertarget', () => {
+    const vNode = queryFixture(
+      '<button tabindex="1" id="target" aria-expanded="true" popovertarget=""></button>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it('should return false for button element that has aria-expanded and has command', () => {
+    const vNode = queryFixture(
+      '<button tabindex="1" id="target" aria-expanded="true" command=""></button>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it('should return false for button element that has aria-expanded and both popovertarget and command', () => {
+    const vNode = queryFixture(
+      '<button tabindex="1" id="target" aria-expanded="true" popovertarget="" command=""></button>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  // it('should return false for button element that has aria-expanded and has a command attribute being added via IDL attribute', () => {
+  //   fixture.innerHTML = `
+  //     <button tabindex="1" id="target" aria-expanded="true"></button>
+  //     <div id="targetdiv"></div>
+  //   `;
+  //   const testbutton = document.getElementById('target');
+  //   const targetdiv = document.getElementById('targetdiv');
+  //   testbutton.commandForElement = targetdiv;
+  //   testbutton.command = 'toggle-command';
+
+  //   axe.setup();
+  //   const vNode = axe.utils.getNodeFromTree(testbutton)
+
+  //   assert.isFalse(
+  //     axe.testUtils
+  //       .getCheckEvaluate('aria-allowed-attr')
+  //       .call(checkContext, null, null, vNode)
+  //   );
+  //   assert.isNotNull(checkContext._data);
+  // });
+
+  // it('should return false for button element that has aria-expanded and has a popovertarget attribute being added via IDL attribute', () => {
+  //   fixture.innerHTML = `
+  //     <button aria-expanded="true" id="testbutton">test </button>
+  //     <div id="testdiv" popover="">test popovertarget IDL attribute<button popovertarget="testdiv" aria-label="close">x</button></div>
+  //   `
+  //   const testbutton = document.getElementById('testbutton');
+  //   const closebutton = document.getElementById('testdiv');
+  //   testbutton.popoverTargetElement = closebutton;
+
+  //   axe.setup();
+  //   const vNode = axe.utils.getNodeFromTree(testbutton)
+
+  //   assert.isFalse(
+  //     axe.testUtils
+  //       .getCheckEvaluate('aria-allowed-attr')
+  //       .call(checkContext, null, null, vNode)
+  //   );
+  //   assert.isNotNull(checkContext._data);
+  // });
+
+  // it('should return false for button element that has aria-expanded and both popovertarget and command both being added via IDL attribute', () => {
+  //   fixture.innerHTML = `
+  //     <button aria-expanded="true" id="testbutton">test </button>
+  //     <div id="testdiv" popover="">test popovertarget IDL attribute<button popovertarget="testdiv" aria-label="close">x</button></div>
+  //   `
+  //   const testbutton = document.getElementById('testbutton');
+  //   const closebutton = document.getElementById('testdiv');
+  //   testbutton.popoverTargetElement = closebutton;
+  //   testbutton.commandForElement = closebutton;
+  //   testbutton.command = 'toggle-command';
+
+  //   axe.setup();
+  //   const vNode = axe.utils.getNodeFromTree(testbutton)
+
+  //   assert.isFalse(
+  //     axe.testUtils
+  //       .getCheckEvaluate('aria-allowed-attr')
+  //       .call(checkContext, null, null, vNode)
+  //   );
+  //   assert.isNotNull(checkContext._data);
+  // });
+
   describe('options', () => {
     it('should allow provided attribute names for a role', () => {
       axe.configure({
