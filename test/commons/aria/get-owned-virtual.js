@@ -37,6 +37,18 @@ describe('aria.getOwnedVirtual', function () {
     assert.equal(owned[3].actualNode.nodeName.toUpperCase(), 'H4');
   });
 
+  it('does not return duplicate when child is also aria-owned', function () {
+    fixtureSetup(
+      '<div role="tablist" id="target" aria-owns="foo">' +
+        '<div id="foo" role="menuitem">foo</div>' +
+        '</div>'
+    );
+    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    var owned = aria.getOwnedVirtual(target);
+    assert.lengthOf(owned, 1);
+    assert.equal(owned[0].actualNode.id, 'foo');
+  });
+
   it('ignores whitespace-only aria-owned', function () {
     fixtureSetup(
       '<div id="target" aria-owns="  ">' +
