@@ -49,6 +49,50 @@ describe('aria.getOwnedVirtual', function () {
     assert.equal(owned[0].actualNode.id, 'foo');
   });
 
+  it('does not return duplicate when same ID appears multiple times in aria-owns', function () {
+    fixtureSetup(
+      '<div role="list" id="target" aria-owns="a b a">' +
+        '</div>' +
+        '<div role="listitem" id="a">A</div>' +
+        '<div role="listitem" id="b">B</div>'
+    );
+    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    var owned = aria.getOwnedVirtual(target);
+    assert.lengthOf(owned, 2);
+    assert.equal(owned[0].actualNode.id, 'a');
+    assert.equal(owned[1].actualNode.id, 'b');
+  });
+
+  it('moves aria-owned child to the end', function () {
+    fixtureSetup(
+      '<div role="list" id="target" aria-owns="a">' +
+        '<div role="listitem" id="a">A</div>' +
+        '<div role="listitem" id="b">B</div>' +
+        '</div>'
+    );
+    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    var owned = aria.getOwnedVirtual(target);
+    assert.lengthOf(owned, 2);
+    assert.equal(owned[0].actualNode.id, 'b');
+    assert.equal(owned[1].actualNode.id, 'a');
+  });
+
+  it('moves multiple aria-owned children to the end in aria-owns order', function () {
+    fixtureSetup(
+      '<div role="list" id="target" aria-owns="c a">' +
+        '<div role="listitem" id="a">A</div>' +
+        '<div role="listitem" id="b">B</div>' +
+        '<div role="listitem" id="c">C</div>' +
+        '</div>'
+    );
+    var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    var owned = aria.getOwnedVirtual(target);
+    assert.lengthOf(owned, 3);
+    assert.equal(owned[0].actualNode.id, 'b');
+    assert.equal(owned[1].actualNode.id, 'c');
+    assert.equal(owned[2].actualNode.id, 'a');
+  });
+
   it('ignores whitespace-only aria-owned', function () {
     fixtureSetup(
       '<div id="target" aria-owns="  ">' +
