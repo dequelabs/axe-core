@@ -349,6 +349,26 @@
     aria-valuetext=""
   ></div>
 
+  <!-- multiple id tokens case -->
+  <div>
+    <input
+      type="text"
+      id="pass192"
+      placeholder="456-7890"
+      aria-invalid="true"
+      aria-label="telephone"
+      aria-describedby="invalid-phonenumber invalid-phonenumber-field"
+      aria-errormessage="invalid-phonenumber invalid-phonenumber-field"
+    />
+    <div id="invalid-phonenumber">
+      <span>Invalid phone number.</span>
+    </div>
+  </div>
+  <div id="invalid-phonenumber-field">
+    <span>The field is invalid.</span>
+  </div>
+  <!-- end multiple id tokens case -->
+
   <div id="ref">Hi</div>
   <div id="ref2">Hi2</div>
 
