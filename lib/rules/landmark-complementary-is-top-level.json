@@ -2,7 +2,8 @@
   "id": "landmark-complementary-is-top-level",
   "impact": "moderate",
   "selector": "aside:not([role]), [role=complementary]",
-  "tags": ["cat.semantics", "best-practice"],
+  "tags": ["cat.semantics", "best-practice", "deprecated"],
+  "enabled": false,
   "metadata": {
     "description": "Ensure the complementary landmark or aside is at top level",
     "help": "Aside should not be contained in another landmark"
