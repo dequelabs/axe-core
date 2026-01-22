@@ -462,6 +462,7 @@
       "fail": {
         "singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
         "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
+        "unsupported": "Multiple IDs in aria-errormessage is not widely supported in assistive technologies",
         "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
