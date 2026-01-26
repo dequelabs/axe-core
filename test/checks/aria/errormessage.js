@@ -70,15 +70,72 @@ describe('aria-errormessage', function () {
     );
   });
 
-  it('sets an array of IDs in data', function () {
+  it('should return false if aria-errormessage has multiple ids (unsupported)', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="error1 error2" aria-errormessage="error1 error2">' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unsupported',
+      values: ['error1', 'error2']
+    });
+  });
+
+  it('should return false if aria-errormessage has multiple ids even when one is in aria-describedby', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="error1" aria-errormessage="error1 error2">' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unsupported',
+      values: ['error1', 'error2']
+    });
+  });
+
+  it('should return false if aria-errormessage has multiple ids even when none are in aria-describedby', function () {
+    var vNode = queryFixture(
+      '<input id="target" aria-invalid="true" aria-describedby="other" aria-errormessage="error1 error2">' +
+        '<div id="other">Other</div>' +
+        '<div id="error1">Error 1</div>' +
+        '<div id="error2">Error 2</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unsupported',
+      values: ['error1', 'error2']
+    });
+  });
+
+  it('sets an unsupported message when aria-errormessage contains multiple ids', function () {
     var vNode = queryFixture(
       '<div id="target" aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
         '<div id="plain"></div>'
     );
-    axe.testUtils
-      .getCheckEvaluate('aria-errormessage')
-      .call(checkContext, null, null, vNode);
-    assert.deepEqual(checkContext._data, ['foo', 'bar', 'baz']);
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unsupported',
+      values: ['foo', 'bar', 'baz']
+    });
   });
 
   it('returns true when aria-errormessage is empty, if that is allowed', function () {
