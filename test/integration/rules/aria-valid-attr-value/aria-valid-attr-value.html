@@ -90,6 +90,28 @@
     />
     <div id="violation46-ref" aria-hidden="true">Error message 1</div>
   </div>
+
+  <!-- Multiple IDs in aria-errormessage are not supported -->
+  <div>
+    <input
+      type="text"
+      id="violation47"
+      aria-invalid="true"
+      aria-errormessage="violation47-ref1 violation47-ref2"
+      aria-describedby="violation47-ref1 violation47-ref2"
+    />
+    <div id="violation47-ref1">Error message 1</div>
+    <div id="violation47-ref2">Error message 2</div>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="violation48"
+      aria-invalid="true"
+      aria-errormessage="ref ref2"
+    />
+  </div>
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -348,6 +370,18 @@
     aria-brailleroledescription=""
     aria-valuetext=""
   ></div>
+
+  <div>
+    <input
+      type="text"
+      id="pass192"
+      aria-invalid="true"
+      aria-errormessage="pass192-ref1"
+      aria-describedby="pass192-ref1 pass192-ref2"
+    />
+    <div id="pass192-ref1">Error message 1</div>
+    <div id="pass192-ref2">Error message 2</div>
+  </div>
 
   <div id="ref">Hi</div>
   <div id="ref2">Hi2</div>
