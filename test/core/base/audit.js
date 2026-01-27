@@ -86,6 +86,7 @@ describe('Audit', () => {
 
   const fixture = document.getElementById('fixture');
   let origAuditRun;
+  let origUtils;
   beforeEach(() => {
     audit = new Audit();
     mockRules.forEach(function (r) {
@@ -95,11 +96,14 @@ describe('Audit', () => {
       audit.addCheck(c);
     });
     origAuditRun = audit.run;
+    origUtils = axe.utils;
+    axe._audit = audit;
   });
 
   afterEach(() => {
     axe.teardown();
     audit.run = origAuditRun;
+    axe.utils = origUtils;
   });
 
   it('should be a function', () => {
@@ -1155,6 +1159,7 @@ describe('Audit', () => {
     });
 
     it('should not halt if errors occur', done => {
+      axe._audit = audit;
       audit.addRule({
         id: 'throw1',
         selector: '*',
@@ -1185,16 +1190,18 @@ describe('Audit', () => {
       );
     });
 
-    it('should run audit.normalizeOptions to ensure valid input', () => {
+    it('should run axe.utils.normalizeRunOptions to ensure valid input', () => {
       fixture.innerHTML =
         '<input type="text" aria-label="monkeys">' +
         '<div id="monkeys">bananas</div>' +
         '<input aria-labelledby="monkeys" type="text">' +
         '<blink>FAIL ME</blink>';
       let checked = 'options not validated';
-
-      audit.normalizeOptions = () => {
-        checked = 'options validated';
+      axe.utils = {
+        ...axe.utils,
+        normalizeRunOptions: () => {
+          checked = 'options validated';
+        }
       };
 
       audit.run(
@@ -1387,213 +1394,6 @@ describe('Audit', () => {
       } catch (actual) {
         assertEqualRuleError(actual, err);
       }
-    });
-  });
-
-  describe('Audit#normalizeOptions', () => {
-    let axeLog;
-    beforeEach(() => {
-      axeLog = axe.log;
-    });
-    afterEach(() => {
-      axe.log = axeLog;
-    });
-
-    it('returns the options object when it is valid', () => {
-      const opt = {
-        runOnly: {
-          type: 'rule',
-          values: ['positive1', 'positive2']
-        },
-        rules: {
-          negative1: { enabled: false }
-        }
-      };
-      assert(audit.normalizeOptions(opt), opt);
-    });
-
-    it('allows `value` as alternative to `values`', () => {
-      const opt = {
-        runOnly: {
-          type: 'rule',
-          value: ['positive1', 'positive2']
-        }
-      };
-      const out = audit.normalizeOptions(opt);
-      assert.deepEqual(out.runOnly.values, ['positive1', 'positive2']);
-      assert.isUndefined(out.runOnly.value);
-    });
-
-    it('allows type: rules as an alternative to type: rule', () => {
-      const opt = {
-        runOnly: {
-          type: 'rules',
-          values: ['positive1', 'positive2']
-        }
-      };
-      assert(audit.normalizeOptions(opt).runOnly.type, 'rule');
-    });
-
-    it('allows type: tags as an alternative to type: tag', () => {
-      const opt = {
-        runOnly: {
-          type: 'tags',
-          values: ['positive']
-        }
-      };
-      assert(audit.normalizeOptions(opt).runOnly.type, 'tag');
-    });
-
-    it('allows type: undefined as an alternative to type: tag', () => {
-      const opt = {
-        runOnly: {
-          values: ['positive']
-        }
-      };
-      assert(audit.normalizeOptions(opt).runOnly.type, 'tag');
-    });
-
-    it('allows runOnly as an array as an alternative to type: tag', () => {
-      const opt = { runOnly: ['positive', 'negative'] };
-      const out = audit.normalizeOptions(opt);
-      assert(out.runOnly.type, 'tag');
-      assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
-    });
-
-    it('allows runOnly as an array as an alternative to type: rule', () => {
-      const opt = { runOnly: ['positive1', 'negative1'] };
-      const out = audit.normalizeOptions(opt);
-      assert(out.runOnly.type, 'rule');
-      assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
-    });
-
-    it('allows runOnly as a string as an alternative to an array', () => {
-      const opt = { runOnly: 'positive1' };
-      const out = audit.normalizeOptions(opt);
-      assert(out.runOnly.type, 'rule');
-      assert.deepEqual(out.runOnly.values, ['positive1']);
-    });
-
-    it('throws an error if runOnly contains both rules and tags', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          runOnly: ['positive', 'negative1']
-        });
-      });
-    });
-
-    it('defaults runOnly to type: tag', () => {
-      const opt = { runOnly: ['fakeTag'] };
-      const out = audit.normalizeOptions(opt);
-      assert(out.runOnly.type, 'tag');
-      assert.deepEqual(out.runOnly.values, ['fakeTag']);
-    });
-
-    it('throws an error runOnly.values not an array', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          runOnly: {
-            type: 'rule',
-            values: { badProp: 'badValue' }
-          }
-        });
-      });
-    });
-
-    it('throws an error runOnly.values an empty', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          runOnly: {
-            type: 'rule',
-            values: []
-          }
-        });
-      });
-    });
-
-    it('throws an error runOnly.type is unknown', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          runOnly: {
-            type: 'something-else',
-            values: ['wcag2aa']
-          }
-        });
-      });
-    });
-
-    it('throws an error when option.runOnly has an unknown rule', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          runOnly: {
-            type: 'rule',
-            values: ['frakeRule']
-          }
-        });
-      });
-    });
-
-    it("doesn't throw an error when option.runOnly has an unknown tag", () => {
-      assert.doesNotThrow(() => {
-        audit.normalizeOptions({
-          runOnly: {
-            type: 'tags',
-            values: ['fakeTag']
-          }
-        });
-      });
-    });
-
-    it('throws an error when option.rules has an unknown rule', () => {
-      assert.throws(() => {
-        audit.normalizeOptions({
-          rules: {
-            fakeRule: { enabled: false }
-          }
-        });
-      });
-    });
-
-    it('logs an issue when a tag is unknown', () => {
-      let message = '';
-      axe.log = function (m) {
-        message = m;
-      };
-      audit.normalizeOptions({
-        runOnly: {
-          type: 'tags',
-          values: ['unknwon-tag']
-        }
-      });
-      assert.include(message, 'Could not find tags');
-    });
-
-    it('logs no issues for unknown WCAG level tags', () => {
-      let message = '';
-      axe.log = function (m) {
-        message = m;
-      };
-      audit.normalizeOptions({
-        runOnly: {
-          type: 'tags',
-          values: ['wcag23aaa']
-        }
-      });
-      assert.isEmpty(message);
-    });
-
-    it('logs an issue when a tag is unknown, together with a wcag level tag', () => {
-      let message = '';
-      axe.log = function (m) {
-        message = m;
-      };
-      audit.normalizeOptions({
-        runOnly: {
-          type: 'tags',
-          values: ['wcag23aaa', 'unknwon-tag']
-        }
-      });
-      assert.include(message, 'Could not find tags');
     });
   });
 });
