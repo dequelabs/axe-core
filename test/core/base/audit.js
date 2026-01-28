@@ -1196,21 +1196,14 @@ describe('Audit', () => {
         '<div id="monkeys">bananas</div>' +
         '<input aria-labelledby="monkeys" type="text">' +
         '<blink>FAIL ME</blink>';
-      let checked = 'options not validated';
-      axe.utils = {
-        ...axe.utils,
-        normalizeRunOptions: () => {
-          checked = 'options validated';
-        }
-      };
-
-      audit.run(
-        { include: [axe.utils.getFlattenedTree(fixture)[0]] },
-        {},
-        noop,
-        isNotCalled
-      );
-      assert.equal(checked, 'options validated');
+      assert.throws(() => {
+        audit.run(
+          { include: [axe.utils.getFlattenedTree(fixture)[0]] },
+          { runOnly: { type: 'rule', values: ['foo'] } },
+          noop,
+          isNotCalled
+        );
+      }, 'unknown rule `foo` in options.runOnly');
     });
 
     it('propagates DqElement options', async () => {

@@ -1,4 +1,4 @@
-describe('axe.utils.normalizeOptions', () => {
+describe('axe.utils.normalizeRunOptions', () => {
   const mockChecks = [
     {
       id: 'positive1-check1',
@@ -79,7 +79,7 @@ describe('axe.utils.normalizeOptions', () => {
         negative1: { enabled: false }
       }
     };
-    assert(axe.utils.normalizeRunOptions(opt), opt);
+    assert.equal(axe.utils.normalizeRunOptions(opt), opt);
   });
 
   it('allows `value` as alternative to `values`', () => {
@@ -101,7 +101,7 @@ describe('axe.utils.normalizeOptions', () => {
         values: ['positive1', 'positive2']
       }
     };
-    assert(axe.utils.normalizeRunOptions(opt).runOnly.type, 'rule');
+    assert.equal(axe.utils.normalizeRunOptions(opt).runOnly.type, 'rule');
   });
 
   it('allows type: tags as an alternative to type: tag', () => {
@@ -111,7 +111,7 @@ describe('axe.utils.normalizeOptions', () => {
         values: ['positive']
       }
     };
-    assert(axe.utils.normalizeRunOptions(opt).runOnly.type, 'tag');
+    assert.equal(axe.utils.normalizeRunOptions(opt).runOnly.type, 'tag');
   });
 
   it('allows type: undefined as an alternative to type: tag', () => {
@@ -120,27 +120,27 @@ describe('axe.utils.normalizeOptions', () => {
         values: ['positive']
       }
     };
-    assert(axe.utils.normalizeRunOptions(opt).runOnly.type, 'tag');
+    assert.equal(axe.utils.normalizeRunOptions(opt).runOnly.type, 'tag');
   });
 
   it('allows runOnly as an array as an alternative to type: tag', () => {
     const opt = { runOnly: ['positive', 'negative'] };
     const out = axe.utils.normalizeRunOptions(opt);
-    assert(out.runOnly.type, 'tag');
+    assert.equal(out.runOnly.type, 'tag');
     assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
   });
 
   it('allows runOnly as an array as an alternative to type: rule', () => {
     const opt = { runOnly: ['positive1', 'negative1'] };
     const out = axe.utils.normalizeRunOptions(opt);
-    assert(out.runOnly.type, 'rule');
+    assert.equal(out.runOnly.type, 'rule');
     assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
   });
 
   it('allows runOnly as a string as an alternative to an array', () => {
     const opt = { runOnly: 'positive1' };
     const out = axe.utils.normalizeRunOptions(opt);
-    assert(out.runOnly.type, 'rule');
+    assert.equal(out.runOnly.type, 'rule');
     assert.deepEqual(out.runOnly.values, ['positive1']);
   });
 
@@ -155,7 +155,7 @@ describe('axe.utils.normalizeOptions', () => {
   it('defaults runOnly to type: tag', () => {
     const opt = { runOnly: ['fakeTag'] };
     const out = axe.utils.normalizeRunOptions(opt);
-    assert(out.runOnly.type, 'tag');
+    assert.equal(out.runOnly.type, 'tag');
     assert.deepEqual(out.runOnly.values, ['fakeTag']);
   });
 
@@ -232,7 +232,7 @@ describe('axe.utils.normalizeOptions', () => {
     axe.utils.normalizeRunOptions({
       runOnly: {
         type: 'tags',
-        values: ['unknwon-tag']
+        values: ['unknown-tag']
       }
     });
     assert.include(message, 'Could not find tags');
