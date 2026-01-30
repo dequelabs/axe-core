@@ -1,0 +1,25 @@
+<!-- PASS -->
+<div id="pass1" role="tab">Tab Name</div>
+<div id="pass2" role="tab" aria-label="Tab Name"></div>
+<div id="pass3" role="tab" aria-labelledby="tab-label"></div>
+
+<span id="tab-label">Tab Name</span>
+
+<div role="tablist">
+  <span id="pass4" role="tab" tabindex="0">
+    Tab Name
+    <i class="fa-solid fa-house"></i>
+  </span>
+</div>
+
+<!-- FAIL -->
+<div id="fail1" role="tab"></div>
+<div id="fail2" role="tab" title="Tab Name"></div>
+
+<div role="tablist">
+  <span id="fail3" role="tab" tabindex="0">
+    <i class="fa-solid fa-house"></i>
+  </span>
+</div>
+
+<!-- INAPPLICABLE -->

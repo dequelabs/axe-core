@@ -1,0 +1,14 @@
+{
+  "id": "aria-tab-name",
+  "impact": "serious",
+  "selector": "[role=\"tab\"]",
+  "matches": "no-naming-method-matches",
+  "tags": ["cat.aria", "best-practice"],
+  "metadata": {
+    "description": "Ensure every ARIA tab node has an accessible name",
+    "help": "ARIA tab nodes should have an accessible name"
+  },
+  "all": [],
+  "any": ["has-visible-text", "aria-label", "aria-labelledby"],
+  "none": []
+}
