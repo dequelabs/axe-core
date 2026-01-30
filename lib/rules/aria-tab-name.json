@@ -9,6 +9,11 @@
     "help": "ARIA tab nodes should have an accessible name"
   },
   "all": [],
-  "any": ["has-visible-text", "aria-label", "aria-labelledby"],
+  "any": [
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title"
+  ],
   "none": []
 }

@@ -1,12 +1,13 @@
 <!-- PASS -->
 <div id="pass1" role="tab">Tab Name</div>
-<div id="pass2" role="tab" aria-label="Tab Name"></div>
-<div id="pass3" role="tab" aria-labelledby="tab-label"></div>
+<div id="pass2" role="tab" title="Item"></div>
+<div id="pass3" role="tab" aria-label="Tab Name"></div>
+<div id="pass4" role="tab" aria-labelledby="tab-label"></div>
 
 <span id="tab-label">Tab Name</span>
 
 <div role="tablist">
-  <span id="pass4" role="tab" tabindex="0">
+  <span id="pass5" role="tab" tabindex="0">
     Tab Name
     <i class="fa-solid fa-house"></i>
   </span>
@@ -14,10 +15,13 @@
 
 <!-- FAIL -->
 <div id="fail1" role="tab"></div>
-<div id="fail2" role="tab" title="Tab Name"></div>
+<div id="fail2" role="tab" aria-labelledby="item-non-existant"></div>
+<div id="fail3" role="tab" aria-labelledby="item-empty"></div>
+
+<div id="item-empty"></div>
 
 <div role="tablist">
-  <span id="fail3" role="tab" tabindex="0">
+  <span id="fail4" role="tab" tabindex="0">
     <i class="fa-solid fa-house"></i>
   </span>
 </div>
