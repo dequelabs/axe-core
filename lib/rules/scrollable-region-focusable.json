@@ -18,7 +18,7 @@
   ],
   "actIds": ["0ssw9k"],
   "metadata": {
-    "description": "Ensure elements that have scrollable content are accessible by keyboard",
+    "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
     "help": "Scrollable region must have keyboard access"
   },
   "all": [],
