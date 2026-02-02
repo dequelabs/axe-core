@@ -68,6 +68,30 @@ this should not effect their outcome -->
   <div role="timer" tabindex="0" id="ignore7">Timer</div>
 </div>
 
+<style>
+  .no-spacing * {
+    margin: 0;
+    padding: 0;
+  }
+  .tooltip {
+    border: 0;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: help;
+    text-decoration: dotted underline;
+  }
+</style>
+<div class="no-spacing">
+  <p>
+    This is a <button id="inapplicable8" class="tooltip">term</button> in a
+    sentence.
+  </p>
+  <button style="width: 500px; height: 28px" id="pass18">
+    this is a button that's within 24px of the term
+  </button>
+</div>
+
 <!-- Nested controls-->
 <p>
   <a
