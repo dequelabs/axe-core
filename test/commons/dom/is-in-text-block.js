@@ -289,6 +289,26 @@ describe('dom.isInTextBlock', () => {
       `);
       assert.isFalse(isInTextBlock(target));
     });
+
+    it('works for inline-grid', () => {
+      const target = queryFixture(`
+        <div>
+          <div role="button" style="display: inline">Hello world</div>
+          <button id="target" style="display: inline-grid">button</button>
+        </div>
+      `);
+      assert.isFalse(isInTextBlock(target));
+    });
+
+    it('works for inline-flex', () => {
+      const target = queryFixture(`
+        <div>
+          <div role="button" style="display: inline">Hello world</div>
+          <button id="target" style="display: inline-flex">button</button>
+        </div>
+      `);
+      assert.isFalse(isInTextBlock(target));
+    });
   });
 
   describe('options.noLengthCompare', () => {
