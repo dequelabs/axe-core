@@ -10,8 +10,8 @@
       "help": "Actieve <area> elementen moeten tekstalternatief hebben"
     },
     "aria-allowed-attr": {
-      "description": "Zorg dat de rol van een element de ARIA attributen ondersteunt",
-      "help": "Elementen mogen alleen ondersteunde ARIA attributen gebruiken"
+      "description": "Zorg ervoor dat de rol van een element de ARIA-attributen ondersteunt",
+      "help": "Elementen mogen alleen ondersteunde ARIA-attributen gebruiken"
     },
     "aria-allowed-role": {
       "description": "Zorg dat de role attribuutwaarde toegestaan is voor het element",
