@@ -358,7 +358,7 @@
       "help": "scope attribute should be used correctly"
     },
     "scrollable-region-focusable": {
-      "description": "Ensure elements that have scrollable content are accessible by keyboard",
+      "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
       "help": "Scrollable region must have keyboard access"
     },
     "select-name": {
