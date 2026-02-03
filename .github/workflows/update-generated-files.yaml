@@ -29,7 +29,7 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          changes=$(git status --porcelain)
+          changes=$(git status --porcelain | tr -d '\n')
           # see https://unix.stackexchange.com/a/509498
           echo $changes | grep . && echo "Changes detected" || echo "No changes"
           echo "changes=$changes" >> "$GITHUB_OUTPUT"
