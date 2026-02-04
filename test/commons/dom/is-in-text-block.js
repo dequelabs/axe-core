@@ -315,11 +315,7 @@ describe('dom.isInTextBlock', () => {
     it('returns true if there is any text outside the link', () => {
       fixtureSetup('<p>amy <a href="" id="link">link text is longer</a></p>');
       const link = document.getElementById('link');
-      assert.isTrue(
-        isInTextBlock(link, {
-          noLengthCompare: true
-        })
-      );
+      assert.isTrue(isInTextBlock(link, { noLengthCompare: true }));
     });
 
     it('returns false if the non-widget text is only whitespace', () => {
@@ -332,33 +328,73 @@ describe('dom.isInTextBlock', () => {
           '</p>'
       );
       const link = document.getElementById('link');
-      assert.isFalse(
-        isInTextBlock(link, {
-          noLengthCompare: true
-        })
-      );
+      assert.isFalse(isInTextBlock(link, { noLengthCompare: true }));
     });
   });
 
-  describe('options.permissive', () => {
-    it('returns options.permissive if inline-block element has text sibling', () => {
+  describe('with options.permissive: true', () => {
+    it('returns true if inline-block element has text sibling', () => {
       const target = queryFixture(`
         <div>
           Hello world
           <button id="target">button</button>
         </div>
       `);
-      assert.isTrue(isInTextBlock(target, { permissive: true }));
+      assert.isTrue(isInTextBlock(target, { includeInlineBlock: true }));
     });
 
-    it('returns options.permissive if inline-block element has inline element sibling', () => {
+    it('returns true if inline-block element has inline element sibling', () => {
       const target = queryFixture(`
         <div>
           <span>Hello world</span>
           <button id="target">button</button>
         </div>
       `);
-      assert.isTrue(isInTextBlock(target, { permissive: true }));
+      assert.isTrue(isInTextBlock(target, { includeInlineBlock: true }));
+    });
+
+    it('returns true if inline-block element has text sibling after it', () => {
+      const target = queryFixture(`
+        <div>
+          <button id="target">button</button> hello world
+        </div>
+      `);
+      assert.isTrue(isInTextBlock(target, { includeInlineBlock: true }));
+    });
+
+    it('returns true if inline-block element has both inline text and a widget sibling', () => {
+      const target = queryFixture(`
+        <div>
+          <button>button 1</button>
+          <span>Hello world, goodbye mars</span>
+          <button id="target">button 2</button>
+        </div>
+      `);
+      assert.isTrue(isInTextBlock(target, { includeInlineBlock: true }));
+    });
+
+    it('returns false the inline text sibling is on a different line', () => {
+      const target = queryFixture(`
+        <div>
+          Hello
+          <br>
+          <button id="target">button</button>
+          <hr>
+          world
+        </div>
+      `);
+      assert.isFalse(isInTextBlock(target, { includeInlineBlock: true }));
+    });
+
+    it('returns true if inline-block element has a sibling on the same line', () => {
+      const target = queryFixture(`
+        <div>
+          Hello
+          <br>
+          world <button id="target">button 2</button>
+        </div>
+      `);
+      assert.isFalse(isInTextBlock(target, { includeInlineBlock: true }));
     });
   });
 });
