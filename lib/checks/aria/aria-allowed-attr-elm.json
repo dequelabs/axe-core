@@ -1,0 +1,14 @@
+{
+  "id": "aria-allowed-attr-elm",
+  "evaluate": "aria-allowed-attr-elm-evaluate",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "ARIA attributes are allowed for this element",
+      "fail": {
+        "singular": "ARIA attribute is not allowed on ${data.nodeName} elements: ${data.values}",
+        "plural": "ARIA attributes are not allowed on ${data.nodeName} elements: ${data.values}"
+      }
+    }
+  }
+}

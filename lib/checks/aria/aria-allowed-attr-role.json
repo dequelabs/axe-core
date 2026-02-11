@@ -1,6 +1,6 @@
 {
-  "id": "aria-allowed-attr",
-  "evaluate": "aria-allowed-attr-evaluate",
+  "id": "aria-allowed-attr-role",
+  "evaluate": "aria-allowed-attr-role-evaluate",
   "options": {
     "validTreeRowAttrs": [
       "aria-posinset",
