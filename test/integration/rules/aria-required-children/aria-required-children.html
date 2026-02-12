@@ -74,12 +74,14 @@
   </div>
 </div>
 
-<div role="list" id="pass10" aria-busy="true"></div>
-<div role="suggestion" id="pass11" aria-busy="true"></div>
-<div role="menu" id="pass12" aria-busy="true"></div>
-<div role="listbox" id="pass13" aria-busy="true"></div>
+<div id="pass10" role="menu" aria-busy="true">
+  <li role="none"></li>
+  <li role="menuitem">Item 1</li>
+  <div role="menuitemradio">Item 2</div>
+  <div role="menuitemcheckbox">Item 3</div>
+</div>
 
-<div role="list" id="pass14">
+<div role="list" id="pass11">
   <script></script>
   <style></style>
   <canvas hidden></canvas>
@@ -115,8 +117,12 @@
 </div>
 
 <div role="list" id="fail13" aria-busy="true">
-  <div role="alert">unallowed role</div>
+  <div role="alert">
+    unallowed role but shows custom message about aria-busy instead
+  </div>
 </div>
+
+<div role="suggestion" id="fail14" aria-busy="true"></div>
 
 <div role="doc-bibliography" id="inapplicable1"></div>
 <div role="doc-endnotes" id="inapplicable2"></div>
@@ -128,10 +134,10 @@
   </ul>
 </div>
 
-<ul role="menu" id="pass15">
+<ul role="menu" id="pass12">
   <li role="none">
     <a href="#" role="menuitem">Foo</a>
-    <ul role="menu" id="pass16">
+    <ul role="menu" id="pass13">
       <li role="none">
         <a href="#" role="menuitem">Bar</a>
       </li>
@@ -139,19 +145,19 @@
   </li>
 </ul>
 
-<nav role="menubar" id="pass17">
+<nav role="menubar" id="pass14">
   <a role="menuitem" href="">Item 1</a>
   <a role="menuitem" href="">Item 2</a>
   <span role="separator"></span>
   <a role="menuitem" href="">Item 3</a>
 </nav>
 
-<div role="menu" id="pass18">
+<div role="menu" id="pass15">
   <div role="menuitem">menu item</div>
   <div aria-hidden="true">shouldn't be flagged but is</div>
 </div>
 
-<div role="list" id="pass19">
+<div role="list" id="pass16">
   <div role="presentation">
     <div style="display: none">ignore</div>
     <div style="visibility: hidden" aria-hidden="true">ignore</div>

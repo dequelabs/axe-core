@@ -503,13 +503,13 @@
     },
     "aria-required-children": {
       "pass": {
-        "default": "Required ARIA children are present",
-        "aria-busy": "Element has an aria-busy attribute, so it is allowed to omit required children"
+        "default": "Required ARIA children are present"
       },
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
-        "unallowed": "Element has children which are not allowed: ${data.values}"
+        "unallowed": "Element has children which are not allowed: ${data.values}",
+        "aria-busy-fail": "Element has an aria-busy attribute, however having it does not allow unallowed children"
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",
