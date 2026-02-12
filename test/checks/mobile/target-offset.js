@@ -34,7 +34,7 @@ describe('target-offset tests', () => {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
-  it('returns true when wrapped inline elements offset is >24px', () => {
+  it('returns true when wrapped inline elements offset is 24px', () => {
     const checkArgs = checkSetup(`
       <div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">
         <a id="target" href="/foo" class="A"> Hello hello hello</a>
