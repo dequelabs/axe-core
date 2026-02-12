@@ -17,7 +17,7 @@
   ],
   "metadata": {
     "description": "Ensure every ARIA tab node has an accessible name",
-    "help": "ARIA tab nodes should have an accessible name"
+    "help": "ARIA tab nodes must have an accessible name"
   },
   "all": [],
   "any": [
