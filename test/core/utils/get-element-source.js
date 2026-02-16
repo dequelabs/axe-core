@@ -92,7 +92,7 @@ describe('axe.utils.getElementSource', () => {
           '</svg>'
       );
       const result = getElementSource(vNode.actualNode, { maxLength: 50 });
-      assert.include(result, 'a');
+      assert.match(result, /<a\s/);
       assert.include(result, 'xlink:href');
       assert.match(result, /\.\.\.>$/);
     });
