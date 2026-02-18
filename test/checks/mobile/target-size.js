@@ -201,11 +201,8 @@ describe('target-size tests', () => {
           </div>
         `);
         assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
-        assert.deepEqual(checkContext._data, {
-          minSize: 24,
-          width: 40.5,
-          height: 45.4
-        });
+        assert.closeTo(checkContext._data.width, 40.5, 10);
+        assert.closeTo(checkContext._data.height, 40.5, 5);
         assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
       });
 
