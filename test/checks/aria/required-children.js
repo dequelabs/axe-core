@@ -156,7 +156,8 @@ describe('aria-required-children', () => {
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     assert.deepEqual(checkContext._data, {
-      messageKey: 'aria-busy-fail'
+      messageKey: 'aria-busy-fail',
+      values: '[role=tabpanel]'
     });
   });
 
