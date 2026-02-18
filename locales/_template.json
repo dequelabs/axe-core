@@ -81,6 +81,10 @@
       "description": "Ensure all elements with a role attribute use a valid value",
       "help": "ARIA roles used must conform to valid values"
     },
+    "aria-tab-name": {
+      "description": "Ensure every ARIA tab node has an accessible name",
+      "help": "ARIA tab nodes must have an accessible name"
+    },
     "aria-text": {
       "description": "Ensure role=\"text\" is used on elements with no focusable descendants",
       "help": "\"role=text\" should have no focusable descendants"
@@ -358,7 +362,7 @@
       "help": "scope attribute should be used correctly"
     },
     "scrollable-region-focusable": {
-      "description": "Ensure elements that have scrollable content are accessible by keyboard",
+      "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
       "help": "Scrollable region must have keyboard access"
     },
     "select-name": {
@@ -462,6 +466,7 @@
       "fail": {
         "singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
         "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
+        "unsupported": "Multiple IDs in aria-errormessage is not widely supported in assistive technologies",
         "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
