@@ -4,87 +4,18 @@
   <!-- The playground is used for quick local host axe-core during development -->
 
   <main>
-    <style>
-      .target-rect {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        background: rgba(255, 0, 0, 0.4);
-        border-radius: 50%;
-      }
-
-      .neighbor-rect {
-        position: absolute;
-        background: rgba(0, 255, 0, 0.4);
-      }
-    </style>
     <h1>Hello World</h1>
-    <div style="position: relative">
-      <button id="target" style="width: 80px; height: 40px">X</button>
-      <button
-        id="obscurer"
-        style="
-          width: 80px;
-          height: 40px;
-          position: absolute;
-          left: 30px;
-          top: 20px;
-        "
-      >
-        x
-      </button>
-    </div>
-
-    <div
-      style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3"
-    >
-      <a id="pass20" href="/foo" class="A"> Hello hello</a>
-      <a id="pass21" href="/bar" class="B">Hello hello hello</a>
-      <a id="pass22" href="/bar" class="C">Hello hello hello</a>
-    </div>
   </main>
 
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    window.showOffset = function (targetRects, neighborRects) {
-      document
-        .querySelectorAll('.target-rect,.neighbor-rect')
-        .forEach(node => node.remove());
-      targetRects.forEach(rect => {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'target-rect');
-        div.setAttribute(
-          'style',
-          `left: ${rect.left + rect.width / 2 - 12}px; top: ${rect.top + rect.height / 2 - 12}px;`
-        );
-        document.body.append(div);
-      });
-      neighborRects.forEach(rect => {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'neighbor-rect');
-        div.setAttribute(
-          'style',
-          `left: ${rect.left}px; top: ${rect.top}px; width: ${rect.width}px; height: ${rect.height}px;`
-        );
-        document.body.append(div);
-      });
-    };
-    window.highlightRect = function (rect, color) {
-      const div = document.createElement('div');
-      div.setAttribute('class', 'neighbor-rect');
-      div.setAttribute(
-        'style',
-        `left: ${rect.left}px; top: ${rect.top}px; width: ${rect.width}px; height: ${rect.height}px; ${color ? `background: ${color};` : ''}`
-      );
-      document.body.append(div);
-    };
     axe.testUtils.awaitNestedLoad(
       window,
       () => {
         axe.run(
           {
-            runOnly: 'target-size',
+            runOnly: 'color-contrast',
             elementRef: true
           },
           (err, results) => {
