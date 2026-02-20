@@ -176,6 +176,36 @@ describe('target-size tests', () => {
         assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
       });
 
+      it('returns true for obscured target when an unobscured rect has sufficient size but smaller area', () => {
+        const checkArgs = checkSetup(`
+          <div style="position: relative;">
+            <button id="target" style="width: 80px; height: 40px;">X</button>
+            <button id="obscurer" style="width: 80px; height: 40px; position: absolute; left: 30px; top: 20px;">x</button>
+          </div>
+        `);
+        assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(checkContext._data, {
+          minSize: 24,
+          width: 30,
+          height: 40
+        });
+        assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
+      });
+
+      it('returns true for multiline inline target with sufficient space', () => {
+        const checkArgs = checkSetup(`
+          <div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3">
+            <a id="not-obscurer" href="/foo" class="A"> Hello hello</a>
+            <a id="target" href="/bar" class="B">Hello hello hello</a>
+            <a id="obscurer" href="/bar" class="C">Hello hello hello</a>
+          </div>
+        `);
+        assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+        assert.closeTo(checkContext._data.width, 40.5, 10);
+        assert.closeTo(checkContext._data.height, 40.5, 5);
+        assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
+      });
+
       it('returns undefined if there are too many focusable widgets', () => {
         let html = '';
         for (let i = 0; i < 100; i++) {
