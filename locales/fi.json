@@ -1,0 +1,1138 @@
+{
+  "lang": "fi",
+  "rules": {
+    "accesskeys": {
+      "description": "Varmista, että jokainen accesskey-attribuuttiArvo on yksilöllinen",
+      "help": "accesskey-attribuuttiarvon tulee olla yksilöllinen"
+    },
+    "area-alt": {
+      "description": "Varmista, että kuvakartan <area>-elementeillä on vaihtoehtoinen teksti",
+      "help": "Aktiivisilla <area>-elementeillä on oltava vaihtoehtoinen teksti"
+    },
+    "aria-allowed-attr": {
+      "description": "Varmista, että elementin rooli tukee sen ARIA-attribuutteja",
+      "help": "Elementit saavat käyttää vain tuettuja ARIA-attribuutteja"
+    },
+    "aria-allowed-role": {
+      "description": "Varmista, että role-attribuutilla on elementille sopiva arvo",
+      "help": "ARIA-roolin tulee olla elementille sopiva"
+    },
+    "aria-braille-equivalent": {
+      "description": "Varmista, että aria-braillelabel ja aria-brailleroledescription -attribuuteilla on ei-pistekirjoitusvastine",
+      "help": "aria-braille-attribuuteilla on oltava ei-pistekirjoitusvastine"
+    },
+    "aria-command-name": {
+      "description": "Varmista, että jokaisella ARIA-painikkeella, linkillä ja valikkokohdalla on saavutettava nimi",
+      "help": "ARIA-komennoilla on oltava saavutettava nimi"
+    },
+    "aria-conditional-attr": {
+      "description": "Varmista, että ARIA-attribuutteja käytetään elementin roolin määrityksen mukaisesti",
+      "help": "ARIA-attribuutteja on käytettävä elementin roolille määritetyllä tavalla"
+    },
+    "aria-deprecated-role": {
+      "description": "Varmista, että elementit eivät käytä vanhentuneita rooleja",
+      "help": "Vanhentuneita ARIA-rooleja ei saa käyttää"
+    },
+    "aria-dialog-name": {
+      "description": "Varmista, että jokaisella ARIA-dialog ja alertdialog-nodella on saavutettava nimi",
+      "help": "ARIA-dialog ja alertdialog-nodeilla tulisi olla saavutettava nimi"
+    },
+    "aria-hidden-body": {
+      "description": "Varmista, että aria-hidden=\"true\" ei ole dokumentin rungossa.",
+      "help": "aria-hidden=\"true\" ei saa olla dokumentin rungossa"
+    },
+    "aria-hidden-focus": {
+      "description": "Varmista, että aria-hidden-elementit eivät ole kohdistettavia eivätkä sisällä kohdistettavia elementtejä",
+      "help": "ARIA-piilotettu elementti ei saa olla kohdistettava eikä sisältää kohdistettavia elementtejä"
+    },
+    "aria-input-field-name": {
+      "description": "Varmista, että jokaisella ARIA-syöttökentällä on saavutettava nimi",
+      "help": "ARIA-syöttökentillä on oltava saavutettava nimi"
+    },
+    "aria-meter-name": {
+      "description": "Varmista, että jokaisella ARIA-meter-nodella on saavutettava nimi",
+      "help": "ARIA-meter-nodeilla on oltava saavutettava nimi"
+    },
+    "aria-progressbar-name": {
+      "description": "Varmista, että jokaisella ARIA-progressbar-nodella on saavutettava nimi",
+      "help": "ARIA-progressbar-nodeilla on oltava saavutettava nimi"
+    },
+    "aria-prohibited-attr": {
+      "description": "Varmista, että ARIA-attribuutit eivät ole kiellettyjä elementin roolille",
+      "help": "Elementit saavat käyttää vain sallittuja ARIA-attribuutteja"
+    },
+    "aria-required-attr": {
+      "description": "Varmista, että ARIA-roolien elementeillä on kaikki vaaditut ARIA-attribuutit",
+      "help": "Vaaditut ARIA-attribuutit on annettava"
+    },
+    "aria-required-children": {
+      "description": "Varmista, että lapsi-rooleja vaativat ARIA-roolielementit sisältävät ne",
+      "help": "Tiettyjen ARIA-roolien on sisällettävä tietyt lapset"
+    },
+    "aria-required-parent": {
+      "description": "Varmista, että vanhempi-rooleja vaativat ARIA-roolielementit sisältyvät niihin",
+      "help": "Tiettyjen ARIA-roolien on sisällyttävä tiettyihin vanhempiin"
+    },
+    "aria-roledescription": {
+      "description": "Varmista, että aria-roledescription on käytössä vain elementeissä, joilla on implisiittinen tai eksplisiittinen rooli",
+      "help": "aria-roledescription on oltava semanttista roolia sisältävissä elementeissä"
+    },
+    "aria-roles": {
+      "description": "Varmista, että kaikki role-attribuuttia sisältävät elementit käyttävät kelvollista arvoa",
+      "help": "Käytettyjen ARIA-roolien on oltava kelvollisia arvoja"
+    },
+    "aria-tab-name": {
+      "description": "Varmista, että jokaisella ARIA-tab-nodella on saavutettava nimi",
+      "help": "ARIA-tab-nodeilla on oltava saavutettava nimi"
+    },
+    "aria-text": {
+      "description": "Varmista, että role=\"text\" on käytössä elementeissä, joilla ei ole kohdistettavia jälkeläisiä",
+      "help": "\"role=text\" -elementeillä ei tulisi olla kohdistettavia jälkeläisiä"
+    },
+    "aria-toggle-field-name": {
+      "description": "Varmista, että jokaisella ARIA-kytkinkentällä on saavutettava nimi",
+      "help": "ARIA-kytkinkentillä on oltava saavutettava nimi"
+    },
+    "aria-tooltip-name": {
+      "description": "Varmista, että jokaisella ARIA-tooltip-nodella on saavutettava nimi",
+      "help": "ARIA-tooltip-nodeilla on oltava saavutettava nimi"
+    },
+    "aria-treeitem-name": {
+      "description": "Varmista, että jokaisella ARIA-treeitem-nodella on saavutettava nimi",
+      "help": "ARIA-treeitem-nodeilla tulisi olla saavutettava nimi"
+    },
+    "aria-valid-attr-value": {
+      "description": "Varmista, että kaikilla ARIA-attribuuteilla on kelvolliset arvot",
+      "help": "ARIA-attribuuttien on oltava kelvollisten arvojen mukaisia"
+    },
+    "aria-valid-attr": {
+      "description": "Varmista, että aria- -alkuiset attribuutit ovat kelvollisia ARIA-attribuutteja",
+      "help": "ARIA-attribuuttien on oltava kelvollisten nimien mukaisia"
+    },
+    "audio-caption": {
+      "description": "Varmista, että <audio>-elementeillä on tekstitykset",
+      "help": "<audio>-elementeillä on oltava tekstityksiraita"
+    },
+    "autocomplete-valid": {
+      "description": "Varmista, että autocomplete-attribuutti on oikea ja sopiva lomakekentälle",
+      "help": "autocomplete-attribuuttia on käytettävä oikein"
+    },
+    "avoid-inline-spacing": {
+      "description": "Varmista, että tyylimääritteiden kautta asetettu tekstin välistys on säädettävissä mukautetuilla tyylitiedostoilla",
+      "help": "Sisäisen tekstin välistyksen on oltava säädettävissä mukautetuilla tyylitiedostoilla"
+    },
+    "blink": {
+      "description": "Varmista, että <blink>-elementtejä ei käytetä",
+      "help": "<blink>-elementit ovat vanhentuneita, eikä niitä saa käyttää"
+    },
+    "button-name": {
+      "description": "Varmista, että painikkeilla on eroteltava teksti",
+      "help": "Painikkeilla on oltava eroteltava teksti"
+    },
+    "bypass": {
+      "description": "Varmista, että jokaisella sivulla on ainakin yksi keino, jolla käyttäjä voi ohittaa navigoinnin ja siirtyä suoraan sisältöön",
+      "help": "Sivulla on oltava keino ohittaa toistuvat lohkot"
+    },
+    "color-contrast-enhanced": {
+      "description": "Varmista, että etu- ja taustavärien välinen kontrasti täyttää WCAG 2 AAA:n parannetun kontrastisuhteen rajat",
+      "help": "Elementtien on täytettävä parannetun värikontrastin rajat"
+    },
+    "color-contrast": {
+      "description": "Varmista, että etu- ja taustavärien välinen kontrasti täyttää WCAG 2 AA:n vähimmäiskontrastisuhteen rajat",
+      "help": "Elementtien on täytettävä värikontrastin vähimmäisrajat"
+    },
+    "css-orientation-lock": {
+      "description": "Varmista, että sisältö ei ole lukittu mihinkään tiettyyn näyttösuuntaan ja että sisältö on käytettävissä kaikissa näyttösuunnissa",
+      "help": "CSS Media -kyselyjen ei saa lukita näyttösuuntaa"
+    },
+    "definition-list": {
+      "description": "Varmista, että <dl>-elementit on jäsennelty oikein",
+      "help": "<dl>-elementtien saa sisältää suoraan vain oikein järjestettyjä <dt>- ja <dd>-ryhmiä, <script>-, <template>- tai <div>-elementtejä"
+    },
+    "dlitem": {
+      "description": "Varmista, että <dt>- ja <dd>-elementit sisältyvät <dl>-elementtiin",
+      "help": "<dt>- ja <dd>-elementtien on sisällyttävä <dl>-elementtiin"
+    },
+    "document-title": {
+      "description": "Varmista, että jokainen HTML-dokumentti sisältää ei-tyhjän <title>-elementin",
+      "help": "Dokumenteilla on oltava <title>-elementti navigoinnin helpottamiseksi"
+    },
+    "duplicate-id-active": {
+      "description": "Varmista, että jokainen aktiivisten elementtien id-attribuutin arvo on yksilöllinen",
+      "help": "Aktiivisten elementtien ID-tunnusten on oltava yksilöllisiä"
+    },
+    "duplicate-id-aria": {
+      "description": "Varmista, että jokainen ARIA:ssa ja labeleissa käytetty id-attribuutin arvo on yksilöllinen",
+      "help": "ARIA:ssa ja labeleissa käytettyjen ID-tunnusten on oltava yksilöllisiä"
+    },
+    "duplicate-id": {
+      "description": "Varmista, että jokainen id-attribuutin arvo on yksilöllinen",
+      "help": "id-attribuutin arvon on oltava yksilöllinen"
+    },
+    "empty-heading": {
+      "description": "Varmista, että otsikoilla on eroteltava teksti",
+      "help": "Otsikot eivät saa olla tyhjiä"
+    },
+    "empty-table-header": {
+      "description": "Varmista, että taulukon otsikoilla on eroteltava teksti",
+      "help": "Taulukon otsikkoteksti ei saa olla tyhjä"
+    },
+    "focus-order-semantics": {
+      "description": "Varmista, että kohdistusjärjestyksessä olevilla elementeillä on vuorovaikutteiselle sisällölle sopiva rooli",
+      "help": "Kohdistusjärjestyksessä olevilla elementeillä tulisi olla sopiva rooli"
+    },
+    "form-field-multiple-labels": {
+      "description": "Varmista, että lomakekentällä ei ole useita label-elementtejä",
+      "help": "Lomakekentällä ei saa olla useita label-elementtejä"
+    },
+    "frame-focusable-content": {
+      "description": "Varmista, että <frame>- ja <iframe>-elementeillä, joissa on kohdistettavaa sisältöä, ei ole tabindex=-1",
+      "help": "Kehyksissä, joissa on kohdistettavaa sisältöä, ei saa olla tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Varmista, että <iframe>- ja <frame>-elementit sisältävät axe-core-skriptin",
+      "help": "Kehykset tulisi testata axe-core:lla"
+    },
+    "frame-title-unique": {
+      "description": "Varmista, että <iframe>- ja <frame>-elementeillä on yksilöllinen title-attribuutti",
+      "help": "Kehyksillä on oltava yksilöllinen title-attribuutti"
+    },
+    "frame-title": {
+      "description": "Varmista, että <iframe>- ja <frame>-elementeillä on saavutettava nimi",
+      "help": "Kehyksillä on oltava saavutettava nimi"
+    },
+    "heading-order": {
+      "description": "Varmista, että otsikoiden järjestys on semanttisesti oikea",
+      "help": "Otsikkotasojen tulisi kasvaa vain yhdellä kerrallaan"
+    },
+    "hidden-content": {
+      "description": "Kerro käyttäjille piilotetusta sisällöstä.",
+      "help": "Sivun piilotettu sisältö tulee analysoida"
+    },
+    "html-has-lang": {
+      "description": "Varmista, että jokaisella HTML-dokumentilla on lang-attribuutti",
+      "help": "<html>-elementillä on oltava lang-attribuutti"
+    },
+    "html-lang-valid": {
+      "description": "Varmista, että <html>-elementin lang-attribuutilla on kelvollinen arvo",
+      "help": "<html>-elementin lang-attribuutilla on oltava kelvollinen arvo"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Varmista, että HTML-elementit, joilla on sekä kelvollinen lang- että xml:lang-attribuutti, ovat yksimielisiä sivun peruskielestä",
+      "help": "HTML-elementtien, joilla on lang- ja xml:lang-attribuutti, on oltava sama peruskieli"
+    },
+    "identical-links-same-purpose": {
+      "description": "Varmista, että samalla esteettömyysnimellä varustetut linkit palvelevat samanlaista tarkoitusta",
+      "help": "Samannimisten linkkien on palveltava samanlaista tarkoitusta"
+    },
+    "image-alt": {
+      "description": "Varmista, että <img>-elementeillä on vaihtoehtoinen teksti tai rooli none tai presentation",
+      "help": "Kuvilla on oltava vaihtoehtoinen teksti"
+    },
+    "image-redundant-alt": {
+      "description": "Varmista, ettei kuvan vaihtoehtotekstiä toisteta tekstinä",
+      "help": "Kuvien vaihtoehtotekstiä ei tulisi toistaa tekstinä"
+    },
+    "input-button-name": {
+      "description": "Varmista, että syöttöpainikkeilla on tunnistettava teksti",
+      "help": "Syöttöpainikkeilla on oltava tunnistettava teksti"
+    },
+    "input-image-alt": {
+      "description": "Varmista, että <input type=\"image\">-elementeillä on vaihtoehtoinen teksti",
+      "help": "Kuvapainikkeilla on oltava vaihtoehtoinen teksti"
+    },
+    "label-content-name-mismatch": {
+      "description": "Varmista, että elementtien, jotka on nimetty sisältönsä kautta, näkyvä teksti on osa niiden esteettömyysnimiä",
+      "help": "Elementtien näkyvän tekstin on oltava osa niiden esteettömyysnimeä"
+    },
+    "label-title-only": {
+      "description": "Varmista, että jokaisella lomake-elementillä on näkyvä tunniste eikä sitä nimetä yksinomaan piilotettujen tunnisteiden tai title- tai aria-describedby-attribuuttien avulla",
+      "help": "Lomake-elementeillä tulisi olla näkyvä tunniste"
+    },
+    "label": {
+      "description": "Varmista, että jokaisella lomake-elementillä on tunniste",
+      "help": "Lomake-elementeillä on oltava tunnisteet"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Varmista, että banner-kiintopiste on ylätasolla",
+      "help": "Banner-kiintopiste ei saa sisältyä toiseen kiintopisteeseen"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Varmista, että complementary-kiintopiste tai aside on ylätasolla",
+      "help": "Aside ei saa sisältyä toiseen kiintopisteeseen"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Varmista, että contentinfo-kiintopiste on ylätasolla",
+      "help": "Contentinfo-kiintopiste ei saa sisältyä toiseen kiintopisteeseen"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Varmista, että main-kiintopiste on ylätasolla",
+      "help": "Main-kiintopiste ei saa sisältyä toiseen kiintopisteeseen"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Varmista, että dokumentissa on enintään yksi banner-kiintopiste",
+      "help": "Dokumentissa ei saa olla useampaa kuin yksi banner-kiintopiste"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Varmista, että dokumentissa on enintään yksi contentinfo-kiintopiste",
+      "help": "Dokumentissa ei saa olla useampaa kuin yksi contentinfo-kiintopiste"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Varmista, että dokumentissa on enintään yksi main-kiintopiste",
+      "help": "Dokumentissa ei saa olla useampaa kuin yksi main-kiintopiste"
+    },
+    "landmark-one-main": {
+      "description": "Varmista, että dokumentissa on main-kiintopiste",
+      "help": "Dokumentissa tulisi olla yksi main-kiintopiste"
+    },
+    "landmark-unique": {
+      "description": "Varmista, että kiintopisteet ovat ainutlaatuisia",
+      "help": "Kiintopisteillä tulisi olla ainutlaatuinen rooli tai rooli/tunniste/otsikko (eli esteettömyysnimi) -yhdistelmä"
+    },
+    "link-in-text-block": {
+      "description": "Varmista, että linkit erottuvat ympäröivästä tekstistä tavalla, joka ei turvaudu väriin",
+      "help": "Linkkien on erotuttava ilman värin varassa olemista"
+    },
+    "link-name": {
+      "description": "Varmista, että linkeillä on tunnistettava teksti",
+      "help": "Linkeillä on oltava tunnistettava teksti"
+    },
+    "list": {
+      "description": "Varmista, että listat on jäsennelty oikein",
+      "help": "<ul>- ja <ol>-elementit saavat sisältää suoraan vain <li>-, <script>- tai <template>-elementtejä"
+    },
+    "listitem": {
+      "description": "Varmista, että <li>-elementtejä käytetään semanttisesti",
+      "help": "<li>-elementtien on oltava <ul>- tai <ol>-elementin sisällä"
+    },
+    "marquee": {
+      "description": "Varmista, että <marquee>-elementtejä ei käytetä",
+      "help": "<marquee>-elementit ovat vanhentuneita eikä niitä saa käyttää"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Varmista, että <meta http-equiv=\"refresh\">-elementtiä ei käytetä viivästettyyn päivitykseen",
+      "help": "Viivästettyä päivitystä ei saa käyttää"
+    },
+    "meta-refresh": {
+      "description": "Varmista, että <meta http-equiv=\"refresh\">-elementtiä ei käytetä viivästettyyn päivitykseen",
+      "help": "Alle 20 tunnin viivästettyä päivitystä ei saa käyttää"
+    },
+    "meta-viewport-large": {
+      "description": "Varmista, että <meta name=\"viewport\">-elementti mahdollistaa merkittävän skaalauksen",
+      "help": "Käyttäjien tulisi pystyä zoomaamaan ja skaalaamaan tekstiä jopa 500 %:iin"
+    },
+    "meta-viewport": {
+      "description": "Varmista, että <meta name=\"viewport\">-elementti ei estä tekstin skaalaamista ja zoomaamista",
+      "help": "Zoomaamista ja skaalaamista ei saa estää"
+    },
+    "nested-interactive": {
+      "description": "Varmista, että interaktiivisia säätimiä ei ole sisäkkäin, koska ruudunlukijat eivät aina julista niitä tai ne voivat aiheuttaa kohdistusongelmia avustavissa teknologioissa",
+      "help": "Interaktiivisia säätimiä ei saa olla sisäkkäin"
+    },
+    "no-autoplay-audio": {
+      "description": "Varmista, että <video>- tai <audio>-elementit eivät toista ääntä automaattisesti yli 3 sekunnin ajan ilman säädinmekanismia äänen pysäyttämiseksi tai mykistämiseksi",
+      "help": "<video>- tai <audio>-elementit eivät saa toistaa automaattisesti"
+    },
+    "object-alt": {
+      "description": "Varmista, että <object>-elementeillä on vaihtoehtoinen teksti",
+      "help": "<object>-elementeillä on oltava vaihtoehtoinen teksti"
+    },
+    "p-as-heading": {
+      "description": "Varmista, että lihavoitua, kursivoitua tekstiä ja font-size-ominaisuutta ei käytetä <p>-elementtien muotoilussa otsikoiksi",
+      "help": "Muotoiltuja <p>-elementtejä ei saa käyttää otsikoina"
+    },
+    "page-has-heading-one": {
+      "description": "Varmista, että sivu tai ainakin yksi sen kehyksistä sisältää ensimmäisen tason otsikon",
+      "help": "Sivun tulisi sisältää ensimmäisen tason otsikko"
+    },
+    "presentation-role-conflict": {
+      "description": "Varmista, että esitystarkoitukseen merkityillä elementeillä ei ole yleisiä ARIA- tai tabindex-ominaisuuksia, jotta kaikki ruudunlukijat jättävät ne huomioimatta",
+      "help": "Esitystarkoitukseen merkityt elementit tulisi jättää johdonmukaisesti huomioimatta"
+    },
+    "region": {
+      "description": "Varmista, että kaikki sivun sisältö sisältyy maamerkkeihin",
+      "help": "Kaiken sivun sisällön tulisi sisältyä maamerkkeihin"
+    },
+    "role-img-alt": {
+      "description": "Varmista, että [role=\"img\"]-elementeillä on vaihtoehtoinen teksti",
+      "help": "[role=\"img\"]-elementeillä on oltava vaihtoehtoinen teksti"
+    },
+    "scope-attr-valid": {
+      "description": "Varmista, että scope-ominaisuutta käytetään oikein taulukoissa",
+      "help": "scope-ominaisuutta tulisi käyttää oikein"
+    },
+    "scrollable-region-focusable": {
+      "description": "Varmista, että elementit, joilla on vieritettävä sisältö, ovat saavutettavissa näppäimistöllä Safarissa",
+      "help": "Vieritettävällä alueella on oltava näppäimistöpääsy"
+    },
+    "select-name": {
+      "description": "Varmista, että select-elementillä on saavutettava nimi",
+      "help": "Select-elementillä on oltava saavutettava nimi"
+    },
+    "server-side-image-map": {
+      "description": "Varmista, että palvelinpuolen kuvakarttoja ei käytetä",
+      "help": "Palvelinpuolen kuvakarttoja ei saa käyttää"
+    },
+    "skip-link": {
+      "description": "Varmista, että kaikilla ohituslinkeillä on kohdistettava kohde",
+      "help": "Ohituslinkin kohteen tulisi olla olemassa ja kohdistettava"
+    },
+    "summary-name": {
+      "description": "Varmista, että summary-elementeillä on erottuva teksti",
+      "help": "Summary-elementeillä on oltava erottuva teksti"
+    },
+    "svg-img-alt": {
+      "description": "Varmista, että <svg>-elementeillä, joilla on img-, graphics-document- tai graphics-symbol-rooli, on saavutettava teksti",
+      "help": "<svg>-elementeillä, joilla on img-rooli, on oltava vaihtoehtoinen teksti"
+    },
+    "tabindex": {
+      "description": "Varmista, että tabindex-ominaisuuden arvot eivät ole suurempia kuin 0",
+      "help": "Elementtien tabindex ei saisi olla suurempi kuin nolla"
+    },
+    "table-duplicate-name": {
+      "description": "Varmista, että <caption>-elementti ei sisällä samaa tekstiä kuin summary-ominaisuus",
+      "help": "Taulukoilla ei saisi olla samaa yhteenvetoa ja kuvatekstiä"
+    },
+    "table-fake-caption": {
+      "description": "Varmista, että kuvatekstin sisältävät taulukot käyttävät <caption>-elementtiä.",
+      "help": "Data- tai otsikkosolujen ei saa käyttää datataulukon kuvatekstin antamiseen."
+    },
+    "target-size": {
+      "description": "Varmista, että kosketuskohteet ovat riittävän kokoisia ja välissä on riittävästi tilaa",
+      "help": "Kaikkien kosketuskohteiden on oltava 24 px:n kokoisia tai niiden ympärillä on oltava riittävästi tilaa"
+    },
+    "td-has-header": {
+      "description": "Varmista, että jokaisessa 3 x 3 -taulukkoa suuremman <table>-taulukon ei-tyhjässä datataulukossa on yksi tai useampi taulukko-otsikko",
+      "help": "Suuremmissa <table>-taulukoissa ei-tyhjillä <td>-elementeillä on oltava liittyvä taulukko-otsikko"
+    },
+    "td-headers-attr": {
+      "description": "Varmista, että jokainen headers-attribuuttia käyttävä taulukon solu viittaa vain muihin <th>-elementteihin samassa taulukossa",
+      "help": "Taulukon solujen headers-attribuuttien on viitattava muihin <th>-elementteihin samassa taulukossa"
+    },
+    "th-has-data-cells": {
+      "description": "Varmista, että <th>-elementeillä ja elementeillä, joilla on role=columnheader/rowheader, on datasoluja, joita ne kuvaavat",
+      "help": "Datataulukon otsikkojen on viitattava datasoluihin"
+    },
+    "valid-lang": {
+      "description": "Varmista, että lang-attribuuteilla on kelvolliset arvot",
+      "help": "lang-attribuutilla on oltava kelvollinen arvo"
+    },
+    "video-caption": {
+      "description": "Varmista, että <video>-elementeillä on tekstitykset",
+      "help": "<video>-elementeillä on oltava tekstitykset"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstrakteja rooleja ei käytetä",
+      "fail": {
+        "singular": "Abstraktia roolia ei voi käyttää suoraan: ${data.values}",
+        "plural": "Abstrakteja rooleja ei voi käyttää suoraan: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "ARIA-attribuutteja käytetään oikein määritellyn roolin mukaan",
+      "fail": {
+        "singular": "ARIA-attribuutti ei ole sallittu: ${data.values}",
+        "plural": "ARIA-attribuutit eivät ole sallittuja: ${data.values}"
+      },
+      "incomplete": "Tarkista, että ei ole ongelmaa, jos ARIA-attribuutti jätetään huomiotta tässä elementissä: ${data.values}"
+    },
+    "aria-allowed-role": {
+      "pass": "ARIA-rooli on sallittu annetulle elementille",
+      "fail": {
+        "singular": "ARIA-rooli ${data.values} ei ole sallittu annetulle elementille",
+        "plural": "ARIA-roolit ${data.values} eivät ole sallittuja annetulle elementille"
+      },
+      "incomplete": {
+        "singular": "ARIA-rooli ${data.values} on poistettava, kun elementti tehdään näkyväksi, koska se ei ole sallittu elementille",
+        "plural": "ARIA-roolit ${data.values} on poistettava, kun elementti tehdään näkyväksi, koska ne eivät ole sallittuja elementille"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elementillä on aria-busy-attribuutti",
+      "fail": "Elementti käyttää aria-busy=\"true\" ladatinta näyttäessään"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA-attribuutti on sallittu",
+      "fail": {
+        "checkbox": "Poista aria-checked tai aseta se arvoon \"${data.checkState}\" vastaamaan todellista valintaruudun tilaa",
+        "rowSingular": "Tämä attribuutti on tuettu treegrid-riveillä, mutta ei ${data.ownerRole}:lla: ${data.invalidAttrs}",
+        "rowPlural": "Nämä attribuutit ovat tuettuja treegrid-riveillä, mutta eivät ${data.ownerRole}:lla: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage on olemassa ja viittaa elementteihin, jotka ovat näkyvissä ruudunlukijoille ja käyttävät tuettua aria-errormessage-tekniikkaa",
+      "fail": {
+        "singular": "aria-errormessage-arvon `${data.values}` on käytettävä tekniikkaa viestin ilmoittamiseksi (esim. aria-live, aria-describedby, role=alert jne.)",
+        "plural": "aria-errormessage-arvojen `${data.values}` on käytettävä tekniikkaa viestin ilmoittamiseksi (esim. aria-live, aria-describedby, role=alert jne.)",
+        "unsupported": "Useita ID:itä aria-errormessagessa ei ole laajalti tuettu avustavissa teknologioissa",
+        "hidden": "aria-errormessage-arvo `${data.values}` ei voi viitata piilotettuun elementtiin"
+      },
+      "incomplete": {
+        "singular": "Varmista, että aria-errormessage-arvo `${data.values}` viittaa olemassa olevaan elementtiin",
+        "plural": "Varmista, että aria-errormessage-arvot `${data.values}` viittaavat olemassa oleviin elementteihin",
+        "idrefs": "Ei voitu määrittää, onko aria-errormessage-elementti olemassa sivulla: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Dokumentin rungossa ei ole aria-hidden-attribuuttia",
+      "fail": "aria-hidden=true:ta ei tulisi olla dokumentin rungossa"
+    },
+    "aria-level": {
+      "pass": "aria-level-arvot ovat kelvollisia",
+      "incomplete": "aria-level-arvot, jotka ovat suurempia kuin 6, eivät ole tuettuja kaikissa ruudunlukija- ja selainkombinaatioissa"
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA-attribuutti on sallittu",
+      "fail": {
+        "hasRolePlural": "${data.prohibited}-attribuutteja ei voi käyttää roolin \"${data.role}\" kanssa.",
+        "hasRoleSingular": "${data.prohibited}-attribuuttia ei voi käyttää roolin \"${data.role}\" kanssa.",
+        "noRolePlural": "${data.prohibited}-attribuutteja ei voi käyttää ${data.nodeName}-elementissä, jossa ei ole kelvollista role-attribuuttia.",
+        "noRoleSingular": "${data.prohibited}-attribuuttia ei voi käyttää ${data.nodeName}-elementissä, jossa ei ole kelvollista role-attribuuttia."
+      },
+      "incomplete": {
+        "hasRoleSingular": "${data.prohibited}-attribuuttia ei ole hyvin tuettu roolin \"${data.role}\" kanssa.",
+        "hasRolePlural": "${data.prohibited}-attribuutteja ei ole hyvin tuettu roolin \"${data.role}\" kanssa.",
+        "noRoleSingular": "${data.prohibited}-attribuuttia ei ole hyvin tuettu ${data.nodeName}-elementissä, jossa ei ole kelvollista role-attribuuttia.",
+        "noRolePlural": "${data.prohibited}-attribuutteja ei ole hyvin tuettu ${data.nodeName}-elementissä, jossa ei ole kelvollista role-attribuuttia."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Kaikki vaaditut ARIA-attribuutit ovat läsnä",
+      "fail": {
+        "singular": "Vaadittu ARIA-attribuutti puuttuu: ${data.values}",
+        "plural": "Vaaditut ARIA-attribuutit puuttuvat: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Vaaditut ARIA-lapsikohteet ovat läsnä",
+        "aria-busy": "Elementillä on aria-busy-attribuutti, joten se saa jättää pois vaaditut lapsikohteet"
+      },
+      "fail": {
+        "singular": "Vaadittu ARIA-lapsikohderooli puuttuu: ${data.values}",
+        "plural": "Vaaditut ARIA-lapsikohteiden roolit puuttuvat: ${data.values}",
+        "unallowed": "Elementillä on lapsikohdetta, joita ei sallita: ${data.values}"
+      },
+      "incomplete": {
+        "singular": "Odotetaan ARIA-lapsikohderoolin lisäämistä: ${data.values}",
+        "plural": "Odotetaan ARIA-lapsikohteiden roolien lisäämistä: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Vaadittu ARIA-ylemmän tason rooli on läsnä",
+      "fail": {
+        "singular": "Vaadittu ARIA-ylemmän tason rooli puuttuu: ${data.values}",
+        "plural": "Vaaditut ARIA-ylemmän tason roolit puuttuvat: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription käytetty tuetussa semanttisessa roolissa",
+      "incomplete": "Tarkista, että tuetut ruudunlukijat ilmoittavat aria-roledescription",
+      "fail": "Anna elementille rooli, joka tukee aria-roledescription"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA-attribuutti on tuettu",
+      "fail": "ARIA-attribuutti ei ole laajasti tuettu ruudunlukijoissa ja apuvälineissä: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA-attribuuttien arvot ovat kelvollisia",
+      "fail": {
+        "singular": "Virheellinen ARIA-attribuutin arvo: ${data.values}",
+        "plural": "Virheelliset ARIA-attribuuttien arvot: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA-attribuutin elementti-ID ei ole sivulla: ${data.needsReview}",
+        "noIdShadow": "ARIA-attribuutin elementti-ID ei ole sivulla tai se on eri shadow DOM -puun jälkeläinen: ${data.needsReview}",
+        "ariaCurrent": "ARIA-attribuutin arvo on virheellinen ja käsitellään arvona „aria-current=true“: ${data.needsReview}",
+        "idrefs": "Ei voida määrittää, onko ARIA-attribuutin elementti-ID sivulla: ${data.needsReview}",
+        "empty": "ARIA-attribuutin arvo jätetään huomioimatta tyhjänä: ${data.needsReview}",
+        "controlsWithinPopup": "Ei voida määrittää, onko aria-controls-viittauksen ID sivulla aria-haspopupia käytettäessä: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA-attribuutin nimi on kelvollinen",
+      "fail": {
+        "singular": "Virheellinen ARIA-attribuutin nimi: ${data.values}",
+        "plural": "Virheelliset ARIA-attribuuttien nimet: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel käytetty elementissä, jossa on saavutettava teksti",
+      "fail": "aria-braillelabel käytetty elementissä, jossa ei ole saavutettavaa tekstiä",
+      "incomplete": "Saavutettavan tekstin laskeminen ei onnistu"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription käytetty elementissä, jossa on aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription käytetty elementissä, jossa ei ole aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription käytetty elementissä, jossa on tyhjä aria-roledescription"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA-rooli ei ole vanhentunut",
+      "fail": "Käytetty rooli on vanhentunut: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Käytetään vain yhtä roolin arvoa",
+      "fail": "Käytä vain yhtä roolin arvoa, koska vara-roolit eivät ole tuettuja vanhemmissa selaimissa",
+      "incomplete": "Käytä vain roolia „presentation“ tai „none“, koska ne ovat synonyymisiä."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elementillä on globaali ARIA-attribuutti: ${data.values}",
+        "plural": "Elementillä on globaaleja ARIA-attribuutteja: ${data.values}"
+      },
+      "fail": "Elementillä ei ole globaalia ARIA-attribuuttia"
+    },
+    "has-widget-role": {
+      "pass": "Elementillä on widget-rooli.",
+      "fail": "Elementillä ei ole widget-roolia."
+    },
+    "invalidrole": {
+      "pass": "ARIA-rooli on kelvollinen",
+      "fail": {
+        "singular": "Roolin on oltava yksi kelvollisista ARIA-rooleista: ${data.values}",
+        "plural": "Roolien on oltava yksi kelvollisista ARIA-rooleista: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Elementti on kohdistettava.",
+      "fail": "Elementti ei ole kohdistettava."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "<label>-elementin ja saavutettavuusnimen välillä ei ole ristiriitaa",
+      "incomplete": "Tarkista, että <label>-elementin ei tarvitse olla osa ARIA ${data} -kentän nimeä"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA-rooli on tuettu",
+      "fail": "Käytettyä roolia ei tueta laajasti näytönlukijoissa ja avustavissa teknologioissa: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Elementillä on kelvolliset semantiikat fokusointijärjestyksessä olevalle elementille.",
+      "fail": "Elementillä on virheelliset semantiikat fokusointijärjestyksessä olevalle elementille."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elementillä on riittävä värikontrasti ${data.contrastRatio}",
+      "fail": {
+        "default": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} (etualan väri: ${data.fgColor}, taustaväri: ${data.bgColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} etualan ja varjon värin välillä (etualan väri: ${data.fgColor}, tekstivarjon väri: ${data.shadowColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} varjon värin ja taustavärin välillä (tekstivarjon väri: ${data.shadowColor}, taustaväri: ${data.bgColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrastisuhdetta ei voitu määrittää",
+        "bgImage": "Elementin taustaväriä ei voitu määrittää taustakuvan vuoksi",
+        "bgGradient": "Elementin taustaväriä ei voitu määrittää taustaliukuvärjäyksen vuoksi",
+        "imgNode": "Elementin taustaväriä ei voitu määrittää, koska elementti sisältää kuvasolmun",
+        "bgOverlap": "Elementin taustaväriä ei voitu määrittää, koska toinen elementti peittää sen",
+        "fgAlpha": "Elementin etualan väriä ei voitu määrittää alfa-läpinäkyvyyden vuoksi",
+        "elmPartiallyObscured": "Elementin taustaväriä ei voitu määrittää, koska toinen elementti peittää sen osittain",
+        "elmPartiallyObscuring": "Elementin taustaväriä ei voitu määrittää, koska se peittää osittain muita elementtejä",
+        "outsideViewport": "Elementin taustaväriä ei voitu määrittää, koska se on näkymäalueen ulkopuolella",
+        "equalRatio": "Elementillä on 1:1 kontrastisuhde taustan kanssa",
+        "shortTextContent": "Elementin sisältö on liian lyhyt määrittämään, onko se todellista tekstisisältöä",
+        "nonBmp": "Elementin sisältö sisältää vain ei-teksti-merkkejä",
+        "pseudoContent": "Elementin taustaväriä ei voitu määrittää pseudo-elementin vuoksi",
+        "colorParse": "Värimerkkijonoa ${data.colorParse} ei voitu jäsentää"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elementillä on riittävä värikontrasti ${data.contrastRatio}",
+        "hidden": "Elementti on piilotettu"
+      },
+      "fail": {
+        "default": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} (etualan väri: ${data.fgColor}, taustaväri: ${data.bgColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} etualan ja varjon värin välillä (etualan väri: ${data.fgColor}, tekstivarjon väri: ${data.shadowColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementillä on riittämätön värikontrasti ${data.contrastRatio} varjon värin ja taustavärin välillä (tekstivarjon väri: ${data.shadowColor}, taustaväri: ${data.bgColor}, fonttikoko: ${data.fontSize}, fontin paksuus: ${data.fontWeight}). Odotettu kontrastisuhde ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrastisuhdetta ei voitu määrittää",
+        "bgImage": "Elementin taustaväriä ei voitu määrittää taustakuvan vuoksi",
+        "bgGradient": "Elementin taustaväriä ei voitu määrittää taustaliukuvärjäyksen vuoksi",
+        "imgNode": "Elementin taustaväriä ei voitu määrittää, koska elementti sisältää kuvasolmun",
+        "bgOverlap": "Elementin taustaväriä ei voitu määrittää, koska toinen elementti peittää sen",
+        "complexTextShadows": "Elementin kontrastia ei voitu määrittää, koska se käyttää monimutkaisia tekstivarjoja",
+        "fgAlpha": "Elementin etualan väriä ei voitu määrittää alfa-läpinäkyvyyden vuoksi",
+        "elmPartiallyObscured": "Elementin taustaväriä ei voitu määrittää, koska toinen elementti peittää sen osittain",
+        "elmPartiallyObscuring": "Elementin taustaväriä ei voitu määrittää, koska se peittää osittain muita elementtejä",
+        "outsideViewport": "Elementin taustaväriä ei voitu määrittää, koska se on näkymäalueen ulkopuolella",
+        "equalRatio": "Elementillä on 1:1 kontrastisuhde taustan kanssa",
+        "shortTextContent": "Elementin sisältö on liian lyhyt määrittämään, onko se todellista tekstisisältöä",
+        "nonBmp": "Elementin sisältö sisältää vain ei-teksti-merkkejä",
+        "pseudoContent": "Elementin taustaväriä ei voitu määrittää pseudo-elementin vuoksi",
+        "colorParse": "Värimerkkijonoa ${data.colorParse} ei voitu jäsentää"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Linkit voidaan erottaa ympäröivästä tekstistä visuaalisen muotoilun perusteella",
+      "incomplete": {
+        "default": "Tarkista, tarvitseeko linkki muotoilua erottuakseen läheisestä tekstistä",
+        "pseudoContent": "Tarkista, riittääkö linkin pseudo-tyyli erottamaan se ympäröivästä tekstistä"
+      },
+      "fail": "Linkillä ei ole muotoilua (kuten alleviivaus) erottuakseen ympäröivästä tekstistä"
+    },
+    "link-in-text-block": {
+      "pass": "Linkit voidaan erottaa ympäröivästä tekstistä jollain muulla tavalla kuin värin perusteella",
+      "fail": {
+        "fgContrast": "Linkillä on riittämätön värikontrasti ${data.contrastRatio}:1 ympäröivän tekstin kanssa. (Vähimmäiskontrasti on ${data.requiredContrastRatio}:1, linkin teksti: ${data.nodeColor}, ympäröivä teksti: ${data.parentColor})",
+        "bgContrast": "Linkin taustalla on riittämätön värikontrasti ${data.contrastRatio} (Vähimmäiskontrasti on ${data.requiredContrastRatio}:1, linkin taustaväri: ${data.nodeBackgroundColor}, ympäröivä taustaväri: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elementin edustakontrastisuhdetta ei voitu määrittää",
+        "bgContrast": "Elementin taustakontrastisuhdetta ei voitu määrittää",
+        "bgImage": "Elementin kontrastisuhdetta ei voitu määrittää taustakuvan vuoksi",
+        "bgGradient": "Elementin kontrastisuhdetta ei voitu määrittää taustagradientin vuoksi",
+        "imgNode": "Elementin kontrastisuhdetta ei voitu määrittää, koska elementti sisältää kuvasolmun",
+        "bgOverlap": "Elementin kontrastisuhdetta ei voitu määrittää elementtien päällekkäisyyden vuoksi"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "Automaattitäydennysarvo on sopivassa elementissä",
+      "fail": "Automaattitäydennysarvo on sopimaton tälle syöttötyypille"
+    },
+    "autocomplete-valid": {
+      "pass": "automaattitäydennysattribuutti on muotoiltu oikein",
+      "fail": "automaattitäydennysattribuutti on muotoiltu väärin",
+      "incomplete": "automaattitäydennysattribuutilla on epästandardi arvo. Tarkista, voidaanko käyttää jotain standardiarvoa sen sijaan."
+    },
+    "accesskeys": {
+      "pass": "Accesskey-attribuutin arvo on yksilöllinen",
+      "fail": "Dokumentissa on useita elementtejä samalla accesskey-arvolla"
+    },
+    "focusable-content": {
+      "pass": "Elementti sisältää kohdistettavia elementtejä",
+      "fail": "Elementin tulisi sisältää kohdistettavaa sisältöä"
+    },
+    "focusable-disabled": {
+      "pass": "Elementissä ei ole kohdistettavia elementtejä",
+      "incomplete": "Tarkista, siirtävätkö kohdistettavat elementit välittömästi kohdistusilmaisimen",
+      "fail": "Kohdistettava sisältö tulisi poistaa käytöstä tai poistaa DOM:sta"
+    },
+    "focusable-element": {
+      "pass": "Elementti on kohdistettava",
+      "fail": "Elementin tulisi olla kohdistettava"
+    },
+    "focusable-modal-open": {
+      "pass": "Ei kohdistettavia elementtejä modaalin ollessa auki",
+      "incomplete": "Tarkista, että kohdistettavat elementit eivät ole sarkainta nykyisessä tilassa"
+    },
+    "focusable-no-name": {
+      "pass": "Elementti ei ole sarkainten järjestyksessä tai sillä on saavutettava teksti",
+      "fail": "Elementti on sarkainten järjestyksessä, mutta sillä ei ole saavutettavaa tekstiä",
+      "incomplete": "Ei voitu määrittää, onko elementillä saavutettava nimi"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Elementissä ei ole kohdistettavia elementtejä",
+      "incomplete": "Tarkista, siirtävätkö kohdistettavat elementit välittömästi kohdistusilmaisimen",
+      "fail": "Kohdistettavalla sisällöllä tulisi olla tabindex=\"-1\" tai se tulisi poistaa DOM:sta"
+    },
+    "frame-focusable-content": {
+      "pass": "Elementillä ei ole kohdistettavia jälkeläisiä",
+      "fail": "Elementillä on kohdistettavia jälkeläisiä",
+      "incomplete": "Ei voitu määrittää, onko elementillä jälkeläisiä"
+    },
+    "landmark-is-top-level": {
+      "pass": "${data.role}-maamerkki on ylimmällä tasolla.",
+      "fail": "${data.role}-maamerkki on toisen maamerkin sisällä."
+    },
+    "no-focusable-content": {
+      "pass": "Elementillä ei ole kohdistettavia jälkeläisiä",
+      "fail": {
+        "default": "Elementillä on kohdistettavia jälkeläisiä",
+        "notHidden": "Negatiivisen tabindex-arvon käyttäminen elementissä interaktiivisen kontrollin sisällä ei estä apuvälineitä kohdistamasta elementtiä (edes aria-hidden=\"true\":n kanssa)"
+      },
+      "incomplete": "Ei voitu määrittää, onko elementillä jälkeläisiä"
+    },
+    "page-has-heading-one": {
+      "pass": "Sivulla on vähintään yksi ensimmäisen tason otsikko",
+      "fail": "Sivulla täytyy olla ensimmäisen tason otsikko"
+    },
+    "page-has-main": {
+      "pass": "Dokumentissa on vähintään yksi main-maamerkki",
+      "fail": "Dokumentissa ei ole main-maamerkkiä"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Dokumentissa ei ole useampaa kuin yksi banner-maamerkki",
+      "fail": "Dokumentissa on useampi kuin yksi banner-maamerkki"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Dokumentissa ei ole useampaa kuin yksi contentinfo-maamerkki",
+      "fail": "Dokumentissa on useampi kuin yksi contentinfo-maamerkki"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Dokumentissa ei ole useampaa kuin yksi main-maamerkki",
+      "fail": "Dokumentissa on useampi kuin yksi main-maamerkki"
+    },
+    "tabindex": {
+      "pass": "Elementillä ei ole tabindex-arvoa suurempaa kuin 0",
+      "fail": "Elementillä on tabindex-arvo suurempi kuin 0"
+    },
+    "alt-space-value": {
+      "pass": "Elementillä on kelvollinen alt-attribuutin arvo",
+      "fail": "Elementillä on alt-attribuutti, joka sisältää vain välilyöntimerkin, jota kaikki ruudunlukijat eivät ohita"
+    },
+    "duplicate-img-label": {
+      "pass": "Elementti ei toista olemassa olevaa tekstiä <img>-elementin alt-tekstissä",
+      "fail": "Elementti sisältää <img>-elementin, jonka alt-teksti toistaa olemassa olevan tekstin"
+    },
+    "explicit-label": {
+      "pass": "Elementillä on eksplisiittinen <label>",
+      "fail": "Elementillä ei ole eksplisiittistä <label>-elementtiä",
+      "incomplete": "Ei voida määrittää, onko lomake-elementillä eksplisiittinen <label>"
+    },
+    "help-same-as-label": {
+      "pass": "Ohjeteksti (title tai aria-describedby) ei toista label-tekstiä",
+      "fail": "Ohjeteksti (title tai aria-describedby) on sama kuin label-teksti"
+    },
+    "hidden-explicit-label": {
+      "pass": "Lomake-elementillä on näkyvissä oleva eksplisiittinen <label>",
+      "fail": "Lomake-elementillä on eksplisiittinen <label>, joka on piilotettu",
+      "incomplete": "Ei voida määrittää, onko lomake-elementillä piilotettu eksplisiittinen <label>"
+    },
+    "implicit-label": {
+      "pass": "Elementillä on implisiittinen (kääritty) <label>",
+      "fail": "Elementillä ei ole implisiittistä (käärittyä) <label>-elementtiä",
+      "incomplete": "Ei voida määrittää, onko lomake-elementillä implisiittinen (kääritty) <label>"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elementti sisältää näkyvää tekstiä osana saavutettavaa nimeään",
+      "fail": "Elementin sisällä oleva teksti ei sisälly saavutettavaan nimeen"
+    },
+    "multiple-label": {
+      "pass": "Lomakekentällä ei ole useita label-elementtejä",
+      "incomplete": "Useita label-elementtejä ei tueta laajalti avustavissa teknologioissa. Varmista, että ensimmäinen label sisältää kaikki tarvittavat tiedot."
+    },
+    "title-only": {
+      "pass": "Lomake-elementti ei käytä yksinomaan title-attribuuttia nimiötään varten",
+      "fail": "Vain title-attribuuttia käytetään lomake-elementin nimiön luomiseen"
+    },
+    "landmark-is-unique": {
+      "pass": "Maamerkeillä on oltava yksilöllinen rooli tai rooli/label/title (eli saavutettava nimi) -yhdistelmä",
+      "fail": "Maamerkillä on oltava yksilöllinen aria-label, aria-labelledby tai title, jotta maamerkit voidaan erottaa toisistaan"
+    },
+    "has-lang": {
+      "pass": "<html>-elementillä on lang-attribuutti",
+      "fail": {
+        "noXHTML": "xml:lang-attribuutti ei ole kelvollinen HTML-sivuilla, käytä lang-attribuuttia.",
+        "noLang": "<html>-elementillä ei ole lang-attribuuttia"
+      }
+    },
+    "valid-lang": {
+      "pass": "Lang-attribuutin arvo sisältyy kelvollisten kielten luetteloon",
+      "fail": "Lang-attribuutin arvo ei sisälly kelvollisten kielten luetteloon"
+    },
+    "xml-lang-mismatch": {
+      "pass": "Lang- ja xml:lang-attribuuteilla on sama peruskieli",
+      "fail": "Lang- ja xml:lang-attribuuteilla ei ole samaa peruskieltä"
+    },
+    "dlitem": {
+      "pass": "Määritelmälistan kohteella on <dl>-vanhempi-elementti",
+      "fail": "Määritelmälistan kohteella ei ole <dl>-vanhempi-elementtiä"
+    },
+    "listitem": {
+      "pass": "Listan kohteella on <ul>-, <ol>- tai role=\"list\" -vanhempi-elementti",
+      "fail": {
+        "default": "Listan kohteella ei ole <ul>- tai <ol>-vanhempi-elementtiä",
+        "roleNotValid": "Listan kohteen vanhempi-elementin rooli ei ole role=\"list\""
+      }
+    },
+    "only-dlitems": {
+      "pass": "dl-elementillä on vain suoria lapsi-elementtejä, jotka ovat sallittuja: <dt>-, <dd>- tai <div>-elementtejä",
+      "fail": "dl-elementillä on suoria lapsi-elementtejä, jotka eivät ole sallittuja: ${data.values}"
+    },
+    "only-listitems": {
+      "pass": "Lista-elementillä on vain suoria lapsi-elementtejä, jotka ovat sallittuja <li>-elementtien sisällä",
+      "fail": "Lista-elementillä on suoria lapsi-elementtejä, jotka eivät ole sallittuja: ${data.values}"
+    },
+    "structured-dlitems": {
+      "pass": "Kun ei ole tyhjä, elementillä on sekä <dt>- että <dd>-elementtejä",
+      "fail": "Kun ei ole tyhjä, elementillä ei ole vähintään yhtä <dt>-elementtiä, jota seuraa vähintään yksi <dd>-elementti"
+    },
+    "caption": {
+      "pass": "Multimedia-elementillä on tekstitysraita",
+      "incomplete": "Tarkista, että elementillä on saatavilla tekstityksistä"
+    },
+    "frame-tested": {
+      "pass": "iframe testattiin axe-core:lla",
+      "fail": "iframe:a ei voitu testata axe-core:lla",
+      "incomplete": "iframe on vielä testattava axe-core:lla"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video>- tai <audio>-elementti ei toista ääntä sallittua kestoa pidempään tai sillä on säätömekanismi",
+      "fail": "<video>- tai <audio>-elementti toistaa ääntä sallittua kestoa pidempään eikä sillä ole säätömekanismia",
+      "incomplete": "Tarkista, ettei <video>- tai <audio>-elementti toista ääntä sallittua kestoa pidempään tai että se tarjoaa säätömekanismin"
+    },
+    "css-orientation-lock": {
+      "pass": "Näyttö on käyttökelpoinen, eikä suunnan lukitusta ole",
+      "fail": "CSS-suuntauslukitus on käytössä ja tekee näytön käyttökelvottomaksi",
+      "incomplete": "CSS-suuntauslukitusta ei voida määrittää"
+    },
+    "meta-viewport-large": {
+      "pass": "<meta>-tagi ei estä merkittävää zoomausta mobiililaitteissa",
+      "fail": "<meta>-tagi rajoittaa zoomausta mobiililaitteissa"
+    },
+    "meta-viewport": {
+      "pass": "<meta>-tagi ei poista zoomausta käytöstä mobiililaitteissa",
+      "fail": "${data} <meta>-tagissa poistaa zoomauksen käytöstä mobiililaitteissa"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Kohteella on riittävästi tilaa lähimmistä naapureistaan. Turvallisen napsautettavan alueen halkaisija on ${data.closestOffset}px, mikä on vähintään ${data.minOffset}px.",
+        "large": "Kohde ylittää selvästi vähimmäiskoon ${data.minOffset}px."
+      },
+      "fail": "Kohteella on riittämätön tila lähimmistä naapureistaan. Turvallisen napsautettavan alueen halkaisija on ${data.closestOffset}px vähintään ${data.minOffset}px:n sijaan.",
+      "incomplete": {
+        "default": "Elementillä, jolla on negatiivinen tabindex, on riittämätön tila lähimmistä naapureistaan. Turvallisen napsautettavan alueen halkaisija on ${data.closestOffset}px vähintään ${data.minOffset}px:n sijaan. Onko tämä kohde?",
+        "nonTabbableNeighbor": "Kohteella on riittämätön tila lähimmistä naapureistaan. Turvallisen napsautettavan alueen halkaisija on ${data.closestOffset}px vähintään ${data.minOffset}px:n sijaan. Onko naapuri kohde?",
+        "tooManyRects": "Kohteen kokoa ei voitu määrittää, koska päällekkäisiä elementtejä on liikaa"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Säätimellä on riittävä koko (${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px)",
+        "obscured": "Säädin ohitetaan, koska se on täysin peitetty eikä siksi napsautettavissa",
+        "large": "Kohde ylittää selvästi vähimmäiskoon ${data.minSize}px."
+      },
+      "fail": {
+        "default": "Kohteen koko on riittämätön (${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px)",
+        "partiallyObscured": "Kohteen koko on riittämätön, koska se on osittain peitetty (pienin tila on ${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Elementillä, jolla on negatiivinen tabindex, on riittämätön koko (${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px). Onko tämä kohde?",
+        "contentOverflow": "Elementin kokoa ei voitu määrittää tarkasti ylivuotavan sisällön vuoksi",
+        "partiallyObscured": "Elementillä, jolla on negatiivinen tabindex, on riittämätön koko, koska se on osittain peitetty (pienin tila on ${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px). Onko tämä kohde?",
+        "partiallyObscuredNonTabbable": "Kohteen koko on riittämätön, koska sitä peittää osittain naapuri, jolla on negatiivinen tabindex (pienin tila on ${data.width}px x ${data.height}px, pitäisi olla vähintään ${data.minSize}px x ${data.minSize}px). Onko naapuri kohde?",
+        "tooManyRects": "Kohteen kokoa ei voitu määrittää, koska päällekkäisiä elementtejä on liikaa"
+      }
+    },
+    "header-present": {
+      "pass": "Sivulla on otsikko",
+      "fail": "Sivulla ei ole otsikkoa"
+    },
+    "heading-order": {
+      "pass": "Otsikkojen järjestys on kelvollinen",
+      "fail": "Otsikkojen järjestys on virheellinen",
+      "incomplete": "Edellistä otsikkoa ei voida määrittää"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Ei ole muita linkkejä samalla nimellä, jotka johtavat eri URL-osoitteeseen",
+      "incomplete": "Varmista, että linkeillä on sama tarkoitus tai ne ovat tarkoituksellisesti moniselitteisiä."
+    },
+    "internal-link-present": {
+      "pass": "Kelvollinen ohituslinkki löytyi",
+      "fail": "Kelvollista ohituslinkkiä ei löytynyt"
+    },
+    "landmark": {
+      "pass": "Sivulla on maamerkkialue",
+      "fail": "Sivulla ei ole maamerkkialuetta"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta>-tagi ei päivitä sivua välittömästi",
+      "fail": "<meta>-tagi pakottaa sivun ajastetun päivityksen"
+    },
+    "meta-refresh": {
+      "pass": "<meta>-tagi ei päivitä sivua välittömästi",
+      "fail": "<meta>-tagi pakottaa sivun ajastetun päivityksen (alle 20 tuntia)"
+    },
+    "p-as-heading": {
+      "pass": "<p>-elementtejä ei ole tyylitelty otsikoiksi",
+      "fail": "Otsikkoelementtejä tulisi käyttää tyyliteltyjen <p>-elementtien sijaan",
+      "incomplete": "Ei voida määrittää, ovatko <p>-elementit tyyliteltyjä otsikoiksi"
+    },
+    "region": {
+      "pass": "Kaikki sivun sisältö sisältyy maamerkkeihin",
+      "fail": "Osa sivun sisällöstä ei sisälly maamerkkeihin"
+    },
+    "skip-link": {
+      "pass": "Ohituslinkin kohde on olemassa",
+      "incomplete": "Ohituslinkin kohteen tulisi tulla näkyväksi aktivoinnissa",
+      "fail": "Ohituslinkin kohdetta ei ole"
+    },
+    "unique-frame-title": {
+      "pass": "Elementin title-attribuutti on yksilöllinen",
+      "fail": "Elementin title-attribuutti ei ole yksilöllinen"
+    },
+    "duplicate-id-active": {
+      "pass": "Dokumentissa ei ole aktiivisia elementtejä, joilla on sama id-attribuutti",
+      "fail": "Dokumentissa on aktiivisia elementtejä samalla id-attribuutilla: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Dokumentissa ei ole ARIA:lla tai tunnisteilla viitattuja elementtejä, joilla on sama id-attribuutti",
+      "fail": "Dokumentissa on useita ARIA-viitattuja elementtejä, joilla on sama id-attribuutti: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Dokumentissa ei ole staattisia elementtejä, jotka jakavat saman id-attribuutin",
+      "fail": "Dokumentissa on useita staattisia elementtejä, joilla on sama id-attribuutti: ${data}"
+    },
+    "aria-label": {
+      "pass": "aria-label-attribuutti on olemassa eikä ole tyhjä",
+      "fail": "aria-label-attribuutti ei ole olemassa tai on tyhjä"
+    },
+    "aria-labelledby": {
+      "pass": "aria-labelledby-attribuutti on olemassa ja viittaa elementteihin, jotka ovat näkyvissä ruudunlukijoille",
+      "fail": "aria-labelledby-attribuutti ei ole olemassa, viittaa elementteihin, joita ei ole olemassa tai viittaa tyhjiin elementteihin",
+      "incomplete": "Varmista, että aria-labelledby viittaa olemassa olevaan elementtiin"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Tekstin välistystä vaikuttavia sisäisiä tyylejä „!important“-määritteellä ei ole määritelty",
+      "fail": {
+        "singular": "Poista „!important“ sisäisestä tyylistä ${data.values}, koska tämän ohittamista ei tue useimmat selaimet",
+        "plural": "Poista „!important“ sisäisistä tyyleistä ${data.values}, koska näiden ohittamista ei tue useimmat selaimet"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elementissä on sisäistä tekstiä, joka on näkyvissä ruudunlukijoille",
+      "fail": "Elementissä ei ole sisäistä tekstiä, joka olisi näkyvissä ruudunlukijoille",
+      "incomplete": "Ei voida määrittää, onko elementissä alielementtejä"
+    },
+    "doc-has-title": {
+      "pass": "Dokumentissa on ei-tyhjä <title>-elementti",
+      "fail": "Dokumentissa ei ole ei-tyhjää <title>-elementtiä"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "Axe kohtasi virheen; testaa sivu tämäntyyppisiltä ongelmilta manuaalisesti"
+    },
+    "exists": {
+      "pass": "Elementti ei ole olemassa",
+      "incomplete": "Elementti on olemassa"
+    },
+    "has-alt": {
+      "pass": "Elementissä on alt-attribuutti",
+      "fail": "Elementissä ei ole alt-attribuuttia"
+    },
+    "has-visible-text": {
+      "pass": "Elementissä on tekstiä, joka on näkyvissä ruudunlukijoille",
+      "fail": "Elementissä ei ole tekstiä, joka olisi näkyvissä ruudunlukijoille",
+      "incomplete": "Ei voida määrittää, onko elementissä alielementtejä"
+    },
+    "important-letter-spacing": {
+      "pass": "Letter-spacing style-attribuutissa ei ole asetettu !important-arvoon tai täyttää vähimmäisvaatimuksen",
+      "fail": "letter-spacing style-attribuutissa ei saa käyttää !important-arvoa tai sen on oltava vähintään ${data.minValue}em (nykyinen ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "line-height style-attribuutissa ei ole asetettu !important-arvoon tai täyttää vähimmäisvaatimuksen",
+      "fail": "line-height style-attribuutissa ei saa käyttää !important-arvoa tai sen on oltava vähintään ${data.minValue}em (nykyinen ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing style-attribuutissa ei ole asetettu !important-arvoon tai täyttää vähimmäisvaatimuksen",
+      "fail": "word-spacing style-attribuutissa ei saa käyttää !important-arvoa tai sen on oltava vähintään ${data.minValue}em (nykyinen ${data.value}em)"
+    },
+    "is-on-screen": {
+      "pass": "Elementti ei ole näkyvissä",
+      "fail": "Elementti on näkyvissä"
+    },
+    "non-empty-alt": {
+      "pass": "Elementissä on ei-tyhjä alt-attribuutti",
+      "fail": {
+        "noAttr": "Elementissä ei ole alt-attribuuttia",
+        "emptyAttr": "Elementissä on tyhjä alt-attribuutti"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elementissä ei ole value-attribuuttia",
+        "has-label": "Elementissä on ei-tyhjä value-attribuutti"
+      },
+      "fail": "Elementissä on value-attribuutti ja value-attribuutti on tyhjä"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elementissä on placeholder-attribuutti",
+      "fail": {
+        "noAttr": "Elementissä ei ole placeholder-attribuuttia",
+        "emptyAttr": "Elementissä on tyhjä placeholder-attribuutti"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elementissä on title-attribuutti",
+      "fail": {
+        "noAttr": "Elementissä ei ole title-attribuuttia",
+        "emptyAttr": "Elementissä on tyhjä title-attribuutti"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elementissä on ei-tyhjä value-attribuutti",
+      "fail": {
+        "noAttr": "Elementissä ei ole value-attribuuttia",
+        "emptyAttr": "Elementissä on tyhjä value-attribuutti"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elementin oletussemanttikat korvattiin role=“${data.role}\"-määrittelyllä",
+      "fail": {
+        "default": "Elementin oletussemanttikoita ei korvattu role=\"none\"- tai role=\"presentation\"-määrittelyllä",
+        "globalAria": "Elementin rooli ei ole esityksellinen, koska sillä on globaali ARIA-attribuutti",
+        "focusable": "Elementin rooli ei ole esityksellinen, koska se on kohdistettavissa",
+        "both": "Elementin rooli ei ole esityksellinen, koska sillä on globaali ARIA-attribuutti ja se on kohdistettavissa",
+        "iframe": "„title“-attribuutin käyttö ${data.nodeName}-elementissä, jolla on esityksellinen rooli, toimii epäjohdonmukaisesti ruudunlukijeiden välillä"
+      }
+    },
+    "role-none": {
+      "pass": "Elementin oletussemantiikat korvattiin role=“none\"-määrityksellä",
+      "fail": "Elementin oletussemantiikoita ei korvattu role=\"none\"-määrityksellä"
+    },
+    "role-presentation": {
+      "pass": "Elementin oletussemantiikat korvattiin role=\"presentation\"-määrityksellä",
+      "fail": "Elementin oletussemantiikoita ei korvattu role=\"presentation\"-määrityksellä"
+    },
+    "svg-non-empty-title": {
+      "pass": "Elementillä on lapsielementti, joka on otsikko",
+      "fail": {
+        "noTitle": "Elementillä ei ole lapsielelementtiä, joka olisi otsikko",
+        "emptyTitle": "Elementin lapsielementti title on tyhjä"
+      },
+      "incomplete": "Ei voitu määrittää, onko elementillä lapsielementtiä, joka on otsikko"
+    },
+    "caption-faked": {
+      "pass": "Taulukon ensimmäistä riviä ei käytetä kuvatekstinä",
+      "fail": "Taulukon ensimmäisen lapsen tulisi olla caption taulukon solun sijaan"
+    },
+    "html5-scope": {
+      "pass": "Scope-attribuuttia käytetään vain taulukon otsikkosoluissa (<th>)",
+      "fail": "HTML 5:ssä scope-attribuutteja saa käyttää vain taulukon otsikkosoluissa (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "Summary-attribuutin ja <caption>-elementin sisältö eivät ole päällekkäisiä",
+      "fail": "Summary-attribuutin ja <caption>-elementin sisältö ovat identtiset",
+      "incomplete": "Ei voitu määrittää, onko <table>-elementillä kuvatekstiä"
+    },
+    "scope-value": {
+      "pass": "Scope-attribuuttia käytetään oikein",
+      "fail": "Scope-attribuutin arvo saa olla vain „row“ tai „col“"
+    },
+    "td-has-header": {
+      "pass": "Kaikilla ei-tyhjillä dataoluilla on taulukon otsikot",
+      "fail": "Joillakin ei-tyhjillä datasoluilla ei ole taulukon otsikoita"
+    },
+    "td-headers-attr": {
+      "pass": "Headers-attribuuttia käytetään yksinomaan viittaamaan muihin otsikkosoluihin taulukossa",
+      "incomplete": "Headers-attribuutti on tyhjä",
+      "fail": {
+        "cell-header-not-in-table": "Headers-attribuuttia ei käytetä yksinomaan viittaamaan muihin otsikkosoluihin taulukossa",
+        "cell-header-not-th": "Headers-attribuutin tulee viitata otsikkosoluihin, ei datasoluihin",
+        "header-refs-self": "Elementti headers-attribuutilla viittaa itseensä"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Kaikki taulukon otsikkosolut viittaavat datasoluihin",
+      "fail": "Kaikki taulukon otsikkosolut eivät viittaa datasoluihin",
+      "incomplete": "Taulukon datasolut puuttuvat tai ovat tyhjiä"
+    },
+    "hidden-content": {
+      "pass": "Kaikki sivun sisältö on analysoitu.",
+      "fail": "Tämän sivun sisällön analysoinnissa oli ongelmia.",
+      "incomplete": "Sivulla on piilotettua sisältöä, jota ei analysoitu. Sinun täytyy saada tämä sisältö näkyviin analysoidaksesi sen."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Korjaa jokin seuraavista:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Korjaa kaikki seuraavat:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe ei pystynyt selvittämään syytä. On aika ottaa elementtitarkastaja käyttöön!"
+}
