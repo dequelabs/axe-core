@@ -147,6 +147,9 @@ declare namespace axe {
     performanceTimer?: boolean;
     pingWaitTime?: number;
   }
+  interface NormalizedRunOptions extends RunOptions {
+    runOnly?: RunOnly;
+  }
   interface PreloadOptions {
     assets: string[];
     timeout?: number;
@@ -467,6 +470,10 @@ declare namespace axe {
   }
 
   interface Utils {
+    getElementSource: (
+      element: Node | null | undefined,
+      options?: { maxLength?: number; attrLimit?: number }
+    ) => string;
     getFrameContexts: (
       context?: ElementContext,
       options?: RunOptions
@@ -497,6 +504,7 @@ declare namespace axe {
       offset?: number
     ) => string | Uint8Array | Array<number>;
     nodeSerializer: NodeSerializer;
+    normalizeRunOptions: (options?: RunOptions) => NormalizedRunOptions;
   }
 
   interface Aria {

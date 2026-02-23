@@ -28,6 +28,14 @@ describe('splitRects', () => {
     }, 'splitRects: Too many rects');
   });
 
+  it('accepts an array of rects', () => {
+    const rectA = new DOMRect(0, 0, 100, 50);
+    const rectB = new DOMRect(0, 50, 50, 50);
+    const rects = splitRects([rectA], [rectB]);
+    assert.lengthOf(rects, 1);
+    assert.deepEqual(rects[0], rectA);
+  });
+
   describe('with one overlapping rect', () => {
     it('returns one rect if overlaps covers two corners', () => {
       const rectA = new DOMRect(0, 0, 100, 50);
@@ -72,6 +80,14 @@ describe('splitRects', () => {
       const rectB = new DOMRect(-50, -50, 400, 400);
       const rects = splitRects(rectA, [rectB]);
       assert.lengthOf(rects, 0);
+    });
+
+    it('accepts an array of rects', () => {
+      const rectA = new DOMRect(0, 0, 100, 50);
+      const rectB = new DOMRect(40, 0, 100, 50);
+      const rects = splitRects([rectA], [rectB]);
+      assert.lengthOf(rects, 1);
+      assert.deepEqual(rects[0], new DOMRect(0, 0, 40, 50));
     });
   });
 
