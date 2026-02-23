@@ -30,12 +30,12 @@
       "help": "ARIA attributen moeten worden gebruikt zoals gespecificeerd voor de rol van het element"
     },
     "aria-deprecated-role": {
-      "description": "Zorg dat elementen geen verouderde rollen gebruiken",
+      "description": "Zorg dat elementen geen verouderde (deprecated) rollen gebruiken",
       "help": "Verouderde ARIA-rollen mogen niet worden gebruikt"
     },
     "aria-dialog-name": {
-      "description": "Zorg dat elk ARIA-dialog- en alertdialog knooppunt een toegankelijke naam heeft",
-      "help": "ARIA-dialog- en alertdialog knooppunten moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-dialog- en alertdialog element een toegankelijke naam heeft",
+      "help": "ARIA-dialog- en alertdialog elementenmoeten een toegankelijke naam hebben"
     },
     "aria-hidden-body": {
       "description": "Zorg dat aria-hidden=\"true\" niet aanwezig is op de document-body.",
@@ -50,12 +50,12 @@
       "help": "ARIA-invoervelden moeten een toegankelijke naam hebben"
     },
     "aria-meter-name": {
-      "description": "Zorg dat elk ARIA-meter knooppunt een toegankelijke naam heeft",
-      "help": "ARIA-meter knooppunten moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-meter element een toegankelijke naam heeft",
+      "help": "ARIA-meter elementen moeten een toegankelijke naam hebben"
     },
     "aria-progressbar-name": {
-      "description": "Zorg dat elk ARIA-progressbar knooppunt een toegankelijke naam heeft",
-      "help": "ARIA-progressbar knooppunten moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-progressbar element een toegankelijke naam heeft",
+      "help": "ARIA-progressbar elementen moeten een toegankelijke naam hebben"
     },
     "aria-prohibited-attr": {
       "description": "Zorg dat ARIA attributen niet zijn verboden voor de rol van een element",
@@ -66,12 +66,12 @@
       "help": "Vereiste ARIA attributen moeten worden opgegeven"
     },
     "aria-required-children": {
-      "description": "Zorg dat elementen met een ARIA-rol die kind-rollen vereist, deze bevatten",
-      "help": "Bepaalde ARIA-rollen moeten specifieke kind elementen bevatten"
+      "description": "Zorg dat elementen met een ARIA-rol die child-rollen vereist, deze bevatten",
+      "help": "Bepaalde ARIA-rollen moeten specifieke child-elementen bevatten"
     },
     "aria-required-parent": {
-      "description": "Zorg dat elementen met een ARIA-rol die ouder-rollen vereist, hierin zijn opgenomen",
-      "help": "Bepaalde ARIA-rollen moeten binnen specifieke ouder elementen zijn opgenomen"
+      "description": "Zorg dat elementen met een ARIA-rol die parent-rollen vereist, hierin zijn opgenomen",
+      "help": "Bepaalde ARIA-rollen moeten binnen specifieke parent-elementen zijn opgenomen"
     },
     "aria-roledescription": {
       "description": "Zorg dat aria-roledescription alleen wordt gebruikt op elementen met een impliciete of expliciete rol",
@@ -82,20 +82,20 @@
       "help": "Gebruikte ARIA-rollen moeten geldige waarden hebben"
     },
     "aria-text": {
-      "description": "Zorg dat role=\"text\" wordt gebruikt op elementen zonder focusbare afstammelingen",
+      "description": "Zorg dat role=\"text\" wordt gebruikt op elementen zonder focusbare content",
       "help": "\"role=text\" mag geen focusbare afstammelingen hebben"
     },
     "aria-toggle-field-name": {
-      "description": "Zorg dat elk ARIA-schakelveld een toegankelijke naam heeft",
-      "help": "ARIA-schakelvelden moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-toggle veld een toegankelijke naam heeft",
+      "help": "ARIA-toggle velden moeten een toegankelijke naam hebben"
     },
     "aria-tooltip-name": {
-      "description": "Zorg dat elk ARIA-tooltip knooppunt een toegankelijke naam heeft",
-      "help": "ARIA-tooltip knooppunten moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-tooltip element een toegankelijke naam heeft",
+      "help": "ARIA-tooltip elementenmoeten een toegankelijke naam hebben"
     },
     "aria-treeitem-name": {
-      "description": "Zorg dat elk ARIA-treeitem knooppunt een toegankelijke naam heeft",
-      "help": "ARIA-treeitem knooppunten moeten een toegankelijke naam hebben"
+      "description": "Zorg dat elk ARIA-treeitem element een toegankelijke naam heeft",
+      "help": "ARIA-treeitem elementenmoeten een toegankelijke naam hebben"
     },
     "aria-valid-attr-value": {
       "description": "Zorg dat alle ARIA attributen geldige waarden hebben",
@@ -118,28 +118,28 @@
       "help": "Inline tekstafstand moet aanpasbaar zijn met aangepaste stylesheets"
     },
     "blink": {
-      "description": "Zorg dat <blink> elementen niet worden gebruikt",
-      "help": "<blink> elementen zijn verouderd en mogen niet worden gebruikt"
+      "description": "Zorg dat <blink> elementen niet worden gebruikt omdat deze verouderd (deprecated) zijn",
+      "help": "<blink> elementen mogen niet worden gebruikt"
     },
     "button-name": {
-      "description": "Zorg dat knoppen herkenbare tekst hebben",
-      "help": "Knoppen moeten herkenbare tekst hebben"
+      "description": "Zorg dat knoppen zichtbare tekst hebben",
+      "help": "Knoppen moeten zichtbare tekst hebben"
     },
     "bypass": {
       "description": "Zorg dat elke pagina ten minste één mechanisme heeft waarmee een gebruiker navigatie kan overslaan en direct naar de inhoud kan gaan",
-      "help": "Pagina moet middelen hebben om herhaalde blokken over te slaan"
+      "help": "Pagina moet een mechanisme hebben om herhaalde blokken over te slaan"
     },
     "color-contrast-enhanced": {
-      "description": "Zorg dat het contrast tussen voorgrond- en achtergrondkleuren voldoet aan de WCAG 2 AAA verbeterde contrastdrempels",
-      "help": "Elementen moeten voldoen aan verbeterde kleurcontrastdrempels"
+      "description": "Zorg dat het contrast tussen voorgrond- en achtergrondkleuren voldoet aan de WCAG 2 AAA versterkte contrastverhouding",
+      "help": "Elementen moeten voldoen aan versterkte kleurcontrastverhouding"
     },
     "color-contrast": {
-      "description": "Zorg dat het contrast tussen voorgrond- en achtergrondkleuren voldoet aan de WCAG 2 AA minimale contrastdrempels",
-      "help": "Elementen moeten voldoen aan minimale kleurcontrastdrempels"
+      "description": "Zorg dat het contrast tussen voorgrond- en achtergrondkleuren voldoet aan de WCAG 2 AA minimale contrastverhouding",
+      "help": "Elementen moeten voldoen aan minimale kleurcontrastverhouding"
     },
     "css-orientation-lock": {
-      "description": "Zorg dat inhoud niet is vergrendeld op een specifieke weergaveoriëntatie en dat de inhoud in alle weergaveoriëntaties bedienbaar is",
-      "help": "CSS-mediaquery's mogen de weergaveoriëntatie niet vergrendelen"
+      "description": "Zorg dat de content in alle weergavestanden bruikbaar is",
+      "help": "CSS-mediaquery's mogen de weergavestand niet vergrendelen"
     },
     "definition-list": {
       "description": "Zorg dat <dl> elementen correct zijn gestructureerd",
@@ -166,15 +166,15 @@
       "help": "id attribuutwaarde moet uniek zijn"
     },
     "empty-heading": {
-      "description": "Zorg dat koppen herkenbare tekst hebben",
+      "description": "Zorg dat koppen zichbare tekst hebben",
       "help": "Koppen mogen niet leeg zijn"
     },
     "empty-table-header": {
-      "description": "Zorg dat tabelkoppen herkenbare tekst hebben",
-      "help": "Tekst van tabelkoppen mag niet leeg zijn"
+      "description": "Zorg dat tabelkoppen zichbare tekst hebben",
+      "help": "Tabelkoppen mogen niet leeg zijn"
     },
     "focus-order-semantics": {
-      "description": "Zorg dat elementen in de focusvolgorde een rol hebben die geschikt is voor interactieve inhoud",
+      "description": "Zorg dat elementen in de focusvolgorde een rol hebben geschikt voor interactieve elementen",
       "help": "Elementen in de focusvolgorde moeten een geschikte rol hebben"
     },
     "form-field-multiple-labels": {
@@ -182,19 +182,19 @@
       "help": "Formulierveld mag niet meerdere label elementen hebben"
     },
     "frame-focusable-content": {
-      "description": "Zorg dat <frame>- en <iframe> elementen met focusbare inhoud geen tabindex=-1 hebben",
-      "help": "Frames met focusbare inhoud mogen geen tabindex=-1 hebben"
+      "description": "Zorg dat <frame> en <iframe> elementen met focusbare content geen tabindex=-1 hebben",
+      "help": "Frames met focusbare content mogen geen tabindex=-1 hebben"
     },
     "frame-tested": {
-      "description": "Zorg dat <iframe>- en <frame> elementen het axe-core-script bevatten",
+      "description": "Zorg dat <iframe> en <frame> elementen het axe-core-script bevatten",
       "help": "Frames moeten worden getest met axe-core"
     },
     "frame-title-unique": {
-      "description": "Zorg dat <iframe>- en <frame> elementen een uniek title attribuut bevatten",
+      "description": "Zorg dat <iframe> en <frame> elementen een uniek title attribuut bevatten",
       "help": "Frames moeten een uniek title attribuut hebben"
     },
     "frame-title": {
-      "description": "Zorg dat <iframe>- en <frame> elementen een toegankelijke naam hebben",
+      "description": "Zorg dat <iframe> en <frame> elementen een toegankelijke naam hebben",
       "help": "Frames moeten een toegankelijke naam hebben"
     },
     "heading-order": {
@@ -202,8 +202,8 @@
       "help": "Kopniveaus mogen alleen met één toenemen"
     },
     "hidden-content": {
-      "description": "Informeer gebruikers over verborgen inhoud.",
-      "help": "Verborgen inhoud op de pagina moet worden geanalyseerd"
+      "description": "Informeer gebruikers over verborgen content",
+      "help": "Verborgen content op de pagina moet worden geanalyseerd"
     },
     "html-has-lang": {
       "description": "Zorg dat elk HTML-document een lang attribuut heeft",
@@ -218,11 +218,11 @@
       "help": "HTML elementen met lang en xml:lang moeten dezelfde basistaal hebben"
     },
     "identical-links-same-purpose": {
-      "description": "Zorg dat links met dezelfde toegankelijke naam een vergelijkbaar doel dienen",
-      "help": "Links met dezelfde naam moeten een vergelijkbaar doel hebben"
+      "description": "Zorg dat links met dezelfde toegankelijke naam een soortgelijke functie hebben",
+      "help": "Links met dezelfde naam moeten een soortgelijke functie hebben"
     },
     "image-alt": {
-      "description": "Zorg dat <img> elementen alternatieve tekst hebben of een rol van none of presentation",
+      "description": "Zorg dat <img> elementen alternatieve tekst hebben of een role=none of presentation",
       "help": "Afbeeldingen moeten alternatieve tekst hebben"
     },
     "image-redundant-alt": {
@@ -238,32 +238,32 @@
       "help": "Afbeeldingsknoppen moeten alternatieve tekst hebben"
     },
     "label-content-name-mismatch": {
-      "description": "Zorg dat elementen die via hun inhoud worden gelabeld hun zichtbare tekst als onderdeel van hun toegankelijke naam hebben",
+      "description": "Zorg dat elementen die hun naam krijgen van de content deze content ook in hun toegankelijke naam hebben",
       "help": "Elementen moeten hun zichtbare tekst als onderdeel van hun toegankelijke naam hebben"
     },
     "label-title-only": {
-      "description": "Zorg dat elk formulierelement een zichtbaar label heeft en niet alleen wordt gelabeld met verborgen labels, of het title- of aria-describedby attribuut",
+      "description": "Zorg dat elk formulierveld een zichtbaar label heeft en niet alleen wordt gelabeld met verborgen labels of een title of aria-describedby attribuut",
       "help": "Formulierelementen moeten een zichtbaar label hebben"
     },
     "label": {
-      "description": "Zorg dat elk formulierelement een label heeft",
+      "description": "Zorg dat elk formulierveld een label heeft",
       "help": "Formulierelementen moeten labels hebben"
     },
     "landmark-banner-is-top-level": {
-      "description": "Zorg dat de banner-landmark op het hoogste niveau staat",
-      "help": "Banner-landmark mag niet in een andere landmark zijn opgenomen"
+      "description": "Zorg dat banner-landmarks niet in een andere landmark zijn geplaatst",
+      "help": "Banner-landmark mag niet in een andere landmark zijn geplaatst"
     },
     "landmark-complementary-is-top-level": {
-      "description": "Zorg dat de complementary-landmark of aside op het hoogste niveau staat",
-      "help": "Aside mag niet in een andere landmark zijn opgenomen"
+      "description": "Zorg dat complementary-landmarks of aside's niet in een andere landmark zijn geplaatst",
+      "help": "Aside mag niet in een andere landmark zijn geplaatst"
     },
     "landmark-contentinfo-is-top-level": {
-      "description": "Zorg dat de contentinfo-landmark op het hoogste niveau staat",
-      "help": "Contentinfo-landmark mag niet in een andere landmark zijn opgenomen"
+      "description": "Zorg dat contentinfo-landmarks niet in een andere landmark zijn geplaatst",
+      "help": "Contentinfo-landmark mag niet in een andere landmark zijn geplaatst"
     },
     "landmark-main-is-top-level": {
-      "description": "Zorg dat de main-landmark op het hoogste niveau staat",
-      "help": "Main-landmark mag niet in een andere landmark zijn opgenomen"
+      "description": "Zorg dat main-landmarks niet in een andere landmark zijn geplaatst",
+      "help": "Main-landmark mag niet in een andere landmark zijn geplaatst"
     },
     "landmark-no-duplicate-banner": {
       "description": "Zorg dat het document maximaal één banner-landmark heeft",
@@ -283,15 +283,15 @@
     },
     "landmark-unique": {
       "description": "Zorg dat landmarks uniek zijn",
-      "help": "Landmarks moeten een unieke rol of rol/label/title (d.w.z. toegankelijke naam) combinatie hebben"
+      "help": "Landmarks moeten een unieke rol, of rol en toegankelijke naam combinatie hebben"
     },
     "link-in-text-block": {
       "description": "Zorg dat links worden onderscheiden van omringende tekst op een manier die niet afhankelijk is van kleur",
-      "help": "Links moeten herkenbaar zijn zonder afhankelijk te zijn van kleur"
+      "help": "Links moeten herkenbaar zijn zonder onderscheid van kleur"
     },
     "link-name": {
-      "description": "Zorg dat links herkenbare tekst hebben",
-      "help": "Links moeten herkenbare tekst hebben"
+      "description": "Zorg dat links herkenbare toegankelijke namen hebben",
+      "help": "Links moeten een toegankelijke naam hebben"
     },
     "list": {
       "description": "Zorg dat lijsten correct zijn gestructureerd",
@@ -299,7 +299,7 @@
     },
     "listitem": {
       "description": "Zorg dat <li> elementen semantisch worden gebruikt",
-      "help": "<li> elementen moeten zijn opgenomen in een <ul> of <ol>"
+      "help": "<li> elementen moeten zijn opgenomen in een <ul> of <ol> element"
     },
     "marquee": {
       "description": "Zorg dat <marquee> elementen niet worden gebruikt",
@@ -314,19 +314,19 @@
       "help": "Vertraagde verversing onder 20 uur mag niet worden gebruikt"
     },
     "meta-viewport-large": {
-      "description": "Zorg dat <meta name=\"viewport\"> aanzienlijk kan schalen",
-      "help": "Gebruikers moeten de tekst kunnen zoomen en schalen tot 500%"
+      "description": "Zorg dat <meta name=\"viewport\"> tekstschalen en zoomen niet beperkt",
+      "help": "zoomen en tekstschalen tot 50% mag niet worden tegengehouden"
     },
     "meta-viewport": {
       "description": "Zorg dat <meta name=\"viewport\"> tekstschaling en zoomen niet uitschakelt",
-      "help": "Zoomen en schalen mogen niet worden uitgeschakeld"
+      "help": "Zoomen en tekstschalen mag niet worden uitgeschakeld"
     },
     "nested-interactive": {
       "description": "Zorg dat interactieve besturingselementen niet zijn genest, omdat ze niet altijd worden aangekondigd door schermlezers of focusproblemen kunnen veroorzaken voor hulptechnologieën",
       "help": "Interactieve besturingselementen mogen niet worden genest"
     },
     "no-autoplay-audio": {
-      "description": "Zorg dat <video>- of <audio> elementen niet automatisch audio afspelen langer dan 3 seconden zonder een bedieningsmechanisme om de audio te stoppen of te dempen",
+      "description": "Zorg dat <video>- of <audio> elementen niet automatisch audio  langer dan 3 seconde afspelen zonder een bedieningsmechanisme om de audio te stoppen of te dempen",
       "help": "<video>- of <audio> elementen mogen niet automatisch afspelen"
     },
     "object-alt": {
@@ -346,8 +346,8 @@
       "help": "Elementen gemarkeerd als presentational moeten consequent worden genegeerd"
     },
     "region": {
-      "description": "Zorg dat alle pagina-inhoud is opgenomen in landmarks",
-      "help": "Alle pagina-inhoud moet zijn opgenomen in landmarks"
+      "description": "Zorg dat alle pagina content is opgenomen in landmarks",
+      "help": "Alle pagina content moet zijn opgenomen in landmarks"
     },
     "role-img-alt": {
       "description": "Zorg dat [role=\"img\"]-elementen alternatieve tekst hebben",
@@ -358,8 +358,8 @@
       "help": "scope attribuut moet correct worden gebruikt"
     },
     "scrollable-region-focusable": {
-      "description": "Zorg dat elementen met scrollbare inhoud toegankelijk zijn via het toetsenbord",
-      "help": "Scrollbaar gebied moet toetsenbordtoegang hebben"
+      "description": "Zorg dat elementen met scrollbare content toegankelijk zijn via het toetsenbord",
+      "help": "Scrollbaar gebied moet bedienbaar zijn met toetsenbord"
     },
     "select-name": {
       "description": "Zorg dat het select element een toegankelijke naam heeft",
@@ -370,8 +370,8 @@
       "help": "Server-side image maps mogen niet worden gebruikt"
     },
     "skip-link": {
-      "description": "Zorg dat alle skip-links een focusbaar doel hebben",
-      "help": "Het doel van de skip-link moet bestaan en focusbaar zijn"
+      "description": "Zorg dat alle skiplinks een focusbaar doel hebben",
+      "help": "Het doel van de skiplink moet bestaan en focusbaar zijn"
     },
     "summary-name": {
       "description": "Zorg dat summary elementen herkenbare tekst hebben",
@@ -383,19 +383,19 @@
     },
     "tabindex": {
       "description": "Zorg dat tabindex attribuutwaarden niet groter zijn dan 0",
-      "help": "Elementen mogen geen tabindex groter dan nul hebben"
+      "help": "Elementen mogen geen tabindex groter dan 0 hebben"
     },
     "table-duplicate-name": {
       "description": "Zorg dat het <caption> element niet dezelfde tekst bevat als het summary attribuut",
       "help": "Tabellen mogen niet dezelfde summary en caption hebben"
     },
     "table-fake-caption": {
-      "description": "Zorg dat tabellen met een caption het <caption> element gebruiken.",
-      "help": "Data- of headercellen mogen niet worden gebruikt om een datatable van een caption te voorzien."
+      "description": "Zorg dat tabellen met een caption het <caption> element gebruiken",
+      "help": "Data- of headercellen mogen niet worden gebruikt om een datatable van een caption te voorzien"
     },
     "target-size": {
-      "description": "Zorg dat aanraakdoelen voldoende grootte en ruimte hebben",
-      "help": "Alle aanraakdoelen moeten 24px groot zijn of voldoende ruimte hebben"
+      "description": "Zorg dat aanwijsdoelen voldoende grootte en ruimte hebben",
+      "help": "Alle aanwijsdoelen moeten 24px groot zijn of voldoende ruimte hebben"
     },
     "td-has-header": {
       "description": "Zorg dat elke niet-lege datacel in een <table> groter dan 3 bij 3 een of meer tabelkoppen heeft",
@@ -447,12 +447,12 @@
     },
     "aria-busy": {
       "pass": "Element heeft een aria-busy attribuut",
-      "fail": "Element gebruikt aria-busy=\"true\" terwijl een laadindicator wordt getoond"
+      "fail": "Element gebruikt aria-busy=\"true\" terwijl een loading indicator wordt getoond"
     },
     "aria-conditional-attr": {
       "pass": "ARIA attribuut is toegestaan",
       "fail": {
-        "checkbox": "Verwijder aria-checked, of stel het in op \"${data.checkState}\" om overeen te komen met de werkelijke checkbox-status",
+        "checkbox": "Verwijder aria-checked, of verander het naar \"${data.checkState}\" zodat het consistent is met de checkbox-status",
         "rowSingular": "Dit attribuut wordt ondersteund bij treegrid-rijen, maar niet bij ${data.ownerRole}: ${data.invalidAttrs}",
         "rowPlural": "Deze attributen worden ondersteund bij treegrid-rijen, maar niet bij ${data.ownerRole}: ${data.invalidAttrs}"
       }
@@ -482,16 +482,16 @@
     "aria-prohibited-attr": {
       "pass": "ARIA attribuut is toegestaan",
       "fail": {
-        "hasRolePlural": "${data.prohibited}-attributen kunnen niet worden gebruikt met rol \"${data.role}\".",
-        "hasRoleSingular": "${data.prohibited}-attribuut kan niet worden gebruikt met rol \"${data.role}\".",
-        "noRolePlural": "${data.prohibited}-attributen kunnen niet worden gebruikt op een ${data.nodeName} zonder geldig role attribuut.",
+        "hasRolePlural": "${data.prohibited} attributen kunnen niet worden gebruikt met rol \"${data.role}\".",
+        "hasRoleSingular": "${data.prohibited} attribuut kan niet worden gebruikt met rol \"${data.role}\".",
+        "noRolePlural": "${data.prohibited} attributen kunnen niet worden gebruikt op een ${data.nodeName} zonder geldig role attribuut.",
         "noRoleSingular": "${data.prohibited}-attribuut kan niet worden gebruikt op een ${data.nodeName} zonder geldig role attribuut."
       },
       "incomplete": {
         "hasRoleSingular": "${data.prohibited}-attribuut wordt niet goed ondersteund met rol \"${data.role}\".",
-        "hasRolePlural": "${data.prohibited}-attributen worden niet goed ondersteund met rol \"${data.role}\".",
+        "hasRolePlural": "${data.prohibited} attributen worden niet goed ondersteund met rol \"${data.role}\".",
         "noRoleSingular": "${data.prohibited}-attribuut wordt niet goed ondersteund op een ${data.nodeName} zonder geldig role attribuut.",
-        "noRolePlural": "${data.prohibited}-attributen worden niet goed ondersteund op een ${data.nodeName} zonder geldig role attribuut."
+        "noRolePlural": "${data.prohibited} attributen worden niet goed ondersteund op een ${data.nodeName} zonder geldig role attribuut."
       }
     },
     "aria-required-attr": {
@@ -503,29 +503,29 @@
     },
     "aria-required-children": {
       "pass": {
-        "default": "Vereiste ARIA-kind elementen zijn aanwezig",
-        "aria-busy": "Element heeft een aria-busy attribuut, dus het mag vereiste kind elementen weglaten"
+        "default": "Vereiste ARIA child-elementen zijn aanwezig",
+        "aria-busy": "Element heeft een aria-busy attribuut, dus het mag vereiste child-elementen weglaten"
       },
       "fail": {
-        "singular": "Vereiste ARIA-kind-rol niet aanwezig: ${data.values}",
-        "plural": "Vereiste ARIA-kind-rollen niet aanwezig: ${data.values}",
-        "unallowed": "Element heeft kind elementen die niet zijn toegestaan: ${data.values}"
+        "singular": "Vereiste ARIA child-rol niet aanwezig: ${data.values}",
+        "plural": "Vereiste ARIA child-rollen niet aanwezig: ${data.values}",
+        "unallowed": "Element heeft child-elementen die niet zijn toegestaan: ${data.values}"
       },
       "incomplete": {
-        "singular": "Verwacht dat ARIA-kind-rol wordt toegevoegd: ${data.values}",
-        "plural": "Verwacht dat ARIA-kind-rollen worden toegevoegd: ${data.values}"
+        "singular": "Verwacht dat ARIA child-rol wordt toegevoegd: ${data.values}",
+        "plural": "Verwacht dat ARIA child-rollen worden toegevoegd: ${data.values}"
       }
     },
     "aria-required-parent": {
-      "pass": "Vereiste ARIA-ouder-rol aanwezig",
+      "pass": "Vereiste ARIA parent-rol aanwezig",
       "fail": {
-        "singular": "Vereiste ARIA-ouder-rol niet aanwezig: ${data.values}",
-        "plural": "Vereiste ARIA-ouder-rollen niet aanwezig: ${data.values}"
+        "singular": "Vereiste ARIA parent-rol niet aanwezig: ${data.values}",
+        "plural": "Vereiste ARIA parent-rollen niet aanwezig: ${data.values}"
       }
     },
     "aria-roledescription": {
       "pass": "aria-roledescription wordt gebruikt op een ondersteunde semantische rol",
-      "incomplete": "Controleer of de aria-roledescription wordt aangekondigd door ondersteunde schermlezers",
+      "incomplete": "Controleer of de aria-roledescription wordt voorgelezen door schermlezers",
       "fail": "Geef het element een rol die aria-roledescription ondersteunt"
     },
     "aria-unsupported-attr": {
@@ -540,11 +540,11 @@
       },
       "incomplete": {
         "noId": "ARIA attribuut element-ID bestaat niet op de pagina: ${data.needsReview}",
-        "noIdShadow": "ARIA attribuut element-ID bestaat niet op de pagina of is een afstammeling van een andere shadow DOM-boom: ${data.needsReview}",
+        "noIdShadow": "ARIA attribuut element-ID bestaat niet op de pagina of is een afstammeling van een andere shadow DOM tree: ${data.needsReview}",
         "ariaCurrent": "ARIA attribuutwaarde is ongeldig en wordt behandeld als \"aria-current=true\": ${data.needsReview}",
         "idrefs": "Kan niet bepalen of ARIA attribuut element-ID op de pagina bestaat: ${data.needsReview}",
         "empty": "ARIA attribuutwaarde wordt genegeerd wanneer leeg: ${data.needsReview}",
-        "controlsWithinPopup": "Kan niet bepalen of aria-controls-gerefereerde ID op de pagina bestaat bij gebruik van aria-haspopup: ${data.needsReview}"
+        "controlsWithinPopup": "Kan niet bepalen of aria-controls gerefereerde ID op de pagina bestaat bij gebruik van aria-haspopup: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -555,9 +555,9 @@
       }
     },
     "braille-label-equivalent": {
-      "pass": "aria-braillelabel wordt gebruikt op een element met toegankelijke tekst",
-      "fail": "aria-braillelabel wordt gebruikt op een element zonder toegankelijke tekst",
-      "incomplete": "Kan toegankelijke tekst niet berekenen"
+      "pass": "aria-braillelabel wordt gebruikt op een element met toegankelijke naam",
+      "fail": "aria-braillelabel wordt gebruikt op een element zonder toegankelijke naam",
+      "incomplete": "Kan toegankelijke naam niet berekenen"
     },
     "braille-roledescription-equivalent": {
       "pass": "aria-brailleroledescription wordt gebruikt op een element met aria-roledescription",
@@ -568,12 +568,12 @@
     },
     "deprecatedrole": {
       "pass": "ARIA-rol is niet verouderd",
-      "fail": "De gebruikte rol is verouderd: ${data}"
+      "fail": "De gebruikte rol is verouderd (deprecated): ${data}"
     },
     "fallbackrole": {
       "pass": "Slechts één rolwaarde gebruikt",
       "fail": "Gebruik slechts één rolwaarde, aangezien fallback-rollen niet worden ondersteund in oudere browsers",
-      "incomplete": "Gebruik alleen rol 'presentation' of 'none' aangezien ze synoniem zijn."
+      "incomplete": "Gebruik alleen rol 'presentation' of 'none' aangezien ze synoniem zijn"
     },
     "has-global-aria-attribute": {
       "pass": {
@@ -583,8 +583,8 @@
       "fail": "Element heeft geen globaal ARIA attribuut"
     },
     "has-widget-role": {
-      "pass": "Element heeft een widget-rol.",
-      "fail": "Element heeft geen widget-rol."
+      "pass": "Element heeft een widget-rol",
+      "fail": "Element heeft geen widget-rol"
     },
     "invalidrole": {
       "pass": "ARIA-rol is geldig",
@@ -593,9 +593,9 @@
         "plural": "Rollen moeten een van de geldige ARIA-rollen zijn: ${data.values}"
       }
     },
-    "is element-focusable": {
-      "pass": "Element is focusbaar.",
-      "fail": "Element is niet focusbaar."
+    "is-element-focusable": {
+      "pass": "Element is focusbaar",
+      "fail": "Element is niet focusbaar"
     },
     "no-implicit-explicit-label": {
       "pass": "Er is geen mismatch tussen een <label> en toegankelijke naam",
@@ -613,23 +613,23 @@
       "pass": "Element heeft voldoende kleurcontrast van ${data.contrastRatio}",
       "fail": {
         "default": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} (voorgrondkleur: ${data.fgColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de voorgrond en schaduwkleur (voorgrondkleur: ${data.fgColor}, text-shadow-kleur: ${data.shadowColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de schaduwkleur en achtergrondkleur (text-shadow-kleur: ${data.shadowColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}"
+        "fgOnShadowColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de voorgrond- en schaduwkleur (voorgrondkleur: ${data.fgColor}, tekstshadowkleur: ${data.shadowColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de schaduw- en achtergrondkleur (tekstshadowkleur: ${data.shadowColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Kan contrastverhouding niet bepalen",
         "bgImage": "Achtergrondkleur van element kon niet worden bepaald vanwege een achtergrondafbeelding",
         "bgGradient": "Achtergrondkleur van element kon niet worden bepaald vanwege een achtergrondverloop",
-        "imgNode": "Achtergrondkleur van element kon niet worden bepaald omdat element een afbeeldingsknooppunt bevat",
+        "imgNode": "Achtergrondkleur van element kon niet worden bepaald omdat element een afbeelding bevat",
         "bgOverlap": "Achtergrondkleur van element kon niet worden bepaald omdat het wordt overlapt door een ander element",
         "fgAlpha": "Voorgrondkleur van element kon niet worden bepaald vanwege alfatransparantie",
         "elmPartiallyObscured": "Achtergrondkleur van element kon niet worden bepaald omdat het gedeeltelijk wordt bedekt door een ander element",
         "elmPartiallyObscuring": "Achtergrondkleur van element kon niet worden bepaald omdat het andere elementen gedeeltelijk overlapt",
         "outsideViewport": "Achtergrondkleur van element kon niet worden bepaald omdat het buiten de viewport is",
         "equalRatio": "Element heeft een 1:1 contrastverhouding met de achtergrond",
-        "shortTextContent": "Inhoud van element is te kort om te bepalen of het daadwerkelijke tekstinhoud is",
-        "nonBmp": "Inhoud van element bevat alleen niet-teksttekens",
-        "pseudoContent": "Achtergrondkleur van element kon niet worden bepaald vanwege een pseudo element",
+        "shortTextContent": "Content van element is te kort om te bepalen of het daadwerkelijke tekstinhoud is",
+        "nonBmp": "Content van element bevat alleen niet-teksttekens",
+        "pseudoContent": "Achtergrondkleur van element kon niet worden bepaald vanwege een pseudo-element",
         "colorParse": "Kon kleurstring niet parseren ${data.colorParse}"
       }
     },
@@ -640,16 +640,16 @@
       },
       "fail": {
         "default": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} (voorgrondkleur: ${data.fgColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
-        "fgOnShadowColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de voorgrond en schaduwkleur (voorgrondkleur: ${data.fgColor}, text-shadow-kleur: ${data.shadowColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
-        "shadowOnBgColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de schaduwkleur en achtergrondkleur (text-shadow-kleur: ${data.shadowColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}"
+        "fgOnShadowColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de voorgrond- en schaduwkleur (voorgrondkleur: ${data.fgColor}, tekstshadowkleur: ${data.shadowColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Element heeft onvoldoende kleurcontrast van ${data.contrastRatio} tussen de schaduw- en achtergrondkleur (text-shadow-kleur: ${data.shadowColor}, achtergrondkleur: ${data.bgColor}, lettergrootte: ${data.fontSize}, letterdikte: ${data.fontWeight}). Verwachte contrastverhouding van ${data.expectedContrastRatio}"
       },
       "incomplete": {
         "default": "Kan contrastverhouding niet bepalen",
         "bgImage": "Achtergrondkleur van element kon niet worden bepaald vanwege een achtergrondafbeelding",
-        "bgGradient": "Achtergrondkleur van element kon niet worden bepaald vanwege een achtergrondverloop",
-        "imgNode": "Achtergrondkleur van element kon niet worden bepaald omdat element een afbeeldingsknooppunt bevat",
+        "bgGradient": "Achtergrondkleur van element kon niet worden bepaald vanwege een achtergrond kleurverloop",
+        "imgNode": "Achtergrondkleur van element kon niet worden bepaald omdat element een afbeelding bevat",
         "bgOverlap": "Achtergrondkleur van element kon niet worden bepaald omdat het wordt overlapt door een ander element",
-        "complexTextShadows": "Contrast van element kon niet worden bepaald omdat het complexe tekstschaduwen gebruikt",
+        "complexTextShadows": "Contrast van element kon niet worden bepaald omdat het complexe tekstschaduw gebruikt",
         "fgAlpha": "Voorgrondkleur van element kon niet worden bepaald vanwege alfatransparantie",
         "elmPartiallyObscured": "Achtergrondkleur van element kon niet worden bepaald omdat het gedeeltelijk wordt bedekt door een ander element",
         "elmPartiallyObscuring": "Achtergrondkleur van element kon niet worden bepaald omdat het andere elementen gedeeltelijk overlapt",
@@ -664,29 +664,29 @@
     "link-in-text-block-style": {
       "pass": "Links kunnen worden onderscheiden van omringende tekst door visuele stijl",
       "incomplete": {
-        "default": "Controleer of de link stijl nodig heeft om zich te onderscheiden van nabije tekst",
+        "default": "Controleer of de linkstijl nodig heeft om zich te onderscheiden van nabije tekst",
         "pseudoContent": "Controleer of de pseudo-stijl van de link voldoende is om zich te onderscheiden van de omringende tekst"
       },
       "fail": "De link heeft geen stijl (zoals onderstreping) om zich te onderscheiden van de omringende tekst"
     },
     "link-in-text-block": {
-      "pass": "Links kunnen worden onderscheiden van omringende tekst op een andere manier dan door kleur",
+      "pass": "Links kunnen worden onderscheiden van omliggende tekst zonder onderscheiding van kleur",
       "fail": {
-        "fgContrast": "De link heeft onvoldoende kleurcontrast van ${data.contrastRatio}:1 met de omringende tekst. (Minimaal contrast is ${data.requiredContrastRatio}:1, linktekst: ${data.nodeColor}, omringende tekst: ${data.parentColor})",
-        "bgContrast": "De linkachtergrond heeft onvoldoende kleurcontrast van ${data.contrastRatio} (Minimaal contrast is ${data.requiredContrastRatio}:1, linkachtergrondkleur: ${data.nodeBackgroundColor}, omringende achtergrondkleur: ${data.parentBackgroundColor})"
+        "fgContrast": "De link heeft onvoldoende kleurcontrast van ${data.contrastRatio}:1 met de omliggende tekst. (Minimaal contrast is ${data.requiredContrastRatio}:1, linktekst: ${data.nodeColor}, omliggende tekst: ${data.parentColor})",
+        "bgContrast": "De linkachtergrond heeft onvoldoende kleurcontrast van ${data.contrastRatio} (Minimaal contrast is ${data.requiredContrastRatio}:1, linkachtergrondkleur: ${data.nodeBackgroundColor}, omliggende achtergrondkleur: ${data.parentBackgroundColor})"
       },
       "incomplete": {
         "default": "Voorgrondcontrastverhouding van element kon niet worden bepaald",
         "bgContrast": "Achtergrondcontrastverhouding van element kon niet worden bepaald",
         "bgImage": "Contrastverhouding van element kon niet worden bepaald vanwege een achtergrondafbeelding",
         "bgGradient": "Contrastverhouding van element kon niet worden bepaald vanwege een achtergrondverloop",
-        "imgNode": "Contrastverhouding van element kon niet worden bepaald omdat element een afbeeldingsknooppunt bevat",
+        "imgNode": "Contrastverhouding van element kon niet worden bepaald omdat element een afbeelding bevat",
         "bgOverlap": "Contrastverhouding van element kon niet worden bepaald vanwege elementoverlap"
       }
     },
     "autocomplete-appropriate": {
       "pass": "De autocomplete waarde staat op een geschikt element",
-      "fail": "De autocomplete waarde is niet geschikt voor dit type invoer"
+      "fail": "De autocomplete waarde is niet geschikt voor dit input type"
     },
     "autocomplete-valid": {
       "pass": "het autocomplete attribuut is correct geformatteerd",
@@ -699,20 +699,20 @@
     },
     "focusable-content": {
       "pass": "Element bevat focusbare elementen",
-      "fail": "Element moet focusbare inhoud hebben"
+      "fail": "Element moet focusbare content hebben"
     },
     "focusable-disabled": {
       "pass": "Geen focusbare elementen aanwezig binnen element",
       "incomplete": "Controleer of de focusbare elementen de focusindicator onmiddellijk verplaatsen",
-      "fail": "Focusbare inhoud moet worden uitgeschakeld of uit de DOM worden verwijderd"
+      "fail": "Focusbare content moet worden uitgeschakeld of uit de DOM worden verwijderd"
     },
     "focusable element": {
       "pass": "Element is focusbaar",
       "fail": "Element moet focusbaar zijn"
     },
     "focusable-modal-open": {
-      "pass": "Geen focusbare elementen terwijl een modaal is geopend",
-      "incomplete": "Controleer of focusbare elementen niet tabbable zijn in de huidige status"
+      "pass": "Geen focusbare elementen terwijl een modal is geopend",
+      "incomplete": "Controleer of focusbare elementen niet begrijkbaar is met tab zijn in de huidige pagina state"
     },
     "focusable-no-name": {
       "pass": "Element staat niet in de tabvolgorde of heeft toegankelijke tekst",
@@ -722,24 +722,24 @@
     "focusable-not-tabbable": {
       "pass": "Geen focusbare elementen aanwezig binnen element",
       "incomplete": "Controleer of de focusbare elementen de focusindicator onmiddellijk verplaatsen",
-      "fail": "Focusbare inhoud moet tabindex=\"-1\" hebben of uit de DOM worden verwijderd"
+      "fail": "Focusbare content moet tabindex=\"-1\" hebben of uit de DOM worden verwijderd"
     },
     "frame-focusable-content": {
-      "pass": "Element heeft geen focusbare afstammelingen",
-      "fail": "Element heeft focusbare afstammelingen",
-      "incomplete": "Kon niet bepalen of element afstammelingen heeft"
+      "pass": "Element heeft geen focusbare content",
+      "fail": "Element heeft focusbare content",
+      "incomplete": "Kon niet bepalen of element content heeft"
     },
     "landmark-is-top-level": {
-      "pass": "De ${data.role}-landmark staat op het hoogste niveau.",
-      "fail": "De ${data.role}-landmark is opgenomen in een andere landmark."
+      "pass": "De ${data.role}-landmark is niet in een andere landmark",
+      "fail": "De ${data.role}-landmark is opgenomen in een andere landmark"
     },
     "no-focusable-content": {
-      "pass": "Element heeft geen focusbare afstammelingen",
+      "pass": "Element heeft geen focusbare content",
       "fail": {
-        "default": "Element heeft focusbare afstammelingen",
-        "notHidden": "Het gebruik van een negatieve tabindex op een element binnen een interactief besturingselement voorkomt niet dat hulptechnologieën het element focussen (zelfs met aria-hidden=\"true\")"
+        "default": "Element heeft focusbare content",
+        "notHidden": "Het gebruik van een negatieve tabindex op een element binnen een interactief besturingselement voorkomt niet dat hulptechnologieën het element focus geeft (zelfs met aria-hidden=\"true\")"
       },
-      "incomplete": "Kon niet bepalen of element afstammelingen heeft"
+      "incomplete": "Kon niet bepalen of element content heeft"
     },
     "page-has-heading-one": {
       "pass": "Pagina heeft ten minste één niveau-één kop",
@@ -783,14 +783,14 @@
       "fail": "Hulptekst (title of aria-describedby) is hetzelfde als de labeltekst"
     },
     "hidden-explicit-label": {
-      "pass": "Formulierelement heeft een zichtbaar expliciet <label>",
-      "fail": "Formulierelement heeft een expliciet <label> dat verborgen is",
-      "incomplete": "Kan niet bepalen of formulierelement een expliciet <label> heeft dat verborgen is"
+      "pass": "Formulierveld heeft een zichtbaar expliciet <label>",
+      "fail": "Formulierveld heeft een expliciet <label> dat verborgen is",
+      "incomplete": "Kan niet bepalen of formulierveld een expliciet <label> heeft dat verborgen is"
     },
     "implicit-label": {
-      "pass": "Element heeft een impliciet (omsluitend) <label>",
-      "fail": "Element heeft geen impliciet (omsluitend) <label>",
-      "incomplete": "Kan niet bepalen of formulierelement een impliciet (omsluitend) <label> heeft"
+      "pass": "Formulierveld heeft een impliciet (omsluitend) <label>",
+      "fail": "Formulierveld heeft geen impliciet (omsluitend) <label>",
+      "incomplete": "Kan niet bepalen of formulierveld een impliciet (omsluitend) <label> heeft"
     },
     "label-content-name-mismatch": {
       "pass": "Element bevat zichtbare tekst als onderdeel van zijn toegankelijke naam",
@@ -801,8 +801,8 @@
       "incomplete": "Meerdere label elementen worden niet breed ondersteund in hulptechnologieën. Zorg dat het eerste label alle benodigde informatie bevat."
     },
     "title-only": {
-      "pass": "Formulierelement gebruikt niet alleen het title attribuut voor zijn label",
-      "fail": "Alleen title wordt gebruikt om een label voor het formulierelement te genereren"
+      "pass": "Formulierveld gebruikt niet alleen het title attribuut voor de toegankelijke naam",
+      "fail": "Alleen title wordt gebruikt om een toegankelijke naam voor het formulierveld te genereren"
     },
     "landmark-is-unique": {
       "pass": "Landmarks moeten een unieke rol of rol/label/title (d.w.z. toegankelijke naam) combinatie hebben",
@@ -811,7 +811,7 @@
     "has-lang": {
       "pass": "Het <html> element heeft een lang attribuut",
       "fail": {
-        "noXHTML": "Het xml:lang attribuut is niet geldig op HTML-pagina's, gebruik het lang attribuut.",
+        "noXHTML": "Het xml:lang attribuut is niet geldig op HTML-pagina's, gebruik het lang attribuut",
         "noLang": "Het <html> element heeft geen lang attribuut"
       }
     },
@@ -824,23 +824,23 @@
       "fail": "Lang- en xml:lang attributen hebben niet dezelfde basistaal"
     },
     "dlitem": {
-      "pass": "Beschrijvingslijst-item heeft een <dl> ouder element",
-      "fail": "Beschrijvingslijst-item heeft geen <dl> ouder element"
+      "pass": "description list item heeft een <dl> parent-element",
+      "fail": "description list item heeft geen <dl> parent-element"
     },
     "listitem": {
-      "pass": "Lijstitem heeft een <ul>-, <ol>- of role=\"list\"-ouder element",
+      "pass": "Lijstitem heeft een <ul>-, <ol>- of role=\"list\"-parent-element",
       "fail": {
-        "default": "Lijstitem heeft geen <ul>- of <ol> ouder element",
+        "default": "Lijstitem heeft geen <ul>- of <ol> parent-element",
         "roleNotValid": "Ouder element van lijstitem heeft een rol die niet role=\"list\" is"
       }
     },
     "only-dlitems": {
-      "pass": "dl element heeft alleen directe kind elementen die zijn toegestaan; <dt>-, <dd>- of <div> elementen",
-      "fail": "dl element heeft directe kind elementen die niet zijn toegestaan: ${data.values}"
+      "pass": "dl element heeft alleen directe child-elementen die zijn toegestaan; <dt>-, <dd>- of <div> elementen",
+      "fail": "dl element heeft directe child-elementen die niet zijn toegestaan: ${data.values}"
     },
     "only-listitems": {
-      "pass": "Lijstelement heeft alleen directe kind elementen die zijn toegestaan binnen <li> elementen",
-      "fail": "Lijstelement heeft directe kind elementen die niet zijn toegestaan: ${data.values}"
+      "pass": "Lijstelement heeft alleen directe child-elementen die zijn toegestaan binnen <li> elementen",
+      "fail": "Lijstelement heeft directe child-elementen die niet zijn toegestaan: ${data.values}"
     },
     "structured-dlitems": {
       "pass": "Wanneer niet leeg, heeft element zowel <dt>- als <dd> elementen",
@@ -861,8 +861,8 @@
       "incomplete": "Controleer of de <video> of <audio> geen audio langer dan de toegestane duur afspeelt of een bedieningsmechanisme biedt"
     },
     "css-orientation-lock": {
-      "pass": "Weergave is bedienbaar en oriëntatievergrendeling bestaat niet",
-      "fail": "CSS-oriëntatievergrendeling is toegepast en maakt weergave onbedienbaar",
+      "pass": "Weergave is bedienbaar; er is geen oriëntatievergrendeling",
+      "fail": "CSS-oriëntatievergrendeling is gebruikt wat weergave beperkt",
       "incomplete": "CSS-oriëntatievergrendeling kan niet worden bepaald"
     },
     "meta-viewport-large": {
@@ -875,32 +875,32 @@
     },
     "target-offset": {
       "pass": {
-        "default": "Doel heeft voldoende ruimte tot zijn dichtstbijzijnde buren. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px, wat ten minste ${data.minOffset}px is.",
-        "large": "Doel overschrijdt ruimschoots de minimumgrootte van ${data.minOffset}px."
+        "default": "Aanwijsgebied heeft voldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px, wat ten minste ${data.minOffset}px is.",
+        "large": "Aanwijsgebied overschrijdt ruimschoots de minimumgrootte van ${data.minOffset}px."
       },
-      "fail": "Doel heeft onvoldoende ruimte tot zijn dichtstbijzijnde buren. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px.",
+      "fail": "Aanwijsgebied heeft onvoldoende ruimte tot dichbije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px.",
       "incomplete": {
-        "default": "Element met negatieve tabindex heeft onvoldoende ruimte tot zijn dichtstbijzijnde buren. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is dit een doel?",
-        "nonTabbableNeighbor": "Doel heeft onvoldoende ruimte tot zijn dichtstbijzijnde buren. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is de buur een doel?",
-        "tooManyRects": "Kon de doelgrootte niet bepalen omdat er te veel overlappende elementen zijn"
+        "default": "Element met negatieve tabindex heeft onvoldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is dit een aanwijsgebied?",
+        "nonTabbableNeighbor": "Aanwijsgebied heeft onvoldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is her nabij element een aanwijsgebied?",
+        "tooManyRects": "Kon de aanwijsgebiedsgrootte niet bepalen omdat er te veel overlappende elementen zijn"
       }
     },
     "target-size": {
       "pass": {
         "default": "Besturingselement heeft voldoende grootte (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)",
-        "obscured": "Besturingselement wordt genegeerd omdat het volledig wordt bedekt en dus niet klikbaar is",
-        "large": "Doel overschrijdt ruimschoots de minimumgrootte van ${data.minSize}px."
+        "obscured": "Besturingselement wordt genegeerd omdat het volledig vorborgen, en dus niet klikbaar is",
+        "large": "Aanwijsgebied overschrijdt ruimschoots de minimumgrootte van ${data.minSize}px."
       },
       "fail": {
-        "default": "Doel heeft onvoldoende grootte (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)",
-        "partiallyObscured": "Doel heeft onvoldoende grootte omdat het gedeeltelijk wordt bedekt (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)"
+        "default": "Aanwijsgebied is te klein (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)",
+        "partiallyObscured": "Aanwijsgebied is te klein omdat het gedeeltelijk vorborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)"
       },
       "incomplete": {
-        "default": "Element met negatieve tabindex heeft onvoldoende grootte (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een doel?",
-        "contentOverflow": "Elementgrootte kon niet nauwkeurig worden bepaald vanwege overflow-inhoud",
-        "partiallyObscured": "Element met negatieve tabindex heeft onvoldoende grootte omdat het gedeeltelijk wordt bedekt (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een doel?",
-        "partiallyObscuredNonTabbable": "Doel heeft onvoldoende grootte omdat het gedeeltelijk wordt bedekt door een buur met negatieve tabindex (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is de buur een doel?",
-        "tooManyRects": "Kon de doelgrootte niet bepalen omdat er te veel overlappende elementen zijn"
+        "default": "Element met negatieve tabindex is te klein (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een aanwijsgebied?",
+        "contentOverflow": "Elementgrootte kon niet nauwkeurig worden bepaald vanwege overflow content",
+        "partiallyObscured": "Element met negatieve tabindex is te klein omdat het gedeeltelijk vorborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een aanwijsgebied?",
+        "partiallyObscuredNonTabbable": "Aanwijsgebied is te klein omdat het gedeeltelijk vorborgen is door een element met negatieve tabindex (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is her nabij element een aanwijsgebied?",
+        "tooManyRects": "Kon de aanwijsgebiedsgrootte niet bepalen omdat er te veel overlappende elementen zijn"
       }
     },
     "header-present": {
@@ -914,11 +914,11 @@
     },
     "identical-links-same-purpose": {
       "pass": "Er zijn geen andere links met dezelfde naam die naar een andere URL gaan",
-      "incomplete": "Controleer of links hetzelfde doel hebben of opzettelijk dubbelzinnig zijn."
+      "incomplete": "Controleer of links hetzelfde doel hebben of opzettelijk onduidelijk zijn"
     },
     "internal-link-present": {
-      "pass": "Geldige skip-link gevonden",
-      "fail": "Geen geldige skip-link gevonden"
+      "pass": "Geldige skiplink gevonden",
+      "fail": "Geen geldige skiplink gevonden"
     },
     "landmark": {
       "pass": "Pagina heeft een landmark-regio",
@@ -934,17 +934,17 @@
     },
     "p-as-heading": {
       "pass": "<p> elementen zijn niet gestyled als koppen",
-      "fail": "Kopelementen moeten worden gebruikt in plaats van gestylede <p> elementen",
+      "fail": "Kopementen moeten worden gebruikt in plaats van gestylede <p> elementen",
       "incomplete": "Kan niet bepalen of <p> elementen zijn gestyled als koppen"
     },
     "region": {
-      "pass": "Alle pagina-inhoud is opgenomen in landmarks",
-      "fail": "Sommige pagina-inhoud is niet opgenomen in landmarks"
+      "pass": "Alle pagina content is opgenomen in landmarks",
+      "fail": "Sommige pagina content is niet opgenomen in landmarks"
     },
     "skip-link": {
-      "pass": "Skip-link doel bestaat",
-      "incomplete": "Skip-link doel moet zichtbaar worden bij activering",
-      "fail": "Geen skip-link doel"
+      "pass": "Skiplink doel bestaat",
+      "incomplete": "Skiplink doel moet zichtbaar worden bij activering",
+      "fail": "Geen skiplink doel"
     },
     "unique-frame-title": {
       "pass": "title attribuut van element is uniek",
@@ -972,16 +972,16 @@
       "incomplete": "Zorg dat aria-labelledby verwijst naar een bestaand element"
     },
     "avoid-inline-spacing": {
-      "pass": "Geen inline stijlen met '!important' die tekstafstand beïnvloeden zijn gespecificeerd",
+      "pass": "Geen inline stijlen met '!important' die tekstafstand beïnvloeden zijn gebruikt",
       "fail": {
         "singular": "Verwijder '!important' uit inline stijl ${data.values}, aangezien het overschrijven hiervan niet wordt ondersteund door de meeste browsers",
         "plural": "Verwijder '!important' uit inline stijlen ${data.values}, aangezien het overschrijven hiervan niet wordt ondersteund door de meeste browsers"
       }
     },
     "button-has-visible-text": {
-      "pass": "Element heeft binnenste tekst die zichtbaar is voor schermlezers",
-      "fail": "Element heeft geen binnenste tekst die zichtbaar is voor schermlezers",
-      "incomplete": "Kan niet bepalen of element kind elementen heeft"
+      "pass": "Element heeft tekst die zichtbaar is voor schermlezers",
+      "fail": "Element heeft geen tekst die zichtbaar is voor schermlezers",
+      "incomplete": "Kan niet bepalen of element een child-elementen heeft"
     },
     "doc-has-title": {
       "pass": "Document heeft een niet-leeg <title> element",
@@ -1002,7 +1002,7 @@
     "has-visible-text": {
       "pass": "Element heeft tekst die zichtbaar is voor schermlezers",
       "fail": "Element heeft geen tekst die zichtbaar is voor schermlezers",
-      "incomplete": "Kan niet bepalen of element kind elementen heeft"
+      "incomplete": "Kan niet bepalen of element een child-elementen heeft"
     },
     "important-letter-spacing": {
       "pass": "letter-spacing in het style attribuut is niet ingesteld op !important, of voldoet aan het minimum",
@@ -1056,38 +1056,38 @@
       }
     },
     "presentational-role": {
-      "pass": "Standaardsemantiek van element is overschreven met role=\"${data.role}\"",
+      "pass": "Element rol is overschreven met role=\"${data.role}\"",
       "fail": {
-        "default": "Standaardsemantiek van element is niet overschreven met role=\"none\" of role=\"presentation\"",
-        "globalAria": "Rol van element is niet presentational omdat het een globaal ARIA attribuut heeft",
-        "focusable": "Rol van element is niet presentational omdat het focusbaar is",
-        "both": "Rol van element is niet presentational omdat het een globaal ARIA attribuut heeft en focusbaar is",
-        "iframe": "Het gebruik van het \"title\"-attribuut op een ${data.nodeName}-element met een presentational rol gedraagt zich inconsistent tussen schermlezers"
+        "default": "Element rol kan niet worden overschreven met role=\"none\" of role=\"presentation\"",
+        "globalAria": "Element rol is niet presentational omdat het een global ARIA attribuut heeft",
+        "focusable": "Element rol is niet presentational omdat het focusbaar is",
+        "both": "Element rol is niet presentational omdat het een global ARIA attribuut heeft en focusbaar is",
+        "iframe": "Het gebruik van het \"title\"-attribuut op een ${data.nodeName} element met een presentational rol is onbetrouwbaar in schermlezers"
       }
     },
     "role-none": {
-      "pass": "Standaardsemantiek van element is overschreven met role=\"none\"",
-      "fail": "Standaardsemantiek van element is niet overschreven met role=\"none\""
+      "pass": "Element rol is overschreven met role=\"none\"",
+      "fail": "Element rol kan niet worden overschreven met role=\"none\""
     },
     "role-presentation": {
-      "pass": "Standaardsemantiek van element is overschreven met role=\"presentation\"",
-      "fail": "Standaardsemantiek van element is niet overschreven met role=\"presentation\""
+      "pass": "Element rol is overschreven met role=\"presentation\"",
+      "fail": "Element rol kan niet worden overschreven met role=\"presentation\""
     },
     "svg-non-empty-title": {
-      "pass": "Element heeft een kind element dat een title is",
+      "pass": "Element heeft een child-element dat een title is",
       "fail": {
-        "noTitle": "Element heeft geen kind element dat een title is",
-        "emptyTitle": "Title-kind element van element is leeg"
+        "noTitle": "Element heeft geen child-element dat een title is",
+        "emptyTitle": "Title child-element van element is leeg"
       },
-      "incomplete": "Kan niet bepalen of element een kind element heeft dat een title is"
+      "incomplete": "Kan niet bepalen of element een child-element heeft dat een title is"
     },
     "caption-faked": {
       "pass": "De eerste rij van een tabel wordt niet gebruikt als caption",
-      "fail": "Het eerste kind van de tabel moet een caption zijn in plaats van een tabelcel"
+      "fail": "Het eerste child van de tabel moet een caption zijn in plaats van een tabelcel"
     },
     "html5-scope": {
-      "pass": "Scope attribuut wordt alleen gebruikt op tabelkopelementen (<th>)",
-      "fail": "In HTML 5 mogen scope attributen alleen worden gebruikt op tabelkopelementen (<th>)"
+      "pass": "Scope attribuut wordt alleen gebruikt op tabelkoppen (<th>)",
+      "fail": "In HTML 5 mogen scope attributen alleen worden gebruikt op tabelkoppen (<th>)"
     },
     "same-caption-summary": {
       "pass": "Inhoud van summary attribuut en <caption> zijn niet gedupliceerd",
@@ -1112,14 +1112,14 @@
       }
     },
     "th-has-data-cells": {
-      "pass": "Alle tabelheadercellen verwijzen naar datacellen",
-      "fail": "Niet alle tabelheadercellen verwijzen naar datacellen",
-      "incomplete": "Tabeldatacellen ontbreken of zijn leeg"
+      "pass": "Alle tabelkoppen verwijzen naar datacellen",
+      "fail": "Niet alle tabelkoppen verwijzen naar datacellen",
+      "incomplete": "Tabelkoppen ontbreken of zijn leeg"
     },
     "hidden-content": {
-      "pass": "Alle inhoud op de pagina is geanalyseerd.",
-      "fail": "Er waren problemen bij het analyseren van de inhoud op deze pagina.",
-      "incomplete": "Er is verborgen inhoud op de pagina die niet is geanalyseerd. U moet de weergave van deze inhoud activeren om deze te analyseren."
+      "pass": "Alle content op de pagina is geanalyseerd",
+      "fail": "Er waren problemen bij het analyseren van de content op deze pagina",
+      "incomplete": "Er is verborgen content op de pagina die niet is geanalyseerd. U moet de weergave van deze content activeren om deze te analyseren."
     }
   },
   "failureSummaries": {
