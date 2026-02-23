@@ -166,11 +166,11 @@
       "help": "id attribuutwaarde moet uniek zijn"
     },
     "empty-heading": {
-      "description": "Zorg dat koppen zichbare tekst hebben",
+      "description": "Zorg dat koppen zichtbare tekst hebben",
       "help": "Koppen mogen niet leeg zijn"
     },
     "empty-table-header": {
-      "description": "Zorg dat tabelkoppen zichbare tekst hebben",
+      "description": "Zorg dat tabelkoppen zichtbare tekst hebben",
       "help": "Tabelkoppen mogen niet leeg zijn"
     },
     "focus-order-semantics": {
@@ -706,7 +706,7 @@
       "incomplete": "Controleer of de focusbare elementen de focusindicator onmiddellijk verplaatsen",
       "fail": "Focusbare content moet worden uitgeschakeld of uit de DOM worden verwijderd"
     },
-    "focusable element": {
+    "focusable-element": {
       "pass": "Element is focusbaar",
       "fail": "Element moet focusbaar zijn"
     },
@@ -881,25 +881,25 @@
       "fail": "Aanwijsgebied heeft onvoldoende ruimte tot dichbije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px.",
       "incomplete": {
         "default": "Element met negatieve tabindex heeft onvoldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is dit een aanwijsgebied?",
-        "nonTabbableNeighbor": "Aanwijsgebied heeft onvoldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is her nabij element een aanwijsgebied?",
+        "nonTabbableNeighbor": "Aanwijsgebied heeft onvoldoende ruimte tot nabije elementen. Veilige klikbare ruimte heeft een diameter van ${data.closestOffset}px in plaats van ten minste ${data.minOffset}px. Is het nabij element een aanwijsgebied?",
         "tooManyRects": "Kon de aanwijsgebiedsgrootte niet bepalen omdat er te veel overlappende elementen zijn"
       }
     },
     "target-size": {
       "pass": {
         "default": "Besturingselement heeft voldoende grootte (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)",
-        "obscured": "Besturingselement wordt genegeerd omdat het volledig vorborgen, en dus niet klikbaar is",
+        "obscured": "Besturingselement wordt genegeerd omdat het volledig verborgen is, en dus niet klikbaar is",
         "large": "Aanwijsgebied overschrijdt ruimschoots de minimumgrootte van ${data.minSize}px."
       },
       "fail": {
         "default": "Aanwijsgebied is te klein (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)",
-        "partiallyObscured": "Aanwijsgebied is te klein omdat het gedeeltelijk vorborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)"
+        "partiallyObscured": "Aanwijsgebied is te klein omdat het gedeeltelijk verborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn)"
       },
       "incomplete": {
         "default": "Element met negatieve tabindex is te klein (${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een aanwijsgebied?",
         "contentOverflow": "Elementgrootte kon niet nauwkeurig worden bepaald vanwege overflow content",
-        "partiallyObscured": "Element met negatieve tabindex is te klein omdat het gedeeltelijk vorborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een aanwijsgebied?",
-        "partiallyObscuredNonTabbable": "Aanwijsgebied is te klein omdat het gedeeltelijk vorborgen is door een element met negatieve tabindex (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is her nabij element een aanwijsgebied?",
+        "partiallyObscured": "Element met negatieve tabindex is te klein omdat het gedeeltelijk verborgen is (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is dit een aanwijsgebied?",
+        "partiallyObscuredNonTabbable": "Aanwijsgebied is te klein omdat het gedeeltelijk verborgen is door een element met negatieve tabindex (kleinste ruimte is ${data.width}px bij ${data.height}px, moet ten minste ${data.minSize}px bij ${data.minSize}px zijn). Is het nabij element een aanwijsgebied?",
         "tooManyRects": "Kon de aanwijsgebiedsgrootte niet bepalen omdat er te veel overlappende elementen zijn"
       }
     },
@@ -934,7 +934,7 @@
     },
     "p-as-heading": {
       "pass": "<p> elementen zijn niet gestyled als koppen",
-      "fail": "Kopementen moeten worden gebruikt in plaats van gestylede <p> elementen",
+      "fail": "Kopelementen moeten worden gebruikt in plaats van gestylede <p> elementen",
       "incomplete": "Kan niet bepalen of <p> elementen zijn gestyled als koppen"
     },
     "region": {
