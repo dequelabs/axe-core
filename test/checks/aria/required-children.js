@@ -248,6 +248,13 @@ describe('aria-required-children', () => {
     assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
+  it('should pass if a required owned element has no children, is not review empty, has aria-busy="true" but no children', () => {
+    const params = checkSetup(
+      '<div id="target" role="feed" aria-busy="true"></div>'
+    );
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
   it('should fail when nested child with role row does not have required child role cell', () => {
     const params = checkSetup(
       '<div  role="grid"><div role="row" id="target"><span>Item 1</span></div></div>'
