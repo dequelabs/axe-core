@@ -27,7 +27,8 @@
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
-        "unallowed": "Element has children which are not allowed: ${data.values}"
+        "unallowed": "Element has children which are not allowed: ${data.values}",
+        "aria-busy-fail": "Element has children which are not allowed: ${data.values}; aria-busy=\"true\" is not a valid exception."
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",
