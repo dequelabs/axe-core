@@ -47,8 +47,13 @@ module.exports = ({ id, title, axeRules, skipTests = [] }) => {
     });
 
     after(async () => {
-      await driver.close();
-      await new Promise(r => server.close(r));
+      try {
+        if (driver) await driver.quit();
+      } catch (err) {
+        console.error('Error quitting driver:', err.message);
+      } finally {
+        if (server) await new Promise(r => server.close(r));
+      }
     });
 
     testcases.forEach(testcase => {
