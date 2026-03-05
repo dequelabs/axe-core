@@ -7,6 +7,7 @@ const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);
   const options = new chrome.Options().addArguments(
     '--headless',
+    '--no-sandbox',
     '--disable-dev-shm-usage',
     '--disable-gpu'
   );
