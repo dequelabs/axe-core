@@ -304,5 +304,58 @@ describe('only-listitems', () => {
         values: 'p'
       });
     });
+
+    it('should return true when a custom element has no shadow root', () => {
+      const item = document.createElement('my-list-item');
+      item.innerHTML = '<li>Item 1</li>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-list-item' });
+    });
+
+    it('should return false when a custom element shadow DOM has multiple valid children', () => {
+      const item = document.createElement('my-list-item');
+      item.attachShadow({ mode: 'open' }).innerHTML = '<li>A</li><li>B</li>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('should return true when a custom element shadow DOM has invalid children', () => {
+      const item = document.createElement('my-list-item');
+      item.attachShadow({ mode: 'open' }).innerHTML =
+        '<div>Not a list item</div>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-list-item' });
+    });
+
+    it('should return true when a custom element shadow DOM has a valid first child but invalid subsequent children', () => {
+      const item = document.createElement('my-list-item');
+      item.attachShadow({ mode: 'open' }).innerHTML =
+        '<li>Valid</li><div>Invalid</div>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-list-item' });
+    });
   });
 });
