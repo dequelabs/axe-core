@@ -242,6 +242,46 @@ describe('only-listitems', () => {
       assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
     });
 
+    it('should return true when custom elements have a shadow DOM <li role="none">', () => {
+      const item1 = document.createElement('my-list-item');
+      item1.attachShadow({ mode: 'open' }).innerHTML =
+        '<li role="none"><slot></slot></li>';
+      item1.textContent = 'Item 1';
+
+      const item2 = document.createElement('my-list-item');
+      item2.attachShadow({ mode: 'open' }).innerHTML =
+        '<li role="none"><slot></slot></li>';
+      item2.textContent = 'Item 2';
+
+      const host = document.createElement('div');
+      host.appendChild(item1);
+      host.appendChild(item2);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('should return true when custom elements have an aria-hidden shadow DOM <li>', () => {
+      const item1 = document.createElement('my-list-item');
+      item1.attachShadow({ mode: 'open' }).innerHTML =
+        '<li aria-hidden="true"><slot></slot></li>';
+      item1.textContent = 'Item 1';
+
+      const item2 = document.createElement('my-list-item');
+      item2.attachShadow({ mode: 'open' }).innerHTML =
+        '<li aria-hidden="true"><slot></slot></li>';
+      item2.textContent = 'Item 2';
+
+      const host = document.createElement('div');
+      host.appendChild(item1);
+      host.appendChild(item2);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
     it('should return false in a shadow DOM pass', () => {
       const node = document.createElement('div');
       node.innerHTML = '<li>My list item </li>';
