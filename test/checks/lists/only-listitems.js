@@ -221,6 +221,27 @@ describe('only-listitems', () => {
   });
 
   describe('shadow DOM', () => {
+    it('should return false when custom elements with shadow DOM <li> are slotted into a list', () => {
+      // Simulate <my-list-item> web components whose shadow DOM renders <li>
+      const item1 = document.createElement('my-list-item');
+      item1.attachShadow({ mode: 'open' }).innerHTML = '<li><slot></slot></li>';
+      item1.textContent = 'Item 1';
+
+      const item2 = document.createElement('my-list-item');
+      item2.attachShadow({ mode: 'open' }).innerHTML = '<li><slot></slot></li>';
+      item2.textContent = 'Item 2';
+
+      // Use a div (in possibleShadowRoots) as the outer shadow host,
+      // matching the pattern of the other shadow DOM tests in this suite
+      const host = document.createElement('div');
+      host.appendChild(item1);
+      host.appendChild(item2);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<ul><slot></slot></ul>';
+
+      const checkArgs = checkSetup(host, 'ul');
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
     it('should return false in a shadow DOM pass', () => {
       const node = document.createElement('div');
       node.innerHTML = '<li>My list item </li>';
