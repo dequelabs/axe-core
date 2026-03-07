@@ -118,4 +118,102 @@ describe('structured-dlitems', function () {
       );
     }
   );
+
+  (shadowSupport.v1 ? describe : describe.skip)(
+    'custom elements with shadow DOM',
+    function () {
+      it('should return false when custom elements wrap <dt> and <dd> in correct order', function () {
+        var term = document.createElement('my-term');
+        term.attachShadow({ mode: 'open' }).innerHTML =
+          '<dt><slot></slot></dt>';
+        term.textContent = 'Term';
+
+        var def = document.createElement('my-definition');
+        def.attachShadow({ mode: 'open' }).innerHTML = '<dd><slot></slot></dd>';
+        def.textContent = 'Definition';
+
+        var host = document.createElement('div');
+        host.appendChild(term);
+        host.appendChild(def);
+        host.attachShadow({ mode: 'open' }).innerHTML =
+          '<dl><slot></slot></dl>';
+
+        var checkArgs = checkSetup(host, 'dl');
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('structured-dlitems')
+            .apply(null, checkArgs)
+        );
+      });
+
+      it('should return true when custom elements wrap <dt> and <dd> in wrong order', function () {
+        var def = document.createElement('my-definition');
+        def.attachShadow({ mode: 'open' }).innerHTML = '<dd><slot></slot></dd>';
+        def.textContent = 'Definition';
+
+        var term = document.createElement('my-term');
+        term.attachShadow({ mode: 'open' }).innerHTML =
+          '<dt><slot></slot></dt>';
+        term.textContent = 'Term';
+
+        var host = document.createElement('div');
+        host.appendChild(def);
+        host.appendChild(term);
+        host.attachShadow({ mode: 'open' }).innerHTML =
+          '<dl><slot></slot></dl>';
+
+        var checkArgs = checkSetup(host, 'dl');
+        assert.isTrue(
+          axe.testUtils
+            .getCheckEvaluate('structured-dlitems')
+            .apply(null, checkArgs)
+        );
+      });
+
+      it('should return false when custom element wraps <dt> followed by native <dd>', function () {
+        var term = document.createElement('my-term');
+        term.attachShadow({ mode: 'open' }).innerHTML =
+          '<dt><slot></slot></dt>';
+        term.textContent = 'Term';
+
+        var dd = document.createElement('dd');
+        dd.textContent = 'Definition';
+
+        var host = document.createElement('div');
+        host.appendChild(term);
+        host.appendChild(dd);
+        host.attachShadow({ mode: 'open' }).innerHTML =
+          '<dl><slot></slot></dl>';
+
+        var checkArgs = checkSetup(host, 'dl');
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('structured-dlitems')
+            .apply(null, checkArgs)
+        );
+      });
+
+      it('should return false when native <dt> followed by custom element wrapping <dd>', function () {
+        var dt = document.createElement('dt');
+        dt.textContent = 'Term';
+
+        var def = document.createElement('my-definition');
+        def.attachShadow({ mode: 'open' }).innerHTML = '<dd><slot></slot></dd>';
+        def.textContent = 'Definition';
+
+        var host = document.createElement('div');
+        host.appendChild(dt);
+        host.appendChild(def);
+        host.attachShadow({ mode: 'open' }).innerHTML =
+          '<dl><slot></slot></dl>';
+
+        var checkArgs = checkSetup(host, 'dl');
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('structured-dlitems')
+            .apply(null, checkArgs)
+        );
+      });
+    }
+  );
 });
