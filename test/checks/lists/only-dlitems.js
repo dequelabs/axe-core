@@ -223,5 +223,64 @@ describe('only-dlitems', () => {
       assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
       assert.deepEqual(checkContext._data, { values: 'p' });
     });
+
+    it('should return false when custom elements wrap <dt> and <dd> in shadow DOM', () => {
+      const term = document.createElement('my-term');
+      term.attachShadow({ mode: 'open' }).innerHTML = '<dt><slot></slot></dt>';
+      term.textContent = 'Term';
+
+      const def = document.createElement('my-definition');
+      def.attachShadow({ mode: 'open' }).innerHTML = '<dd><slot></slot></dd>';
+      def.textContent = 'Definition';
+
+      const host = document.createElement('div');
+      host.appendChild(term);
+      host.appendChild(def);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<dl><slot></slot></dl>';
+
+      const checkArgs = checkSetup(host, 'dl');
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('should return true when custom element has no shadow root', () => {
+      const item = document.createElement('my-term');
+      item.innerHTML = '<dt>Term</dt>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<dl><slot></slot></dl>';
+
+      const checkArgs = checkSetup(host, 'dl');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-term' });
+    });
+
+    it('should return true when custom element shadow DOM has invalid children', () => {
+      const item = document.createElement('my-term');
+      item.attachShadow({ mode: 'open' }).innerHTML = '<p>Not a dt or dd</p>';
+
+      const host = document.createElement('div');
+      host.appendChild(item);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<dl><slot></slot></dl>';
+
+      const checkArgs = checkSetup(host, 'dl');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-term' });
+    });
+
+    it('should return true when custom element has aria-hidden shadow DOM <dt>', () => {
+      const term = document.createElement('my-term');
+      term.attachShadow({ mode: 'open' }).innerHTML =
+        '<dt aria-hidden="true"><slot></slot></dt>';
+      term.textContent = 'Term';
+
+      const host = document.createElement('div');
+      host.appendChild(term);
+      host.attachShadow({ mode: 'open' }).innerHTML = '<dl><slot></slot></dl>';
+
+      const checkArgs = checkSetup(host, 'dl');
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, { values: 'my-term' });
+    });
   });
 });
