@@ -28,7 +28,7 @@ describe('aria-practices', function () {
   });
 
   after(async () => {
-    await driver.close();
+    await driver.quit();
   });
 
   const disabledRules = {
