@@ -17,12 +17,12 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-      - name: Install dependencies
-        run: npm ci
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
         run: echo ".github" >> .prettierignore && cat .prettierignore

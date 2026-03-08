@@ -169,6 +169,31 @@ npm run test:examples
 npm run test:node
 ```
 
+### Chrome Driver Configuration
+
+Some tests require the Chrome Driver binary be installed with a matching Chrome version. This can be achieved with the
+`@puppeteer/browsers` command from the npm registry.
+
+To get the Chrome For Testing binary run: `npx @puppeteer/browsers install chrome`;
+
+To get the Chrome Driver run: `npx @puppeteer/browsers install chromedriver`
+
+> [!NOTE]
+> Do check the commands arguments, you can set a path to install to so they
+> are more universally available.
+
+Each command will first output the binary name installed, followed by the
+full path to the binary installed. Copy that path to set to the environment
+variables.
+
+```shell
+export CHROME_BIN=/path/to/Chrome
+export CHROMEDRIVER_BIN=/path/to/ChromeDriver
+```
+
+If you don't set `CHROMEDRIVER_BIN` when required, an error will be thrown
+instructing that it needs to be set and testing will not continue.
+
 ### Running and debugging specific unit tests
 
 If you want to run a specific set of unit tests instead of all the unit tests, you can use one of the following commands:
