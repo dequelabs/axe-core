@@ -1064,7 +1064,7 @@ describe('color-contrast', function () {
       var params = checkSetup(`
         <div id="target" style="
           background-color: #aaa;
-          color:#666; 
+          color:#666;
           text-shadow: 1px 1px #000;
         "> Hello world </div>
       `);
@@ -1074,6 +1074,21 @@ describe('color-contrast', function () {
       assert.deepEqual(checkContext._data, {
         messageKey: 'complexTextShadows'
       });
+    });
+  });
+
+  describe('error handling', function () {
+    it('should not throw for elements positioned far off-screen', function () {
+      // Elements positioned far outside the viewport could previously crash
+      // getCellFromPoint with "Element midpoint exceeds the grid bounds"
+      var params = checkSetup(
+        '<div id="target" style="position: absolute; left: -99999px; top: -99999px; color: #000; background-color: #fff;">' +
+          'Hello world</div>'
+      );
+
+      // Should not throw - should either return a valid result or undefined (incomplete)
+      var result = contrastEvaluate.apply(checkContext, params);
+      assert.isNotNull(result);
     });
   });
 });
