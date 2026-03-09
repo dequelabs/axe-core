@@ -229,30 +229,23 @@ describe('create-grid', () => {
   });
 
   describe('getCellFromPoint', () => {
-    it('returns an empty array for out-of-bounds points', () => {
-      fixture = fixtureSetup('<span>Hello world</span>');
-      createGrid();
-      const grid = fixture._grid;
-      // Use a point far outside the grid boundaries
-      const result = grid.getCellFromPoint({ x: -99999, y: -99999 });
-      assert.isArray(result);
-      assert.isEmpty(result);
-    });
-
-    it('returns an empty array for points beyond the positive grid bounds', () => {
-      fixture = fixtureSetup('<span>Hello world</span>');
-      createGrid();
-      const grid = fixture._grid;
-      const result = grid.getCellFromPoint({ x: 999999, y: 999999 });
-      assert.isArray(result);
-      assert.isEmpty(result);
+    [
+      { name: 'negative', point: { x: -99999, y: -99999 } },
+      { name: 'positive', point: { x: 999999, y: 999999 } }
+    ].forEach(({ name, point }) => {
+      it(`returns an empty array for ${name} out-of-bounds points`, () => {
+        fixture = fixtureSetup('<span>Hello world</span>');
+        createGrid();
+        const result = fixture._grid.getCellFromPoint(point);
+        assert.isArray(result);
+        assert.isEmpty(result);
+      });
     });
 
     it('returns nodes for in-bounds points', () => {
       fixture = fixtureSetup('<span>Hello world</span>');
       createGrid();
-      const grid = fixture._grid;
-      const result = grid.getCellFromPoint({ x: 10, y: 10 });
+      const result = fixture._grid.getCellFromPoint({ x: 10, y: 10 });
       assert.isArray(result);
       assert.isNotEmpty(result);
     });
