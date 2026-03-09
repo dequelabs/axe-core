@@ -45,8 +45,7 @@
         "shortTextContent": "Element content is too short to determine if it is actual text content",
         "nonBmp": "Element content contains only non-text characters",
         "pseudoContent": "Element's background color could not be determined due to a pseudo element",
-        "colorParse": "Could not parse color string ${data.colorParse}",
-        "unableToAnalyze": "Element's contrast could not be determined due to an internal error in the analysis pipeline"
+        "colorParse": "Could not parse color string ${data.colorParse}"
       }
     }
   }
