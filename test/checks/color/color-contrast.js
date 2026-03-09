@@ -1064,7 +1064,7 @@ describe('color-contrast', function () {
       var params = checkSetup(`
         <div id="target" style="
           background-color: #aaa;
-          color:#666;
+          color:#666; 
           text-shadow: 1px 1px #000;
         "> Hello world </div>
       `);
@@ -1076,5 +1076,4 @@ describe('color-contrast', function () {
       });
     });
   });
-
 });
