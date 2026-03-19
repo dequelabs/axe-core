@@ -88,9 +88,11 @@ import { someUtil } from './index'; // Use: import someUtil from './some-util';
  * @param {VirtualNode|Element} node Node to determine if select
  * @returns {Boolean}
  */
+import nodeLookup from '../../core/utils/node-lookup';
+
 function isNativeSelect(node) {
-  node = node instanceof AbstractVirtuaNode ? node : getNodeFromTree(node);
-  const nodeName = node.props.nodeName;
+  const { vNode } = nodeLookup(node);
+  const nodeName = vNode.props.nodeName;
   return nodeName === 'select';
 }
 ```
@@ -140,14 +142,11 @@ function myCheck(node, options, virtualNode) {
   const rootNode = node.getRootNode();
 }
 
-// Convert ambiguous input to Virtual Node
-import { getNodeFromTree } from '../../core/utils';
+// Convert ambiguous input using nodeLookup
+import nodeLookup from '../../core/utils/node-lookup';
 
 function myFunction(nodeOrVirtual) {
-  const vNode =
-    nodeOrVirtual instanceof AbstractVirtuaNode
-      ? nodeOrVirtual
-      : getNodeFromTree(nodeOrVirtual);
-  // Now work with vNode
+  const { vNode, domNode } = nodeLookup(nodeOrVirtual);
+  // vNode = VirtualNode, domNode = real DOM node
 }
 ```

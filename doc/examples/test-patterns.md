@@ -6,8 +6,6 @@ Quick-reference examples for axe-core test conventions.
 
 ```javascript
 describe('text.sanitize', function () {
-  'use strict';
-
   it('should collapse whitespace and trim', function () {
     assert.equal(axe.commons.text.sanitize('\thi\t'), 'hi');
     assert.equal(axe.commons.text.sanitize('\t\nhi \t'), 'hi');
@@ -24,28 +22,22 @@ describe('text.sanitize', function () {
 
 ```javascript
 describe('aria-allowed-attr', function () {
-  'use strict';
-
-  var fixture = document.getElementById('fixture');
-  var checkContext = axe.testUtils.MockCheckContext();
+  const fixture = document.getElementById('fixture');
+  const checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
-    fixture.innerHTML = '';
     checkContext.reset();
-    axe._tree = null;
   });
 
   it('should return true if all ARIA attributes are allowed', function () {
-    fixture.innerHTML =
-      '<div role="textbox" aria-placeholder="foo" id="target"></div>';
-    axe.testUtils.flatTreeSetup(fixture);
-    var node = fixture.querySelector('#target');
-    var virtualNode = axe.utils.getNodeFromTree(node);
+    const vNode = queryFixture(
+      '<div role="textbox" aria-placeholder="foo" id="target"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node, {}, virtualNode)
+        .call(checkContext, vNode.actualNode, {}, vNode)
     );
   });
 });
@@ -55,17 +47,10 @@ describe('aria-allowed-attr', function () {
 
 ```javascript
 it('should work with Shadow DOM', function () {
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
-  if (!shadowSupport) {
-    this.skip();
-  }
-
-  fixture.innerHTML = '<div id="host"></div>';
-  var host = fixture.querySelector('#host');
-  var shadowRoot = host.attachShadow({ mode: 'open' });
-  shadowRoot.innerHTML = '<div role="button" id="target">Test</div>';
-
-  axe.testUtils.flatTreeSetup(fixture);
+  const vNode = queryShadowFixture(
+    '<div id="host"></div>',
+    '<div role="button" id="target">Test</div>'
+  );
   // Test your function against the shadow DOM content
 });
 ```
@@ -99,3 +84,11 @@ IDs use axe selector array format. For elements inside iframes:
   "violations": [["iframe", "#fail-inside-iframe"]]
 }
 ```
+
+### Full-page integration tests
+
+For rules that need a complete HTML page (e.g., landmark rules, page-level rules), use `test/integration/full/` instead. These tests run against a full HTML document rather than injected fragments.
+
+### Virtual rules tests
+
+Rules that can run without a DOM (using only virtual nodes) should have tests in `test/virtual-rules/`. These tests verify that rules work correctly with `axe.run()` on serialized node data.

@@ -60,10 +60,10 @@ Common feedback and anti-patterns observed in axe-core code reviews.
 ## Common PR Mistakes
 
 1. Not running `npm test` locally before pushing
-2. Committing generated files (`axe.js`, `axe.min.js`, `locales/_template.json`) in a separate commit — always include them with their source changes
+2. Not committing auto-generated `locales/_template.json` in the same commit as message source changes
 3. Changing multiple unrelated things in one PR — split refactoring from feature work
 4. Not updating integration tests when changing rule behavior
-5. Using `console.log` instead of `import log from '../../core/log'`
+5. `console.log` statements should not be committed
 6. Not handling `null` or `undefined` gracefully
 7. Hardcoding strings that should come from `standards/` data
 8. Changing public APIs without `BREAKING CHANGE` in commit footer
