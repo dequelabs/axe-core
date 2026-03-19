@@ -1,6 +1,6 @@
 # axe-core — PR Checklist
 
-Complete every item before opening a PR. Reviewers will not merge until all boxes are checked.
+Complete all applicable items before opening a PR. For items that do not apply to this PR (for example, tests for a `chore`-only change), mark them as "N/A" and follow `doc/code-submission-guidelines.md`. Reviewers will not merge until all required boxes are checked.
 
 ## Code
 
