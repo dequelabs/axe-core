@@ -1,0 +1,111 @@
+# Rule & Check JSON Templates
+
+Quick-reference templates for creating axe-core rules and checks.
+
+## Rule JSON
+
+```json
+{
+  "id": "aria-input-field-name",
+  "impact": "serious",
+  "selector": "[role=\"textbox\"], [role=\"combobox\"]",
+  "matches": "no-naming-method-matches",
+  "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "metadata": {
+    "description": "Ensure every ARIA input field has an accessible name",
+    "help": "ARIA input fields must have an accessible name"
+  },
+  "all": [],
+  "any": ["aria-label", "aria-labelledby", "non-empty-title"],
+  "none": ["no-implicit-explicit-label"]
+}
+```
+
+**Key properties:**
+
+| Property    | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| `selector`  | CSS selector for candidate elements                           |
+| `matches`   | Optional function to further filter elements                  |
+| `all`       | All checks must pass                                          |
+| `any`       | At least one check must pass                                  |
+| `none`      | All checks must fail (for the rule to pass)                   |
+| `impact`    | `"minor"`, `"moderate"`, `"serious"`, `"critical"`            |
+| `enabled`   | Defaults to `true`; set `false` for disabled/deprecated rules |
+| `tags`      | Grouping: `wcag2a`, `wcag2aa`, `best-practice`, `cat.*`, etc. |
+| `pageLevel` | `true` if rule should only run on the top-level window        |
+
+## Check JSON
+
+```json
+{
+  "id": "aria-allowed-attr",
+  "evaluate": "aria-allowed-attr-evaluate",
+  "options": {
+    "validTreeRowAttrs": ["aria-posinset", "aria-setsize"]
+  },
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "ARIA attributes are used correctly for the defined role",
+      "fail": {
+        "singular": "ARIA attribute is not allowed: ${data.values}",
+        "plural": "ARIA attributes are not allowed: ${data.values}"
+      },
+      "incomplete": "Check that there is no problem if the ARIA attribute is ignored: ${data.values}"
+    }
+  }
+}
+```
+
+**Message templates:**
+
+- Use `${data.property}` for dynamic values set via `this.data()`
+- Support singular/plural variants via object with `singular`/`plural` keys
+- Always update `locales/_template.json` when changing messages
+
+## Check Evaluate Function
+
+```javascript
+export default function myCheckEvaluate(node, options, virtualNode) {
+  // node: HTMLElement
+  // options: from check JSON or runtime config
+  // virtualNode: Virtual Node representation
+
+  // Early returns for edge cases
+  if (someEdgeCase) {
+    return true; // Pass
+  }
+
+  // Compute what you need
+  const relevantData = computeStuff(virtualNode);
+
+  // Set data for messages (optional)
+  if (relevantData.hasIssues) {
+    this.data({
+      messageKey: 'someIssue', // Selects message variant
+      values: relevantData.issueList
+    });
+  }
+
+  // Return boolean or undefined
+  if (cannotDetermine) {
+    this.data({ missingData: 'reason' });
+    return undefined; // Incomplete
+  }
+
+  return isValid; // true = pass, false = fail
+}
+```
+
+**Return values:**
+
+- `true` — check passed
+- `false` — check failed
+- `undefined` — incomplete (cannot determine result)
+
+**`this.data()` usage:**
+
+- `messageKey` — selects which message variant to use
+- `values` — dynamic content for `${data.values}` in message templates
+- `missingData` — reason for incomplete results

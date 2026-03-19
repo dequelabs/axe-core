@@ -81,7 +81,14 @@ Closes issue #4957
 - **API changes:** Update `doc/API.md` and `axe.d.ts` TypeScript definitions.
 - **Breaking changes:** Add `BREAKING CHANGE: description` to commit footer. Include migration guide in `CHANGELOG.md`. Tag deprecated code with `@deprecated` JSDoc.
 
-## 5. Reference Docs & Help
+## 5. Examples (Copy-Paste Reference)
+
+- **Code patterns:** `doc/examples/code-patterns.md` — return early, default export, imports, JSDoc, Virtual Node usage
+- **Test patterns:** `doc/examples/test-patterns.md` — unit tests, check tests, Shadow DOM tests, integration test HTML+JSON
+- **Rule & check templates:** `doc/examples/rule-check-templates.md` — JSON templates for rules and checks, evaluate function pattern
+- **PR review patterns:** `doc/examples/pr-review-patterns.md` — common reviewer feedback, anti-patterns, what reviewers look for
+
+## 6. Reference Docs & Help
 
 - **Contributing guide:** `CONTRIBUTING.md`
 - **Import rules detail:** `doc/import-rules.md`
@@ -89,6 +96,6 @@ Closes issue #4957
 - **Developer guide:** `doc/developer-guide.md`
 - **Rule development:** `doc/rule-development.md`
 - **API reference:** `doc/API.md`
+- **Pull Request Checklist:** `doc/pull-request-checklist.md`
 - **Slack:** [axe-community](https://accessibility.deque.com/axe-community)
 - **Issues:** [GitHub Issues](https://github.com/dequelabs/axe-core/issues)
-- **Pull Request Checklist:** [pull request checklist](doc/pull-request-checklist.md)
