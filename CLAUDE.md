@@ -16,7 +16,7 @@
 
 - **Return Early:** Keep the happy path left-aligned. Handle errors/edge cases first with early returns — never nest when you can exit.
 - **Exports:** Default export at the top of the file, immediately after imports.
-- **JSDoc:** Every function requires JSDoc. Document parameters, return type, and `@memberof`. See `doc/developer-guide.md`.
+- **JSDoc:** Add JSDoc/DocBlock comments where appropriate, especially for exported APIs and complex logic. Document parameters and return types. See `doc/code-submission-guidelines.md` (source of truth) and `doc/developer-guide.md` for additional guidance.
 - **Naming:** Files and rule/check IDs in kebab-case. Functions in camelCase. Booleans prefixed `is`/`has`/`should`. Constants in `UPPER_SNAKE_CASE`.
 - **Variables:** Declare at point of use, not at the top of the function.
 
