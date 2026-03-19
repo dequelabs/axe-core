@@ -7,7 +7,7 @@ Complete every item before opening a PR. Reviewers will not merge until all boxe
 - [ ] Default export is at the top of the file, immediately after imports
 - [ ] Return early pattern used — no nested conditionals where an early return works
 - [ ] JSDoc comments on all functions (parameters, return type, `@memberof`)
-- [ ] `console.log` replaced with `import log from '../../core/log'`
+- [ ] `console.log` replaced with the `core/log` wrapper (import path depends on file location)
 - [ ] No hardcoded ARIA/HTML lists — queried from `standards/` via `commons/standards`
 - [ ] Imports follow directory restrictions — especially no `commons` from `core/utils`
 
