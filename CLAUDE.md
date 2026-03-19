@@ -5,8 +5,8 @@
 ## 0. Fundamental Standards
 
 - **Formatting:** Run `npm run fmt` (Prettier) and `npm run eslint` before every commit. No exceptions.
-- **Zero-Exception Testing:** 100% coverage goal. Run `npm test` before completion. All code changes require unit + integration tests.
-- **Import Rule:** Directory-level import restrictions are strictly enforced. See `doc/import-rules.md`.
+- **Zero-Exception Testing:** 100% coverage goal. Run `npm test` before completion. `feat`/`fix` and other behavior-changing PRs require unit + integration tests where applicable; see `doc/code-submission-guidelines.md` for exceptions (e.g., some `chore`/docs changes).
+- **Import Rule:** Directory-level import restrictions are strictly enforced. See `eslint.config.js`.
 - **Commits:** Angular commit convention is mandatory. PRs with non-conforming commits will be rejected. See `doc/code-submission-guidelines.md`.
 - **Issues:** All unresolved issues tracked in [GitHub Issues](https://github.com/dequelabs/axe-core/issues).
 
@@ -24,8 +24,8 @@
 
 - **Prefer Virtual Nodes** for attribute access and property reads (`virtualNode.attr()`, `virtualNode.props`).
 - **Use real DOM** only when you need DOM APIs (e.g., `getBoundingClientRect`, `getRootNode`).
-- **`core/utils/` functions** must NOT use Virtual Nodes — they run before Virtual Tree is initialized.
-- **Conversion:** Use `getNodeFromTree()` from `core/utils` when you receive an ambiguous input.
+- **`core/utils/` functions** should default to real DOM inputs/outputs, except utilities that are explicitly documented as operating on `VirtualNode` (for example, tree or selector helpers). Avoid introducing new `VirtualNode`-dependent utilities unless there is a clear performance or API benefit.
+- **Conversion:** Use `getNodeFromTree()` from `core/utils` when you receive an ambiguous input (such as a `VirtualNode`, selector, or mixed type) and need to resolve it to a real DOM `Node`.
 
 ### Import Restrictions (Hard Rules)
 
@@ -60,7 +60,8 @@
 
 ## 3. Build & Commits
 
-- **Build outputs** (`axe.js`, `axe.min.js`, `locales/_template.json`) are auto-generated. Always commit them in the same commit as their source changes — never in a separate commit.
+- **Bundles (`axe.js`, `axe.min.js`)** are auto-generated for releases/publishing and are not committed to the repo (they are gitignored).
+- **Locales template (`locales/_template.json`)** is auto-generated. When message strings change, regenerate this file and commit it in the same commit as the source changes — never in a separate commit.
 - **One change per PR.** Do not mix refactoring with feature work.
 - **Commit format:** `<type>(<scope>): <subject>` — imperative, lowercase, no period, ≤100 chars total. Body explains motivation. Footer: `Closes issue #123` or full URL. See `doc/code-submission-guidelines.md` for the full type list.
 

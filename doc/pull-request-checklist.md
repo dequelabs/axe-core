@@ -6,8 +6,8 @@ Complete all applicable items before opening a PR. For items that do not apply t
 
 - [ ] Default export is at the top of the file, immediately after imports
 - [ ] Return early pattern used — no nested conditionals where an early return works
-- [ ] JSDoc comments on all functions (parameters, return type, `@memberof`)
-- [ ] `console.log` replaced with the `core/log` wrapper (import path depends on file location)
+- [ ] DocBlock comments where appropriate (especially for public/exported APIs), per `doc/code-submission-guidelines.md`
+- [ ] `console.log` replaced with the `lib/core/log.js` wrapper (imported via a relative path)
 - [ ] No hardcoded ARIA/HTML lists — queried from `standards/` via `commons/standards`
 - [ ] Imports follow directory restrictions — especially no `commons` from `core/utils`
 
@@ -22,7 +22,7 @@ Complete all applicable items before opening a PR. For items that do not apply t
 
 - [ ] `npm run fmt` passes (Prettier)
 - [ ] `npm run eslint` passes
-- [ ] `npm run build` run — generated files (`axe.js`, `axe.min.js`, `locales/_template.json`) committed in the same commit as source changes
+- [ ] `npm run build` run — generated artifacts that are tracked in git (for example `locales/_template.json`) are committed in the same commit as source changes
 
 ## Commits
 
