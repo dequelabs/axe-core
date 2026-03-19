@@ -57,7 +57,7 @@ it('should work with Shadow DOM', function () {
 
 ## Integration Test — Rule
 
-Each rule change requires an HTML + JSON pair in `test/integration/rules/<rule-name>/`.
+Each rule change requires an HTML + JSON pair in `test/integration/rules/<rule-name>/` (mocha-hosted) or `test/integration/full/<rule-name>/` (full HTML page). See sections below for guidance on which to use.
 
 ### HTML file (`aria-allowed-attr.html`)
 
