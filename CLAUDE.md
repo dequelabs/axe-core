@@ -56,7 +56,7 @@
 - **Checks:** Use `axe.testUtils.MockCheckContext()`. Reset `fixture`, `checkContext`, and `axe._tree` in `afterEach`.
 - **Integration tests:** All rule changes require an HTML + JSON pair in `test/integration/rules/<rule-name>/`. JSON selectors must use axe array format (`["#id"]`; iframes: `["iframe", "#id"]`).
 - **Shadow DOM:** Every relevant check/rule must include an open Shadow DOM test case. Skip gracefully with `this.skip()` if `axe.testUtils.shadowSupport.v1` is false.
-- **Logging:** Use `import log from '../../core/log'`. Never use `console.log`.
+- **Logging:** Import the logging helper from `lib/core/log.js` (using a path relative to the current file). Never use `console.log`.
 
 ## 3. Build & Commits
 
