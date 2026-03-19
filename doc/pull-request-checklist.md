@@ -31,7 +31,7 @@ Complete all applicable items before opening a PR. For items that do not apply t
 - [ ] All commits follow Angular format: `<type>(<scope>): <subject>`
 - [ ] Subject is imperative, lowercase, no trailing period, ≤100 chars total
 - [ ] Commit body explains motivation (not just what changed)
-- [ ] Footer includes issue reference: `Closes issue #123` or full URL
+- [ ] Footer includes issue reference: `Closes issue: #123` or full URL
 - [ ] Breaking changes avoided — prefer supporting both old and new formats simultaneously. If unavoidable, document in footer: `BREAKING CHANGE: description`
 
 ## Docs
