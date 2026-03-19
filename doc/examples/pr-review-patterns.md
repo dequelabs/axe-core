@@ -6,7 +6,7 @@ Common feedback and anti-patterns observed in axe-core code reviews.
 
 ### 1. Missing Tests
 
-- Every code change needs unit tests
+- Every behavior-changing code change needs unit tests
 - Rule changes need integration tests (HTML + JSON pair)
 - Shadow DOM test coverage required for relevant checks/rules
 
