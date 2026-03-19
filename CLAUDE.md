@@ -92,7 +92,7 @@ Closes issue #4957
 ## 6. Reference Docs & Help
 
 - **Contributing guide:** `CONTRIBUTING.md`
-- **Import rules detail:** `doc/import-rules.md`
+- **Import rules detail:** `eslint.config.js`
 - **Code submission standards:** `doc/code-submission-guidelines.md`
 - **Developer guide:** `doc/developer-guide.md`
 - **Rule development:** `doc/rule-development.md`
