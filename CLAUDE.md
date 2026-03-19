@@ -91,4 +91,4 @@ Closes issue #4957
 - **API reference:** `doc/API.md`
 - **Slack:** [axe-community](https://accessibility.deque.com/axe-community)
 - **Issues:** [GitHub Issues](https://github.com/dequelabs/axe-core/issues)
-- **Pull Request Checklist** [pull request checklist]()`doc/pull-request-checklist.md`)
+- **Pull Request Checklist:** [pull request checklist](doc/pull-request-checklist.md)
