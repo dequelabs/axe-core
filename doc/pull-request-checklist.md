@@ -14,7 +14,8 @@ Complete all applicable items before opening a PR. For items that do not apply t
 ## Tests
 
 - [ ] Unit tests cover all code paths (`null`/`undefined` input handling only needed for public API functions)
-- [ ] Integration test HTML + JSON pair added/updated for any rule changes
+- [ ] Integration test HTML + JSON pair added/updated for any rule changes — use `integration/rules` for mocha-hosted tests or `integration/full` when the rule requires a full HTML page
+- [ ] Virtual-rules tests updated or created for appropriate rules
 - [ ] Shadow DOM test case added where relevant
 - [ ] Code built with `npm run build` before testing
 - [ ] All applicable tests pass locally: `npm test` (unit), `test:integration`, `test:virtual-rules`, `test:act`, `test:apg`, `test:examples`, `test:node`, `test:jsdom`
