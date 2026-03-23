@@ -3,37 +3,11 @@
   <input type="text" />
 </div>
 
-<div id="pass2" style="height: 200px; overflow-y: auto" tabindex="0">
-  <div style="height: 2000px">
-    <p>Content</p>
-  </div>
-</div>
-
-<div id="pass3" style="height: 20px; overflow: auto">
+<div id="pass2" style="height: 20px; overflow: auto">
   <input type="text" tabindex="-1" />
   <select tabindex="-1"></select>
   <textarea tabindex="-1"></textarea>
   <p style="height: 200px" tabindex="0"></p>
-</div>
-
-<div id="pass4" style="height: 200px; overflow-y: auto" contenteditable="true">
-  <div style="height: 2000px">
-    <p>Content</p>
-  </div>
-</div>
-
-<div id="pass5" style="height: 200px; overflow-y: auto" contenteditable="true">
-  <div style="height: 2000px">
-    <div
-      id="pass6"
-      style="height: 200px; overflow-y: auto"
-      contenteditable="invalid"
-    >
-      <div style="height: 2000px">
-        <p>Content</p>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- fail -->
@@ -47,10 +21,17 @@
   <textarea tabindex="-1"></textarea>
 </div>
 
-<div id="fail3" style="height: 200px; overflow-y: auto" contenteditable="false">
-  <div style="height: 2000px">
-    <p>Content</p>
-  </div>
+<div id="fail3" style="width: 300px; overflow-y: auto">
+  <p style="width: 600px">Contents</p>
+  <p style="width: 600px">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+    doloremque laudantium.
+  </p>
+</div>
+
+<div id="fail4" style="width: 300px; overflow-y: auto">
+  <p width="600px">Contents</p>
+  <img src="#" width="600" height="600" />
 </div>
 
 <!-- inapplicable -->
@@ -144,3 +125,55 @@
   test
   test
 </textarea>
+
+<div id="inapplicable13" style="height: 200px; overflow-y: auto" tabindex="0">
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
+</div>
+
+<div
+  id="inapplicable14"
+  style="height: 200px; overflow-y: auto"
+  contenteditable="true"
+>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
+</div>
+
+<div
+  id="inapplicable15"
+  style="height: 200px; overflow-y: auto"
+  contenteditable="true"
+>
+  <div style="height: 2000px">
+    <div
+      id="inapplicable16"
+      style="height: 200px; overflow-y: auto"
+      contenteditable="invalid"
+    >
+      <div style="height: 2000px">
+        <p>Content</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="inapplicable16"
+  style="height: 200px; overflow-y: auto"
+  contenteditable="false"
+>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
+</div>
+
+<div id="inapplicable17" style="width: 300px">
+  <p style="width: 600px">Contents</p>
+</div>
+
+<div id="inapplicable18" style="width: 300px; overflow-y: auto">
+  <img src="#" width="100" height="100" />
+</div>

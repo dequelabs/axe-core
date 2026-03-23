@@ -96,4 +96,14 @@ describe('get-target-rects', () => {
     const rects = getTargetRects(vNode);
     assert.deepEqual(rects, [vNode.actualNode.getBoundingClientRect()]);
   });
+
+  it('uses client rects if target is inline', () => {
+    const vNode = queryFixture(`
+      <div style="width: 20px">
+        <a href="#" id="target">hello world</a>
+      </div>
+    `);
+    const rects = getTargetRects(vNode);
+    assert.deepEqual(rects, Array.from(vNode.actualNode.getClientRects()));
+  });
 });
