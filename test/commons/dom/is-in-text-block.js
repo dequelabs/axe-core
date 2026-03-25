@@ -332,7 +332,7 @@ describe('dom.isInTextBlock', () => {
     });
   });
 
-  describe('with options.permissive: true', () => {
+  describe('with options.includeInlineBlock: true', () => {
     it('returns true if inline-block element has text sibling', () => {
       const target = queryFixture(`
         <div>
@@ -391,7 +391,7 @@ describe('dom.isInTextBlock', () => {
         <div>
           Hello
           <br>
-          world <button id="target">button 2</button>
+          world <button id="target">button</button>
         </div>
       `);
       assert.isFalse(isInTextBlock(target, { includeInlineBlock: true }));
