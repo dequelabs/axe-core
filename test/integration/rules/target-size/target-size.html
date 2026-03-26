@@ -68,6 +68,30 @@ this should not effect their outcome -->
   <div role="timer" tabindex="0" id="ignore7">Timer</div>
 </div>
 
+<style>
+  .no-spacing * {
+    margin: 0;
+    padding: 0;
+  }
+  .tooltip {
+    border: 0;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: help;
+    text-decoration: dotted underline;
+  }
+</style>
+<div class="no-spacing">
+  <p>
+    This is a <button id="inapplicable8" class="tooltip">term</button> in a
+    sentence.
+  </p>
+  <button style="width: 500px; height: 28px" id="pass25">
+    this is a button that's within 24px of the term
+  </button>
+</div>
+
 <!-- Nested controls-->
 <p>
   <a
@@ -94,14 +118,14 @@ this should not effect their outcome -->
 </p>
 
 <div role="tabpanel" tabindex="0">
-  Focusable tabpanel containing small control
+  Focusable tabpanel containing small control<br />
   <button id="pass17">x</button>
 </div>
 
 <!-- Failed examples -->
 <p>
-  <button id="fail1">x</button
-  ><span role="button" tabindex="0" id="fail2">x</span>
+  <button id="fail1">x</button>
+  <span role="button" tabindex="0" id="fail2">x</span>
 </p>
 
 <ul>
