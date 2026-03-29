@@ -26,11 +26,11 @@ describe('accessible-authentication tests', () => {
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
-  it('returns undefined for invalid autocomplete values', () => {
+  it('returns false for invalid autocomplete values', () => {
     const params = checkSetup(
       '<input type="password" autocomplete="username" id="target" />'
     );
-    assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
   it('returns true for password field in an open shadow root', () => {
