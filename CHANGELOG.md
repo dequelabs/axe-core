@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Features
+
+- **new rule:** add WCAG 2.2 accessible-authentication rule (off by default)
+
 ### [4.11.1](https://github.com/dequelabs/axe-core/compare/v4.11.0...v4.11.1) (2026-01-06)
 
 ### Bug Fixes

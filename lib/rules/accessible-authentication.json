@@ -1,0 +1,13 @@
+{
+  "id": "accessible-authentication",
+  "impact": "serious",
+  "selector": "input[type=\"password\"]",
+  "tags": ["cat.forms", "wcag22aa", "wcag337"],
+  "metadata": {
+    "description": "Ensure password fields have a valid autocomplete attribute",
+    "help": "Authentication password fields must have a valid autocomplete attribute"
+  },
+  "all": ["accessible-authentication"],
+  "any": [],
+  "none": []
+}

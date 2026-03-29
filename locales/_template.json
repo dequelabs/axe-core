@@ -1,6 +1,10 @@
 {
   "lang": "xyz",
   "rules": {
+    "accessible-authentication": {
+      "description": "Ensure password fields have a valid autocomplete attribute",
+      "help": "Authentication password fields must have a valid autocomplete attribute"
+    },
     "accesskeys": {
       "description": "Ensure every accesskey attribute value is unique",
       "help": "accesskey attribute value should be unique"
@@ -688,6 +692,11 @@
         "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
         "bgOverlap": "Element's contrast ratio could not be determined because of element overlap"
       }
+    },
+    "accessible-authentication": {
+      "pass": "Password field has a valid autocomplete attribute",
+      "fail": "Password field does not have a valid autocomplete attribute",
+      "incomplete": "Ensure the password field has an alternative method of authentication"
     },
     "autocomplete-appropriate": {
       "pass": "The autocomplete value is on an appropriate element",

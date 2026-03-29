@@ -1,0 +1,7 @@
+{
+  "description": "accessible-authentication tests",
+  "rule": "accessible-authentication",
+  "violations": [],
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+  "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]]
+}
