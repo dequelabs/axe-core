@@ -1,0 +1,20 @@
+<input type="password" autocomplete="current-password" id="pass1" />
+<input type="password" autocomplete="new-password" id="pass2" />
+<input
+  type="password"
+  autocomplete="section-login current-password"
+  id="pass3"
+/>
+
+<input type="password" id="incomplete1" />
+<input type="password" autocomplete="off" id="incomplete2" />
+<input type="password" autocomplete="username" id="incomplete3" />
+<input type="text" id="inapplicable1" />
+
+<div id="shadow-host"></div>
+<script>
+  const host = document.querySelector('#shadow-host');
+  const shadowRoot = host.attachShadow({ mode: 'open' });
+  shadowRoot.innerHTML =
+    '<input type="password" autocomplete="current-password" id="pass-shadow" />';
+</script>

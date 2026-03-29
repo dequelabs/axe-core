@@ -1,0 +1,12 @@
+{
+  "id": "accessible-authentication",
+  "evaluate": "accessible-authentication-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Password field has a valid autocomplete attribute",
+      "fail": "Password field does not have a valid autocomplete attribute",
+      "incomplete": "Ensure the password field has an alternative method of authentication"
+    }
+  }
+}
