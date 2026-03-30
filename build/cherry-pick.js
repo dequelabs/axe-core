@@ -3,6 +3,10 @@
 const { execSync } = require('child_process');
 const conventionalCommitsParser = require('conventional-commits-parser');
 const chalk = require('chalk');
+
+/** Node's default execSync buffer (~1 MiB) is too small for `git log` on long histories. */
+const GIT_LOG_EXEC_OPTS = { maxBuffer: 50 * 1024 * 1024 };
+
 const { version } = require('../package.json');
 
 const releaseType = process.argv[2];
@@ -50,7 +54,8 @@ function getCommits(branch) {
   // all commits are too large for execSync buffer size so we'll just get since the last 3 years
   const date = new Date(new Date().setFullYear(new Date().getFullYear() - 3));
   const stdout = execSync(
-    `git log ${branch || ''} --abbrev-commit --since=${date.getFullYear()}`
+    `git log ${branch || ''} --no-merges --abbrev-commit --since=${date.getFullYear()}`,
+    GIT_LOG_EXEC_OPTS
   ).toString();
   const allCommits = stdout
     .split(/commit (?=[\w\d]{8}[\n\r])/)
