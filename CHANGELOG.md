@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.12.0](https://github.com/dequelabs/axe-core/compare/v4.11.1...v4.12.0) (2026-03-30)
+
+### Features
+
+- **core:** expose normalizeRunOptions ([#4998](https://github.com/dequelabs/axe-core/issues/4998)) ([b8e6a59](https://github.com/dequelabs/axe-core/commit/b8e6a5943f3d7613e770f36dd15fdb27621ca18c))
+- **new-rule:** check that aria-tab have an accessible name ([#5001](https://github.com/dequelabs/axe-core/issues/5001)) ([0d4e4e7](https://github.com/dequelabs/axe-core/commit/0d4e4e70aa9f46519eb6000744e043c058fd994e)), closes [#4842](https://github.com/dequelabs/axe-core/issues/4842)
+- **rules:** deprecate landmark-complementary-is-top-level rules ([#4992](https://github.com/dequelabs/axe-core/issues/4992)) ([9e09139](https://github.com/dequelabs/axe-core/commit/9e091391189dba452ea485275609120e1e6ae8ba)), closes [#4950](https://github.com/dequelabs/axe-core/issues/4950)
+
+### Bug Fixes
+
+- **aria-valid-attr-value:** handle multiple aria-errormessage IDs ([#4973](https://github.com/dequelabs/axe-core/issues/4973)) ([0489e30](https://github.com/dequelabs/axe-core/commit/0489e30aad3d80790d8fb9cf5b1807d7c3a2179f))
+- **aria:** prevent getOwnedVirtual from returning duplicate nodes ([#4987](https://github.com/dequelabs/axe-core/issues/4987)) ([48ca955](https://github.com/dequelabs/axe-core/commit/48ca9554e2f0400caeec55c09aa100cbb415422d)), closes [#4840](https://github.com/dequelabs/axe-core/issues/4840)
+- **DqElement:** avoid calling constructors with cloneNode ([#5013](https://github.com/dequelabs/axe-core/issues/5013)) ([0281fa1](https://github.com/dequelabs/axe-core/commit/0281fa16f7110b793ac8b3b5b46f93e81be75ee4))
+- **existing-rule:** aria-busy now shows an error message for a use with unallowed children ([#5017](https://github.com/dequelabs/axe-core/issues/5017)) ([2067b87](https://github.com/dequelabs/axe-core/commit/2067b87195552daa3065be7aca1aa2a02c135f28))
+- **scrollable-region-focusable:** clarify the issue is in safari ([#4995](https://github.com/dequelabs/axe-core/issues/4995)) ([4ec5211](https://github.com/dequelabs/axe-core/commit/4ec52112b67b1b44f82b3eade1825789ee8cb659)), closes [WebKit#190870](https://github.com/dequelabs/WebKit/issues/190870) [WebKit#277290](https://github.com/dequelabs/WebKit/issues/277290)
+- **scrollable-region-focusable:** do not fail scroll areas when all content is visible without scrolling ([#4993](https://github.com/dequelabs/axe-core/issues/4993)) ([838707a](https://github.com/dequelabs/axe-core/commit/838707a8f224907042221bbf6fb28d6ad59d7cb0))
+- **target-size:** determine offset using clientRects if target is display:inline ([#5012](https://github.com/dequelabs/axe-core/issues/5012)) ([a4b8091](https://github.com/dequelabs/axe-core/commit/a4b809183f43c4296a3ec57cd80d8a8f34743361))
+- **target-size:** ignore widgets that are inline with other inline elements ([#5000](https://github.com/dequelabs/axe-core/issues/5000)) ([a8dd81b](https://github.com/dequelabs/axe-core/commit/a8dd81be759c670203784acf7b1894257df5457c))
+
 ### [4.11.1](https://github.com/dequelabs/axe-core/compare/v4.11.0...v4.11.1) (2026-01-06)
 
 ### Bug Fixes
