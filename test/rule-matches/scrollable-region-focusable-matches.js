@@ -56,7 +56,7 @@ describe('scrollable-region-focusable-matches', function () {
     const target = queryFixture(
       '<div id="target" style="height: 200px; width: 200px; overflow: auto">' +
         '<div style="height: 10px; width: 2000px; background-color: red;">' +
-        '<p> Content </p>' +
+        '<p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium </p>' +
         '</div>' +
         '</div>'
     );
@@ -138,7 +138,49 @@ describe('scrollable-region-focusable-matches', function () {
 
   it('returns true for combobox with non-valid role', function () {
     const target = queryFixture(
-      '<div role="combobox"><ul id="target" role="section" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+      '<div role="combobox"><ul id="target" role="section" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li><li role="option" style="height: 15rem">Option</li><li role="option" style="height: 15rem">Option</li><li role="option" style="height: 15rem">Option</li></ul></div>'
+    );
+    const actual = rule.matches(target.actualNode, target);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when all text is visible without scrolling', () => {
+    const target = queryFixture(
+      `<div id="target" style="width: 300px; overflow-y: auto">
+        <p style="width: 600px">Contents</p>
+      </div>`
+    );
+    const actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when all visible content is visible without scrolling', () => {
+    const target = queryFixture(
+      `<div id="target" style="width: 300px; overflow-y: auto">
+        <img src="#" width="100" height="100"/>
+      </div>`
+    );
+    const actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when any visible text is not visible without scrolling', () => {
+    const target = queryFixture(
+      `<div id="target" style="width: 300px; overflow-y: auto">
+        <p style="width: 600px">Contents</p>
+        <p style="width: 600px">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. </p>
+      </div>`
+    );
+    const actual = rule.matches(target.actualNode, target);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when any visible content is not visible without scrolling', () => {
+    const target = queryFixture(
+      `<div id="target" style="width: 300px; overflow-y: auto">
+        <p width="600px">Contents</p>
+        <img src="#" width="600" height="600"/>
+      </div>`
     );
     const actual = rule.matches(target.actualNode, target);
     assert.isTrue(actual);

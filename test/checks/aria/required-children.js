@@ -146,14 +146,14 @@ describe('aria-required-children', () => {
     });
   });
 
-  it('should fail list with an unallowed child, even if aria-busy="true"', () => {
+  it('should fail list with an unallowed child but show a custom message, even if aria-busy="true"', () => {
     const params = checkSetup(`
       <div id="target" role="list" aria-busy="true"><div role="tabpanel"></div></div>
     `);
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
     assert.deepEqual(checkContext._data, {
-      messageKey: 'unallowed',
+      messageKey: 'aria-busy-fail',
       values: '[role=tabpanel]'
     });
   });

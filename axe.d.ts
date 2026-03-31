@@ -467,6 +467,10 @@ declare namespace axe {
   }
 
   interface Utils {
+    getElementSource: (
+      element: Node | null | undefined,
+      options?: { maxLength?: number; attrLimit?: number }
+    ) => string;
     getFrameContexts: (
       context?: ElementContext,
       options?: RunOptions

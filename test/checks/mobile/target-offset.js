@@ -34,6 +34,19 @@ describe('target-offset tests', () => {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
+  it('returns true when wrapped inline elements offset is 24px', () => {
+    const checkArgs = checkSetup(`
+      <div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">
+        <a id="target" href="/foo" class="A"> Hello hello hello</a>
+        <a href="/bar" class="B">Hello hello hello</a>
+      </div>
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+  });
+
   describe('when the offset is insufficient', () => {
     it('returns false for targets in the tab order', () => {
       const checkArgs = checkSetup(
@@ -65,6 +78,32 @@ describe('target-offset tests', () => {
       assert.isUndefined(checkContext._data.messageKey);
       assert.equal(checkContext._data.minOffset, 24);
       assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+    });
+
+    it('returns false when wrapped inline elements offset is <24px', () => {
+      const checkArgs = checkSetup(`
+        <div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.1;">
+          <a id="target" href="/foo" class="A"> Hello hello hello</a>
+          <a href="/bar" class="B">Hello hello hello</a>
+        </div>
+      `);
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 20, 3);
+    });
+
+    it('returns false when one line of a wrapped inline elements offset is <24px', () => {
+      const checkArgs = checkSetup(`
+        <div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">
+          <a id="target" href="/foo" class="A"> Hello hello hello</a>
+          <a style="margin-left: -30px" href="/bar" class="B">Hello hello hello</a>
+        </div>
+      `);
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 24);
+      assert.closeTo(checkContext._data.closestOffset, 15.5, 5);
     });
   });
 

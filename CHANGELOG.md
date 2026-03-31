@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.2](https://github.com/dequelabs/axe-core/compare/v4.11.1...v4.11.2) (2026-03-30)
+
+### Bug Fixes
+
+- **aria-valid-attr-value:** handle multiple aria-errormessage IDs ([#4973](https://github.com/dequelabs/axe-core/issues/4973)) ([9322148](https://github.com/dequelabs/axe-core/commit/9322148b69924d6ae2d2dd46e6109bc2fc53abd3))
+- **aria:** prevent getOwnedVirtual from returning duplicate nodes ([#4987](https://github.com/dequelabs/axe-core/issues/4987)) ([99d1e77](https://github.com/dequelabs/axe-core/commit/99d1e77f351db586c79020372efc59608e604a1c)), closes [#4840](https://github.com/dequelabs/axe-core/issues/4840)
+- **DqElement:** avoid calling constructors with cloneNode ([#5013](https://github.com/dequelabs/axe-core/issues/5013)) ([88bc57f](https://github.com/dequelabs/axe-core/commit/88bc57fd3de12cd69d365b3f385ce9a2e30b7bd5))
+- **existing-rule:** aria-busy now shows an error message for a use with unallowed children ([#5017](https://github.com/dequelabs/axe-core/issues/5017)) ([dded75a](https://github.com/dequelabs/axe-core/commit/dded75a9acc9a2350926f46f04e0f1de522f43d6))
+- **scrollable-region-focusable:** clarify the issue is in safari ([#4995](https://github.com/dequelabs/axe-core/issues/4995)) ([2567afd](https://github.com/dequelabs/axe-core/commit/2567afd5c32398c6a488240b066bb0d335f6dc6a)), closes [WebKit#190870](https://github.com/dequelabs/WebKit/issues/190870) [WebKit#277290](https://github.com/dequelabs/WebKit/issues/277290)
+- **scrollable-region-focusable:** do not fail scroll areas when all content is visible without scrolling ([#4993](https://github.com/dequelabs/axe-core/issues/4993)) ([240f8b5](https://github.com/dequelabs/axe-core/commit/240f8b53ad168521a63b54d0053b96ce430c7184))
+- **target-size:** determine offset using clientRects if target is display:inline ([#5012](https://github.com/dequelabs/axe-core/issues/5012)) ([69d81c1](https://github.com/dequelabs/axe-core/commit/69d81c1cbb6a61a272884516c7983dcd17d28a42))
+- **target-size:** ignore widgets that are inline with other inline elements ([#5000](https://github.com/dequelabs/axe-core/issues/5000)) ([cf8a3c0](https://github.com/dequelabs/axe-core/commit/cf8a3c039b121c0c64a1eb8805c586659b69f3c1))
+
 ### [4.11.1](https://github.com/dequelabs/axe-core/compare/v4.11.0...v4.11.1) (2026-01-06)
 
 ### Bug Fixes

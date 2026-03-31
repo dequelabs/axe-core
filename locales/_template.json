@@ -358,7 +358,7 @@
       "help": "scope attribute should be used correctly"
     },
     "scrollable-region-focusable": {
-      "description": "Ensure elements that have scrollable content are accessible by keyboard",
+      "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
       "help": "Scrollable region must have keyboard access"
     },
     "select-name": {
@@ -462,6 +462,7 @@
       "fail": {
         "singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
         "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
+        "unsupported": "Multiple IDs in aria-errormessage is not widely supported in assistive technologies",
         "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
@@ -508,7 +509,8 @@
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
-        "unallowed": "Element has children which are not allowed: ${data.values}"
+        "unallowed": "Element has children which are not allowed: ${data.values}",
+        "aria-busy-fail": "Element has children which are not allowed: ${data.values}; Having aria-busy=\"true\" does not allow children with roles that are not allowed"
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",
