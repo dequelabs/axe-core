@@ -16,7 +16,7 @@
     "description": "Ensure an element's role supports its ARIA attributes",
     "help": "Elements must only use supported ARIA attributes"
   },
-  "all": ["aria-allowed-attr-role", "aria-allowed-attr-elm"],
+  "all": ["aria-allowed-attr", "aria-allowed-attr-elm"],
   "any": [],
   "none": ["aria-unsupported-attr"]
 }

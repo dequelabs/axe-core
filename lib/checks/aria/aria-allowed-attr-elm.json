@@ -2,7 +2,6 @@
   "id": "aria-allowed-attr-elm",
   "evaluate": "aria-allowed-attr-elm-evaluate",
   "metadata": {
-    "impact": "critical",
     "messages": {
       "pass": "ARIA attributes are allowed for this element",
       "fail": {

@@ -1,4 +1,4 @@
-describe('aria-allowed-attr-role', () => {
+describe('aria-allowed-attr', () => {
   'use strict';
 
   const queryFixture = axe.testUtils.queryFixture;
@@ -15,7 +15,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
@@ -28,7 +28,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
   });
@@ -40,7 +40,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
@@ -53,7 +53,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
@@ -66,7 +66,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
@@ -79,7 +79,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
@@ -92,7 +92,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
@@ -105,7 +105,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
@@ -118,7 +118,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-required="true"']);
@@ -131,7 +131,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
@@ -144,7 +144,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
@@ -157,7 +157,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-multiline="false"']);
@@ -168,7 +168,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
@@ -181,7 +181,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isUndefined(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNotNull(checkContext._data);
@@ -194,7 +194,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNotNull(checkContext._data);
@@ -207,7 +207,7 @@ describe('aria-allowed-attr-role', () => {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr-role')
+        .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
     assert.isNotNull(checkContext._data);
@@ -231,12 +231,12 @@ describe('aria-allowed-attr-role', () => {
 
       assert.isFalse(
         axe.testUtils
-          .getCheckEvaluate('aria-allowed-attr-role')
+          .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, null, vNode)
       );
 
       assert.isTrue(
-        axe.testUtils.getCheckEvaluate('aria-allowed-attr-role').call(
+        axe.testUtils.getCheckEvaluate('aria-allowed-attr').call(
           checkContext,
           null,
           {
@@ -271,13 +271,13 @@ describe('aria-allowed-attr-role', () => {
 
       assert.isFalse(
         axe.testUtils
-          .getCheckEvaluate('aria-allowed-attr-role')
+          .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, null, vNode)
       );
 
       assert.isTrue(
         axe.testUtils
-          .getCheckEvaluate('aria-allowed-attr-role')
+          .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, options, vNode)
       );
     });

@@ -437,7 +437,7 @@
         "plural": "ARIA attributes are not allowed on ${data.nodeName} elements: ${data.values}"
       }
     },
-    "aria-allowed-attr-role": {
+    "aria-allowed-attr": {
       "pass": "ARIA attributes are used correctly for the defined role",
       "fail": {
         "singular": "ARIA attribute is not allowed: ${data.values}",
