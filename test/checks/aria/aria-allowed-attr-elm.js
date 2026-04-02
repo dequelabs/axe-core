@@ -58,6 +58,16 @@ describe('aria-allowed-attr-elm', () => {
     });
   });
 
+  it('should pass for br with non-global aria attribute', () => {
+    const vNode = queryFixture('<br aria-expanded="true" id="target">');
+
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr-elm')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
   it('should pass for br with explicit role', () => {
     const vNode = queryFixture(
       '<br role="heading" aria-busy="true" id="target">'
