@@ -44,4 +44,69 @@ describe('text.nativeTextAlternative', function () {
     var vNode = queryFixture('<img id="target" alt="foo" role="none" />');
     assert.equal(nativeTextAlternative(vNode), '');
   });
+
+  describe('form-associated custom elements', function () {
+    var uniqueId = 0;
+
+    function defineFormAssociatedElement() {
+      var name = 'x-native-text-' + uniqueId++;
+      if (!customElements.get(name)) {
+        customElements.define(
+          name,
+          class extends HTMLElement {
+            static formAssociated = true;
+            constructor() {
+              super();
+              this.internals_ = this.attachInternals();
+            }
+          }
+        );
+      }
+      return name;
+    }
+
+    it('returns label text for a form-associated custom element with an explicit label', function () {
+      var tagName = defineFormAssociatedElement();
+      var vNode = queryFixture(
+        '<label for="target">Custom label</label>' +
+          '<' +
+          tagName +
+          ' id="target"></' +
+          tagName +
+          '>'
+      );
+      assert.equal(nativeTextAlternative(vNode), 'Custom label');
+    });
+
+    it('returns `` for a custom element without formAssociated', function () {
+      var name = 'x-native-text-nfa-' + uniqueId++;
+      if (!customElements.get(name)) {
+        customElements.define(
+          name,
+          class extends HTMLElement {
+            constructor() {
+              super();
+            }
+          }
+        );
+      }
+      var vNode = queryFixture(
+        '<label for="target">Should not match</label>' +
+          '<' +
+          name +
+          ' id="target"></' +
+          name +
+          '>'
+      );
+      assert.equal(nativeTextAlternative(vNode), '');
+    });
+
+    it('returns `` for a form-associated custom element without labels', function () {
+      var tagName = defineFormAssociatedElement();
+      var vNode = queryFixture(
+        '<' + tagName + ' id="target"></' + tagName + '>'
+      );
+      assert.equal(nativeTextAlternative(vNode), '');
+    });
+  });
 });

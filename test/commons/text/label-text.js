@@ -117,4 +117,88 @@ describe('text.labelText', function () {
       assert.equal(labelText(target, { inLabelledByContext: true }), '');
     });
   });
+
+  describe('form-associated custom elements', function () {
+    var uniqueId = 0;
+
+    function defineFormAssociatedElement() {
+      var name = 'x-label-text-' + uniqueId++;
+      if (!customElements.get(name)) {
+        customElements.define(
+          name,
+          class extends HTMLElement {
+            static formAssociated = true;
+            constructor() {
+              super();
+              this.internals_ = this.attachInternals();
+            }
+          }
+        );
+      }
+      return name;
+    }
+
+    it('returns label text from an explicit label via for attribute', function () {
+      var tagName = defineFormAssociatedElement();
+      var target = queryFixture(
+        '<label for="target">Custom label</label>' +
+          '<' +
+          tagName +
+          ' id="target"></' +
+          tagName +
+          '>'
+      );
+      assert.equal(labelText(target), 'Custom label');
+    });
+
+    it('returns label text from multiple explicit labels', function () {
+      var tagName = defineFormAssociatedElement();
+      var target = queryFixture(
+        '<label for="target">Label 1</label>' +
+          '<label for="target">Label 2</label>' +
+          '<' +
+          tagName +
+          ' id="target"></' +
+          tagName +
+          '>'
+      );
+      assert.equal(labelText(target), 'Label 1 Label 2');
+    });
+
+    it('returns label text from an implicit label', function () {
+      var tagName = defineFormAssociatedElement();
+      var target = queryFixture(
+        '<label>Implicit label' +
+          '<' +
+          tagName +
+          ' id="target"></' +
+          tagName +
+          '>' +
+          '</label>'
+      );
+      assert.equal(labelText(target), 'Implicit label');
+    });
+
+    it('does not duplicate the implicit label when it is also in actualNode.labels', function () {
+      var tagName = defineFormAssociatedElement();
+      var target = queryFixture(
+        '<label for="target">Wrapping label' +
+          '<' +
+          tagName +
+          ' id="target"></' +
+          tagName +
+          '>' +
+          '</label>'
+      );
+      assert.equal(labelText(target), 'Wrapping label');
+    });
+
+    it('returns empty string when no labels are associated', function () {
+      var tagName = defineFormAssociatedElement();
+      var target = queryFixture(
+        '<' + tagName + ' id="target"></' + tagName + '>'
+      );
+      assert.equal(labelText(target), '');
+    });
+  });
 });
