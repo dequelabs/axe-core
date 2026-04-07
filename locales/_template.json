@@ -426,6 +426,13 @@
         "plural": "Abstract roles cannot be directly used: ${data.values}"
       }
     },
+    "aria-allowed-attr-elm": {
+      "pass": "ARIA attributes are allowed for this element",
+      "fail": {
+        "singular": "ARIA attribute is not allowed on ${data.nodeName} elements: ${data.values}",
+        "plural": "ARIA attributes are not allowed on ${data.nodeName} elements: ${data.values}"
+      }
+    },
     "aria-allowed-attr": {
       "pass": "ARIA attributes are used correctly for the defined role",
       "fail": {
