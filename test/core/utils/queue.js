@@ -171,6 +171,151 @@ describe('axe.utils.queue', function () {
     });
   });
 
+  describe('timeBudget', function () {
+    it('should preserve default behavior when no timeBudget is set', function () {
+      var q = axe.utils.queue();
+      var complete = false;
+
+      q.defer(function (resolve) {
+        resolve(1);
+      });
+
+      q.defer(function (resolve) {
+        resolve(2);
+      });
+
+      q.then(function (data) {
+        complete = true;
+        assert.deepEqual(data, [1, 2]);
+      });
+
+      assert.isTrue(complete);
+    });
+
+    it('should complete all deferred tasks with a timeBudget', function (done) {
+      var q = axe.utils.queue({ timeBudget: 1 });
+
+      q.defer(function (resolve) {
+        var start = Date.now();
+        while (Date.now() - start < 10) {
+          // busy-wait to exceed budget
+        }
+        resolve(1);
+      });
+
+      q.defer(function (resolve) {
+        resolve(2);
+      });
+
+      q.defer(function (resolve) {
+        resolve(3);
+      });
+
+      q.then(function (data) {
+        assert.deepEqual(data, [1, 2, 3]);
+        done();
+      });
+    });
+
+    it('should not complete synchronously when budget is exceeded', function (done) {
+      var q = axe.utils.queue({ timeBudget: 1 });
+      var complete = false;
+
+      q.defer(function (resolve) {
+        var start = Date.now();
+        while (Date.now() - start < 10) {
+          // busy-wait to exceed budget
+        }
+        resolve(1);
+      });
+
+      q.defer(function (resolve) {
+        resolve(2);
+      });
+
+      q.then(function (data) {
+        complete = true;
+        assert.deepEqual(data, [1, 2]);
+        done();
+      });
+
+      assert.isFalse(
+        complete,
+        'queue should not complete synchronously when yielding'
+      );
+    });
+
+    it('should complete synchronously when budget is not exceeded', function () {
+      var q = axe.utils.queue({ timeBudget: 5000 });
+      var complete = false;
+
+      q.defer(function (resolve) {
+        resolve(1);
+      });
+
+      q.defer(function (resolve) {
+        resolve(2);
+      });
+
+      q.then(function (data) {
+        complete = true;
+        assert.deepEqual(data, [1, 2]);
+      });
+
+      assert.isTrue(complete);
+    });
+
+    it('should handle errors during yielded execution', function (done) {
+      var q = axe.utils.queue({ timeBudget: 1 });
+
+      q.defer(function (resolve) {
+        var start = Date.now();
+        while (Date.now() - start < 10) {
+          // busy-wait to exceed budget
+        }
+        resolve(1);
+      });
+
+      q.defer(function () {
+        throw 'error during yield';
+      });
+
+      q.catch(function (e) {
+        assert.equal(e, 'error during yield');
+        done();
+      });
+    });
+
+    it('should not run yielded tasks after abort', function (done) {
+      var q = axe.utils.queue({ timeBudget: 1 });
+      var taskRan = false;
+
+      q.defer(function (resolve) {
+        var start = Date.now();
+        while (Date.now() - start < 10) {
+          // busy-wait to exceed budget
+        }
+        resolve(1);
+      });
+
+      q.defer(function () {
+        taskRan = true;
+      });
+
+      q.then(function () {
+        assert.ok(false, 'should not execute');
+      });
+
+      q.catch(function () {});
+      q.abort('aborted');
+
+      setTimeout(function () {
+        assert.isFalse(taskRan, 'task should not run after abort');
+        done();
+      }, 50);
+    });
+  });
+
   describe('catch', function () {
     it('is called when defer throws an error', function (done) {
       var q = axe.utils.queue();
