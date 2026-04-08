@@ -179,7 +179,7 @@ describe('text.labelText', function () {
       assert.equal(labelText(target), 'Implicit label');
     });
 
-    it('does not duplicate the implicit label when it is also in actualNode.labels', function () {
+    it('does not duplicate when element is inside its explicit label', function () {
       var tagName = defineFormAssociatedElement();
       var target = queryFixture(
         '<label for="target">Wrapping label' +
