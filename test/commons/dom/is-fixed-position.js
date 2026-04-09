@@ -42,6 +42,13 @@ describe('dom.isFixedPosition', () => {
     assert.isTrue(isFixedPosition(vNode));
   });
 
+  it('returns false on detached elements', function () {
+    var el = document.createElement('div');
+    el.innerHTML = 'I am not visible because I am detached!';
+
+    assert.isFalse(axe.commons.dom.isFixedPosition(el));
+  });
+
   describe('options.skipAncestors', () => {
     it('returns false for ancestor with "position: fixed"', () => {
       const vNode = queryFixture(
