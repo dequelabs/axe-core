@@ -18,7 +18,6 @@ describe('target-size position: fixed and scrolled', () => {
           return done(err);
         }
         results = r;
-        console.log(results);
         done();
       });
     });

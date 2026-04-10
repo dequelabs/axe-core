@@ -113,7 +113,6 @@ describe('dom.isOffscreen', () => {
     const vNode = queryFixture(
       '<div id="target" style="position: absolute; width: 50px; right: -151px;">Offscreen?</div>'
     );
-
     assert.isTrue(isOffscreen(vNode));
   });
 
@@ -124,6 +123,15 @@ describe('dom.isOffscreen', () => {
     );
 
     assert.isFalse(isOffscreen(vNode));
+  });
+
+  it('should detect elements positioned outside the right edge on RTL documents', () => {
+    document.body.style.direction = 'rtl';
+    const vNode = queryFixture(
+      '<div id="target" style="position: absolute; width: 50px; left: 100vw;">Offscreen?</div>'
+    );
+
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should not detect elements positioned because of a scroll', () => {
@@ -194,9 +202,44 @@ describe('dom.isOffscreen', () => {
       assert.isTrue(isOffscreen(vNode));
     });
 
-    it('should detect elements positioned outside the right edge', () => {
+    it('should consider elements in the viewport, but beyond the window size as on screen', () => {
+      const vNode = queryFixture(`
+        <div>
+          <p>Hello World</p>
+          <div id="target" style="position: fixed; top: calc(100vh - 50px);">
+            Offscreen?
+          </div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the right edge (LTR)', () => {
       const vNode = queryFixture(
         `<div id="target" style="position: fixed; width: 50px; left: 100vw;">Offscreen?</div>`
+      );
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the right edge (RTL)', () => {
+      document.body.style.direction = 'rtl';
+      const vNode = queryFixture(
+        `<div id="target" style="position: fixed; width: 50px; left: 100vw;">Offscreen?</div>`
+      );
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the left edge (LTR)', () => {
+      const vNode = queryFixture(
+        `<div id="target" style="position: fixed; width: 50px; left: -50px;">Offscreen?</div>`
+      );
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the left edge on RTL documents', () => {
+      document.body.style.direction = 'rtl';
+      const vNode = queryFixture(
+        `<div id="target" style="position: fixed; width: 50px; left: -50px;">Offscreen?</div>`
       );
       assert.isTrue(isOffscreen(vNode));
     });
