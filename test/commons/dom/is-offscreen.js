@@ -1,4 +1,5 @@
 describe('dom.isOffscreen', () => {
+  const { isOffscreen } = axe.commons.dom;
   const fixture = document.getElementById('fixture');
   const { queryFixture, fixtureSetup, flatTreeSetup, shadowSupport } =
     axe.testUtils;
@@ -11,11 +12,19 @@ describe('dom.isOffscreen', () => {
     window.scrollTo(0, 0);
   });
 
+  it('should be false for 0 height elements at the top of the viewport', () => {
+    assert.isFalse(isOffscreen(document.body));
+    assert.isFalse(isOffscreen(document.documentElement));
+
+    const vNode = queryFixture('<div id="target"></div>');
+    assert.isFalse(isOffscreen(vNode));
+  });
+
   it('should detect elements positioned outside the left edge', () => {
     const vNode = queryFixture(
       '<div id="target" style="position: absolute; width: 50px; left: -51px;">Offscreen?</div>'
     );
-    assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should detect elements positioned to but not beyond the left edge', () => {
@@ -23,7 +32,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; left: -50px;">Offscreen?</div>'
     );
 
-    assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should not detect elements at the left edge with a zero width', () => {
@@ -31,14 +40,14 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="width: 0px; left: 0px;"></div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned outside the top edge', () => {
     const vNode = queryFixture(
       '<div id="target" style="position: absolute; height: 50px; top: -50px;">Offscreen?</div>'
     );
-    assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should never detect elements positioned outside the bottom edge', () => {
@@ -46,7 +55,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; height: 50px; bottom: -501px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned that bleed inside the left edge', () => {
@@ -54,7 +63,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; left: -49px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned outside the right edge', () => {
@@ -62,7 +71,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; right: -49px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned outside the top edge', () => {
@@ -70,7 +79,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; height: 50px; top: -49px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned outside the bottom edge', () => {
@@ -78,7 +87,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; height: 50px; bottom: -49px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements that are made off-screen by a parent', () => {
@@ -88,7 +97,7 @@ describe('dom.isOffscreen', () => {
       </div>
     `);
 
-    assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should NOT detect elements positioned outside the right edge on LTR documents', () => {
@@ -96,7 +105,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; right: -51px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should detect elements positioned outside the right edge on RTL documents', () => {
@@ -105,7 +114,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; right: -151px;">Offscreen?</div>'
     );
 
-    assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+    assert.isTrue(isOffscreen(vNode));
   });
 
   it('should NOT detect elements positioned outside the left edge on RTL documents', () => {
@@ -114,7 +123,7 @@ describe('dom.isOffscreen', () => {
       '<div id="target" style="position: absolute; width: 50px; left: -51px;">Offscreen?</div>'
     );
 
-    assert.isFalse(axe.commons.dom.isOffscreen(vNode));
+    assert.isFalse(isOffscreen(vNode));
   });
 
   it('should not detect elements positioned because of a scroll', () => {
@@ -126,14 +135,14 @@ describe('dom.isOffscreen', () => {
       </div>
     `);
     const viz = document.getElementById('visible');
-    assert.isFalse(axe.commons.dom.isOffscreen(viz));
+    assert.isFalse(isOffscreen(viz));
     const scrollme = document.getElementById('scrollme');
     scrollme.scrollIntoView();
-    assert.isFalse(axe.commons.dom.isOffscreen(viz));
+    assert.isFalse(isOffscreen(viz));
   });
 
   it('should return undefined if actual node is undefined', () => {
-    assert.isUndefined(axe.commons.dom.isOffscreen());
+    assert.isUndefined(isOffscreen());
   });
 
   (shadowSupport.v1 ? it : xit)('should detect on screen shadow nodes', () => {
@@ -143,7 +152,7 @@ describe('dom.isOffscreen', () => {
     flatTreeSetup(fixture);
 
     const el = shadow.querySelector('#target');
-    assert.isFalse(axe.commons.dom.isOffscreen(el));
+    assert.isFalse(isOffscreen(el));
   });
 
   (shadowSupport.v1 ? it : xit)('should detect off screen shadow nodes', () => {
@@ -154,7 +163,7 @@ describe('dom.isOffscreen', () => {
     flatTreeSetup(fixture);
 
     const el = shadow.querySelector('#target');
-    assert.isTrue(axe.commons.dom.isOffscreen(el));
+    assert.isTrue(isOffscreen(el));
   });
 
   describe('positioned: fixed', () => {
@@ -163,7 +172,7 @@ describe('dom.isOffscreen', () => {
         '<div id="target" style="position: fixed; height: 50px; top: -50px;">Offscreen?</div>'
       );
 
-      assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+      assert.isTrue(isOffscreen(vNode));
     });
 
     it('should detect elements positioned outside the top edge when scrolled', () => {
@@ -173,23 +182,23 @@ describe('dom.isOffscreen', () => {
         </div>
       `);
 
-      assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+      assert.isTrue(isOffscreen(vNode));
       window.scrollTo(0, document.body.scrollHeight);
-      assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+      assert.isTrue(isOffscreen(vNode));
     });
 
     it('should detect elements positioned outside the bottom edge', () => {
       const vNode = queryFixture(
         `<div id="target" style="position: fixed; height: 50px; top: 100vh;">Offscreen?</div>`
       );
-      assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+      assert.isTrue(isOffscreen(vNode));
     });
 
     it('should detect elements positioned outside the right edge', () => {
       const vNode = queryFixture(
         `<div id="target" style="position: fixed; width: 50px; left: 100vw;">Offscreen?</div>`
       );
-      assert.isTrue(axe.commons.dom.isOffscreen(vNode));
+      assert.isTrue(isOffscreen(vNode));
     });
   });
 });
