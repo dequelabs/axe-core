@@ -1,6 +1,6 @@
 describe('dom.isFixedPosition', () => {
   const isFixedPosition = axe.commons.dom.isFixedPosition;
-  const { queryFixture } = axe.testUtils;
+  const { queryFixture, queryShadowFixture } = axe.testUtils;
 
   it('returns true for element with "position: fixed"', () => {
     const vNode = queryFixture(
@@ -55,6 +55,49 @@ describe('dom.isFixedPosition', () => {
         '<div style="position: fixed;"><div><div id="target"></div></div></div>'
       );
 
+      assert.isFalse(isFixedPosition(vNode, { skipAncestors: true }));
+    });
+  });
+
+  describe('Shadow DOM', () => {
+    it('returns false when no element in the composed tree has position: fixed', () => {
+      const vNode = queryShadowFixture(
+        '<div id="shadow"></div>',
+        '<span id="target"></span>'
+      );
+      assert.isFalse(isFixedPosition(vNode));
+    });
+
+    it('returns true for element in shadow tree with position: fixed', () => {
+      const vNode = queryShadowFixture(
+        '<div id="shadow"></div>',
+        '<div id="target" style="position: fixed;"></div>'
+      );
+
+      assert.isTrue(isFixedPosition(vNode));
+    });
+
+    it('returns true when ancestor outside shadow tree has position: fixed', () => {
+      const vNode = queryShadowFixture(
+        '<div style="position: fixed;"><div id="shadow"></div></div>',
+        '<span id="target"></span>'
+      );
+      assert.isTrue(isFixedPosition(vNode));
+    });
+
+    it('returns true when ancestor outside shadow is fixed and target in shadow has a different position', () => {
+      const vNode = queryShadowFixture(
+        '<div style="position: fixed;"><div id="shadow"></div></div>',
+        '<span id="target" style="position: relative"></span>'
+      );
+      assert.isTrue(isFixedPosition(vNode));
+    });
+
+    it('returns false with skipAncestors when only ancestor outside shadow tree is fixed', () => {
+      const vNode = queryShadowFixture(
+        '<div style="position: fixed;"><div id="shadow"></div></div>',
+        '<span id="target"></span>'
+      );
       assert.isFalse(isFixedPosition(vNode, { skipAncestors: true }));
     });
   });

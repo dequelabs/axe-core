@@ -85,7 +85,7 @@ describe('dom.isOffscreen', () => {
   it('should detect elements that are made off-screen by a parent', () => {
     const vNode = queryFixture(`
       <div id="target" style="position: absolute; width: 50px; left: -51px;">
-        <div id="target">Offscreen?</div> +
+        <div id="target">Offscreen?</div>
       </div>
     `);
 
@@ -180,10 +180,10 @@ describe('dom.isOffscreen', () => {
     });
 
     it('should detect elements positioned outside the bottom edge', () => {
+      const bottom = `-${window.innerHeight + 50}px`;
       const vNode = queryFixture(
-        '<div id="target" style="position: fixed; height: 50px; bottom: -501px;">Offscreen?</div>'
+        `<div id="target" style="position: fixed; height: 50px; bottom: ${bottom};">Offscreen?</div>`
       );
-
       assert.isTrue(axe.commons.dom.isOffscreen(vNode));
     });
   });
