@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Target-size position: fixed and scrolled</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <main id="mocha"></main>
+
+    <div style="height: 5000px">
+      <p>
+        <button style="position: fixed; top: -15px; height: 10px">
+          Offscreen button
+        </button>
+      </p>
+      <p>
+        <button style="position: fixed; top: 0; height: 10px">
+          Too-small visible button
+        </button>
+      </p>
+    </div>
+    <script src="/test/testutils.js"></script>
+    <script src="fixed-scroll.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
