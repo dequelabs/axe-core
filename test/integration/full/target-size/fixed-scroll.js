@@ -15,7 +15,7 @@ describe('target-size position: fixed and scrolled', () => {
       };
       axe.run(context, options, (err, r) => {
         if (err) {
-          done(err);
+          return done(err);
         }
         results = r;
         console.log(results);
