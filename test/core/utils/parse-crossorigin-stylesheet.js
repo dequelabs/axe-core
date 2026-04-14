@@ -92,7 +92,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
       });
   });
 
-  it('returns empty results when url is nullish', done => {
+  it('returns empty results when url is nullish', function (done) {
     this.timeout(axe.constants.preload.timeout + 1000);
 
     var importUrl = null;
@@ -114,7 +114,8 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
         importedUrls,
         isCrossOriginRequest
       )
-      .then(function () {
+      .then(function (data) {
+        assert.isUndefined(data);
         done();
       })
       .catch(function (err) {
