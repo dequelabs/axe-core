@@ -1649,6 +1649,38 @@ describe('text.accessibleTextVirtual', () => {
     });
   });
 
+  describe('natively hidden elements', () => {
+    const tags = ['style', 'script', 'noscript', 'template'];
+
+    it('should not use content as accessible name when directly referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = `<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id">content</${tag}>`;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
+      });
+    });
+
+    it('should not use content when inside a hidden container referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = `
+          <div id="t1" aria-labelledby="hidden-container"></div>
+          <div id="hidden-container" aria-hidden="true">
+            <${tag}>content</${tag}>
+            Expected label
+          </div>
+        `;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(
+          axe.commons.text.accessibleTextVirtual(target),
+          'Expected label',
+          tag
+        );
+      });
+    });
+  });
+
   describe('text.accessibleText acceptance tests', () => {
     'use strict';
     // Tests borrowed from the AccName 1.1 testing docs
