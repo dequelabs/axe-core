@@ -1679,6 +1679,15 @@ describe('text.accessibleTextVirtual', () => {
         );
       });
     });
+
+    it('should ignore aria-label as accessible name when directly referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = `<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id" aria-label="aria-label"></${tag}>`;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
+      });
+    });
   });
 
   describe('text.accessibleText acceptance tests', () => {
