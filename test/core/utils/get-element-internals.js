@@ -1,7 +1,9 @@
 describe('utils.getElementInternals', () => {
   const getElementInternals = axe.utils.getElementInternals;
+  let origElementInternals;
 
   before(() => {
+    origElementInternals = window.ElementInternals;
     customElements.define(
       'utils-get-element-internals',
       class CustomButton extends HTMLElement {
@@ -14,6 +16,7 @@ describe('utils.getElementInternals', () => {
 
   afterEach(() => {
     delete globalThis.axeInternalsMap;
+    window.ElementInternals = origElementInternals;
   });
 
   it('returns undefined for element without internals', () => {
@@ -109,5 +112,12 @@ describe('utils.getElementInternals', () => {
     Object.setPrototypeOf(node._internals, ElementInternals.prototype);
 
     assert.strictEqual(getElementInternals(node), internals);
+  });
+
+  it('guards when window.ElementInternals does not exist', () => {
+    delete window.ElementInternals;
+    const node = document.createElement('utils-get-element-internals');
+
+    assert.isUndefined(getElementInternals(node));
   });
 });
