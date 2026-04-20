@@ -16,14 +16,14 @@ describe('utils.getElementInternals', () => {
     delete globalThis.axeInternalsMap;
   });
 
-  it('should return undefined for element without internals', () => {
+  it('returns undefined for element without internals', () => {
     const node = document.createElement('utils-get-element-internals');
 
     assert.isUndefined(getElementInternals(node));
   });
 
   for (const prop of ['_internals', 'internals', 'internals_']) {
-    it(`should get internals from prop "${prop}"`, () => {
+    it(`returns internals from prop "${prop}"`, () => {
       const node = document.createElement('utils-get-element-internals');
       const internals = node.attachInternals();
       node[prop] = internals;
@@ -31,7 +31,7 @@ describe('utils.getElementInternals', () => {
       assert.strictEqual(getElementInternals(node), internals);
     });
 
-    it(`should not get internals from prop "${prop}" getter`, () => {
+    it(`should not return internals from prop "${prop}" getter`, () => {
       const node = document.createElement('utils-get-element-internals');
       const internals = node.attachInternals();
       Object.defineProperty(node, prop, {
@@ -42,10 +42,17 @@ describe('utils.getElementInternals', () => {
 
       assert.isUndefined(getElementInternals(node));
     });
+
+    it(`should not return internals from prop "${prop}" if not of type ElementInternals`, () => {
+      const node = document.createElement('utils-get-element-internals');
+      node[prop] = 'hello world';
+
+      assert.isUndefined(getElementInternals(node));
+    });
   }
 
   for (const symbol of ['internals', 'privateInternals']) {
-    it(`should get internals from "Symbol('${symbol}')"`, () => {
+    it(`returns internals from "Symbol('${symbol}')"`, () => {
       const node = document.createElement('utils-get-element-internals');
       const internals = node.attachInternals();
       node[Symbol(symbol)] = internals;
@@ -53,7 +60,7 @@ describe('utils.getElementInternals', () => {
       assert.strictEqual(getElementInternals(node), internals);
     });
 
-    it(`should not get internals from Symbol('${symbol}')" getter`, () => {
+    it(`should not return internals from "Symbol('${symbol}')" getter`, () => {
       const node = document.createElement('utils-get-element-internals');
       const internals = node.attachInternals();
       Object.defineProperty(node, Symbol(symbol), {
@@ -64,9 +71,16 @@ describe('utils.getElementInternals', () => {
 
       assert.isUndefined(getElementInternals(node));
     });
+
+    it(`should not return internals from prop "Symbol('${symbol}')" if not of type ElementInternals`, () => {
+      const node = document.createElement('utils-get-element-internals');
+      node[Symbol(symbol)] = 'hello world';
+
+      assert.isUndefined(getElementInternals(node));
+    });
   }
 
-  it('should get internals from global map', () => {
+  it('returns internals from global map', () => {
     const node = document.createElement('utils-get-element-internals');
     const internals = node.attachInternals();
     globalThis.axeInternalsMap = new WeakMap();
@@ -75,7 +89,7 @@ describe('utils.getElementInternals', () => {
     assert.strictEqual(getElementInternals(node), internals);
   });
 
-  it("should fallback to props if element doesn't exist in the global map", () => {
+  it("fallbacks to props if element doesn't exist in the global map", () => {
     const node = document.createElement('utils-get-element-internals');
     const internals = node.attachInternals();
     node._internals = internals;
@@ -84,12 +98,15 @@ describe('utils.getElementInternals', () => {
     assert.strictEqual(getElementInternals(node), internals);
   });
 
-  it('should use global map over props', () => {
+  it('uses global map over props', () => {
     const node = document.createElement('utils-get-element-internals');
     const internals = node.attachInternals();
-    node._internals = 'hello world';
     globalThis.axeInternalsMap = new WeakMap();
     globalThis.axeInternalsMap.set(node, internals);
+
+    // can't attach internals twice so we'll create a fake internals object that is still an instanceof ElementInternals
+    node._internals = {};
+    Object.setPrototypeOf(node._internals, ElementInternals.prototype);
 
     assert.strictEqual(getElementInternals(node), internals);
   });
