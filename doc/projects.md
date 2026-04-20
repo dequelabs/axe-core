@@ -62,5 +62,6 @@ Add your project/integration to this file and submit a pull request.
 1. [A11y Audit Elixir](https://github.com/angelikatyborska/a11y-audit-elixir)
 1. [Accented](https://accented.dev)
 1. [Happo](https://happo.io)
+1. [HolmDigital Accessibility Ecosystem](https://wiki.holmdigital.se)
 
 Axe® and axe-core® are registered trademarks of Deque Systems Inc.
