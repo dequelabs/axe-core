@@ -22,15 +22,6 @@ describe('utils.getElementInternals', () => {
     assert.isUndefined(getElementInternals(node));
   });
 
-  it('should get internals from global map', () => {
-    const node = document.createElement('utils-get-element-internals');
-    const internals = node.attachInternals();
-    globalThis.axeInternalsMap = new WeakMap();
-    globalThis.axeInternalsMap.set(node, internals);
-
-    assert.strictEqual(getElementInternals(node), internals);
-  });
-
   for (const prop of ['_internals', 'internals', 'internals_']) {
     it(`should get internals from prop "${prop}"`, () => {
       const node = document.createElement('utils-get-element-internals');
@@ -74,4 +65,32 @@ describe('utils.getElementInternals', () => {
       assert.isUndefined(getElementInternals(node));
     });
   }
+
+  it('should get internals from global map', () => {
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    globalThis.axeInternalsMap = new WeakMap();
+    globalThis.axeInternalsMap.set(node, internals);
+
+    assert.strictEqual(getElementInternals(node), internals);
+  });
+
+  it("should fallback to props if element doesn't exist in the global map", () => {
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    node._internals = internals;
+    globalThis.axeInternalsMap = new WeakMap();
+
+    assert.strictEqual(getElementInternals(node), internals);
+  });
+
+  it('should use global map over props', () => {
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    node._internals = 'hello world';
+    globalThis.axeInternalsMap = new WeakMap();
+    globalThis.axeInternalsMap.set(node, internals);
+
+    assert.strictEqual(getElementInternals(node), internals);
+  });
 });
