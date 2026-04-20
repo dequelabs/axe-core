@@ -92,7 +92,7 @@ describe('utils.getElementInternals', () => {
     assert.strictEqual(getElementInternals(node), internals);
   });
 
-  it("fallbacks to props if element doesn't exist in the global map", () => {
+  it("uses props if element doesn't exist in the global map", () => {
     const node = document.createElement('utils-get-element-internals');
     const internals = node.attachInternals();
     node._internals = internals;
@@ -111,6 +111,7 @@ describe('utils.getElementInternals', () => {
     node._internals = {};
     Object.setPrototypeOf(node._internals, ElementInternals.prototype);
 
+    assert.isTrue(node._internals instanceof ElementInternals);
     assert.strictEqual(getElementInternals(node), internals);
   });
 
