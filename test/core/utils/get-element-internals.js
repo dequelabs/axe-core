@@ -115,6 +115,32 @@ describe('utils.getElementInternals', () => {
     assert.strictEqual(getElementInternals(node), internals);
   });
 
+  it('gets internals when getter and another prop is set', () => {
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    Object.defineProperty(node, '_internals', {
+      get() {
+        return internals;
+      }
+    });
+    node.internals = internals;
+
+    assert.strictEqual(getElementInternals(node), internals);
+  });
+
+  it('gets internals when getter and another symbol is set', () => {
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    Object.defineProperty(node, Symbol('internals'), {
+      get() {
+        return internals;
+      }
+    });
+    node[Symbol('privateInternals')] = internals;
+
+    assert.strictEqual(getElementInternals(node), internals);
+  });
+
   it('guards when window.ElementInternals does not exist', () => {
     delete window.ElementInternals;
     const node = document.createElement('utils-get-element-internals');
