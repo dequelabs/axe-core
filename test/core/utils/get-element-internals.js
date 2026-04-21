@@ -92,7 +92,7 @@ describe('utils.getElementInternals', () => {
     assert.strictEqual(getElementInternals(node), internals);
   });
 
-  it("uses props if element doesn't exist in the global map", () => {
+  it(`uses props if element doesn't exist in the global map`, () => {
     const node = document.createElement('utils-get-element-internals');
     const internals = node.attachInternals();
     node._internals = internals;
@@ -118,6 +118,8 @@ describe('utils.getElementInternals', () => {
   it('guards when window.ElementInternals does not exist', () => {
     delete window.ElementInternals;
     const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    node._internals = internals;
 
     assert.isUndefined(getElementInternals(node));
   });
