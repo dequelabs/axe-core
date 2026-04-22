@@ -149,4 +149,13 @@ describe('utils.getElementInternals', () => {
 
     assert.isUndefined(getElementInternals(node));
   });
+
+  it('returns undefined for native element', () => {
+    const node = document.createElement('div');
+    // verify we don't return internals for non-native element
+    node._internals = {};
+    Object.setPrototypeOf(node._internals, ElementInternals.prototype);
+
+    assert.isUndefined(getElementInternals(node));
+  });
 });

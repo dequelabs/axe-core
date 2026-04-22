@@ -442,5 +442,24 @@ describe('VirtualNode', () => {
         assert.equal(count, 1);
       });
     });
+
+    describe('internals', () => {
+      it('should get element internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        const internals = vNode.internals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'button');
+      });
+
+      it('should cache the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        let internals = vNode.internals;
+        delete node._internals;
+        internals = vNode.internals;
+        assert.equal(internals.role, 'button');
+      });
+    });
   });
 });

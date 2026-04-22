@@ -6,6 +6,11 @@
 <div role="button"><span id="pass6" aria-label="value"></span></div>
 <div role="button"><span id="pass7" aria-labelledby="value"></span></div>
 <div role="foo dialog" aria-label="foo" id="pass8"></div>
+<testutils-element
+  id="pass9"
+  with-role="progressbar"
+  aria-label="Internals progressbar"
+></testutils-element>
 
 <div role="caption" aria-label="value" id="fail1"></div>
 <div role="caption" aria-labelledby="value" id="fail2"></div>
@@ -42,6 +47,11 @@ conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has on
 <div role="grid"><span id="fail31" aria-labelledby="value"></span></div>
 <div role="foo" aria-label="foo" id="fail32"></div>
 <div role="foo bar" aria-label="foo" id="fail33"></div>
+<testutils-element
+  id="fail34"
+  no-role
+  aria-label="Internals progressbar"
+></testutils-element>
 
 <div id="incomplete1" aria-label="foo">Foo</div>
 <div id="incomplete2" aria-labelledby="missing">Foo</div>
