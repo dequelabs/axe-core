@@ -152,7 +152,7 @@ describe('utils.getElementInternals', () => {
 
   it('returns undefined for native element', () => {
     const node = document.createElement('div');
-    // verify we don't return internals for non-native element
+    // verify we don't return internals for native element
     node._internals = {};
     Object.setPrototypeOf(node._internals, ElementInternals.prototype);
 
