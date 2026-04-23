@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.4](https://github.com/dequelabs/axe-core/compare/v4.11.3...v4.11.4) (2026-04-23)
+
+### Bug Fixes
+
+- **commons/text:** exclude natively hidden elements from aria-labelledby accessible name ([#5076](https://github.com/dequelabs/axe-core/issues/5076)) ([df34adf](https://github.com/dequelabs/axe-core/commit/df34adfc1967919d667d40a76ab5c85b6e47ddfe)), closes [#4704](https://github.com/dequelabs/axe-core/issues/4704)
+- **utils/getAncestry:** escape node name ([#5079](https://github.com/dequelabs/axe-core/issues/5079)) ([6e68d0a](https://github.com/dequelabs/axe-core/commit/6e68d0a5d26999b996152df82238bc3f3a041cb3)), closes [#5078](https://github.com/dequelabs/axe-core/issues/5078)
+
 ### [4.11.3](https://github.com/dequelabs/axe-core/compare/v4.11.2...v4.11.3) (2026-04-13)
 
 ### Bug Fixes
