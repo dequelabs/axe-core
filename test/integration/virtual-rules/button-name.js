@@ -12,7 +12,44 @@ describe('button-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', () => {
+  it('should pass for aria-labelledby in complete tree', () => {
+    const root = new axe.SerialVirtualNode({
+      nodeName: 'body'
+    });
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'button',
+      attributes: {
+        'aria-labelledby': 'foobar'
+      }
+    });
+    const foobar = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      id: 'foobar'
+    });
+    const text = new axe.SerialVirtualNode({
+      nodeName: '#text',
+      nodeType: 3,
+      nodeValue: 'foobar'
+    });
+
+    root.parent = null;
+    root.children = [node, foobar];
+
+    node.parent = root;
+
+    foobar.parent = root;
+    foobar.children = [text];
+
+    text.parent = foobar;
+
+    const results = axe.runVirtualRule('button-name', node);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should incomplete for aria-labelledby in disconnected tree', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'button',
       attributes: {
@@ -171,6 +208,30 @@ describe('button-name virtual-rule', () => {
     });
     node.children = [];
     node.parent = null;
+
+    const results = axe.runVirtualRule('button-name', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for missing aria-labelledby in complete tree', () => {
+    const root = new axe.SerialVirtualNode({
+      nodeName: 'body'
+    });
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'button',
+      attributes: {
+        'aria-labelledby': 'foobar'
+      }
+    });
+
+    root.parent = null;
+    root.children = [node];
+
+    node.parent = root;
+    node.children = [];
 
     const results = axe.runVirtualRule('button-name', node);
 
