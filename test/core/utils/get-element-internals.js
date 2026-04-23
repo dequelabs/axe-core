@@ -177,7 +177,7 @@ describe('utils.getElementInternals', () => {
       '<button is="get-element-internals-builtin">hello</button>';
     const node = fixture.querySelector('button');
 
-    // verify we don't return internals for customized-built in as they cannot attach internals
+    // verify we don't return internals for customized built-in as they cannot attach internals
     // @see https://html.spec.whatwg.org/multipage/custom-elements.html#element-internals
     node._internals = {};
     Object.setPrototypeOf(node._internals, ElementInternals.prototype);
