@@ -447,7 +447,7 @@ describe('VirtualNode', () => {
       it('should get element internals', () => {
         node = document.createElement('testutils-element');
         const vNode = new VirtualNode(node);
-        const internals = vNode.internals;
+        const internals = vNode.elementInternals;
         assert.ok(internals);
         assert.equal(internals.role, 'button');
       });
@@ -455,9 +455,9 @@ describe('VirtualNode', () => {
       it('should cache the internals', () => {
         node = document.createElement('testutils-element');
         const vNode = new VirtualNode(node);
-        let internals = vNode.internals;
+        let internals = vNode.elementInternals;
         delete node._internals;
-        internals = vNode.internals;
+        internals = vNode.elementInternals;
         assert.equal(internals.role, 'button');
       });
     });

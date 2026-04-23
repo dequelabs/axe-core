@@ -1,4 +1,5 @@
 describe('utils.getElementInternals', () => {
+  const { fixture } = axe.testUtils;
   const getElementInternals = axe.utils.getElementInternals;
   let origElementInternals;
 
@@ -156,6 +157,32 @@ describe('utils.getElementInternals', () => {
     node._internals = {};
     Object.setPrototypeOf(node._internals, ElementInternals.prototype);
 
+    assert.isUndefined(getElementInternals(node));
+  });
+
+  it('returns undefined for customized built-in element', () => {
+    let customized = false;
+    customElements.define(
+      'get-element-internals-builtin',
+      class getElementInternalsBuiltIn extends HTMLButtonElement {
+        constructor() {
+          super();
+          customized = true;
+        }
+      },
+      { extends: 'button' }
+    );
+
+    fixture.innerHTML =
+      '<button is="get-element-internals-builtin">hello</button>';
+    const node = fixture.querySelector('button');
+
+    // verify we don't return internals for customized-built in as they cannot attach internals
+    // @see https://html.spec.whatwg.org/multipage/custom-elements.html#element-internals
+    node._internals = {};
+    Object.setPrototypeOf(node._internals, ElementInternals.prototype);
+
+    assert.isTrue(customized);
     assert.isUndefined(getElementInternals(node));
   });
 });
