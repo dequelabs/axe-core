@@ -91,4 +91,35 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
         done();
       });
   });
+
+  it('returns empty results when url is nullish', function (done) {
+    this.timeout(axe.constants.preload.timeout + 1000);
+
+    var importUrl = null;
+    var options = {
+      rootNode: document,
+      shadowId: undefined,
+      convertDataToStylesheet: convertDataToStylesheet,
+      rootIndex: 1
+    };
+    var priority = [1, 0];
+    var importedUrls = [];
+    var isCrossOriginRequest = true;
+
+    axe.utils
+      .parseCrossOriginStylesheet(
+        importUrl,
+        options,
+        priority,
+        importedUrls,
+        isCrossOriginRequest
+      )
+      .then(function (data) {
+        assert.isUndefined(data);
+        done();
+      })
+      .catch(function (err) {
+        done(err);
+      });
+  });
 });
