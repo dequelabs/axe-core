@@ -39,47 +39,44 @@ describe('landmark-unique-matches', function () {
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  describe('form and section elements must have accessible names to be matched', function () {
-    const sectionFormElements = ['section', 'form'];
+  const sectionFormElements = ['section', 'form'];
+  for (const elementType of sectionFormElements) {
+    describe(`${elementType} must have accessible names to be matched`, () => {
+      it(`should match with a label`, () => {
+        axeFixtureSetup(
+          `<${elementType} aria-label="sample label">some ${elementType}</${elementType}>`
+        );
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isTrue(rule.matches(node, virtualNode));
+      });
 
-    sectionFormElements.forEach(function (elementType) {
-      it(
-        'should match because it is a ' + elementType + ' with a label',
-        function () {
-          axeFixtureSetup(
-            '<' +
-              elementType +
-              ' aria-label="sample label">some ' +
-              elementType +
-              '</' +
-              elementType +
-              '>'
-          );
-          const node = fixture.querySelector(elementType);
-          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-          assert.isTrue(rule.matches(node, virtualNode));
-        }
-      );
+      it(`should not match without a label`, () => {
+        axeFixtureSetup(`<${elementType}>some ${elementType}</${elementType}>`);
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isFalse(rule.matches(node, virtualNode));
+      });
 
-      it(
-        'should not match because it is a ' + elementType + ' without a label',
-        function () {
-          axeFixtureSetup(
-            '<' +
-              elementType +
-              '>some ' +
-              elementType +
-              '</' +
-              elementType +
-              '>'
-          );
-          const node = fixture.querySelector(elementType);
-          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-          assert.isFalse(rule.matches(node, virtualNode));
-        }
-      );
+      it('should match without label if given a landmark role', () => {
+        axeFixtureSetup(
+          `<${elementType} role="banner">some ${elementType}</${elementType}>`
+        );
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isTrue(rule.matches(node, virtualNode));
+      });
+
+      it('should not match with a label if given a non-landmark role', () => {
+        axeFixtureSetup(
+          `<${elementType} aria-label="sample label" role="tabpanel">some ${elementType}</${elementType}>`
+        );
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isFalse(rule.matches(node, virtualNode));
+      });
     });
-  });
+  }
 
   describe('header/footers should only match when not inside the excluded descendants', function () {
     headerFooterElements.forEach(function (elementType) {
