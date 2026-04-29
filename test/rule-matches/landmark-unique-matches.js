@@ -39,7 +39,7 @@ describe('landmark-unique-matches', function () {
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  describe('form and section elements must have accessible names to be matched', function () {
+  describe('form and section elements match as landmarks conditionally based on accessible name and role', function () {
     const sectionFormElements = ['section', 'form'];
 
     sectionFormElements.forEach(function (elementType) {
@@ -62,12 +62,80 @@ describe('landmark-unique-matches', function () {
       );
 
       it(
+        'should match because it is a ' +
+          elementType +
+          ' with an explicit landmark role and a label',
+        function () {
+          const explicitRole =
+            elementType === 'section' ? 'navigation' : 'search';
+          axeFixtureSetup(
+            '<' +
+              elementType +
+              ' role="' +
+              explicitRole +
+              '" aria-label="sample label">some ' +
+              elementType +
+              '</' +
+              elementType +
+              '>'
+          );
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          assert.isTrue(rule.matches(node, virtualNode));
+        }
+      );
+
+      it(
+        'should match because it is a ' +
+          elementType +
+          ' with an explicit landmark role but no label',
+        function () {
+          const explicitRole =
+            elementType === 'section' ? 'navigation' : 'search';
+          axeFixtureSetup(
+            '<' +
+              elementType +
+              ' role="' +
+              explicitRole +
+              '">some ' +
+              elementType +
+              '</' +
+              elementType +
+              '>'
+          );
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          assert.isTrue(rule.matches(node, virtualNode));
+        }
+      );
+
+      it(
         'should not match because it is a ' + elementType + ' without a label',
         function () {
           axeFixtureSetup(
             '<' +
               elementType +
               '>some ' +
+              elementType +
+              '</' +
+              elementType +
+              '>'
+          );
+          const node = fixture.querySelector(elementType);
+          const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+          assert.isFalse(rule.matches(node, virtualNode));
+        }
+      );
+
+      it(
+        'should not match because it is a ' +
+          elementType +
+          ' with a label but a non-landmark role',
+        function () {
+          axeFixtureSetup(
+            '<' +
+              elementType +
+              ' role="tabpanel" aria-label="sample label">some ' +
               elementType +
               '</' +
               elementType +
