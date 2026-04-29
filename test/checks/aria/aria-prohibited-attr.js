@@ -284,7 +284,7 @@ describe('aria-prohibited-attr', () => {
 
     it('should return true for multiple prohibited attributes', () => {
       const params = checkSetup(
-        '<testutils-element with-role="code" id="target" aria-hidden="false"  aria-label="foo" aria-labelledby="foo"></div>'
+        '<testutils-element with-role="code" id="target" aria-hidden="false" aria-label="foo" aria-labelledby="foo"></testutils-element>'
       );
       assert.isTrue(checkEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
