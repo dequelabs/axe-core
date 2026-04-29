@@ -282,4 +282,31 @@ describe('aria-allowed-attr', () => {
       );
     });
   });
+
+  describe('ElementInternals', () => {
+    it('should detect incorrectly used attributes', () => {
+      const vNode = queryFixture(
+        '<testutils-element with-role="link" id="target" tabindex="1" aria-selected="true"></testutils-element>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+    });
+
+    it('should not report on required attributes', () => {
+      const vNode = queryFixture(
+        '<testutils-element with-role="checkbox" id="target" tabindex="1" aria-checked="true"></testutils-element>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+  });
 });

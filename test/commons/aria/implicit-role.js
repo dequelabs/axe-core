@@ -1,562 +1,484 @@
-describe('aria.implicitRole', function () {
-  'use strict';
-  var implicitRole = axe.commons.aria.implicitRole;
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
-  var fixture = document.querySelector('#fixture');
-
-  afterEach(function () {
-    fixture.innerHTML = '';
-  });
+describe('aria.implicitRole', () => {
+  const implicitRole = axe.commons.aria.implicitRole;
+  const { fixture, flatTreeSetup, queryFixture } = axe.testUtils;
 
   // test string role (don't need to test all of them just that
   // one works)
-  it('should return button for button', function () {
-    fixture.innerHTML = '<button id="target"></button>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'button');
+  it('returns button for button', () => {
+    const vNode = queryFixture('<button id="target"></button>');
+    assert.equal(implicitRole(vNode), 'button');
   });
 
-  it('should error if element is not in the tree', function () {
+  it('should error if element is not in the tree', () => {
     fixture.innerHTML = '<button id="target"></button>';
-    var node = fixture.querySelector('#target');
-    assert.throws(function () {
+    const node = document.querySelector('#target');
+    assert.throws(() => {
       implicitRole(node);
     });
   });
 
-  it('should return null if there is no implicit role', function () {
-    fixture.innerHTML = '<div id="target"></div>';
-    var node = fixture.querySelector('#target');
+  it('should accept an HTML element', () => {
+    fixture.innerHTML = '<button id="target"></button>';
     flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+    const node = document.querySelector('#target');
+    assert.equal(implicitRole(node), 'button');
   });
 
-  it('should return null if there is no implicit role when not considering chromium', function () {
-    fixture.innerHTML = '<canvas id="target" aria-label="hello"></canvas>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null if there is no implicit role', () => {
+    const vNode = queryFixture('<div id="target"></div>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return the chromium implicit role for elements that have one', function () {
-    fixture.innerHTML = '<canvas id="target" aria-label="hello"></canvas>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node, { chromium: true }), 'Canvas');
+  it('returns null if there is no implicit role when not considering chromium', () => {
+    const vNode = queryFixture(
+      '<canvas id="target" aria-label="hello"></canvas>'
+    );
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return link for "a[href]"', function () {
-    fixture.innerHTML = '<a id="target" href>link</a>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'link');
+  it('returns the chromium implicit role for elements that have one', () => {
+    const vNode = queryFixture(
+      '<canvas id="target" aria-label="hello"></canvas>'
+    );
+    assert.equal(implicitRole(vNode, { chromium: true }), 'Canvas');
   });
 
-  it('should return null for "a:not([href])"', function () {
-    fixture.innerHTML = '<a id="target">link</a>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns link for "a[href]"', () => {
+    const vNode = queryFixture('<a id="target" href>link</a>');
+    assert.equal(implicitRole(vNode), 'link');
   });
 
-  it('should return link for "area[href]"', function () {
-    fixture.innerHTML = '<area id="target" href>link</area>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'link');
+  it('returns null for "a:not([href])"', () => {
+    const vNode = queryFixture('<a id="target">link</a>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for "area:not([href])"', function () {
-    fixture.innerHTML = '<area id="target">link</area>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns link for "area[href]"', () => {
+    const vNode = queryFixture('<area id="target" href>link</area>');
+    assert.equal(implicitRole(vNode), 'link');
   });
 
-  it('should return contentinfo for "body footer"', function () {
-    fixture.innerHTML = '<footer id="target"></footer>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'contentinfo');
+  it('returns null for "area:not([href])"', () => {
+    const vNode = queryFixture('<area id="target">link</area>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for footer with sectioning or main parent', function () {
+  it('returns contentinfo for "body footer"', () => {
+    const vNode = queryFixture('<footer id="target"></footer>');
+    assert.equal(implicitRole(vNode), 'contentinfo');
+  });
+
+  it('returns null for footer with sectioning or main parent', () => {
     var nodes = ['article', 'aside', 'main', 'nav', 'section'];
     var roles = ['article', 'complementary', 'main', 'navigation', 'region'];
 
     for (var i = 0; i < nodes.length; i++) {
-      fixture.innerHTML =
-        '<' + nodes[i] + '><footer id="target"></footer></' + nodes[i] + '>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), nodes[i] + ' not null');
+      const vNode = queryFixture(
+        '<' + nodes[i] + '><footer id="target"></footer></' + nodes[i] + '>'
+      );
+      assert.isNull(implicitRole(vNode), nodes[i] + ' not null');
     }
 
     for (var i = 0; i < roles.length; i++) {
-      fixture.innerHTML =
-        '<div role="' + roles[i] + '"><footer id="target"></footer></div>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), '[' + roles[i] + '] not null');
+      const vNode = queryFixture(
+        '<div role="' + roles[i] + '"><footer id="target"></footer></div>'
+      );
+      assert.isNull(implicitRole(vNode), '[' + roles[i] + '] not null');
     }
   });
 
-  it('should return form for form with accessible name aria-label', function () {
-    fixture.innerHTML = '<form id="target" aria-label="foo"></form>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'form');
+  it('returns form for form with accessible name aria-label', () => {
+    const vNode = queryFixture('<form id="target" aria-label="foo"></form>');
+    assert.equal(implicitRole(vNode), 'form');
   });
 
-  it('should return form for form with accessible name aria-labelledby', function () {
-    fixture.innerHTML =
-      '<div id="foo">foo</div><form id="target" aria-labelledby="foo"></form>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'form');
+  it('returns form for form with accessible name aria-labelledby', () => {
+    const vNode = queryFixture(
+      '<div id="foo">foo</div><form id="target" aria-labelledby="foo"></form>'
+    );
+    assert.equal(implicitRole(vNode), 'form');
   });
 
-  it('should return null for form with accessible name title', function () {
-    fixture.innerHTML = '<form id="target" title="foo"></form>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for form with accessible name title', () => {
+    const vNode = queryFixture('<form id="target" title="foo"></form>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for form without accessible name', function () {
-    fixture.innerHTML = '<form id="target"></form>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for form without accessible name', () => {
+    const vNode = queryFixture('<form id="target"></form>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return complementary for aside scoped to body', function () {
-    fixture.innerHTML = '<aside id="target"></aside>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'complementary');
+  it('returns complementary for aside scoped to body', () => {
+    const vNode = queryFixture('<aside id="target"></aside>');
+    assert.equal(implicitRole(vNode), 'complementary');
   });
 
-  it('should return complementary for aside scoped to main', function () {
-    fixture.innerHTML = '<main><aside id="target"></aside></main>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'complementary');
+  it('returns complementary for aside scoped to main', () => {
+    const vNode = queryFixture('<main><aside id="target"></aside></main>');
+    assert.equal(implicitRole(vNode), 'complementary');
   });
 
-  it('should return complementary for aside scoped to element with role=main', function () {
-    fixture.innerHTML =
-      '<article role="main"><aside id="target"></aside></article>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'complementary');
+  it('returns complementary for aside scoped to element with role=main', () => {
+    const vNode = queryFixture(
+      '<article role="main"><aside id="target"></aside></article>'
+    );
+    assert.equal(implicitRole(vNode), 'complementary');
   });
 
-  it('should return null for aside with sectioning parent', function () {
+  it('returns null for aside with sectioning parent', () => {
     var nodes = ['article', 'aside', 'nav', 'section'];
     var roles = ['article', 'complementary', 'navigation', 'region'];
 
     for (var i = 0; i < nodes.length; i++) {
-      fixture.innerHTML =
-        '<' + nodes[i] + '><header id="target"></header></' + nodes[i] + '>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), nodes[i] + ' not null');
+      const vNode = queryFixture(
+        '<' + nodes[i] + '><header id="target"></header></' + nodes[i] + '>'
+      );
+      assert.isNull(implicitRole(vNode), nodes[i] + ' not null');
     }
 
     for (var i = 0; i < roles.length; i++) {
-      fixture.innerHTML =
-        '<div role="' + roles[i] + '"><header id="target"></header></div>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), '[' + roles[i] + '] not null');
+      const vNode = queryFixture(
+        '<div role="' + roles[i] + '"><header id="target"></header></div>'
+      );
+      assert.isNull(implicitRole(vNode), '[' + roles[i] + '] not null');
     }
   });
 
-  it('should return complementary for aside with sectioning parent if aside has aria-label', function () {
+  it('returns complementary for aside with sectioning parent if aside has aria-label', () => {
     var nodes = ['article', 'aside', 'nav', 'section'];
     var roles = ['article', 'complementary', 'navigation', 'region'];
 
     for (var i = 0; i < nodes.length; i++) {
-      fixture.innerHTML =
+      const vNode = queryFixture(
         '<' +
-        nodes[i] +
-        '><aside id="target" aria-label="test label"></aside></' +
-        nodes[i] +
-        '>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.equal(implicitRole(node), 'complementary');
+          nodes[i] +
+          '><aside id="target" aria-label="test label"></aside></' +
+          nodes[i] +
+          '>'
+      );
+      assert.equal(implicitRole(vNode), 'complementary');
     }
 
     for (var i = 0; i < roles.length; i++) {
-      fixture.innerHTML =
+      const vNode = queryFixture(
         '<div role="' +
-        roles[i] +
-        '"><aside id="target" aria-label="test label"></aside></div>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.equal(implicitRole(node), 'complementary');
+          roles[i] +
+          '"><aside id="target" aria-label="test label"></aside></div>'
+      );
+      assert.equal(implicitRole(vNode), 'complementary');
     }
   });
 
-  it('should return null for sectioned aside with empty aria-label', function () {
-    fixture.innerHTML =
-      '<section><aside id="target" aria-label=" "></aside></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for sectioned aside with empty aria-label', () => {
+    const vNode = queryFixture(
+      '<section><aside id="target" aria-label=" "></aside></section>'
+    );
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return complementary for sectioned aside with title', function () {
-    fixture.innerHTML =
-      '<section><aside id="target" title="test title"></aside></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'complementary');
+  it('returns complementary for sectioned aside with title', () => {
+    const vNode = queryFixture(
+      '<section><aside id="target" title="test title"></aside></section>'
+    );
+    assert.equal(implicitRole(vNode), 'complementary');
   });
 
-  it('should return null for sectioned aside with empty title', function () {
-    fixture.innerHTML =
-      '<section><aside id="target" title=" "></aside></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for sectioned aside with empty title', () => {
+    const vNode = queryFixture(
+      '<section><aside id="target" title=" "></aside></section>'
+    );
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return banner for "body header"', function () {
-    fixture.innerHTML = '<header id="target"></header>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'banner');
+  it('returns banner for "body header"', () => {
+    const vNode = queryFixture('<header id="target"></header>');
+    assert.equal(implicitRole(vNode), 'banner');
   });
 
-  it('should return null for header with sectioning or main parent', function () {
+  it('returns null for header with sectioning or main parent', () => {
     var nodes = ['article', 'aside', 'main', 'nav', 'section'];
     var roles = ['article', 'complementary', 'main', 'navigation', 'region'];
 
     for (var i = 0; i < nodes.length; i++) {
-      fixture.innerHTML =
-        '<' + nodes[i] + '><header id="target"></header></' + nodes[i] + '>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), nodes[i] + ' not null');
+      const vNode = queryFixture(
+        '<' + nodes[i] + '><header id="target"></header></' + nodes[i] + '>'
+      );
+      assert.isNull(implicitRole(vNode), nodes[i] + ' not null');
     }
 
     for (var i = 0; i < roles.length; i++) {
-      fixture.innerHTML =
-        '<div role="' + roles[i] + '"><header id="target"></header></div>';
-      var node = fixture.querySelector('#target');
-      flatTreeSetup(fixture);
-      assert.isNull(implicitRole(node), '[' + roles[i] + '] not null');
+      const vNode = queryFixture(
+        '<div role="' + roles[i] + '"><header id="target"></header></div>'
+      );
+      assert.isNull(implicitRole(vNode), '[' + roles[i] + '] not null');
     }
   });
 
-  it('should return img for "img[alt]"', function () {
-    fixture.innerHTML = '<img id="target" alt="value"></img>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'img');
+  it('returns img for "img[alt]"', () => {
+    const vNode = queryFixture('<img id="target" alt="value"></img>');
+    assert.equal(implicitRole(vNode), 'img');
   });
 
-  it('should return img for "img:not([alt])"', function () {
-    fixture.innerHTML = '<img id="target"></img>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'img');
+  it('returns img for "img:not([alt])"', () => {
+    const vNode = queryFixture('<img id="target"></img>');
+    assert.equal(implicitRole(vNode), 'img');
   });
 
-  it('should return presentation for "img" with empty alt', function () {
-    fixture.innerHTML = '<img id="target" alt=""></img>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'presentation');
+  it('returns presentation for "img" with empty alt', () => {
+    const vNode = queryFixture('<img id="target" alt=""></img>');
+    assert.equal(implicitRole(vNode), 'presentation');
   });
 
-  it('should return img for "img" with empty alt and global aria attribute', function () {
-    fixture.innerHTML = '<img id="target" alt="" aria-label></img>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'img');
+  it('returns img for "img" with empty alt and global aria attribute', () => {
+    const vNode = queryFixture('<img id="target" alt="" aria-label></img>');
+    assert.equal(implicitRole(vNode), 'img');
   });
 
-  it('should return img for "img" with empty alt and focusable', function () {
-    fixture.innerHTML = '<img id="target" alt="" tabindex="0"></img>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'img');
+  it('returns img for "img" with empty alt and focusable', () => {
+    const vNode = queryFixture('<img id="target" alt="" tabindex="0"></img>');
+    assert.equal(implicitRole(vNode), 'img');
   });
 
-  it('should return button for "input[type=button]"', function () {
-    fixture.innerHTML = '<input id="target" type="button"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'button');
+  it('returns button for "input[type=button]"', () => {
+    const vNode = queryFixture('<input id="target" type="button"/>');
+    assert.equal(implicitRole(vNode), 'button');
   });
 
-  it('should return button for "input[type=image]"', function () {
-    fixture.innerHTML = '<input id="target" type="image"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'button');
+  it('returns button for "input[type=image]"', () => {
+    const vNode = queryFixture('<input id="target" type="image"/>');
+    assert.equal(implicitRole(vNode), 'button');
   });
 
-  it('should return button for "input[type=reset]"', function () {
-    fixture.innerHTML = '<input id="target" type="reset"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'button');
+  it('returns button for "input[type=reset]"', () => {
+    const vNode = queryFixture('<input id="target" type="reset"/>');
+    assert.equal(implicitRole(vNode), 'button');
   });
 
-  it('should return button for "input[type=submit]"', function () {
-    fixture.innerHTML = '<input id="target" type="submit"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'button');
+  it('returns button for "input[type=submit]"', () => {
+    const vNode = queryFixture('<input id="target" type="submit"/>');
+    assert.equal(implicitRole(vNode), 'button');
   });
 
-  it('should return checkbox for "input[type=checkbox]"', function () {
-    fixture.innerHTML = '<input id="target" type="checkbox"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'checkbox');
+  it('returns checkbox for "input[type=checkbox]"', () => {
+    const vNode = queryFixture('<input id="target" type="checkbox"/>');
+    assert.equal(implicitRole(vNode), 'checkbox');
   });
 
-  it('should return textbox for "input[type=email]"', function () {
-    fixture.innerHTML = '<input id="target" type="email"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=email]"', () => {
+    const vNode = queryFixture('<input id="target" type="email"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=tel]"', function () {
-    fixture.innerHTML = '<input id="target" type="tel"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=tel]"', () => {
+    const vNode = queryFixture('<input id="target" type="tel"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=text]"', function () {
-    fixture.innerHTML = '<input id="target" type="text"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=text]"', () => {
+    const vNode = queryFixture('<input id="target" type="text"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=url]"', function () {
-    fixture.innerHTML = '<input id="target" type="url"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=url]"', () => {
+    const vNode = queryFixture('<input id="target" type="url"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=password]"', function () {
-    fixture.innerHTML = '<input id="target" type="password"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=password]"', () => {
+    const vNode = queryFixture('<input id="target" type="password"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=time]"', function () {
-    fixture.innerHTML = '<input id="target" type="time"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=time]"', () => {
+    const vNode = queryFixture('<input id="target" type="time"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=date]"', function () {
-    fixture.innerHTML = '<input id="target" type="date"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=date]"', () => {
+    const vNode = queryFixture('<input id="target" type="date"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input:not([type])"', function () {
-    fixture.innerHTML = '<input id="target"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input:not([type])"', () => {
+    const vNode = queryFixture('<input id="target"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return combobox for "input[list]" that points to a datalist', function () {
-    fixture.innerHTML =
-      '<input id="target" list="list"/><datalist id="list"></datalist>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'combobox');
+  it('returns combobox for "input[list]" that points to a datalist', () => {
+    const vNode = queryFixture(
+      '<input id="target" list="list"/><datalist id="list"></datalist>'
+    );
+    assert.equal(implicitRole(vNode), 'combobox');
   });
 
-  it('should return textbox for "input[list]" that does not point to a datalist', function () {
-    fixture.innerHTML = '<input id="target" list="list"/><div id="list"></div>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[list]" that does not point to a datalist', () => {
+    const vNode = queryFixture(
+      '<input id="target" list="list"/><div id="list"></div>'
+    );
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return textbox for "input[type=password][list]"', function () {
-    fixture.innerHTML =
+  it('returns textbox for "input[type=password][list]"', () => {
+    const vNode = queryFixture(
       '<input id="target" type="password" list="list"/>' +
-      '<datalist id="list"></datalist>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+        '<datalist id="list"></datalist>'
+    );
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return spinbutton for "input[type=number]"', function () {
-    fixture.innerHTML = '<input id="target" type="number"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'spinbutton');
+  it('returns spinbutton for "input[type=number]"', () => {
+    const vNode = queryFixture('<input id="target" type="number"/>');
+    assert.equal(implicitRole(vNode), 'spinbutton');
   });
 
-  it('should return radio for "input[type=radio]"', function () {
-    fixture.innerHTML = '<input id="target" type="radio"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'radio');
+  it('returns radio for "input[type=radio]"', () => {
+    const vNode = queryFixture('<input id="target" type="radio"/>');
+    assert.equal(implicitRole(vNode), 'radio');
   });
 
-  it('should return slider for "input[type=range]"', function () {
-    fixture.innerHTML = '<input id="target" type="range"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'slider');
+  it('returns slider for "input[type=range]"', () => {
+    const vNode = queryFixture('<input id="target" type="range"/>');
+    assert.equal(implicitRole(vNode), 'slider');
   });
 
-  it('should return searchbox for "input[type=search]"', function () {
-    fixture.innerHTML = '<input id="target" type="search"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'searchbox');
+  it('returns searchbox for "input[type=search]"', () => {
+    const vNode = queryFixture('<input id="target" type="search"/>');
+    assert.equal(implicitRole(vNode), 'searchbox');
   });
 
-  it('should return combobox for "input[type=search][list]"', function () {
-    fixture.innerHTML =
-      '<input id="target" type="search" list="list"/><datalist id="list"></datalist>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'combobox');
+  it('returns combobox for "input[type=search][list]"', () => {
+    const vNode = queryFixture(
+      '<input id="target" type="search" list="list"/><datalist id="list"></datalist>'
+    );
+    assert.equal(implicitRole(vNode), 'combobox');
   });
 
-  it('should return textbox for "input[type=invalid]"', function () {
-    fixture.innerHTML = '<input id="target" type="invalid"/>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'textbox');
+  it('returns textbox for "input[type=invalid]"', () => {
+    const vNode = queryFixture('<input id="target" type="invalid"/>');
+    assert.equal(implicitRole(vNode), 'textbox');
   });
 
-  it('should return region for "section" with accessible name aria-label', function () {
-    fixture.innerHTML = '<section id="target" aria-label="foo"></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'region');
+  it('returns region for "section" with accessible name aria-label', () => {
+    const vNode = queryFixture(
+      '<section id="target" aria-label="foo"></section>'
+    );
+    assert.equal(implicitRole(vNode), 'region');
   });
 
-  it('should return region for section with accessible name aria-labelledby', function () {
-    fixture.innerHTML =
-      '<div id="foo">foo</div><section id="target" aria-labelledby="foo"></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'region');
+  it('returns region for section with accessible name aria-labelledby', () => {
+    const vNode = queryFixture(
+      '<div id="foo">foo</div><section id="target" aria-labelledby="foo"></section>'
+    );
+    assert.equal(implicitRole(vNode), 'region');
   });
 
-  it('should return null for section with accessible name title', function () {
-    fixture.innerHTML = '<section id="target" title="foo"></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for section with accessible name title', () => {
+    const vNode = queryFixture('<section id="target" title="foo"></section>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for "section" without accessible name', function () {
-    fixture.innerHTML = '<section id="target"></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for "section" without accessible name', () => {
+    const vNode = queryFixture('<section id="target"></section>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for "section" with empty aria-label', function () {
-    fixture.innerHTML = '<section id="target" aria-label=" "></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for "section" with empty aria-label', () => {
+    const vNode = queryFixture(
+      '<section id="target" aria-label=" "></section>'
+    );
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for "section" with empty aria-labelledby', function () {
-    fixture.innerHTML =
-      '<div id="foo"> </div><section id="target" aria-labelledby="foo"></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for "section" with empty aria-labelledby', () => {
+    const vNode = queryFixture(
+      '<div id="foo"> </div><section id="target" aria-labelledby="foo"></section>'
+    );
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return null for "section" with empty title', function () {
-    fixture.innerHTML = '<section id="target" title=" "></section>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.isNull(implicitRole(node));
+  it('returns null for "section" with empty title', () => {
+    const vNode = queryFixture('<section id="target" title=" "></section>');
+    assert.isNull(implicitRole(vNode));
   });
 
-  it('should return listbox for "select[multiple]"', function () {
-    fixture.innerHTML = '<select id="target" multiple></select>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'listbox');
+  it('returns listbox for "select[multiple]"', () => {
+    const vNode = queryFixture('<select id="target" multiple></select>');
+    assert.equal(implicitRole(vNode), 'listbox');
   });
 
-  it('should return listbox for "select[size]" > 1', function () {
-    fixture.innerHTML = '<select id="target" size="3"></select>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'listbox');
+  it('returns listbox for "select[size]" > 1', () => {
+    const vNode = queryFixture('<select id="target" size="3"></select>');
+    assert.equal(implicitRole(vNode), 'listbox');
   });
 
-  it('should return combobox for "select[size]" <= 1', function () {
-    fixture.innerHTML = '<select id="target" size="1"></select>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'combobox');
+  it('returns combobox for "select[size]" <= 1', () => {
+    const vNode = queryFixture('<select id="target" size="1"></select>');
+    assert.equal(implicitRole(vNode), 'combobox');
   });
 
-  it('should return combobox for "select"', function () {
-    fixture.innerHTML = '<select id="target"></select>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'combobox');
+  it('returns combobox for "select"', () => {
+    const vNode = queryFixture('<select id="target"></select>');
+    assert.equal(implicitRole(vNode), 'combobox');
   });
 
-  it('should return cell for "td"', function () {
-    fixture.innerHTML = '<table><td id="target"></td></table>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'cell');
+  it('returns cell for "td"', () => {
+    const vNode = queryFixture('<table><td id="target"></td></table>');
+    assert.equal(implicitRole(vNode), 'cell');
   });
 
-  it('should return gridcell for "td" with grid parent', function () {
-    fixture.innerHTML = '<table role="grid"><td id="target"></td></table>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'gridcell');
+  it('returns gridcell for "td" with grid parent', () => {
+    const vNode = queryFixture(
+      '<table role="grid"><td id="target"></td></table>'
+    );
+    assert.equal(implicitRole(vNode), 'gridcell');
   });
 
-  it('should return gridcell for "td" with treegrid parent', function () {
-    fixture.innerHTML = '<table role="treegrid"><td id="target"></td></table>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'gridcell');
+  it('returns gridcell for "td" with treegrid parent', () => {
+    const vNode = queryFixture(
+      '<table role="treegrid"><td id="target"></td></table>'
+    );
+    assert.equal(implicitRole(vNode), 'gridcell');
   });
 
-  it('should return rowheader for "th[scope=row]"', function () {
-    fixture.innerHTML = '<table><th id="target" scope="row"></th></table>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'rowheader');
+  it('returns rowheader for "th[scope=row]"', () => {
+    const vNode = queryFixture(
+      '<table><th id="target" scope="row"></th></table>'
+    );
+    assert.equal(implicitRole(vNode), 'rowheader');
   });
 
-  it('should return columnheader for "th[scope=col]"', function () {
-    fixture.innerHTML = '<table><th id="target" scope="col"></th></table>';
-    var node = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
-    assert.equal(implicitRole(node), 'columnheader');
+  it('returns columnheader for "th[scope=col]"', () => {
+    const vNode = queryFixture(
+      '<table><th id="target" scope="col"></th></table>'
+    );
+    assert.equal(implicitRole(vNode), 'columnheader');
+  });
+
+  describe('ElementInternals', () => {
+    it('returns element internals role', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      assert.equal(implicitRole(vNode), 'button');
+    });
+
+    it('returns null for element without internals', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      delete vNode.actualNode._internals;
+      assert.isNull(implicitRole(vNode));
+    });
+
+    it('returns null for element without internals role', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      vNode.actualNode._internals.role = undefined;
+      assert.isNull(implicitRole(vNode));
+    });
+
+    // no test is needed for returning internals role over implicit html role since only custom-elements can have element internals
   });
 });

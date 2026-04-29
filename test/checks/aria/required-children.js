@@ -1,15 +1,15 @@
 describe('aria-required-children', () => {
-  const fixture = document.getElementById('fixture');
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
-  const checkContext = axe.testUtils.MockCheckContext();
-  const checkSetup = axe.testUtils.checkSetup;
-  const requiredChildrenCheck = axe.testUtils.getCheckEvaluate(
-    'aria-required-children'
-  );
+  const {
+    fixture,
+    MockCheckContext,
+    checkSetup,
+    getCheckEvaluate,
+    flatTreeSetup
+  } = axe.testUtils;
+  const checkContext = MockCheckContext();
+  const requiredChildrenCheck = getCheckEvaluate('aria-required-children');
 
   afterEach(() => {
-    fixture.innerHTML = '';
-    axe._tree = undefined;
     checkContext.reset();
   });
 
@@ -22,23 +22,20 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._data, ['listitem']);
   });
 
-  (shadowSupported ? it : xit)(
-    'should detect missing sole required child in shadow tree',
-    () => {
-      fixture.innerHTML = '<div id="target" role="list"></div>';
+  it('should detect missing sole required child in shadow tree', () => {
+    fixture.innerHTML = '<div id="target" role="list"></div>';
 
-      const target = document.querySelector('#target');
-      const shadowRoot = target.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<p>Nothing here.</p>';
+    const target = document.querySelector('#target');
+    const shadowRoot = target.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const virtualTarget = axe.utils.getNodeFromTree(target);
+    flatTreeSetup(fixture);
+    const virtualTarget = axe.utils.getNodeFromTree(target);
 
-      const params = [target, undefined, virtualTarget];
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, ['listitem']);
-    }
-  );
+    const params = [target, undefined, virtualTarget];
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['listitem']);
+  });
 
   it('should detect multiple missing required children when one required', () => {
     const params = checkSetup(
@@ -49,23 +46,20 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
   });
 
-  (shadowSupported ? it : xit)(
-    'should detect missing multiple required children in shadow tree when one required',
-    () => {
-      fixture.innerHTML = '<div role="grid" id="target"></div>';
+  it('should detect missing multiple required children in shadow tree when one required', () => {
+    fixture.innerHTML = '<div role="grid" id="target"></div>';
 
-      const target = document.querySelector('#target');
-      const shadowRoot = target.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<p>Nothing here.</p>';
+    const target = document.querySelector('#target');
+    const shadowRoot = target.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const virtualTarget = axe.utils.getNodeFromTree(target);
+    flatTreeSetup(fixture);
+    const virtualTarget = axe.utils.getNodeFromTree(target);
 
-      const params = [target, undefined, virtualTarget];
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
-    }
-  );
+    const params = [target, undefined, virtualTarget];
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
+  });
 
   it('should pass all existing required children when all required', () => {
     const params = checkSetup(
@@ -522,6 +516,28 @@ describe('aria-required-children', () => {
           { reviewEmpty: ['listbox'] }
         );
         assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+    });
+  });
+
+  describe('ElementInternals', () => {
+    it('should allow element with required internals role', () => {
+      const params = checkSetup(
+        '<div role="list" id="target"><testutils-element with-role="listitem">Nothing here.</testutils-element></div>'
+      );
+
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should detect missing sole required child', () => {
+      const params = checkSetup(
+        '<div role="list" id="target"><testutils-element>Nothing here.</testutils-element></div>'
+      );
+
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'unallowed',
+        values: 'testutils-element'
       });
     });
   });
