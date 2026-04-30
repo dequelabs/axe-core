@@ -30,6 +30,8 @@
  *   `.only` / `.skip`, plus `before` / `after` / `beforeEach` / `afterEach` and their
  *   `.only` / `.skip`) — not in `describe` / `it` titles, options, or suite-level code.
  *   Callees may be parenthesized or ternary-chosen runnables, e.g. `(cond ? it : xit)(...)`.
+ *   Skipped when the template is the direct RHS of `*.innerHTML =` (leading quasi
+ *   whitespace becomes `#text` nodes and breaks `firstChild` / fixed vtree indices).
  * - Unwrap legacy IE shadow-DOM skips: `(shadowSupported ? it : xit)(...)`,
  *   `(shadowSupported ? it : it.skip)(...)`, and `(shadowSupport.v1 ? it : xit|it.skip)(...)`
  *   become plain `it(...)`. Then drop `const|let|var shadowSupported = axe.testUtils.shadowSupport.v1`
@@ -770,6 +772,28 @@ function hasHtmlBindingInScopeChain(templatePath) {
 }
 
 /**
+ * `node.innerHTML = \`...\`` (or tagged). Leading whitespace in the string becomes
+ * `#text` nodes and breaks tests that use `firstChild` / fixed child indices.
+ *
+ * @param {import('@babel/traverse').NodePath<import('@babel/types').TemplateLiteral>} tmplPath
+ */
+function isRhsOfInnerHtmlAssignment(tmplPath) {
+  const p = tmplPath.parentPath;
+  if (!p?.isAssignmentExpression?.()) {
+    return false;
+  }
+  if (p.node.right !== tmplPath.node) {
+    return false;
+  }
+  const left = p.node.left;
+  return (
+    t.isMemberExpression(left) &&
+    !left.computed &&
+    t.isIdentifier(left.property, { name: 'innerHTML' })
+  );
+}
+
+/**
  * @param {import('@babel/types').File | import('@babel/types').Program} ast
  */
 function tagHtmlTemplatesAndInjectHtmlConst(ast) {
@@ -785,6 +809,9 @@ function tagHtmlTemplatesAndInjectHtmlConst(ast) {
         return;
       }
       if (templateLiteralHasJsEscapesInRawQuasis(tmplPath.node)) {
+        return;
+      }
+      if (isRhsOfInnerHtmlAssignment(tmplPath)) {
         return;
       }
       if (!isInsideMochaRunnableCallback(tmplPath)) {
