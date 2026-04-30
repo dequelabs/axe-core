@@ -10,11 +10,33 @@
  *   no `arguments`, not a generator, not a named function expression, not a `new` callee)
  * - Convert `var` to `const` or `let` when the declaration is in a function/class method
  *   body (not nested `if`/`for`/`try`/etc., not `for (var ...)`, not top-level `var`)
- *   and using binding reassignment analysis
+ *   and using binding reassignment analysis. Repeated `var name = …` in the same block
+ *   becomes one `let`/`const` then `name = …` assignments (or drops a redundant no-init
+ *   `var name` after an earlier declaration of `name`).
  * - Turn `+` chains used for multi-line HTML/strings into template literals (backticks);
  *   non-string operands become `${expr}` (identifiers, calls, nested `+` that are not
- *   plain numeric addition, etc.); a single space is added inside the backticks at the
- *   start and end so Prettier can reflow long HTML more readably.
+ *   plain numeric addition, etc.). All-string chains become indented multiline templates
+ *   (newline after opening backtick, +2 spaces vs statement indent for HTML, newline at
+ *   each original `+` boundary between literals, newline before closing backtick). When
+ *   the chain is a direct `CallExpression` argument, the
+ *   whole call is rebuilt so recast does not keep a line break between `(` and the opening
+ *   backtick (yields `fn(\`...\`)` instead of `fn(\n  \`...\`)`).
+ * - After that, bare template literals whose quasi-only text parses as an HTML fragment
+ *   with at least one element (via parse5) are wrapped with `html\`\`` so Prettier can format them; `html` is
+ *   `axe.testUtils.html`. Skipped when any quasi `raw` contains JS escapes such as `\r`,
+ *   `\t`, `\n`, `\u…`, `\x…`, etc. — tagging + Prettier would rewrite those into literal
+ *   control characters and break fixtures that rely on exact escape sequences in markup.
+ *   Only inside Mocha runnables (`it` / `xit` / `specify` and
+ *   `.only` / `.skip`, plus `before` / `after` / `beforeEach` / `afterEach` and their
+ *   `.only` / `.skip`) — not in `describe` / `it` titles, options, or suite-level code.
+ *   Callees may be parenthesized or ternary-chosen runnables, e.g. `(cond ? it : xit)(...)`.
+ * - Unwrap legacy IE shadow-DOM skips: `(shadowSupported ? it : xit)(...)`,
+ *   `(shadowSupported ? it : it.skip)(...)`, and `(shadowSupport.v1 ? it : xit|it.skip)(...)`
+ *   become plain `it(...)`. Then drop `const|let|var shadowSupported = axe.testUtils.shadowSupport.v1`
+ *   (or `shadowSupport = axe.testUtils.shadowSupport`) when the binding is unused.
+ *   If no `html` binding is visible from the literal, inserts
+ *   `const html = axe.testUtils.html;` at the start of the outermost Mocha `describe` /
+ *   `describe.only` / `describe.skip` callback body that contains the literal.
  *
  * Usage:
  *   node build/codemods/modernize-test-files.mjs [options] [glob ...]
@@ -23,13 +45,14 @@
  *   -h, --help         Show this message
  *   --dry-run          Print files that would change, do not write
  *   --verbose          Log per-file actions
- *   --prettier         After writes, run Prettier on changed files (can collapse blanks)
+ *   --no-prettier      Skip Prettier after writes (keep recast-only output; may preserve
+ *                      extra blank lines that Prettier would collapse)
  *
  * Default globs: all .js files under test/ (glob: test slash star star slash star dot js)
  *
- * Output uses recast so unchanged regions (including blank lines) stay aligned with the
- * original source. Optional `--prettier` reformats changed files (Prettier may collapse
- * some blank lines). Then run npm run eslint -- --fix and the test suite as needed.
+ * Output uses recast so unchanged regions stay aligned with the original source. After
+ * writes, Prettier is run on changed files by default (use `--no-prettier` to skip). Then
+ * run npm run eslint -- --fix and the test suite as needed.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -42,6 +65,7 @@ import traverseModule from '@babel/traverse';
 import * as t from '@babel/types';
 import recast from 'recast';
 import { glob as globAsync } from 'glob';
+import { parseFragment } from 'parse5';
 
 const traverse = traverseModule.default ?? traverseModule;
 
@@ -189,6 +213,30 @@ function canSafelyConvertVarDeclaration(varPath) {
 }
 
 /**
+ * Whether an earlier statement in the same block already declares `name` with
+ * `var` / `let` / `const`. Used so repeated `var name = …` in one function body
+ * becomes one `let` plus `name = …` assignments (matching hoisted `var` behavior).
+ *
+ * @param {import('@babel/types').Statement[]} body
+ * @param {number} beforeIndex
+ * @param {string} name
+ */
+function blockBodyPriorDeclaresIdentifier(body, beforeIndex, name) {
+  for (let i = 0; i < beforeIndex; i++) {
+    const stmt = body[i];
+    if (!t.isVariableDeclaration(stmt)) {
+      continue;
+    }
+    for (const d of stmt.declarations) {
+      if (t.isIdentifier(d.id) && d.id.name === name) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
  * @param {import('@babel/traverse').NodePath} varPath
  */
 function varDeclarationToConstLet(varPath) {
@@ -202,6 +250,36 @@ function varDeclarationToConstLet(varPath) {
   const declarators = varPath.node.declarations;
   if (declarators.length === 0) {
     return;
+  }
+
+  const blockPath = varPath.parentPath;
+  if (!blockPath?.isBlockStatement?.()) {
+    return;
+  }
+  const body = blockPath.node.body;
+  const stmtIndex = body.indexOf(varPath.node);
+  if (stmtIndex >= 0 && declarators.length === 1) {
+    const only = declarators[0];
+    if (t.isIdentifier(only.id)) {
+      const name = only.id.name;
+      if (blockBodyPriorDeclaresIdentifier(body, stmtIndex, name)) {
+        if (only.init !== null && only.init !== undefined) {
+          varPath.replaceWith(
+            t.expressionStatement(
+              t.assignmentExpression(
+                '=',
+                t.identifier(name),
+                t.cloneNode(only.init)
+              )
+            )
+          );
+        } else {
+          // `var x` after `var x` / `let x` — hoisted duplicate with no initializer; drop.
+          varPath.remove();
+        }
+        return;
+      }
+    }
   }
 
   /** @type {{ id: import('@babel/types').Identifier, kind: 'const' | 'let' }[]} */
@@ -350,18 +428,95 @@ function findConcatChainRoot(binPath) {
 }
 
 /**
- * @param {import('@babel/types').Expression[]} parts
+ * When a concat chain is a call's argument (possibly wrapped in one+ parens), replacing
+ * only the `BinaryExpression` makes recast keep a line break between `(` and the new
+ * template. Replacing the whole `CallExpression` drops that gap so we get
+ * `queryFixture(\`...\`)`.
+ *
+ * @param {import('@babel/traverse').NodePath<import('@babel/types').BinaryExpression>} binPath
+ * @returns {{ callPath: import('@babel/traverse').NodePath<import('@babel/types').CallExpression>, argIndex: number } | null}
  */
-function partsToTemplateLiteral(parts) {
+function getCallRewriteForConcatArg(binPath) {
+  /** @type {import('@babel/traverse').NodePath} */
+  let child = binPath;
+  let p = binPath.parentPath;
+  while (p?.isParenthesizedExpression?.() && p.get('expression') === child) {
+    child = p;
+    p = p.parentPath;
+  }
+  if (!p?.isCallExpression?.()) {
+    return null;
+  }
+  const idx = p.node.arguments.indexOf(child.node);
+  if (idx === -1) {
+    return null;
+  }
+  return { callPath: p, argIndex: idx };
+}
+
+/**
+ * @param {import('@babel/traverse').NodePath<import('@babel/types').CallExpression>} callPath
+ * @param {number} argIndex
+ * @param {import('@babel/types').Expression} newArg
+ */
+function replaceCallArgument(callPath, argIndex, newArg) {
+  const old = callPath.node;
+  const newArgs = old.arguments.map((arg, i) =>
+    i === argIndex ? newArg : arg
+  );
+  const newCall = t.callExpression(old.callee, newArgs);
+  if (old.optional) {
+    newCall.optional = true;
+  }
+  callPath.replaceWith(newCall);
+}
+
+/**
+ * Whitespace prefix of the line at `loc` up to `loc.column` (statement start), for
+ * indenting generated multiline template literals like Prettier (`block + 2` for body).
+ *
+ * @param {string} source
+ * @param {import('@babel/types').SourceLocation['start'] | null | undefined} loc
+ */
+function statementIndentFromLoc(source, loc) {
+  if (!loc) {
+    return '  ';
+  }
+  const lineText = source.split('\n')[loc.line - 1] ?? '';
+  const prefix = lineText.slice(0, loc.column);
+  if (!/^\s*$/.test(prefix)) {
+    return '  ';
+  }
+  return prefix;
+}
+
+/**
+ * @param {import('@babel/types').Expression[]} parts
+ * @param {string} statementIndent
+ */
+function partsToTemplateLiteral(parts, statementIndent) {
+  const innerIndent = `${statementIndent}  `;
+  const onlyStrings = parts.every(p => t.isStringLiteral(p));
+
+  if (onlyStrings) {
+    const segments = parts.map(p => escapeTemplateQuasiText(p.value));
+    const mergedBody = segments.join(`\n${innerIndent}`);
+    const raw = `\n${innerIndent}${mergedBody}\n${statementIndent}`;
+    const quasi = t.templateElement({ raw, cooked: raw }, true);
+    return t.templateLiteral([quasi], []);
+  }
+
   /** @type {import('@babel/types').TemplateElement[]} */
   const quasis = [];
   /** @type {import('@babel/types').Expression[]} */
   const expressions = [];
-  /** Leading space inside opening backtick (Prettier-friendly padding). */
-  let buffer = ' ';
+  let buffer = '';
 
   for (const part of parts) {
     if (t.isStringLiteral(part)) {
+      if (buffer.length > 0) {
+        buffer += `\n${innerIndent}`;
+      }
       buffer += escapeTemplateQuasiText(part.value);
       continue;
     }
@@ -370,17 +525,460 @@ function partsToTemplateLiteral(parts) {
     quasis.push(t.templateElement({ raw, cooked: raw }, false));
     expressions.push(part);
   }
-  /** Trailing space inside closing backtick. */
-  buffer += ' ';
   quasis.push(t.templateElement({ raw: buffer, cooked: buffer }, true));
 
   return t.templateLiteral(quasis, expressions);
 }
 
 /**
- * @param {string} source
- * @param {string} filename
+ * @param {import('@babel/types').TemplateElement} el
  */
+function templateElementText(el) {
+  const v = el.value;
+  return typeof v.cooked === 'string' ? v.cooked : v.raw;
+}
+
+/**
+ * Cooked-ish full text of a template literal (quasis only; `${expr}` omitted).
+ *
+ * @param {import('@babel/types').TemplateLiteral} node
+ */
+function templateLiteralQuasiJoinedText(node) {
+  return node.quasis.map(templateElementText).join('');
+}
+
+/**
+ * True when quasi-joined text is permissively parseable as HTML and yields at least one
+ * element (not comment-only, not plain text). Interpolation gaps are ignored (quasis
+ * only), same as before.
+ *
+ * @param {import('@babel/types').TemplateLiteral} node
+ */
+function looksLikeHtmlTemplateLiteral(node) {
+  const s = templateLiteralQuasiJoinedText(node).trim();
+  if (s.length === 0 || !s.includes('<')) {
+    return false;
+  }
+  try {
+    const fragment = parseFragment(s);
+    return fragment.childNodes.some(child => {
+      const name = child.nodeName;
+      return (
+        name !== '#text' && name !== '#comment' && name !== '#documentType'
+      );
+    });
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * True when a template quasi was written with JS escapes (e.g. `\r`, `\t`, `\n`) in
+ * source. Wrapping with `html` and running Prettier turns those into literal control
+ * characters or different line breaks, which breaks tests that assert exact strings in
+ * attributes or text nodes.
+ *
+ * Uses each quasi's `value.raw` (Babel), where backslash-escape sequences appear as
+ * two-character (or longer) `\` + introducer patterns, distinct from `\\` (one backslash
+ * in cooked output).
+ *
+ * @param {import('@babel/types').TemplateLiteral} node
+ */
+function templateLiteralHasJsEscapesInRawQuasis(node) {
+  for (const quasi of node.quasis) {
+    const raw = quasi.value.raw;
+    // Control / unicode / hex escapes; octal \0–\7 (legacy). Not `` \` `` / `\${` (template only).
+    if (
+      /\\(?:[0-7]{1,3}|[rntfbv]|u(?:\{[0-9a-fA-F]+\}|[0-9a-fA-F]{4})|x[0-9a-fA-F]{2})/.test(
+        raw
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * @param {import('@babel/types').Expression} callee
+ */
+function isMochaDescribeCallee(callee) {
+  if (t.isIdentifier(callee) && callee.name === 'describe') {
+    return true;
+  }
+  return (
+    t.isMemberExpression(callee) &&
+    !callee.computed &&
+    t.isIdentifier(callee.object, { name: 'describe' }) &&
+    t.isIdentifier(callee.property) &&
+    (callee.property.name === 'skip' || callee.property.name === 'only')
+  );
+}
+
+/** Mocha roots that take a callback body (not `describe`). */
+const MOCHA_RUNNABLE_ROOT_NAMES = new Set([
+  'it',
+  'xit',
+  'specify',
+  'before',
+  'after',
+  'beforeEach',
+  'afterEach'
+]);
+
+/**
+ * `it`, `xit`, `before`, `after`, `beforeEach`, `afterEach`, `specify`, and
+ * `it.only` / `it.skip` / `beforeEach.skip` / … (including `.retries` on `it`).
+ *
+ * @param {import('@babel/types').Expression} callee
+ */
+function isMochaRunnableCallee(callee) {
+  if (t.isIdentifier(callee) && MOCHA_RUNNABLE_ROOT_NAMES.has(callee.name)) {
+    return true;
+  }
+  if (
+    t.isMemberExpression(callee) &&
+    !callee.computed &&
+    t.isIdentifier(callee.object) &&
+    MOCHA_RUNNABLE_ROOT_NAMES.has(callee.object.name) &&
+    t.isIdentifier(callee.property) &&
+    (callee.property.name === 'only' ||
+      callee.property.name === 'skip' ||
+      callee.property.name === 'retries')
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Strip `(...)` wrappers from a callee (e.g. `(it)` or `((shadow ? it : xit))`).
+ *
+ * @param {import('@babel/types').Expression} callee
+ */
+function unwrapCalleeExpression(callee) {
+  let e = callee;
+  while (t.isParenthesizedExpression(e)) {
+    e = e.expression;
+  }
+  return e;
+}
+
+/**
+ * Whether `callee()` is a Mocha runnable call, including `(a ? it : xit)` and nested
+ * ternaries where every branch ends in a recognizable runnable.
+ *
+ * @param {import('@babel/types').Expression} callee
+ */
+function isCallToMochaRunnable(callee) {
+  const inner = unwrapCalleeExpression(callee);
+  if (isMochaRunnableCallee(inner)) {
+    return true;
+  }
+  if (t.isConditionalExpression(inner)) {
+    return (
+      isCallToMochaRunnable(inner.consequent) &&
+      isCallToMochaRunnable(inner.alternate)
+    );
+  }
+  return false;
+}
+
+/**
+ * Index of the callback argument (`it(title, fn)`, `it(title, opts, fn)`, `it(fn)`).
+ *
+ * @param {import('@babel/types').CallExpression} callNode
+ */
+function getMochaRunnableCallbackArgIndex(callNode) {
+  const args = callNode.arguments;
+  for (let i = args.length - 1; i >= 0; i--) {
+    const a = args[i];
+    if (t.isFunctionExpression(a) || t.isArrowFunctionExpression(a)) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+/**
+ * True when the template is inside a runnable’s callback, not its title/options.
+ *
+ * @param {import('@babel/traverse').NodePath} tmplPath
+ */
+function isInsideMochaRunnableCallback(tmplPath) {
+  const runnableCall = tmplPath.findParent(
+    p =>
+      p.isCallExpression() &&
+      isCallToMochaRunnable(
+        /** @type {import('@babel/types').CallExpression} */ (p.node).callee
+      )
+  );
+  if (!runnableCall?.isCallExpression()) {
+    return false;
+  }
+  const idx = getMochaRunnableCallbackArgIndex(runnableCall.node);
+  if (idx < 0) {
+    return false;
+  }
+  const callbackArgPath = runnableCall.get(`arguments.${idx}`);
+  return callbackArgPath.isAncestor(tmplPath);
+}
+
+/**
+ * Outermost `describe` / `describe.only` / `describe.skip` call ancestor.
+ *
+ * @param {import('@babel/traverse').NodePath} startPath
+ * @returns {import('@babel/traverse').NodePath<import('@babel/types').CallExpression> | null}
+ */
+function findOutermostDescribeCallPath(startPath) {
+  /** @type {import('@babel/traverse').NodePath<import('@babel/types').CallExpression> | null} */
+  let outer = null;
+  let p = startPath;
+  while (p) {
+    if (p.isCallExpression() && isMochaDescribeCallee(p.node.callee)) {
+      outer = /** @type {typeof outer} */ (p);
+    }
+    p = p.parentPath;
+  }
+  return outer;
+}
+
+/**
+ * @param {import('@babel/traverse').NodePath<import('@babel/types').CallExpression>} describePath
+ * @returns {import('@babel/types').BlockStatement | null}
+ */
+function getDescribeCallbackBlock(describePath) {
+  const args = describePath.node.arguments;
+  if (args.length < 2) {
+    return null;
+  }
+  const cb = args[1];
+  if (!t.isFunctionExpression(cb) && !t.isArrowFunctionExpression(cb)) {
+    return null;
+  }
+  if (!t.isBlockStatement(cb.body)) {
+    return null;
+  }
+  return cb.body;
+}
+
+/**
+ * @param {import('@babel/traverse').NodePath} templatePath
+ */
+function hasHtmlBindingInScopeChain(templatePath) {
+  return templatePath.scope.hasBinding('html');
+}
+
+/**
+ * @param {import('@babel/types').File | import('@babel/types').Program} ast
+ */
+function tagHtmlTemplatesAndInjectHtmlConst(ast) {
+  /** @type {import('@babel/types').BlockStatement[]} */
+  const describeBodiesNeedingConst = [];
+
+  traverse(ast, {
+    TemplateLiteral(tmplPath) {
+      if (tmplPath.parentPath?.isTaggedTemplateExpression?.()) {
+        return;
+      }
+      if (!looksLikeHtmlTemplateLiteral(tmplPath.node)) {
+        return;
+      }
+      if (templateLiteralHasJsEscapesInRawQuasis(tmplPath.node)) {
+        return;
+      }
+      if (!isInsideMochaRunnableCallback(tmplPath)) {
+        return;
+      }
+      const describePath = findOutermostDescribeCallPath(tmplPath);
+      if (!describePath) {
+        return;
+      }
+      if (!hasHtmlBindingInScopeChain(tmplPath)) {
+        const block = getDescribeCallbackBlock(describePath);
+        if (!block) {
+          return;
+        }
+        if (!describeBodiesNeedingConst.includes(block)) {
+          describeBodiesNeedingConst.push(block);
+        }
+      }
+      tmplPath.replaceWith(
+        t.taggedTemplateExpression(t.identifier('html'), tmplPath.node)
+      );
+    }
+  });
+
+  const htmlInit = t.memberExpression(
+    t.memberExpression(t.identifier('axe'), t.identifier('testUtils')),
+    t.identifier('html')
+  );
+  const htmlDecl = t.variableDeclaration('const', [
+    t.variableDeclarator(t.identifier('html'), htmlInit)
+  ]);
+
+  for (const block of describeBodiesNeedingConst) {
+    block.body.unshift(t.cloneNode(htmlDecl));
+  }
+}
+
+/**
+ * `axe.testUtils.shadowSupport` or `axe.testUtils.shadowSupport.v1`.
+ *
+ * @param {import('@babel/types').Expression | null | undefined} node
+ * @param {boolean} requireV1
+ */
+function isInitAxeTestUtilsShadowSupport(node, requireV1) {
+  if (!node || !t.isMemberExpression(node) || node.computed) {
+    return false;
+  }
+  let cur = node;
+  if (requireV1) {
+    if (!t.isIdentifier(cur.property, { name: 'v1' })) {
+      return false;
+    }
+    cur = cur.object;
+    if (!t.isMemberExpression(cur) || cur.computed) {
+      return false;
+    }
+  }
+  if (!t.isIdentifier(cur.property, { name: 'shadowSupport' })) {
+    return false;
+  }
+  cur = cur.object;
+  if (!t.isMemberExpression(cur) || cur.computed) {
+    return false;
+  }
+  if (!t.isIdentifier(cur.property, { name: 'testUtils' })) {
+    return false;
+  }
+  cur = cur.object;
+  return t.isIdentifier(cur, { name: 'axe' });
+}
+
+/**
+ * Legacy `(shadowSupported | shadowSupport.v1) ? it : (xit | it.skip)` used to skip
+ * shadow tests on IE. When matched, return the `it` branch to use as the call callee.
+ *
+ * @param {import('@babel/types').Expression} inner
+ * @returns {import('@babel/types').Expression | null}
+ */
+function getItBranchFromShadowSupportSkipTernary(inner) {
+  if (!t.isConditionalExpression(inner)) {
+    return null;
+  }
+  const { test, consequent, alternate } = inner;
+  const testOk =
+    (t.isIdentifier(test) && test.name === 'shadowSupported') ||
+    (t.isMemberExpression(test) &&
+      !test.computed &&
+      t.isIdentifier(test.object, { name: 'shadowSupport' }) &&
+      t.isIdentifier(test.property, { name: 'v1' }));
+  if (!testOk) {
+    return null;
+  }
+  if (!t.isIdentifier(consequent) || consequent.name !== 'it') {
+    return null;
+  }
+  const altOk =
+    (t.isIdentifier(alternate) && alternate.name === 'xit') ||
+    (t.isMemberExpression(alternate) &&
+      !alternate.computed &&
+      t.isIdentifier(alternate.object, { name: 'it' }) &&
+      t.isIdentifier(alternate.property, { name: 'skip' }));
+  if (!altOk) {
+    return null;
+  }
+  return consequent;
+}
+
+/**
+ * @param {import('@babel/types').File | import('@babel/types').Program} ast
+ */
+function unwrapShadowSupportMochaCalls(ast) {
+  traverse(ast, {
+    CallExpression(callPath) {
+      const inner = unwrapCalleeExpression(callPath.node.callee);
+      const itCallee = getItBranchFromShadowSupportSkipTernary(inner);
+      if (!itCallee) {
+        return;
+      }
+      callPath.get('callee').replaceWith(t.cloneNode(itCallee));
+    }
+  });
+}
+
+/**
+ * How many reference sites resolve to this declarator’s binding. Prefer this over
+ * `binding.referenced` after callee rewrites: Babel can keep stale `referencePaths` on
+ * detached subtrees.
+ *
+ * @param {import('@babel/types').Program} program
+ * @param {import('@babel/traverse').NodePath<import('@babel/types').VariableDeclarator>} declPath
+ * @param {string} name
+ */
+function countReferencesToDeclarator(program, declPath, name) {
+  let count = 0;
+  traverse(program, {
+    Identifier(p) {
+      if (p.node.name !== name) {
+        return;
+      }
+      if (!p.isReferencedIdentifier()) {
+        return;
+      }
+      const b = p.scope.getBinding(name);
+      if (b && b.path === declPath) {
+        count++;
+      }
+    }
+  });
+  return count;
+}
+
+/**
+ * @param {import('@babel/types').File | import('@babel/types').Program} ast
+ */
+function removeUnusedShadowSupportDeclarators(ast) {
+  const program = t.isFile(ast) ? ast.program : ast;
+  /** @type {import('@babel/traverse').NodePath<import('@babel/types').VariableDeclarator>[]} */
+  const toRemove = [];
+
+  traverse(ast, {
+    VariableDeclarator(declPath) {
+      const id = declPath.node.id;
+      if (!t.isIdentifier(id)) {
+        return;
+      }
+      const n = id.name;
+      if (n === 'shadowSupported') {
+        if (!isInitAxeTestUtilsShadowSupport(declPath.node.init, true)) {
+          return;
+        }
+      } else if (n === 'shadowSupport') {
+        if (!isInitAxeTestUtilsShadowSupport(declPath.node.init, false)) {
+          return;
+        }
+      } else {
+        return;
+      }
+
+      const binding = declPath.scope.getBinding(n);
+      if (!binding || binding.constantViolations.length > 0) {
+        return;
+      }
+      if (countReferencesToDeclarator(program, declPath, n) > 0) {
+        return;
+      }
+      toRemove.push(declPath);
+    }
+  });
+
+  for (const p of toRemove.reverse()) {
+    p.remove();
+  }
+}
+
 /**
  * Parse with recast so `recast.print` can reuse original formatting (including blank
  * lines). `tokens: true` helps recast reprint accurately.
@@ -413,6 +1011,9 @@ function parseSource(source, filename) {
 function transformSource(source, filename) {
   const ast = parseSource(source, filename);
 
+  unwrapShadowSupportMochaCalls(ast);
+  removeUnusedShadowSupportDeclarators(ast);
+
   traverse(ast, {
     BinaryExpression(binPath) {
       if (binPath.node.operator !== '+') {
@@ -431,9 +1032,23 @@ function transformSource(source, filename) {
       if (!parts.some(p => t.isStringLiteral(p))) {
         return;
       }
-      binPath.replaceWith(partsToTemplateLiteral(parts));
+      const stmt = binPath.getStatementParent();
+      const indent = statementIndentFromLoc(source, stmt?.node?.loc?.start);
+      const template = partsToTemplateLiteral(parts, indent);
+      const callRewrite = getCallRewriteForConcatArg(binPath);
+      if (callRewrite) {
+        replaceCallArgument(
+          callRewrite.callPath,
+          callRewrite.argIndex,
+          template
+        );
+      } else {
+        binPath.replaceWith(template);
+      }
     }
   });
+
+  tagHtmlTemplatesAndInjectHtmlConst(ast);
 
   /** @type {import('@babel/traverse').NodePath<import('@babel/types').FunctionExpression>[]} */
   const fnExprs = [];
@@ -516,12 +1131,12 @@ function printHelp() {
 Modernize Mocha/Karma-style tests (default: test/**/*.js). See file header for transforms.
 
 Options:
-  -h, --help     Show this message
-  --dry-run      List files that would change; do not write
-  --verbose      Log unchanged files too
-  --prettier     Run Prettier on changed files after write (may collapse blank lines)
+  -h, --help       Show this message
+  --dry-run        List files that would change; do not write
+  --verbose        Log unchanged files too
+  --no-prettier    Do not run Prettier after writes (recast output only)
 
-By default, blank lines are preserved (no Prettier). Pass --prettier to format with Prettier.
+By default, Prettier is run on each file that was written (may collapse some blank lines).
 `);
 }
 
@@ -530,7 +1145,7 @@ function parseArgs(argv) {
     dryRun: false,
     verbose: false,
     help: false,
-    prettier: false,
+    prettier: true,
     globs: []
   };
   for (const a of argv) {
@@ -540,6 +1155,8 @@ function parseArgs(argv) {
       args.dryRun = true;
     } else if (a === '--verbose') {
       args.verbose = true;
+    } else if (a === '--no-prettier') {
+      args.prettier = false;
     } else if (a === '--prettier') {
       args.prettier = true;
     } else if (!a.startsWith('-')) {
@@ -661,7 +1278,7 @@ async function main() {
       runPrettierOnFiles(cwd, writtenFiles);
     } else {
       console.log(
-        '\nTip: run npm run fmt on changed files if you want Prettier, or re-run with --prettier.'
+        '\nTip: Prettier was skipped (--no-prettier). Run npm run fmt on changed files to format.'
       );
     }
     console.log('\nNext: npm run eslint -- --fix');
