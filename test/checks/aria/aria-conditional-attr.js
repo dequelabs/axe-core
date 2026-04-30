@@ -262,9 +262,9 @@ describe('aria-conditional-attr', () => {
     });
 
     describe('indeterminate state', () => {
-      function asIndeterminateVirtualNode(html) {
+      function asIndeterminateVirtualNode(markup) {
         const fixture = document.querySelector('#fixture');
-        fixture.innerHTML = html;
+        fixture.innerHTML = markup;
         fixture.querySelector('input').indeterminate = true;
         const root = axe.setup(fixture);
         return axe.utils.querySelectorAll(root, 'input')[0];

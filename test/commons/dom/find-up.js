@@ -14,12 +14,17 @@ describe('dom.findUp', () => {
     fixture.innerHTML = html`
       <div class="target">
         <div id="target" class="target">
-          <span
-            ><span
-              ><span
-                ><div>
-                  <div><div id="start"></div></div></div></span></span
-          ></span>
+          <span>
+            <span>
+              <span>
+                <div>
+                  <div>
+                    <div id="start"></div>
+                  </div>
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
       </div>
     `;
@@ -27,7 +32,7 @@ describe('dom.findUp', () => {
     const start = document.getElementById('start'),
       target = document.getElementById('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.equal(
       axe.commons.dom.findUp(start, '.target'),
       target,
@@ -39,7 +44,7 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<div id="start"></div>';
     const start = document.getElementById('start');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.isNull(axe.commons.dom.findUp(start, '.nomatchyplzkthx'));
   });
 
@@ -47,7 +52,7 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<div id="start"></div><div class="target"></div>';
     const start = document.getElementById('start');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.isNull(axe.commons.dom.findUp(start, '.target'));
   });
 
@@ -69,11 +74,11 @@ describe('dom.findUp', () => {
 
       fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
       makeShadowTree(fixture.querySelector('div'));
-      const tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+      const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       const el = axe.utils.querySelectorAll(tree, 'a')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'label'),
-        fixture.firstChild
+        fixture.firstElementChild
       );
     }
   );
@@ -93,11 +98,11 @@ describe('dom.findUp', () => {
 
     fixture.innerHTML = '<label><div></div></label>';
     makeShadowTree(fixture.querySelector('div'));
-    const tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+    const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     const el = axe.utils.querySelectorAll(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
-      fixture.firstChild
+      fixture.firstElementChild
     );
   });
 
@@ -108,10 +113,10 @@ describe('dom.findUp', () => {
     shadow.innerHTML = '<div role="listitem">item 1</div>';
     const listItem = shadow.querySelector('[role=listitem]');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.equal(
       axe.commons.dom.findUp(listItem, '[role=list]'),
-      fixture.firstChild
+      fixture.firstElementChild
     );
   });
 
@@ -131,11 +136,11 @@ describe('dom.findUp', () => {
 
     fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
     makeShadowTree(fixture.querySelector('div'));
-    const tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+    const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     const el = axe.utils.querySelectorAll(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
-      fixture.firstChild
+      fixture.firstElementChild
     );
   });
 
@@ -156,7 +161,7 @@ describe('dom.findUp', () => {
 
     fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
     makeShadowTree(fixture.querySelector('div'));
-    const tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+    const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     const el = axe.utils.querySelectorAll(tree, 'a')[0];
     const target = axe.utils.querySelectorAll(tree, '.target')[0];
     assert.equal(
@@ -180,11 +185,11 @@ describe('dom.findUp', () => {
 
     fixture.innerHTML = '<label><div></div></label>';
     makeShadowTree(fixture.querySelector('div'));
-    const tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
+    const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     const el = axe.utils.querySelectorAll(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
-      fixture.firstChild
+      fixture.firstElementChild
     );
   });
 
@@ -197,10 +202,10 @@ describe('dom.findUp', () => {
     shadow.innerHTML = '<div role="listitem">item 1</div>';
     const listItem = shadow.querySelector('[role=listitem]');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.equal(
       axe.commons.dom.findUp(listItem, '[role=list]'),
-      fixture.firstChild
+      fixture.firstElementChild
     );
   });
 });

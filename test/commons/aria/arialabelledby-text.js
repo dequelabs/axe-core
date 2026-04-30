@@ -100,11 +100,12 @@ describe('aria.arialabelledbyText', () => {
   });
 
   it('preserves spacing', () => {
-    const target = queryFixture(html`
-      <div role="heading" id="target" aria-labelledby="foo"></div>
-      <div id="foo">Foo text</div>
-    `);
+    const spaced = ' \t Foo \n text \t ';
+    const target = queryFixture(
+      html`<div role="heading" id="target" aria-labelledby="foo"></div>
+        <div id="foo">${spaced}</div>`
+    );
     const accName = aria.arialabelledbyText(target);
-    assert.equal(accName, ' \t Foo \n text \t ');
+    assert.equal(accName, spaced);
   });
 });

@@ -1,6 +1,6 @@
 describe('text.accessibleTextVirtual', () => {
   const fixture = document.getElementById('fixture');
-  const { html, shadowSupport } = axe.testUtils;
+  const { html } = axe.testUtils;
 
   afterEach(() => {
     fixture.innerHTML = '';

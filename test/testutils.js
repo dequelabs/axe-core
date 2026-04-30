@@ -62,7 +62,8 @@ var commons;
    *
    * @return Object
    */
-  testUtils.MockCheckContext = () => {
+  testUtils.MockCheckContext = function () {
+    // IMPORTANT: Keep a function to allow using this as a constructor
     return {
       _relatedNodes: [],
       _data: null,
@@ -205,7 +206,7 @@ var commons;
       // check if content specifies a shadow container
       container = fixtureNode.querySelector('#shadow');
       if (!container) {
-        container = fixtureNode.firstChild;
+        container = fixtureNode.firstElementChild;
       }
     }
     // attach a shadowRoot with the content provided

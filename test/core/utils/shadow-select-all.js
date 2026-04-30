@@ -32,9 +32,9 @@ describe('utils.shadowSelectAll', () => {
   });
 
   describe('given an array of string', () => {
-    function addShadowTree(host, html) {
+    function addShadowTree(host, shadowMarkup) {
       const root = host.attachShadow({ mode: 'open' });
-      root.innerHTML = html;
+      root.innerHTML = shadowMarkup;
       return root;
     }
 

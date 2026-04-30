@@ -911,11 +911,11 @@ describe('color.getBackgroundColor', () => {
   });
 
   it('should return background color for inline elements that do not fit the viewport', () => {
-    let html = '';
+    let body = '';
     for (var i = 0; i < 300; i++) {
-      html += 'foo<br />';
+      body += 'foo<br />';
     }
-    fixture.innerHTML = html`<em>${html}</em>`;
+    fixture.innerHTML = html`<em>${body}</em>`;
     axe.testUtils.flatTreeSetup(fixture);
     const actual = axe.commons.color.getBackgroundColor(fixture, []);
     const expected = new axe.commons.color.Color(255, 255, 255, 1);

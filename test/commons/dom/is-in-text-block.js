@@ -1,7 +1,7 @@
 describe('dom.isInTextBlock', () => {
   const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
-  const { shadowSupport, fixtureSetup, queryFixture } = axe.testUtils;
+  const { fixtureSetup, queryFixture } = axe.testUtils;
   const isInTextBlock = axe.commons.dom.isInTextBlock;
 
   it('returns true if the element is a node in a block of text', () => {

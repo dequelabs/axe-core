@@ -43,12 +43,12 @@ describe('create-grid', () => {
   it('adds large elements to multiple cell', () => {
     fixture = fixtureSetup(html`
       <span style="display: inline-block; width: 300px; height: 300px;">
-        Hello world</span
-      >
+        Hello world
+      </span>
     `);
     createGrid();
 
-    const positions = findPositions(fixture._grid, fixture.children[0]);
+    const positions = findPositions(fixture._grid, fixture.children[1]);
     assert.deepEqual(positions, [
       { col: 0, row: 0 },
       { col: 1, row: 0 },
@@ -63,8 +63,9 @@ describe('create-grid', () => {
         <span
           id="target"
           style="display: inline-block; width: 1000px; height: 1000px;"
-          >' + 'Hello world</span
         >
+          Hello world
+        </span>
       </div>
     `);
     createGrid();
@@ -184,8 +185,8 @@ describe('create-grid', () => {
 
     it('adds elements vertically scrolled out of view', () => {
       const gridScroll = 2;
-      fixture = fixtureSetup(
-        html`<div
+      fixture = fixtureSetup(html`
+        <div
           id="scroller"
           style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll"
         >
@@ -194,9 +195,9 @@ describe('create-grid', () => {
           <div style="height: ${gridSize}px">V3</div>
           <div style="height: ${gridSize}px">V4</div>
           <div style="height: ${gridSize}px">V5</div>
-        </div>`
-      );
-      const scroller = fixture.children[0];
+        </div>
+      `);
+      const scroller = fixture.children[1];
       scroller.actualNode.scroll(0, gridSize * gridScroll);
       const childElms = scroller.children.filter(
         ({ props }) => props.nodeName === 'div'
@@ -245,7 +246,7 @@ describe('create-grid', () => {
           <span style="display: inline-block; height: 300px" id="x">x</span>
         </div>
       `);
-      const vOverflow = fixture.children[0];
+      const vOverflow = fixture.children[1];
       assert.isUndefined(vOverflow._subGrid);
       createGrid();
       assert.isDefined(vOverflow._subGrid);
@@ -259,8 +260,8 @@ describe('create-grid', () => {
         </div>
       `);
       createGrid();
-      const vOverflow = fixture.children[0];
-      const vSpan = vOverflow.children[0];
+      const vOverflow = fixture.children[1];
+      const vSpan = vOverflow.children[1];
       assert.equal(vOverflow._subGrid, vSpan._grid);
     });
 
@@ -271,7 +272,7 @@ describe('create-grid', () => {
         </div>
       `);
       createGrid();
-      const vSpan = fixture.children[0].children[0];
+      const vSpan = fixture.children[1].children[1];
       const position = findPositions(fixture._grid, vSpan);
       assert.isEmpty(position);
     });
@@ -283,8 +284,8 @@ describe('create-grid', () => {
         </div>
       `);
       createGrid();
-      const vOverflow = fixture.children[0];
-      const vSpan = vOverflow.children[0];
+      const vOverflow = fixture.children[1];
+      const vSpan = vOverflow.children[1];
       const position = findPositions(vOverflow._subGrid, vSpan);
       assert.deepEqual(position, [
         { col: 0, row: 0 },

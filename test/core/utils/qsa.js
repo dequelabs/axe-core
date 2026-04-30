@@ -7,32 +7,30 @@ function setShadowId(vNode, shadowId) {
 
 function getTestDom() {
   const html = document.createElement('html');
-  html.innerHTML = `
-    
-    <body>
-    <div class="first" data-a11yhero="faulkner">
-    <ul>
-    <li class="breaking"></li>
-    <li class="breaking"></li>
-    </ul>
-    </div>
-    <div id="one"></div>
-    <div class="second third">
-    <ul>
-    <li role="tab" id="one"></li>
-    <li role="button" id="one"></li>
-    </ul>
-    </div>
-    <span class="fourth">
-    <span>
-    <span>
-    <span></span>
-    <span></span>
-    </span>
-    </span>
-    </span>
-    </body>
-  `;
+  html.innerHTML =
+    '<body>' +
+    '<div class="first" data-a11yhero="faulkner">' +
+    '<ul>' +
+    '<li class="breaking"></li>' +
+    '<li class="breaking"></li>' +
+    '</ul>' +
+    '</div>' +
+    '<div id="one"></div>' +
+    '<div class="second third">' +
+    '<ul>' +
+    '<li role="tab" id="one"></li>' +
+    '<li role="button" id="one"></li>' +
+    '</ul>' +
+    '</div>' +
+    '<span class="fourth">' +
+    '<span>' +
+    '<span>' +
+    '<span></span>' +
+    '<span></span>' +
+    '</span>' +
+    '</span>' +
+    '</span>' +
+    '</body>';
 
   // remove the head node
   const head = html.querySelector('head');

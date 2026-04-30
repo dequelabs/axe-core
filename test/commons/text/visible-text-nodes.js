@@ -1,6 +1,4 @@
 describe('text.visibleTextNodes', () => {
-  const html = axe.testUtils.html;
-
   const fixture = document.getElementById('fixture');
   const queryFixture = axe.testUtils.queryFixture;
   const visibleTextNodes = axe.commons.text.visibleTextNodes;
@@ -40,13 +38,14 @@ describe('text.visibleTextNodes', () => {
   });
 
   it('should know how visibility works', () => {
-    const vNode = queryFixture(html`
-      <div id="target">
-        Hello<span style="visibility: hidden;">
-          <span style="visibility: visible;">Hi</span>
-        </span>
-      </div>
-    `);
+    const vNode = queryFixture(
+      `<div id="target">` +
+        `Hello` +
+        `<span style="visibility: hidden;">` +
+        `<span style="visibility: visible;">Hi</span>` +
+        `</span>` +
+        `</div>`
+    );
     const nodes = visibleTextNodes(vNode);
     assert.equal(nodes.length, 2);
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
@@ -63,30 +62,26 @@ describe('text.visibleTextNodes', () => {
   });
 
   it('should ignore script and style tags', () => {
-    const vNode = queryFixture(html`
-      <div id="target">
-        <script>
-          // hello
-        </script>
-        <style>
-          /*hello */
-        </style>
-        Hello
-      </div>
-    `);
+    const vNode = queryFixture(
+      `<div id="target">` +
+        `<script>// hello</script>` +
+        `<style>/*hello */</style>` +
+        `Hello` +
+        `</div>`
+    );
     const nodes = visibleTextNodes(vNode);
     assert.equal(nodes.length, 1);
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
   });
 
   it('should not take into account position of parents', () => {
-    const vNode = queryFixture(html`
-      <div id="target">
-        <div style="position: absolute; top: -9999px;">
-          <div style="position: absolute; top: 10000px;">Hello</div>
-        </div>
-      </div>
-    `);
+    const vNode = queryFixture(
+      `<div id="target">` +
+        `<div style="position: absolute; top: -9999px;">` +
+        `<div style="position: absolute; top: 10000px;">Hello</div>` +
+        `</div>` +
+        `</div>`
+    );
     const nodes = visibleTextNodes(vNode);
     assert.equal(nodes.length, 1);
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
@@ -105,8 +100,8 @@ describe('text.visibleTextNodes', () => {
       div.appendChild(createContentSlotted());
     }
     fixture.innerHTML = '<div><a>hello</a></div>';
-    makeShadowTree(fixture.firstChild);
-    const tree = axe.utils.getFlattenedTree(fixture.firstChild);
+    makeShadowTree(fixture.firstElementChild);
+    const tree = axe.utils.getFlattenedTree(fixture.firstElementChild);
     const nodes = visibleTextNodes(tree[0]);
     assert.equal(nodes.length, 2);
     assert.equal(nodes[0].actualNode.nodeValue, 'Stuff');

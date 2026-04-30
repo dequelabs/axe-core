@@ -64,7 +64,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
@@ -84,7 +84,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
@@ -104,7 +104,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
@@ -191,7 +191,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
@@ -210,7 +210,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
@@ -231,7 +231,7 @@ describe('table.getScope', () => {
         </table>
       `;
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
@@ -248,7 +248,7 @@ describe('table.getScope', () => {
         </table>
       `;
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
   });
@@ -327,7 +327,7 @@ describe('table.getScope', () => {
       `;
 
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
@@ -346,7 +346,7 @@ describe('table.getScope', () => {
         </table>
       `;
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
@@ -367,7 +367,7 @@ describe('table.getScope', () => {
         </table>
       `;
       const target = $id('target');
-      axe.testUtils.flatTreeSetup(fixture.firstChild);
+      axe.testUtils.flatTreeSetup(fixture.firstElementChild);
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
   });
@@ -383,7 +383,7 @@ describe('table.getScope', () => {
       </table>
     `;
     const target = $id('target');
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.equal(axe.commons.table.getScope(target), 'auto');
   });
 });

@@ -62,8 +62,8 @@ describe('aria-valid-attr-value', () => {
       <button aria-controls="">Button</button>
       <div aria-activedescendant=""></div>
     `);
-    const passing1 = tree.children[0];
-    const passing2 = tree.children[1];
+    const passing1 = tree.children.find(n => n.props.nodeName === 'button');
+    const passing2 = tree.children.find(n => n.props.nodeName === 'div');
     assert.isTrue(validAttrValueCheck.call(checkContext, null, null, passing1));
     assert.isTrue(validAttrValueCheck.call(checkContext, null, null, passing2));
   });
@@ -73,8 +73,8 @@ describe('aria-valid-attr-value', () => {
       <button aria-labelledby="">Button</button>
       <div aria-owns=""></div>
     `);
-    const passing1 = tree.children[0];
-    const passing2 = tree.children[1];
+    const passing1 = tree.children.find(n => n.props.nodeName === 'button');
+    const passing2 = tree.children.find(n => n.props.nodeName === 'div');
     assert.isTrue(validAttrValueCheck.call(checkContext, null, null, passing1));
     assert.isTrue(validAttrValueCheck.call(checkContext, null, null, passing2));
   });

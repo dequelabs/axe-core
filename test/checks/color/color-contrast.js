@@ -1,5 +1,8 @@
 describe('color-contrast', () => {
   const html = axe.testUtils.html;
+  /** One-line data URL so CSS `url()` is not broken by template newlines */
+  const tinyGifDataUri =
+    'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
 
   const fixture = document.getElementById('fixture');
   const fixtureSetup = axe.testUtils.fixtureSetup;
@@ -324,21 +327,14 @@ describe('color-contrast', () => {
   });
 
   it('should return undefined for background-image elements', () => {
-    const dataURI = `
-      data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/
-      XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA
-      ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU
-      E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7
-    `;
-
-    const params = checkSetup(
-      html`<div
+    const params = checkSetup(html`
+      <div
         id="background"
-        style="background:url(${dataURI}) no-repeat left center; padding: 5px 0 5px 25px;"
+        style="background:url(${tinyGifDataUri}) no-repeat left center; padding: 5px 0 5px 25px;"
       >
         <p id="target">Text 1</p>
-      </div>`
-    );
+      </div>
+    `);
 
     assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     assert.isUndefined(checkContext._data.bgColor);
@@ -465,21 +461,14 @@ describe('color-contrast', () => {
   });
 
   it('returns relatedNodes with undefined', () => {
-    const dataURI = `
-      data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/
-      XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA
-      ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU
-      E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7
-    `;
-
-    const params = checkSetup(
-      html`<div
+    const params = checkSetup(html`
+      <div
         id="background"
-        style="background:url(${dataURI}) no-repeat left center; padding: 5px 0 5px 25px;"
+        style="background:url(${tinyGifDataUri}) no-repeat left center; padding: 5px 0 5px 25px;"
       >
         <p id="target">Text 1</p>
-      </div>`
-    );
+      </div>
+    `);
 
     assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     assert.equal(
@@ -657,13 +646,6 @@ x
     });
 
     it('should return undefined if pseudo element has a background image', () => {
-      const dataURI = `
-        data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/
-        XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA
-        ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU
-        E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7
-      `;
-
       const params = checkSetup(
         html`<style>
             .foo {
@@ -674,11 +656,11 @@ x
               position: absolute;
               width: 100%;
               height: 100%;
-              background: url(${dataURI}) no-repeat left center;
+              background: url(${tinyGifDataUri}) no-repeat left center;
             }
           </style>
           <div id="background" class="foo">
-            <p id="target" style="#000">Content</p>
+            <p id="target" style="color:#000">Content</p>
           </div>`
       );
 

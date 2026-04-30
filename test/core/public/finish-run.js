@@ -249,14 +249,14 @@ describe('axe.finishRun', () => {
   });
 
   describe('frames', () => {
-    function createIframe(html, parent) {
+    function createIframe(markup, parent) {
       return new Promise(resolve => {
         parent = parent || fixture;
         const doc = parent.ownerDocument;
         const iframe = doc.createElement('iframe');
         parent.appendChild(iframe);
         const frameDoc = iframe.contentDocument;
-        frameDoc.write(`${html}<script src="/axe.js"></script>`);
+        frameDoc.write(`${markup}<script src="/axe.js"></script>`);
         frameDoc.close();
         frameDoc.querySelector('script').onload = () => {
           resolve(iframe.contentWindow);

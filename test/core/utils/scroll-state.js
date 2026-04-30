@@ -40,12 +40,12 @@ describe('axe.utils.getScrollState', () => {
   it('returns the html as the first item, if pageXOffset is not supported', () => {
     mockWin.pageYOffset = undefined;
     mockWin.pageXOffset = undefined;
-    const html = mockWin.document.documentElement;
+    const docEl = mockWin.document.documentElement;
 
     assert.deepEqual(getScrollState(mockWin)[0], {
-      elm: html,
-      top: html.scrollTop,
-      left: html.scrollLeft
+      elm: docEl,
+      top: docEl.scrollTop,
+      left: docEl.scrollLeft
     });
   });
 

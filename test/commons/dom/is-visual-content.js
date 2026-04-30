@@ -1,6 +1,4 @@
 describe('dom.isVisualContent', () => {
-  const html = axe.testUtils.html;
-
   const fixture = document.getElementById('fixture');
   const queryFixture = axe.testUtils.queryFixture;
   const isVisualContent = axe.commons.dom.isVisualContent;
@@ -86,19 +84,19 @@ describe('dom.isVisualContent', () => {
     });
 
     it('should return true for elements with a visual aria role', () => {
-      const virtualNode = queryFixture(html`
-        <div id="target">
-          <span role="img"></span>
-          <span role="checkbox"></span>
-          <span role="radio"></span>
-          <span role="meter"></span>
-          <span role="progressbar"></span>
-          <span role="scrollbar"></span>
-          <span role="slider"></span>
-          <span role="spinbutton"></span>
-          <span role="textbox"></span>
-        </div>
-      `);
+      const virtualNode = queryFixture(
+        `<div id="target">` +
+          `<span role="img"></span>` +
+          `<span role="checkbox"></span>` +
+          `<span role="radio"></span>` +
+          `<span role="meter"></span>` +
+          `<span role="progressbar"></span>` +
+          `<span role="scrollbar"></span>` +
+          `<span role="slider"></span>` +
+          `<span role="spinbutton"></span>` +
+          `<span role="textbox"></span>` +
+          `</div>`
+      );
 
       for (var i = 0; i < virtualNode.children.length; i++) {
         assert.isTrue(

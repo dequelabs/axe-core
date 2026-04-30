@@ -86,7 +86,7 @@ describe('axe.utils.isShadowRoot', () => {
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
       it('should support shadow DOM v1', () => {
-        assert.isDefined(fixture.firstChild.shadowRoot);
+        assert.isDefined(fixture.firstElementChild.shadowRoot);
       });
     });
   }

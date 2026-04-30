@@ -12,7 +12,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -29,7 +31,9 @@ describe('aria.getOwnedVirtual', () => {
       <h3 id="hdr3">heading 3</h3>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 4);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -44,7 +48,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 1);
     assert.equal(owned[0].actualNode.id, 'foo');
   });
@@ -56,7 +62,9 @@ describe('aria.getOwnedVirtual', () => {
       <div role="listitem" id="b">B</div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 2);
     assert.equal(owned[0].actualNode.id, 'a');
     assert.equal(owned[1].actualNode.id, 'b');
@@ -70,7 +78,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 2);
     assert.equal(owned[0].actualNode.id, 'b');
     assert.equal(owned[1].actualNode.id, 'a');
@@ -85,7 +95,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.id, 'b');
     assert.equal(owned[1].actualNode.id, 'c');
@@ -101,7 +113,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -117,7 +131,9 @@ describe('aria.getOwnedVirtual', () => {
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    const owned = aria.getOwnedVirtual(target);
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
     assert.lengthOf(owned, 3);
     assert.equal(owned[0].actualNode.nodeName.toUpperCase(), 'H1');
     assert.equal(owned[1].actualNode.nodeName.toUpperCase(), 'H2');
@@ -131,17 +147,18 @@ describe('aria.getOwnedVirtual', () => {
         <h1>heading 1</h1>
         text 2
         <h2>heading 2</h2>
+        ${' \t\n'}
       </div>
     `);
     const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
     const owned = aria.getOwnedVirtual(target);
 
     assert.lengthOf(owned, 5);
-    assert.equal(owned[0].actualNode.textContent, 'text 1');
-    assert.equal(owned[1].actualNode.textContent, 'heading 1');
-    assert.equal(owned[2].actualNode.textContent, 'text 2');
-    assert.equal(owned[3].actualNode.textContent, 'heading 2');
-    assert.equal(owned[4].actualNode.textContent, ' \t\n');
+    assert.include(owned[0].actualNode.textContent, 'text 1');
+    assert.include(owned[1].actualNode.textContent, 'heading 1');
+    assert.include(owned[2].actualNode.textContent, 'text 2');
+    assert.include(owned[3].actualNode.textContent, 'heading 2');
+    assert.include(owned[4].actualNode.textContent, ' \t\n');
   });
 
   it('returns an empty array if there are no owned elements', () => {

@@ -1,5 +1,4 @@
 describe('text.subtreeText', () => {
-  const html = axe.testUtils.html;
   const fixtureSetup = axe.testUtils.fixtureSetup;
   const subtreeText = axe.commons.text.subtreeText;
 
@@ -16,37 +15,31 @@ describe('text.subtreeText', () => {
   });
 
   it('adds spacing around "block-like" elements', () => {
-    fixtureSetup(html`
-      <div>foo</div>
-      <h1>bar</h1>
-      <p>baz</p>
-      <blockquote>fizz</blockquote>
-      <pre>buzz</pre>
-    `);
+    fixtureSetup(
+      `<div>foo</div>` +
+        `<h1>bar</h1>` +
+        `<p>baz</p>` +
+        `<blockquote>fizz</blockquote>` +
+        `<pre>buzz</pre>`
+    );
     const fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
     assert.equal(subtreeText(fixture), 'foo bar baz fizz buzz ');
   });
 
   it('does not add spacing around "inline-like" elements', () => {
-    fixtureSetup(html`
-      <a>foo</a>
-      <b>bar</b>
-      <i>baz</i>
-      <s>fizz</s>
-      <u>buzz</u>
-    `);
+    fixtureSetup(`<a>foo</a><b>bar</b><i>baz</i><s>fizz</s><u>buzz</u>`);
     const fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
     assert.equal(subtreeText(fixture), 'foobarbazfizzbuzz');
   });
 
   it('returns `` for embedded content', () => {
-    fixtureSetup(html`
-      <video>foo</video>
-      <audio>foo</audio>
-      <canvas>foo</canvas>
-      <iframe>foo</iframe>
-      <svg>foo</svg>
-    `);
+    fixtureSetup(
+      `<video>foo</video>` +
+        `<audio>foo</audio>` +
+        `<canvas>foo</canvas>` +
+        `<iframe>foo</iframe>` +
+        `<svg>foo</svg>`
+    );
     const children = axe._tree[0].children;
     assert.lengthOf(children, 5);
     children.forEach(embeddedContent => {

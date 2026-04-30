@@ -1,8 +1,6 @@
-var fixture = document.getElementById('fixture');
-var shadowSupport = axe.testUtils.shadowSupport;
-
 describe('axe.utils.getFlattenedTree', () => {
-  const html = axe.testUtils.html;
+  const fixture = document.getElementById('fixture');
+  const shadowSupport = axe.testUtils.shadowSupport;
   function createStyle(box) {
     const style = document.createElement('style');
     style.textContent = `div.breaking { color: Red;font-size: 20px; border: 1px dashed Purple; }${box ? 'slot { display: block; }' : ''}div.other { padding: 2px 0 0 0; border: 1px solid Cyan; }`;
@@ -115,9 +113,7 @@ describe('axe.utils.getFlattenedTree', () => {
         function createStoryGroup(className, contentSelector) {
           const group = document.createElement('div');
           group.className = className;
-          group.innerHTML = html`<ul>
-            <content select="${contentSelector}"></content>
-          </ul>`;
+          group.innerHTML = `<ul><content select="${contentSelector}"></content></ul>`;
           return group;
         }
 
@@ -127,26 +123,24 @@ describe('axe.utils.getFlattenedTree', () => {
           root.appendChild(createStoryGroup('breaking', '.breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        let str = html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking">6</li>
-          </div>
-        `;
-        str += html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking">6</li>
-          </div>
-        `;
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking">6</li>` +
+          `</div>`;
+        str +=
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking">6</li>` +
+          `</div>`;
         fixture.innerHTML = str;
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
@@ -177,12 +171,11 @@ describe('axe.utils.getFlattenedTree', () => {
           const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
-          group.innerHTML = html`<ul>
-            <slot name="${slotName}"
-              >fallback content
-              <li>one</li></slot
-            >
-          </ul>`;
+          group.innerHTML =
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
@@ -192,26 +185,24 @@ describe('axe.utils.getFlattenedTree', () => {
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        let str = html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
-        str += html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
+        str +=
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 
@@ -262,12 +253,11 @@ describe('axe.utils.getFlattenedTree', () => {
           const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
-          group.innerHTML = html`<ul>
-            <slot name="${slotName}"
-              >fallback content
-              <li>one</li></slot
-            >
-          </ul>`;
+          group.innerHTML =
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
@@ -277,26 +267,24 @@ describe('axe.utils.getFlattenedTree', () => {
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        let str = html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
-        str += html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
+        str +=
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 
@@ -317,12 +305,11 @@ describe('axe.utils.getFlattenedTree', () => {
           const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
-          group.innerHTML = html`<ul>
-            <slot name="${slotName}"
-              >fallback content
-              <li>one</li></slot
-            >
-          </ul>`;
+          group.innerHTML =
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
@@ -332,26 +319,24 @@ describe('axe.utils.getFlattenedTree', () => {
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        let str = html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
-        str += html`
-          <div class="stories">
-            <li>1</li>
-            <li>2</li>
-            <li class="breaking" slot="breaking">3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="breaking" slot="breaking">6</li>
-          </div>
-        `;
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
+        str +=
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 

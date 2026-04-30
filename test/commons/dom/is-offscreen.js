@@ -2,8 +2,7 @@ describe('dom.isOffscreen', () => {
   const html = axe.testUtils.html;
   const { isOffscreen } = axe.commons.dom;
   const fixture = document.getElementById('fixture');
-  const { queryFixture, fixtureSetup, flatTreeSetup, shadowSupport } =
-    axe.testUtils;
+  const { queryFixture, fixtureSetup, flatTreeSetup } = axe.testUtils;
 
   afterEach(() => {
     document.body.style.direction = 'ltr';

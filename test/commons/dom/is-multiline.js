@@ -9,12 +9,12 @@ describe('dom.isMultiline', () => {
 
   it('returns false if there is a single line', () => {
     fixture.innerHTML = '<p>hello</p>';
-    assert.isFalse(isMultiline(fixture.firstChild));
+    assert.isFalse(isMultiline(fixture.firstElementChild));
   });
 
   it('returns true if there are two lines', () => {
     fixture.innerHTML = '<p>hello <br> world</p>';
-    assert.isTrue(isMultiline(fixture.firstChild));
+    assert.isTrue(isMultiline(fixture.firstElementChild));
   });
 
   it('handles single-line texts with varying font-sizes', () => {
@@ -25,7 +25,7 @@ describe('dom.isMultiline', () => {
         <span style="font-size: 16px">medium</span>
       </p>
     `;
-    assert.isFalse(isMultiline(fixture.firstChild));
+    assert.isFalse(isMultiline(fixture.firstElementChild));
   });
 
   describe('with non-text elements', () => {
@@ -37,7 +37,7 @@ describe('dom.isMultiline', () => {
           <button style="font-size: 20px">I like big buttons</button>
         </p>
       `;
-      assert.isTrue(isMultiline(fixture.firstChild));
+      assert.isTrue(isMultiline(fixture.firstElementChild));
     });
 
     it('is false when on a single line', () => {
@@ -49,7 +49,7 @@ describe('dom.isMultiline', () => {
           <button style="font-size: 20px">I like big buttons</button>
         </p>
       `;
-      assert.isFalse(isMultiline(fixture.firstChild));
+      assert.isFalse(isMultiline(fixture.firstElementChild));
     });
   });
 });

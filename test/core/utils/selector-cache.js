@@ -93,10 +93,10 @@ describe('utils.selector-cache', () => {
       for (let i = 0; i < fixture.children.length; i++) {
         const child = fixture.children[i];
         const isShadow = child.hasAttribute('data-shadow');
-        const html = child.innerHTML;
+        const innerMarkup = child.innerHTML;
         if (isShadow) {
           const shadowRoot = child.attachShadow({ mode: 'open' });
-          shadowRoot.innerHTML = html;
+          shadowRoot.innerHTML = innerMarkup;
           child.innerHTML = '';
         }
       }

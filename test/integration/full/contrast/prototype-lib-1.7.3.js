@@ -2352,7 +2352,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
           tagName,
           content.stripScripts()
         );
-        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var k = 0, node; (node = nodes[k]); k++) element.appendChild(node);
       } else if (
         LINK_ELEMENT_INNERHTML_BUGGY &&
         Object.isString(content) &&
@@ -2366,7 +2366,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
           true
         );
 
-        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var j = 0, node; (node = nodes[j]); j++) element.appendChild(node);
       } else {
         element.innerHTML = content.stripScripts();
       }
@@ -6975,7 +6975,6 @@ Form.Element.Serializers = (() => {
   }
 
   function selectMany(element) {
-    let values;
     const length = element.length;
     if (!length) return null;
 

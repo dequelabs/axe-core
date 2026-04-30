@@ -492,7 +492,7 @@ describe('color-contrast-matches', () => {
         '<div id="shadowTarget" style="color: #333">Text</div>';
 
       const shadowTarget =
-        fixture.firstChild.shadowRoot.querySelector('#shadowTarget');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowTarget');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isTrue(
         rule.matches(shadowTarget, axe.utils.getNodeFromTree(shadowTarget))
@@ -517,7 +517,7 @@ describe('color-contrast-matches', () => {
       `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))
@@ -541,7 +541,7 @@ describe('color-contrast-matches', () => {
       `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))
@@ -566,7 +566,7 @@ describe('color-contrast-matches', () => {
       `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))

@@ -29,7 +29,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -54,7 +54,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -84,7 +84,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2'),
@@ -110,7 +110,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2'),
@@ -135,7 +135,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
@@ -156,7 +156,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -180,7 +180,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -203,7 +203,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2'),
@@ -227,7 +227,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
@@ -247,7 +247,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
@@ -268,7 +268,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), []);
   });
 
@@ -290,7 +290,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -312,7 +312,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [
       $id('t1'),
       $id('t2')
@@ -337,7 +337,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 
@@ -356,7 +356,7 @@ describe('table.getHeaders', () => {
 
     const target = $id('target');
 
-    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
     assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
   });
 });

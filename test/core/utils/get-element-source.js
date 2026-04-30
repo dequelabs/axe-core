@@ -158,12 +158,7 @@ describe('axe.utils.getElementSource', () => {
     const result = getElementSource(el);
     assert.equal(
       result,
-      html`<div
-        ${attributeName.substring(0, 20)}...="${attributeValue.substring(
-          0,
-          20
-        )}..."
-      ></div>`
+      `<div ${attributeName.substring(0, 20)}...="${attributeValue.substring(0, 20)}...">`
     );
   });
 
@@ -172,8 +167,7 @@ describe('axe.utils.getElementSource', () => {
     for (let i = 0; i < 100; i++) {
       customElement += ` attr${i}="value${i}"`;
     }
-    customElement += html`>
-      <div></div>`;
+    customElement += `><div>`;
 
     const vNode = queryFixture(customElement);
     const result = getElementSource(vNode.actualNode);
@@ -202,7 +196,7 @@ describe('axe.utils.getElementSource', () => {
     el.innerHTML = innerHtml;
 
     const result = getElementSource(el);
-    assert.equal(result, html`<div long-attribute="${attributeValue}"></div>`);
+    assert.equal(result, `<div long-attribute="${attributeValue}">`);
   });
 
   describe('options', () => {
