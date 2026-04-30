@@ -26,7 +26,6 @@ describe('summary-name virtual-rule', () => {
     vSummary.children = [];
     appendSerialChild(vDetails, vSummary);
     const results = axe.runVirtualRule('summary-name', vSummary);
-    console.log(results);
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);

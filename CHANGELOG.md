@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.4](https://github.com/dequelabs/axe-core/compare/v4.11.3...v4.11.4) (2026-04-23)
+
+### Bug Fixes
+
+- **commons/text:** exclude natively hidden elements from aria-labelledby accessible name ([#5076](https://github.com/dequelabs/axe-core/issues/5076)) ([df34adf](https://github.com/dequelabs/axe-core/commit/df34adfc1967919d667d40a76ab5c85b6e47ddfe)), closes [#4704](https://github.com/dequelabs/axe-core/issues/4704)
+- **utils/getAncestry:** escape node name ([#5079](https://github.com/dequelabs/axe-core/issues/5079)) ([6e68d0a](https://github.com/dequelabs/axe-core/commit/6e68d0a5d26999b996152df82238bc3f3a041cb3)), closes [#5078](https://github.com/dequelabs/axe-core/issues/5078)
+
+### [4.11.3](https://github.com/dequelabs/axe-core/compare/v4.11.2...v4.11.3) (2026-04-13)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** restrict br and wbr elements to aria-hidden only ([#4974](https://github.com/dequelabs/axe-core/issues/4974)) ([1d80163](https://github.com/dequelabs/axe-core/commit/1d801636f058f2abd885c488baff954872b13846))
+- **target-size:** ignore position: fixed elements that are offscreen when page is scrolled ([#5066](https://github.com/dequelabs/axe-core/issues/5066)) ([5906273](https://github.com/dequelabs/axe-core/commit/5906273841cbd7ac9e08af730dffc244cf42b39b)), closes [#5065](https://github.com/dequelabs/axe-core/issues/5065)
+
 ### [4.11.2](https://github.com/dequelabs/axe-core/compare/v4.11.1...v4.11.2) (2026-03-30)
 
 ### Bug Fixes

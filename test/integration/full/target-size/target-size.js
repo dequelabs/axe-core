@@ -29,7 +29,6 @@ describe('target-size test', function () {
           results.passes[0].nodes.forEach(function (node) {
             node.element.className += ' passes';
           });
-        console.log(results);
         done();
       });
     });
