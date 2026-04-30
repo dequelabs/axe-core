@@ -1,5 +1,4 @@
 describe('color.Color', () => {
-  'use strict';
   const Color = axe.commons.color.Color;
 
   it('can be constructed without alpha', () => {
@@ -357,7 +356,7 @@ describe('color.Color', () => {
     it('does nothing when passed an invalid string', () => {
       const color = new Color(1, 2, 3, 0.4);
       const values = ['abcdef', '#abcde', '#XYZ', '#0123456789'];
-      values.forEach(function (val) {
+      values.forEach(val => {
         color.parseHexString(val);
         assert.equal(color.red, 1);
         assert.equal(color.green, 2);

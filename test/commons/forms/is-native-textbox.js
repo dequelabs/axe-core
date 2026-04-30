@@ -1,10 +1,10 @@
-describe('forms.isNativeTextbox', function () {
-  'use strict';
-  var isNativeTextbox = axe.commons.forms.isNativeTextbox;
-  var queryFixture = axe.testUtils.queryFixture;
+describe('forms.isNativeTextbox', () => {
+  const html = axe.testUtils.html;
+  const isNativeTextbox = axe.commons.forms.isNativeTextbox;
+  const queryFixture = axe.testUtils.queryFixture;
 
-  it('returns true for a text inputs', function () {
-    var textInputs = [
+  it('returns true for a text inputs', () => {
+    const textInputs = [
       'date',
       'datetime',
       'datetime-local',
@@ -19,22 +19,22 @@ describe('forms.isNativeTextbox', function () {
       'url',
       'week'
     ];
-    textInputs.forEach(function (type) {
-      var node = queryFixture('<input id="target" type="' + type + '"/>');
+    textInputs.forEach(type => {
+      const node = queryFixture(html`<input id="target" type="${type}" />`);
       assert.isTrue(
         isNativeTextbox(node),
-        '<input type="' + type + '"> is a native text input'
+        html`<input type="${type}" /> is a native text input`
       );
     });
   });
 
-  it('returns true for a textarea element', function () {
-    var node = queryFixture('<textarea id="target"/>');
+  it('returns true for a textarea element', () => {
+    const node = queryFixture('<textarea id="target"/>');
     assert.isTrue(isNativeTextbox(node));
   });
 
-  it('returns false for non-text inputs', function () {
-    var nonTextInputs = [
+  it('returns false for non-text inputs', () => {
+    const nonTextInputs = [
       'button',
       'checkbox',
       'file',
@@ -46,23 +46,23 @@ describe('forms.isNativeTextbox', function () {
       'submit',
       'color'
     ];
-    nonTextInputs.forEach(function (type) {
-      var node = queryFixture('<input id="target" type="' + type + '"/>');
+    nonTextInputs.forEach(type => {
+      const node = queryFixture(html`<input id="target" type="${type}" />`);
 
       assert.isFalse(
         isNativeTextbox(node),
-        '<input type="' + type + '"> is not a native text input'
+        html`<input type="${type}" /> is not a native text input`
       );
     });
   });
 
-  it('return false for aria textbox elements', function () {
-    var node = queryFixture('<div id="target" role="textbox"></div>');
+  it('return false for aria textbox elements', () => {
+    const node = queryFixture('<div id="target" role="textbox"></div>');
     assert.isFalse(isNativeTextbox(node));
   });
 
-  it('should ignore type case', function () {
-    var node = queryFixture('<input id="target" type="TEXT"/>');
+  it('should ignore type case', () => {
+    const node = queryFixture('<input id="target" type="TEXT"/>');
     assert.isTrue(isNativeTextbox(node));
   });
 });

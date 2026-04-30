@@ -1,6 +1,4 @@
 describe('accesskeys', () => {
-  'use strict';
-
   const checkSetup = axe.testUtils.checkSetup;
   const checkContext = axe.testUtils.MockCheckContext();
   const checkEvaluate = axe.testUtils.getCheckEvaluate('accesskeys');

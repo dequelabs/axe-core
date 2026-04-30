@@ -1,120 +1,120 @@
-describe('dom.isVisualContent', function () {
-  'use strict';
+describe('dom.isVisualContent', () => {
+  const html = axe.testUtils.html;
 
-  var fixture = document.getElementById('fixture');
-  var queryFixture = axe.testUtils.queryFixture;
-  var isVisualContent = axe.commons.dom.isVisualContent;
+  const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
+  const isVisualContent = axe.commons.dom.isVisualContent;
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  describe('isVisualContent', function () {
-    it('should return true for img', function () {
-      var virtualNode = queryFixture('<img src="" id="target">');
+  describe('isVisualContent', () => {
+    it('should return true for img', () => {
+      const virtualNode = queryFixture('<img src="" id="target">');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for iframe', function () {
-      var virtualNode = queryFixture('<iframe src="" id="target"></iframe>');
+    it('should return true for iframe', () => {
+      const virtualNode = queryFixture('<iframe src="" id="target"></iframe>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for object', function () {
-      var virtualNode = queryFixture('<object data="" id="target"></object>');
+    it('should return true for object', () => {
+      const virtualNode = queryFixture('<object data="" id="target"></object>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for video', function () {
-      var virtualNode = queryFixture('<video src="" id="target"></video>');
+    it('should return true for video', () => {
+      const virtualNode = queryFixture('<video src="" id="target"></video>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for audio', function () {
-      var virtualNode = queryFixture('<audio src="" id="target"></audio>');
+    it('should return true for audio', () => {
+      const virtualNode = queryFixture('<audio src="" id="target"></audio>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for canvas', function () {
-      var virtualNode = queryFixture('<canvas id="target"></canvas>');
+    it('should return true for canvas', () => {
+      const virtualNode = queryFixture('<canvas id="target"></canvas>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for svg', function () {
-      var virtualNode = queryFixture('<svg id="target"></svg>');
+    it('should return true for svg', () => {
+      const virtualNode = queryFixture('<svg id="target"></svg>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for math', function () {
-      var virtualNode = queryFixture('<math id="target"></math>');
+    it('should return true for math', () => {
+      const virtualNode = queryFixture('<math id="target"></math>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for button', function () {
-      var virtualNode = queryFixture('<button id="target"></button>');
+    it('should return true for button', () => {
+      const virtualNode = queryFixture('<button id="target"></button>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for select', function () {
-      var virtualNode = queryFixture('<select id="target"></select>');
+    it('should return true for select', () => {
+      const virtualNode = queryFixture('<select id="target"></select>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for textarea', function () {
-      var virtualNode = queryFixture('<textarea id="target"></textarea>');
+    it('should return true for textarea', () => {
+      const virtualNode = queryFixture('<textarea id="target"></textarea>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for keygen', function () {
-      var virtualNode = queryFixture('<keygen id="target"></keygen');
+    it('should return true for keygen', () => {
+      const virtualNode = queryFixture('<keygen id="target"></keygen');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for progress', function () {
-      var virtualNode = queryFixture('<progress id="target"></progress>');
+    it('should return true for progress', () => {
+      const virtualNode = queryFixture('<progress id="target"></progress>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for meter', function () {
-      var virtualNode = queryFixture('<meter id="target"></meter>');
+    it('should return true for meter', () => {
+      const virtualNode = queryFixture('<meter id="target"></meter>');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for non-hidden input', function () {
-      var virtualNode = queryFixture('<input type="text" id="target">');
+    it('should return true for non-hidden input', () => {
+      const virtualNode = queryFixture('<input type="text" id="target">');
       assert.isTrue(isVisualContent(virtualNode));
     });
 
-    it('should return true for elements with a visual aria role', function () {
-      var virtualNode = queryFixture(
-        '<div id="target">' +
-          '<span role="img"></span>' +
-          '<span role="checkbox"></span>' +
-          '<span role="radio"></span>' +
-          '<span role="meter"></span>' +
-          '<span role="progressbar"></span>' +
-          '<span role="scrollbar"></span>' +
-          '<span role="slider"></span>' +
-          '<span role="spinbutton"></span>' +
-          '<span role="textbox"></span>' +
-          '</div>'
-      );
+    it('should return true for elements with a visual aria role', () => {
+      const virtualNode = queryFixture(html`
+        <div id="target">
+          <span role="img"></span>
+          <span role="checkbox"></span>
+          <span role="radio"></span>
+          <span role="meter"></span>
+          <span role="progressbar"></span>
+          <span role="scrollbar"></span>
+          <span role="slider"></span>
+          <span role="spinbutton"></span>
+          <span role="textbox"></span>
+        </div>
+      `);
 
       for (var i = 0; i < virtualNode.children.length; i++) {
         assert.isTrue(
           isVisualContent(virtualNode.children[i]),
-          'for role ' + virtualNode.children[i].attr('role')
+          `for role ${virtualNode.children[i].attr('role')}`
         );
       }
     });
 
-    it('should return false for hidden input', function () {
-      var virtualNode = queryFixture('<input type="hidden" id="target">');
+    it('should return false for hidden input', () => {
+      const virtualNode = queryFixture('<input type="hidden" id="target">');
       assert.isFalse(isVisualContent(virtualNode));
     });
 
-    it('should return false for p', function () {
-      var virtualNode = queryFixture('<p id="target">Paragraph!</p>');
+    it('should return false for p', () => {
+      const virtualNode = queryFixture('<p id="target">Paragraph!</p>');
       assert.isFalse(isVisualContent(virtualNode));
     });
   });

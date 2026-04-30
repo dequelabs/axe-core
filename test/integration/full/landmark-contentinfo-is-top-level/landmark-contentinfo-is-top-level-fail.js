@@ -1,8 +1,7 @@
-describe('landmark-contentinfo-is-top-level test fail', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe('landmark-contentinfo-is-top-level test fail', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         {
           runOnly: {
@@ -10,7 +9,7 @@ describe('landmark-contentinfo-is-top-level test fail', function () {
             values: ['landmark-contentinfo-is-top-level']
           }
         },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -19,27 +18,27 @@ describe('landmark-contentinfo-is-top-level test fail', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 1', function () {
+  describe('violations', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.violations, 1);
     });
 
-    it('should find 2 nodes', function () {
+    it('should find 2 nodes', () => {
       assert.lengthOf(results.violations[0].nodes, 2);
     });
   });
 
-  describe('passes', function () {
-    it('should find none', function () {
+  describe('passes', () => {
+    it('should find none', () => {
       assert.lengthOf(results.passes, 0);
     });
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  it('should find 0 incomplete', function () {
+  it('should find 0 incomplete', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 });

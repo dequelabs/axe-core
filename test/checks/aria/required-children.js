@@ -1,6 +1,6 @@
 describe('aria-required-children', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
   const requiredChildrenCheck = axe.testUtils.getCheckEvaluate(
@@ -22,23 +22,20 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._data, ['listitem']);
   });
 
-  (shadowSupported ? it : xit)(
-    'should detect missing sole required child in shadow tree',
-    () => {
-      fixture.innerHTML = '<div id="target" role="list"></div>';
+  it('should detect missing sole required child in shadow tree', () => {
+    fixture.innerHTML = '<div id="target" role="list"></div>';
 
-      const target = document.querySelector('#target');
-      const shadowRoot = target.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<p>Nothing here.</p>';
+    const target = document.querySelector('#target');
+    const shadowRoot = target.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const virtualTarget = axe.utils.getNodeFromTree(target);
+    axe.testUtils.flatTreeSetup(fixture);
+    const virtualTarget = axe.utils.getNodeFromTree(target);
 
-      const params = [target, undefined, virtualTarget];
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, ['listitem']);
-    }
-  );
+    const params = [target, undefined, virtualTarget];
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['listitem']);
+  });
 
   it('should detect multiple missing required children when one required', () => {
     const params = checkSetup(
@@ -49,27 +46,24 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
   });
 
-  (shadowSupported ? it : xit)(
-    'should detect missing multiple required children in shadow tree when one required',
-    () => {
-      fixture.innerHTML = '<div role="grid" id="target"></div>';
+  it('should detect missing multiple required children in shadow tree when one required', () => {
+    fixture.innerHTML = '<div role="grid" id="target"></div>';
 
-      const target = document.querySelector('#target');
-      const shadowRoot = target.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<p>Nothing here.</p>';
+    const target = document.querySelector('#target');
+    const shadowRoot = target.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const virtualTarget = axe.utils.getNodeFromTree(target);
+    axe.testUtils.flatTreeSetup(fixture);
+    const virtualTarget = axe.utils.getNodeFromTree(target);
 
-      const params = [target, undefined, virtualTarget];
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
-    }
-  );
+    const params = [target, undefined, virtualTarget];
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
+  });
 
   it('should pass all existing required children when all required', () => {
     const params = checkSetup(
-      `<div id="target" role="menu">
+      html`<div id="target" role="menu">
         <li role="none"></li>
         <li role="menuitem">Item 1</li>
         <div role="menuitemradio">Item 2</div>
@@ -135,7 +129,7 @@ describe('aria-required-children', () => {
   });
 
   it('should fail list with an unallowed child', () => {
-    const params = checkSetup(`
+    const params = checkSetup(html`
       <div id="target" role="list"><div role="tabpanel"></div></div>
     `);
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
@@ -147,8 +141,10 @@ describe('aria-required-children', () => {
   });
 
   it('should fail list with an unallowed child but show a custom message, even if aria-busy="true"', () => {
-    const params = checkSetup(`
-      <div id="target" role="list" aria-busy="true"><div role="tabpanel"></div></div>
+    const params = checkSetup(html`
+      <div id="target" role="list" aria-busy="true">
+        <div role="tabpanel"></div>
+      </div>
     `);
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
@@ -210,7 +206,7 @@ describe('aria-required-children', () => {
   });
 
   it('should remove duplicate unallowed selectors', () => {
-    const params = checkSetup(`
+    const params = checkSetup(html`
       <div id="target" role="list">
         <div role="tabpanel"></div>
         <div role="listitem">List item 1</div>
@@ -226,22 +222,22 @@ describe('aria-required-children', () => {
   });
 
   it('should pass when list has child with aria-hidden', () => {
-    const params = checkSetup(
-      '<div id="target" role="list">' +
-        '<div aria-hidden="true">Ignore item</div>' +
-        '<div role="listitem">List item 1</div>' +
-        '</div>'
-    );
+    const params = checkSetup(html`
+      <div id="target" role="list">
+        <div aria-hidden="true">Ignore item</div>
+        <div role="listitem">List item 1</div>
+      </div>
+    `);
     assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
   it('should pass when list has child with aria-hidden and is focusable', () => {
-    const params = checkSetup(
-      '<div id="target" role="list">' +
-        '<div aria-hidden="true" tabindex="0">Ignore item</div>' +
-        '<div role="listitem">List item 1</div>' +
-        '</div>'
-    );
+    const params = checkSetup(html`
+      <div id="target" role="list">
+        <div aria-hidden="true" tabindex="0">Ignore item</div>
+        <div role="listitem">List item 1</div>
+      </div>
+    `);
     assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
   });
 
@@ -346,7 +342,7 @@ describe('aria-required-children', () => {
   });
 
   it('should ignore hidden children inside the group', () => {
-    const params = checkSetup(`
+    const params = checkSetup(html`
       <div role="menu" id="target">
         <ul role="group">
           <li style="display: none">hidden</li>
@@ -483,7 +479,7 @@ describe('aria-required-children', () => {
 
       it('should return undefined when role=none child has hidden content', () => {
         const params = checkSetup(
-          `<div role="listbox" id="target">
+          html`<div role="listbox" id="target">
             <div role="none">
               <h1 style="display:none">hello</h1>
               <h1 aria-hidden="true">hello</h1>
@@ -506,7 +502,7 @@ describe('aria-required-children', () => {
 
       it('should return undefined when the element has hidden children', () => {
         const params = checkSetup(
-          `<div role="menu" id="target">
+          html`<div role="menu" id="target">
             <div role="menuitem" hidden></div>
             <div role="none" hidden></div>
             <div role="list" hidden></div>

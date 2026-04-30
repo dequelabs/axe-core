@@ -1,11 +1,11 @@
-describe('AbstractVirtualNode', function () {
-  it('should be a function', function () {
+describe('AbstractVirtualNode', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.AbstractVirtualNode);
   });
 
-  it('should throw an error when accessing props', function () {
+  it('should throw an error when accessing props', () => {
     function fn() {
-      var abstractNode = new axe.AbstractVirtualNode();
+      const abstractNode = new axe.AbstractVirtualNode();
       if (abstractNode.props.nodeType === 1) {
         return;
       }
@@ -14,18 +14,18 @@ describe('AbstractVirtualNode', function () {
     assert.throws(fn);
   });
 
-  it('should throw an error when accessing attrNames', function () {
+  it('should throw an error when accessing attrNames', () => {
     function fn() {
-      var abstractNode = new axe.AbstractVirtualNode();
+      const abstractNode = new axe.AbstractVirtualNode();
       return abstractNode.attrNames;
     }
 
     assert.throws(fn, 'VirtualNode class must have an "attrNames" property');
   });
 
-  it('should throw an error when accessing hasClass', function () {
+  it('should throw an error when accessing hasClass', () => {
     function fn() {
-      var abstractNode = new axe.AbstractVirtualNode();
+      const abstractNode = new axe.AbstractVirtualNode();
       if (abstractNode.hasClass('foo')) {
         return;
       }
@@ -34,9 +34,9 @@ describe('AbstractVirtualNode', function () {
     assert.throws(fn);
   });
 
-  it('should throw an error when accessing attr', function () {
+  it('should throw an error when accessing attr', () => {
     function fn() {
-      var abstractNode = new axe.AbstractVirtualNode();
+      const abstractNode = new axe.AbstractVirtualNode();
       if (abstractNode.attr('foo') === 'bar') {
         return;
       }
@@ -45,9 +45,9 @@ describe('AbstractVirtualNode', function () {
     assert.throws(fn);
   });
 
-  it('should throw an error when accessing hasAttr', function () {
+  it('should throw an error when accessing hasAttr', () => {
     function fn() {
-      var abstractNode = new axe.AbstractVirtualNode();
+      const abstractNode = new axe.AbstractVirtualNode();
       if (abstractNode.hasAttr('foo')) {
         return;
       }
@@ -56,19 +56,19 @@ describe('AbstractVirtualNode', function () {
     assert.throws(fn);
   });
 
-  describe('hasClass, when attr is set', function () {
-    it('should return true when the element has the class', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+  describe('hasClass, when attr is set', () => {
+    it('should return true when the element has the class', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return 'my-class';
       };
 
       assert.isTrue(vNode.hasClass('my-class'));
     });
 
-    it('should return true when the element contains more than one class', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+    it('should return true when the element contains more than one class', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return 'my-class a11y-focus visually-hidden';
       };
 
@@ -77,35 +77,35 @@ describe('AbstractVirtualNode', function () {
       assert.isTrue(vNode.hasClass('visually-hidden'));
     });
 
-    it('should return false when the element does not contain the class', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+    it('should return false when the element does not contain the class', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return undefined;
       };
 
       assert.isFalse(vNode.hasClass('my-class'));
     });
 
-    it('should return false when the element contains only part of the class', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+    it('should return false when the element contains only part of the class', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return 'my-class';
       };
       assert.isFalse(vNode.hasClass('class'));
     });
 
-    it('should return false if className is not of type string', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+    it('should return false if className is not of type string', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return null;
       };
 
       assert.isFalse(vNode.hasClass('my-class'));
     });
 
-    it('should return true for whitespace characters', function () {
-      var vNode = new axe.AbstractVirtualNode();
-      vNode.attr = function () {
+    it('should return true for whitespace characters', () => {
+      const vNode = new axe.AbstractVirtualNode();
+      vNode.attr = () => {
         return 'my-class\ta11y-focus\rvisually-hidden\ngrid\fcontainer';
       };
 

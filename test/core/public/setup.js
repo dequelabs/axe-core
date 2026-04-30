@@ -1,32 +1,30 @@
-describe('axe.setup', function () {
-  'use strict';
-
-  afterEach(function () {
+describe('axe.setup', () => {
+  afterEach(() => {
     axe.teardown();
   });
 
-  it('should setup the tree', function () {
+  it('should setup the tree', () => {
     axe._tree = undefined;
     axe.setup();
     assert.exists(axe._tree);
   });
 
-  it('should default the tree to use html element', function () {
+  it('should default the tree to use html element', () => {
     axe.setup();
     assert.equal(axe._tree[0].actualNode, document.documentElement);
   });
 
-  it('should use the passed in node as the root of the tree', function () {
+  it('should use the passed in node as the root of the tree', () => {
     axe.setup(document.body);
     assert.equal(axe._tree[0].actualNode, document.body);
   });
 
-  it('should return the root node', function () {
-    var vNode = axe.setup(document.body);
+  it('should return the root node', () => {
+    const vNode = axe.setup(document.body);
     assert.equal(vNode.actualNode, document.body);
   });
 
-  it('should setup selector data', function () {
+  it('should setup selector data', () => {
     axe._selectorData = undefined;
     axe.setup();
     assert.exists(axe._selectorData);
@@ -37,7 +35,7 @@ describe('axe.setup', function () {
     assert.equal(axe._tree[0].actualNode, document.documentElement);
   });
 
-  it('should throw if called twice in a row', function () {
+  it('should throw if called twice in a row', () => {
     function fn() {
       axe.setup();
       axe.setup();

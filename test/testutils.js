@@ -43,8 +43,8 @@ var commons;
     }
   }
 
-  axe._audit.rules.forEach(function (rule) {
-    rule.none.forEach(function (check) {
+  axe._audit.rules.forEach(rule => {
+    rule.none.forEach(check => {
       check = check.id || check;
       if (noneChecks.indexOf(check) === -1) {
         noneChecks.push(check);
@@ -52,7 +52,7 @@ var commons;
     });
   });
 
-  axe._audit.rules.forEach(function (rule) {
+  axe._audit.rules.forEach(rule => {
     rule.any.forEach(verifyIsNoneCheck);
     rule.all.forEach(verifyIsNoneCheck);
   });
@@ -62,8 +62,7 @@ var commons;
    *
    * @return Object
    */
-  testUtils.MockCheckContext = function () {
-    'use strict';
+  testUtils.MockCheckContext = () => {
     return {
       _relatedNodes: [],
       _data: null,
@@ -72,7 +71,7 @@ var commons;
       _onAsync: null,
       async: function () {
         const self = this;
-        return function (result) {
+        return result => {
           // throws if _onAsync isn't set
           self._onAsync(result, self);
         };
@@ -97,8 +96,7 @@ var commons;
    * @param HTMLDocumentElement		The document of the current context
    * @return Object
    */
-  testUtils.shadowSupport = (function (document) {
-    'use strict';
+  testUtils.shadowSupport = (document => {
     const v0 =
         document.body && typeof document.body.createShadowRoot === 'function',
       v1 = document.body && typeof document.body.attachShadow === 'function';
@@ -117,8 +115,7 @@ var commons;
    * Return the fixture element
    * @return HTMLElement
    */
-  testUtils.getFixture = function () {
-    'use strict';
+  testUtils.getFixture = () => {
     return fixture;
   };
 
@@ -127,8 +124,7 @@ var commons;
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
    * @return HTMLElement
    */
-  testUtils.injectIntoFixture = function (content) {
-    'use strict';
+  testUtils.injectIntoFixture = content => {
     if (typeof content !== 'undefined') {
       fixture.innerHTML = '';
     }
@@ -138,7 +134,7 @@ var commons;
     } else if (content instanceof Node) {
       fixture.appendChild(content);
     } else if (Array.isArray(content)) {
-      content.forEach(function (node) {
+      content.forEach(node => {
         fixture.appendChild(node);
       });
     }
@@ -153,8 +149,7 @@ var commons;
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
    * @return HTMLElement
    */
-  testUtils.fixtureSetup = function (content) {
-    'use strict';
+  testUtils.fixtureSetup = content => {
     testUtils.injectIntoFixture(content);
     axe.teardown();
     return axe.setup(fixture);
@@ -168,8 +163,7 @@ var commons;
    * @param String				Target for the check, CSS selector (default: '#target')
    * @return Array
    */
-  testUtils.checkSetup = function (content, options, target) {
-    'use strict';
+  testUtils.checkSetup = (content, options, target) => {
     // Normalize the params
     if (typeof options !== 'object') {
       target = options;
@@ -198,13 +192,7 @@ var commons;
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
    * @return VirtualNode
    */
-  testUtils.queryShadowFixture = function (
-    content,
-    shadowContent,
-    targetSelector
-  ) {
-    'use strict';
-
+  testUtils.queryShadowFixture = (content, shadowContent, targetSelector) => {
     // Normalize target, allow it to be the provided string or use '#target' to query composed tree
     if (typeof targetSelector !== 'string') {
       targetSelector = '#target';
@@ -250,12 +238,12 @@ var commons;
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
    * @return Array
    */
-  testUtils.shadowCheckSetup = function (
+  testUtils.shadowCheckSetup = (
     content,
     shadowContent,
     options,
     targetSelector
-  ) {
+  ) => {
     // Normalize the object params
     if (typeof options !== 'object') {
       options = {};
@@ -273,7 +261,7 @@ var commons;
    * @param Node   Stuff to go in the flat tree
    * @returns vNode[]
    */
-  testUtils.flatTreeSetup = function (content) {
+  testUtils.flatTreeSetup = content => {
     axe._tree = axe.utils.getFlattenedTree(content);
     return axe._tree;
   };
@@ -286,7 +274,6 @@ var commons;
    * @param function      Callback, called once rejected
    */
   testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb, errCb) {
-    'use strict';
     if (typeof win === 'function') {
       errCb = cb;
       cb = win;
@@ -296,7 +283,7 @@ var commons;
     const q = axe.utils.queue();
 
     // Wait for page load
-    q.defer(function (resolve) {
+    q.defer(resolve => {
       if (document.readyState === 'complete') {
         resolve();
       } else {
@@ -305,14 +292,14 @@ var commons;
     });
 
     // Wait for all frames to be loaded
-    Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
-      q.defer(function (resolve) {
+    Array.from(document.querySelectorAll('iframe')).forEach(frame => {
+      q.defer(resolve => {
         return awaitNestedLoad(frame.contentWindow, resolve);
       });
     });
 
     // Complete (don't pass the args on to the callback)
-    q.then(function () {
+    q.then(() => {
       cb();
     });
 
@@ -336,7 +323,7 @@ var commons;
     const doc = rootNode ? rootNode : document;
     const q = axe.utils.queue();
     if (data.href) {
-      q.defer(function (resolve, reject) {
+      q.defer((resolve, reject) => {
         const link = doc.createElement('link');
         link.rel = 'stylesheet';
         link.href = data.href;
@@ -346,18 +333,18 @@ var commons;
         if (data.mediaPrint) {
           link.media = 'print';
         }
-        link.onload = function () {
-          setTimeout(function () {
+        link.onload = () => {
+          setTimeout(() => {
             resolve();
           });
         };
-        link.onerror = function () {
+        link.onerror = () => {
           reject();
         };
         doc.head.appendChild(link);
       });
     } else {
-      q.defer(function (resolve, reject) {
+      q.defer((resolve, reject) => {
         const style = doc.createElement('style');
         if (data.id) {
           style.id = data.id;
@@ -368,7 +355,7 @@ var commons;
         // In Firefox, there is a delay between adding the element and it appearing in
         // document.styleSheets, so we poll until we see it there.
         const timeoutAt = Date.now() + 500;
-        const interval = setInterval(function () {
+        const interval = setInterval(() => {
           const isLoaded = Array.from(doc.styleSheets).some(
             sheet => sheet.ownerNode === style
           );
@@ -397,7 +384,7 @@ var commons;
    */
   testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
     const q = axe.utils.queue();
-    sheets.forEach(function (data) {
+    sheets.forEach(data => {
       q.defer(axe.testUtils.addStyleSheet(data, rootNode));
     });
     return q;
@@ -410,8 +397,8 @@ var commons;
    */
   testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
     const q = axe.utils.queue();
-    sheets.forEach(function (data) {
-      q.defer(function (resolve, reject) {
+    sheets.forEach(data => {
+      q.defer((resolve, reject) => {
         const node = document.getElementById(data.id);
         if (!node || !node.parentNode) {
           reject();
@@ -478,9 +465,7 @@ var commons;
     const vNode = axe.utils.querySelectorAll(rootNode, query)[0];
     assert.exists(
       vNode,
-      'Node does not exist in query `' +
-        query +
-        '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter. If you do not intend on querying the fixture for #target, consider using `axe.testUtils.fixtureSetup()` instead.'
+      `Node does not exist in query \`${query}\`. This is usually fixed by adding the default target (\`id="target"\`) to your html parameter. If you do not intend on querying the fixture for #target, consider using \`axe.testUtils.fixtureSetup()\` instead.`
     );
     return vNode;
   };
@@ -540,22 +525,12 @@ var commons;
 
         assert.exists(
           messages[key],
-          'Missing "' +
-            key +
-            '" message for check result of ' +
-            result +
-            noneCheckMessage
+          `Missing "${key}" message for check result of ${result}${noneCheckMessage}`
         );
         if (messageKey) {
           assert.exists(
             messages[key][messageKey],
-            'Missing ' +
-              key +
-              ' message key "' +
-              messageKey +
-              '" for check result of ' +
-              result +
-              noneCheckMessage
+            `Missing ${key} message key "${messageKey}" for check result of ${result}${noneCheckMessage}`
           );
 
           const message = axe.utils.processMessage(
@@ -564,23 +539,13 @@ var commons;
           );
           assert.isTrue(
             message.indexOf('${') === -1,
-            'Data object missing properties for ' +
-              key +
-              ' message key "' +
-              messageKey +
-              '": "' +
-              message +
-              '"'
+            `Data object missing properties for ${key} message key "${messageKey}": "${message}"`
           );
         } else {
           const message = axe.utils.processMessage(messages[key], this._data);
           assert.isTrue(
             message.indexOf('${') === -1,
-            'Data object missing properties for ' +
-              key +
-              ' message: "' +
-              message +
-              '"'
+            `Data object missing properties for ${key} message: "${message}"`
           );
         }
       }
@@ -603,7 +568,7 @@ var commons;
       });
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
       // reset from axe._load overriding
       checks = originalChecks;
       axe._audit = originalAudit;
@@ -611,7 +576,7 @@ var commons;
       commons = axe.commons = originalCommons;
     });
 
-    afterEach(function () {
+    afterEach(() => {
       axe.teardown();
       fixture.innerHTML = '';
 
@@ -653,7 +618,7 @@ var commons;
     const frameContexts = axe.utils.getFrameContexts(context);
     let promiseResults = [axe.runPartial(context, options)];
 
-    frameContexts.forEach(function (c) {
+    frameContexts.forEach(c => {
       const frame = testUtils.shadowQuerySelector(
         c.frameSelector,
         win.document
@@ -676,7 +641,7 @@ var commons;
     let elm;
     doc = doc || document;
     axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector];
-    axeSelector.forEach(function (selectorStr) {
+    axeSelector.forEach(selectorStr => {
       elm = doc && doc.querySelector(selectorStr);
       doc = elm && elm.shadowRoot;
     });

@@ -59,7 +59,7 @@ describe('axe.utils.parseSameOriginStylesheet', () => {
           importedUrls,
           false
         )
-        .then(function (data) {
+        .then(data => {
           assert.isDefined(data);
           assert.isDefined(data.sheet);
           assert.equal(data.isCrossOrigin, isCrossOriginRequest);
@@ -97,7 +97,7 @@ describe('axe.utils.parseSameOriginStylesheet', () => {
           importedUrls,
           false
         )
-        .then(function (data) {
+        .then(data => {
           assert.isDefined(data);
 
           const parsedImportData = data[0];
@@ -143,7 +143,7 @@ describe('axe.utils.parseSameOriginStylesheet', () => {
           importedUrls,
           false
         )
-        .then(function (data) {
+        .then(data => {
           assert.isDefined(data);
           assert.isDefined(data.sheet);
           assert.equal(data.isCrossOrigin, isCrossOriginRequest);

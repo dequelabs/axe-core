@@ -1,15 +1,13 @@
-describe('deprecatedrole', function () {
-  'use strict';
-
-  var checkContext = axe.testUtils.MockCheckContext();
-  var checkSetup = axe.testUtils.checkSetup;
-  var checkEvaluate = axe.testUtils.getCheckEvaluate('deprecatedrole');
-  afterEach(function () {
+describe('deprecatedrole', () => {
+  const checkContext = axe.testUtils.MockCheckContext();
+  const checkSetup = axe.testUtils.checkSetup;
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('deprecatedrole');
+  afterEach(() => {
     checkContext.reset();
     axe.reset();
   });
 
-  it('returns true if applied to a deprecated role', function () {
+  it('returns true if applied to a deprecated role', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -20,12 +18,12 @@ describe('deprecatedrole', function () {
         }
       }
     });
-    var params = checkSetup('<div id="target" role="melon">Contents</div>');
+    const params = checkSetup('<div id="target" role="melon">Contents</div>');
     assert.isTrue(checkEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, 'melon');
   });
 
-  it('returns true if applied to a deprecated DPUB role', function () {
+  it('returns true if applied to a deprecated DPUB role', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -36,31 +34,31 @@ describe('deprecatedrole', function () {
         }
       }
     });
-    var params = checkSetup(
+    const params = checkSetup(
       '<div id="target" role="doc-fizzbuzz">Contents</div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, 'doc-fizzbuzz');
   });
 
-  it('returns false if applied to a non-deprecated role', function () {
-    var params = checkSetup('<div id="target" role="button">Contents</div>');
+  it('returns false if applied to a non-deprecated role', () => {
+    let params = checkSetup('<div id="target" role="button">Contents</div>');
     assert.isFalse(checkEvaluate.apply(checkContext, params));
     assert.isNull(checkContext._data);
 
-    var params = checkSetup('<button id="target">Contents</button>');
-    assert.isFalse(checkEvaluate.apply(checkContext, params));
-    assert.isNull(checkContext._data);
-  });
-
-  it('returns false if applied to an invalid role', function () {
-    var params = checkSetup('<input id="target" role="foo">');
+    params = checkSetup('<button id="target">Contents</button>');
     assert.isFalse(checkEvaluate.apply(checkContext, params));
     assert.isNull(checkContext._data);
   });
 
-  describe('with fallback roles', function () {
-    it('returns true if the deprecated role is the first valid role', function () {
+  it('returns false if applied to an invalid role', () => {
+    const params = checkSetup('<input id="target" role="foo">');
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+    assert.isNull(checkContext._data);
+  });
+
+  describe('with fallback roles', () => {
+    it('returns true if the deprecated role is the first valid role', () => {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -71,14 +69,14 @@ describe('deprecatedrole', function () {
           }
         }
       });
-      var params = checkSetup(
+      const params = checkSetup(
         '<div id="target" role="foo widget melon button">Contents</div>'
       );
       assert.isTrue(checkEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, 'melon');
     });
 
-    it('returns false if the deprecated role is not the first valid role', function () {
+    it('returns false if the deprecated role is not the first valid role', () => {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -89,7 +87,7 @@ describe('deprecatedrole', function () {
           }
         }
       });
-      var params = checkSetup(
+      const params = checkSetup(
         '<div id="target" role="button melon widget">Contents</div>'
       );
       assert.isFalse(checkEvaluate.apply(checkContext, params));

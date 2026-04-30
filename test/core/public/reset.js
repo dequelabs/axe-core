@@ -1,22 +1,20 @@
-describe('axe.reset', function () {
-  'use strict';
-
+describe('axe.reset', () => {
   // var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-  var fixture = document.getElementById('fixture');
-  afterEach(function () {
+  const fixture = document.getElementById('fixture');
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe._audit = null;
   });
 
-  it('should throw if no audit is configured', function () {
+  it('should throw if no audit is configured', () => {
     assert.throws(
-      function () {
+      () => {
         axe.reset(
-          function () {},
-          function () {}
+          () => {},
+          () => {}
         );
       },
       Error,
@@ -24,7 +22,7 @@ describe('axe.reset', function () {
     );
   });
 
-  it('should restore the default configuration', function () {
+  it('should restore the default configuration', () => {
     axe._load({
       data: {
         rules: {
@@ -77,8 +75,8 @@ describe('axe.reset', function () {
     assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
   });
 
-  describe('when custom locale was provided', function () {
-    beforeEach(function () {
+  describe('when custom locale was provided', () => {
+    beforeEach(() => {
       axe._load({
         data: {
           checks: {
@@ -95,13 +93,13 @@ describe('axe.reset', function () {
         checks: [
           {
             id: 'banana',
-            evaluate: function () {}
+            evaluate: () => {}
           }
         ]
       });
     });
 
-    it('should restore the original locale', function () {
+    it('should restore the original locale', () => {
       axe.configure({
         locale: {
           checks: {
@@ -116,7 +114,7 @@ describe('axe.reset', function () {
 
       axe.reset();
 
-      var banana = axe._audit.data.checks.banana;
+      const banana = axe._audit.data.checks.banana;
       assert.equal(banana.impact, 'serious');
       assert.equal(banana.messages.pass, 'yay');
       assert.equal(banana.messages.fail, 'boo');
@@ -124,7 +122,7 @@ describe('axe.reset', function () {
     });
   });
 
-  it('should restore standards object', function () {
+  it('should restore standards object', () => {
     axe._load({});
 
     axe.configure({
@@ -139,7 +137,7 @@ describe('axe.reset', function () {
 
     axe.reset();
 
-    var ariaLiveAttr = axe._audit.standards.ariaAttrs['aria-live'];
+    const ariaLiveAttr = axe._audit.standards.ariaAttrs['aria-live'];
     assert.equal(ariaLiveAttr.type, 'nmtoken');
   });
 });

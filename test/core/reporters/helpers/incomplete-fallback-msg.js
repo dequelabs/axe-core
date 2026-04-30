@@ -1,13 +1,11 @@
-describe('helpers.incompleteFallbackMessage', function () {
-  'use strict';
-
-  it('returns a non-empty string by default', function () {
-    var summary = helpers.incompleteFallbackMessage();
+describe('helpers.incompleteFallbackMessage', () => {
+  it('returns a non-empty string by default', () => {
+    const summary = helpers.incompleteFallbackMessage();
     assert.typeOf(summary, 'string');
     assert.notEqual(summary, '');
   });
 
-  it('should return a string', function () {
+  it('should return a string', () => {
     axe._load({
       messages: {},
       rules: [],
@@ -15,11 +13,11 @@ describe('helpers.incompleteFallbackMessage', function () {
         incompleteFallbackMessage: 'Dogs are the best'
       }
     });
-    var summary = helpers.incompleteFallbackMessage();
+    const summary = helpers.incompleteFallbackMessage();
     assert.equal(summary, 'Dogs are the best');
   });
 
-  it('should handle doT.js template function', function () {
+  it('should handle doT.js template function', () => {
     axe._load({
       messages: {},
       rules: [],
@@ -30,12 +28,12 @@ describe('helpers.incompleteFallbackMessage', function () {
       }
     });
 
-    var summary = helpers.incompleteFallbackMessage();
+    const summary = helpers.incompleteFallbackMessage();
     assert.equal(summary, 'Dogs are the best');
   });
 
-  describe('when passed an invalid value', function () {
-    it('returns `` when set to an object', function () {
+  describe('when passed an invalid value', () => {
+    it('returns `` when set to an object', () => {
       axe._load({
         messages: {},
         rules: [],
@@ -46,7 +44,7 @@ describe('helpers.incompleteFallbackMessage', function () {
       assert.equal(helpers.incompleteFallbackMessage(), '');
     });
 
-    it('returns `` when set to null', function () {
+    it('returns `` when set to null', () => {
       axe._load({
         messages: {},
         rules: [],
@@ -57,7 +55,7 @@ describe('helpers.incompleteFallbackMessage', function () {
       assert.equal(helpers.incompleteFallbackMessage(), '');
     });
 
-    it('returns `` when set to undefined', function () {
+    it('returns `` when set to undefined', () => {
       axe._load({
         messages: {},
         rules: [],

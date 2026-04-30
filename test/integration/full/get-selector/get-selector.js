@@ -1,13 +1,12 @@
-describe('axe.utils.getSelector', function () {
-  'use strict';
-  before(function () {
+describe('axe.utils.getSelector', () => {
+  before(() => {
     axe.setup();
   });
-  it('should work on namespaced elements', function () {
-    var fixture = document.querySelector('#fixture');
-    var node = fixture.firstElementChild;
-    var sel = axe.utils.getSelector(node);
-    var result = document.querySelectorAll(sel);
+  it('should work on namespaced elements', () => {
+    const fixture = document.querySelector('#fixture');
+    const node = fixture.firstElementChild;
+    const sel = axe.utils.getSelector(node);
+    const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
   });

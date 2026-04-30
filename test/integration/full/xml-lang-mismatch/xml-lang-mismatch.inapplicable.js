@@ -1,8 +1,6 @@
-describe('html-xml-lang-mismatch test', function () {
-  'use strict';
-
-  var results;
-  before(function (done) {
+describe('html-xml-lang-mismatch test', () => {
+  let results;
+  before(done => {
     axe.run(
       {
         runOnly: {
@@ -10,7 +8,7 @@ describe('html-xml-lang-mismatch test', function () {
           values: ['html-xml-lang-mismatch']
         }
       },
-      function (err, r) {
+      (err, r) => {
         assert.isNull(err);
         results = r;
         done();
@@ -18,8 +16,8 @@ describe('html-xml-lang-mismatch test', function () {
     );
   });
 
-  describe('inapplicable', function () {
-    it('should find one', function () {
+  describe('inapplicable', () => {
+    it('should find one', () => {
       assert.lengthOf(results.inapplicable, 1);
     });
   });

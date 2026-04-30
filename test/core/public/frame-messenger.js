@@ -1,11 +1,11 @@
-describe('frameMessenger', function () {
-  var stub;
+describe('frameMessenger', () => {
+  let stub;
 
-  after(function () {
+  after(() => {
     stub.restore();
   });
 
-  it('should call into axe.utils.respondable.updateMessenger', function () {
+  it('should call into axe.utils.respondable.updateMessenger', () => {
     stub = sinon.stub(axe.utils.respondable, 'updateMessenger');
     axe.frameMessenger();
     assert.isTrue(stub.called);

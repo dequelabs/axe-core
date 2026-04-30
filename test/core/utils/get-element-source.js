@@ -1,4 +1,5 @@
 describe('axe.utils.getElementSource', () => {
+  const html = axe.testUtils.html;
   const getElementSource = axe.utils.getElementSource;
   const queryFixture = axe.testUtils.queryFixture;
 
@@ -34,7 +35,7 @@ describe('axe.utils.getElementSource', () => {
   it('should truncate long nodeValue for non-element nodes', () => {
     const textNode = document.createTextNode('x'.repeat(500));
     const result = getElementSource(textNode, { maxLength: 50 });
-    assert.equal(result, 'x'.repeat(50) + '...');
+    assert.equal(result, `${'x'.repeat(50)}...`);
   });
 
   it('should work without the virtual tree (element not in axe context)', () => {
@@ -59,11 +60,13 @@ describe('axe.utils.getElementSource', () => {
   });
 
   it('should work with MathML', () => {
-    const vNode = queryFixture(
-      '<math display="block" id="target">' +
-        '<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>' +
-        '</math>'
-    );
+    const vNode = queryFixture(html`
+      <math display="block" id="target">
+        <mrow
+          ><msup><mi>x</mi><mn>2</mn></msup></mrow
+        >
+      </math>
+    `);
 
     const result = getElementSource(vNode.actualNode);
     assert.equal(result, vNode.actualNode.outerHTML);
@@ -71,11 +74,14 @@ describe('axe.utils.getElementSource', () => {
 
   describe('XML namespaces', () => {
     it('should work with SVG and xlink:href attribute', () => {
-      const vNode = queryFixture(
-        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
-          '<a id="target" xlink:href="#section"><text>Link</text></a>' +
-          '</svg>'
-      );
+      const vNode = queryFixture(html`
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <a id="target" xlink:href="#section"><text>Link</text></a>
+        </svg>
+      `);
       const result = getElementSource(vNode.actualNode);
 
       assert.include(result, 'xlink:href');
@@ -85,11 +91,14 @@ describe('axe.utils.getElementSource', () => {
 
     it('should truncate SVG with namespaced attributes correctly', () => {
       const vNode = queryFixture(
-        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
-          '<a id="target" xlink:href="#section" class="link">' +
-          'x'.repeat(400) +
-          '</a>' +
-          '</svg>'
+        html`<svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <a id="target" xlink:href="#section" class="link">
+            ${'x'.repeat(400)}
+          </a>
+        </svg>`
       );
       const result = getElementSource(vNode.actualNode, { maxLength: 50 });
       assert.match(result, /<a\s/);
@@ -149,7 +158,12 @@ describe('axe.utils.getElementSource', () => {
     const result = getElementSource(el);
     assert.equal(
       result,
-      `<div ${attributeName.substring(0, 20)}...="${attributeValue.substring(0, 20)}...">`
+      html`<div
+        ${attributeName.substring(0, 20)}...="${attributeValue.substring(
+          0,
+          20
+        )}..."
+      ></div>`
     );
   });
 
@@ -158,7 +172,8 @@ describe('axe.utils.getElementSource', () => {
     for (let i = 0; i < 100; i++) {
       customElement += ` attr${i}="value${i}"`;
     }
-    customElement += `><div>`;
+    customElement += html`>
+      <div></div>`;
 
     const vNode = queryFixture(customElement);
     const result = getElementSource(vNode.actualNode);
@@ -187,13 +202,13 @@ describe('axe.utils.getElementSource', () => {
     el.innerHTML = innerHtml;
 
     const result = getElementSource(el);
-    assert.equal(result, `<div long-attribute="${attributeValue}">`);
+    assert.equal(result, html`<div long-attribute="${attributeValue}"></div>`);
   });
 
   describe('options', () => {
     it('should respect custom maxLength', () => {
       const vNode = queryFixture(
-        '<div class="foo" id="target">' + 'x'.repeat(200) + '</div>'
+        html`<div class="foo" id="target">${'x'.repeat(200)}</div>`
       );
       const result = getElementSource(vNode.actualNode, { maxLength: 25 });
       assert.equal(result, '<div class="foo" ...>');
@@ -201,7 +216,7 @@ describe('axe.utils.getElementSource', () => {
 
     it('should respect custom attrLimit', () => {
       const el = document.createElement('div');
-      const longName = 'data-' + 'x'.repeat(300);
+      const longName = `data-${'x'.repeat(300)}`;
       const longValue = 'y'.repeat(300);
       el.setAttribute(longName, longValue);
 
@@ -211,9 +226,13 @@ describe('axe.utils.getElementSource', () => {
 
     it('should include later attributes that fit after skipping long ones', () => {
       const vNode = queryFixture(
-        '<div id="target" data-very-long-attr="' +
-          'x'.repeat(200) +
-          '" class="foo">content</div>'
+        html`<div
+          id="target"
+          data-very-long-attr="${'x'.repeat(200)}"
+          class="foo"
+        >
+          content
+        </div>`
       );
       const result = getElementSource(vNode.actualNode, { maxLength: 50 });
       assert.equal(result, '<div id="target" class="foo" ...>');

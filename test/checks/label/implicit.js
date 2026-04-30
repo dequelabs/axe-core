@@ -78,7 +78,7 @@ describe('implicit-label', () => {
         '<label id="lbl"> <input type="text" id="target"> </label>'
       );
       checkEvaluate.apply(checkContext, params);
-      const ids = checkContext._relatedNodes.map(node => '#' + node.id);
+      const ids = checkContext._relatedNodes.map(node => `#${node.id}`);
       assert.deepEqual(ids, ['#lbl']);
     });
   });

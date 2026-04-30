@@ -1,17 +1,15 @@
-describe('reporters - raw-env', function () {
-  'use strict';
-
-  var fixture = document.getElementById('fixture');
+describe('reporters - raw-env', () => {
+  const fixture = document.getElementById('fixture');
 
   function createDqElement() {
-    var node = document.createElement('div');
+    const node = document.createElement('div');
     fixture.appendChild(node);
     return new axe.utils.DqElement(node);
   }
 
-  var runResults;
+  let runResults;
 
-  beforeEach(function () {
+  beforeEach(() => {
     runResults = [
       {
         id: 'gimmeLabel',
@@ -117,13 +115,13 @@ describe('reporters - raw-env', function () {
     axe._cache.set('selectorData', {});
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     sinon.restore();
   });
 
-  it('should serialize DqElements (#1195)', function () {
-    axe.getReporter('rawEnv')(runResults, {}, function (results) {
+  it('should serialize DqElements (#1195)', () => {
+    axe.getReporter('rawEnv')(runResults, {}, results => {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
         for (var j = 0; j < result.passes.length; j++) {
@@ -134,8 +132,8 @@ describe('reporters - raw-env', function () {
     });
   });
 
-  it('should pass env object', function () {
-    axe.getReporter('rawEnv')(runResults, {}, function (results) {
+  it('should pass env object', () => {
+    axe.getReporter('rawEnv')(runResults, {}, results => {
       assert.isDefined(results.env);
       assert.isDefined(results.env.url);
       assert.isDefined(results.env.timestamp);
@@ -144,26 +142,26 @@ describe('reporters - raw-env', function () {
     });
   });
 
-  it('uses the environmentData option instead of environment data if specified', function () {
-    var environmentData = {
+  it('uses the environmentData option instead of environment data if specified', () => {
+    const environmentData = {
       myReporter: 'hello world'
     };
     axe.getReporter('rawEnv')(
       runResults,
       { environmentData: environmentData },
-      function (results) {
+      results => {
         assert.deepEqual(results.env, environmentData);
       }
     );
   });
 
   it('uses nodeSerializer', done => {
-    var rawReporter = axe.getReporter('rawEnv');
-    var spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
+    const rawReporter = axe.getReporter('rawEnv');
+    const spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
     rawReporter(
       runResults,
       {},
-      function () {
+      () => {
         assert.isTrue(spy.called);
         done();
       },

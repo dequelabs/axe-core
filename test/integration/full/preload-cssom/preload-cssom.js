@@ -1,12 +1,11 @@
 describe('preload cssom integration test', function () {
-  'use strict';
+  const html = axe.testUtils.html;
 
   // axe-core preload timeout is set to 10s so we need a
   // timeout slightly above that to ensure there's enough
   // time to resolve tests that we want to throw
   this.timeout(15000);
 
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
   const styleSheets = {
     crossOriginLinkHref: {
       id: 'crossOriginLinkHref',
@@ -63,7 +62,7 @@ describe('preload cssom integration test', function () {
         callback();
       })
       .catch(error => {
-        callback(new Error('Could not load stylesheets for testing. ' + error));
+        callback(new Error(`Could not load stylesheets for testing. ${error}`));
       });
   }
 
@@ -239,88 +238,83 @@ describe('preload cssom integration test', function () {
       });
     });
 
-    (shadowSupported ? it : xit)(
-      'returns styles from shadow DOM (handles @import in <style>)',
-      done => {
-        const shadow = shadowFixture.attachShadow({ mode: 'open' });
-        shadow.innerHTML =
-          '<style>' +
-          // stylesheet -> 1
-          '@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css";' +
-          // stylesheet -> 2
-          '.green { background-color: green; } ' +
-          '</style>' +
-          '<div class="initialism">Some text</div>';
+    it('returns styles from shadow DOM (handles @import in <style>)', done => {
+      const shadow = shadowFixture.attachShadow({ mode: 'open' });
+      shadow.innerHTML = html`
+        <style>
+          @import 'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css';
+          .green {
+            background-color: green;
+          }
+        </style>
+        <div class="initialism">Some text</div>
+      `;
+      getPreloadCssom(shadowFixture)
+        .then(sheets => {
+          assert.lengthOf(sheets, 2);
+          const nonCrossOriginSheetsWithInShadowDOM = sheets
+            .filter(s => {
+              return !s.isCrossOrigin;
+            })
+            .filter(s => {
+              return s.shadowId;
+            });
+          axe.testUtils.assertStylesheet(
+            nonCrossOriginSheetsWithInShadowDOM[
+              nonCrossOriginSheetsWithInShadowDOM.length - 1
+            ].sheet,
+            '.green',
+            '.green{background-color:green;}'
+          );
+          done();
+        })
+        .catch(() => {
+          done(new Error('Expected getPreload to resolve.'));
+        });
+    });
+
+    it('returns styles from base document and shadow DOM with right priority', done => {
+      const shadow = shadowFixture.attachShadow({ mode: 'open' });
+      shadow.innerHTML = html`
+        <style>
+          @import 'base.css';
+        </style>
+        <h1>Heading</h1>
+      `;
+
+      // sheet appended to root document
+      stylesForPage = [styleSheets.styleTag];
+      attachStylesheets({ styles: stylesForPage }, err => {
+        if (err) {
+          done(err);
+        }
         getPreloadCssom(shadowFixture)
           .then(sheets => {
             assert.lengthOf(sheets, 2);
-            const nonCrossOriginSheetsWithInShadowDOM = sheets
-              .filter(s => {
-                return !s.isCrossOrigin;
-              })
-              .filter(s => {
-                return s.shadowId;
-              });
+
+            const shadowDomStyle = sheets.filter(s => {
+              return s.shadowId;
+            })[0];
             axe.testUtils.assertStylesheet(
-              nonCrossOriginSheetsWithInShadowDOM[
-                nonCrossOriginSheetsWithInShadowDOM.length - 1
-              ].sheet,
-              '.green',
-              '.green{background-color:green;}'
+              shadowDomStyle.sheet,
+              '.style-from-base-css',
+              '.style-from-base-css { font-size: 100%; }'
+            );
+
+            const rootDocumentStyle = sheets.filter(s => {
+              return !s.shadowId;
+            })[0];
+            assert.isAbove(
+              shadowDomStyle.priority[0],
+              rootDocumentStyle.priority[0]
             );
             done();
           })
           .catch(() => {
             done(new Error('Expected getPreload to resolve.'));
           });
-      }
-    );
-
-    (shadowSupported ? it : xit)(
-      'returns styles from base document and shadow DOM with right priority',
-      done => {
-        const shadow = shadowFixture.attachShadow({ mode: 'open' });
-        shadow.innerHTML =
-          '<style>' +
-          // stylesheet -> 1 -> inside shadow DOM
-          '@import "base.css"' +
-          '</style>' +
-          '<h1>Heading</h1>';
-
-        // sheet appended to root document
-        stylesForPage = [styleSheets.styleTag];
-        attachStylesheets({ styles: stylesForPage }, err => {
-          if (err) {
-            done(err);
-          }
-          getPreloadCssom(shadowFixture)
-            .then(sheets => {
-              assert.lengthOf(sheets, 2);
-
-              const shadowDomStyle = sheets.filter(s => {
-                return s.shadowId;
-              })[0];
-              axe.testUtils.assertStylesheet(
-                shadowDomStyle.sheet,
-                '.style-from-base-css',
-                '.style-from-base-css { font-size: 100%; }'
-              );
-
-              const rootDocumentStyle = sheets.filter(s => {
-                return !s.shadowId;
-              })[0];
-              assert.isAbove(
-                shadowDomStyle.priority[0],
-                rootDocumentStyle.priority[0]
-              );
-              done();
-            })
-            .catch(() => {
-              done(new Error('Expected getPreload to resolve.'));
-            });
-        });
-      }
-    );
+      });
+    });
 
     it('returns styles from various @import(ed) styles from an @import(ed) stylesheet', done => {
       stylesForPage = [

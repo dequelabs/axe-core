@@ -1,6 +1,6 @@
-describe('aria-valid-attr virtual-rule', function () {
-  it('should pass for valid aria attrs', function () {
-    var results = axe.runVirtualRule('aria-valid-attr', {
+describe('aria-valid-attr virtual-rule', () => {
+  it('should pass for valid aria attrs', () => {
+    const results = axe.runVirtualRule('aria-valid-attr', {
       nodeName: 'button',
       attributes: {
         'aria-expanded': true,
@@ -13,8 +13,8 @@ describe('aria-valid-attr virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for invalid aria attr', function () {
-    var results = axe.runVirtualRule('aria-valid-attr', {
+  it('should fail for invalid aria attr', () => {
+    const results = axe.runVirtualRule('aria-valid-attr', {
       nodeName: 'button',
       attributes: {
         'aria-expanded': true,
@@ -27,7 +27,7 @@ describe('aria-valid-attr virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass when configured to accept attribute names', function () {
+  it('should pass when configured to accept attribute names', () => {
     axe.configure({
       checks: [
         {
@@ -37,7 +37,7 @@ describe('aria-valid-attr virtual-rule', function () {
       ]
     });
 
-    var results = axe.runVirtualRule('aria-valid-attr', {
+    const results = axe.runVirtualRule('aria-valid-attr', {
       nodeName: 'button',
       attributes: {
         'aria-expanded': true,

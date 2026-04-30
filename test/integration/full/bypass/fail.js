@@ -1,36 +1,32 @@
-describe('bypass fail test', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    var mocha = document.getElementById('mocha'),
+describe('bypass fail test', () => {
+  let results;
+  before(done => {
+    const mocha = document.getElementById('mocha'),
       html = mocha.innerHTML;
     mocha.innerHTML = '';
-    axe.testUtils.awaitNestedLoad(function () {
-      axe.run(
-        { runOnly: { type: 'rule', values: ['bypass'] } },
-        function (err, r) {
-          assert.isNull(err);
+    axe.testUtils.awaitNestedLoad(() => {
+      axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, (err, r) => {
+        assert.isNull(err);
 
-          results = r;
-          mocha.innerHTML = html;
-          done();
-        }
-      );
+        results = r;
+        mocha.innerHTML = html;
+        done();
+      });
     });
   });
 
-  describe('incomplete', function () {
-    it('should find 1', function () {
+  describe('incomplete', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.incomplete, 1);
     });
 
-    it('should find html', function () {
+    it('should find html', () => {
       assert.deepEqual(results.incomplete[0].nodes[0].target, ['html']);
     });
   });
 
-  describe('passes', function () {
-    it('should find none', function () {
+  describe('passes', () => {
+    it('should find none', () => {
       assert.lengthOf(results.passes, 0);
     });
   });

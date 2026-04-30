@@ -1,16 +1,14 @@
-describe('axe.utils.publishMetaData', function () {
-  'use strict';
-
-  afterEach(function () {
+describe('axe.utils.publishMetaData', () => {
+  afterEach(() => {
     axe._audit = null;
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(axe.utils.publishMetaData);
   });
 
-  it('should pull data from rules from axe._audit.data', function () {
-    var expected = {
+  it('should pull data from rules from axe._audit.data', () => {
+    const expected = {
       foo: 'bar',
       bob: 'loblaw'
     };
@@ -24,7 +22,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: []
     };
@@ -34,8 +32,8 @@ describe('axe.utils.publishMetaData', function () {
     assert.equal(result.bob, expected.bob);
   });
 
-  it('should pull data from checks from axe._audit.data', function () {
-    var expected = {
+  it('should pull data from checks from axe._audit.data', () => {
+    const expected = {
       foo: 'bar',
       bob: 'loblaw'
     };
@@ -49,7 +47,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'foo',
       nodes: [
         {
@@ -68,13 +66,13 @@ describe('axe.utils.publishMetaData', function () {
     assert.equal(result.nodes[0].any[0].bar, expected.bar);
   });
 
-  it('should execute messages', function () {
+  it('should execute messages', () => {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -82,30 +80,30 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               }
             }
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               }
             }
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               }
             }
@@ -114,7 +112,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {
@@ -215,13 +213,13 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should return default incomplete message with no reason specified by the check', function () {
+  it('should return default incomplete message with no reason specified by the check', () => {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -229,10 +227,10 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -245,10 +243,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -261,10 +259,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -279,7 +277,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {
@@ -343,16 +341,16 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should fall back to a generic message if incomplete object fails', function () {
+  it('should fall back to a generic message if incomplete object fails', () => {
     axe._load({
       rules: [],
       data: {
-        incompleteFallbackMessage: function () {
+        incompleteFallbackMessage: () => {
           return 'Dogs are the best';
         },
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -360,10 +358,10 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               },
               incomplete: {}
@@ -371,10 +369,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               },
               incomplete: {}
@@ -382,10 +380,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               },
               incomplete: {}
@@ -395,7 +393,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {
@@ -459,13 +457,13 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should handle incomplete reasons', function () {
+  it('should handle incomplete reasons', () => {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -473,10 +471,10 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -489,10 +487,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -505,10 +503,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -523,7 +521,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {
@@ -599,13 +597,13 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should handle incomplete reasons with backwards compatibility', function () {
+  it('should handle incomplete reasons with backwards compatibility', () => {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -613,10 +611,10 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               },
               incomplete: {
@@ -629,10 +627,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               },
               incomplete: {
@@ -645,10 +643,10 @@ describe('axe.utils.publishMetaData', function () {
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               },
               incomplete: {
@@ -663,7 +661,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {
@@ -763,30 +761,30 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should not modify base configuration', function () {
+  it('should not modify base configuration', () => {
     axe._load({
       rules: [],
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
         },
         checks: {
           'cats-PASS': {
-            failureMessage: function () {
+            failureMessage: () => {
               return 'cats-check';
             }
           },
           'cats-ANY': {
-            failureMessage: function () {
+            failureMessage: () => {
               return 'cats-check2';
             }
           },
           'cats-ALL': {
-            failureMessage: function () {
+            failureMessage: () => {
               return 'cats-check2';
             }
           }
@@ -824,8 +822,8 @@ describe('axe.utils.publishMetaData', function () {
     assert.isNotNull(axe._audit.data.checks['cats-ALL'].failureMessage);
   });
 
-  it('should pull tags off rule object', function () {
-    var expected = {
+  it('should pull tags off rule object', () => {
+    const expected = {
       foo: 'bar',
       bob: 'loblaw'
     };
@@ -844,7 +842,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'foo',
       nodes: [
         {
@@ -862,8 +860,8 @@ describe('axe.utils.publishMetaData', function () {
     assert.deepEqual(result.tags, ['hai']);
   });
 
-  describe('non-doT syntax', function () {
-    it('should process ${data} syntax', function () {
+  describe('non-doT syntax', () => {
+    it('should process ${data} syntax', () => {
       axe._load({
         rules: [],
         data: {
@@ -883,7 +881,7 @@ describe('axe.utils.publishMetaData', function () {
         }
       });
 
-      var result = {
+      const result = {
         id: 'cats',
         nodes: [
           {
@@ -922,7 +920,7 @@ describe('axe.utils.publishMetaData', function () {
       });
     });
 
-    it('should return default incomplete message with no reason specified by the check', function () {
+    it('should return default incomplete message with no reason specified by the check', () => {
       axe._load({
         rules: [],
         data: {
@@ -972,7 +970,7 @@ describe('axe.utils.publishMetaData', function () {
         }
       });
 
-      var result = {
+      const result = {
         id: 'cats',
         nodes: [
           {
@@ -1036,7 +1034,7 @@ describe('axe.utils.publishMetaData', function () {
       });
     });
 
-    it('should fall back to a generic message if incomplete object fails', function () {
+    it('should fall back to a generic message if incomplete object fails', () => {
       axe._load({
         rules: [],
         data: {
@@ -1072,7 +1070,7 @@ describe('axe.utils.publishMetaData', function () {
         }
       });
 
-      var result = {
+      const result = {
         id: 'cats',
         nodes: [
           {
@@ -1137,7 +1135,7 @@ describe('axe.utils.publishMetaData', function () {
     });
   });
 
-  it('should use fail message for rules with "reviewOnFaill: true"', function () {
+  it('should use fail message for rules with "reviewOnFaill: true"', () => {
     axe._load({
       rules: [
         {
@@ -1148,7 +1146,7 @@ describe('axe.utils.publishMetaData', function () {
       data: {
         rules: {
           cats: {
-            help: function () {
+            help: () => {
               return 'cats-rule';
             }
           }
@@ -1156,30 +1154,30 @@ describe('axe.utils.publishMetaData', function () {
         checks: {
           'cats-NONE': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-NONE';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-NONE';
               }
             }
           },
           'cats-ANY': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ANY';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ANY';
               }
             }
           },
           'cats-ALL': {
             messages: {
-              fail: function () {
+              fail: () => {
                 return 'fail-ALL';
               },
-              pass: function () {
+              pass: () => {
                 return 'pass-ALL';
               }
             }
@@ -1188,7 +1186,7 @@ describe('axe.utils.publishMetaData', function () {
       }
     });
 
-    var result = {
+    const result = {
       id: 'cats',
       nodes: [
         {

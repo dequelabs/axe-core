@@ -1,6 +1,7 @@
 // Additional tests for createGrid are part of createRectStack tests,
 // which is what createGrid was originally part of
 describe('create-grid', () => {
+  const html = axe.testUtils.html;
   let fixture;
   const createGrid = axe.commons.dom.createGrid;
   const fixtureSetup = axe.testUtils.fixtureSetup;
@@ -40,10 +41,11 @@ describe('create-grid', () => {
   });
 
   it('adds large elements to multiple cell', () => {
-    fixture = fixtureSetup(
-      '<span style="display: inline-block; width: 300px; height: 300px;">' +
-        'Hello world</span>'
-    );
+    fixture = fixtureSetup(html`
+      <span style="display: inline-block; width: 300px; height: 300px;">
+        Hello world</span
+      >
+    `);
     createGrid();
 
     const positions = findPositions(fixture._grid, fixture.children[0]);
@@ -56,10 +58,13 @@ describe('create-grid', () => {
   });
 
   it('only adds the visible non-overflow area of large elements', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <div style="overflow: hidden; width: 300px; height: 300px;">
-        <span id="target" style="display: inline-block; width: 1000px; height: 1000px;">' +
-        'Hello world</span>
+        <span
+          id="target"
+          style="display: inline-block; width: 1000px; height: 1000px;"
+          >' + 'Hello world</span
+        >
       </div>
     `);
     createGrid();
@@ -117,7 +122,7 @@ describe('create-grid', () => {
     });
 
     it('creates multiple stacking context when they are nested', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <div style="opacity: 0.2">
           <div style="transform: translate(42px, 18px);">
             <div id="target">Hello world</div>
@@ -179,14 +184,18 @@ describe('create-grid', () => {
 
     it('adds elements vertically scrolled out of view', () => {
       const gridScroll = 2;
-      fixture =
-        fixtureSetup(`<div id="scroller" style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll">
+      fixture = fixtureSetup(
+        html`<div
+          id="scroller"
+          style="height: ${gridSize}px; width: ${gridSize}px; overflow: scroll"
+        >
           <div style="height: ${gridSize}px">V1</div>
           <div style="height: ${gridSize}px">V2</div>
           <div style="height: ${gridSize}px">V3</div>
           <div style="height: ${gridSize}px">V4</div>
           <div style="height: ${gridSize}px">V5</div>
-        </div>`);
+        </div>`
+      );
       const scroller = fixture.children[0];
       scroller.actualNode.scroll(0, gridSize * gridScroll);
       const childElms = scroller.children.filter(
@@ -203,16 +212,17 @@ describe('create-grid', () => {
 
     it('adds elements horizontally scrolled out of view', () => {
       const gridScroll = 2;
-      fixture =
-        fixtureSetup(`<div id="scroller" style="width: ${gridSize}px; overflow: scroll">
-        <div style="width: ${gridSize * 6}px;">
-          <div style="width: ${gridSize}px; float: left;">H1</div>
-          <div style="width: ${gridSize}px; float: left;">H2</div>
-          <div style="width: ${gridSize}px; float: left;">H3</div>
-          <div style="width: ${gridSize}px; float: left;">H4</div>
-          <div style="width: ${gridSize}px; float: left;">H5</div>
-        </div>
-      </div>`);
+      fixture = fixtureSetup(
+        html`<div id="scroller" style="width: ${gridSize}px; overflow: scroll">
+          <div style="width: ${gridSize * 6}px;">
+            <div style="width: ${gridSize}px; float: left;">H1</div>
+            <div style="width: ${gridSize}px; float: left;">H2</div>
+            <div style="width: ${gridSize}px; float: left;">H3</div>
+            <div style="width: ${gridSize}px; float: left;">H4</div>
+            <div style="width: ${gridSize}px; float: left;">H5</div>
+          </div>
+        </div>`
+      );
       const scroller = fixture.children[0];
       scroller.actualNode.scroll(gridSize * gridScroll, 0);
       const childElms = scroller.children[0].children.filter(
@@ -230,11 +240,11 @@ describe('create-grid', () => {
 
   describe('subGrids', () => {
     it('sets the .subGrid property', () => {
-      fixture = fixtureSetup(
-        '<div style="overflow: scroll; height: 100px;">' +
-          '<span style="display: inline-block; height: 300px" id="x">x</span>' +
-          '</div>'
-      );
+      fixture = fixtureSetup(html`
+        <div style="overflow: scroll; height: 100px;">
+          <span style="display: inline-block; height: 300px" id="x">x</span>
+        </div>
+      `);
       const vOverflow = fixture.children[0];
       assert.isUndefined(vOverflow._subGrid);
       createGrid();
@@ -243,11 +253,11 @@ describe('create-grid', () => {
     });
 
     it('sets the ._grid of children as the subGrid', () => {
-      fixture = fixtureSetup(
-        '<div style="overflow: scroll; height: 100px;">' +
-          '<span style="display: inline-block; height: 300px" id="x">x</span>' +
-          '</div>'
-      );
+      fixture = fixtureSetup(html`
+        <div style="overflow: scroll; height: 100px;">
+          <span style="display: inline-block; height: 300px" id="x">x</span>
+        </div>
+      `);
       createGrid();
       const vOverflow = fixture.children[0];
       const vSpan = vOverflow.children[0];
@@ -255,11 +265,11 @@ describe('create-grid', () => {
     });
 
     it('does not add scrollable children to the root grid', () => {
-      fixture = fixtureSetup(
-        '<div style="overflow: scroll; height: 100px;">' +
-          '<span style="display: inline-block; height: 300px" id="x">x</span>' +
-          '</div>'
-      );
+      fixture = fixtureSetup(html`
+        <div style="overflow: scroll; height: 100px;">
+          <span style="display: inline-block; height: 300px" id="x">x</span>
+        </div>
+      `);
       createGrid();
       const vSpan = fixture.children[0].children[0];
       const position = findPositions(fixture._grid, vSpan);
@@ -267,11 +277,11 @@ describe('create-grid', () => {
     });
 
     it('adds scrollable children to the subGrid', () => {
-      fixture = fixtureSetup(
-        '<div style="overflow: scroll; height: 100px;">' +
-          '<span style="display: inline-block; height: 300px" id="x">x</span>' +
-          '</div>'
-      );
+      fixture = fixtureSetup(html`
+        <div style="overflow: scroll; height: 100px;">
+          <span style="display: inline-block; height: 300px" id="x">x</span>
+        </div>
+      `);
       createGrid();
       const vOverflow = fixture.children[0];
       const vSpan = vOverflow.children[0];

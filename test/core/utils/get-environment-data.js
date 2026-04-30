@@ -1,42 +1,41 @@
-describe('utils.getEnvironmentData', function () {
-  'use strict';
-  var __audit;
-  var getEnvironmentData = axe.utils.getEnvironmentData;
-  before(function () {
+describe('utils.getEnvironmentData', () => {
+  let __audit;
+  const getEnvironmentData = axe.utils.getEnvironmentData;
+  before(() => {
     __audit = axe._audit;
     axe._audit = { brand: 'Deque' };
   });
 
-  after(function () {
+  after(() => {
     axe._audit = __audit;
   });
 
-  it('returns the first argument, if it is truthy', function () {
-    var input = {
+  it('returns the first argument, if it is truthy', () => {
+    const input = {
       testEngine: {
         name: 'axe-core',
         version: axe.version
       }
     };
-    var output = getEnvironmentData(input);
+    const output = getEnvironmentData(input);
     assert.equal(input, output);
   });
 
-  it('should return a `testEngine` property', function () {
-    var data = getEnvironmentData();
+  it('should return a `testEngine` property', () => {
+    const data = getEnvironmentData();
     assert.isObject(data.testEngine);
     assert.equal(data.testEngine.name, 'axe-core');
     assert.equal(data.testEngine.version, axe.version);
   });
 
-  it('should return a `testRunner` property', function () {
-    var data = getEnvironmentData();
+  it('should return a `testRunner` property', () => {
+    const data = getEnvironmentData();
     assert.isObject(data.testRunner);
     assert.equal(data.testRunner.name, axe._audit.brand);
   });
 
-  it('should return a `testEnvironment` property', function () {
-    var data = getEnvironmentData();
+  it('should return a `testEnvironment` property', () => {
+    const data = getEnvironmentData();
     assert.isObject(data.testEnvironment);
     assert.ok(data.testEnvironment.userAgent);
     assert.ok(data.testEnvironment.windowWidth);
@@ -45,21 +44,21 @@ describe('utils.getEnvironmentData', function () {
     assert.isNotNull(data.testEnvironment.orientationType);
   });
 
-  it('should return a `timestamp` property`', function () {
-    var data = getEnvironmentData();
+  it('should return a `timestamp` property`', () => {
+    const data = getEnvironmentData();
     assert.isDefined(data.timestamp);
   });
 
-  it('should return a `url` property', function () {
-    var data = getEnvironmentData();
+  it('should return a `url` property', () => {
+    const data = getEnvironmentData();
     assert.isDefined(data.url);
   });
 
   // TODO: remove or update test once we are testing axe-core in jsdom and
   // other supported environments as what this is testing should be done in
   // those environment tests
-  it('gets data from the `win` parameter when passed', function () {
-    var data = getEnvironmentData(null, {
+  it('gets data from the `win` parameter when passed', () => {
+    const data = getEnvironmentData(null, {
       screen: {
         orientation: {
           type: 'fictional',

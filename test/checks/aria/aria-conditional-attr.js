@@ -1,4 +1,5 @@
 describe('aria-conditional-attr', () => {
+  const html = axe.testUtils.html;
   const { checkSetup, getCheckEvaluate } = axe.testUtils;
   const checkContext = axe.testUtils.MockCheckContext();
   const ariaConditionalCheck = getCheckEvaluate('aria-conditional-attr');
@@ -10,7 +11,7 @@ describe('aria-conditional-attr', () => {
   it('is true for non-conditional roles', () => {
     const roles = ['main', 'button', 'radiogroup', 'tree', 'none'];
     for (const role of roles) {
-      const params = checkSetup(`<div id="target" role="${role}"></div>`);
+      const params = checkSetup(html`<div id="target" role="${role}"></div>`);
       assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
     }
   });
@@ -25,8 +26,13 @@ describe('aria-conditional-attr', () => {
 
     it('returns true when valid ARIA props are used on table', () => {
       const params = checkSetup(
-        `<div role="treegrid">
-          <div id="target" role="row" aria-rowindex="1" aria-label="hello world"></div>
+        html`<div role="treegrid">
+          <div
+            id="target"
+            role="row"
+            aria-rowindex="1"
+            aria-label="hello world"
+          ></div>
         </div>`
       );
       assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
@@ -35,7 +41,7 @@ describe('aria-conditional-attr', () => {
 
     it('returns true when treegrid row props are used on a treegrid row', () => {
       const params = checkSetup(
-        `<div role="treegrid">
+        html`<div role="treegrid">
           <div id="target" role="row" ${treeGridRowProps.join(' ')}></div>
         </div>`
       );
@@ -45,7 +51,7 @@ describe('aria-conditional-attr', () => {
 
     it('returns true when the row is not in a table, grid, or treegrid', () => {
       const params = checkSetup(
-        `<div id="target" role="row" ${treeGridRowProps.join(' ')}></div>`
+        html`<div id="target" role="row" ${treeGridRowProps.join(' ')}></div>`
       );
       assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
       assert.isNull(checkContext._data);
@@ -54,7 +60,7 @@ describe('aria-conditional-attr', () => {
     it('returns false when treegrid row props are used on an ARIA table row', () => {
       for (const prop of treeGridRowProps) {
         const params = checkSetup(
-          `<div role="table">
+          html`<div role="table">
             <div id="target" role="row" ${prop}></div>
           </div>`
         );
@@ -70,7 +76,7 @@ describe('aria-conditional-attr', () => {
     it('returns false when treegrid row props are used on a grid row', () => {
       for (const prop of treeGridRowProps) {
         const params = checkSetup(
-          `<div role="grid">
+          html`<div role="grid">
             <div id="target" role="row" ${prop}></div>
           </div>`
         );
@@ -86,7 +92,11 @@ describe('aria-conditional-attr', () => {
     it('returns false when treegrid row props are used on a native table row', () => {
       for (const prop of treeGridRowProps) {
         const params = checkSetup(
-          `<table> <tr id="target" ${prop}> <td></td> </tr> </table>`
+          html`<table>
+            <tr id="target" ${prop}>
+              <td></td>
+            </tr>
+          </table>`
         );
         assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
         assert.deepEqual(checkContext._data, {
@@ -99,8 +109,13 @@ describe('aria-conditional-attr', () => {
 
     it('sets messageKey to rowPlural with multiple bad attributes', () => {
       const params = checkSetup(
-        `<div role="table">
-          <div id="target" role="row" aria-expanded="false" aria-level="1"></div>
+        html`<div role="table">
+          <div
+            id="target"
+            role="row"
+            aria-expanded="false"
+            aria-level="1"
+          ></div>
         </div>`
       );
       assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
@@ -111,11 +126,15 @@ describe('aria-conditional-attr', () => {
       });
     });
 
-    describe('options.invalidTableRowAttrs', function () {
+    describe('options.invalidTableRowAttrs', () => {
       it('returns false for removed attribute', () => {
         const options = { invalidTableRowAttrs: ['aria-rowindex'] };
         const params = checkSetup(
-          `<table> <tr id="target" aria-rowindex="1"> <td></td> </tr> </table>`,
+          html`<table>
+            <tr id="target" aria-rowindex="1">
+              <td></td>
+            </tr>
+          </table>`,
           options
         );
         assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
@@ -124,8 +143,15 @@ describe('aria-conditional-attr', () => {
       it('returns true for additional attribute', () => {
         const options = { invalidTableRowAttrs: ['aria-level'] };
         const params = checkSetup(
-          `<table>
-            <tr id="target" aria-expanded="true" aria-setsize="1" aria-posinset="1"> <td></td> </tr>
+          html`<table>
+            <tr
+              id="target"
+              aria-expanded="true"
+              aria-setsize="1"
+              aria-posinset="1"
+            >
+              <td></td>
+            </tr>
           </table>`,
           options
         );
@@ -137,7 +163,7 @@ describe('aria-conditional-attr', () => {
   describe('ariaConditionalCheckboxAttr', () => {
     it('returns true for non-native checkbox', () => {
       const params = checkSetup(
-        `<div id="target" role="checkbox" aria-checked="true"></div>`
+        html`<div id="target" role="checkbox" aria-checked="true"></div>`
       );
       assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
       assert.isNull(checkContext._data);
@@ -146,7 +172,7 @@ describe('aria-conditional-attr', () => {
     it('returns true for checkbox without aria-checked value', () => {
       for (const prop of ['', 'aria-checked', 'aria-checked=""']) {
         const params = checkSetup(
-          `<input id="target" type="checkbox" ${prop}>`
+          html`<input id="target" type="checkbox" ${prop} />`
         );
         assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
         assert.isNull(checkContext._data);
@@ -157,7 +183,11 @@ describe('aria-conditional-attr', () => {
       const fixture = document.querySelector('#fixture');
 
       it('returns true for aria-checked="true" on a [checked] checkbox', () => {
-        fixture.innerHTML = `<input type="checkbox" aria-checked="true" checked>`;
+        fixture.innerHTML = html`<input
+          type="checkbox"
+          aria-checked="true"
+          checked
+        />`;
         const root = axe.setup(fixture);
         const vNode = axe.utils.querySelectorAll(root, 'input')[0];
 
@@ -168,7 +198,7 @@ describe('aria-conditional-attr', () => {
       });
 
       it('returns true for aria-checked="true" on a clicked checkbox', () => {
-        fixture.innerHTML = `<input type="checkbox" aria-checked="true">`;
+        fixture.innerHTML = html`<input type="checkbox" aria-checked="true" />`;
         fixture.firstChild.click(); // set checked state
         const root = axe.setup(fixture);
         const vNode = axe.utils.querySelectorAll(root, 'input')[0];
@@ -182,7 +212,12 @@ describe('aria-conditional-attr', () => {
       it('returns false for other aria-checked values', () => {
         for (const prop of ['  ', 'false', 'mixed', 'incorrect', '  true  ']) {
           const params = checkSetup(
-            `<input type="checkbox" aria-checked="${prop}" checked id="target">`
+            html`<input
+              type="checkbox"
+              aria-checked="${prop}"
+              checked
+              id="target"
+            />`
           );
           assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
           assert.deepEqual(checkContext._data, {
@@ -196,7 +231,7 @@ describe('aria-conditional-attr', () => {
     describe('unchecked state', () => {
       it('returns true for aria-checked="false"', () => {
         const params = checkSetup(
-          `<input id="target" type="checkbox" aria-checked="false">`
+          html`<input id="target" type="checkbox" aria-checked="false" />`
         );
         assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
         assert.isNull(checkContext._data);
@@ -205,7 +240,7 @@ describe('aria-conditional-attr', () => {
       it('returns true for aria-checked with an invalid value', () => {
         for (const prop of ['  ', 'invalid', 'FALSE', 'nope']) {
           const params = checkSetup(
-            `<input type="checkbox" aria-checked="${prop}" id="target">`
+            html`<input type="checkbox" aria-checked="${prop}" id="target" />`
           );
           assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
           assert.isNull(checkContext._data);
@@ -215,7 +250,7 @@ describe('aria-conditional-attr', () => {
       it('returns false for other aria-checked values', () => {
         for (const prop of ['true', 'TRUE', 'mixed', 'MiXeD']) {
           const params = checkSetup(
-            `<input type="checkbox" aria-checked="${prop}" id="target">`
+            html`<input type="checkbox" aria-checked="${prop}" id="target" />`
           );
           assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
           assert.deepEqual(checkContext._data, {
@@ -237,7 +272,7 @@ describe('aria-conditional-attr', () => {
 
       it('returns true for aria-checked="mixed"', () => {
         const vNode = asIndeterminateVirtualNode(
-          `<input type="checkbox" aria-checked="mixed">`
+          html`<input type="checkbox" aria-checked="mixed" />`
         );
         assert.isTrue(
           ariaConditionalCheck.call(checkContext, null, null, vNode)
@@ -247,7 +282,7 @@ describe('aria-conditional-attr', () => {
       it('returns false for other aria-checked values', () => {
         for (const prop of ['true', 'TRUE', 'false', 'invalid']) {
           const vNode = asIndeterminateVirtualNode(
-            `<input type="checkbox" aria-checked="${prop}" id="target">`
+            html`<input type="checkbox" aria-checked="${prop}" id="target" />`
           );
           assert.isFalse(
             ariaConditionalCheck.call(checkContext, null, null, vNode)

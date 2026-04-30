@@ -1,21 +1,15 @@
-describe('utils.escapeSelector', function () {
-  'use strict';
-
-  it('should be a function', function () {
+describe('utils.escapeSelector', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.commons.utils.escapeSelector);
   });
 });
-describe('utils.matchesSelector', function () {
-  'use strict';
-
-  it('should be a function', function () {
+describe('utils.matchesSelector', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.commons.utils.matchesSelector);
   });
 });
-describe('utils.clone', function () {
-  'use strict';
-
-  it('should be a function', function () {
+describe('utils.clone', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.commons.utils.clone);
   });
 });

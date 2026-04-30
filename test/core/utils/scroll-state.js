@@ -1,11 +1,11 @@
-describe('axe.utils.getScrollState', function () {
-  'use strict';
-  var mockWin;
-  var getScrollState = axe.utils.getScrollState;
+describe('axe.utils.getScrollState', () => {
+  const html = axe.testUtils.html;
+  let mockWin;
+  const getScrollState = axe.utils.getScrollState;
 
-  var fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
 
-  beforeEach(function () {
+  beforeEach(() => {
     mockWin = {
       pageXOffset: 1,
       pageYOffset: 3,
@@ -21,15 +21,15 @@ describe('axe.utils.getScrollState', function () {
     fixture.innerHTML = '';
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(getScrollState);
   });
 
-  it('takes the window object as an optional argument', function () {
+  it('takes the window object as an optional argument', () => {
     assert.deepEqual(getScrollState(), getScrollState(window));
   });
 
-  it('returns the window as the first item, if pageXOffset is supported', function () {
+  it('returns the window as the first item, if pageXOffset is supported', () => {
     assert.deepEqual(getScrollState(mockWin)[0], {
       elm: mockWin,
       top: mockWin.pageYOffset,
@@ -37,10 +37,10 @@ describe('axe.utils.getScrollState', function () {
     });
   });
 
-  it('returns the html as the first item, if pageXOffset is not supported', function () {
+  it('returns the html as the first item, if pageXOffset is not supported', () => {
     mockWin.pageYOffset = undefined;
     mockWin.pageXOffset = undefined;
-    var html = mockWin.document.documentElement;
+    const html = mockWin.document.documentElement;
 
     assert.deepEqual(getScrollState(mockWin)[0], {
       elm: html,
@@ -49,110 +49,122 @@ describe('axe.utils.getScrollState', function () {
     });
   });
 
-  it('grabs scrollTop and scrollLeft from all descendants of body', function () {
-    fixture.innerHTML =
-      '<div style="overflow:auto; height: 50px" id="tgt1">' +
-      '<div style="height: 100px"> Han Solo </div>' +
-      '<div style="overflow: auto; height: 50px" id="tgt2">' +
-      '<div style="height: 100px"> Chewbacca </div>' +
-      '</div>' +
-      '</div>';
+  it('grabs scrollTop and scrollLeft from all descendants of body', () => {
+    fixture.innerHTML = html`
+      <div style="overflow:auto; height: 50px" id="tgt1">
+        <div style="height: 100px">Han Solo</div>
+        <div style="overflow: auto; height: 50px" id="tgt2">
+          <div style="height: 100px">Chewbacca</div>
+        </div>
+      </div>
+    `;
 
-    var tgt1 = document.getElementById('tgt1');
-    var tgt2 = document.getElementById('tgt2');
+    const tgt1 = document.getElementById('tgt1');
+    const tgt2 = document.getElementById('tgt2');
     tgt1.scrollTop = 10;
     tgt2.scrollTop = 20;
 
-    var scrollState = getScrollState();
+    const scrollState = getScrollState();
 
     assert.deepEqual(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt1;
       }),
       { elm: tgt1, top: 10, left: 0 }
     );
     assert.deepEqual(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt2;
       }),
       { elm: tgt2, top: 20, left: 0 }
     );
   });
 
-  it('ignores elements with overflow visible', function () {
-    fixture.innerHTML =
-      '<div style="overflow:visible; height: 50px" id="tgt1">' +
-      '<div style="height: 100px" id="tgt2"> Han Solo </div>' +
-      '</div>';
+  it('ignores elements with overflow visible', () => {
+    fixture.innerHTML = html`
+      <div style="overflow:visible; height: 50px" id="tgt1">
+        <div style="height: 100px" id="tgt2">Han Solo</div>
+      </div>
+    `;
 
-    var tgt1 = document.getElementById('tgt1');
-    var tgt2 = document.getElementById('tgt2');
-    var scrollState = getScrollState();
+    const tgt1 = document.getElementById('tgt1');
+    const tgt2 = document.getElementById('tgt2');
+    const scrollState = getScrollState();
 
     assert.isUndefined(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt1;
       })
     );
     assert.isUndefined(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt2;
       })
     );
   });
 
-  it('ignores elements that do not overflow', function () {
-    fixture.innerHTML =
-      '<div style="overflow:auto; height: 300px" id="tgt1">' +
-      '<div style="height: 100px"> Han Solo </div>' +
-      '<div style="overflow: hidden; height: 150px" id="tgt2">' +
-      '<div style="height: 100px"> Chewbacca </div>' +
-      '</div>' +
-      '</div>';
+  it('ignores elements that do not overflow', () => {
+    fixture.innerHTML = html`
+      <div style="overflow:auto; height: 300px" id="tgt1">
+        <div style="height: 100px">Han Solo</div>
+        <div style="overflow: hidden; height: 150px" id="tgt2">
+          <div style="height: 100px">Chewbacca</div>
+        </div>
+      </div>
+    `;
 
-    var tgt1 = document.getElementById('tgt1');
-    var tgt2 = document.getElementById('tgt2');
-    var scrollState = getScrollState();
+    const tgt1 = document.getElementById('tgt1');
+    const tgt2 = document.getElementById('tgt2');
+    const scrollState = getScrollState();
 
     assert.isUndefined(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt1;
       })
     );
     assert.isUndefined(
-      scrollState.find(function (scroll) {
+      scrollState.find(scroll => {
         return scroll.elm === tgt2;
       })
     );
   });
 
-  it('does not fail with svg elements', function () {
-    fixture.innerHTML =
-      '<svg class="svg" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">' +
-      '<path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>' +
-      '</svg>';
+  it('does not fail with svg elements', () => {
+    fixture.innerHTML = html`
+      <svg
+        class="svg"
+        xmlns="http://www.w3.org/2000/svg"
+        width="13"
+        height="17"
+        viewBox="0 0 13 17"
+      >
+        <path
+          fill="currentColor"
+          d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"
+        ></path>
+      </svg>
+    `;
 
-    assert.doesNotThrow(function () {
+    assert.doesNotThrow(() => {
       getScrollState();
     });
   });
 });
 
-describe('axe.utils.setScrollState', function () {
-  'use strict';
-  var setScrollState = axe.utils.setScrollState;
+describe('axe.utils.setScrollState', () => {
+  const setScrollState = axe.utils.setScrollState;
 
-  var fixture = document.getElementById('fixture');
-  afterEach(function () {
+  const fixture = document.getElementById('fixture');
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(setScrollState);
   });
 
-  it('sets scrollTop and scrollLeft for regular nodes', function () {
-    var elm1 = {},
+  it('sets scrollTop and scrollLeft for regular nodes', () => {
+    const elm1 = {},
       elm2 = {};
     setScrollState([
       { elm: elm1, top: 10, left: 20 },
@@ -163,10 +175,10 @@ describe('axe.utils.setScrollState', function () {
     assert.deepEqual(elm2, { scrollTop: 30, scrollLeft: 40 });
   });
 
-  it('calls scroll() for the window element', function () {
-    var called;
-    var winScroll = window.scroll;
-    window.scroll = function (left, top) {
+  it('calls scroll() for the window element', () => {
+    let called;
+    const winScroll = window.scroll;
+    window.scroll = (left, top) => {
       called = { top: top, left: left };
     };
     setScrollState([{ elm: window, top: 10, left: 20 }]);

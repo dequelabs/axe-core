@@ -1,12 +1,11 @@
-describe('document-title test failure', function () {
-  'use strict';
-  var results;
+describe('document-title test failure', () => {
+  let results;
 
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['document-title'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -15,26 +14,26 @@ describe('document-title test failure', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 1', function () {
+  describe('violations', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.violations[0].nodes, 1);
     });
-    it('should find first level iframe', function () {
+    it('should find first level iframe', () => {
       assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
     });
   });
 
-  describe('passes', function () {
-    it('should find 0', function () {
+  describe('passes', () => {
+    it('should find 0', () => {
       assert.lengthOf(results.passes, 0);
     });
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  it('should find 0 incomplete', function () {
+  it('should find 0 incomplete', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 });

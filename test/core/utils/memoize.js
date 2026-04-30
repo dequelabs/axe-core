@@ -1,7 +1,5 @@
-describe('axe.utils.memoize', function () {
-  'use strict';
-
-  it('should add the function to axe._memoizedFns', function () {
+describe('axe.utils.memoize', () => {
+  it('should add the function to axe._memoizedFns', () => {
     const length = axe._memoizedFns.length;
 
     axe.utils.memoize(function myFn() {});

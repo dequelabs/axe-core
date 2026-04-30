@@ -1,5 +1,5 @@
 describe('axe.utils.getAncestry', () => {
-  'use strict';
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
 
   afterEach(() => {
@@ -73,16 +73,16 @@ describe('axe.utils.getAncestry', () => {
   });
 
   it('escapes the node name', () => {
-    fixture.innerHTML = `
-    <div>
-      <hello="world">
-        <button id="target1">button</button>
-      </hello="world">
-    </div>
-    <emoji-👍>
-      <button id="target2">button</button>
-    </emoji-👍>
-    `;
+    fixture.innerHTML = html`
+<div>
+  <hello="world">
+    <button id="target1">button</button>
+  </hello="world">
+</div>
+<emoji-👍>
+  <button id="target2">button</button>
+</emoji-👍>
+`;
 
     const sel1 = axe.utils.getAncestry(document.querySelector('#target1'));
     assert.equal(

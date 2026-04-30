@@ -9,7 +9,7 @@ describe('error-occurred test', () => {
           {
             runOnly: ['matches-error', 'evaluate-error', 'after-error']
           },
-          function (err, r) {
+          (err, r) => {
             assert.isNull(err);
             results = r;
             done();

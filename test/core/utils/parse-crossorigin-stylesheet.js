@@ -1,33 +1,31 @@
-describe('axe.utils.parseCrossOriginStylesheet', function () {
-  'use strict';
+describe('axe.utils.parseCrossOriginStylesheet', () => {
+  let dynamicDoc;
+  let convertDataToStylesheet;
 
-  var dynamicDoc;
-  var convertDataToStylesheet;
-
-  beforeEach(function () {
+  beforeEach(() => {
     dynamicDoc = document.implementation.createHTMLDocument(
       'Dynamic document for testing axe.utils.parseCrossOriginStylesheet'
     );
     convertDataToStylesheet = axe.utils.getStyleSheetFactory(dynamicDoc);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     dynamicDoc = undefined;
     convertDataToStylesheet = undefined;
   });
 
-  it('returns cross-origin stylesheet', function (done) {
-    var importUrl =
+  it('returns cross-origin stylesheet', done => {
+    const importUrl =
       'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css';
-    var options = {
+    const options = {
       rootNode: document,
       shadowId: undefined,
       convertDataToStylesheet: convertDataToStylesheet,
       rootIndex: 1
     };
-    var priority = [1, 0];
-    var importedUrls = [];
-    var isCrossOriginRequest = true;
+    const priority = [1, 0];
+    const importedUrls = [];
+    const isCrossOriginRequest = true;
 
     axe.utils
       .parseCrossOriginStylesheet(
@@ -37,7 +35,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
         importedUrls,
         isCrossOriginRequest
       )
-      .then(function (data) {
+      .then(data => {
         assert.isDefined(data);
         assert.isDefined(data.sheet);
 
@@ -54,7 +52,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
         );
         done();
       })
-      .catch(function (err) {
+      .catch(err => {
         done(err);
       });
   });
@@ -62,17 +60,17 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
   it('rejects when given url to fetch is not found', function (done) {
     this.timeout(axe.constants.preload.timeout + 1000);
 
-    var importUrl =
+    const importUrl =
       'https://make-up-a-website-that-does-not-exist.com/style.css';
-    var options = {
+    const options = {
       rootNode: document,
       shadowId: undefined,
       convertDataToStylesheet: convertDataToStylesheet,
       rootIndex: 1
     };
-    var priority = [1, 0];
-    var importedUrls = [];
-    var isCrossOriginRequest = true;
+    const priority = [1, 0];
+    const importedUrls = [];
+    const isCrossOriginRequest = true;
     axe.utils
       .parseCrossOriginStylesheet(
         importUrl,
@@ -81,12 +79,12 @@ describe('axe.utils.parseCrossOriginStylesheet', function () {
         importedUrls,
         isCrossOriginRequest
       )
-      .then(function () {
+      .then(() => {
         done(
           new Error('Expected axe.utils.parseCrossOriginStylesheet to reject.')
         );
       })
-      .catch(function (err) {
+      .catch(err => {
         assert.isNotNull(err);
         done();
       });

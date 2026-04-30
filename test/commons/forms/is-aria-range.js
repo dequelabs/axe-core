@@ -1,37 +1,36 @@
-describe('forms.isAriaRange', function () {
-  'use strict';
-  var isAriaRange = axe.commons.forms.isAriaRange;
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
+describe('forms.isAriaRange', () => {
+  const isAriaRange = axe.commons.forms.isAriaRange;
+  const flatTreeSetup = axe.testUtils.flatTreeSetup;
 
-  it('returns true for an element with range roles', function () {
-    var rangeRoles = ['progressbar', 'scrollbar', 'slider', 'spinbutton'];
-    rangeRoles.forEach(function (role) {
-      var node = document.createElement('div');
+  it('returns true for an element with range roles', () => {
+    const rangeRoles = ['progressbar', 'scrollbar', 'slider', 'spinbutton'];
+    rangeRoles.forEach(role => {
+      const node = document.createElement('div');
       node.setAttribute('role', role);
       node.setAttribute('aria-valuenow', '0');
       flatTreeSetup(node);
       assert.isTrue(
         isAriaRange(node),
-        'role="' + role + '" is not an aria range role'
+        `role="${role}" is not an aria range role`
       );
     });
   });
 
-  it('returns false for elements without role', function () {
-    var node = document.createElement('div');
+  it('returns false for elements without role', () => {
+    const node = document.createElement('div');
     flatTreeSetup(node);
     assert.isFalse(isAriaRange(node));
   });
 
-  it('returns false for elements with incorrect role', function () {
-    var node = document.createElement('div');
+  it('returns false for elements with incorrect role', () => {
+    const node = document.createElement('div');
     node.setAttribute('role', 'main');
     flatTreeSetup(node);
     assert.isFalse(isAriaRange(node));
   });
 
-  it('returns false for native range elements', function () {
-    var nativeRangeElements = [
+  it('returns false for native range elements', () => {
+    const nativeRangeElements = [
       {
         nodeName: 'progress'
       },
@@ -44,15 +43,15 @@ describe('forms.isAriaRange', function () {
         type: 'number'
       }
     ];
-    nativeRangeElements.forEach(function (elm) {
-      var node = document.createElement(elm.nodeName);
+    nativeRangeElements.forEach(elm => {
+      const node = document.createElement(elm.nodeName);
       if (elm.type) {
         node.setAttribute('type', elm.type);
       }
       flatTreeSetup(node);
       assert.isFalse(
         isAriaRange(node),
-        node.outterHTML + ' is not an aria range element'
+        `${node.outterHTML} is not an aria range element`
       );
     });
   });
