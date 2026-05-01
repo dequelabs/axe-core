@@ -168,12 +168,7 @@ jobs:
       - *checkout
       - name: Extract release notes
         id: release-notes
-        run: |
-          {
-            echo 'notes<<EOF'
-            awk '/# \[?[0-9]/{if(found) exit; found=1; next} found{print}' CHANGELOG.md
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
+        run: ./.github/bin/extract-release-notes.sh
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
