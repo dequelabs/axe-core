@@ -177,6 +177,7 @@ jobs:
         run: |
           gh release create "v${VERSION}" \
             --title "Release ${VERSION}" \
+            --target ${{ github.sha }} \
             --notes "$NOTES"
   validate-deploy:
     name: Validate Deployment
