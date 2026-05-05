@@ -186,4 +186,12 @@ describe('label-content-name-mismatch tests', function () {
     var actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
+
+  it('returns true when aria-label and visible text match even though there is an image with alt text', function () {
+    var vNode = queryFixture(
+      '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />button label</button>'
+    );
+    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
 });

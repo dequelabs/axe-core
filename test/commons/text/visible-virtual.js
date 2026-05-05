@@ -4,6 +4,22 @@ describe('text.visible', function () {
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var visibleVirtual = axe.commons.text.visibleVirtual;
+  var fontApiSupport = !!document.fonts;
+
+  before(function (done) {
+    if (!fontApiSupport) {
+      done();
+      return;
+    }
+    var materialFont = new FontFace(
+      'Material Icons',
+      'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+    );
+    materialFont.load().then(function () {
+      document.fonts.add(materialFont);
+      done();
+    });
+  });
 
   afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
@@ -97,6 +113,12 @@ describe('text.visible', function () {
         assert.equal(visibleVirtual(tree[0]), 'Stuffhello');
       }
     );
+
+    it('should treat <br> elements as a space', function () {
+      fixture.innerHTML = '<button>button<br>label</button>';
+      var tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'button label');
+    });
   });
 
   describe('screen reader', function () {
@@ -156,5 +178,41 @@ describe('text.visible', function () {
       var tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0], true), 'Hello');
     });
+  });
+
+  describe('options', function () {
+    (fontApiSupport ? it : it.skip)(
+      'should exclude icon ligature text when ignoreIconLigature is true',
+      function () {
+        fixture.innerHTML =
+          '<button>next page <span style="font-family: \'Material Icons\'">delete</span></button>';
+        var tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(
+          visibleVirtual(tree[0], false, false, {
+            ignoreIconLigature: true,
+            pixelThreshold: 0.1,
+            occurrenceThreshold: 3
+          }),
+          'next page'
+        );
+      }
+    );
+
+    (fontApiSupport ? it : it.skip)(
+      'should not exclude icon ligature text when ignoreIconLigature is false',
+      function () {
+        fixture.innerHTML =
+          '<button>next page <span style="font-family: \'Material Icons\'">delete</span></button>';
+        var tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(
+          visibleVirtual(tree[0], false, false, {
+            ignoreIconLigature: false,
+            pixelThreshold: 0.1,
+            occurrenceThreshold: 3
+          }),
+          'next page delete'
+        );
+      }
+    );
   });
 });
