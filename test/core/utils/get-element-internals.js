@@ -18,6 +18,7 @@ describe('utils.getElementInternals', () => {
   afterEach(() => {
     delete globalThis.axeInternalsMap;
     window.ElementInternals = origElementInternals;
+    axe._enableElementInternals = true;
   });
 
   it('returns undefined for element without internals', () => {
@@ -184,5 +185,24 @@ describe('utils.getElementInternals', () => {
 
     assert.isTrue(customized);
     assert.isUndefined(getElementInternals(node));
+  });
+
+  it('returns undefined when feature flag is off', () => {
+    delete axe._enableElementInternals;
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    node._internals = internals;
+
+    assert.isUndefined(getElementInternals(node));
+  });
+
+  it('returns internals when feature flag is on', () => {
+    delete axe._enableElementInternals;
+    axe._enableElementInternals = true;
+    const node = document.createElement('utils-get-element-internals');
+    const internals = node.attachInternals();
+    node._internals = internals;
+
+    assert.strictEqual(getElementInternals(node), internals);
   });
 });

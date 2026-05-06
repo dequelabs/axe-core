@@ -52,6 +52,10 @@ var commons;
     );
   }
 
+  // turn on elementInternals feature flag
+  // TODO: remove when feature is fully enabled
+  axe._enableElementInternals = true;
+
   // determine which checks are used only in the `none` array of rules
   const noneChecks = [];
 

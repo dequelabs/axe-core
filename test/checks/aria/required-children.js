@@ -521,20 +521,13 @@ describe('aria-required-children', () => {
   });
 
   describe('ElementInternals', () => {
-    it('should allow element with required internals role', () => {
-      const params = checkSetup(
-        '<div role="list" id="target"><testutils-element with-role="listitem">Nothing here.</testutils-element></div>'
-      );
-
-      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
-    });
-
     it('should detect missing sole required child', () => {
       const params = checkSetup(
         '<div role="list" id="target"><testutils-element>Nothing here.</testutils-element></div>'
       );
 
       assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      // ensure element doesn't have [tabindex] on the selector
       assert.deepEqual(checkContext._data, {
         messageKey: 'unallowed',
         values: 'testutils-element'

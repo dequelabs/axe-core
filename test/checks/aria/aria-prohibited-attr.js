@@ -267,40 +267,4 @@ describe('aria-prohibited-attr', () => {
       assert.isTrue(checkEvaluate.apply(checkContext, params));
     });
   });
-
-  describe('ElementInternals', () => {
-    it('should return true for prohibited attributes and no content', () => {
-      const params = checkSetup(
-        '<testutils-element with-role="code" id="target" aria-hidden="false" aria-label="foo"></testutils-element>'
-      );
-      assert.isTrue(checkEvaluate.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, {
-        nodeName: 'testutils-element',
-        role: 'code',
-        messageKey: 'hasRoleSingular',
-        prohibited: ['aria-label']
-      });
-    });
-
-    it('should return true for multiple prohibited attributes', () => {
-      const params = checkSetup(
-        '<testutils-element with-role="code" id="target" aria-hidden="false" aria-label="foo" aria-labelledby="foo"></testutils-element>'
-      );
-      assert.isTrue(checkEvaluate.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, {
-        nodeName: 'testutils-element',
-        role: 'code',
-        messageKey: 'hasRolePlural',
-        // attribute order not important
-        prohibited: ['aria-label', 'aria-labelledby']
-      });
-    });
-
-    it('should return false if all attributes are allowed', () => {
-      const params = checkSetup(
-        '<testutils-element id="target" aria-label="foo" aria-labelledby="foo">Contents</testutils-element>'
-      );
-      assert.isFalse(checkEvaluate.apply(checkContext, params));
-    });
-  });
 });

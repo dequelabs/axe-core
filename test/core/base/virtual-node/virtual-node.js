@@ -460,6 +460,15 @@ describe('VirtualNode', () => {
         internals = vNode.elementInternals;
         assert.equal(internals.role, 'button');
       });
+
+      it('should set the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        vNode.elementInternals = { role: 'link' };
+        const internals = vNode.elementInternals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'link');
+      });
     });
   });
 });
