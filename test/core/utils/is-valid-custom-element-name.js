@@ -32,7 +32,15 @@ describe('utils.isValidCustomElementName', () => {
   });
 
   it('return false for element with invalid name', () => {
-    assert.isFalse(isValidCustomElementName('m1'));
+    assert.isFalse(isValidCustomElementName('m 1-c'));
+  });
+
+  it('returns false for element with non-lower case alpha as first char', () => {
+    assert.isFalse(isValidCustomElementName('1m-c'));
+  });
+
+  it('returns false for element with upper case letter', () => {
+    assert.isFalse(isValidCustomElementName('custom-Button'));
   });
 
   for (const name of reservedNames) {
