@@ -8,7 +8,8 @@ var testDirs = [
   'checks',
   'api',
   'integration',
-  'virtual-rules'
+  'virtual-rules',
+  'gather-internals'
 ];
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
@@ -66,6 +67,7 @@ if (testFiles.length) {
     }
     return path.join('test', dir, '**/*.js');
   });
+  console.log(testDirs);
 }
 
 module.exports = config => {
@@ -101,6 +103,7 @@ module.exports = config => {
       },
       'axe.js',
       { pattern: 'axe.min.js', included: false, served: true },
+      'tmp/walk-tree.js',
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
@@ -108,7 +111,8 @@ module.exports = config => {
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
       '/axe.js': '/base/axe.js',
-      '/axe.min.js': '/base/axe.min.js'
+      '/axe.min.js': '/base/axe.min.js',
+      '/tmp': 'base/tmp'
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],

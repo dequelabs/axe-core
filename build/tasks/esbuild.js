@@ -12,6 +12,7 @@ module.exports = function (grunt) {
       files.forEach(file => {
         const src = Array.isArray(file.src) ? file.src : [file.src];
         const dest = file.dest;
+        const options = file.options || {};
 
         src.forEach(entry => {
           const name = path.basename(entry);
@@ -23,7 +24,8 @@ module.exports = function (grunt) {
             entryPoints: [entry],
             outfile: path.join(dest, name),
             minify: false,
-            bundle: true
+            bundle: true,
+            ...options
           })
             .then(done)
             .catch(e => {
