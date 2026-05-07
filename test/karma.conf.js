@@ -67,7 +67,6 @@ if (testFiles.length) {
     }
     return path.join('test', dir, '**/*.js');
   });
-  console.log(testDirs);
 }
 
 module.exports = config => {
@@ -111,8 +110,7 @@ module.exports = config => {
       '/mock': '/base/test/mock',
       '/integration': '/base/test/integration',
       '/axe.js': '/base/axe.js',
-      '/axe.min.js': '/base/axe.min.js',
-      '/tmp': 'base/tmp'
+      '/axe.min.js': '/base/axe.min.js'
     },
     browsers: ['ChromeHeadless'],
     reporters: ['spec'],
