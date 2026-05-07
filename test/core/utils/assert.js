@@ -1,6 +1,6 @@
-describe('axe.utils.assert', function () {
-  it('does nothing when passed a truthy value', function () {
-    assert.doesNotThrow(function () {
+describe('axe.utils.assert', () => {
+  it('does nothing when passed a truthy value', () => {
+    assert.doesNotThrow(() => {
       axe.utils.assert(true);
       axe.utils.assert('foo');
       axe.utils.assert(123);
@@ -9,23 +9,23 @@ describe('axe.utils.assert', function () {
     });
   });
 
-  it('throws an error when passed a falsey value', function () {
-    assert.throws(function () {
+  it('throws an error when passed a falsey value', () => {
+    assert.throws(() => {
       axe.utils.assert(false);
     });
-    assert.throws(function () {
+    assert.throws(() => {
       axe.utils.assert(0);
     });
-    assert.throws(function () {
+    assert.throws(() => {
       axe.utils.assert(null);
     });
-    assert.throws(function () {
+    assert.throws(() => {
       axe.utils.assert(undefined);
     });
   });
 
-  it('sets second argument as the error message', function () {
-    var message = 'Something went wrong';
+  it('sets second argument as the error message', () => {
+    const message = 'Something went wrong';
     try {
       axe.utils.assert(false, message);
     } catch (e) {

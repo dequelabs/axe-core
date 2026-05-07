@@ -27,7 +27,7 @@ describe('axe.utils.preload integration test', () => {
         callback();
       })
       .catch(error => {
-        callback(new Error('Could not load stylesheets for testing. ' + error));
+        callback(new Error(`Could not load stylesheets for testing. ${error}`));
       });
   }
 

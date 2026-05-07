@@ -1,8 +1,6 @@
-describe('meta-refresh fail', function () {
-  'use strict';
-
-  it('should be a violation', function (done) {
-    axe.run({ runOnly: 'meta-refresh' }, function (err, results) {
+describe('meta-refresh fail', () => {
+  it('should be a violation', done => {
+    axe.run({ runOnly: 'meta-refresh' }, (err, results) => {
       try {
         assert.isNull(err);
         assert.lengthOf(results.violations, 1, 'violations');

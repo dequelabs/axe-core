@@ -1,23 +1,18 @@
-var fixture = document.getElementById('fixture');
-var shadowSupport = axe.testUtils.shadowSupport;
-
-describe('axe.utils.getFlattenedTree', function () {
-  'use strict';
+describe('axe.utils.getFlattenedTree', () => {
+  const fixture = document.getElementById('fixture');
+  const shadowSupport = axe.testUtils.shadowSupport;
   function createStyle(box) {
-    var style = document.createElement('style');
-    style.textContent =
-      'div.breaking { color: Red;font-size: 20px; border: 1px dashed Purple; }' +
-      (box ? 'slot { display: block; }' : '') +
-      'div.other { padding: 2px 0 0 0; border: 1px solid Cyan; }';
+    const style = document.createElement('style');
+    style.textContent = `div.breaking { color: Red;font-size: 20px; border: 1px dashed Purple; }${box ? 'slot { display: block; }' : ''}div.other { padding: 2px 0 0 0; border: 1px solid Cyan; }`;
     return style;
   }
 
   function flattenedTreeAssertions() {
-    var virtualDOM = axe.utils.getFlattenedTree(fixture.firstChild);
+    let virtualDOM = axe.utils.getFlattenedTree(fixture.firstChild);
     assert.equal(virtualDOM.length, 1); // host
     assert.equal(virtualDOM[0].actualNode.nodeName, 'DIV');
 
-    var parentDOM = virtualDOM[0];
+    const parentDOM = virtualDOM[0];
     virtualDOM = virtualDOM[0].children;
     assert.equal(virtualDOM.length, 3);
     assert.equal(virtualDOM[0].actualNode.nodeName, 'STYLE');
@@ -37,9 +32,9 @@ describe('axe.utils.getFlattenedTree', function () {
     assert.equal(virtualDOM[1].children.length, 1);
     assert.equal(virtualDOM[1].children[0].actualNode.nodeName, 'UL');
     assert.equal(virtualDOM[1].children[0].parent, virtualDOM[1]);
-    virtualDOM[1].children[0].children.forEach(function (child, index) {
+    virtualDOM[1].children[0].children.forEach((child, index) => {
       assert.equal(child.actualNode.nodeName, 'LI');
-      assert.isTrue(child.actualNode.textContent === 3 * (index + 1) + '');
+      assert.isTrue(child.actualNode.textContent === `${3 * (index + 1)}`);
     });
     assert.equal(virtualDOM[1].children[0].children.length, 2);
 
@@ -51,7 +46,7 @@ describe('axe.utils.getFlattenedTree', function () {
   }
 
   function shadowIdAssertions() {
-    var virtualDOM = axe.utils.getFlattenedTree(fixture);
+    const virtualDOM = axe.utils.getFlattenedTree(fixture);
     assert.isUndefined(virtualDOM[0].shadowId); //fixture
     assert.isUndefined(virtualDOM[0].children[0].shadowId); //host
     assert.isDefined(virtualDOM[0].children[0].children[0].shadowId);
@@ -74,25 +69,25 @@ describe('axe.utils.getFlattenedTree', function () {
     );
   }
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should default to document', function () {
+  it('should default to document', () => {
     fixture.innerHTML = '';
-    var tree = axe.utils.getFlattenedTree();
+    const tree = axe.utils.getFlattenedTree();
     assert(tree[0].actualNode === document.documentElement);
   });
 
-  it('should set `null` on the parent for the root node', function () {
-    var tree = axe.utils.getFlattenedTree();
+  it('should set `null` on the parent for the root node', () => {
+    const tree = axe.utils.getFlattenedTree();
     assert(tree[0].parent === null);
   });
 
-  it('creates virtual nodes in the correct order', function () {
+  it('creates virtual nodes in the correct order', () => {
     fixture.innerHTML = '<p><b><i></i></b></p><u><s></s></u>';
 
-    var vNode = axe.utils.getFlattenedTree(fixture)[0];
+    const vNode = axe.utils.getFlattenedTree(fixture)[0];
     assert.equal(vNode.nodeIndex, 0);
     assert.equal(vNode.props.nodeName, 'div');
     assert.equal(vNode.children[0].nodeIndex, 1);
@@ -107,44 +102,53 @@ describe('axe.utils.getFlattenedTree', function () {
     assert.equal(vNode.children[1].children[0].props.nodeName, 's');
   });
 
-  it('should add selectorMap to root element', function () {
-    var tree = axe.utils.getFlattenedTree();
+  it('should add selectorMap to root element', () => {
+    const tree = axe.utils.getFlattenedTree();
     assert.exists(tree[0]._selectorMap);
   });
 
   if (shadowSupport.v0) {
-    describe('shadow DOM v0', function () {
-      beforeEach(function () {
+    describe('shadow DOM v0', () => {
+      beforeEach(() => {
         function createStoryGroup(className, contentSelector) {
-          var group = document.createElement('div');
+          const group = document.createElement('div');
           group.className = className;
-          group.innerHTML =
-            '<ul><content select="' + contentSelector + '"></content></ul>';
+          group.innerHTML = `<ul><content select="${contentSelector}"></content></ul>`;
           return group;
         }
 
         function makeShadowTree(storyList) {
-          var root = storyList.createShadowRoot();
+          const root = storyList.createShadowRoot();
           root.appendChild(createStyle());
           root.appendChild(createStoryGroup('breaking', '.breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        var str =
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking">6</li></div>';
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking">6</li>` +
+          `</div>`;
         str +=
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking">6</li></div>';
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking">6</li>` +
+          `</div>`;
         fixture.innerHTML = str;
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
-      it('it should support shadow DOM v0', function () {
+      it('it should support shadow DOM v0', () => {
         assert.isDefined(fixture.firstChild.shadowRoot);
       });
-      it('getFlattenedTree should return an array of stuff', function () {
+      it('getFlattenedTree should return an array of stuff', () => {
         assert.isTrue(
           Array.isArray(axe.utils.getFlattenedTree(fixture.firstChild))
         );
@@ -161,42 +165,53 @@ describe('axe.utils.getFlattenedTree', function () {
   }
 
   if (shadowSupport.v1) {
-    describe('shadow DOM v1', function () {
-      beforeEach(function () {
+    describe('shadow DOM v1', () => {
+      beforeEach(() => {
         function createStoryGroup(className, slotName) {
-          var group = document.createElement('div');
+          const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
           group.innerHTML =
-            '<ul><slot name="' +
-            slotName +
-            '">fallback content<li>one</li></slot></ul>';
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
         function makeShadowTree(storyList) {
-          var root = storyList.attachShadow({ mode: 'open' });
+          const root = storyList.attachShadow({ mode: 'open' });
           root.appendChild(createStyle());
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        var str =
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str +=
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
-      it('should support shadow DOM v1', function () {
+      it('should support shadow DOM v1', () => {
         assert.isDefined(fixture.firstChild.shadowRoot);
       });
-      it('getFlattenedTree should return an array of stuff', function () {
+      it('getFlattenedTree should return an array of stuff', () => {
         assert.isTrue(
           Array.isArray(axe.utils.getFlattenedTree(fixture.firstChild))
         );
@@ -209,8 +224,8 @@ describe('axe.utils.getFlattenedTree', function () {
         "getFlattenedTree's virtual DOM should give an ID to the shadow DOM",
         shadowIdAssertions
       );
-      it("getFlattenedTree's virtual DOM should have the fallback content", function () {
-        var virtualDOM = axe.utils.getFlattenedTree(fixture);
+      it("getFlattenedTree's virtual DOM should have the fallback content", () => {
+        const virtualDOM = axe.utils.getFlattenedTree(fixture);
         assert.isTrue(
           virtualDOM[0].children[2].children[1].children[0].children.length ===
             2
@@ -229,101 +244,123 @@ describe('axe.utils.getFlattenedTree', function () {
         );
       });
     });
-    describe('shadow DOM v1: boxed slots', function () {
-      afterEach(function () {
+    describe('shadow DOM v1: boxed slots', () => {
+      afterEach(() => {
         fixture.innerHTML = '';
       });
-      beforeEach(function () {
+      beforeEach(() => {
         function createStoryGroup(className, slotName) {
-          var group = document.createElement('div');
+          const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
           group.innerHTML =
-            '<ul><slot name="' +
-            slotName +
-            '">fallback content<li>one</li></slot></ul>';
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
         function makeShadowTree(storyList) {
-          var root = storyList.attachShadow({ mode: 'open' });
+          const root = storyList.attachShadow({ mode: 'open' });
           root.appendChild(createStyle(true));
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        var str =
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str +=
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
-      it("getFlattenedTree's virtual DOM should have the <slot> elements", function () {
+      it("getFlattenedTree's virtual DOM should have the <slot> elements", () => {
         return; // Chrome's implementation of slot is broken
         // var virtualDOM = axe.utils.getFlattenedTree(fixture);
         // assert.isTrue(virtualDOM[0].children[1].children[0].children[0].actualNode.nodeName === 'SLOT');
       });
     });
-    describe('getNodeFromTree', function () {
-      afterEach(function () {
+    describe('getNodeFromTree', () => {
+      afterEach(() => {
         fixture.innerHTML = '';
       });
-      beforeEach(function () {
+      beforeEach(() => {
         function createStoryGroup(className, slotName) {
-          var group = document.createElement('div');
+          const group = document.createElement('div');
           group.className = className;
           // Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
           group.innerHTML =
-            '<ul><slot name="' +
-            slotName +
-            '">fallback content<li>one</li></slot></ul>';
+            `<ul><slot name="${slotName}">` +
+            `fallback content` +
+            `<li>one</li>` +
+            `</slot></ul>`;
           return group;
         }
 
         function makeShadowTree(storyList) {
-          var root = storyList.attachShadow({ mode: 'open' });
+          const root = storyList.attachShadow({ mode: 'open' });
           root.appendChild(createStyle());
           root.appendChild(createStoryGroup('breaking', 'breaking'));
           root.appendChild(createStoryGroup('other', ''));
         }
-        var str =
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+        let str =
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str +=
-          '<div class="stories"><li>1</li>' +
-          '<li>2</li><li class="breaking" slot="breaking">3</li>' +
-          '<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+          `<div class="stories">` +
+          `<li>1</li>` +
+          `<li>2</li>` +
+          `<li class="breaking" slot="breaking">3</li>` +
+          `<li>4</li>` +
+          `<li>5</li>` +
+          `<li class="breaking" slot="breaking">6</li>` +
+          `</div>`;
         str += '<div class="stories"></div>';
         fixture.innerHTML = str;
 
         fixture.querySelectorAll('.stories').forEach(makeShadowTree);
       });
-      it('should find the virtual node that matches the real node passed in', function () {
+      it('should find the virtual node that matches the real node passed in', () => {
         axe.utils.getFlattenedTree(fixture);
-        var node = document.querySelector('.stories li');
-        var vNode = axe.utils.getNodeFromTree(node);
+        const node = document.querySelector('.stories li');
+        const vNode = axe.utils.getNodeFromTree(node);
         assert.isDefined(vNode);
         assert.equal(node, vNode.actualNode);
         assert.equal(vNode.actualNode.textContent, '1');
       });
-      it('should find the virtual node if it is the very top of the tree', function () {
-        var virtualDOM = axe.utils.getFlattenedTree(fixture);
-        var vNode = axe.utils.getNodeFromTree(
+      it('should find the virtual node if it is the very top of the tree', () => {
+        const virtualDOM = axe.utils.getFlattenedTree(fixture);
+        const vNode = axe.utils.getNodeFromTree(
           virtualDOM[0],
           virtualDOM[0].actualNode
         );
         assert.isDefined(vNode);
         assert.equal(virtualDOM[0].actualNode, vNode.actualNode);
       });
-      it('should not throw if getDistributedNodes is missing', function () {
-        var getDistributedNodes = fixture.getDistributedNodes;
+      it('should not throw if getDistributedNodes is missing', () => {
+        const getDistributedNodes = fixture.getDistributedNodes;
         fixture.getDistributedNodes = undefined;
         try {
           var virtualDOM = axe.utils.getFlattenedTree(fixture);
@@ -339,16 +376,16 @@ describe('axe.utils.getFlattenedTree', function () {
       });
     });
   } else {
-    it('does not throw when slot elements are used', function () {
+    it('does not throw when slot elements are used', () => {
       fixture.innerHTML = '<button><slot></slot></button>';
-      assert.doesNotThrow(function () {
+      assert.doesNotThrow(() => {
         axe.utils.getFlattenedTree(fixture);
       });
     });
   }
 
   if (shadowSupport.undefined) {
-    describe('shadow dom undefined', function () {
+    describe('shadow dom undefined', () => {
       it('SHADOW DOM TESTS DEFERRED, NO SUPPORT');
     });
   }

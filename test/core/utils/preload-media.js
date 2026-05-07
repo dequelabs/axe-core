@@ -1,4 +1,5 @@
 describe('axe.utils.preloadMedia', () => {
+  const html = axe.testUtils.html;
   const fixtureSetup = axe.testUtils.fixtureSetup;
 
   it('returns empty array when there are no media nodes to be preloaded', async () => {
@@ -22,7 +23,7 @@ describe('axe.utils.preloadMedia', () => {
   });
 
   it('returns empty array when media node does not preload', async () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <video id="target" autoplay="true" preload="none">
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
@@ -32,7 +33,7 @@ describe('axe.utils.preloadMedia', () => {
   });
 
   it('returns empty array when media node is muted', async () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <video id="target" autoplay="true" muted>
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
@@ -42,7 +43,7 @@ describe('axe.utils.preloadMedia', () => {
   });
 
   it('returns empty array when media node is paused', async () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <video id="target" autoplay="true" paused>
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>
@@ -63,15 +64,13 @@ describe('axe.utils.preloadMedia', () => {
   });
 
   it('returns media nodes (audio, video) after their metadata has been preloaded', async () => {
-    fixtureSetup(
-      // 1 audio elm
-      '<audio src="/test/assets/moon-speech.mp3" autoplay="true"></audio>' +
-        // 1 video elm
-        '<video autoplay="true">' +
-        '<source src="/test/assets/video.mp4" type="video/mp4" />' +
-        '<source src="/test/assets/video.webm" type="video/webm" />' +
-        '</video>'
-    );
+    fixtureSetup(html`
+      <audio src="/test/assets/moon-speech.mp3" autoplay="true"></audio>
+      <video autoplay="true">
+        <source src="/test/assets/video.mp4" type="video/mp4" />
+        <source src="/test/assets/video.webm" type="video/webm" />
+      </video>
+    `);
 
     const result = await axe.utils.preloadMedia({ treeRoot: axe._tree[0] });
     assert.equal(result.length, 2);

@@ -1,17 +1,15 @@
-describe('axe.utils.nodeSorter', function () {
-  'use strict';
-
+describe('axe.utils.nodeSorter', () => {
   function $id(id) {
     return document.getElementById(id);
   }
 
-  var fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
 
-  it('should exist', function () {
+  it('should exist', () => {
     assert.isFunction(axe.utils.nodeSorter);
   });
 
-  it('should return -1 if a comes before b', function () {
+  it('should return -1 if a comes before b', () => {
     fixture.innerHTML = '<div id="a"></div><div id="b"></div>';
 
     assert.equal(
@@ -20,7 +18,7 @@ describe('axe.utils.nodeSorter', function () {
     );
   });
 
-  it('should return -1 if a comes before b - nested', function () {
+  it('should return -1 if a comes before b - nested', () => {
     fixture.innerHTML = '<div id="a"><div id="b"></div></div>';
 
     assert.equal(
@@ -29,7 +27,7 @@ describe('axe.utils.nodeSorter', function () {
     );
   });
 
-  it('should return 1 if b comes before a', function () {
+  it('should return 1 if b comes before a', () => {
     fixture.innerHTML = '<div id="b"></div><div id="a"></div>';
 
     assert.equal(
@@ -38,7 +36,7 @@ describe('axe.utils.nodeSorter', function () {
     );
   });
 
-  it('should return 1 if b comes before a - nested', function () {
+  it('should return 1 if b comes before a - nested', () => {
     fixture.innerHTML = '<div id="b"><div id="a"></div></div>';
 
     assert.equal(
@@ -47,7 +45,7 @@ describe('axe.utils.nodeSorter', function () {
     );
   });
 
-  it('should return 0 if a === b', function () {
+  it('should return 0 if a === b', () => {
     fixture.innerHTML = '<div id="a"></div>';
 
     assert.equal(

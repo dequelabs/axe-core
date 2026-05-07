@@ -1,24 +1,22 @@
-describe('aria-required-children-matches', function () {
-  'use strict';
-
+describe('aria-required-children-matches', () => {
   const fixture = document.getElementById('fixture');
   const queryFixture = axe.testUtils.queryFixture;
   let rule;
 
-  beforeEach(function () {
+  beforeEach(() => {
     rule = axe.utils.getRule('aria-required-children');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should return true for a role that requires children', function () {
+  it('should return true for a role that requires children', () => {
     const vNode = queryFixture('<div id="target" role="list"></div>');
     assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('should return false for a role that does not require children', function () {
+  it('should return false for a role that does not require children', () => {
     const vNode = queryFixture('<div id="target" role="alert"></div>');
     assert.isFalse(rule.matches(null, vNode));
   });

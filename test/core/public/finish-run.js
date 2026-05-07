@@ -1,17 +1,18 @@
-describe('axe.finishRun', function () {
-  var fixture = document.querySelector('#fixture');
+describe('axe.finishRun', () => {
+  const html = axe.testUtils.html;
+  const fixture = document.querySelector('#fixture');
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('takes a single partial results and outputs a finished report', function (done) {
+  it('takes a single partial results and outputs a finished report', done => {
     axe
       .runPartial()
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.property(results, 'violations');
         assert.property(results, 'passes');
         assert.property(results, 'incomplete');
@@ -21,29 +22,29 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('does not mutate the options object', function (done) {
-    var options = {};
+  it('does not mutate the options object', done => {
+    const options = {};
     axe
       .runPartial(options)
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result], options);
       })
-      .then(function () {
+      .then(() => {
         assert.deepEqual(options, {});
         done();
       })
       .catch(done);
   });
 
-  it('uses option.reporter to create the report', function (done) {
+  it('uses option.reporter to create the report', done => {
     axe
       .runPartial()
-      .then(function (partialResult) {
+      .then(partialResult => {
         return axe.finishRun([partialResult], { reporter: 'raw' });
       })
-      .then(function (rawResults) {
+      .then(rawResults => {
         assert.notEqual(rawResults.length, 0);
-        rawResults.forEach(function (rawResult) {
+        rawResults.forEach(rawResult => {
           assert.property(rawResult, 'violations');
           assert.property(rawResult, 'passes');
           assert.property(rawResult, 'incomplete');
@@ -54,26 +55,26 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('defaults options.reporter to v1', function (done) {
+  it('defaults options.reporter to v1', done => {
     axe
       .runPartial()
-      .then(function (partialResult) {
+      .then(partialResult => {
         return axe.finishRun([partialResult]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.equal(results.toolOptions.reporter, 'v1');
         done();
       })
       .catch(done);
   });
 
-  it('normalizes the runOnly option in the reporter', function (done) {
+  it('normalizes the runOnly option in the reporter', done => {
     axe
       .runPartial()
-      .then(function (partialResult) {
+      .then(partialResult => {
         return axe.finishRun([partialResult], { runOnly: 'region' });
       })
-      .then(function (results) {
+      .then(results => {
         assert.deepEqual(results.toolOptions.runOnly, {
           type: 'rule',
           values: ['region']
@@ -83,35 +84,35 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('takes partialResult.environmentData to the reporter', function (done) {
-    var testEngine = {
+  it('takes partialResult.environmentData to the reporter', done => {
+    const testEngine = {
       name: 'dummy-engine',
       version: '1.2.3.4.5'
     };
     axe
       .runPartial()
-      .then(function (partialResult) {
+      .then(partialResult => {
         partialResult.environmentData = { testEngine: testEngine };
         return axe.finishRun([partialResult], { runOnly: 'region' });
       })
-      .then(function (results) {
+      .then(results => {
         assert.deepEqual(results.testEngine, testEngine);
         done();
       })
       .catch(done);
   });
 
-  it('can report violations results', function (done) {
+  it('can report violations results', done => {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe
       .runPartial(
         { include: [['#fixture']] },
         { runOnly: 'aria-prohibited-attr' }
       )
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.violations, 1);
         assert.lengthOf(results.passes, 0);
         assert.lengthOf(results.incomplete, 0);
@@ -121,15 +122,15 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('can report passes results', function (done) {
+  it('can report passes results', done => {
     fixture.innerHTML = '<div role="button" aria-label="foo"></div>';
 
     axe
       .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.violations, 0);
         assert.lengthOf(results.passes, 1);
         assert.lengthOf(results.incomplete, 0);
@@ -139,7 +140,7 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('can report incomplete results', function (done) {
+  it('can report incomplete results', done => {
     fixture.innerHTML = '<div aria-describedby="missing"></div>';
 
     axe
@@ -147,10 +148,10 @@ describe('axe.finishRun', function () {
         { include: [['#fixture']] },
         { runOnly: 'aria-valid-attr-value' }
       )
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.violations, 0);
         assert.lengthOf(results.passes, 0);
         assert.lengthOf(results.incomplete, 1);
@@ -160,13 +161,13 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('can report inapplicable results', function (done) {
+  it('can report inapplicable results', done => {
     axe
       .runPartial({ include: [['#fixture']] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (result) {
+      .then(result => {
         return axe.finishRun([result]);
       })
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.violations, 0);
         assert.lengthOf(results.passes, 0);
         assert.lengthOf(results.incomplete, 0);
@@ -176,33 +177,34 @@ describe('axe.finishRun', function () {
       .catch(done);
   });
 
-  it('takes multiple partial results and outputs a finished report', function (done) {
-    fixture.innerHTML =
-      '<div id="fail" aria-label="foo"></div>' +
-      '<div id="pass" role="button" aria-label="foo"></div>' +
-      '<div id="incomplete" aria-describedby="missing"></div>';
-    var allResults = [];
+  it('takes multiple partial results and outputs a finished report', done => {
+    fixture.innerHTML = html`
+      <div id="fail" aria-label="foo"></div>
+      <div id="pass" role="button" aria-label="foo"></div>
+      <div id="incomplete" aria-describedby="missing"></div>
+    `;
+    const allResults = [];
 
     axe
       .runPartial({ include: [['#pass']] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (results) {
+      .then(results => {
         allResults.push(results);
         return axe.runPartial(
           { include: [['#fail']] },
           { runOnly: 'aria-prohibited-attr' }
         );
       })
-      .then(function (results) {
+      .then(results => {
         allResults.push(results);
         return axe.runPartial(
           { include: [['#incomplete']] },
           { runOnly: 'aria-valid-attr-value' }
         );
       })
-      .then(function (results) {
+      .then(results => {
         return axe.finishRun(allResults.concat(results));
       })
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.violations, 1);
         assert.lengthOf(results.passes, 1);
         assert.lengthOf(results.incomplete, 1);
@@ -246,57 +248,57 @@ describe('axe.finishRun', function () {
     }
   });
 
-  describe('frames', function () {
-    function createIframe(html, parent) {
-      return new Promise(function (resolve) {
+  describe('frames', () => {
+    function createIframe(markup, parent) {
+      return new Promise(resolve => {
         parent = parent || fixture;
-        var doc = parent.ownerDocument;
-        var iframe = doc.createElement('iframe');
+        const doc = parent.ownerDocument;
+        const iframe = doc.createElement('iframe');
         parent.appendChild(iframe);
-        var frameDoc = iframe.contentDocument;
-        frameDoc.write(html + '<script src="/axe.js"></script>');
+        const frameDoc = iframe.contentDocument;
+        frameDoc.write(`${markup}<script src="/axe.js"></script>`);
         frameDoc.close();
-        frameDoc.querySelector('script').onload = function () {
+        frameDoc.querySelector('script').onload = () => {
           resolve(iframe.contentWindow);
         };
       });
     }
 
-    it('reconstructs which node is in which frame', function (done) {
+    it('reconstructs which node is in which frame', done => {
       createIframe('<h1></h1>')
-        .then(function (frameWin) {
+        .then(frameWin => {
           return Promise.all([
             window.axe.runPartial({ runOnly: 'empty-heading' }),
             frameWin.axe.runPartial({ runOnly: 'empty-heading' })
           ]);
         })
         .then(axe.finishRun)
-        .then(function (results) {
-          var nodes = results.violations[0].nodes;
+        .then(results => {
+          const nodes = results.violations[0].nodes;
           assert.deepEqual(nodes[0].target, ['iframe', 'h1']);
           done();
         })
         .catch(done);
     });
 
-    it('handles nodes in nested iframes', function (done) {
-      var windows = [window];
+    it('handles nodes in nested iframes', done => {
+      const windows = [window];
       fixture.innerHTML = '<h1></h1>';
       createIframe('<h2></h2>')
-        .then(function (frameWin) {
+        .then(frameWin => {
           windows.push(frameWin);
           return createIframe('<h3></h3>', frameWin.document.body);
         })
-        .then(function (nestedWin) {
+        .then(nestedWin => {
           windows.push(nestedWin);
-          var promisedResults = windows.map(function (win) {
+          const promisedResults = windows.map(win => {
             return win.axe.runPartial({ runOnly: 'empty-heading' });
           });
           return Promise.all(promisedResults);
         })
         .then(axe.finishRun)
-        .then(function (results) {
-          var nodes = results.violations[0].nodes;
+        .then(results => {
+          const nodes = results.violations[0].nodes;
           assert.deepEqual(nodes[0].target, ['h1']);
           assert.deepEqual(nodes[1].target, ['iframe', 'h2']);
           assert.deepEqual(nodes[2].target, ['iframe', 'iframe', 'h3']);
@@ -305,28 +307,28 @@ describe('axe.finishRun', function () {
         .catch(done);
     });
 
-    it('should handle null results and set target correctly', function (done) {
-      var windows = [window];
+    it('should handle null results and set target correctly', done => {
+      const windows = [window];
       fixture.innerHTML = '<h1></h1>';
       createIframe('<h2></h2>')
-        .then(function (frameWin) {
+        .then(frameWin => {
           windows.push(frameWin);
           return createIframe('<h3></h3>');
         })
-        .then(function (nestedWin) {
+        .then(nestedWin => {
           windows.push(nestedWin);
-          var promisedResults = windows.map(function (win) {
+          const promisedResults = windows.map(win => {
             return win.axe.runPartial({ runOnly: 'empty-heading' });
           });
           return Promise.all(promisedResults);
         })
-        .then(function (partialResults) {
+        .then(partialResults => {
           partialResults[1] = null;
           return partialResults;
         })
         .then(axe.finishRun)
-        .then(function (results) {
-          var nodes = results.violations[0].nodes;
+        .then(results => {
+          const nodes = results.violations[0].nodes;
           assert.deepEqual(nodes[0].target, ['h1']);
           assert.deepEqual(nodes[1].target, ['iframe:nth-child(3)', 'h3']);
           done();
@@ -335,17 +337,17 @@ describe('axe.finishRun', function () {
     });
   });
 
-  describe('calling audit.after', function () {
-    it('passes results with iframe ancestries', function (done) {
+  describe('calling audit.after', () => {
+    it('passes results with iframe ancestries', done => {
       fixture.innerHTML = '<i id="i"></i> <i id="i"></i>';
       axe
         .runPartial(fixture, { runOnly: 'duplicate-id' })
-        .then(function (partialResult) {
+        .then(partialResult => {
           return axe.finishRun([partialResult], { runOnly: 'duplicate-id' });
         })
-        .then(function (result) {
-          var nodes = result.violations[0].nodes;
-          var relatedNodes = nodes[0].any[0].relatedNodes;
+        .then(result => {
+          const nodes = result.violations[0].nodes;
+          const relatedNodes = nodes[0].any[0].relatedNodes;
 
           assert.lengthOf(nodes, 1);
           assert.deepEqual(nodes[0].target, ['i:nth-child(1)']);
@@ -356,16 +358,16 @@ describe('axe.finishRun', function () {
         .catch(done);
     });
 
-    it('provides the options object', function (done) {
-      var spy;
+    it('provides the options object', done => {
+      let spy;
       fixture.innerHTML = '<i id="i"></i> <i id="i"></i>';
       axe
         .runPartial(fixture, { runOnly: 'duplicate-id' })
-        .then(function (partialResult) {
+        .then(partialResult => {
           spy = sinon.spy(axe._audit, 'after');
           return axe.finishRun([partialResult], { runOnly: 'duplicate-id' });
         })
-        .then(function () {
+        .then(() => {
           assert.lengthOf(axe._audit.after.args, 1);
           assert.deepEqual(axe._audit.after.args[0][1], {
             runOnly: { type: 'rule', values: ['duplicate-id'] },
@@ -374,7 +376,7 @@ describe('axe.finishRun', function () {
           spy.restore();
           done();
         })
-        .catch(function (err) {
+        .catch(err => {
           spy.restore();
           done(err);
         });

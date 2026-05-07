@@ -1,10 +1,10 @@
-describe('standards.getAriaRolesByType', function () {
-  var getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
+describe('standards.getAriaRolesByType', () => {
+  const getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
 
-  it('should return a list of role names by type', function () {
+  it('should return a list of role names by type', () => {
     // first remove all role types
-    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
-    var ariaRoles = {};
+    const roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    const ariaRoles = {};
     for (var i = 0; i < roleNames.length; i++) {
       ariaRoles[roleNames[i]] = { type: 'off' };
     }
@@ -21,7 +21,7 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    const structureRoles = getAriaRolesByType('structure');
     assert.deepEqual(structureRoles, [
       'article',
       'blockquote',
@@ -30,7 +30,7 @@ describe('standards.getAriaRolesByType', function () {
     ]);
   });
 
-  it('should return configured roles', function () {
+  it('should return configured roles', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -41,11 +41,11 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    const structureRoles = getAriaRolesByType('structure');
     assert.include(structureRoles, 'myRole');
   });
 
-  it('should not return role that is configured to not be of the type', function () {
+  it('should not return role that is configured to not be of the type', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -56,7 +56,7 @@ describe('standards.getAriaRolesByType', function () {
       }
     });
 
-    var structureRoles = getAriaRolesByType('structure');
+    const structureRoles = getAriaRolesByType('structure');
     assert.notInclude(structureRoles, 'article');
   });
 });

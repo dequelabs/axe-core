@@ -1,11 +1,9 @@
-describe('aria.requiredAttr', function () {
-  'use strict';
-
-  afterEach(function () {
+describe('aria.requiredAttr', () => {
+  afterEach(() => {
     axe.reset();
   });
 
-  it('should returned the attributes property for the proper role', function () {
+  it('should returned the attributes property for the proper role', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -19,7 +17,7 @@ describe('aria.requiredAttr', function () {
     assert.deepEqual(axe.commons.aria.requiredAttr('cats'), ['yes']);
   });
 
-  it('should returned empty array if the required attributes is not an array', function () {
+  it('should returned empty array if the required attributes is not an array', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -32,14 +30,14 @@ describe('aria.requiredAttr', function () {
     assert.deepEqual(axe.commons.aria.requiredAttr('cats'), []);
   });
 
-  it('should return an empty array if there are no required attributes', function () {
-    var result = axe.commons.aria.requiredAttr('cats');
+  it('should return an empty array if there are no required attributes', () => {
+    const result = axe.commons.aria.requiredAttr('cats');
 
     assert.deepEqual(result, []);
   });
 
-  it('should return a unique copy of the attributes', function () {
-    var attrs = ['yes', 'no'];
+  it('should return a unique copy of the attributes', () => {
+    const attrs = ['yes', 'no'];
 
     axe.configure({
       standards: {
@@ -51,7 +49,7 @@ describe('aria.requiredAttr', function () {
       }
     });
 
-    var result = axe.commons.aria.requiredAttr('cats');
+    const result = axe.commons.aria.requiredAttr('cats');
     assert.notEqual(result, attrs);
   });
 });

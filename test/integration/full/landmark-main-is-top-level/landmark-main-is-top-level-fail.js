@@ -1,11 +1,10 @@
-describe('landmark-main-is-top-level test fail', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe('landmark-main-is-top-level test fail', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['landmark-main-is-top-level'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -14,27 +13,27 @@ describe('landmark-main-is-top-level test fail', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 1', function () {
+  describe('violations', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.violations, 1);
     });
 
-    it('should find 4 nodes', function () {
+    it('should find 4 nodes', () => {
       assert.lengthOf(results.violations[0].nodes, 4);
     });
   });
 
-  describe('passes', function () {
-    it('should find none', function () {
+  describe('passes', () => {
+    it('should find none', () => {
       assert.lengthOf(results.passes, 0);
     });
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  it('should find 0 incomplete', function () {
+  it('should find 0 incomplete', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 });

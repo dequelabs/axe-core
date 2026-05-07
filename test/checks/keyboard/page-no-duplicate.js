@@ -1,8 +1,8 @@
 describe('page-no-duplicate', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
   const checkContext = new axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
 
   const check = checks['page-no-duplicate-main'];
 
@@ -65,52 +65,46 @@ describe('page-no-duplicate', () => {
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    (shadowSupported ? it : xit)(
-      'should return false if there is a second matching element inside the shadow dom',
-      () => {
-        const options = { selector: 'main' };
-        const div = document.createElement('div');
-        div.innerHTML = '<div id="shadow"></div><main id="target"></main>';
+    it('should return false if there is a second matching element inside the shadow dom', () => {
+      const options = { selector: 'main' };
+      const div = document.createElement('div');
+      div.innerHTML = '<div id="shadow"></div><main id="target"></main>';
 
-        const shadow = div
-          .querySelector('#shadow')
-          .attachShadow({ mode: 'open' });
-        shadow.innerHTML = '<main></main>';
-        axe.testUtils.fixtureSetup(div);
-        const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const shadow = div
+        .querySelector('#shadow')
+        .attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<main></main>';
+      axe.testUtils.fixtureSetup(div);
+      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
-        assert.isFalse(
-          check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
-        );
-        assert.deepEqual(checkContext._relatedNodes, [
-          shadow.querySelector('main')
-        ]);
-      }
-    );
+      assert.isFalse(
+        check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+      assert.deepEqual(checkContext._relatedNodes, [
+        shadow.querySelector('main')
+      ]);
+    });
 
-    (shadowSupported ? it : xit)(
-      'should return true if there is a second matching element inside the shadow dom but only one is visible to screenreaders',
-      () => {
-        const options = { selector: 'main' };
-        const div = document.createElement('div');
-        div.innerHTML =
-          '<div id="shadow"></div><main id="target" aria-hidden="true"></main>';
+    it('should return true if there is a second matching element inside the shadow dom but only one is visible to screenreaders', () => {
+      const options = { selector: 'main' };
+      const div = document.createElement('div');
+      div.innerHTML =
+        '<div id="shadow"></div><main id="target" aria-hidden="true"></main>';
 
-        const shadow = div
-          .querySelector('#shadow')
-          .attachShadow({ mode: 'open' });
-        shadow.innerHTML = '<main></main>';
-        axe.testUtils.fixtureSetup(div);
-        const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const shadow = div
+        .querySelector('#shadow')
+        .attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<main></main>';
+      axe.testUtils.fixtureSetup(div);
+      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
-        assert.isTrue(
-          check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
-        );
-        assert.deepEqual(checkContext._relatedNodes, [
-          shadow.querySelector('main')
-        ]);
-      }
-    );
+      assert.isTrue(
+        check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+      assert.deepEqual(checkContext._relatedNodes, [
+        shadow.querySelector('main')
+      ]);
+    });
   });
 
   describe('option.nativeScopeFilter', () => {
@@ -120,9 +114,12 @@ describe('page-no-duplicate', () => {
         nativeScopeFilter: 'main'
       };
       const params = checkSetup(
-        '<div><footer id="target"></footer>' +
-          '<main><footer></footer></main>' +
-          '</div>',
+        html`
+          <div>
+            <footer id="target"></footer>
+            <main><footer></footer></main>
+          </div>
+        `,
         options
       );
       assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -134,9 +131,12 @@ describe('page-no-duplicate', () => {
         nativeScopeFilter: 'main'
       };
       const params = checkSetup(
-        '<div><footer id="target"></footer>' +
-          '<main><div role="contentinfo"></div></main>' +
-          '</div>',
+        html`
+          <div>
+            <footer id="target"></footer>
+            <main><div role="contentinfo"></div></main>
+          </div>
+        `,
         options
       );
       assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -148,36 +148,35 @@ describe('page-no-duplicate', () => {
         nativeScopeFilter: 'article'
       };
       const params = checkSetup(
-        '<article>' +
-          '<footer id="target">Article footer</footer>' +
-          '</article>' +
-          '<footer>Body footer</footer>',
+        html`
+          <article>
+            <footer id="target">Article footer</footer>
+          </article>
+          <footer>Body footer</footer>
+        `,
         options
       );
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    (shadowSupported ? it : xit)(
-      'elements if its ancestor is outside the shadow DOM tree',
-      () => {
-        const options = {
-          selector: 'footer',
-          nativeScopeFilter: 'header'
-        };
+    it('elements if its ancestor is outside the shadow DOM tree', () => {
+      const options = {
+        selector: 'footer',
+        nativeScopeFilter: 'header'
+      };
 
-        const div = document.createElement('div');
-        div.innerHTML =
-          '<header id="shadow"></header><footer id="target"></footer>';
-        div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
-          '<footer></footer>';
-        axe.testUtils.fixtureSetup(div);
-        const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const div = document.createElement('div');
+      div.innerHTML =
+        '<header id="shadow"></header><footer id="target"></footer>';
+      div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
+        '<footer></footer>';
+      axe.testUtils.fixtureSetup(div);
+      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
-        assert.isTrue(
-          check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
-        );
-      }
-    );
+      assert.isTrue(
+        check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
   });
 
   describe('options.role', () => {
@@ -187,7 +186,7 @@ describe('page-no-duplicate', () => {
         role: 'contentinfo'
       };
       const params = checkSetup(
-        `<div>
+        html`<div>
           <footer id="target"></footer>
           <div role="main">
             <footer></footer>
@@ -204,7 +203,7 @@ describe('page-no-duplicate', () => {
         role: 'contentinfo'
       };
       const params = checkSetup(
-        `<div>
+        html`<div>
           <footer id="target"></footer>
           <div>
             <footer id="fail"></footer>
@@ -224,35 +223,32 @@ describe('page-no-duplicate', () => {
         role: 'contentinfo'
       };
       const params = checkSetup(
-        `<article>
-          <footer id="target">Article footer</footer>
-        </article>
-        <footer>Body footer</footer>`,
+        html`<article>
+            <footer id="target">Article footer</footer>
+          </article>
+          <footer>Body footer</footer>`,
         options
       );
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
-    (shadowSupported ? it : xit)(
-      "should pass if element's ancestor is outside the shadow DOM tree",
-      () => {
-        const options = {
-          selector: 'footer',
-          role: 'contentinfo'
-        };
+    it("should pass if element's ancestor is outside the shadow DOM tree", () => {
+      const options = {
+        selector: 'footer',
+        role: 'contentinfo'
+      };
 
-        const div = document.createElement('div');
-        div.innerHTML =
-          '<article id="shadow"></article><footer id="target"></footer>';
-        div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
-          '<footer></footer>';
-        axe.testUtils.fixtureSetup(div);
-        const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const div = document.createElement('div');
+      div.innerHTML =
+        '<article id="shadow"></article><footer id="target"></footer>';
+      div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
+        '<footer></footer>';
+      axe.testUtils.fixtureSetup(div);
+      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
-        assert.isTrue(
-          check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
-        );
-      }
-    );
+      assert.isTrue(
+        check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
   });
 });

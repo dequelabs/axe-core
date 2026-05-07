@@ -1,4 +1,4 @@
-window.assertIsErrorOccurred = function (result, { message, target }) {
+window.assertIsErrorOccurred = (result, { message, target }) => {
   assert.isDefined(result);
   assert.isDefined(result.error);
   assert.include(result.error.message, message);

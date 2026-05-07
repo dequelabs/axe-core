@@ -1,20 +1,17 @@
-describe('header-present', function () {
-  'use strict';
+describe('header-present', () => {
+  const fixture = document.getElementById('fixture');
+  const checkSetup = axe.testUtils.checkSetup;
+  const checkContext = axe.testUtils.MockCheckContext();
+  const shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 
-  var fixture = document.getElementById('fixture');
-  var checkSetup = axe.testUtils.checkSetup;
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var checkContext = axe.testUtils.MockCheckContext();
-  var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('should return true if h1-h6 is found', function () {
-    var params = checkSetup('<h1 id="target">Hi</h1>');
+  it('should return true if h1-h6 is found', () => {
+    let params = checkSetup('<h1 id="target">Hi</h1>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('header-present')
@@ -57,8 +54,8 @@ describe('header-present', function () {
     );
   });
 
-  it('should return true if role=heading is found', function () {
-    var params = checkSetup('<div role="heading" id="target">Hi</div>');
+  it('should return true if role=heading is found', () => {
+    const params = checkSetup('<div role="heading" id="target">Hi</div>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('header-present')
@@ -66,8 +63,8 @@ describe('header-present', function () {
     );
   });
 
-  it('should otherwise return false', function () {
-    var params = checkSetup('<p id="target">Some stuff and stuff</p>');
+  it('should otherwise return false', () => {
+    const params = checkSetup('<p id="target">Some stuff and stuff</p>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('header-present')
@@ -75,8 +72,8 @@ describe('header-present', function () {
     );
   });
 
-  it('should return false if heading has a different role', function () {
-    var params = checkSetup(
+  it('should return false if heading has a different role', () => {
+    const params = checkSetup(
       '<h1 role="none" id="target">Some stuff and stuff</h1>'
     );
     assert.isFalse(
@@ -86,15 +83,12 @@ describe('header-present', function () {
     );
   });
 
-  (shadowSupported ? it : xit)(
-    'should return true if heading is in shadow dom',
-    function () {
-      var params = shadowCheckSetup('<div id="target"><div>', '<h1></h1>');
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('header-present')
-          .apply(checkContext, params)
-      );
-    }
-  );
+  it('should return true if heading is in shadow dom', () => {
+    const params = shadowCheckSetup('<div id="target"><div>', '<h1></h1>');
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('header-present')
+        .apply(checkContext, params)
+    );
+  });
 });

@@ -1,6 +1,6 @@
-describe('meta-viewport virtual-rule', function () {
-  it('should pass for missing user-scalable', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+describe('meta-viewport virtual-rule', () => {
+  it('should pass for missing user-scalable', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -13,8 +13,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for user-scalable=yes', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should pass for user-scalable=yes', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -27,8 +27,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass comma-separated list', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should pass comma-separated list', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -41,8 +41,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass semicolon-separated list', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should pass semicolon-separated list', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -55,8 +55,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for user-scalable=no', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should fail for user-scalable=no', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -69,8 +69,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for user-scalable=0', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should fail for user-scalable=0', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',
@@ -83,8 +83,8 @@ describe('meta-viewport virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for maximum-scale=yes', function () {
-    var results = axe.runVirtualRule('meta-viewport', {
+  it('should fail for maximum-scale=yes', () => {
+    const results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
       attributes: {
         name: 'viewport',

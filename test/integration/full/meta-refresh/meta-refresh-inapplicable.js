@@ -1,8 +1,6 @@
-describe('meta-refresh inapplicable', function () {
-  'use strict';
-
-  it('should be inapplicable', function (done) {
-    axe.run({ runOnly: 'meta-refresh' }, function (err, results) {
+describe('meta-refresh inapplicable', () => {
+  it('should be inapplicable', done => {
+    axe.run({ runOnly: 'meta-refresh' }, (err, results) => {
       try {
         assert.isNull(err);
         assert.lengthOf(results.violations, 0, 'violations');

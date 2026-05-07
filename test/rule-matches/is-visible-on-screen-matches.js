@@ -1,6 +1,4 @@
 describe('is-visible-on-screen-matches', () => {
-  'use strict';
-
   const rule = axe.utils.getRule('avoid-inline-spacing');
   const queryFixture = axe.testUtils.queryFixture;
 

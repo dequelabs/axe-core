@@ -1,4 +1,5 @@
 describe('no-autoplay-audio', () => {
+  const html = axe.testUtils.html;
   const check = checks['no-autoplay-audio'];
   const checkSetup = axe.testUtils.checkSetup;
   const checkContext = axe.testUtils.MockCheckContext();
@@ -29,7 +30,7 @@ describe('no-autoplay-audio', () => {
   });
 
   it('returns false when <video> can autoplay and has no controls mechanism', async () => {
-    const checkArgs = checkSetup(`
+    const checkArgs = checkSetup(html`
       <video id="target" autoplay="true">
         <source src="/test/assets/video.webm" type="video/webm" />
         <source src="/test/assets/video.mp4" type="video/mp4" />
@@ -48,7 +49,7 @@ describe('no-autoplay-audio', () => {
   });
 
   it('returns false when <video> loops and has no controls mechanism when duration is unknown', () => {
-    const checkArgs = checkSetup(`
+    const checkArgs = checkSetup(html`
       <video id="target" loop>
         <source src="/test/assets/video.webm#t=7,9" type="video/webm" />
         <source src="/test/assets/video.mp4#t=7,9" type="video/mp4" />
@@ -66,8 +67,7 @@ describe('no-autoplay-audio', () => {
 
   it('returns true when <video> can autoplay and duration is below allowed duration (by passing options)', async () => {
     const checkArgs = checkSetup(
-      `
-      <video id="target" autoplay="true">
+      html` <video id="target" autoplay="true">
         <source src="/test/assets/video.webm" type="video/webm" />
         <source src="/test/assets/video.mp4" type="video/mp4" />
       </video>`,
@@ -78,11 +78,12 @@ describe('no-autoplay-audio', () => {
   });
 
   it('returns true when <video> can autoplay and duration is below allowed duration (by setting playback range)', async () => {
-    const checkArgs = checkSetup(`
-      <video id="target" autoplay="true">
+    const checkArgs = checkSetup(
+      html` <video id="target" autoplay="true">
         <source src="/test/assets/video.webm#t=7,9" type="video/webm" />
         <source src="/test/assets/video.mp4#t=7,9" type="video/mp4" />
-      </video>`);
+      </video>`
+    );
     // Note: default allowed duration is 3s
     await axe.utils.preload(preloadOptions);
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -97,7 +98,7 @@ describe('no-autoplay-audio', () => {
   });
 
   it('returns true when <video> can autoplay and has controls mechanism', async () => {
-    const checkArgs = checkSetup(`
+    const checkArgs = checkSetup(html`
       <video id="target" autoplay="true" controls>
         <source src="/test/assets/video.webm" type="video/webm" />
         <source src="/test/assets/video.mp4" type="video/mp4" />
@@ -108,7 +109,7 @@ describe('no-autoplay-audio', () => {
   });
 
   it('returns true when <video> loops and has controls mechanism when duration is unknown', () => {
-    const checkArgs = checkSetup(`
+    const checkArgs = checkSetup(html`
       <video id="target" loop controls>
         <source src="/test/assets/video.webm#t=7,9" type="video/webm" />
         <source src="/test/assets/video.mp4#t=7,9" type="video/mp4" />

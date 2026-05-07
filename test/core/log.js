@@ -1,16 +1,14 @@
-describe('axe.log', function () {
-  'use strict';
-
-  it('should be a function', function () {
+describe('axe.log', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.log);
   });
-  it('should invoke console.log', function () {
-    var orig = window.console;
+  it('should invoke console.log', () => {
+    const orig = window.console;
     if (!window.console || window.console.log) {
-      window.console = { log: function () {} };
+      window.console = { log: () => {} };
     }
-    var expected = ['hi', 'hello'];
-    var success = false;
+    const expected = ['hi', 'hello'];
+    let success = false;
 
     window.console.log = function () {
       success = true;

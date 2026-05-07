@@ -1,11 +1,10 @@
-describe('aria-hidden on body test ' + window.location.pathname, function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe(`aria-hidden on body test ${window.location.pathname}`, () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['aria-hidden-body'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -14,8 +13,8 @@ describe('aria-hidden on body test ' + window.location.pathname, function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find some', function () {
+  describe('violations', () => {
+    it('should find some', () => {
       assert.lengthOf(results.violations, 1);
     });
   });

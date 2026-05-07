@@ -1,27 +1,27 @@
-describe('aria-text virtual-rule', function () {
-  it('should incomplete for element with undefined children', function () {
-    var node = new axe.SerialVirtualNode({
+describe('aria-text virtual-rule', () => {
+  it('should incomplete for element with undefined children', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail for focusable widget children', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail for focusable widget children', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'button',
@@ -30,43 +30,43 @@ describe('aria-text virtual-rule', function () {
     });
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for children with native focus', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail for children with native focus', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass if element only has descendants that are not focusable', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should pass if element only has descendants that are not focusable', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'span'
     });
-    var grandchild = new axe.SerialVirtualNode({
+    const grandchild = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'hello'
@@ -75,27 +75,27 @@ describe('aria-text virtual-rule', function () {
     child.children = [grandchild];
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for deeply nested focusable children', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail for deeply nested focusable children', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'div'
     });
-    var grandchild = new axe.SerialVirtualNode({
+    const grandchild = new axe.SerialVirtualNode({
       nodeName: 'div'
     });
-    var greatgrandchild = new axe.SerialVirtualNode({
+    const greatgrandchild = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
     greatgrandchild.parent = grandchild;
@@ -103,21 +103,21 @@ describe('aria-text virtual-rule', function () {
     child.children = [grandchild];
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when tabIndex is negative', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when tabIndex is negative', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         tabindex: '-1',
@@ -127,21 +127,21 @@ describe('aria-text virtual-rule', function () {
 
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass when an anchor has no href and has implicit role of link', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should pass when an anchor has no href and has implicit role of link', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         tabindex: '-1'
@@ -150,15 +150,15 @@ describe('aria-text virtual-rule', function () {
     child.children = [];
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
     assert.lengthOf(results.passes, 1);
   });
 
-  it('should incomplete when vNode has no children and is type 1', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should incomplete when vNode has no children and is type 1', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text',
@@ -166,21 +166,21 @@ describe('aria-text virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
     assert.lengthOf(results.passes, 0);
   });
 
-  it('should fail when tabIndex is NaN', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when tabIndex is NaN', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'text'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: {
         tabindex: 'foo',
@@ -190,7 +190,7 @@ describe('aria-text virtual-rule', function () {
 
     node.children = [child];
 
-    var results = axe.runVirtualRule('aria-text', node);
+    const results = axe.runVirtualRule('aria-text', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);

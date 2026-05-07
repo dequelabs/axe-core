@@ -1,4 +1,4 @@
-describe('aria-conditional-attr virtual-rule', function () {
+describe('aria-conditional-attr virtual-rule', () => {
   it('passes when aria-checked is consistent with native checkbox state', () => {
     const results = axe.runVirtualRule('aria-conditional-attr', {
       nodeName: 'input',

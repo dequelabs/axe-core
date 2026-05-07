@@ -1,167 +1,196 @@
-describe('text.labelVirtual', function () {
-  'use strict';
+describe('text.labelVirtual', () => {
+  const html = axe.testUtils.html;
 
-  var fixture = document.getElementById('fixture');
-  afterEach(function () {
+  const fixture = document.getElementById('fixture');
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('is called from text.label', function () {
-    fixture.innerHTML =
-      '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
-      '<input id="target" aria-labelledby="monkeys bananas">';
+  it('is called from text.label', () => {
+    fixture.innerHTML = html`
+      <div id="monkeys">monkeys</div>
+      <div id="bananas">bananas</div>
+      <input id="target" aria-labelledby="monkeys bananas" />
+    `;
 
     axe.testUtils.flatTreeSetup(document.body);
-    var target = fixture.querySelector('#target');
+    const target = fixture.querySelector('#target');
     assert.equal(axe.commons.text.label(target), 'monkeys bananas');
   });
 
-  describe('aria-labelledby', function () {
-    it('should join text with a single space', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
-        '<input id="target" aria-labelledby="monkeys bananas">';
+  describe('aria-labelledby', () => {
+    it('should join text with a single space', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <input id="target" aria-labelledby="monkeys bananas" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
-    it('should filter invisible elements', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">monkeys</div><div id="bananas" style="display: none">bananas</div>' +
-        '<input id="target" aria-labelledby="monkeys bananas">';
+    it('should filter invisible elements', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas" style="display: none">bananas</div>
+        <input id="target" aria-labelledby="monkeys bananas" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
-    it('should take precedence over aria-label', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
-        '<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">';
+    it('should take precedence over aria-label', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <input
+          id="target"
+          aria-labelledby="monkeys bananas"
+          aria-label="nope"
+        />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
-    it('should take precedence over explicit labels', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
-        '<label for="target">nope</label>' +
-        '<input id="target" aria-labelledby="monkeys bananas">';
+    it('should take precedence over explicit labels', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <label for="target">nope</label>
+        <input id="target" aria-labelledby="monkeys bananas" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
-    it('should take precedence over implicit labels', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
-        '<label>nope' +
-        '<input id="target" aria-labelledby="monkeys bananas"></label>';
+    it('should take precedence over implicit labels', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <label
+          >nope <input id="target" aria-labelledby="monkeys bananas"
+        /></label>
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
-    it('should ignore whitespace only labels', function () {
-      fixture.innerHTML =
-        '<div id="monkeys">	\n  </div><div id="bananas"></div>' +
-        '<input id="target" aria-labelledby="monkeys bananas">';
+    it('should ignore whitespace only labels', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys"></div>
+        <div id="bananas"></div>
+        <input id="target" aria-labelledby="monkeys bananas" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
   });
 
-  describe('aria-label', function () {
-    it('should detect it', function () {
+  describe('aria-label', () => {
+    it('should detect it', () => {
       fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
-    it('should ignore whitespace only labels', function () {
+    it('should ignore whitespace only labels', () => {
       fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
 
-    it('should take precedence over explicit labels', function () {
-      fixture.innerHTML =
-        '<label for="target">nope</label>' +
-        '<input id="target" aria-label="monkeys">';
+    it('should take precedence over explicit labels', () => {
+      fixture.innerHTML = html`
+        <label for="target">nope</label>
+        <input id="target" aria-label="monkeys" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
-    it('should take precedence over implicit labels', function () {
-      fixture.innerHTML =
-        '<label>nope' + '<input id="target" aria-label="monkeys"></label>';
+    it('should take precedence over implicit labels', () => {
+      fixture.innerHTML = html`
+        <label>nope <input id="target" aria-label="monkeys" /></label>
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
   });
 
-  describe('explicit label', function () {
-    it('should detect it', function () {
-      fixture.innerHTML =
-        '<label for="target">monkeys</label>' + '<input id="target">';
+  describe('explicit label', () => {
+    it('should detect it', () => {
+      fixture.innerHTML = html`
+        <label for="target">monkeys</label>
+        <input id="target" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
-    it('should ignore whitespace only or empty labels', function () {
-      fixture.innerHTML =
-        '<label for="target">	\n\r  </label>' + '<input id="target">';
+    it('should ignore whitespace only or empty labels', () => {
+      fixture.innerHTML = html`
+        <label for="target"> </label>
+        <input id="target" />
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
 
-    it('should take precedence over implicit labels', function () {
-      fixture.innerHTML =
-        '<label for="target">monkeys</label>' +
-        '<label>nope' +
-        '<input id="target"></label>';
+    it('should take precedence over implicit labels', () => {
+      fixture.innerHTML = html`
+        <label for="target">monkeys</label>
+        <label>nope <input id="target" /></label>
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
   });
 
-  describe('implicit label', function () {
-    it('should detect it', function () {
-      fixture.innerHTML = '<label>monkeys' + '<input id="target"><label>';
+  describe('implicit label', () => {
+    it('should detect it', () => {
+      fixture.innerHTML = html`
+        <label>monkeys <input id="target" /><label> </label></label>
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
-    it('should ignore whitespace only or empty labels', function () {
-      fixture.innerHTML = '<label> ' + '<input id="target"><label>';
+    it('should ignore whitespace only or empty labels', () => {
+      fixture.innerHTML = html`
+        <label> <input id="target" /><label> </label></label>
+      `;
 
-      var tree = axe.testUtils.flatTreeSetup(document.body);
-      var target = axe.utils.querySelectorAll(tree, '#target')[0];
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
   });

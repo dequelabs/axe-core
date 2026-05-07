@@ -1,10 +1,9 @@
-describe('helpers.processAggregate', function () {
-  'use strict';
-  var results, options;
+describe('helpers.processAggregate', () => {
+  let results, options;
   const helpers = axe._thisWillBeDeletedDoNotUse.helpers;
   const fixture = document.getElementById('fixture');
 
-  beforeEach(function () {
+  beforeEach(() => {
     results = [
       {
         id: 'passed-rule',
@@ -131,29 +130,29 @@ describe('helpers.processAggregate', function () {
     ];
   });
 
-  it('should remove the `result` property from each node in each ruleResult', function () {
+  it('should remove the `result` property from each node in each ruleResult', () => {
     assert.isDefined(
-      results.find(function (r) {
+      results.find(r => {
         return r.id === 'passed-rule';
       }).passes[0].result
     );
 
-    var resultObject = helpers.processAggregate(results, {});
-    var ruleResult = resultObject.passes.find(function (r) {
+    const resultObject = helpers.processAggregate(results, {});
+    const ruleResult = resultObject.passes.find(r => {
       return r.id === 'passed-rule';
     });
     assert.isUndefined(ruleResult.nodes[0].result);
   });
 
-  it('should remove the `node` property from each node in each ruleResult', function () {
+  it('should remove the `node` property from each node in each ruleResult', () => {
     assert.isDefined(
-      results.find(function (r) {
+      results.find(r => {
         return r.id === 'passed-rule';
       }).passes[0].node
     );
 
-    var resultObject = helpers.processAggregate(results, {});
-    var ruleResult = resultObject.passes.find(function (r) {
+    const resultObject = helpers.processAggregate(results, {});
+    const ruleResult = resultObject.passes.find(r => {
       return r.id === 'passed-rule';
     });
     assert.isUndefined(ruleResult.nodes[0].node);
@@ -197,10 +196,10 @@ describe('helpers.processAggregate', function () {
     });
   });
 
-  describe('`options` argument', function () {
-    describe('`resultTypes` option', function () {
-      it('should reduce the unwanted result types to 1 in the `resultObject`', function () {
-        var resultObject = helpers.processAggregate(results, {
+  describe('`options` argument', () => {
+    describe('`resultTypes` option', () => {
+      it('should reduce the unwanted result types to 1 in the `resultObject`', () => {
+        let resultObject = helpers.processAggregate(results, {
           resultTypes: ['violations']
         });
         assert.isDefined(resultObject.passes);
@@ -232,15 +231,15 @@ describe('helpers.processAggregate', function () {
       });
     });
 
-    describe('`elementRef` option', function () {
-      describe('when set to true', function () {
-        before(function () {
+    describe('`elementRef` option', () => {
+      describe('when set to true', () => {
+        before(() => {
           options = { elementRef: true };
         });
 
-        describe("when node's, or relatedNode's, `fromFrame` equals false", function () {
-          it('should add an `element` property to the subResult nodes or relatedNodes', function () {
-            var resultObject = helpers.processAggregate(results, options);
+        describe("when node's, or relatedNode's, `fromFrame` equals false", () => {
+          it('should add an `element` property to the subResult nodes or relatedNodes', () => {
+            const resultObject = helpers.processAggregate(results, options);
             assert.isDefined(resultObject.passes[0].nodes[0].element);
             assert.isDefined(
               resultObject.passes[0].nodes[0].any[0].relatedNodes[0].element
@@ -248,9 +247,9 @@ describe('helpers.processAggregate', function () {
           });
         });
 
-        describe("when node's, or relatedNode's, `fromFrame` equals true", function () {
-          it('should NOT add an `element` property to the subResult nodes or relatedNodes', function () {
-            var resultObject = helpers.processAggregate(results, options);
+        describe("when node's, or relatedNode's, `fromFrame` equals true", () => {
+          it('should NOT add an `element` property to the subResult nodes or relatedNodes', () => {
+            const resultObject = helpers.processAggregate(results, options);
             assert.isUndefined(resultObject.violations[0].nodes[0].element);
             assert.isUndefined(
               resultObject.violations[0].nodes[0].any[0].relatedNodes[0].element
@@ -259,13 +258,13 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when set to false', function () {
-        before(function () {
+      describe('when set to false', () => {
+        before(() => {
           options = { elementRef: false };
         });
 
-        it('should NOT add an `element` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, options);
+        it('should NOT add an `element` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, options);
           assert.isUndefined(resultObject.passes[0].nodes[0].element);
           assert.isUndefined(resultObject.violations[0].nodes[0].element);
           assert.isUndefined(
@@ -277,9 +276,9 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when not set at all', function () {
-        it('should NOT add an `element` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {});
+      describe('when not set at all', () => {
+        it('should NOT add an `element` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {});
           assert.isUndefined(resultObject.passes[0].nodes[0].element);
           assert.isUndefined(resultObject.violations[0].nodes[0].element);
           assert.isUndefined(
@@ -292,15 +291,15 @@ describe('helpers.processAggregate', function () {
       });
     });
 
-    describe('`selectors` option', function () {
-      describe('when set to false', function () {
-        before(function () {
+    describe('`selectors` option', () => {
+      describe('when set to false', () => {
+        before(() => {
           options = { selectors: false };
         });
 
-        describe("when node's, or relatedNode's, `fromFrame` equals true", function () {
-          it('should add a `target` property to the subResult nodes or relatedNodes', function () {
-            var resultObject = helpers.processAggregate(results, options);
+        describe("when node's, or relatedNode's, `fromFrame` equals true", () => {
+          it('should add a `target` property to the subResult nodes or relatedNodes', () => {
+            const resultObject = helpers.processAggregate(results, options);
             assert.isDefined(resultObject.violations[0].nodes[0].target);
             assert.isDefined(
               resultObject.violations[0].nodes[0].any[0].relatedNodes[0].target
@@ -308,9 +307,9 @@ describe('helpers.processAggregate', function () {
           });
         });
 
-        describe("when node's, or relatedNode's, `fromFrame` equals false", function () {
-          it('should NOT add a `target` property to the subResult nodes or relatedNodes', function () {
-            var resultObject = helpers.processAggregate(results, options);
+        describe("when node's, or relatedNode's, `fromFrame` equals false", () => {
+          it('should NOT add a `target` property to the subResult nodes or relatedNodes', () => {
+            const resultObject = helpers.processAggregate(results, options);
             assert.isUndefined(resultObject.passes[0].nodes[0].target);
             assert.isUndefined(
               resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
@@ -332,13 +331,13 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when set to true', function () {
-        before(function () {
+      describe('when set to true', () => {
+        before(() => {
           options = { selectors: true };
         });
 
-        it('should add a `target` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, options);
+        it('should add a `target` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, options);
           assert.isDefined(resultObject.passes[0].nodes[0].target);
           assert.isDefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
@@ -346,9 +345,9 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when not set at all', function () {
-        it('should add a `target` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {});
+      describe('when not set at all', () => {
+        it('should add a `target` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {});
           assert.isDefined(resultObject.passes[0].nodes[0].target);
           assert.isDefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
@@ -357,10 +356,10 @@ describe('helpers.processAggregate', function () {
       });
     });
 
-    describe('`ancestry` option', function () {
-      describe('when set to true', function () {
-        it('should add an `ancestry` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {
+    describe('`ancestry` option', () => {
+      describe('when set to true', () => {
+        it('should add an `ancestry` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {
             ancestry: true
           });
           assert.isDefined(resultObject.passes[0].nodes[0].ancestry);
@@ -370,9 +369,9 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when set to false', function () {
-        it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {
+      describe('when set to false', () => {
+        it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {
             ancestry: false
           });
           assert.isUndefined(resultObject.passes[0].nodes[0].ancestry);
@@ -397,9 +396,9 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when not set at all', function () {
-        it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {});
+      describe('when not set at all', () => {
+        it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {});
           assert.isUndefined(resultObject.passes[0].nodes[0].ancestry);
           assert.isUndefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
@@ -408,14 +407,14 @@ describe('helpers.processAggregate', function () {
       });
     });
 
-    describe('`xpath` option', function () {
-      describe('when set to true', function () {
-        before(function () {
+    describe('`xpath` option', () => {
+      describe('when set to true', () => {
+        before(() => {
           options = { xpath: true };
         });
 
-        it('should add an `xpath` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, options);
+        it('should add an `xpath` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, options);
           assert.isDefined(resultObject.passes[0].nodes[0].xpath);
           assert.isDefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].xpath
@@ -423,13 +422,13 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when set to false', function () {
-        before(function () {
+      describe('when set to false', () => {
+        before(() => {
           options = { xpath: false };
         });
 
-        it('should NOT add an `xpath` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, options);
+        it('should NOT add an `xpath` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, options);
           assert.isUndefined(resultObject.passes[0].nodes[0].xpath);
           assert.isUndefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].xpath
@@ -437,9 +436,9 @@ describe('helpers.processAggregate', function () {
         });
       });
 
-      describe('when not set at all', function () {
-        it('should NOT add an `xpath` property to the subResult nodes or relatedNodes', function () {
-          var resultObject = helpers.processAggregate(results, {});
+      describe('when not set at all', () => {
+        it('should NOT add an `xpath` property to the subResult nodes or relatedNodes', () => {
+          const resultObject = helpers.processAggregate(results, {});
           assert.isUndefined(resultObject.passes[0].nodes[0].xpath);
           assert.isUndefined(
             resultObject.passes[0].nodes[0].any[0].relatedNodes[0].xpath

@@ -1,8 +1,7 @@
-describe('landmark-no-more-than-one-contentinfo test failure', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe('landmark-no-more-than-one-contentinfo test failure', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         {
           runOnly: {
@@ -10,7 +9,7 @@ describe('landmark-no-more-than-one-contentinfo test failure', function () {
             values: ['landmark-no-duplicate-contentinfo']
           }
         },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -19,23 +18,23 @@ describe('landmark-no-more-than-one-contentinfo test failure', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 3', function () {
+  describe('violations', () => {
+    it('should find 3', () => {
       assert.lengthOf(results.violations[0].nodes, 3);
     });
 
-    it('should find #fail1', function () {
+    it('should find #fail1', () => {
       assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
     });
 
-    it('should find #frame1, #fail2', function () {
+    it('should find #frame1, #fail2', () => {
       assert.deepEqual(results.violations[0].nodes[1].target, [
         '#frame1',
         '#fail2'
       ]);
     });
 
-    it('should find #frame1, #frame2, #fail3', function () {
+    it('should find #frame1, #frame2, #fail3', () => {
       assert.deepEqual(results.violations[0].nodes[2].target, [
         '#frame1',
         '#frame2',
@@ -44,17 +43,17 @@ describe('landmark-no-more-than-one-contentinfo test failure', function () {
     });
   });
 
-  describe('passes', function () {
-    it('should find 0', function () {
+  describe('passes', () => {
+    it('should find 0', () => {
       assert.lengthOf(results.passes, 0);
     });
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  it('should find 0 incomplete', function () {
+  it('should find 0 incomplete', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 });

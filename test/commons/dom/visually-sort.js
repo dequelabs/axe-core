@@ -1,6 +1,6 @@
 // This method is mostly tested through color-contrast integrations
 describe('visually-sort', () => {
-  'use strict';
+  const html = axe.testUtils.html;
 
   const fixture = document.querySelector('#fixture');
   const visuallySort = axe.commons.dom.visuallySort;
@@ -8,13 +8,22 @@ describe('visually-sort', () => {
   let root;
 
   beforeEach(() => {
-    fixture.innerHTML = `
-      <header id="1" style="position: absolute; z-index: 999; height: 50px; width: 100%;">
+    fixture.innerHTML = html`
+      <header
+        id="1"
+        style="position: absolute; z-index: 999; height: 50px; width: 100%;"
+      >
         <div id="2" style="display: flex; position: relative; height: 50px;">
-          <div id="3" style="position: relative; height: 50px; width: 100%;"></div>
+          <div
+            id="3"
+            style="position: relative; height: 50px; width: 100%;"
+          ></div>
         </div>
       </header>
-      <div id="4" style="position: absolute; z-index: 10; height: 50px; width: 100%;">
+      <div
+        id="4"
+        style="position: absolute; z-index: 10; height: 50px; width: 100%;"
+      >
         <div id="5" style="position: absolute; transform: translate(0, -50%);">
           <div id="6">
             <div id="7" style="float: left">Text</div>

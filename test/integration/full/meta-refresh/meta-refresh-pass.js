@@ -1,8 +1,6 @@
-describe('meta-refresh pass', function () {
-  'use strict';
-
-  it('should pass', function (done) {
-    axe.run({ runOnly: 'meta-refresh' }, function (err, results) {
+describe('meta-refresh pass', () => {
+  it('should pass', done => {
+    axe.run({ runOnly: 'meta-refresh' }, (err, results) => {
       try {
         assert.isNull(err);
         assert.lengthOf(results.violations, 0, 'violations');

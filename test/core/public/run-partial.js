@@ -1,19 +1,20 @@
-describe('axe.runPartial', function () {
-  var fixture = document.getElementById('fixture');
-  var DqElement = axe.utils.DqElement;
-  var dqElementKeys = Object.keys(new DqElement(null).toJSON());
+describe('axe.runPartial', () => {
+  const html = axe.testUtils.html;
+  const fixture = document.getElementById('fixture');
+  const DqElement = axe.utils.DqElement;
+  const dqElementKeys = Object.keys(new DqElement(null).toJSON());
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('Uses axe._tree if it already exists', function (done) {
+  it('Uses axe._tree if it already exists', done => {
     axe._tree = [axe.setup(fixture)];
     fixture.innerHTML = '<img>';
     axe
       .runPartial(document, { runOnly: 'image-alt' })
-      .then(function (partialResult) {
-        var result = partialResult.results[0];
+      .then(partialResult => {
+        const result = partialResult.results[0];
         // 0, because <img> was added after the tree was constructed
         assert.lengthOf(result.nodes, 0);
         done();
@@ -21,10 +22,10 @@ describe('axe.runPartial', function () {
       .catch(done);
   });
 
-  it('cleans up after resolving', function (done) {
+  it('cleans up after resolving', done => {
     axe
       .runPartial(document, { runOnly: 'image-alt' })
-      .then(function () {
+      .then(() => {
         assert.isUndefined(axe._tree);
         assert.isUndefined(axe._selectorData);
         assert.isFalse(axe._running);
@@ -33,10 +34,10 @@ describe('axe.runPartial', function () {
       .catch(done);
   });
 
-  it('normalizes the options argument', function (done) {
+  it('normalizes the options argument', done => {
     axe
       .runPartial(/* no context */ { runOnly: 'image-alt' })
-      .then(function (partialResult) {
+      .then(partialResult => {
         assert.lengthOf(partialResult.results, 1);
         assert.equal(partialResult.results[0].id, 'image-alt');
         done();
@@ -44,11 +45,11 @@ describe('axe.runPartial', function () {
       .catch(done);
   });
 
-  it('does not mutate the options object', function (done) {
-    var options = {};
+  it('does not mutate the options object', done => {
+    const options = {};
     axe
       .runPartial(options)
-      .then(function () {
+      .then(() => {
         assert.deepEqual(options, {});
         done();
       })
@@ -63,18 +64,18 @@ describe('axe.runPartial', function () {
     }
   });
 
-  describe('result', function () {
-    var partialResult;
-    before(function (done) {
+  describe('result', () => {
+    let partialResult;
+    before(done => {
       fixture.innerHTML = '<img>';
-      axe.runPartial(document, { runOnly: 'image-alt' }).then(function (out) {
+      axe.runPartial(document, { runOnly: 'image-alt' }).then(out => {
         partialResult = out;
         done();
       });
     });
 
-    it('returns a result with all the valid properties', function () {
-      var result = partialResult.results[0];
+    it('returns a result with all the valid properties', () => {
+      const result = partialResult.results[0];
       assert.lengthOf(partialResult.results, 1);
       assert.hasAllKeys(result, [
         'id',
@@ -85,14 +86,14 @@ describe('axe.runPartial', function () {
       ]);
       assert.equal(result.id, 'image-alt');
 
-      var checkResult = result.nodes[0];
+      const checkResult = result.nodes[0];
       assert.lengthOf(result.nodes, 1);
       assert.hasAllKeys(checkResult, ['any', 'all', 'none', 'node']);
       assert.deepEqual(checkResult.node.selector, ['img']);
     });
 
-    it('returns check results with a serialized node', function () {
-      var checkResult = partialResult.results[0].nodes[0];
+    it('returns check results with a serialized node', () => {
+      const checkResult = partialResult.results[0].nodes[0];
       assert.lengthOf(partialResult.results[0].nodes, 1);
       assert.hasAllKeys(checkResult, ['any', 'all', 'none', 'node']);
       assert.notInstanceOf(checkResult.node, DqElement);
@@ -117,67 +118,66 @@ describe('axe.runPartial', function () {
       }
     });
 
-    it('can be serialized using JSON.stringify', function () {
-      assert.doesNotThrow(function () {
+    it('can be serialized using JSON.stringify', () => {
+      assert.doesNotThrow(() => {
         JSON.stringify(partialResult);
       });
     });
   });
 
-  describe('frames', function () {
-    var partialResult;
-    before(function (done) {
-      fixture.innerHTML =
-        '<main>' +
-        ' <iframe id="foo"></iframe>' +
-        ' <iframe id="bar"></iframe>' +
-        '</main>' +
-        '<iframe id="baz"></iframe>';
+  describe('frames', () => {
+    let partialResult;
+    before(done => {
+      fixture.innerHTML = html`
+        <main>
+          <iframe id="foo"></iframe>
+          <iframe id="bar"></iframe>
+        </main>
+        <iframe id="baz"></iframe>
+      `;
 
-      axe
-        .runPartial('#fixture > main', { runOnly: 'image-alt' })
-        .then(function (out) {
-          partialResult = out;
-          done();
-        });
+      axe.runPartial('#fixture > main', { runOnly: 'image-alt' }).then(out => {
+        partialResult = out;
+        done();
+      });
     });
 
-    it('only has frames in context', function () {
+    it('only has frames in context', () => {
       assert.lengthOf(partialResult.frames, 2);
       assert.deepEqual(partialResult.frames[0].selector, ['#foo']);
       assert.deepEqual(partialResult.frames[1].selector, ['#bar']);
     });
 
-    it('provides serialized frame info', function () {
-      partialResult.frames.forEach(function (frame) {
+    it('provides serialized frame info', () => {
+      partialResult.frames.forEach(frame => {
         assert.hasAllKeys(frame, dqElementKeys);
       });
     });
   });
 
-  describe('environmentData', function () {
-    it('includes environment data for the initiator', function (done) {
-      var context = {
+  describe('environmentData', () => {
+    it('includes environment data for the initiator', done => {
+      const context = {
         include: [['#fixture']]
       };
       axe
         .runPartial(context, { runOnly: 'image-alt' })
-        .then(function (out) {
-          var keys = Object.keys(axe.utils.getEnvironmentData());
+        .then(out => {
+          const keys = Object.keys(axe.utils.getEnvironmentData());
           assert.hasAllKeys(out.environmentData, keys);
           done();
         })
         .catch(done);
     });
 
-    it('is undefined for frames', function (done) {
-      var context = {
+    it('is undefined for frames', done => {
+      const context = {
         include: [['#fixture']],
         initiator: false
       };
       axe
         .runPartial(context, { runOnly: 'image-alt' })
-        .then(function (out) {
+        .then(out => {
           assert.isUndefined(out.environmentData);
           done();
         })
@@ -185,25 +185,25 @@ describe('axe.runPartial', function () {
     });
   });
 
-  describe('guards', function () {
-    var audit = axe._audit;
-    afterEach(function () {
+  describe('guards', () => {
+    const audit = axe._audit;
+    afterEach(() => {
       axe._audit = audit;
       axe._running = false;
     });
 
-    it('throws when axe._audit is undefined', function () {
+    it('throws when axe._audit is undefined', () => {
       axe._audit = null;
-      assert.throws(function () {
+      assert.throws(() => {
         axe.runPartial();
       });
     });
 
-    it('throws if axe is already running', function (done) {
-      axe.runPartial().then(function () {
+    it('throws if axe is already running', done => {
+      axe.runPartial().then(() => {
         done();
       });
-      assert.throws(function () {
+      assert.throws(() => {
         axe.runPartial();
       });
     });

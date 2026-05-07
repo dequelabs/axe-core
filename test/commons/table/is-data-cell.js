@@ -1,10 +1,16 @@
 describe('table.isDataCell', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
   const flatTreeSetup = axe.testUtils.flatTreeSetup;
 
   it('should work with TH', () => {
-    fixture.innerHTML =
-      '<table>' + '<tr><th id="target">1</th></tr>' + '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <th id="target">1</th>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target = document.getElementById('target');
@@ -13,8 +19,13 @@ describe('table.isDataCell', () => {
   });
 
   it('should work with TD', () => {
-    fixture.innerHTML =
-      '<table>' + '<tr><td id="target">1</td></tr>' + '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td id="target">1</td>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target = document.getElementById('target');
@@ -23,8 +34,13 @@ describe('table.isDataCell', () => {
   });
 
   it('should work with empty TD', () => {
-    fixture.innerHTML =
-      '<table>' + '<tr><td id="target"></td></tr>' + '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td id="target"></td>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target = document.getElementById('target');
@@ -33,12 +49,19 @@ describe('table.isDataCell', () => {
   });
 
   it('should ignore TDs with a valid role other than (grid)cell', () => {
-    fixture.innerHTML =
-      '<table>' +
-      '<tr><td id="target1" role="columnheader">heading</td></tr>' +
-      '<tr><td id="target2" role="rowheader">heading</td></tr>' +
-      '<tr><td id="target3" role="presentation">heading</td></tr>' +
-      '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td id="target1" role="columnheader">heading</td>
+        </tr>
+        <tr>
+          <td id="target2" role="rowheader">heading</td>
+        </tr>
+        <tr>
+          <td id="target3" role="presentation">heading</td>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target1 = document.getElementById('target1');
@@ -50,11 +73,16 @@ describe('table.isDataCell', () => {
   });
 
   it('should return true for elements with role="(grid)cell"', () => {
-    fixture.innerHTML =
-      '<table>' +
-      '<tr><th id="target1" role="cell">heading</th></tr>' +
-      '<tr><th id="target2" role="gridcell">heading</th></tr>' +
-      '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <th id="target1" role="cell">heading</th>
+        </tr>
+        <tr>
+          <th id="target2" role="gridcell">heading</th>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target1 = document.getElementById('target1');
@@ -64,11 +92,16 @@ describe('table.isDataCell', () => {
   });
 
   it('should ignore invalid roles', () => {
-    fixture.innerHTML =
-      '<table>' +
-      '<tr><td id="target1" role="foobar">heading</td></tr>' +
-      '<tr><th id="target2" role="foobar">heading</th></tr>' +
-      '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td id="target1" role="foobar">heading</td>
+        </tr>
+        <tr>
+          <th id="target2" role="foobar">heading</th>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target1 = document.getElementById('target1');
@@ -78,11 +111,16 @@ describe('table.isDataCell', () => {
   });
 
   it('should ignore abstract roles', () => {
-    fixture.innerHTML =
-      '<table>' +
-      '<tr><td id="target1" role="section">heading</td></tr>' +
-      '<tr><th id="target2" role="section">heading</th></tr>' +
-      '</table>';
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td id="target1" role="section">heading</td>
+        </tr>
+        <tr>
+          <th id="target2" role="section">heading</th>
+        </tr>
+      </table>
+    `;
     flatTreeSetup(fixture);
 
     const target1 = document.getElementById('target1');

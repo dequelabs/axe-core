@@ -166,16 +166,19 @@ jobs:
       contents: write # Required to create releases
     steps:
       - *checkout
-      - name: Install Release Helper
-        run: go install gopkg.in/aktau/github-release.v0@latest
-      - name: Download Release Script
-        run: curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
-      - name: Make Release Script Executable
-        run: chmod +x ./node-github-release.sh
+      - name: Extract release notes
+        id: release-notes
+        run: ./.github/bin/extract-release-notes.sh
       - name: Create GitHub Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./node-github-release.sh
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.prod-deploy.outputs.version }}
+          NOTES: ${{ steps.release-notes.outputs.notes }}
+        run: |
+          gh release create "v${VERSION}" \
+            --title "Release ${VERSION}" \
+            --target ${{ github.sha }} \
+            --notes "$NOTES"
   validate-deploy:
     name: Validate Deployment
     needs: prod-deploy

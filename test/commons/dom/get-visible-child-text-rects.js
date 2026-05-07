@@ -1,4 +1,5 @@
 describe('dom.getVisibleChildTextRects', () => {
+  const html = axe.testUtils.html;
   const { getVisibleChildTextRects } = axe.commons.dom;
   const { fixtureSetup } = axe.testUtils;
   const fixture = document.querySelector('#fixture');
@@ -32,7 +33,7 @@ describe('dom.getVisibleChildTextRects', () => {
   }
 
   it('returns the text rect of a node', () => {
-    fixtureSetup(`<span>Hello</span>`);
+    fixtureSetup(html`<span>Hello</span>`);
     const node = fixture.firstChild;
     const actual = getVisibleChildTextRects(node);
 
@@ -40,7 +41,7 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('returns multiple text rects and filters out newlines', () => {
-    fixtureSetup(`<span>Hello<br/>World</span>`);
+    fixtureSetup(html`<span>Hello<br />World</span>`);
     const node = fixture.firstChild;
     const actual = getVisibleChildTextRects(node);
 
@@ -48,7 +49,7 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('returns the nodes bounding box if text rects escape bounds of node', () => {
-    fixtureSetup(`<div style="width: 10px;">Hello World</div>`);
+    fixtureSetup(html`<div style="width: 10px;">Hello World</div>`);
     const node = fixture.firstChild;
     const actual = getVisibleChildTextRects(node);
 
@@ -56,7 +57,7 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('changes rect size based on overflow of parent', () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <div style="overflow: hidden; width: 10px;">
         <span id="target">Hello</span>
       </div>
@@ -70,7 +71,7 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('changes rect size based on overflow of all ancestors', () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <div style="overflow: hidden; height: 10px;">
         <div style="overflow: hidden; width: 10px;">
           <span id="target">Hello</span>
@@ -86,9 +87,9 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('changes only the rect size of text rects that go outside ancestor overflow', () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <div style="overflow: hidden; height: 25px">
-        <span id="target">Hello<br/>World</span>
+        <span id="target">Hello<br />World</span>
       </div>
     `);
     const node = fixture.querySelector('#target');
@@ -108,10 +109,10 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('does not return rects outside overflows', () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <div style="overflow: hidden; height: 50px;">
         <div style="overflow: hidden; height: 25px">
-          <span id="target">Hello<br/>World<br/>Goodbye<br/>World</span>
+          <span id="target">Hello<br />World<br />Goodbye<br />World</span>
         </div>
       </div>
     `);
@@ -122,7 +123,7 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('changes nodeRect size if all text rects got outside ancestor overflow', () => {
-    fixtureSetup(`
+    fixtureSetup(html`
       <div style="overflow: hidden; width: 50px;">
         <div style="overflow: hidden; width: 25px">
           <div id="target" style="padding-left: 65px;">Hello World</div>

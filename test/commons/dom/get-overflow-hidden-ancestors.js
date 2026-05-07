@@ -1,4 +1,5 @@
 describe('dom.getOverflowHiddenAncestors', () => {
+  const html = axe.testUtils.html;
   const { getOverflowHiddenAncestors } = axe.commons.dom;
   const { queryFixture } = axe.testUtils;
 
@@ -7,7 +8,7 @@ describe('dom.getOverflowHiddenAncestors', () => {
   }
 
   it('returns parent node', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <div style="overflow: hidden">
         <div id="target"></div>
       </div>
@@ -18,7 +19,7 @@ describe('dom.getOverflowHiddenAncestors', () => {
   });
 
   it('returns ancestor node', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <div style="overflow: hidden">
         <div>
           <div id="target"></div>
@@ -32,7 +33,7 @@ describe('dom.getOverflowHiddenAncestors', () => {
 
   it('returns itself', () => {
     const vNode = queryFixture(
-      `<div id="target" style="overflow: hidden"></div>`
+      html`<div id="target" style="overflow: hidden"></div>`
     );
 
     const actual = getOverflowHiddenAncestors(vNode);
@@ -40,7 +41,7 @@ describe('dom.getOverflowHiddenAncestors', () => {
   });
 
   it('returns all nodes with overflow:hidden', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <div id="1" style="overflow: hidden">
         <div>
           <div>
@@ -56,7 +57,7 @@ describe('dom.getOverflowHiddenAncestors', () => {
   });
 
   it('ignores other overflow types', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <div id="1" style="overflow: visible">
         <div>
           <div>
