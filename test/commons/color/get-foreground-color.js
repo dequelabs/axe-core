@@ -1,4 +1,5 @@
 describe('color.getForegroundColor', () => {
+  const html = axe.testUtils.html;
   const { getForegroundColor, Color } = axe.commons.color;
   const { queryFixture, queryShadowFixture } = axe.testUtils;
 
@@ -40,13 +41,19 @@ describe('color.getForegroundColor', () => {
   });
 
   it('returns null if containing parent has a background image and is non-opaque', () => {
-    const target = queryFixture(
-      '<div style="height: 40px; width: 30px;' +
-        'background-color: #800000; background-image: url(image.png);">' +
-        '<div id="target" style="height: 20px; width: 15px; color: blue; background-color: green; opacity: 0.5;">' +
-        'Hello World' +
-        '</div></div>'
-    ).actualNode;
+    const target = queryFixture(html`
+      <div
+        style="height: 40px; width: 30px;
+      background-color: #800000; background-image: url(image.png);"
+      >
+        <div
+          id="target"
+          style="height: 20px; width: 15px; color: blue; background-color: green; opacity: 0.5;"
+        >
+          Hello World
+        </div>
+      </div>
+    `).actualNode;
     assert.isNull(getForegroundColor(target));
     assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'bgImage');
   });
@@ -99,25 +106,33 @@ describe('color.getForegroundColor', () => {
 
   describe('with transparency', () => {
     it('returns the blended color if it has alpha set', () => {
-      const target = queryFixture(
-        '<div style="height: 40px; background-color: #800000;">' +
-          '<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);' +
-          ' background-color: rgba(0, 128, 0, 0.5);">' +
-          'This is my text' +
-          '</div></div>'
-      ).actualNode;
+      const target = queryFixture(html`
+        <div style="height: 40px; background-color: #800000;">
+          <div
+            id="target"
+            style="height: 40px; color: rgba(0, 0, 128, 0.5);
+         background-color: rgba(0, 128, 0, 0.5);"
+          >
+            This is my text
+          </div>
+        </div>
+      `).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(32, 32, 64), 0.8);
     });
 
     it('returns the blended color if it has opacity set', () => {
-      const target = queryFixture(
-        '<div style="height: 40px; background-color: #800000;">' +
-          '<div id="target" style="height: 40px; color: #000080;' +
-          ' background-color: green; opacity: 0.5;">' +
-          'This is my text' +
-          '</div></div>'
-      ).actualNode;
+      const target = queryFixture(html`
+        <div style="height: 40px; background-color: #800000;">
+          <div
+            id="target"
+            style="height: 40px; color: #000080;
+         background-color: green; opacity: 0.5;"
+          >
+            This is my text
+          </div>
+        </div>
+      `).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(64, 0, 64));
     });
@@ -132,37 +147,50 @@ describe('color.getForegroundColor', () => {
 
     it('combines opacity with text stroke alpha color', () => {
       const target = queryFixture(
-        `<div id="target" style="
-          opacity: 0.5;
-          color: transparent;
-          -webkit-text-stroke: 0.05em rgb(0 255 255 / 50%);
-        ">Hello world</div>`
+        html`<div
+          id="target"
+          style="
+  opacity: 0.5;
+  color: transparent;
+  -webkit-text-stroke: 0.05em rgb(0 255 255 / 50%);
+"
+        >
+          Hello world
+        </div>`
       ).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
     });
 
     it('takes into account parent opacity tree', () => {
-      const target = queryFixture(
-        '<div style="background-color: #fafafa">' +
-          '<div style="height: 40px; opacity: 0.6">' +
-          '<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
-          'This is my text' +
-          '</div></div></div>'
-      ).actualNode;
+      const target = queryFixture(html`
+        <div style="background-color: #fafafa">
+          <div style="height: 40px; opacity: 0.6">
+            <div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">
+              This is my text
+            </div>
+          </div>
+        </div>
+      `).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(119.5, 119.5, 119.5), 0.8);
     });
 
     it('takes into account entire parent opacity tree', () => {
-      const target = queryFixture(
-        '<div style="background-color: #fafafa">' +
-          '<div style="height: 40px; opacity: 0.75">' +
-          '<div style="height: 40px; opacity: 0.8">' +
-          '<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
-          'This is my text' +
-          '</div></div></div></div>'
-      ).actualNode;
+      const target = queryFixture(html`
+        <div style="background-color: #fafafa">
+          <div style="height: 40px; opacity: 0.75">
+            <div style="height: 40px; opacity: 0.8">
+              <div
+                id="target"
+                style="height: 40px; color: rgba(0, 0, 0, 0.87);"
+              >
+                This is my text
+              </div>
+            </div>
+          </div>
+        </div>
+      `).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(119.5, 119.5, 119.5), 0.8);
     });
@@ -171,8 +199,11 @@ describe('color.getForegroundColor', () => {
   describe('test-shadow', () => {
     it('returns text shadow color if foreground is transparent', () => {
       const target = queryFixture(
-        `<div style="height: 40px; width: 120px; background-color: white;">
-          <div id="target" style="height: 20px; width: 120px; color: rgba(0,0,0,0); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">
+        html`<div style="height: 40px; width: 120px; background-color: white;">
+          <div
+            id="target"
+            style="height: 20px; width: 120px; color: rgba(0,0,0,0); text-shadow: 0 0 0 rgba(32, 32, 64, 1)"
+          >
             This is my text
           </div>
         </div>`
@@ -183,8 +214,11 @@ describe('color.getForegroundColor', () => {
 
     it('returns a mix of colors if there is a shadow, foreground with alpha < 1, and background color', () => {
       const target = queryFixture(
-        `<div style="height: 40px; width: 120px; background-color: white;">
-          <div id="target" style="height: 20px; width: 120px; color: rgba(128, 0, 0, .5); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">
+        html`<div style="height: 40px; width: 120px; background-color: white;">
+          <div
+            id="target"
+            style="height: 20px; width: 120px; color: rgba(128, 0, 0, .5); text-shadow: 0 0 0 rgba(32, 32, 64, 1)"
+          >
             This is my text
           </div>
         </div>`
@@ -209,11 +243,16 @@ describe('color.getForegroundColor', () => {
 
     it('applies opacity to text-shadow', () => {
       const target = queryFixture(
-        `<div id="target" style="
-            color: transparent;
-            opacity: 0.5;
-            text-shadow: 0 0 0 rgb(0 255 255 / 50%)
-          ">Hello world</div>`
+        html`<div
+          id="target"
+          style="
+    color: transparent;
+    opacity: 0.5;
+    text-shadow: 0 0 0 rgb(0 255 255 / 50%)
+  "
+        >
+          Hello world
+        </div>`
       ).actualNode;
       const fgColor = getForegroundColor(target);
       assertSameColor(fgColor, new Color(191, 255, 255), 0.8);

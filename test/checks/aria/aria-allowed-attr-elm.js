@@ -1,6 +1,4 @@
 describe('aria-allowed-attr-elm', () => {
-  'use strict';
-
   const queryFixture = axe.testUtils.queryFixture;
   const checkContext = axe.testUtils.MockCheckContext();
 

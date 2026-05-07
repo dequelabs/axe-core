@@ -1,8 +1,6 @@
-describe('axe.utils.extend', function () {
-  'use strict';
-
-  it('should merge properties', function () {
-    var src = {
+describe('axe.utils.extend', () => {
+  it('should merge properties', () => {
+    const src = {
       cats: 'fail',
       dogs: 'fail'
     };
@@ -16,13 +14,13 @@ describe('axe.utils.extend', function () {
     assert.equal(src.dogs, 'woof');
   });
 
-  it('should execute any found functions', function () {
-    var src = {
+  it('should execute any found functions', () => {
+    const src = {
       cats: 'fail',
       dogs: 'fail'
     };
     axe.utils.extendMetaData(src, {
-      cats: function (ctxt) {
+      cats: ctxt => {
         assert.equal(ctxt, src);
         return 'meow';
       },
@@ -32,13 +30,13 @@ describe('axe.utils.extend', function () {
     assert.equal(src.cats, 'meow');
     assert.equal(src.dogs, 'woof');
   });
-  it('should catch exceptions in functions and default to `null`', function () {
-    var src = {
+  it('should catch exceptions in functions and default to `null`', () => {
+    const src = {
       cats: 'fail',
       dogs: 'fail'
     };
     axe.utils.extendMetaData(src, {
-      cats: function () {
+      cats: () => {
         throw new Error('hehe');
       },
       dogs: 'woof'

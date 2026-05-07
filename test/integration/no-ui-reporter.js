@@ -1,33 +1,31 @@
 /*global mocha, console */
-(function () {
-  'use strict';
-
+(() => {
   if (!mocha || !mocha.reporter || !mocha.reporter('base')) {
     return;
   }
 
-  var Base = mocha.reporter('base')._reporter;
+  const Base = mocha.reporter('base')._reporter;
   mocha.reporter(function (runner) {
     Base.call(this, runner);
-    var passes = 0;
-    var failures = 0;
+    let passes = 0;
+    let failures = 0;
 
-    runner.on('pass', function (test) {
+    runner.on('pass', test => {
       passes++;
       console.log('pass: %s', test.fullTitle());
     });
 
-    runner.on('fail', function (test, err) {
+    runner.on('fail', (test, err) => {
       failures++;
       console.error('fail: %s -- error: %s', test.fullTitle(), err.message);
     });
 
-    runner.on('end', function () {
+    runner.on('end', () => {
       console.log('end: %d/%d', passes, passes + failures);
-      var mochaFixture = document.getElementById('mocha');
+      const mochaFixture = document.getElementById('mocha');
       if (mochaFixture) {
-        var html = '<div style="color: ' + (failures ? 'red' : 'green') + '">';
-        html += passes + '/' + (failures + passes);
+        var html = `<div style="color: ${failures ? 'red' : 'green'}">`;
+        html += `${passes}/${failures}${passes}`;
         html += ' tests passed</div>';
         mochaFixture.innerHTML = html;
       }

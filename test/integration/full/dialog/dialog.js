@@ -14,7 +14,7 @@ describe('dialog tests', () => {
     return { buttonName, colorContrast };
   }
 
-  afterEach(function () {
+  afterEach(() => {
     dialog.close();
   });
 

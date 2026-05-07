@@ -1,7 +1,5 @@
-describe('Options parameter', function () {
-  'use strict';
-
-  before(function (done) {
+describe('Options parameter', () => {
+  before(done => {
     axe.testUtils.awaitNestedLoad(done);
   });
 
@@ -9,15 +7,15 @@ describe('Options parameter', function () {
     return document.getElementById(id);
   }
 
-  describe('iframes', function () {
-    it('should include iframes if `iframes` is true', function (done) {
-      var config = { iframes: true };
-      axe.run(document, config, function (err, results) {
+  describe('iframes', () => {
+    it('should include iframes if `iframes` is true', done => {
+      const config = { iframes: true };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.isTrue(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               if (node.target.length !== 2) {
                 return false;
               }
@@ -37,14 +35,14 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should exclude iframes if `iframes` is false', function (done) {
-      var config = { iframes: false };
-      axe.run(document, config, function (err, results) {
+    it('should exclude iframes if `iframes` is false', done => {
+      const config = { iframes: false };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.isFalse(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               if (node.target.length !== 2) {
                 return false;
               }
@@ -64,14 +62,14 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should include iframes by default', function (done) {
-      var config = {};
-      axe.run(document, config, function (err, results) {
+    it('should include iframes by default', done => {
+      const config = {};
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.isTrue(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               if (node.target.length !== 2) {
                 return false;
               }
@@ -92,16 +90,16 @@ describe('Options parameter', function () {
     });
   });
 
-  describe('elementRef', function () {
-    it('should not return an elementRef by default', function (done) {
-      var config = {};
-      axe.run(document, config, function (err, results) {
+  describe('elementRef', () => {
+    it('should not return an elementRef by default', done => {
+      const config = {};
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.lengthOf(results.passes[0].nodes, 2, '');
           assert.isFalse(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               return 'element' in node;
             }),
             'unexpectedly foud element ref'
@@ -113,9 +111,9 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should not return an elementRef if `elementRef` is false', function (done) {
-      var config = { elementRef: false };
-      axe.run(document, config, function (err, results) {
+    it('should not return an elementRef if `elementRef` is false', done => {
+      const config = { elementRef: false };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
@@ -125,7 +123,7 @@ describe('Options parameter', function () {
             'results from main frame and iframe'
           );
           assert.isFalse(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               return 'element' in node;
             }),
             'unexpectedly found element ref'
@@ -137,15 +135,15 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should return element refs for the top frame only if `elementRef` is true', function (done) {
-      var config = { elementRef: true };
-      axe.run(document, config, function (err, results) {
+    it('should return element refs for the top frame only if `elementRef` is true', done => {
+      const config = { elementRef: true };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.lengthOf(results.passes[0].nodes, 2, '');
           assert.isTrue(
-            results.passes[0].nodes.every(function (node) {
+            results.passes[0].nodes.every(node => {
               if ('element' in node) {
                 return node.element === $id('target');
               }
@@ -161,16 +159,16 @@ describe('Options parameter', function () {
     });
   });
 
-  describe('no selectors', function () {
-    it('should return a selector by default', function (done) {
-      var config = {};
-      axe.run(document, config, function (err, results) {
+  describe('no selectors', () => {
+    it('should return a selector by default', done => {
+      const config = {};
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.lengthOf(results.passes[0].nodes, 2, '');
           assert.isTrue(
-            results.passes[0].nodes.every(function (node) {
+            results.passes[0].nodes.every(node => {
               return 'target' in node;
             }),
             'every result node should have a target'
@@ -182,15 +180,15 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should return a selector if `selectors` is true', function (done) {
-      var config = { selectors: true };
-      axe.run(document, config, function (err, results) {
+    it('should return a selector if `selectors` is true', done => {
+      const config = { selectors: true };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.lengthOf(results.passes[0].nodes, 2, '');
           assert.isTrue(
-            results.passes[0].nodes.every(function (node) {
+            results.passes[0].nodes.every(node => {
               return 'target' in node;
             }),
             'every result node should have a target'
@@ -202,15 +200,15 @@ describe('Options parameter', function () {
       });
     });
 
-    it('should return no selector in top frame if `selectors` is false', function (done) {
-      var config = { selectors: false };
-      axe.run(document, config, function (err, results) {
+    it('should return no selector in top frame if `selectors` is false', done => {
+      const config = { selectors: false };
+      axe.run(document, config, (err, results) => {
         try {
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
           assert.lengthOf(results.passes[0].nodes, 2, '');
           assert.isFalse(
-            results.passes[0].nodes.some(function (node) {
+            results.passes[0].nodes.some(node => {
               return 'target' in node && node.target.length === 1;
             }),
             'only iframe result nodes should have a target'

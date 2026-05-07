@@ -1,13 +1,12 @@
-describe('async rule test', function () {
-  'use strict';
-  var results;
+describe('async rule test', () => {
+  let results;
 
   function AsyncCheck(node) {
     /*eslint indent: 0*/
-    var check = this;
-    var done = check.async();
-    setTimeout(function () {
-      var dataOut = node.getAttribute('data-out');
+    const check = this;
+    const done = check.async();
+    setTimeout(() => {
+      const dataOut = node.getAttribute('data-out');
       check.data(dataOut);
       switch (dataOut) {
         case 'true':
@@ -22,7 +21,7 @@ describe('async rule test', function () {
     }, 10);
   }
 
-  before(function (done) {
+  before(done => {
     axe.configure({
       rules: [
         {
@@ -57,23 +56,20 @@ describe('async rule test', function () {
       ]
     });
 
-    axe.run(
-      { runOnly: { type: 'rule', values: ['my-async'] } },
-      function (err, r) {
-        assert.isNull(err);
-        results = r;
-        done();
-      }
-    );
+    axe.run({ runOnly: { type: 'rule', values: ['my-async'] } }, (err, r) => {
+      assert.isNull(err);
+      results = r;
+      done();
+    });
   });
 
-  describe('violations', function () {
-    it('should find 1', function () {
+  describe('violations', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.violations, 1);
       assert.lengthOf(results.violations[0].nodes, 1);
     });
 
-    it('should find #violation', function () {
+    it('should find #violation', () => {
       assert.equal(
         results.violations[0].nodes[0].any[0].message,
         'failed with false'
@@ -82,13 +78,13 @@ describe('async rule test', function () {
     });
   });
 
-  describe('passes', function () {
-    it('should find 1', function () {
+  describe('passes', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.passes, 1);
       assert.lengthOf(results.passes[0].nodes, 1);
     });
 
-    it('should find #pass', function () {
+    it('should find #pass', () => {
       assert.equal(
         results.passes[0].nodes[0].any[0].message,
         'passed with true'
@@ -97,13 +93,13 @@ describe('async rule test', function () {
     });
   });
 
-  describe('incomplete', function () {
-    it('should find 1', function () {
+  describe('incomplete', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.incomplete, 1);
       assert.lengthOf(results.incomplete[0].nodes, 1);
     });
 
-    it('should find #incomplete', function () {
+    it('should find #incomplete', () => {
       assert.equal(
         results.incomplete[0].nodes[0].any[0].message,
         'incomplete with undefined'

@@ -1,51 +1,47 @@
-describe('region fail test', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
-      axe.run(
-        { runOnly: { type: 'rule', values: ['region'] } },
-        function (err, r) {
-          assert.isNull(err);
-          results = r;
-          done();
-        }
-      );
+describe('region fail test', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
+      axe.run({ runOnly: { type: 'rule', values: ['region'] } }, (err, r) => {
+        assert.isNull(err);
+        results = r;
+        done();
+      });
     });
   });
 
-  describe('violations', function () {
-    it('should find all violations', function () {
+  describe('violations', () => {
+    it('should find all violations', () => {
       assert.lengthOf(results.violations[0].nodes, 6);
     });
 
-    it('should find wrapper', function () {
+    it('should find wrapper', () => {
       assert.deepEqual(results.violations[0].nodes[0].target, ['#wrapper']);
     });
 
-    it('should find image without an alt tag', function () {
+    it('should find image without an alt tag', () => {
       assert.deepEqual(results.violations[0].nodes[1].target, ['#img-no-alt']);
     });
 
-    it('should find focusable image', function () {
+    it('should find focusable image', () => {
       assert.deepEqual(results.violations[0].nodes[2].target, [
         '#img-focusable'
       ]);
     });
 
-    it('should find image with global aria attr', function () {
+    it('should find image with global aria attr', () => {
       assert.deepEqual(results.violations[0].nodes[3].target, [
         '#img-aria-global'
       ]);
     });
 
-    it('should find object with a label', function () {
+    it('should find object with a label', () => {
       assert.deepEqual(results.violations[0].nodes[4].target, [
         '#labeled-object'
       ]);
     });
 
-    it('should find div with an role of none', function () {
+    it('should find div with an role of none', () => {
       assert.deepEqual(results.violations[0].nodes[5].target, [
         '#none-role-div'
       ]);

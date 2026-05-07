@@ -1,18 +1,15 @@
-describe('context test', function () {
-  'use strict';
+describe('context test', () => {
+  const config = { runOnly: { type: 'rule', values: ['html-lang-valid'] } };
 
-  var config = { runOnly: { type: 'rule', values: ['html-lang-valid'] } };
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
-
-  before(function (done) {
+  before(done => {
     axe.testUtils.awaitNestedLoad(done);
     axe._tree = undefined;
   });
 
-  describe('direct exclude', function () {
-    describe('no include', function () {
-      it('should find no violations given a selector array', function (done) {
-        axe.run({ exclude: [['iframe']] }, config, function (err, results) {
+  describe('direct exclude', () => {
+    describe('no include', () => {
+      it('should find no violations given a selector array', done => {
+        axe.run({ exclude: [['iframe']] }, config, (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 1, 'passes');
@@ -25,34 +22,30 @@ describe('context test', function () {
         });
       });
 
-      it('should find one violation given a multi-level selector array', function (done) {
-        axe.run(
-          { exclude: [['iframe', 'iframe']] },
-          config,
-          function (err, results) {
-            assert.isNull(err);
-            assert.lengthOf(results.violations, 1, 'violations');
-            assert.lengthOf(
-              results.violations[0].nodes,
-              1,
-              'level1.html; 2-a & 2-b excluded'
-            );
-            assert.lengthOf(results.passes, 1, 'passes');
-            assert.lengthOf(
-              results.passes[0].nodes,
-              1,
-              'context.html (main doc) not excluded'
-            );
-            done();
-          }
-        );
+      it('should find one violation given a multi-level selector array', done => {
+        axe.run({ exclude: [['iframe', 'iframe']] }, config, (err, results) => {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 1, 'violations');
+          assert.lengthOf(
+            results.violations[0].nodes,
+            1,
+            'level1.html; 2-a & 2-b excluded'
+          );
+          assert.lengthOf(results.passes, 1, 'passes');
+          assert.lengthOf(
+            results.passes[0].nodes,
+            1,
+            'context.html (main doc) not excluded'
+          );
+          done();
+        });
       });
 
-      it('should find no violations given a direct reference', function (done) {
+      it('should find no violations given a direct reference', done => {
         axe.run(
           { exclude: [document.querySelector('iframe')] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 1, 'passes');
@@ -66,11 +59,11 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a NodeList', function (done) {
+      it('should find no violations given a NodeList', done => {
         axe.run(
           { exclude: document.getElementsByTagName('iframe') },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 1, 'passes');
@@ -85,12 +78,12 @@ describe('context test', function () {
       });
     });
 
-    describe('body include', function () {
-      it('should find no violations given a selector array', function (done) {
+    describe('body include', () => {
+      it('should find no violations given a selector array', done => {
         axe.run(
           { include: [document.body], exclude: [['iframe']] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -99,11 +92,11 @@ describe('context test', function () {
         );
       });
 
-      it('should find one violation given a multi-level selector array', function (done) {
+      it('should find one violation given a multi-level selector array', done => {
         axe.run(
           { include: [document.body], exclude: [['iframe', 'iframe']] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 1, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -112,14 +105,14 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a direct reference', function (done) {
+      it('should find no violations given a direct reference', done => {
         axe.run(
           {
             include: [document.body],
             exclude: [document.querySelector('iframe')]
           },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -128,14 +121,14 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a NodeList', function (done) {
+      it('should find no violations given a NodeList', done => {
         axe.run(
           {
             include: [document.body],
             exclude: document.getElementsByTagName('iframe')
           },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -146,12 +139,12 @@ describe('context test', function () {
     });
   });
 
-  describe('indirect exclude', function () {
-    it('should find no nodes', function (done) {
+  describe('indirect exclude', () => {
+    it('should find no nodes', done => {
       axe.run(
         { include: [document.body], exclude: [['#myframe']] },
         config,
-        function (err, results) {
+        (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.violations, 0, 'violations');
           assert.lengthOf(results.passes, 0, 'passes');
@@ -160,74 +153,63 @@ describe('context test', function () {
       );
     });
 
-    (shadowSupported ? it : xit)(
-      'should find no nodes in Shadow DOM',
-      function (done) {
-        var sConfig = { runOnly: { type: 'rule', values: ['color-contrast'] } };
-        axe.run(
-          { include: [['#shadow-container']], exclude: [['#shadow-host']] },
-          sConfig,
-          function (err, results) {
-            try {
-              assert.isNull(err);
-              assert.lengthOf(results.violations, 0, 'violations');
-              assert.lengthOf(results.passes, 1, 'passes');
-              done();
-            } catch (e) {
-              done(e);
-            }
-          }
-        );
-      }
-    );
-
-    describe('no include', function () {
-      it('should find no violations given a selector array', function (done) {
-        axe.run(
-          { exclude: [['#frame-container']] },
-          config,
-          function (err, results) {
+    it('should find no nodes in Shadow DOM', done => {
+      const sConfig = { runOnly: { type: 'rule', values: ['color-contrast'] } };
+      axe.run(
+        { include: [['#shadow-container']], exclude: [['#shadow-host']] },
+        sConfig,
+        (err, results) => {
+          try {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 1, 'passes');
-            assert.lengthOf(
-              results.passes[0].nodes,
-              1,
-              'context.html has a lang attribute'
-            );
             done();
+          } catch (e) {
+            done(e);
           }
-        );
+        }
+      );
+    });
+
+    describe('no include', () => {
+      it('should find no violations given a selector array', done => {
+        axe.run({ exclude: [['#frame-container']] }, config, (err, results) => {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 0, 'violations');
+          assert.lengthOf(results.passes, 1, 'passes');
+          assert.lengthOf(
+            results.passes[0].nodes,
+            1,
+            'context.html has a lang attribute'
+          );
+          done();
+        });
       });
 
-      it('should find one violation given a multi-level selector array', function (done) {
-        axe.run(
-          { exclude: [['iframe', 'body']] },
-          config,
-          function (err, results) {
-            assert.isNull(err);
-            assert.lengthOf(results.violations, 1, 'violations');
-            assert.lengthOf(
-              results.violations[0].nodes,
-              1,
-              'level1.html; 2-a & 2-b excluded'
-            );
-            assert.lengthOf(results.passes, 1, 'passes');
-            assert.lengthOf(
-              results.passes[0].nodes,
-              1,
-              'context.html (main doc) not excluded'
-            );
-            done();
-          }
-        );
+      it('should find one violation given a multi-level selector array', done => {
+        axe.run({ exclude: [['iframe', 'body']] }, config, (err, results) => {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 1, 'violations');
+          assert.lengthOf(
+            results.violations[0].nodes,
+            1,
+            'level1.html; 2-a & 2-b excluded'
+          );
+          assert.lengthOf(results.passes, 1, 'passes');
+          assert.lengthOf(
+            results.passes[0].nodes,
+            1,
+            'context.html (main doc) not excluded'
+          );
+          done();
+        });
       });
 
-      it('should find no violations given a direct reference', function (done) {
+      it('should find no violations given a direct reference', done => {
         axe.run(
           { exclude: [document.querySelector('#frame-container')] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 1, 'passes');
@@ -241,11 +223,11 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a NodeList', function (done) {
+      it('should find no violations given a NodeList', done => {
         axe.run(
           { exclude: document.getElementsByTagName('div') },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 1, 'passes');
@@ -260,12 +242,12 @@ describe('context test', function () {
       });
     });
 
-    describe('body include', function () {
-      it('should find no violations given a selector array', function (done) {
+    describe('body include', () => {
+      it('should find no violations given a selector array', done => {
         axe.run(
           { include: [document.body], exclude: [['#frame-container']] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -274,11 +256,11 @@ describe('context test', function () {
         );
       });
 
-      it('should find one violation given a multi-level selector array', function (done) {
+      it('should find one violation given a multi-level selector array', done => {
         axe.run(
           { include: [document.body], exclude: [['iframe', 'body']] },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 1, 'violations');
             assert.lengthOf(
@@ -292,14 +274,14 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a direct reference', function (done) {
+      it('should find no violations given a direct reference', done => {
         axe.run(
           {
             include: [document.body],
             exclude: [document.querySelector('#frame-container')]
           },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -308,14 +290,14 @@ describe('context test', function () {
         );
       });
 
-      it('should find no violations given a NodeList', function (done) {
+      it('should find no violations given a NodeList', done => {
         axe.run(
           {
             include: [document.body],
             exclude: document.getElementsByTagName('div')
           },
           config,
-          function (err, results) {
+          (err, results) => {
             assert.isNull(err);
             assert.lengthOf(results.violations, 0, 'violations');
             assert.lengthOf(results.passes, 0, 'passes');
@@ -326,9 +308,9 @@ describe('context test', function () {
     });
   });
 
-  describe('direct include', function () {
-    it('should find the frames given a context object', function (done) {
-      axe.run({ include: [['#myframe']] }, config, function (err, results) {
+  describe('direct include', () => {
+    it('should find the frames given a context object', done => {
+      axe.run({ include: [['#myframe']] }, config, (err, results) => {
         assert.isNull(err);
         assert.lengthOf(results.violations, 1, 'violations');
         assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
@@ -336,24 +318,20 @@ describe('context test', function () {
         done();
       });
     });
-    it('should find the frames given a direct reference', function (done) {
-      axe.run(
-        document.getElementById('myframe'),
-        config,
-        function (err, results) {
-          assert.isNull(err);
-          assert.lengthOf(results.violations, 1, 'violations');
-          assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
-          assert.lengthOf(results.passes, 0, 'passes');
-          done();
-        }
-      );
+    it('should find the frames given a direct reference', done => {
+      axe.run(document.getElementById('myframe'), config, (err, results) => {
+        assert.isNull(err);
+        assert.lengthOf(results.violations, 1, 'violations');
+        assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
+        assert.lengthOf(results.passes, 0, 'passes');
+        done();
+      });
     });
-    it('should find the frames given a NodeList', function (done) {
+    it('should find the frames given a NodeList', done => {
       axe.run(
         document.getElementsByTagName('iframe'),
         config,
-        function (err, results) {
+        (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.violations, 1, 'violations');
           assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
@@ -363,19 +341,19 @@ describe('context test', function () {
       );
     });
 
-    describe('Shadow DOM', function () {
-      var sConfig = {
+    describe('Shadow DOM', () => {
+      const sConfig = {
         runOnly: {
           type: 'rule',
           values: ['aria-allowed-attr', 'color-contrast']
         }
       };
-      it('when passed a shadow host, reports issues both on itself and in the shadow DOM', function (done) {
-        axe.run('#shadow-host', sConfig, function (err, results) {
+      it('when passed a shadow host, reports issues both on itself and in the shadow DOM', done => {
+        axe.run('#shadow-host', sConfig, (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.violations, 2, 'violations');
-          var allowedAttrsViolations = results.violations.filter(
-            function (violation) {
+          const allowedAttrsViolations = results.violations.filter(
+            violation => {
               return violation.id === 'aria-allowed-attr';
             }
           );
@@ -387,14 +365,14 @@ describe('context test', function () {
           done();
         });
       });
-      it('when passed a shadow root, reports issues in the shadow DOM, but not on the host', function (done) {
-        var host = document.querySelector('#shadow-host');
-        var shadowRoot = host.shadowRoot;
-        axe.run(shadowRoot, sConfig, function (err, results) {
+      it('when passed a shadow root, reports issues in the shadow DOM, but not on the host', done => {
+        const host = document.querySelector('#shadow-host');
+        const shadowRoot = host.shadowRoot;
+        axe.run(shadowRoot, sConfig, (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.violations, 1, 'violations');
-          var allowedAttrsViolations = results.violations.filter(
-            function (violation) {
+          const allowedAttrsViolations = results.violations.filter(
+            violation => {
               return violation.id === 'aria-allowed-attr';
             }
           );
@@ -409,9 +387,9 @@ describe('context test', function () {
     });
   });
 
-  describe('indirect include', function () {
-    it('should find the frames given context object with a node reference', function (done) {
-      axe.run({ include: [document.body] }, config, function (err, results) {
+  describe('indirect include', () => {
+    it('should find the frames given context object with a node reference', done => {
+      axe.run({ include: [document.body] }, config, (err, results) => {
         assert.isNull(err);
         assert.lengthOf(results.violations, 1, 'violations');
         assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
@@ -419,8 +397,8 @@ describe('context test', function () {
         done();
       });
     });
-    it('should find the frames give a node', function (done) {
-      axe.run(document.body, config, function (err, results) {
+    it('should find the frames give a node', done => {
+      axe.run(document.body, config, (err, results) => {
         assert.isNull(err);
         assert.lengthOf(results.violations, 1, 'violations');
         assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
@@ -428,18 +406,14 @@ describe('context test', function () {
         done();
       });
     });
-    it('should find the frames give a NodeList', function (done) {
-      axe.run(
-        document.getElementsByTagName('body'),
-        config,
-        function (err, results) {
-          assert.isNull(err);
-          assert.lengthOf(results.violations, 1, 'violations');
-          assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
-          assert.lengthOf(results.passes, 0, 'passes');
-          done();
-        }
-      );
+    it('should find the frames give a NodeList', done => {
+      axe.run(document.getElementsByTagName('body'), config, (err, results) => {
+        assert.isNull(err);
+        assert.lengthOf(results.violations, 1, 'violations');
+        assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
+        assert.lengthOf(results.passes, 0, 'passes');
+        done();
+      });
     });
   });
 });

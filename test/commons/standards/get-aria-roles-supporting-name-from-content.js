@@ -1,11 +1,11 @@
-describe('standards.getAriaRolesSupportingNameFromContent', function () {
-  var getAriaRolesSupportingNameFromContent =
+describe('standards.getAriaRolesSupportingNameFromContent', () => {
+  const getAriaRolesSupportingNameFromContent =
     axe.commons.standards.getAriaRolesSupportingNameFromContent;
 
-  it('should return a list of role names which are named from content', function () {
+  it('should return a list of role names which are named from content', () => {
     // first remove all namedFromContent
-    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
-    var ariaRoles = {};
+    const roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    const ariaRoles = {};
     for (var i = 0; i < roleNames.length; i++) {
       ariaRoles[roleNames[i]] = { nameFromContent: false };
     }
@@ -22,7 +22,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    const contentRoles = getAriaRolesSupportingNameFromContent();
     assert.deepEqual(contentRoles, [
       'button',
       'cell',
@@ -31,7 +31,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
     ]);
   });
 
-  it('should return configured roles', function () {
+  it('should return configured roles', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -42,11 +42,11 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    const contentRoles = getAriaRolesSupportingNameFromContent();
     assert.include(contentRoles, 'myRole');
   });
 
-  it('should not return role that is configured to not be of the type', function () {
+  it('should not return role that is configured to not be of the type', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -57,7 +57,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function () {
       }
     });
 
-    var contentRoles = getAriaRolesSupportingNameFromContent();
+    const contentRoles = getAriaRolesSupportingNameFromContent();
     assert.notInclude(contentRoles, 'button');
   });
 });

@@ -1,5 +1,5 @@
 describe('css-orientation-lock violations test', () => {
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
+  const html = axe.testUtils.html;
 
   const styleSheets = [
     {
@@ -17,7 +17,7 @@ describe('css-orientation-lock violations test', () => {
         done();
       })
       .catch(error => {
-        done(new Error('Could not load stylesheets for testing. ' + error));
+        done(new Error(`Could not load stylesheets for testing. ${error}`));
       });
   });
 
@@ -69,53 +69,60 @@ describe('css-orientation-lock violations test', () => {
     );
   });
 
-  (shadowSupported ? it : xit)(
-    'returns VIOLATIONS whilst also accommodating shadowDOM styles',
-    done => {
-      const fixture = document.getElementById('shadow-fixture');
-      const shadow = fixture.attachShadow({ mode: 'open' });
-      shadow.innerHTML =
-        '<style> @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) { .shadowDiv { transform: rotate3d(0,0,1,90deg); } } .green { background-color: green; } </style>' +
-        '<div class="green">green</div>' +
-        '<div class="shadowDiv">red</div>';
-
-      axe.run(
-        {
-          runOnly: {
-            type: 'rule',
-            values: ['css-orientation-lock']
-          }
-        },
-        (err, res) => {
-          try {
-            assert.isNull(err);
-            assert.isDefined(res);
-
-            // check for violation
-            assert.property(res, 'violations');
-            assert.lengthOf(res.violations, 1);
-
-            // assert the node
-            const checkedNode = res.violations[0].nodes[0];
-            assert.isTrue(/html/i.test(checkedNode.html));
-
-            // assert the relatedNodes
-            const checkResult = checkedNode.all[0];
-            assert.lengthOf(checkResult.relatedNodes, 5);
-            assertViolatedSelectors(checkResult.relatedNodes, [
-              '.someDiv',
-              '.thatDiv',
-              '.rotateDiv',
-              '.rotateMatrix',
-              '.shadowDiv'
-            ]);
-
-            done();
-          } catch (e) {
-            done(e);
+  it('returns VIOLATIONS whilst also accommodating shadowDOM styles', done => {
+    const fixture = document.getElementById('shadow-fixture');
+    const shadow = fixture.attachShadow({ mode: 'open' });
+    shadow.innerHTML = html`
+      <style>
+        @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) {
+          .shadowDiv {
+            transform: rotate3d(0, 0, 1, 90deg);
           }
         }
-      );
-    }
-  );
+        .green {
+          background-color: green;
+        }
+      </style>
+      <div class="green">green</div>
+      <div class="shadowDiv">red</div>
+    `;
+
+    axe.run(
+      {
+        runOnly: {
+          type: 'rule',
+          values: ['css-orientation-lock']
+        }
+      },
+      (err, res) => {
+        try {
+          assert.isNull(err);
+          assert.isDefined(res);
+
+          // check for violation
+          assert.property(res, 'violations');
+          assert.lengthOf(res.violations, 1);
+
+          // assert the node
+          const checkedNode = res.violations[0].nodes[0];
+          assert.isTrue(/html/i.test(checkedNode.html));
+
+          // assert the relatedNodes
+          const checkResult = checkedNode.all[0];
+          assert.lengthOf(checkResult.relatedNodes, 5);
+          assertViolatedSelectors(checkResult.relatedNodes, [
+            '.someDiv',
+            '.thatDiv',
+            '.rotateDiv',
+            '.rotateMatrix',
+            '.shadowDiv'
+          ]);
+
+          done();
+        } catch (e) {
+          done(e);
+        }
+      }
+    );
+  });
 });

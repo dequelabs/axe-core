@@ -65,7 +65,7 @@ describe('matches.fromFunction', () => {
         baz: 'baz'
       };
       assert.isFalse(
-        fromFunction(function (key) {
+        fromFunction(key => {
           if (key === 'bar') {
             return 'mismatch';
           }

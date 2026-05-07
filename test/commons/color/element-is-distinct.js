@@ -38,35 +38,33 @@ describe('color.elementIsDistinct', () => {
             if (!name) {
               return propPiece;
             } else {
-              return name + '-' + propPiece.toLowerCase();
+              return `${name}-${propPiece.toLowerCase()}`;
             }
           }, null);
 
         // Return indented line of style code
-        return '  ' + cssPropName + ':' + styleObj[prop] + ';';
+        return `  ${cssPropName}:${styleObj[prop]};`;
       })
       .join('\n');
 
     // Add to the style element
-    styleElm.innerHTML += selector + ' {\n' + cssLines + '\n}\n';
+    styleElm.innerHTML += `${selector} {
+${cssLines}
+}
+`;
   }
 
   function getLinkElm(linkStyle, paragraphStyle) {
     // Get a random id and build the style string
-    const linkId = 'linkid-' + Math.floor(Math.random() * 100000);
-    const parId = 'parid-' + Math.floor(Math.random() * 100000);
+    const linkId = `linkid-${Math.floor(Math.random() * 100000)}`;
+    const parId = `parid-${Math.floor(Math.random() * 100000)}`;
 
-    createStyleString('#' + linkId, linkStyle);
-    createStyleString('#' + parId, paragraphStyle);
+    createStyleString(`#${linkId}`, linkStyle);
+    createStyleString(`#${parId}`, paragraphStyle);
 
-    fixture.innerHTML +=
-      '<p id="' +
-      parId +
-      '"> Text ' +
-      '<a href="/" id="' +
-      linkId +
-      '">link</a>' +
-      '</p>';
+    fixture.innerHTML += `<p id="${parId}"> Text 
+      <a href="/" id="${linkId}">link</a>
+      </p>`;
     return {
       link: document.getElementById(linkId),
       par: document.getElementById(parId)

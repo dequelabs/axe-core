@@ -1,17 +1,15 @@
-describe('dom.findElmsInContext', function () {
-  'use strict';
+describe('dom.findElmsInContext', () => {
+  const html = axe.testUtils.html;
+  const fixtureSetup = axe.testUtils.fixtureSetup;
+  const findElmsInContext = axe.commons.dom.findElmsInContext;
 
-  var shadowSupport = axe.testUtils.shadowSupport;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
-  var findElmsInContext = axe.commons.dom.findElmsInContext;
-
-  it('returns an array or elements in the same context', function () {
-    var rootNode = fixtureSetup(
-      '<b name="foo">1</b>' +
-        '<b name="foo">2</b>' +
-        '<b name="bar">3</b>' +
-        '<i name="foo">4</i>'
-    );
+  it('returns an array or elements in the same context', () => {
+    const rootNode = fixtureSetup(html`
+      <b name="foo">1</b>
+      <b name="foo">2</b>
+      <b name="bar">3</b>
+      <i name="foo">4</i>
+    `);
 
     assert.deepEqual(
       findElmsInContext({
@@ -24,44 +22,38 @@ describe('dom.findElmsInContext', function () {
     );
   });
 
-  (shadowSupport.v1 ? it : xit)(
-    'ignores elements inside shadow tree',
-    function () {
-      var node = document.createElement('div');
-      node.innerHTML = '<b name="foo">1</b>';
-      var shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<b name="foo">2</b> <slot></slot>';
-      var rootNode = fixtureSetup(node);
+  it('ignores elements inside shadow tree', () => {
+    const node = document.createElement('div');
+    node.innerHTML = '<b name="foo">1</b>';
+    const shadow = node.attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<b name="foo">2</b> <slot></slot>';
+    const rootNode = fixtureSetup(node);
 
-      var result = findElmsInContext({
-        elm: 'b',
-        attr: 'name',
-        value: 'foo',
-        context: rootNode.actualNode
-      });
-      assert.lengthOf(result, 1);
-      assert.equal(result[0].innerText, '1');
-    }
-  );
+    const result = findElmsInContext({
+      elm: 'b',
+      attr: 'name',
+      value: 'foo',
+      context: rootNode.actualNode
+    });
+    assert.lengthOf(result, 1);
+    assert.equal(result[0].innerText, '1');
+  });
 
-  (shadowSupport.v1 ? it : xit)(
-    'can search elements limited to the shadow tree',
-    function () {
-      var node = document.createElement('div');
-      node.innerHTML = '<b name="foo">1</b>';
-      var shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<b name="foo">2</b><slot></slot>';
-      fixtureSetup(node);
+  it('can search elements limited to the shadow tree', () => {
+    const node = document.createElement('div');
+    node.innerHTML = '<b name="foo">1</b>';
+    const shadow = node.attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<b name="foo">2</b><slot></slot>';
+    fixtureSetup(node);
 
-      var result = findElmsInContext({
-        elm: 'b',
-        attr: 'name',
-        value: 'foo',
-        context: shadow
-      });
+    const result = findElmsInContext({
+      elm: 'b',
+      attr: 'name',
+      value: 'foo',
+      context: shadow
+    });
 
-      assert.lengthOf(result, 1);
-      assert.equal(result[0].innerText, '2');
-    }
-  );
+    assert.lengthOf(result, 1);
+    assert.equal(result[0].innerText, '2');
+  });
 });

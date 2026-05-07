@@ -149,7 +149,7 @@ describe('text.hasUnicode', () => {
     });
 
     it('returns true for strings with money signs and odd symbols', () => {
-      ['£', '¢', '¥', '€', '§', '±'].forEach(function (str) {
+      ['£', '¢', '¥', '€', '§', '±'].forEach(str => {
         const actual = axe.commons.text.hasUnicode(str, {
           punctuations: true
         });

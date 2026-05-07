@@ -1,23 +1,24 @@
-describe('standards.getElementsByContentType', function () {
-  var getElementsByContentType = axe.commons.standards.getElementsByContentType;
+describe('standards.getElementsByContentType', () => {
+  const getElementsByContentType =
+    axe.commons.standards.getElementsByContentType;
 
-  before(function () {
+  before(() => {
     axe._load({});
   });
 
-  after(function () {
+  after(() => {
     axe.reset();
   });
 
-  it('should return a list of node names by content type', function () {
+  it('should return a list of node names by content type', () => {
     // Source: https://html.spec.whatwg.org/multipage/dom.html#sectioning-content
-    var sectioningContent = getElementsByContentType('sectioning');
+    const sectioningContent = getElementsByContentType('sectioning');
     assert.deepEqual(sectioningContent, ['article', 'aside', 'nav', 'section']);
   });
 
-  it('should return a default variants', function () {
+  it('should return a default variants', () => {
     // Source: https://html.spec.whatwg.org/multipage/dom.html#embedded-content-2
-    var sectioningContent = getElementsByContentType('embedded');
+    const sectioningContent = getElementsByContentType('embedded');
     assert.deepEqual(sectioningContent, [
       'audio',
       'canvas',
@@ -31,7 +32,7 @@ describe('standards.getElementsByContentType', function () {
     ]);
   });
 
-  it('should return configured roles', function () {
+  it('should return configured roles', () => {
     axe.configure({
       standards: {
         htmlElms: {
@@ -42,11 +43,11 @@ describe('standards.getElementsByContentType', function () {
       }
     });
 
-    var structureRoles = getElementsByContentType('sectioning');
+    const structureRoles = getElementsByContentType('sectioning');
     assert.include(structureRoles, 'myElm');
   });
 
-  it('should not return role that is configured to not be of the type', function () {
+  it('should not return role that is configured to not be of the type', () => {
     axe.configure({
       standards: {
         htmlElms: {
@@ -57,7 +58,7 @@ describe('standards.getElementsByContentType', function () {
       }
     });
 
-    var structureRoles = getElementsByContentType('sectioning');
+    const structureRoles = getElementsByContentType('sectioning');
     assert.notInclude(structureRoles, 'article');
   });
 });

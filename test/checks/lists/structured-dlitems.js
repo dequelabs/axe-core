@@ -1,16 +1,13 @@
-describe('structured-dlitems', function () {
-  'use strict';
+describe('structured-dlitems', () => {
+  const fixture = document.getElementById('fixture');
+  const checkSetup = axe.testUtils.checkSetup;
 
-  var fixture = document.getElementById('fixture');
-  var checkSetup = axe.testUtils.checkSetup;
-  var shadowSupport = axe.testUtils.shadowSupport;
-
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should return false if the list has no contents', function () {
-    var checkArgs = checkSetup('<dl id="target"></dl>');
+  it('should return false if the list has no contents', () => {
+    const checkArgs = checkSetup('<dl id="target"></dl>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('structured-dlitems')
@@ -18,8 +15,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return true if the list has only a dd', function () {
-    var checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
+  it('should return true if the list has only a dd', () => {
+    const checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('structured-dlitems')
@@ -27,8 +24,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return true if the list has only a dt', function () {
-    var checkArgs = checkSetup('<dl id="target"><dt>A list</dt></dl>');
+  it('should return true if the list has only a dt', () => {
+    const checkArgs = checkSetup('<dl id="target"><dt>A list</dt></dl>');
 
     assert.isTrue(
       axe.testUtils
@@ -37,8 +34,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return true if the list has dt and dd in the incorrect order', function () {
-    var checkArgs = checkSetup(
+  it('should return true if the list has dt and dd in the incorrect order', () => {
+    const checkArgs = checkSetup(
       '<dl id="target"><dd>A list</dd><dt>An item</dt></dl>'
     );
 
@@ -49,8 +46,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return true if the list has dt and dd in the correct order as non-child descendants', function () {
-    var checkArgs = checkSetup(
+  it('should return true if the list has dt and dd in the correct order as non-child descendants', () => {
+    const checkArgs = checkSetup(
       '<dl id="target"><dd><dl><dt>An item</dt><dd>A list</dd></dl></dd></dl>'
     );
 
@@ -61,8 +58,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return false if the list has dt and dd in the correct order', function () {
-    var checkArgs = checkSetup(
+  it('should return false if the list has dt and dd in the correct order', () => {
+    const checkArgs = checkSetup(
       '<dl id="target"><dt>An item</dt><dd>A list</dd></dl>'
     );
 
@@ -73,8 +70,8 @@ describe('structured-dlitems', function () {
     );
   });
 
-  it('should return false if the list has a correctly-ordered dt and dd with other content', function () {
-    var checkArgs = checkSetup(
+  it('should return false if the list has a correctly-ordered dt and dd with other content', () => {
+    const checkArgs = checkSetup(
       '<dl id="target"><dt>Stuff</dt><dt>Item one</dt><dd>Description</dd><p>Not a list</p></dl>'
     );
 
@@ -85,37 +82,31 @@ describe('structured-dlitems', function () {
     );
   });
 
-  (shadowSupport.v1 ? it : xit)(
-    'should return false in a shadow DOM pass',
-    function () {
-      var node = document.createElement('div');
-      node.innerHTML = '<dt>Grayhound bus</dt><dd>at dawn</dd>';
-      var shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<dl><slot></slot></dl>';
+  it('should return false in a shadow DOM pass', () => {
+    const node = document.createElement('div');
+    node.innerHTML = '<dt>Grayhound bus</dt><dd>at dawn</dd>';
+    const shadow = node.attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<dl><slot></slot></dl>';
 
-      var checkArgs = checkSetup(node, 'dl');
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('structured-dlitems')
-          .apply(null, checkArgs)
-      );
-    }
-  );
+    const checkArgs = checkSetup(node, 'dl');
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('structured-dlitems')
+        .apply(null, checkArgs)
+    );
+  });
 
-  (shadowSupport.v1 ? it : xit)(
-    'should return true in a shadow DOM fail',
-    function () {
-      var node = document.createElement('div');
-      node.innerHTML = '<dd>Galileo</dd><dt>Figaro</dt>';
-      var shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<dl><slot></slot></dl>';
+  it('should return true in a shadow DOM fail', () => {
+    const node = document.createElement('div');
+    node.innerHTML = '<dd>Galileo</dd><dt>Figaro</dt>';
+    const shadow = node.attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<dl><slot></slot></dl>';
 
-      var checkArgs = checkSetup(node, 'dl');
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('structured-dlitems')
-          .apply(null, checkArgs)
-      );
-    }
-  );
+    const checkArgs = checkSetup(node, 'dl');
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('structured-dlitems')
+        .apply(null, checkArgs)
+    );
+  });
 });

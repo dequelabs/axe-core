@@ -9,11 +9,9 @@ function flattenTitles(test) {
   return titles.reverse();
 }
 
-(function () {
-  'use strict';
-
-  var runner = mocha.run();
-  runner.on('end', function () {
+(() => {
+  const runner = mocha.run();
+  runner.on('end', () => {
     window.mochaResults = runner.stats;
     window.mochaResults.reports = failedTests;
   });

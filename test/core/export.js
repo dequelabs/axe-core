@@ -1,10 +1,8 @@
-describe('export', function () {
-  'use strict';
-
-  it('should publish a global `axe` variable', function () {
+describe('export', () => {
+  it('should publish a global `axe` variable', () => {
     assert.isDefined(window.axe);
   });
-  it('should define version', function () {
+  it('should define version', () => {
     assert.isNotNull(axe.version);
   });
 });

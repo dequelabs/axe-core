@@ -1,17 +1,15 @@
-describe('reporters - raw', function () {
-  'use strict';
-
-  var fixture = document.getElementById('fixture');
+describe('reporters - raw', () => {
+  const fixture = document.getElementById('fixture');
 
   function createDqElement() {
-    var node = document.createElement('div');
+    const node = document.createElement('div');
     fixture.appendChild(node);
     return new axe.utils.DqElement(node);
   }
 
-  var runResults;
+  let runResults;
 
-  beforeEach(function () {
+  beforeEach(() => {
     runResults = [
       {
         id: 'gimmeLabel',
@@ -117,13 +115,13 @@ describe('reporters - raw', function () {
     axe._cache.set('selectorData', {});
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     sinon.restore();
   });
 
-  it('should serialize DqElements', function (done) {
-    axe.getReporter('rawEnv')(runResults, {}, function (results) {
+  it('should serialize DqElements', done => {
+    axe.getReporter('rawEnv')(runResults, {}, results => {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
         for (var j = 0; j < result.passes.length; j++) {
@@ -135,11 +133,11 @@ describe('reporters - raw', function () {
     });
   });
 
-  it('does not throw on serialized nodes', function (done) {
-    var rawReporter = axe.getReporter('rawEnv');
-    rawReporter(runResults, {}, function (serializedResults) {
-      assert.doesNotThrow(function () {
-        rawReporter(serializedResults, {}, function () {
+  it('does not throw on serialized nodes', done => {
+    const rawReporter = axe.getReporter('rawEnv');
+    rawReporter(runResults, {}, serializedResults => {
+      assert.doesNotThrow(() => {
+        rawReporter(serializedResults, {}, () => {
           done();
         });
       });
@@ -147,12 +145,12 @@ describe('reporters - raw', function () {
   });
 
   it('uses nodeSerializer', done => {
-    var rawReporter = axe.getReporter('raw');
-    var spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
+    const rawReporter = axe.getReporter('raw');
+    const spy = sinon.spy(axe.utils.nodeSerializer, 'mapRawNodeResults');
     rawReporter(
       runResults,
       {},
-      function () {
+      () => {
         assert.isTrue(spy.called);
         done();
       },

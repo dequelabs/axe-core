@@ -1,14 +1,14 @@
-describe('matches.attributes', function () {
-  var attributes = axe.commons.matches.attributes;
-  var fixture = document.querySelector('#fixture');
-  var queryFixture = axe.testUtils.queryFixture;
+describe('matches.attributes', () => {
+  const attributes = axe.commons.matches.attributes;
+  const fixture = document.querySelector('#fixture');
+  const queryFixture = axe.testUtils.queryFixture;
 
-  beforeEach(function () {
+  beforeEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('returns true if all attributes match', function () {
-    var virtualNode = queryFixture(
+  it('returns true if all attributes match', () => {
+    const virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
     assert.isTrue(
@@ -20,8 +20,8 @@ describe('matches.attributes', function () {
     );
   });
 
-  it('returns false if some attributes do not match', function () {
-    var virtualNode = queryFixture(
+  it('returns false if some attributes do not match', () => {
+    const virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
     assert.isFalse(
@@ -33,8 +33,8 @@ describe('matches.attributes', function () {
     );
   });
 
-  it('returns false if any attributes are missing', function () {
-    var virtualNode = queryFixture(
+  it('returns false if any attributes are missing', () => {
+    const virtualNode = queryFixture(
       '<span id="target" foo="baz" baz="bar"></span>'
     );
     assert.isFalse(
@@ -46,8 +46,8 @@ describe('matches.attributes', function () {
     );
   });
 
-  it('works with actual nodes', function () {
-    var virtualNode = queryFixture(
+  it('works with actual nodes', () => {
+    const virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
     assert.isTrue(
@@ -59,8 +59,8 @@ describe('matches.attributes', function () {
     );
   });
 
-  it('works with SerialVirtualNode', function () {
-    var serialNode = new axe.SerialVirtualNode({
+  it('works with SerialVirtualNode', () => {
+    const serialNode = new axe.SerialVirtualNode({
       nodeName: 'span',
       attributes: {
         id: 'target',

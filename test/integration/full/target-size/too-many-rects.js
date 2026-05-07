@@ -1,5 +1,4 @@
 describe('target-size too many rects test', () => {
-  'use strict';
   let results;
 
   before(done => {

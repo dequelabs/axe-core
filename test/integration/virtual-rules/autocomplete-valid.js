@@ -1,6 +1,6 @@
-describe('autocomplete-valid virtual-rule', function () {
-  it('should pass when autocomplete is valid', function () {
-    var results = axe.runVirtualRule('autocomplete-valid', {
+describe('autocomplete-valid virtual-rule', () => {
+  it('should pass when autocomplete is valid', () => {
+    const results = axe.runVirtualRule('autocomplete-valid', {
       nodeName: 'input',
       attributes: {
         type: 'text',
@@ -13,8 +13,8 @@ describe('autocomplete-valid virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass when autocomplete is correctly used', function () {
-    var results = axe.runVirtualRule('autocomplete-valid', {
+  it('should pass when autocomplete is correctly used', () => {
+    const results = axe.runVirtualRule('autocomplete-valid', {
       nodeName: 'input',
       attributes: {
         type: 'text',
@@ -27,8 +27,8 @@ describe('autocomplete-valid virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail autocomplete is not valid', function () {
-    var results = axe.runVirtualRule('autocomplete-valid', {
+  it('should fail autocomplete is not valid', () => {
+    const results = axe.runVirtualRule('autocomplete-valid', {
       nodeName: 'input',
       attributes: {
         type: 'text',

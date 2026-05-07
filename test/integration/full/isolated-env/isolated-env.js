@@ -1,15 +1,14 @@
 /* global chai */
 var messages = [];
-window.addEventListener('message', function (msg) {
+window.addEventListener('message', msg => {
   messages.push(msg.data);
 });
 
-describe('isolated-env test', function () {
-  'use strict';
-  var fixture = document.querySelector('#fixture');
-  var origPartialResults;
-  var partialResults;
-  var win;
+describe('isolated-env test', () => {
+  const fixture = document.querySelector('#fixture');
+  let origPartialResults;
+  let partialResults;
+  let win;
 
   // just a nicer assertion error rather than just doing
   // done(err)
@@ -18,17 +17,15 @@ describe('isolated-env test', function () {
       return done(err);
     }
 
-    var error = new chai.AssertionError(
-      "expected [Function] to not throw an error but '" +
-        err.toString() +
-        "' was thrown"
+    const error = new chai.AssertionError(
+      `expected [Function] to not throw an error but '${err.toString()}' was thrown`
     );
     done(error);
   }
 
   function setEmptyReporter() {
     win.axeConfigure({
-      reporter: function (results, options, callback) {
+      reporter: (results, options, callback) => {
         if (typeof options === 'function') {
           callback = options;
           options = {};
@@ -38,34 +35,34 @@ describe('isolated-env test', function () {
     });
   }
 
-  before(function (done) {
-    var nestedLoadPromise = new Promise(function (resolve, reject) {
+  before(done => {
+    const nestedLoadPromise = new Promise((resolve, reject) => {
       axe.testUtils.awaitNestedLoad(resolve, reject);
     });
 
-    var isloadedPromise = new Promise(function (resolve, reject) {
+    const isloadedPromise = new Promise((resolve, reject) => {
       if (messages.includes('axe-loaded')) {
         resolve();
       } else {
-        window.addEventListener('message', function (msg) {
+        window.addEventListener('message', msg => {
           if (msg.data === 'axe-loaded') {
             resolve();
           }
         });
       }
 
-      setTimeout(function () {
+      setTimeout(() => {
         reject(new Error('axe-loaded message not called'));
       }, 5000);
     });
 
     Promise.all([nestedLoadPromise, isloadedPromise])
-      .then(function () {
+      .then(() => {
         win = fixture.querySelector('#isolated-frame').contentWindow;
-        var focusableFrame = fixture.querySelector('#focusable-iframe');
+        const focusableFrame = fixture.querySelector('#focusable-iframe');
 
         // trigger frame-focusable-content rule
-        var iframePromise = focusableFrame.contentWindow.axe.runPartial({
+        const iframePromise = focusableFrame.contentWindow.axe.runPartial({
           include: [],
           exclude: [],
           initiator: false,
@@ -74,7 +71,7 @@ describe('isolated-env test', function () {
         });
 
         Promise.all([axe.runPartial(), iframePromise])
-          .then(function (r) {
+          .then(r => {
             origPartialResults = r;
             done();
           })
@@ -83,7 +80,7 @@ describe('isolated-env test', function () {
       .catch(done);
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     // calling axe.finishRun mutates the partial results
     // object and prevents calling finishRun again with
     // the same object
@@ -94,60 +91,56 @@ describe('isolated-env test', function () {
     }
   });
 
-  it('successfully isolates axe object in iframe', function () {
+  it('successfully isolates axe object in iframe', () => {
     assert.isUndefined(win.axe);
     assert.isDefined(win.axeFinishRun);
     assert.isDefined(win.axeConfigure);
   });
 
-  it('after methods do not error by calling window or DOM methods', function (done) {
+  it('after methods do not error by calling window or DOM methods', done => {
     setEmptyReporter();
 
     win
       .axeFinishRun(partialResults)
-      .then(function (results) {
+      .then(results => {
         assert.isDefined(results);
         done();
       })
-      .catch(function (err) {
+      .catch(err => {
         doesNotThrow(err, done);
       });
   });
 
-  it('runs all rules and after methods', function (done) {
+  it('runs all rules and after methods', done => {
     win
       .axeFinishRun(partialResults)
-      .then(function (results) {
+      .then(results => {
         assert.lengthOf(results.inapplicable, 0);
         done();
       })
-      .catch(function (err) {
+      .catch(err => {
         doesNotThrow(err, done);
       });
   });
 
-  describe('reporters', function () {
-    var reporters = axe._thisWillBeDeletedDoNotUse.public.reporters;
-    Object.keys(reporters).forEach(function (reporterName) {
-      it(
-        reporterName +
-          ' reporter does not error by calling window or DOM methods',
-        function (done) {
-          win.axeConfigure({
-            reporter: reporterName
-          });
+  describe('reporters', () => {
+    const reporters = axe._thisWillBeDeletedDoNotUse.public.reporters;
+    Object.keys(reporters).forEach(reporterName => {
+      it(`${reporterName} reporter does not error by calling window or DOM methods`, done => {
+        win.axeConfigure({
+          reporter: reporterName
+        });
 
-          win
-            .axeFinishRun(partialResults)
-            .then(function (results) {
-              assert.isDefined(results);
-              done();
-            })
-            .catch(function (err) {
-              doesNotThrow(err, done);
-            });
-        }
-      );
+        win
+          .axeFinishRun(partialResults)
+          .then(results => {
+            assert.isDefined(results);
+            done();
+          })
+          .catch(err => {
+            doesNotThrow(err, done);
+          });
+      });
     });
   });
 });

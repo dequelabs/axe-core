@@ -1,5 +1,5 @@
 describe('axe.utils.getXpath', () => {
-  'use strict';
+  const html = axe.testUtils.html;
 
   const fixture = document.getElementById('fixture');
 
@@ -51,7 +51,7 @@ describe('axe.utils.getXpath', () => {
   });
 
   it('should use the nearest unique ID', () => {
-    fixture.innerHTML = `
+    fixture.innerHTML = html`
       <div id="dogs">
         <div>
           <div>
@@ -123,10 +123,10 @@ describe('axe.utils.getXpath', () => {
     assert.equal(document.body, getElementByXPath(sel));
   });
 
-  it('should work on namespaced elements', function () {
+  it('should work on namespaced elements', () => {
     fixture.innerHTML = '<hx:include>Hello</hx:include>';
-    var node = fixture.firstChild;
-    var sel = axe.utils.getXpath(node);
+    const node = fixture.firstChild;
+    const sel = axe.utils.getXpath(node);
 
     assert.equal(sel, "//div[@id='fixture']/hx:include");
     // couldn't figure out how to use document.evaluate to select an element with namespace

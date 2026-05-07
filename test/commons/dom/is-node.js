@@ -1,8 +1,6 @@
-describe('dom.isNode', function () {
-  'use strict';
-
-  it('nodes', function () {
-    var node;
+describe('dom.isNode', () => {
+  it('nodes', () => {
+    let node;
     node = document;
     assert.isTrue(axe.commons.dom.isNode(node), 'Document');
 
@@ -25,8 +23,8 @@ describe('dom.isNode', function () {
     assert.isTrue(axe.commons.dom.isNode(node), 'Document fragments');
   });
 
-  it('non-nodes', function () {
-    var node;
+  it('non-nodes', () => {
+    let node;
 
     node = {};
     assert.isFalse(axe.commons.dom.isNode(node));

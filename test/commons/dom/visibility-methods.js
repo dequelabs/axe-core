@@ -1,4 +1,5 @@
 describe('dom.visibility-methods', () => {
+  const html = axe.testUtils.html;
   const { queryFixture, shadowCheckSetup } = axe.testUtils;
   const {
     nativelyHidden,
@@ -32,7 +33,7 @@ describe('dom.visibility-methods', () => {
         })
         .forEach(nodeName => {
           const vNode = new axe.VirtualNode(document.createElement(nodeName));
-          assert.isFalse(nativelyHidden(vNode), nodeName + ' is not visible');
+          assert.isFalse(nativelyHidden(vNode), `${nodeName} is not visible`);
         });
     });
   });
@@ -58,12 +59,12 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for area element', () => {
-      const vNode = queryFixture(
-        '<map name="test">' +
-          '<area id="target" href="#"/>' +
-          '</map>' +
-          '<img usemap="#test" src="img.png"/>'
-      );
+      const vNode = queryFixture(html`
+        <map name="test">
+          <area id="target" href="#" />
+        </map>
+        <img usemap="#test" src="img.png" />
+      `);
       assert.isFalse(displayHidden(vNode));
     });
   });
@@ -205,192 +206,210 @@ describe('dom.visibility-methods', () => {
     });
   });
 
-  describe('overflowHidden', function () {
-    it('should return true for element with "overflow:hidden" and small width', function () {
-      var vNode = queryFixture(
+  describe('overflowHidden', () => {
+    it('should return true for element with "overflow:hidden" and small width', () => {
+      const vNode = queryFixture(
         '<div id="target" style="overflow: hidden; width: 1px;">Hello world</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and small height', function () {
-      var vNode = queryFixture(
+    it('should return true for element with "overflow:hidden" and small height', () => {
+      const vNode = queryFixture(
         '<div id="target" style="overflow: hidden; height: 1px;">Hello world</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for parent with "overflow: hidden" and element outside parent rect', function () {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
-          '</div>'
-      );
+    it('should return true for parent with "overflow: hidden" and element outside parent rect', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div id="target" style="margin-left: 100px;">Hello world</div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for ancestor with "overflow: hidden" and element outside ancestor rect', function () {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div>' +
-          '<div>' +
-          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>'
-      );
+    it('should return true for ancestor with "overflow: hidden" and element outside ancestor rect', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div>
+            <div>
+              <div id="target" style="margin-left: 100px;">Hello world</div>
+            </div>
+          </div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for multiple ancestors with "overflow: hidden" and element outside one ancestor rect', function () {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div>' +
-          '<div style="overflow: hidden; width: 500px">' +
-          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>'
-      );
+    it('should return true for multiple ancestors with "overflow: hidden" and element outside one ancestor rect', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div>
+            <div style="overflow: hidden; width: 500px">
+              <div id="target" style="margin-left: 100px;">Hello world</div>
+            </div>
+          </div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
     it('should return true for element barely inside "overflow: hidden" parent using floating point', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50.5px;">' +
-          '<div id="target" style="margin-left: 50px;">Hello world</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50.5px;">
+          <div id="target" style="margin-left: 50px;">Hello world</div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return false for element with "overflow:hidden" and width larger than 1px', function () {
-      var vNode = queryFixture(
+    it('should return false for element with "overflow:hidden" and width larger than 1px', () => {
+      const vNode = queryFixture(
         '<div id="target" style="overflow: hidden; width: 2px;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element with "overflow:hidden" and height larger than 1px', function () {
-      var vNode = queryFixture(
+    it('should return false for element with "overflow:hidden" and height larger than 1px', () => {
+      const vNode = queryFixture(
         '<div id="target" style="overflow: hidden; height: 2px;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element with just "overflow:hidden"', function () {
-      var vNode = queryFixture(
+    it('should return false for element with just "overflow:hidden"', () => {
+      const vNode = queryFixture(
         '<div id="target" style="overflow: hidden;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element without "overflow:hidden"', function () {
-      var vNode = queryFixture('<div id="target">Hello world</div>');
+    it('should return false for element without "overflow:hidden"', () => {
+      const vNode = queryFixture('<div id="target">Hello world</div>');
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for multiple ancestors with "overflow: hidden" and element is inside all ancestor rects', function () {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 101px;">' +
-          '<div>' +
-          '<div style="overflow: hidden; width: 500px">' +
-          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>'
-      );
+    it('should return false for multiple ancestors with "overflow: hidden" and element is inside all ancestor rects', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 101px;">
+          <div>
+            <div style="overflow: hidden; width: 500px">
+              <div id="target" style="margin-left: 100px;">Hello world</div>
+            </div>
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden" and element with "position:fixed"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div id="target" style="margin-left: 100px; position: fixed">Hello world</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div id="target" style="margin-left: 100px; position: fixed">
+            Hello world
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden; position:relative" and element with "position:fixed"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px; position: relative">' +
-          '<div id="target" style="margin-left: 100px; position: fixed">Hello world</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; position: relative">
+          <div id="target" style="margin-left: 100px; position: fixed">
+            Hello world
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden" and element with "position:absolute"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div id="target" style="margin-left: 100px; position: absolute">
+            Hello world
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return true for ancestor with "overflow:hidden; position:relative" and element with "position:absolute"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px; position: relative">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; position: relative">
+          <div id="target" style="margin-left: 100px; position: absolute">
+            Hello world
+          </div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
     it('should return true for ancestor with "overflow:hidden" and element with "position:absolute" if ancestor in-between uses "position:relative"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div style="position: relative">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div style="position: relative">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
     it('should return true for ancestor with "overflow:hidden" and element with "position:absolute" if ancestor in-between uses "position:sticky"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div style="position: sticky">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div style="position: sticky">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
       assert.isTrue(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden" and element with "position:absolute" if ancestor in-between uses "position:absolute"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div style="position: absolute">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div style="position: absolute">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden" and element with "position:absolute" if ancestor in-between uses "position:fixed"', () => {
-      var vNode = queryFixture(
-        '<div style="overflow: hidden; width: 50px;">' +
-          '<div style="position: fixed">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div style="position: fixed">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
 
     it('should return false for ancestor with "overflow:hidden" and element with "position:absolute" if ancestor of overflow node uses position other than static', () => {
-      var vNode = queryFixture(
-        '<div style="position: relative">' +
-          '<div style="overflow: hidden; width: 50px;">' +
-          '<div id="target" style="margin-left: 100px; position: absolute">Hello world</div>' +
-          '</div>' +
-          '</div>'
-      );
+      const vNode = queryFixture(html`
+        <div style="position: relative">
+          <div style="overflow: hidden; width: 50px;">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
       assert.isFalse(overflowHidden(vNode));
     });
   });
@@ -528,7 +547,7 @@ describe('dom.visibility-methods', () => {
 
   describe('detailsHidden', () => {
     it('should return true for closed details parent', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary>Hello World</summary>
           <p id="target">Hidden</p>
@@ -539,7 +558,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details id="target">
           <summary>Hello World</summary>
           <p>Hidden</p>
@@ -550,7 +569,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for summary in closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary id="target">Hello World</summary>
           <p>Hidden</p>
@@ -561,7 +580,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for summary in open details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details open>
           <summary id="target">Hello World</summary>
           <p>Hidden</p>
@@ -572,7 +591,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for open details parent', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details open>
           <summary>Hello World</summary>
           <p id="target">Hidden</p>
@@ -583,7 +602,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return true for not first summary in closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary>Hello World</summary>
           <summary id="target">Not a summary</summary>
@@ -595,7 +614,7 @@ describe('dom.visibility-methods', () => {
     });
 
     it('should return false for element not in details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <div>
           <div id="target">Hello World</div>
         </div>

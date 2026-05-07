@@ -1,12 +1,10 @@
-describe('axe.utils.getAllChecks', function () {
-  'use strict';
-
-  it('should be a function', function () {
+describe('axe.utils.getAllChecks', () => {
+  it('should be a function', () => {
     assert.isFunction(axe.utils.getAllChecks);
   });
 
-  it('should concatenate all 3 check collections', function () {
-    var r = {
+  it('should concatenate all 3 check collections', () => {
+    const r = {
       any: ['any:foo', 'any:bar'],
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
@@ -21,8 +19,8 @@ describe('axe.utils.getAllChecks', function () {
     ]);
   });
 
-  it('should safely ignore missing collections - all', function () {
-    var r = {
+  it('should safely ignore missing collections - all', () => {
+    const r = {
       any: ['any:foo', 'any:bar'],
       none: ['none:foo', 'none:bar']
     };
@@ -34,8 +32,8 @@ describe('axe.utils.getAllChecks', function () {
     ]);
   });
 
-  it('should safely ignore missing collections - any', function () {
-    var r = {
+  it('should safely ignore missing collections - any', () => {
+    const r = {
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
     };
@@ -47,8 +45,8 @@ describe('axe.utils.getAllChecks', function () {
     ]);
   });
 
-  it('should safely ignore missing collections - none', function () {
-    var r = {
+  it('should safely ignore missing collections - none', () => {
+    const r = {
       any: ['any:foo', 'any:bar'],
       all: ['all:foo', 'all:bar']
     };

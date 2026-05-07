@@ -91,19 +91,22 @@ describe('text.formControlValue', () => {
       };
       fixtureSetup(
         Object.keys(formData).reduce((code, fieldType) => {
-          return `${code}<input type="${fieldType}" value="${formData[fieldType]}">`;
+          return html`${code}<input
+              type="${fieldType}"
+              value="${formData[fieldType]}"
+            />`;
         }, '')
       );
       axe.utils
         .querySelectorAll(axe._tree[0], '#fixture input')
-        .forEach(function (target) {
+        .forEach(target => {
           const expected = formData[getNodeType(target.actualNode)];
           assert.isDefined(expected);
           const actual = nativeTextboxValue(target);
           assert.equal(
             actual,
             expected,
-            'Expected value for ' + target.actualNode.outerHTML
+            `Expected value for ${target.actualNode.outerHTML}`
           );
         });
     });
@@ -123,7 +126,7 @@ describe('text.formControlValue', () => {
       `);
       axe.utils
         .querySelectorAll(axe._tree[0], '#fixture input')
-        .forEach(function (target) {
+        .forEach(target => {
           // Safari and IE11 do not support the color input type
           // and thus treat them as text inputs. ignore fallback
           // inputs
@@ -134,7 +137,7 @@ describe('text.formControlValue', () => {
           assert.equal(
             nativeTextboxValue(target),
             '',
-            'Expected no value for ' + target.actualNode.outerHTML
+            `Expected no value for ${target.actualNode.outerHTML}`
           );
         });
     });
@@ -148,7 +151,7 @@ describe('text.formControlValue', () => {
     it('returns `` for other elements', () => {
       // some random elements:
       ['div', 'span', 'h1', 'output', 'summary', 'style', 'template'].forEach(
-        function (nodeName) {
+        nodeName => {
           const target = document.createElement(nodeName);
           target.value = 'foo'; // That shouldn't do anything
           fixture.appendChild(target);
@@ -232,7 +235,7 @@ describe('text.formControlValue', () => {
     it('returns `` for other elements', () => {
       // some random elements:
       ['div', 'span', 'h1', 'output', 'summary', 'style', 'template'].forEach(
-        function (nodeName) {
+        nodeName => {
           const target = document.createElement(nodeName);
           target.value = 'foo'; // That shouldn't do anything
           fixture.appendChild(target);
@@ -454,7 +457,7 @@ describe('text.formControlValue', () => {
 
     it('returns `` for elements without role=combobox', () => {
       const target = queryFixture(
-        `<div role="combobox">${comboboxContent}</div>`,
+        html`<div role="combobox">${comboboxContent}</div>`,
         '[role=listbox]'
       );
       assert.equal(ariaComboboxValue(target), '');
@@ -469,8 +472,8 @@ describe('text.formControlValue', () => {
 
     it('passes aria-owned listbox to `ariaListboxValue` and returns its result', () => {
       const target = queryFixture(
-        '<div id="target" role="combobox" aria-owns="text list"></div>' +
-          comboboxContent
+        html`<div id="target" role="combobox" aria-owns="text list"></div>
+          ${comboboxContent}`
       );
       assert.equal(ariaComboboxValue(target), 'bar');
     });
@@ -486,8 +489,8 @@ describe('text.formControlValue', () => {
       assert.equal(ariaRangeValue(target), '');
     });
 
-    rangeRoles.forEach(function (role) {
-      describe('with ' + role, () => {
+    rangeRoles.forEach(role => {
+      describe(`with ${role}`, () => {
         it('returns the result of aria-valuenow', () => {
           const target = queryFixture(html`
             <div id="target" role="${role}" aria-valuenow="+123">foo</div>

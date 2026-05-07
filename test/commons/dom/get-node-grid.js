@@ -1,12 +1,13 @@
 describe('dom.getNodeGrid', () => {
+  const html = axe.testUtils.html;
   const queryFixture = axe.testUtils.queryFixture;
   const getNodeGrid = axe.commons.dom.getNodeGrid;
 
   it('returns the grid of an vNode', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <section id="container" style="height: 2em; overflow: auto;">
-        <p id="target" style="height: 2em;">  text  </p>
-        <p id="sibling" style="height: 2em;">  text  </p>
+        <p id="target" style="height: 2em;">text</p>
+        <p id="sibling" style="height: 2em;">text</p>
       </section>
     `);
     const grid = getNodeGrid(vNode);
@@ -14,10 +15,10 @@ describe('dom.getNodeGrid', () => {
   });
 
   it('returns the grid of an elm', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <section id="container" style="height: 2em; overflow: auto;">
-        <p id="target" style="height: 2em;">  text  </p>
-        <p id="sibling" style="height: 2em;">  text  </p>
+        <p id="target" style="height: 2em;">text</p>
+        <p id="sibling" style="height: 2em;">text</p>
       </section>
     `);
     const grid = getNodeGrid(vNode.actualNode);

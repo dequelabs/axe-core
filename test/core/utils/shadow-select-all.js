@@ -1,4 +1,5 @@
 describe('utils.shadowSelectAll', () => {
+  const html = axe.testUtils.html;
   const shadowSelectAll = axe.utils.shadowSelectAll;
   const fixture = document.querySelector('#fixture');
   const mapNodeName = elms => elms.map(elm => elm.nodeName.toLowerCase());
@@ -22,7 +23,7 @@ describe('utils.shadowSelectAll', () => {
     });
 
     it('returns the each matching element in the document', () => {
-      fixture.innerHTML = `<b class="hello"></b>
+      fixture.innerHTML = html`<b class="hello"></b>
         <s class="goodbye"></s>
         <i class="hello"></i>`;
       const nodes = shadowSelectAll('#fixture > .hello');
@@ -31,9 +32,9 @@ describe('utils.shadowSelectAll', () => {
   });
 
   describe('given an array of string', () => {
-    function addShadowTree(host, html) {
+    function addShadowTree(host, shadowMarkup) {
       const root = host.attachShadow({ mode: 'open' });
-      root.innerHTML = html;
+      root.innerHTML = shadowMarkup;
       return root;
     }
 
@@ -43,27 +44,27 @@ describe('utils.shadowSelectAll', () => {
 
     it('returns [] if the shadow host does not exist', () => {
       fixture.innerHTML = '<div></div>';
-      addShadowTree(fixture.children[0], `<b></b>`);
+      addShadowTree(fixture.children[0], html`<b></b>`);
       assert.deepEqual(shadowSelectAll(['#fixture > span', 'b']), []);
     });
 
     it('returns [] if the no final element exists', () => {
       fixture.innerHTML = '<span></span>';
-      addShadowTree(fixture.children[0], `<i></i>`);
+      addShadowTree(fixture.children[0], html`<i></i>`);
       assert.deepEqual(shadowSelectAll(['span', 'b']), []);
     });
 
     it('returns nodes from a shadow tree', () => {
       fixture.innerHTML = '<span></span>';
-      addShadowTree(fixture.children[0], `<b></b><i></i>`);
+      addShadowTree(fixture.children[0], html`<b></b><i></i>`);
       const nodeNames = mapNodeName(shadowSelectAll(['#fixture > span', '*']));
       assert.deepEqual(nodeNames, ['b', 'i']);
     });
 
     it('returns nodes from multiple shadow trees', () => {
       fixture.innerHTML = '<span></span><span></span>';
-      addShadowTree(fixture.children[0], `<a></a><b></b>`);
-      addShadowTree(fixture.children[1], `<i></i><s></s>`);
+      addShadowTree(fixture.children[0], html`<a></a><b></b>`);
+      addShadowTree(fixture.children[1], html`<i></i><s></s>`);
       const nodeNames = mapNodeName(shadowSelectAll(['#fixture > span', '*']));
       assert.deepEqual(nodeNames, ['a', 'b', 'i', 's']);
     });

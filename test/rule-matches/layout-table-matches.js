@@ -1,11 +1,9 @@
-describe('layout-table-matches', function () {
-  'use strict';
-
+describe('layout-table-matches', () => {
   const fixture = document.getElementById('fixture');
   const flatTreeSetup = axe.testUtils.flatTreeSetup;
   let rule;
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe.configure({
       rules: [
         {
@@ -18,12 +16,12 @@ describe('layout-table-matches', function () {
     rule = axe.utils.getRule('layout-rule');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe.reset();
   });
 
-  it('should return false for data table', function () {
+  it('should return false for data table', () => {
     fixture.innerHTML = '<table><caption>Hello></caption></table>';
     flatTreeSetup(fixture);
     const node = fixture.firstChild;
@@ -31,7 +29,7 @@ describe('layout-table-matches', function () {
     assert.isFalse(rule.matches(node));
   });
 
-  it('should return false if the table is focusable', function () {
+  it('should return false if the table is focusable', () => {
     fixture.innerHTML = '<table tabindex="0"></table>';
     flatTreeSetup(fixture);
     const node = fixture.firstChild;
@@ -39,7 +37,7 @@ describe('layout-table-matches', function () {
     assert.isFalse(rule.matches(node));
   });
 
-  it('should return true if table has role=presentation', function () {
+  it('should return true if table has role=presentation', () => {
     fixture.innerHTML = '<table role="presentation"></table>';
     flatTreeSetup(fixture);
     const node = fixture.firstChild;
@@ -47,7 +45,7 @@ describe('layout-table-matches', function () {
     assert.isTrue(rule.matches(node));
   });
 
-  it('should return true if table has role=none', function () {
+  it('should return true if table has role=none', () => {
     fixture.innerHTML = '<table role="none"></table>';
     flatTreeSetup(fixture);
     const node = fixture.firstChild;
