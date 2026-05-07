@@ -186,4 +186,42 @@ describe('label-content-name-mismatch tests', function () {
     var actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
+
+  it('returns true when aria-label and visible text match even though there is an image with alt text', function () {
+    var vNode = queryFixture(
+      '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />button label</button>'
+    );
+    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when aria-label and visible text do not match even though there is an image with alt text', function () {
+    var vNode = queryFixture(
+      '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />this is a button label</button>'
+    );
+    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  (fontApiSupport ? it : it.skip)(
+    'returns true when aria-label and visible text match even though there is a ligature icon',
+    function () {
+      var vNode = queryFixture(
+        '<button id="target" aria-label="button label"><span style="font-family: \'Material Icons\'">delete</span>button label</button>'
+      );
+      var actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    }
+  );
+
+  (fontApiSupport ? it : it.skip)(
+    'returns false when aria-label and visible text do not match even though there is a ligature icon',
+    function () {
+      var vNode = queryFixture(
+        '<button id="target" aria-label="button label"><span style="font-family: \'Material Icons\'">delete</span>this is a button label</button>'
+      );
+      var actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    }
+  );
 });
