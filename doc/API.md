@@ -244,6 +244,8 @@ axe.configure({
   - `standards` - object(optional). Used to configure the standards object. See the [Standards Object docs](./standards-object.md) for the structure of each standards object.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
+  - `selectorConfig` - Used to configure how selectors are generated
+    - `ignoredAttributes` - array(optional). A list of attributes that should be ignored when generating selectors for nodes.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
   - `noHtml` - Disables the HTML output of nodes from rules.
   - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
@@ -403,7 +405,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
-| `selectors`        | `true`  | Return CSS selector for elements, optimised for readability                                                                             |
+| `selectors`        | `true`  | Return CSS selector for elements, optimised for readability. Can also be an object: `{ ignoredAttributes: string[] }`                   |
 | `ancestry`         | `false` | Return CSS selector for elements, with all the element's ancestors                                                                      |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
 | `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |

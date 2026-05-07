@@ -136,7 +136,7 @@ declare namespace axe {
     rules?: RuleObject;
     reporter?: ReporterVersion | string;
     resultTypes?: resultGroups[];
-    selectors?: boolean;
+    selectors?: boolean | SelectorConfig;
     ancestry?: boolean;
     xpath?: boolean;
     absolutePaths?: boolean;
@@ -146,6 +146,9 @@ declare namespace axe {
     preload?: boolean | PreloadOptions;
     performanceTimer?: boolean;
     pingWaitTime?: number;
+  }
+  interface SelectorConfig {
+    ignoredAttributes?: string[];
   }
   interface NormalizedRunOptions extends RunOptions {
     runOnly?: RunOnly;
@@ -277,6 +280,7 @@ declare namespace axe {
     axeVersion?: string;
     noHtml?: boolean;
     allowedOrigins?: string[];
+    selectorConfig?: SelectorConfig;
     // Deprecated - do not use.
     ver?: string;
   }
