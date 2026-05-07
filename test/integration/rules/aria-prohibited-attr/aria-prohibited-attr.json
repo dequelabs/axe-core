@@ -9,7 +9,8 @@
     ["#pass5"],
     ["#pass6"],
     ["#pass7"],
-    ["#pass8"]
+    ["#pass8"],
+    ["#pass9"]
   ],
   "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]],
   "violations": [
@@ -45,6 +46,7 @@
     ["#fail30"],
     ["#fail31"],
     ["#fail32"],
-    ["#fail33"]
+    ["#fail33"],
+    ["#fail34"]
   ]
 }

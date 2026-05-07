@@ -442,5 +442,33 @@ describe('VirtualNode', () => {
         assert.equal(count, 1);
       });
     });
+
+    describe('internals', () => {
+      it('should get element internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        const internals = vNode.elementInternals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'button');
+      });
+
+      it('should cache the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        let internals = vNode.elementInternals;
+        delete node._internals;
+        internals = vNode.elementInternals;
+        assert.equal(internals.role, 'button');
+      });
+
+      it('should set the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        vNode.elementInternals = { role: 'link' };
+        const internals = vNode.elementInternals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'link');
+      });
+    });
   });
 });

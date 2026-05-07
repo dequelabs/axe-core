@@ -118,6 +118,14 @@
   <div role="alert">unallowed role</div>
 </div>
 
+<div role="menu" id="fail14">
+  <testutils-element with-role="listitem">List item 1</testutils-element>
+</div>
+
+<div role="list" id="fail15">
+  <testutils-element with-role="alert">unallowed role</testutils-element>
+</div>
+
 <div role="doc-bibliography" id="inapplicable1"></div>
 <div role="doc-endnotes" id="inapplicable2"></div>
 <div role="radiogroup" id="inapplicable3">
@@ -158,4 +166,8 @@
     <li>item 1</li>
     <li>item 2</li>
   </div>
+</div>
+
+<div role="menu" id="pass20">
+  <testutils-element with-role="menuitem">List item 1</testutils-element>
 </div>

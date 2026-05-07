@@ -32,6 +32,29 @@ var commons;
     fixture.setAttribute('id', 'fixture');
     document.body.insertBefore(fixture, document.body.firstChild);
   }
+  testUtils.fixture = fixture;
+
+  // create a custom element that all tests can use
+  if (!customElements.get('testutils-element')) {
+    customElements.define(
+      'testutils-element',
+      class TestutilsElement extends HTMLElement {
+        constructor() {
+          super();
+          this._internals = this.attachInternals();
+
+          if (!this.hasAttribute('no-role')) {
+            const role = this.getAttribute('with-role');
+            this._internals.role = role ?? 'button';
+          }
+        }
+      }
+    );
+  }
+
+  // turn on elementInternals feature flag
+  // TODO: remove when feature is fully enabled
+  axe._enableElementInternals = true;
 
   // determine which checks are used only in the `none` array of rules
   const noneChecks = [];

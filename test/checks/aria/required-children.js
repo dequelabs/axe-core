@@ -8,8 +8,6 @@ describe('aria-required-children', () => {
   );
 
   afterEach(() => {
-    fixture.innerHTML = '';
-    axe._tree = undefined;
     checkContext.reset();
   });
 
@@ -518,6 +516,21 @@ describe('aria-required-children', () => {
           { reviewEmpty: ['listbox'] }
         );
         assert.isUndefined(requiredChildrenCheck.apply(checkContext, params));
+      });
+    });
+  });
+
+  describe('ElementInternals', () => {
+    it('should detect missing sole required child', () => {
+      const params = checkSetup(
+        '<div role="list" id="target"><testutils-element>Nothing here.</testutils-element></div>'
+      );
+
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      // ensure element doesn't have [tabindex] on the selector
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'unallowed',
+        values: 'testutils-element'
       });
     });
   });

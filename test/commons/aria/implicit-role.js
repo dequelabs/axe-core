@@ -3,10 +3,7 @@ describe('aria.implicitRole', () => {
   const implicitRole = axe.commons.aria.implicitRole;
   const flatTreeSetup = axe.testUtils.flatTreeSetup;
   const fixture = document.querySelector('#fixture');
-
-  afterEach(() => {
-    fixture.innerHTML = '';
-  });
+  const queryFixture = axe.testUtils.queryFixture;
 
   // test string role (don't need to test all of them just that
   // one works)
@@ -553,5 +550,32 @@ describe('aria.implicitRole', () => {
     const node = fixture.querySelector('#target');
     flatTreeSetup(fixture);
     assert.equal(implicitRole(node), 'columnheader');
+  });
+
+  describe('ElementInternals', () => {
+    it('returns element internals role', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      assert.equal(implicitRole(vNode), 'button');
+    });
+
+    it('returns null for element without internals', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      delete vNode.actualNode._internals;
+      assert.isNull(implicitRole(vNode));
+    });
+
+    it('returns null for element without internals role', () => {
+      const vNode = queryFixture(
+        '<testutils-element id="target"></testutils-element>'
+      );
+      vNode.actualNode._internals.role = undefined;
+      assert.isNull(implicitRole(vNode));
+    });
+
+    // no test is needed for returning internals role over implicit html role since only custom-elements can have element internals
   });
 });
