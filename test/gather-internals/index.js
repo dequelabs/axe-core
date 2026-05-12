@@ -81,7 +81,7 @@ describe('gather-internals.walkTree', () => {
     assert.equal(key, ancestry);
   });
 
-  it('should resole idref property as ancestry', () => {
+  it('should resolve idref property as ancestry', () => {
     fixture.innerHTML = html`<testutils-element>
       <div id="child"></div>
     </testutils-element>`;
@@ -96,7 +96,7 @@ describe('gather-internals.walkTree', () => {
     assert.equal(internals.ariaActiveDescendantElement, ancestry);
   });
 
-  it('should resole idrefs property as ancestry', () => {
+  it('should resolve idrefs property as ancestry', () => {
     fixture.innerHTML = html`
       <div id="label1">hello</div>
       <div id="label2">world</div>
