@@ -18,9 +18,10 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
   console.log(results.incomplete.length);
   const errors = results.incomplete.map(result => result.error);
   console.log(
-    errors.map(
-      ({ message, stack, ruleId, method }) =>
-        `${message} ${ruleId} ${method}\n\n${stack}`
+    errors.map(error =>
+      error
+        ? `${error.message} ${error.ruleId} ${error.method}\n\n${error.stack}`
+        : ''
     )
   );
   console.log(results.inapplicable.length);
@@ -57,7 +58,7 @@ export async function runAsync() {
   await axe.run([[['main']]]);
   await axe.run([[['#app', 'main']]]); // Selecting in the outer frame
 
-  await axe.run(document.querySelector('main'));
+  await axe.run(document.querySelector('main')!);
   await axe.run(document.querySelectorAll('main'));
   // axe.run with frameContext context
   await axe.run({ fromShadowDom: ['#app', '#main', '#inner'] });
@@ -409,7 +410,8 @@ let fooReporter = (
   resolve: (out: 'foo') => void,
   reject: (err: Error) => void
 ) => {
-  reject && resolve('foo');
+  reject(new Error('foo'));
+  resolve('foo');
 };
 
 axe.addReporter<'foo'>('foo', fooReporter, true);
@@ -465,7 +467,7 @@ axe.utils.nodeSerializer.update({
     return axe.utils.DqElement.mergeSpecs(childSpec, parentSpec);
   }
 });
-const spec2: axe.SerialDqElement = axe.utils.nodeSerializer.toSpec(element);
+const spec2: axe.SerialDqElement = axe.utils.nodeSerializer.toSpec(element!);
 const spec3: axe.SerialDqElement = axe.utils.nodeSerializer.dqElmToSpec(
   dqElement,
   options
