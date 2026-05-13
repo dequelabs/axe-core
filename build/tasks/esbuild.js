@@ -1,5 +1,6 @@
 const { build } = require('esbuild');
 const path = require('path');
+const assert = require('assert');
 
 module.exports = function (grunt) {
   grunt.registerMultiTask(
@@ -27,7 +28,26 @@ module.exports = function (grunt) {
             bundle: true,
             ...options
           })
-            .then(done)
+            .then(result => {
+              if (options.metafile && file.validateImports) {
+                const { max, maxSize } = file.validateImports;
+                const { inputs } = result.metafile;
+                const entries = Object.entries(inputs);
+
+                assert(
+                  entries.length <= max,
+                  `${entry} imported too many files (max: ${max}): ${entries.length}`
+                );
+                for (const [key, value] of entries) {
+                  assert(
+                    value.bytes <= maxSize,
+                    `${key} import size too large (max: ${maxSize}): ${value.bytes}`
+                  );
+                }
+              }
+
+              done(result);
+            })
             .catch(e => {
               grunt.fail.fatal(e);
               done();

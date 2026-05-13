@@ -3,22 +3,103 @@ describe('gather-internals.walkTree', () => {
     globalThis._gatherInternals;
   const html = axe.testUtils.html;
   const fixture = axe.testUtils.fixture;
+  const ariaProps = [
+    'ariaAtomic',
+    'ariaAutoComplete',
+    'ariaBrailleLabel',
+    'ariaBrailleRoleDescription',
+    'ariaBusy',
+    'ariaChecked',
+    'ariaColCount',
+    'ariaColIndex',
+    'ariaColIndexText',
+    'ariaColSpan',
+    'ariaCurrent',
+    'ariaDescription',
+    'ariaDisabled',
+    'ariaExpanded',
+    'ariaHasPopup',
+    'ariaHidden',
+    'ariaInvalid',
+    'ariaKeyShortcuts',
+    'ariaLabel',
+    'ariaLevel',
+    'ariaLive',
+    'ariaModal',
+    'ariaMultiline',
+    'ariaMultiSelectable',
+    'ariaOrientation',
+    'ariaPlaceholder',
+    'ariaPosInSet',
+    'ariaPressed',
+    'ariaReadOnly',
+    'ariaRelevant',
+    'ariaRequired',
+    'ariaRoleDescription',
+    'ariaRowCount',
+    'ariaRowIndex',
+    'ariaRowIndexText',
+    'ariaRowSpan',
+    'ariaSelected',
+    'ariaSetSize',
+    'ariaSort',
+    'ariaValueMax',
+    'ariaValueMin',
+    'ariaValueNow',
+    'ariaValueText'
+  ];
+  const idrefProps = ['ariaActiveDescendantElement'];
+  const idrefsProps = [
+    'ariaControlsElements',
+    'ariaDescribedByElements',
+    'ariaDetailsElements',
+    'ariaErrorMessageElements',
+    'ariaFlowToElements',
+    'ariaLabelledByElements',
+    'ariaOwnsElements'
+  ];
+
+  before(() => {
+    // the `form` and `labels` properties are only readable (and won't throw) if the
+    // element is form associated
+    customElements.define(
+      'gather-internals-element',
+      class GatherInternalsElement extends HTMLElement {
+        static formAssociated = true;
+
+        constructor() {
+          super();
+          this._internals = this.attachInternals();
+        }
+      }
+    );
+  });
 
   afterEach(() => {
     _reset();
   });
 
-  it('should find internals on node', () => {
+  it('sets the array with expected properties', () => {
     fixture.innerHTML = html`<testutils-element></testutils-element>`;
 
     walkTree();
-    assert.lengthOf(Object.keys(elementInternalsMap), 1);
 
-    const internals = Object.values(elementInternalsMap)[0];
+    assert.isTrue(Array.isArray(elementInternalsMap));
+    assert.lengthOf(elementInternalsMap, 1);
+    assert.hasAllKeys(elementInternalsMap[0], ['ancestry', 'internals']);
+  });
+
+  it('finds internals on node', () => {
+    fixture.innerHTML = html`<testutils-element></testutils-element>`;
+
+    walkTree();
+    assert.lengthOf(elementInternalsMap, 1);
+
+    const { internals } = elementInternalsMap[0];
     assert.equal(internals.role, 'button');
   });
 
-  it('should find internals in nested node', () => {
+  it('finds internals in nested node', () => {
     fixture.innerHTML = html` <div>
       <div>
         <testutils-element></testutils-element>
@@ -26,13 +107,13 @@ describe('gather-internals.walkTree', () => {
     </div>`;
 
     walkTree();
-    assert.lengthOf(Object.keys(elementInternalsMap), 1);
+    assert.lengthOf(elementInternalsMap, 1);
 
-    const internals = Object.values(elementInternalsMap)[0];
+    const { internals } = elementInternalsMap[0];
     assert.equal(internals.role, 'button');
   });
 
-  it('should find all internals', () => {
+  it('finds all internals', () => {
     fixture.innerHTML = html` <div>
       <div>
         <testutils-element></testutils-element>
@@ -47,14 +128,13 @@ describe('gather-internals.walkTree', () => {
     </div>`;
 
     walkTree();
-    assert.lengthOf(Object.keys(elementInternalsMap), 2);
+    assert.lengthOf(elementInternalsMap, 2);
 
-    const internals = Object.values(elementInternalsMap);
-    assert.equal(internals[0].role, 'button');
-    assert.equal(internals[1].role, 'input');
+    assert.equal(elementInternalsMap[0].internals.role, 'button');
+    assert.equal(elementInternalsMap[1].internals.role, 'input');
   });
 
-  it('should find internals in shadow root', () => {
+  it('finds internals in shadow root', () => {
     const host = document.createElement('div');
     const shadowRoot = host.attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = html`
@@ -65,38 +145,65 @@ describe('gather-internals.walkTree', () => {
     fixture.append(host);
 
     walkTree();
-    assert.lengthOf(Object.keys(elementInternalsMap), 1);
+    assert.lengthOf(elementInternalsMap, 1);
 
-    const internals = Object.values(elementInternalsMap)[0];
+    const { internals } = elementInternalsMap[0];
     assert.equal(internals.role, 'button');
   });
 
-  it('should set the key as the ancestry', () => {
+  it('sets the ancestry', () => {
     fixture.innerHTML = html`<testutils-element></testutils-element>`;
     const node = fixture.querySelector('testutils-element');
     const ancestry = getAncestry(node);
 
     walkTree();
-    const key = Object.keys(elementInternalsMap)[0];
-    assert.equal(key, ancestry);
+    assert.equal(elementInternalsMap[0].ancestry, ancestry);
   });
 
-  it('should resolve idref property as ancestry', () => {
+  it('sets the ancestry of shadow element', () => {
+    const host = document.createElement('div');
+    const shadowRoot = host.attachShadow({ mode: 'open' });
+    shadowRoot.innerHTML = html`
+      <div>
+        <testutils-element></testutils-element>
+      </div>
+    `;
+    fixture.append(host);
+    const node = shadowRoot.querySelector('testutils-element');
+    const ancestry = getAncestry(node);
+
+    walkTree();
+    assert.deepEqual(elementInternalsMap[0].ancestry, ancestry);
+  });
+
+  it('resolves idref property as ancestry', () => {
     fixture.innerHTML = html`<testutils-element>
       <div id="child"></div>
     </testutils-element>`;
     const node = fixture.querySelector('testutils-element');
-    const activeChild = fixture.querySelector('div');
+    const activeChild = fixture.querySelector('#child');
     node._internals.ariaActiveDescendantElement = activeChild;
     const ancestry = getAncestry(activeChild);
 
     walkTree();
 
-    const internals = Object.values(elementInternalsMap)[0];
+    const { internals } = elementInternalsMap[0];
     assert.equal(internals.ariaActiveDescendantElement, ancestry);
   });
 
-  it('should resolve idrefs property as ancestry', () => {
+  it('ignores unattached idref element', () => {
+    fixture.innerHTML = html`<testutils-element></testutils-element>`;
+    const node = fixture.querySelector('testutils-element');
+    const activeChild = document.createElement('div');
+    node._internals.ariaActiveDescendantElement = activeChild;
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.isUndefined(internals.ariaActiveDescendantElement);
+  });
+
+  it('resolves idrefs property as array of ancestries', () => {
     fixture.innerHTML = html`
       <div id="label1">hello</div>
       <div id="label2">world</div>
@@ -111,7 +218,117 @@ describe('gather-internals.walkTree', () => {
 
     walkTree();
 
-    const internals = Object.values(elementInternalsMap)[0];
+    const { internals } = elementInternalsMap[0];
     assert.deepEqual(internals.ariaLabelledByElements, [ancestry1, ancestry2]);
+  });
+
+  it('ignores unattached idrefs element', () => {
+    fixture.innerHTML = html`
+      <div id="label1">hello</div>
+      <testutils-element></testutils-element>
+    `;
+    const node = fixture.querySelector('testutils-element');
+    const label1 = fixture.querySelector('#label1');
+    const label2 = document.createElement('div');
+    node._internals.ariaLabelledByElements = [label1, label2];
+    const ancestry1 = getAncestry(label1);
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.deepEqual(internals.ariaLabelledByElements, [ancestry1]);
+  });
+
+  it('ignores prop if all idrefs elements are unattached', () => {
+    fixture.innerHTML = html`
+      <div id="label1">hello</div>
+      <testutils-element></testutils-element>
+    `;
+    const node = fixture.querySelector('testutils-element');
+    const label1 = document.createElement('div');
+    const label2 = document.createElement('div');
+    node._internals.ariaLabelledByElements = [label1, label2];
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.isUndefined(internals.ariaLabelledByElements);
+  });
+
+  it('captures all aria internal properties', () => {
+    fixture.innerHTML = html`
+      <testutils-element></testutils-element>
+      <div id="elm"></div>
+    `;
+    const node = fixture.querySelector('testutils-element');
+    const elm = fixture.querySelector('#elm');
+
+    for (const prop of ariaProps) {
+      node._internals[prop] = 'value';
+    }
+    for (const prop of idrefProps) {
+      node._internals[prop] = elm;
+    }
+    for (const prop of idrefsProps) {
+      node._internals[prop] = [elm];
+    }
+    const ancestry = getAncestry(elm);
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.containsAllKeys(internals, ariaProps);
+    assert.containsAllKeys(internals, idrefProps);
+    assert.containsAllKeys(internals, idrefsProps);
+
+    for (const prop of ariaProps) {
+      assert.equal(internals[prop], 'value');
+    }
+    for (const prop of idrefProps) {
+      assert.equal(internals[prop], ancestry);
+    }
+    for (const prop of idrefsProps) {
+      assert.deepEqual(internals[prop], [ancestry]);
+    }
+  });
+
+  it('ignores non-aria internals property', () => {
+    fixture.innerHTML = html`<testutils-element></testutils-element>`;
+    const node = fixture.querySelector('testutils-element');
+    node._internals.ignoredProp = 'ignored';
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.isUndefined(internals.ignoredProp);
+  });
+
+  it('captures the internals "form" property', () => {
+    fixture.innerHTML = html`<form id="form">
+      <gather-internals-element></gather-internals-element>
+    </form>`;
+    const node = fixture.querySelector('gather-internals-element');
+    const form = fixture.querySelector('#form');
+    node._internals.form = form;
+    const ancestry = getAncestry(form);
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.strictEqual(internals.form, ancestry);
+  });
+
+  it('captures the internals "labels" property', () => {
+    fixture.innerHTML = html`<form id="form">
+      <gather-internals-element id="elm"></gather-internals-element>
+      <label for="elm">Hello</label>
+    </form>`;
+    const label = fixture.querySelector('label');
+    const ancestry = getAncestry(label);
+
+    walkTree();
+
+    const { internals } = elementInternalsMap[0];
+    assert.deepEqual(internals.labels, [ancestry]);
   });
 });

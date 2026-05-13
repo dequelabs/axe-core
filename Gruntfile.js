@@ -121,7 +121,7 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            src: ['lib/gather-internals/index.js'],
+            src: ['lib/gather-internals/main.js'],
             dest: './',
             options: {
               outfile: 'gather-internals.js',
@@ -134,7 +134,12 @@ module.exports = function (grunt) {
                 js: `return elementInternalsMap;
 })();`
               },
-              globalName: 'elementInternalsMap'
+              globalName: 'elementInternalsMap',
+              metafile: true
+            },
+            validateImports: {
+              max: 10,
+              maxSize: 4000
             }
           }
         ]
