@@ -46,7 +46,8 @@ describe('gather-internals.walkTree', () => {
     'ariaValueMax',
     'ariaValueMin',
     'ariaValueNow',
-    'ariaValueText'
+    'ariaValueText',
+    'role'
   ];
   const idrefProps = ['ariaActiveDescendantElement'];
   const idrefsProps = [
@@ -284,9 +285,7 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.containsAllKeys(internals, ariaProps);
-    assert.containsAllKeys(internals, idrefProps);
-    assert.containsAllKeys(internals, idrefsProps);
+    assert.hasAllKeys(internals, [...ariaProps, ...idrefProps, ...idrefsProps]);
 
     for (const prop of ariaProps) {
       assert.equal(internals[prop], 'value');
