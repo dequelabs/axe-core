@@ -58,8 +58,11 @@ describe('gather-internals.walkTree', () => {
     'ariaLabelledByElements',
     'ariaOwnsElements'
   ];
+  let axeInitial;
 
   before(() => {
+    axeInitial = globalThis.axe;
+
     // the `form` and `labels` properties are only readable (and won't throw) if the
     // element is form associated
     customElements.define(
@@ -77,6 +80,10 @@ describe('gather-internals.walkTree', () => {
 
   afterEach(() => {
     _reset();
+  });
+
+  after(() => {
+    globalThis.axe = axeInitial;
   });
 
   it('sets the array with expected properties', () => {
@@ -330,5 +337,40 @@ describe('gather-internals.walkTree', () => {
 
     const { internals } = elementInternalsMap[0];
     assert.deepEqual(internals.labels, [ancestry]);
+  });
+
+  it('works without needing axe', () => {
+    try {
+      globalThis.axe = null;
+
+      // this should test each piece of the code, so use shadow dom and an idref prop
+      const host = document.createElement('div');
+      const shadowRoot = host.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = html`
+        <div>
+          <testutils-element>
+            <div id="child"></div>
+          </testutils-element>
+        </div>
+      `;
+      fixture.append(host);
+      const node = shadowRoot.querySelector('testutils-element');
+      const activeChild = shadowRoot.querySelector('#child');
+      node._internals.ariaActiveDescendantElement = activeChild;
+      node._internals.ariaLabelledByElements = [activeChild];
+      const ancestry = getAncestry(activeChild);
+
+      assert.doesNotThrow(() => {
+        walkTree();
+      });
+
+      const { internals } = elementInternalsMap[0];
+      assert.equal(internals.role, 'button');
+      assert.deepEqual(internals.ariaActiveDescendantElement, ancestry);
+      assert.deepEqual(internals.ariaLabelledByElements, [ancestry]);
+    } finally {
+      // reset before test ends so global afterEach has axe instance
+      globalThis.axe = axeInitial;
+    }
   });
 });
