@@ -196,7 +196,10 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.equal(internals.ariaActiveDescendantElement, ancestry);
+    assert.deepEqual(internals.ariaActiveDescendantElement, {
+      type: 'HTMLElement',
+      value: ancestry
+    });
   });
 
   it('ignores unattached idref element', () => {
@@ -227,7 +230,10 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.deepEqual(internals.ariaLabelledByElements, [ancestry1, ancestry2]);
+    assert.deepEqual(internals.ariaLabelledByElements, {
+      type: 'NodeList',
+      value: [ancestry1, ancestry2]
+    });
   });
 
   it('ignores unattached idrefs element', () => {
@@ -244,7 +250,10 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.deepEqual(internals.ariaLabelledByElements, [ancestry1]);
+    assert.deepEqual(internals.ariaLabelledByElements, {
+      type: 'NodeList',
+      value: [ancestry1]
+    });
   });
 
   it('ignores prop if all idrefs elements are unattached', () => {
@@ -291,10 +300,16 @@ describe('gather-internals.walkTree', () => {
       assert.equal(internals[prop], 'value');
     }
     for (const prop of idrefProps) {
-      assert.equal(internals[prop], ancestry);
+      assert.deepEqual(internals[prop], {
+        type: 'HTMLElement',
+        value: ancestry
+      });
     }
     for (const prop of idrefsProps) {
-      assert.deepEqual(internals[prop], [ancestry]);
+      assert.deepEqual(internals[prop], {
+        type: 'NodeList',
+        value: [ancestry]
+      });
     }
   });
 
@@ -321,7 +336,10 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.strictEqual(internals.form, ancestry);
+    assert.deepEqual(internals.form, {
+      type: 'HTMLElement',
+      value: ancestry
+    });
   });
 
   it('captures the internals "labels" property', () => {
@@ -335,7 +353,10 @@ describe('gather-internals.walkTree', () => {
     walkTree();
 
     const { internals } = elementInternalsMap[0];
-    assert.deepEqual(internals.labels, [ancestry]);
+    assert.deepEqual(internals.labels, {
+      type: 'NodeList',
+      value: [ancestry]
+    });
   });
 
   it('works without needing axe', () => {
@@ -365,8 +386,14 @@ describe('gather-internals.walkTree', () => {
 
       const { internals } = elementInternalsMap[0];
       assert.equal(internals.role, 'button');
-      assert.deepEqual(internals.ariaActiveDescendantElement, ancestry);
-      assert.deepEqual(internals.ariaLabelledByElements, [ancestry]);
+      assert.deepEqual(internals.ariaActiveDescendantElement, {
+        type: 'HTMLElement',
+        value: ancestry
+      });
+      assert.deepEqual(internals.ariaLabelledByElements, {
+        type: 'NodeList',
+        value: [ancestry]
+      });
     } finally {
       // reset before test ends so global afterEach has axe instance
       globalThis.axe = axeInitial;
