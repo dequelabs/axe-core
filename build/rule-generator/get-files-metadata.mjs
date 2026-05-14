@@ -1,5 +1,5 @@
-const directories = require('./directories');
-const outdent = require('outdent');
+import outdent from 'outdent';
+import directories from './directories.mjs';
 
 /**
  * Helper to convert a given string to camel case (split by hyphens if any)
@@ -300,4 +300,4 @@ const getFilesMetaData = answers => {
   ];
 };
 
-module.exports = getFilesMetaData;
+export default getFilesMetaData;

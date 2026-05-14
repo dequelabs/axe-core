@@ -1,4 +1,7 @@
-const path = require('path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const directories = {
   axePath: path.join(__dirname, '..', '..', 'axe.js'),
@@ -16,4 +19,4 @@ const directories = {
   )
 };
 
-module.exports = directories;
+export default directories;

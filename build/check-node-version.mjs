@@ -1,14 +1,19 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const PATH_TO_NVMRC = path.join(__dirname, '..', '.nvmrc');
+const PATH_TO_NVMRC = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '..',
+  '.nvmrc'
+);
 const nvmrc = fs.readFileSync(PATH_TO_NVMRC, 'utf8');
 const minimumVersionMajor = parseInt(nvmrc.trim(), 10);
 
 const currentVersion = process.version.replace('v', '');
-const currentVersionMajor = parseInt(currentVersion.split('.')[0]);
+const currentVersionMajor = parseInt(currentVersion.split('.')[0], 10);
 
 const usesMinimumVersion = currentVersionMajor >= minimumVersionMajor;
 

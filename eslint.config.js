@@ -364,6 +364,21 @@ module.exports = [
     }
   },
   {
+    files: ['build/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2024
+      }
+    },
+    rules: {
+      'no-console': 'off',
+      'no-restricted-imports': ['off']
+    }
+  },
+  {
     files: ['.github/bin/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -379,17 +394,35 @@ module.exports = [
     }
   },
   {
+    // QUnit example runner (Puppeteer); callbacks run in browser context
+    files: ['doc/examples/qunit/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2024,
+        window: true,
+        QUnit: true
+      }
+    },
+    rules: {
+      'no-console': 'off',
+      'no-restricted-imports': ['off']
+    }
+  },
+  {
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',
       'patches/*',
-      'build/tasks/aria-supported.js',
       'doc/api/*',
       'doc/examples/jest_react/*.js',
       'lib/core/imports/polyfills.js',
       'lib/core/utils/uuid.js',
       'axe.js',
-      'axe.min.js'
+      'axe.min.js',
+      'test/integration/full/patch/patch.mjs'
     ]
   }
 ];

@@ -1,6 +1,9 @@
-const fs = require('fs');
-const { glob } = require('glob');
-const directories = require('./directories');
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+import { glob } from 'glob';
+import directories from './directories.mjs';
+
+const require = createRequire(import.meta.url);
 
 /**
  * Check validity of a given string to be non-empty alphabets or dashes.
@@ -164,4 +167,4 @@ const questions = {
   }
 };
 
-module.exports = questions;
+export default questions;

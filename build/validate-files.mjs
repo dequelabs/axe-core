@@ -1,17 +1,16 @@
-/*eslint-env node */
-'use strict';
+import revalidatorPkg from 'revalidator';
+import fs from 'node:fs';
+import path from 'node:path';
 
-var revalidator = require('revalidator').validate,
-  fs = require('fs'),
-  path = require('path');
+const revalidator = revalidatorPkg.validate;
 
 function fileExists(v, o) {
   if (!v.endsWith('.js')) {
     return true;
   }
 
-  var file = path.resolve(path.dirname(o._path), v);
-  var exists;
+  const file = path.resolve(path.dirname(o._path), v);
+  let exists;
   try {
     exists = fs.existsSync(file);
   } catch {
@@ -21,8 +20,8 @@ function fileExists(v, o) {
 }
 
 function hasUniqueId() {
-  var seen = {};
-  return function (v, o) {
+  const seen = {};
+  return (v, o) => {
     if (!seen[v]) {
       seen[v] = o;
       return true;
@@ -51,7 +50,7 @@ function hasMultipleOutcomes(messages) {
 }
 
 function createSchemas() {
-  var schemas = {};
+  const schemas = {};
 
   schemas.tool = {
     properties: {
@@ -151,7 +150,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function (v) {
+          conform: v => {
             if (typeof v === 'string') {
               return true;
             }
@@ -167,7 +166,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function (v) {
+          conform: v => {
             if (typeof v === 'string') {
               return true;
             }
@@ -183,7 +182,7 @@ function createSchemas() {
         type: 'array',
         items: {
           type: ['string', 'object'],
-          conform: function (v) {
+          conform: v => {
             if (typeof v === 'string') {
               return true;
             }
@@ -236,54 +235,41 @@ function createSchemas() {
   return schemas;
 }
 
-function validateFiles(grunt, files, schema, type) {
-  var valid = true;
-  files.forEach(function (f) {
-    f.src.forEach(function (pathArg) {
-      var file = grunt.file.readJSON(pathArg);
-      file._path = pathArg;
-      var result = revalidator(file, schema);
-      if (!result.valid) {
-        result.errors.forEach(function (err) {
-          grunt.log.error(pathArg, err.property + ' ' + err.message);
-        });
-        valid = false;
-      }
+function validateFiles(ctx, paths, schema, type) {
+  let valid = true;
+  paths.forEach(pathArg => {
+    const file = ctx.readJSON(pathArg);
+    file._path = pathArg;
+    const result = revalidator(file, schema);
+    if (!result.valid) {
+      result.errors.forEach(err => {
+        console.error(pathArg, err.property + ' ' + err.message);
+      });
+      valid = false;
+    }
 
-      const ruleIssues = type === 'rule' ? validateRule(file) : [];
-      if (ruleIssues.length > 0) {
-        ruleIssues.forEach(issue => grunt.log.error(pathArg, issue));
-        valid = false;
-      }
-
-      if (valid) {
-        grunt.verbose.ok();
-      }
-    });
+    const ruleIssues = type === 'rule' ? validateRule(file) : [];
+    if (ruleIssues.length > 0) {
+      ruleIssues.forEach(issue => console.error(pathArg, issue));
+      valid = false;
+    }
   });
   return valid;
 }
 
-module.exports = function (grunt) {
-  grunt.registerMultiTask(
-    'validate',
-    'Task for validating API schema for checks and rules',
-    function () {
-      const { type } = this.options();
-      const schemas = createSchemas();
-      const schema = schemas[type];
-      if (!schema) {
-        grunt.log.error(
-          'Please specify a valid type to validate: ' + Object.keys(schemas)
-        );
-        return false;
-      }
-      const valid = validateFiles(grunt, this.files, schema, type);
-      schema.seen = {};
-      return valid;
-    }
-  );
-};
+/**
+ * @param {ReturnType<import('./build-context.mjs').createBuildContext>} ctx
+ */
+export function validateAll(ctx) {
+  const schemas = createSchemas();
+  let valid = true;
+  const checkPaths = ctx.expandGlob('lib/checks/**/*.json');
+  valid = validateFiles(ctx, checkPaths, schemas.check, 'check') && valid;
+  schemas.rule.seen = {};
+  const rulePaths = ctx.expandGlob('lib/rules/**/*.json');
+  valid = validateFiles(ctx, rulePaths, schemas.rule, 'rule') && valid;
+  return valid;
+}
 
 function validateRule({ tags, metadata }) {
   if (!Array.isArray(tags) || typeof metadata !== 'object') {

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
+import { execSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 const conventionalCommitsParser = require('conventional-commits-parser');
 const chalk = require('chalk');
 const { version } = require('../package.json');
@@ -13,7 +16,7 @@ let ignoreCommits = process.argv[3];
 
 if (!releaseType) {
   console.error(
-    'Must specify a release type:\n$ node build/cherry-pick.js [<releaseType> | minor | patch] [<ignoreCommits>]'
+    'Must specify a release type:\n$ node build/cherry-pick.mjs [<releaseType> | minor | patch] [<ignoreCommits>]'
   );
   process.exit(1);
 }
@@ -46,7 +49,7 @@ if (['develop', 'master'].includes(currentBranch)) {
 // e.g. if we are currently on version 3.4.5 and need to do a minor release we pull commits starting from 3.4.0
 const [major, minor] = version.split('.').map(Number);
 
-let targetVersion = releaseType === 'patch' ? version : `${major}.${minor}.0`;
+const targetVersion = releaseType === 'patch' ? version : `${major}.${minor}.0`;
 
 // get all commits from a branch
 function getCommits(branch) {
@@ -143,7 +146,7 @@ commitsToCherryPick.forEach(({ hash, type, scope, subject }) => {
       '\nCannot auto-resolve cherry-pick commit. This can be caused by the commit already being applied or a file being edited in the cherry-pick branch that does not yet exist (the commit it depends on was not cherry-picked). Please review the commits being cherry-picked and either manually resolve or ignore the commit.'
     );
     console.error(
-      `$ node build/cherry-pick.js ${releaseType} [commitSHA1,commitSHA2,...]`
+      `$ node build/cherry-pick.mjs ${releaseType} [commitSHA1,commitSHA2,...]`
     );
 
     execSync('git cherry-pick --abort; git reset --hard origin/master');

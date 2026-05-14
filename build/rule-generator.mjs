@@ -1,26 +1,20 @@
-/* global Promise */
-
-const fs = require('fs');
-const chalk = require('chalk');
-const execa = require('execa');
+import fs from 'node:fs';
+import chalk from 'chalk';
+import execa from 'execa';
+import createFile from './shared/create-file.mjs';
+import directories from './rule-generator/directories.mjs';
+import getAnswers from './rule-generator/get-answers.mjs';
+import getFilesMetaData from './rule-generator/get-files-metadata.mjs';
 
 const { CI } = process.env;
 
-const createFile = require('./shared/create-file');
-const directories = require('./rule-generator/directories');
-const getAnswers = require('./rule-generator/get-answers');
-const getFilesMetaData = require('./rule-generator/get-files-metadata');
-
-// prevent malicious execution from CI
 if (CI) {
   throw new Error('Cannot run Rule Generation CLI in CI.');
 }
 
-// execute
 run();
 
 async function run() {
-  // ensure axe exists, if not build axe, then start the generator
   const axeExists = fs.existsSync(directories.axePath);
   if (!axeExists) {
     console.log(
@@ -31,16 +25,12 @@ async function run() {
     await execa('npm run build', { shell: true });
   }
 
-  // rule-generator banner
   console.log(chalk.hex('#0077c8')('Axe Rule Generator'));
 
-  // get answers (ask questions)
   const answers = await getAnswers();
 
-  // get metadata of files to be created
   const files = getFilesMetaData(answers);
 
-  // create the files
   if (!files || !files.length) {
     console.log(chalk.red.bold(`No files to generate.`));
   }
@@ -48,10 +38,10 @@ async function run() {
   try {
     const result = await Promise.all(
       files.map(async meta => {
-        const path = `${meta.dir}/${meta.name}`;
+        const filePath = `${meta.dir}/${meta.name}`;
         const content = meta.content + '\n';
-        await createFile(path, content);
-        return path;
+        await createFile(filePath, content);
+        return filePath;
       })
     );
     console.log(

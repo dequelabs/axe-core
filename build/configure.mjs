@@ -1,35 +1,25 @@
-/*eslint-env node */
 /*eslint max-len: off */
-'use strict';
+import path from 'node:path';
+import clone from 'clone';
+import doT from '@deque/dot';
+import { encode } from 'html-entities';
+import templates from './templates.mjs';
+import buildManual from './build-manual.mjs';
+import { templateProcess } from './build-context.mjs';
+import { compareRuleIds } from './rule-id-sort.mjs';
 
-var clone = require('clone');
-var doT = require('@deque/dot');
-var templates = require('./templates');
-var buildManual = require('./build-manual');
-var { encode } = require('html-entities');
-var packageJSON = require('../package.json');
-var doTRegex = /\{\{.+?\}\}/g;
+const doTRegex = /\{\{.+?\}\}/g;
 
-var axeVersion = packageJSON.version.substring(
-  0,
-  packageJSON.version.lastIndexOf('.')
-);
-
-var descriptionTableHeader =
+const descriptionTableHeader =
   '| Rule ID | Description | Impact | Tags | Issue Type | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 // prevent striping newline characters from strings (e.g. failure
 // summaries). must be synced with lib/core/imports/index.js
 doT.templateSettings.strip = false;
 
-function getLocale(grunt, options) {
-  var localeFile;
+function getLocale(ctx, options) {
   if (options.locale) {
-    localeFile = './locales/' + options.locale + '.json';
-  }
-
-  if (localeFile) {
-    return grunt.file.readJSON(localeFile);
+    return ctx.readJSON(`locales/${options.locale}.json`);
   }
 }
 
@@ -37,16 +27,22 @@ function makeHeaderLink(title) {
   return title.replace(/ /g, '-').replace(/[\.&]/g, '').toLowerCase();
 }
 
-function buildRules(grunt, options, commons, callback) {
-  var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
-  var locale = getLocale(grunt, options);
+function buildRules(ctx, options, callback) {
+  const packageJSON = ctx.readJSON('package.json');
+  const axeVersion = packageJSON.version.substring(
+    0,
+    packageJSON.version.lastIndexOf('.')
+  );
+  // Impact order for derived rule text (matches axe.commons.impact severity order).
+  const axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']);
+  const locale = getLocale(ctx, options);
   options.getFiles = false;
-  buildManual(grunt, options, commons, function (build) {
-    var metadata = {
+  buildManual(ctx, options, build => {
+    const metadata = {
       rules: {},
       checks: {}
     };
-    var descriptions = {
+    let descriptions = {
       wcag20: {
         title: 'WCAG 2.0 Level A & AA Rules',
         rules: []
@@ -87,7 +83,7 @@ function buildRules(grunt, options, commons, callback) {
       }
     };
 
-    var TOC = Object.keys(descriptions)
+    const TOC = Object.keys(descriptions)
       .map(key => {
         return `- [${descriptions[key].title}](#${makeHeaderLink(
           descriptions[key].title
@@ -95,14 +91,14 @@ function buildRules(grunt, options, commons, callback) {
       })
       .join('\n');
 
-    var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-    var rules = build.rules;
-    var checks = build.checks;
+    const tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
+    const rules = build.rules;
+    const checks = build.checks;
 
     // Translate checks before parsing them so that translations
     // get applied to the metadata object
     if (locale && locale.checks) {
-      checks.forEach(function (check) {
+      checks.forEach(check => {
         if (locale.checks[check.id] && check.metadata) {
           check.metadata.messages = locale.checks[check.id];
         }
@@ -112,15 +108,15 @@ function buildRules(grunt, options, commons, callback) {
     parseChecks(checks);
 
     function parseMetaData(source, propType) {
-      var data = source.metadata;
-      var id = source.id || source.type;
+      let data = source.metadata;
+      const id = source.id || source.type;
       if (id && locale && locale[propType] && propType !== 'checks') {
         data = locale[propType][id] || data;
       }
-      var result = clone(data) || {};
+      const result = clone(data) || {};
 
       if (result.messages) {
-        Object.keys(result.messages).forEach(function (key) {
+        Object.keys(result.messages).forEach(key => {
           // only convert to templated function for strings
           // objects handled later in publish-metadata.js
           if (
@@ -141,8 +137,8 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function createFailureSummaryObject(summaries) {
-      var result = {};
-      summaries.forEach(function (summary) {
+      const result = {};
+      summaries.forEach(summary => {
         if (summary.type) {
           result[summary.type] = parseMetaData(summary, 'failureSummaries');
         }
@@ -151,9 +147,9 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function getIncompleteMsg(summaries) {
-      var summary = summaries.find(function (element) {
-        return typeof element.incompleteFallbackMessage === 'string';
-      });
+      const summary = summaries.find(
+        element => typeof element.incompleteFallbackMessage === 'string'
+      );
       return summary ? summary.incompleteFallbackMessage : '';
     }
 
@@ -161,51 +157,43 @@ function buildRules(grunt, options, commons, callback) {
       return string
         .replace(
           /"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?.js")/g,
-          function (m, p1, p2) {
+          (m, p1, p2) => {
             return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
           }
         )
-        .replace(
-          /"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g,
-          function (m) {
-            return JSON.parse(m);
-          }
+        .replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, m =>
+          JSON.parse(m)
         )
-        .replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m) {
-          return JSON.parse(m);
-        });
+        .replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, m =>
+          JSON.parse(m)
+        );
     }
 
     function getSource(file, type) {
-      return grunt.template.process(templates[type], {
-        data: {
-          source: grunt.file.read(file)
-        }
+      const abs = path.isAbsolute(file) ? file : path.join(ctx.root, file);
+      return templateProcess(templates[type], {
+        source: ctx.readFile(path.relative(ctx.root, abs))
       });
     }
 
     function findCheck(checkCollection, id) {
-      return checkCollection.filter(function (check) {
-        if (check.id === id) {
-          return true;
-        }
-      })[0];
+      return checkCollection.find(check => check.id === id);
     }
 
-    function blacklist(k, v) {
+    const blacklist = (k, v) => {
       if (options.blacklist.indexOf(k) !== -1) {
         return undefined;
       }
       return v;
-    }
+    };
 
     function parseChecks(collection) {
-      return collection.map(function (check) {
-        var c = {};
-        var id = typeof check === 'string' ? check : check.id;
-        var definition = clone(findCheck(checks, id));
+      return collection.map(check => {
+        const c = {};
+        const id = typeof check === 'string' ? check : check.id;
+        const definition = clone(findCheck(checks, id));
         if (!definition) {
-          grunt.log.error('check ' + id + ' not found');
+          console.error('check ' + id + ' not found');
         }
         c.options = check.options || definition.options;
         c.id = id;
@@ -219,11 +207,11 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function traverseChecks(checkCollection, predicate, startValue) {
-      return checkCollection.reduce(function (out, check) {
-        var id = typeof check === 'string' ? check : check.id;
-        var definition = clone(findCheck(checks, id));
+      return checkCollection.reduce((out, check) => {
+        const id = typeof check === 'string' ? check : check.id;
+        const definition = clone(findCheck(checks, id));
         if (!definition) {
-          grunt.log.error('check ' + id + ' not found');
+          console.error('check ' + id + ' not found');
         }
         return predicate(definition, out);
       }, startValue);
@@ -238,21 +226,21 @@ function buildRules(grunt, options, commons, callback) {
       }
 
       function getUniqueArr(arr) {
-        return arr.filter(function (value, index, self) {
-          return self.indexOf(value) === index;
-        });
+        return arr.filter(
+          (value, index, self) => self.indexOf(value) === index
+        );
       }
 
       function getImpactScores(definition, out) {
         if (definition && definition.metadata && definition.metadata.impact) {
-          var impactScore = axeImpact.indexOf(definition.metadata.impact);
+          const impactScore = axeImpact.indexOf(definition.metadata.impact);
           out.push(impactScore);
         }
         return out;
       }
 
       function getScore(checkCollection, onlyHighestScore) {
-        var scores = traverseChecks(checkCollection, getImpactScores, []);
+        const scores = traverseChecks(checkCollection, getImpactScores, []);
         if (scores && scores.length) {
           return onlyHighestScore
             ? [Math.max.apply(null, scores)]
@@ -262,15 +250,15 @@ function buildRules(grunt, options, commons, callback) {
         }
       }
 
-      var highestImpactForRuleTypeAny = getScore(rule.any, true);
-      var allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
-      var allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
-      var cumulativeImpacts = highestImpactForRuleTypeAny
+      const highestImpactForRuleTypeAny = getScore(rule.any, true);
+      const allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
+      const allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
+      const cumulativeImpacts = highestImpactForRuleTypeAny
         .concat(allUniqueImpactsForRuleTypeAll)
         .concat(allUniqueImpactsForRuleTypeNone);
-      var cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
+      const cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
 
-      return cumulativeScores.reduce(function (out, cV) {
+      return cumulativeScores.reduce((out, cV) => {
         return out.length
           ? out + ', ' + capitalize(axeImpact[cV])
           : capitalize(axeImpact[cV]);
@@ -316,18 +304,18 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function createActLinksForRule(rule) {
-      var actIds = rule.actIds || [];
-      var actLinks = [];
+      const actIds = rule.actIds || [];
+      const actLinks = [];
       actIds.forEach(id =>
         actLinks.push(`[${id}](https://act-rules.github.io/rules/${id})`)
       );
       return actLinks.join(', ');
     }
 
-    rules.map(function (rule) {
-      var impact = parseImpactForRule(rule);
-      var canFail = parseFailureForRule(rule);
-      var canIncomplete = parseIncompleteForRule(rule);
+    rules.map(rule => {
+      const impact = parseImpactForRule(rule);
+      const canFail = parseFailureForRule(rule);
+      const canIncomplete = parseIncompleteForRule(rule);
 
       rule.any = parseChecks(rule.any);
       rule.all = parseChecks(rule.all);
@@ -336,7 +324,7 @@ function buildRules(grunt, options, commons, callback) {
         metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
       }
 
-      var result;
+      let result;
       if (rule.tags.includes('deprecated')) {
         result = descriptions.deprecated.rules;
       } else if (rule.tags.includes('experimental')) {
@@ -353,7 +341,7 @@ function buildRules(grunt, options, commons, callback) {
         result = descriptions.wcag22.rules;
       }
 
-      var issueType = [];
+      const issueType = [];
       if (canFail) {
         issueType.push('failure');
       }
@@ -361,7 +349,7 @@ function buildRules(grunt, options, commons, callback) {
         issueType.push('needs&nbsp;review');
       }
 
-      var actLinks = createActLinksForRule(rule);
+      const actLinks = createActLinksForRule(rule);
 
       result.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
@@ -372,16 +360,24 @@ function buildRules(grunt, options, commons, callback) {
         actLinks
       ]);
       if (tags.length) {
-        rule.enabled = !!rule.tags.filter(function (t) {
-          return tags.indexOf(t) !== -1;
-        }).length;
+        rule.enabled = !!rule.tags.filter(t => tags.indexOf(t) !== -1).length;
       }
       return rule;
     });
 
-    var ruleTables = Object.keys(descriptions)
+    Object.keys(descriptions).forEach(key => {
+      descriptions[key].rules.sort((a, b) => {
+        const idA = /^\[([^\]]+)\]/.exec(a[0]);
+        const idB = /^\[([^\]]+)\]/.exec(b[0]);
+        const keyA = idA ? idA[1] : a[0];
+        const keyB = idB ? idB[1] : b[0];
+        return compareRuleIds(keyA, keyB);
+      });
+    });
+
+    const ruleTables = Object.keys(descriptions)
       .map(key => {
-        var description = descriptions[key];
+        const description = descriptions[key];
 
         return `
 ## ${description.title}
@@ -392,16 +388,12 @@ ${
   description.rules.length
     ? descriptionTableHeader
     : '_There are no matching rules_'
-}${description.rules
-          .map(function (row) {
-            return '| ' + row.join(' | ') + ' |';
-          })
-          .join('\n')}`;
+}${description.rules.map(row => '| ' + row.join(' | ') + ' |').join('\n')}`;
       })
       .join('\n\n');
 
-    var descriptions = `
-<!--- This file is automatically generated using build/configure.js --->
+    descriptions = `
+<!--- This file is automatically generated using build/configure.mjs --->
 
 # Rule Descriptions
 
@@ -440,4 +432,4 @@ ${ruleTables}`;
   });
 }
 
-module.exports = buildRules;
+export default buildRules;

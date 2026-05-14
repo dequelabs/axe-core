@@ -276,7 +276,7 @@ Log into a second ssh terminal (without -X) and execute the following commands
 
 ```console
 cd axe-core
-grunt connect watch
+`npm run develop` (rebuilds on `lib/` changes) together with `npm start` / Karma for unit tests
 ```
 
 Load your test file URL in the Chrome browser opened in XQuartz

@@ -9,32 +9,42 @@
  * update sri-history.json with the SRIs of axe{.*}.js.
  * @deprecated
  */
-var path = require('path');
-var fs = require('fs');
-var sriToolbox = require('sri-toolbox');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const sriToolbox = require('sri-toolbox');
 
 // Check if we should be validating or updating
-var validate = process.argv.some(function (arg) {
-  return arg === '--validate';
-});
+const validate = process.argv.some(arg => arg === '--validate');
 
-var root = path.join(__dirname, '..');
-var axeVersion = require('../package.json').version;
-var axeHistory = require('../sri-history.json');
+const root = path.join(__dirname, '..');
+const axeVersion = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf8')
+).version;
+let axeHistory = JSON.parse(
+  fs.readFileSync(path.join(root, 'sri-history.json'), 'utf8')
+);
 
 if (typeof axeHistory[axeVersion] !== 'object') {
   axeHistory[axeVersion] = {};
 }
-var versionSRIs = axeHistory[axeVersion];
+const versionSRIs = axeHistory[axeVersion];
 
 // List all axe files (including minified and localized axe files)
-var axeFiles = fs.readdirSync(root).filter(function (file) {
-  return file.match(/^axe(\.[a-z.-]+)?\.js$/);
-});
+const axeFiles = fs
+  .readdirSync(root)
+  .filter(file => file.match(/^axe(\.[a-z.-]+)?\.js$/));
 
-axeFiles.forEach(function (axeFile) {
-  var axeSource = fs.readFileSync(path.join(root, axeFile), 'utf-8');
-  var axeIntegrity = sriToolbox.generate({ algorithms: ['sha256'] }, axeSource);
+axeFiles.forEach(axeFile => {
+  const axeSource = fs.readFileSync(path.join(root, axeFile), 'utf-8');
+  const axeIntegrity = sriToolbox.generate(
+    { algorithms: ['sha256'] },
+    axeSource
+  );
 
   if (!validate) {
     // Update SRI

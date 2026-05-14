@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   evaluate: 'function (node, options, virtualNode, context) {\n<%=source%>\n}',
   after: 'function (results, options) {\n<%=source%>\n}',
   gather: 'function (context, options) {\n<%=source%>\n}',

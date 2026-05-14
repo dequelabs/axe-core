@@ -136,7 +136,7 @@ The `any`, `all` and `none` arrays must contain either a `String` which referenc
 - `id` - `String` The unique ID of the Check.
 - `options` - `Mixed` Any options the Check requires that are specific to the Rule.
 
-There is a Grunt target which will ensure each Rule has a valid format, which can be run with `npx grunt validate`.
+There is a build step which will ensure each Rule has a valid format, which can be run with `npm run validate`.
 
 #### Matches Function
 

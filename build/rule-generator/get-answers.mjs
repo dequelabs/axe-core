@@ -1,5 +1,5 @@
-const questions = require('./questions');
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
+import questions from './questions.mjs';
 
 /**
  * Get CHECK details as entered by the user for the prompted questions
@@ -56,4 +56,4 @@ const getAnswers = async () => {
   };
 };
 
-module.exports = getAnswers;
+export default getAnswers;

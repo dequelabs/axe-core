@@ -3,18 +3,17 @@
   "description": "Axe QUnit Example",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "author": {
     "name": "David Sturley",
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
   },
   "scripts": {
-    "test": "grunt qunit"
+    "test": "node run-qunit.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.6.2",
-    "grunt": "^1.6.1",
-    "grunt-contrib-qunit": "^10.1.1",
     "puppeteer": "^23.1.0",
     "qunit": "^2.22.0"
   }
