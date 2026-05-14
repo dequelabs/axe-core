@@ -453,6 +453,7 @@
       "pass": "ARIA 属性が許可されています",
       "fail": {
         "checkbox": "aria-checkedを削除するか\"${data.checkState}\"を設定して、チェックボックスの実際の状態と合うようにしましょう",
+        "radio": "aria-checkedを削除するか\"${data.checkState}\"を設定して、ラジオボタンの実際の状態と合うようにしましょう",
         "rowSingular": "treegridの行でサポートされている属性ですが、${data.ownerRole}: ${data.invalidAttrs}の場合はこの限りではありません",
         "rowPlural": "treegridの行でサポートされている属性ですが、${data.ownerRole}: ${data.invalidAttrs}の場合はこの限りではありません"
       }

@@ -296,4 +296,95 @@ describe('aria-conditional-attr', () => {
       });
     });
   });
+
+  describe('ariaConditionalRadioAttr', () => {
+    it('returns true for non-native radio', () => {
+      const params = checkSetup(
+        `<div id="target" role="radio" aria-checked="true"></div>`
+      );
+      assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns true for radio without aria-checked value', () => {
+      for (const prop of ['', 'aria-checked', 'aria-checked=""']) {
+        const params = checkSetup(`<input id="target" type="radio" ${prop}>`);
+        assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+        assert.isNull(checkContext._data);
+      }
+    });
+
+    describe('checked state', () => {
+      const fixture = document.querySelector('#fixture');
+
+      it('returns true for aria-checked="true" on a [checked] radio', () => {
+        fixture.innerHTML = `<input type="radio" aria-checked="true" checked>`;
+        const root = axe.setup(fixture);
+        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+
+        assert.isTrue(
+          ariaConditionalCheck.call(checkContext, null, null, vNode)
+        );
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns true for aria-checked="true" on a clicked radio', () => {
+        fixture.innerHTML = `<input type="radio" aria-checked="true">`;
+        fixture.firstChild.click(); // set checked state
+        const root = axe.setup(fixture);
+        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+
+        assert.isTrue(
+          ariaConditionalCheck.call(checkContext, null, null, vNode)
+        );
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns false for other aria-checked values', () => {
+        for (const prop of ['  ', 'false', 'mixed', 'incorrect', '  true  ']) {
+          const params = checkSetup(
+            `<input type="radio" aria-checked="${prop}" checked id="target">`
+          );
+          assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'radio',
+            checkState: 'true'
+          });
+        }
+      });
+    });
+
+    describe('unchecked state', () => {
+      it('returns true for aria-checked="false"', () => {
+        const params = checkSetup(
+          `<input id="target" type="radio" aria-checked="false">`
+        );
+        assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+        assert.isNull(checkContext._data);
+      });
+
+      it('returns true for aria-checked with an invalid value', () => {
+        for (const prop of ['  ', 'invalid', 'FALSE', 'nope']) {
+          const params = checkSetup(
+            `<input type="radio" aria-checked="${prop}" id="target">`
+          );
+          assert.isTrue(ariaConditionalCheck.apply(checkContext, params));
+          assert.isNull(checkContext._data);
+        }
+      });
+
+      it('returns false for other aria-checked values', () => {
+        for (const prop of ['true', 'TRUE']) {
+          const params = checkSetup(
+            `<input type="radio" aria-checked="${prop}" id="target">`
+          );
+          assert.isFalse(ariaConditionalCheck.apply(checkContext, params));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'radio',
+            checkState: 'false'
+          });
+        }
+      });
+    });
+  });
 });
