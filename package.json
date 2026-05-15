@@ -79,7 +79,7 @@
     "translate": "node build/run-build.mjs translate",
     "patch": "npx patch-package",
     "unpatch": "npx patch-package --reverse",
-    "eslint": "eslint --color --format stylish '{lib,test}/**/*.{js,mjs}' 'build/**/*.mjs' 'doc/**/*.js' '.github/bin/*.mjs'",
+    "eslint": "eslint --color --format stylish '{lib,test}/**/*.{js,mjs}' 'build/**/*.mjs' 'doc/**/*.{js,mjs}' '.github/bin/*.mjs'",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
