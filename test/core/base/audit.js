@@ -2,6 +2,7 @@ describe('Audit', () => {
   const html = axe.testUtils.html;
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+  const externalAPIs = axe.externalAPIs;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
   const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
@@ -1242,6 +1243,87 @@ describe('Audit', () => {
           }, done)
         );
       });
+    });
+
+    it('runs elementInternals if set', done => {
+      const stub = sinon.stub().returns(Promise.resolve([]));
+      externalAPIs({
+        elementInternals: stub
+      });
+
+      audit.run(
+        { include: [axe.utils.getFlattenedTree()[0]] },
+        {},
+        results => {
+          assert.isTrue(stub.called);
+          done();
+        },
+        isNotCalled
+      );
+    });
+
+    it('runs elementInternals before any rules', done => {
+      fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+
+      let elementInternalsStartTime;
+      let ruleStartTime;
+
+      externalAPIs({
+        elementInternals: () => {
+          elementInternalsStartTime = performance.now();
+          return Promise.resolve([]);
+        }
+      });
+
+      audit = new Audit();
+      audit.addRule({
+        id: 'rule-start',
+        selector: '*',
+        any: ['check-start']
+      });
+      audit.addCheck({
+        id: 'check-start',
+        evaluate: function (node, options, vNode, context) {
+          ruleStartTime = performance.now();
+          return true;
+        }
+      });
+
+      audit.run(
+        { include: [axe.utils.getFlattenedTree()[0]] },
+        {},
+        results => {
+          assert.isNumber(elementInternalsStartTime);
+          assert.isNumber(ruleStartTime);
+
+          assert.isTrue(elementInternalsStartTime < ruleStartTime);
+          done();
+        },
+        isNotCalled
+      );
+    });
+
+    it('rejects if elementInternals timeout occurs', done => {
+      const stub = sinon.stub().returns(Promise.resolve([]));
+      externalAPIs({
+        elementInternalsTimeout: 200,
+        elementInternals() {
+          return new Promise(res => {
+            setTimeout(res, 500);
+          });
+        }
+      });
+
+      audit.run(
+        { include: [axe.utils.getFlattenedTree()[0]] },
+        {},
+        isNotCalled,
+        err => {
+          assert.isTrue(err.message.includes('Timeout'));
+          assert.isTrue(err.message.includes('elementInternals'));
+          done();
+        }
+      );
     });
   });
 
