@@ -5,7 +5,7 @@ describe('text.visible', () => {
   const visibleVirtual = axe.commons.text.visibleVirtual;
   const fontApiSupport = !!document.fonts;
 
-  before((done) => {
+  before(done => {
     if (!fontApiSupport) {
       done();
       return;
