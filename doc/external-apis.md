@@ -11,7 +11,7 @@ axe.externalAPIs({
 });
 ```
 
-## axe.externalAPIS({ elementInternals })
+## axe.externalAPIs({ elementInternals })
 
 `elementInternals` is a function that can be used to pass ElementInternal data for the elements on the page. It should return a Promise with the ElementInternal data array. The data inside the ElementInternal array must have the following properties:
 
