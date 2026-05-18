@@ -46,7 +46,7 @@ axe.externalAPIs({
 });
 ```
 
-Axe-core provides a package script `gather-internals.js` that can used to inject into the main context when working in an extension. The returned object from the script can be used directly as the returned value of the Promise for `elementInternals`.
+Axe-core provides a package script `gather-internals.js` that can be used to inject into the main context when working in an extension. The returned object from the script can be used directly as the returned value of the Promise for `elementInternals`.
 
 ```js
 const internals = await chrome.scripting.executeScript({
