@@ -3,7 +3,7 @@
 Axe-core supports CustomElements with attached ElementInternals or ARIA Properties. However, JavaScript does not provide an API for accessing ElementInternals information on a node so axe-core must rely on developers implementing a [community protocol](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/element-internals-declaration.md) on their CustomElements in order to find this information.
 
 > [!Note]
-> At this time, axe-core only supports the ElementInternals `role` property and no others (e.g. `ariaLabel`), though support for other properties is planned. Additionally axe-core will not validate the value of the ElementInternals `role`, and many rules will not run against the element (e.g. `aria-required-attr`). Rules that do run may only be partial supported (e.g. `aria-required-children`).
+> At this time, axe-core only supports the ElementInternals `role` property and no others (e.g. `ariaLabel`), though support for other properties is planned. Additionally axe-core will not validate the value of the ElementInternals `role`, and many rules will not run against the element (e.g. `aria-required-attr`). Rules that do run may only be partially supported (e.g. `aria-required-children`).
 >
 > Lastly, support for ElementInternals is behind a feature flag `axe._enableElementInternals`, which must manually be set to `true` before axe runs.
 
