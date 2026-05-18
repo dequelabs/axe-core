@@ -53,7 +53,7 @@ const internals = await chrome.scripting.executeScript({
   target: {
     tabId: tab.id
   },
-  files: ['/node_moduels/axe-core/gather-internals.js'],
+  files: ['/node_modules/axe-core/gather-internals.js'],
   world: 'MAIN'
 });
 ```
