@@ -389,10 +389,8 @@ declare namespace axe {
     frameContext: FrameContextObject;
   }
 
-  interface RawCheckResult extends Omit<
-    CheckResult,
-    'relatedNodes' | 'impact'
-  > {
+  interface RawCheckResult
+    extends Omit<CheckResult, 'relatedNodes' | 'impact'> {
     relatedNodes?: Array<SerialDqElement | DqElement>;
     impact?: ImpactValue;
   }
@@ -628,6 +626,14 @@ declare namespace axe {
    * Restores the default axe configuration
    */
   function reset(): void;
+
+  /**
+   * Restores the default locale that was active before any
+   * `axe.configure({ locale })` call. No-op if no non-default
+   * locale has ever been applied. Does not affect any other
+   * configuration.
+   */
+  function resetLocale(): void;
 
   /**
    * Function to register a plugin configuration in document and its subframes
