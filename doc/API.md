@@ -24,6 +24,7 @@
    1. [API Name: axe.teardown](#api-name-axeteardown)
    1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
    1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial--axefinishrun)
+   1. [API name: axe.externalAPIs](#api-name-axeexternal-apis)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -839,6 +840,10 @@ Set up an alternative communication channel between parent and child frames. By 
 ### API name: axe.runPartial / axe.finishRun
 
 Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
+
+### API name: axe.externalAPIs
+
+Set external API data for axe-core to use during the run. See [external-apis.md](external-apis.md) for details.
 
 ### Virtual DOM Utilities
 

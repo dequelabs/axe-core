@@ -51,11 +51,34 @@ describe('externalAPIs', () => {
       resetExternal();
     });
 
+    it('noops if elementInternals is not passed', () => {
+      assert.doesNotThrow(() => {
+        externalAPIs();
+        externalAPIs({});
+      });
+
+      for (const type of [undefined, null]) {
+        assert.doesNotThrow(
+          () => {
+            externalAPIs({ elementInternals: type });
+          },
+          Error,
+          '',
+          `"${type}" threw an error`
+        );
+      }
+    });
+
     it('throws if elementInternals is not a function', () => {
-      for (const type of ['1', 1, false, {}, []]) {
-        assert.throws(() => {
-          externalAPIs({ elementInternals: type });
-        });
+      for (const type of ['1', 0, false, {}, []]) {
+        assert.throws(
+          () => {
+            externalAPIs({ elementInternals: type });
+          },
+          Error,
+          '',
+          `"${type}" did not through an error`
+        );
       }
 
       assert.doesNotThrow(() => {
@@ -207,7 +230,7 @@ describe('externalAPIs', () => {
       );
     });
 
-    it('does not error if the resolved value is not an array', done => {
+    it('does not error if the resolved value is not an array', async () => {
       for (const type of ['1', 1, false, null, () => {}, {}]) {
         externalAPIs({
           elementInternals() {
@@ -215,10 +238,8 @@ describe('externalAPIs', () => {
           }
         });
 
-        external.elementInternals(() => {}, isNotCalled);
+        await external.elementInternals(() => {}, isNotCalled);
       }
-
-      done();
     });
 
     it('does not error if internals property is missing', done => {
@@ -237,7 +258,7 @@ describe('externalAPIs', () => {
       }, isNotCalled);
     });
 
-    it('does not error if internals property is not an object', done => {
+    it('does not error if internals property is not an object', async () => {
       for (const type of ['1', 1, false, null, () => {}]) {
         externalAPIs({
           elementInternals() {
@@ -250,13 +271,11 @@ describe('externalAPIs', () => {
           }
         });
 
-        external.elementInternals(() => {}, isNotCalled);
+        await external.elementInternals(() => {}, isNotCalled);
       }
-
-      done();
     });
 
-    it('does not error if ancestry is not a string or array', done => {
+    it('does not error if ancestry is not a string or array', async () => {
       for (const type of [1, false, null, () => {}, {}]) {
         externalAPIs({
           elementInternals() {
@@ -269,10 +288,8 @@ describe('externalAPIs', () => {
           }
         });
 
-        external.elementInternals(() => {}, isNotCalled);
+        await external.elementInternals(() => {}, isNotCalled);
       }
-
-      done();
     });
 
     it('does not error if it cannot find the ancestry node', done => {
