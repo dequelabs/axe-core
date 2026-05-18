@@ -1,6 +1,6 @@
 # External APIs
 
-Axe externalAPIs can be used to configure to pass information to axe-core that it would be otherwise unable to obtain on it's own (such as when it is running in an isolated JavaScript context of an extension). By default axe-core will try to gather the information if the external API for it is not set. If the external API is set axe-core will only rely on the passed in data and will not gather it itself.
+Axe externalAPIs can be used to pass information to axe-core that it would be otherwise unable to obtain on its own (such as when it is running in an isolated JavaScript context of an extension). By default axe-core will try to gather the information if the external API for it is not set. If the external API is set axe-core will only rely on the passed in data and will not gather it itself.
 
 ```js
 axe.externalAPIs({
