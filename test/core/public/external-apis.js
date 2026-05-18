@@ -1,6 +1,6 @@
 describe('externalAPIs', () => {
   const externalAPIs = axe.externalAPIs;
-  const external = axe._thisWillBeDeletedDoNotUse.public.external;
+  const { external, resetExternal } = axe._thisWillBeDeletedDoNotUse.public;
   const { html, queryShadowFixture } = axe.testUtils;
   const { getNodeFromTree } = axe.utils;
   const isNotCalled = err => {
@@ -47,6 +47,10 @@ describe('externalAPIs', () => {
       ];
     });
 
+    afterEach(() => {
+      resetExternal();
+    });
+
     it('throws if elementInternals is not a function', () => {
       for (const type of ['1', 1, false, {}, []]) {
         assert.throws(() => {
@@ -71,11 +75,11 @@ describe('externalAPIs', () => {
           const node = document.querySelector('testutils-element');
           const vNode = getNodeFromTree(node);
 
-          const internals = vNode.internals;
+          const internals = vNode.elementInternals;
           assert.ok(internals);
           assert.equal(internals.role, 'heading');
 
-          const shadowInternals = shadowVNode.internals;
+          const shadowInternals = shadowVNode.elementInternals;
           assert.ok(shadowInternals);
           assert.equal(shadowInternals.role, 'input');
 
@@ -99,7 +103,7 @@ describe('externalAPIs', () => {
           const activeDesc = document.querySelector('testutils-element > div');
           const vNode = getNodeFromTree(node);
 
-          const internals = vNode.internals;
+          const internals = vNode.elementInternals;
           assert.equal(internals.ariaActiveDescendantElement, activeDesc);
 
           done();
@@ -122,7 +126,7 @@ describe('externalAPIs', () => {
           const label = document.querySelector('#label');
           const vNode = getNodeFromTree(node);
 
-          const internals = vNode.internals;
+          const internals = vNode.elementInternals;
           assert.deepEqual(internals.ariaLabelledbyElements, [label]);
 
           done();
