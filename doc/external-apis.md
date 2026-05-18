@@ -58,6 +58,6 @@ const internals = await chrome.scripting.executeScript({
 });
 ```
 
-## axe.externalAPIS({ elementInternalsTimeout })
+## axe.externalAPIs({ elementInternalsTimeout })
 
 Since gathering ElementInternals data is an async operation, you can configure how long axe-core will wait for `elementInternals` promise to resolve. By default the timeout is set to 1 second. If the timeout occurs axe-core will not run and will throw an error.
