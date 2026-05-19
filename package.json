@@ -61,7 +61,8 @@
     "axe.d.ts",
     "sri-history.json",
     "locales/",
-    "LICENSE-3RD-PARTY.txt"
+    "LICENSE-3RD-PARTY.txt",
+    "gather-internals.js"
   ],
   "standard-version": {
     "scripts": {
@@ -90,6 +91,7 @@
     "test:unit:api": "npm run test:unit -- testDirs=api",
     "test:unit:integration": "npm run test:unit -- testDirs=integration",
     "test:unit:virtual-rules": "npm run test:unit -- testDirs=virtual-rules",
+    "test:unit:gather-internals": "npm run test:unit -- testDirs=gather-internals",
     "integration": "node test/integration/full/test-webdriver.js",
     "integration:apg": "mocha --fail-zero test/aria-practices/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
