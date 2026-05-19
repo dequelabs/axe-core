@@ -3,7 +3,6 @@ describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   const externalAPIs = axe.externalAPIs;
-  const resetExternal = axe._thisWillBeDeletedDoNotUse.public.resetExternal;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
   const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
@@ -104,7 +103,7 @@ describe('Audit', () => {
   });
 
   afterEach(() => {
-    resetExternal();
+    externalAPIs();
     axe.teardown();
     audit.run = origAuditRun;
     axe.utils = origUtils;
@@ -1248,10 +1247,10 @@ describe('Audit', () => {
     });
 
     describe('elementInternals', () => {
-      it('runs elementInternals if set', done => {
+      it('runs external getElementInternals', done => {
         const stub = sinon.stub().returns(Promise.resolve([]));
         externalAPIs({
-          elementInternals: stub
+          getElementInternals: stub
         });
 
         audit.run(
@@ -1265,14 +1264,14 @@ describe('Audit', () => {
         );
       });
 
-      it('runs elementInternals before any rules', done => {
+      it('runs getElementInternals before any rules', done => {
         fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
         let elementInternalsStartTime;
         let ruleStartTime;
 
         externalAPIs({
-          elementInternals: () => {
+          getElementInternals: () => {
             elementInternalsStartTime = performance.now();
             return Promise.resolve([]);
           }
@@ -1306,11 +1305,11 @@ describe('Audit', () => {
         );
       });
 
-      it('rejects if elementInternals timeout occurs', done => {
+      it('rejects if getElementInternals timeout occurs', done => {
         const stub = sinon.stub().returns(Promise.resolve([]));
         externalAPIs({
-          elementInternalsTimeout: 200,
-          elementInternals() {
+          getElementInternalsTimeout: 200,
+          getElementInternals() {
             return new Promise(res => {
               setTimeout(res, 500);
             });
