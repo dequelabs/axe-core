@@ -50,24 +50,6 @@ describe('externalAPIs', () => {
       externalAPIs();
     });
 
-    it('noops if getElementInternals is not passed', () => {
-      assert.doesNotThrow(() => {
-        externalAPIs();
-        externalAPIs({});
-      });
-
-      for (const type of [undefined, null]) {
-        assert.doesNotThrow(
-          () => {
-            externalAPIs({ getElementInternals: type });
-          },
-          Error,
-          '',
-          `"${type}" threw an error`
-        );
-      }
-    });
-
     it('throws if getElementInternals is not a function', () => {
       for (const type of ['1', 0, false, {}, []]) {
         assert.throws(
@@ -138,6 +120,21 @@ describe('externalAPIs', () => {
 
       const internals = vNode.elementInternals;
       assert.deepEqual(internals.ariaLabelledbyElements, [label]);
+    });
+
+    it('resets getElementInternals if not passed', async () => {
+      const stub = sinon.stub().returns(Promise.resolve([]));
+
+      externalAPIs({
+        getElementInternals() {
+          return stub;
+        }
+      });
+
+      externalAPIs();
+      await external.setElementInternals();
+
+      assert.isFalse(stub.called);
     });
 
     it('timesout if getElementInternals function does not return in time', async () => {
