@@ -210,7 +210,13 @@ defined files in the \`files\` array of \`package.json\`.
 | File | Status | Version |\n|------|--------|--------|
 `;
 
-  const importTargets = [...pkg.files.map(file => `${pkg.name}/${file}`)];
+  // these files are not part of the importable api
+  const nonImportableFiles = ['gather-internals.js'];
+  const importTargets = [
+    ...pkg.files
+      .filter(file => !nonImportableFiles.includes(file))
+      .map(file => `${pkg.name}/${file}`)
+  ];
   let anyCaught = false;
 
   console.log('Validating package files are importable:');
