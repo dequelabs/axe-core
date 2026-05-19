@@ -14,7 +14,7 @@ describe('external-apis', () => {
     const context = { exclude: [] };
 
     axe.externalAPIs({
-      elementInternals() {
+      getElementInternals() {
         return Promise.resolve([
           {
             ancestry: 'html > body > external-api-element',
@@ -40,7 +40,7 @@ describe('external-apis', () => {
 
     axe._enableElementInternals = false;
     axe.externalAPIs({
-      elementInternals() {
+      getElementInternals() {
         return Promise.resolve([
           {
             ancestry: 'html > body > external-api-element',
