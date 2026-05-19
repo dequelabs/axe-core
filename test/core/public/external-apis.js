@@ -1,13 +1,11 @@
 describe('externalAPIs', () => {
   const externalAPIs = axe.externalAPIs;
-  const { external, resetExternal } = axe._thisWillBeDeletedDoNotUse.public;
+  const { external } = axe._thisWillBeDeletedDoNotUse.public;
   const { html, queryShadowFixture } = axe.testUtils;
   const { getNodeFromTree } = axe.utils;
-  const isNotCalled = err => {
-    throw err || new Error('Reject should not be called');
-  };
+  const subLogger = sinon.stub();
 
-  describe('elementInternals', () => {
+  describe('getElementInternals', () => {
     let externalInternals;
     let shadowVNode;
 
@@ -48,10 +46,11 @@ describe('externalAPIs', () => {
     });
 
     afterEach(() => {
-      resetExternal();
+      subLogger.resetHistory();
+      externalAPIs();
     });
 
-    it('noops if elementInternals is not passed', () => {
+    it('noops if getElementInternals is not passed', () => {
       assert.doesNotThrow(() => {
         externalAPIs();
         externalAPIs({});
@@ -60,7 +59,7 @@ describe('externalAPIs', () => {
       for (const type of [undefined, null]) {
         assert.doesNotThrow(
           () => {
-            externalAPIs({ elementInternals: type });
+            externalAPIs({ getElementInternals: type });
           },
           Error,
           '',
@@ -69,182 +68,164 @@ describe('externalAPIs', () => {
       }
     });
 
-    it('throws if elementInternals is not a function', () => {
+    it('throws if getElementInternals is not a function', () => {
       for (const type of ['1', 0, false, {}, []]) {
         assert.throws(
           () => {
-            externalAPIs({ elementInternals: type });
+            externalAPIs({ getElementInternals: type });
           },
           Error,
           '',
-          `"${type}" did not through an error`
+          `"${type}" did not throw an error`
         );
       }
 
       assert.doesNotThrow(() => {
-        externalAPIs({ elementInternals() {} });
+        externalAPIs({ getElementInternals() {} });
       });
     });
 
-    it('sets internals on the vNode', done => {
+    it('sets internals on the vNode', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return Promise.resolve(externalInternals);
         }
       });
 
-      external.elementInternals(() => {
-        try {
-          const node = document.querySelector('testutils-element');
-          const vNode = getNodeFromTree(node);
+      await external.setElementInternals();
 
-          const internals = vNode.elementInternals;
-          assert.ok(internals);
-          assert.equal(internals.role, 'heading');
+      const node = document.querySelector('testutils-element');
+      const vNode = getNodeFromTree(node);
 
-          const shadowInternals = shadowVNode.elementInternals;
-          assert.ok(shadowInternals);
-          assert.equal(shadowInternals.role, 'input');
+      const internals = vNode.elementInternals;
+      assert.ok(internals);
+      assert.equal(internals.role, 'heading');
 
-          done();
-        } catch (err) {
-          done(err);
-        }
-      }, isNotCalled);
+      const shadowInternals = shadowVNode.elementInternals;
+      assert.ok(shadowInternals);
+      assert.equal(shadowInternals.role, 'input');
     });
 
-    it('converts idref ancestry to HTMLElement', done => {
+    it('converts idref ancestry to HTMLElement', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return Promise.resolve(externalInternals);
         }
       });
 
-      external.elementInternals(() => {
-        try {
-          const node = document.querySelector('testutils-element');
-          const activeDesc = document.querySelector('testutils-element > div');
-          const vNode = getNodeFromTree(node);
+      await external.setElementInternals();
 
-          const internals = vNode.elementInternals;
-          assert.equal(internals.ariaActiveDescendantElement, activeDesc);
+      const node = document.querySelector('testutils-element');
+      const activeDesc = document.querySelector('testutils-element > div');
+      const vNode = getNodeFromTree(node);
 
-          done();
-        } catch (err) {
-          done(err);
-        }
-      }, isNotCalled);
+      const internals = vNode.elementInternals;
+      assert.equal(internals.ariaActiveDescendantElement, activeDesc);
     });
 
-    it('converts idrefs ancestry to NodeList', done => {
+    it('converts idrefs ancestry to NodeList', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return Promise.resolve(externalInternals);
         }
       });
 
-      external.elementInternals(() => {
-        try {
-          const node = document.querySelector('testutils-element');
-          const label = document.querySelector('#label');
-          const vNode = getNodeFromTree(node);
+      await external.setElementInternals();
 
-          const internals = vNode.elementInternals;
-          assert.deepEqual(internals.ariaLabelledbyElements, [label]);
+      const node = document.querySelector('testutils-element');
+      const label = document.querySelector('#label');
+      const vNode = getNodeFromTree(node);
 
-          done();
-        } catch (err) {
-          done(err);
-        }
-      }, isNotCalled);
+      const internals = vNode.elementInternals;
+      assert.deepEqual(internals.ariaLabelledbyElements, [label]);
     });
 
-    it('timesout if elementInternals function does not return in time', done => {
+    it('timesout if getElementInternals function does not return in time', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return new Promise(res => {
             setTimeout(res, 1500);
           });
         }
       });
 
-      external.elementInternals(
-        () => {
-          done(new Error('Did not time out'));
-        },
-        err => {
-          try {
-            assert.isTrue(err.message.includes('Timeout'));
-            done();
-          } catch (error) {
-            done(error);
-          }
-        }
-      );
+      try {
+        await external.setElementInternals();
+        throw new Error('Did not time out');
+      } catch (err) {
+        assert.isTrue(err.message.includes('Timeout'));
+      }
     });
 
-    it('allows configuring the timeout time', done => {
+    it('allows configuring the timeout time', async () => {
       externalAPIs({
-        elementInternalsTimeout: 250,
-        elementInternals() {
+        getElementInternalsTimeout: 250,
+        getElementInternals() {
           return new Promise(res => {
             setTimeout(res, 500);
           });
         }
       });
 
-      external.elementInternals(
-        () => {
-          done(new Error('Did not time out'));
-        },
-        err => {
-          try {
-            assert.isTrue(err.message.includes('Timeout'));
-            done();
-          } catch (error) {
-            done(error);
-          }
-        }
-      );
+      try {
+        await external.setElementInternals();
+        throw new Error('Did not time out');
+      } catch (err) {
+        assert.isTrue(err.message.includes('Timeout'));
+      }
     });
 
-    it('forwards rejection if elementInternals rejects', done => {
+    it('forwards rejection if getElementInternals rejects', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return Promise.reject(new Error('boom!'));
         }
       });
 
-      external.elementInternals(
-        () => {
-          done(new Error('Did not throw'));
-        },
-        err => {
-          try {
-            assert.isTrue(err.message.includes('boom'));
-            done();
-          } catch (error) {
-            done(error);
-          }
-        }
-      );
+      try {
+        await external.setElementInternals();
+        throw new Error('Did not throw');
+      } catch (err) {
+        assert.isTrue(err.message.includes('boom!'));
+      }
     });
 
-    it('does not error if the resolved value is not an array', async () => {
+    it('logs and does not error if the resolved value is not an array', async () => {
       for (const type of ['1', 1, false, null, () => {}, {}]) {
         externalAPIs({
-          elementInternals() {
+          getElementInternals() {
             return Promise.resolve(type);
           }
         });
 
-        await external.elementInternals(() => {}, isNotCalled);
+        subLogger.resetHistory();
+        try {
+          await external.setElementInternals(subLogger);
+        } catch (err) {
+          throw new Error(`"${type}" threw an error`, { cause: err });
+        }
+
+        assert.isTrue(subLogger.called);
+        assert.include(subLogger.firstCall.args[0], 'did not return an array');
       }
     });
 
-    it('does not error if internals property is missing', done => {
+    it('logs and does not error if resolve value contains non-object items', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
+          return Promise.resolve(['1', 1, false, null, () => {}]);
+        }
+      });
+
+      await external.setElementInternals(subLogger);
+
+      assert.isTrue(subLogger.called);
+      assert.include(subLogger.firstCall.args[0], 'is not an object');
+    });
+
+    it('logs and does not error internals property is missing', async () => {
+      externalAPIs({
+        getElementInternals() {
           return Promise.resolve([
             {
               ancestry: 'testutils-element'
@@ -253,15 +234,16 @@ describe('externalAPIs', () => {
         }
       });
 
-      external.elementInternals(() => {
-        done();
-      }, isNotCalled);
+      await external.setElementInternals(subLogger);
+
+      assert.isTrue(subLogger.called);
+      assert.include(subLogger.firstCall.args[0], 'internals is not an object');
     });
 
-    it('does not error if internals property is not an object', async () => {
+    it('logs and does not error if internals property is not an object', async () => {
       for (const type of ['1', 1, false, null, () => {}]) {
         externalAPIs({
-          elementInternals() {
+          getElementInternals() {
             return Promise.resolve([
               {
                 ancestry: 'testutils-element',
@@ -271,14 +253,25 @@ describe('externalAPIs', () => {
           }
         });
 
-        await external.elementInternals(() => {}, isNotCalled);
+        subLogger.resetHistory();
+        try {
+          await external.setElementInternals(subLogger);
+        } catch (err) {
+          throw new Error(`"${type}" threw an error`, { cause: err });
+        }
+
+        assert.isTrue(subLogger.called);
+        assert.include(
+          subLogger.firstCall.args[0],
+          'internals is not an object'
+        );
       }
     });
 
-    it('does not error if ancestry is not a string or array', async () => {
+    it('logs and does not error if ancestry is not a string or array', async () => {
       for (const type of [1, false, null, () => {}, {}]) {
         externalAPIs({
-          elementInternals() {
+          getElementInternals() {
             return Promise.resolve([
               {
                 ancestry: type,
@@ -288,13 +281,24 @@ describe('externalAPIs', () => {
           }
         });
 
-        await external.elementInternals(() => {}, isNotCalled);
+        subLogger.resetHistory();
+        try {
+          await external.setElementInternals(subLogger);
+        } catch (err) {
+          throw new Error(`"${type}" threw an error`, { cause: err });
+        }
+
+        assert.isTrue(subLogger.called);
+        assert.include(
+          subLogger.firstCall.args[0],
+          'ancestry is not a string or an array of strings'
+        );
       }
     });
 
-    it('does not error if it cannot find the ancestry node', done => {
+    it('logs and does not error if it cannot find the ancestry node', async () => {
       externalAPIs({
-        elementInternals() {
+        getElementInternals() {
           return Promise.resolve([
             {
               ancestry: 'does-not-exist',
@@ -306,9 +310,69 @@ describe('externalAPIs', () => {
         }
       });
 
-      external.elementInternals(() => {
-        done();
-      }, isNotCalled);
+      await external.setElementInternals(subLogger);
+
+      assert.isTrue(subLogger.called);
+      assert.include(
+        subLogger.firstCall.args[0],
+        'Unable to locate node using selector'
+      );
+    });
+
+    it("sets a getter that throws if it can't find an idref element", async () => {
+      externalAPIs({
+        getElementInternals() {
+          return Promise.resolve([
+            {
+              ancestry: '#fixture > testutils-element:nth-child(1)',
+              internals: {
+                ariaActiveDescendantElement: {
+                  type: 'HTMLElement',
+                  value: 'button'
+                }
+              }
+            }
+          ]);
+        }
+      });
+
+      await external.setElementInternals();
+
+      const node = document.querySelector('testutils-element');
+      const vNode = getNodeFromTree(node);
+
+      const internals = vNode.elementInternals;
+      assert.throws(() => {
+        internals.ariaActiveDescendantElement;
+      }, /Unable to locate node using selector/);
+    });
+
+    it("sets a getter that throws if it can't find idrefs elements", async () => {
+      externalAPIs({
+        getElementInternals() {
+          return Promise.resolve([
+            {
+              ancestry: '#fixture > testutils-element:nth-child(1)',
+              internals: {
+                ariaLabelledbyElements: {
+                  type: 'NodeList',
+                  value: ['button']
+                }
+              }
+            }
+          ]);
+        }
+      });
+
+      await external.setElementInternals();
+
+      const node = document.querySelector('testutils-element');
+      const vNode = getNodeFromTree(node);
+
+      const internals = vNode.elementInternals;
+      assert.throws(() => {
+        internals.ariaLabelledbyElements;
+      }, /Unable to locate nodes using selectors/);
     });
   });
 });

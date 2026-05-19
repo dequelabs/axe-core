@@ -674,6 +674,31 @@ declare namespace axe {
     isDefault?: boolean
   ): void;
 
+  /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function externalAPIs(params?: {
+    getElementInternalsTimeout?: number;
+    getElementInternals?: () => Promise<ElementInternalsMap>;
+  }): void;
+
+  type ElementInternalsMap = Array<{
+    ancestry: CrossTreeSelector;
+    internals: Record<string, InternalsData>;
+  }>;
+  type InternalsData = string | InternalsDataIdref | InternalsDataIdrefs;
+  type InternalsDataIdref = {
+    type: 'HTMLElement';
+    value: CrossTreeSelector;
+  };
+  type InternalsDataIdrefs = {
+    type: 'NodeList';
+    value: CrossTreeSelector[];
+  };
+
   // axe.frameMessenger
   type FrameMessenger = {
     open: (topicHandler: TopicHandler) => Close | void;
