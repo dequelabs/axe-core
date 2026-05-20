@@ -175,6 +175,29 @@ describe('externalAPIs', () => {
       }
     });
 
+    it('resets the timeout if passed null', async () => {
+      externalAPIs({
+        getElementInternalsTimeout: 250,
+        getElementInternals() {
+          return new Promise(res => {
+            setTimeout(res, 500, externalInternals);
+          });
+        }
+      });
+
+      externalAPIs({
+        getElementInternalsTimeout: null
+      });
+
+      await external.loadElementInternals();
+
+      const node = document.querySelector('testutils-element');
+      const vNode = getNodeFromTree(node);
+      const internals = vNode.elementInternals;
+      assert.ok(internals);
+      assert.equal(internals.role, 'heading');
+    });
+
     it('forwards rejection if getElementInternals rejects', async () => {
       externalAPIs({
         getElementInternals() {
@@ -316,6 +339,56 @@ describe('externalAPIs', () => {
       assert.include(
         subLogger.firstCall.args[0],
         'Unable to locate node using selector'
+      );
+    });
+
+    it('logs and does not error if internals property is an object without the "type" property', async () => {
+      externalAPIs({
+        getElementInternals() {
+          return Promise.resolve([
+            {
+              ancestry: '#fixture > testutils-element:nth-child(1)',
+              internals: {
+                ariaActiveDescendantElement: {
+                  value: 'button'
+                }
+              }
+            }
+          ]);
+        }
+      });
+
+      await external.loadElementInternals(subLogger);
+
+      assert.isTrue(subLogger.called);
+      assert.include(
+        subLogger.firstCall.args[0],
+        'is an object but has no "type" property'
+      );
+    });
+
+    it('logs and does not error if internals property is an object without the "value" property', async () => {
+      externalAPIs({
+        getElementInternals() {
+          return Promise.resolve([
+            {
+              ancestry: '#fixture > testutils-element:nth-child(1)',
+              internals: {
+                ariaActiveDescendantElement: {
+                  type: 'HTMLElement'
+                }
+              }
+            }
+          ]);
+        }
+      });
+
+      await external.loadElementInternals(subLogger);
+
+      assert.isTrue(subLogger.called);
+      assert.include(
+        subLogger.firstCall.args[0],
+        'is an object but has no "value" property'
       );
     });
 
