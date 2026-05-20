@@ -47,7 +47,10 @@ describe('externalAPIs', () => {
 
     afterEach(() => {
       subLogger.resetHistory();
-      externalAPIs();
+      externalAPIs({
+        getElementInternals: null,
+        getElementInternalsTimeout: null
+      });
     });
 
     it('throws if getElementInternals is not a function', () => {
@@ -74,7 +77,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals();
+      await external.loadElementInternals();
 
       const node = document.querySelector('testutils-element');
       const vNode = getNodeFromTree(node);
@@ -95,7 +98,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals();
+      await external.loadElementInternals();
 
       const node = document.querySelector('testutils-element');
       const activeDesc = document.querySelector('testutils-element > div');
@@ -112,7 +115,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals();
+      await external.loadElementInternals();
 
       const node = document.querySelector('testutils-element');
       const label = document.querySelector('#label');
@@ -122,7 +125,7 @@ describe('externalAPIs', () => {
       assert.deepEqual(internals.ariaLabelledbyElements, [label]);
     });
 
-    it('resets getElementInternals if not passed', async () => {
+    it('resets getElementInternals if passed null', async () => {
       const stub = sinon.stub().returns(Promise.resolve([]));
 
       externalAPIs({
@@ -131,8 +134,8 @@ describe('externalAPIs', () => {
         }
       });
 
-      externalAPIs();
-      await external.setElementInternals();
+      externalAPIs({ getElementInternals: null });
+      await external.loadElementInternals();
 
       assert.isFalse(stub.called);
     });
@@ -147,7 +150,7 @@ describe('externalAPIs', () => {
       });
 
       try {
-        await external.setElementInternals();
+        await external.loadElementInternals();
         throw new Error('Did not time out');
       } catch (err) {
         assert.isTrue(err.message.includes('Timeout'));
@@ -165,7 +168,7 @@ describe('externalAPIs', () => {
       });
 
       try {
-        await external.setElementInternals();
+        await external.loadElementInternals();
         throw new Error('Did not time out');
       } catch (err) {
         assert.isTrue(err.message.includes('Timeout'));
@@ -180,7 +183,7 @@ describe('externalAPIs', () => {
       });
 
       try {
-        await external.setElementInternals();
+        await external.loadElementInternals();
         throw new Error('Did not throw');
       } catch (err) {
         assert.isTrue(err.message.includes('boom!'));
@@ -197,7 +200,7 @@ describe('externalAPIs', () => {
 
         subLogger.resetHistory();
         try {
-          await external.setElementInternals(subLogger);
+          await external.loadElementInternals(subLogger);
         } catch (err) {
           throw new Error(`"${type}" threw an error`, { cause: err });
         }
@@ -214,7 +217,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals(subLogger);
+      await external.loadElementInternals(subLogger);
 
       assert.isTrue(subLogger.called);
       assert.include(subLogger.firstCall.args[0], 'is not an object');
@@ -231,7 +234,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals(subLogger);
+      await external.loadElementInternals(subLogger);
 
       assert.isTrue(subLogger.called);
       assert.include(subLogger.firstCall.args[0], 'internals is not an object');
@@ -252,7 +255,7 @@ describe('externalAPIs', () => {
 
         subLogger.resetHistory();
         try {
-          await external.setElementInternals(subLogger);
+          await external.loadElementInternals(subLogger);
         } catch (err) {
           throw new Error(`"${type}" threw an error`, { cause: err });
         }
@@ -280,7 +283,7 @@ describe('externalAPIs', () => {
 
         subLogger.resetHistory();
         try {
-          await external.setElementInternals(subLogger);
+          await external.loadElementInternals(subLogger);
         } catch (err) {
           throw new Error(`"${type}" threw an error`, { cause: err });
         }
@@ -307,7 +310,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals(subLogger);
+      await external.loadElementInternals(subLogger);
 
       assert.isTrue(subLogger.called);
       assert.include(
@@ -333,7 +336,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals();
+      await external.loadElementInternals();
 
       const node = document.querySelector('testutils-element');
       const vNode = getNodeFromTree(node);
@@ -361,7 +364,7 @@ describe('externalAPIs', () => {
         }
       });
 
-      await external.setElementInternals();
+      await external.loadElementInternals();
 
       const node = document.querySelector('testutils-element');
       const vNode = getNodeFromTree(node);
