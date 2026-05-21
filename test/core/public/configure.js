@@ -441,6 +441,59 @@ describe('axe.configure', () => {
       assert.equal(axe._audit.lang, 'lol');
     });
 
+    it('should update helpUrl lang when locale is configured', () => {
+      assert.equal(
+        axe._audit.data.rules.greeting.helpUrl,
+        `https://dequeuniversity.com/rules/axe/${ver}/greeting?application=axeAPI`
+      );
+      axe.configure({
+        locale: {
+          lang: 'de'
+        }
+      });
+      assert.equal(
+        axe._audit.data.rules.greeting.helpUrl,
+        `https://dequeuniversity.com/rules/axe/${ver}/greeting?application=axeAPI&lang=de`
+      );
+    });
+
+    it('should not modify custom helpUrls when locale is configured', () => {
+      axe.configure({
+        rules: [
+          {
+            id: 'custom',
+            selector: 'div',
+            metadata: {
+              helpUrl: `https://dequeuniversity.com/rules/myproject/${ver}/custom?application=axeAPI`
+            }
+          },
+          {
+            id: 'greeting',
+            selector: 'div',
+            metadata: {
+              description: 'This is a rule that rules',
+              help: 'ABCDEFGHIKLMNOPQRSTVXYZ'
+            }
+          }
+        ]
+      });
+
+      axe.configure({
+        locale: {
+          lang: 'de'
+        }
+      });
+
+      assert.equal(
+        axe._audit.data.rules.custom.helpUrl,
+        `https://dequeuniversity.com/rules/myproject/${ver}/custom?application=axeAPI`
+      );
+      assert.equal(
+        axe._audit.data.rules.greeting.helpUrl,
+        `https://dequeuniversity.com/rules/axe/${ver}/greeting?application=axeAPI&lang=de`
+      );
+    });
+
     it('should call doT.compile if a messages uses doT syntax', () => {
       axe.configure({
         locale: {

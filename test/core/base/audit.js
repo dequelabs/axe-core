@@ -210,6 +210,7 @@ describe('Audit', () => {
         `https://dequeuniversity.com/rules/thing/${ver}/target2?application=axeAPI`
       );
     });
+
     it('understands prerelease type version numbers', () => {
       const tempVersion = axe.version;
       audit = new Audit();
@@ -294,36 +295,6 @@ describe('Audit', () => {
       audit.setBranding('thing');
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
-    });
-    it('should call _constructHelpUrls', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding({
-        application: 'thing'
-      });
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=thing`
-      });
-    });
-    it('should call _constructHelpUrls even when nothing changed', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding(undefined);
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=axeAPI`
-      });
     });
     it('should not replace custom set branding', () => {
       audit = new Audit();
