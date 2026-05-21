@@ -299,11 +299,9 @@ None
 
 ### API Name: axe.resetLocale
 
-#### Purpose
+#### Description
 
 Restore the default locale that was active before any `axe.configure({ locale })` call, without touching the rest of the configuration.
-
-#### Description
 
 `axe.configure({ locale })` has no inverse, and `axe.reset()` also clears branding, rule enable/disable overrides, `frameMessenger`, and other configuration. `axe.resetLocale()` reverts only the locale (rule descriptions, check messages, failure summaries, `lang`) back to the default that was in effect before the first `applyLocale` call. It is a no-op if no non-default locale has ever been applied, and safe to call repeatedly.
 
