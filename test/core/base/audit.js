@@ -106,7 +106,7 @@ describe('Audit', () => {
     // reset elementInternals
     externalAPIs({
       getElementInternals: null,
-      getElementInternalsTimeout: null
+      elementInternalsTimeout: null
     });
     axe.teardown();
     audit.run = origAuditRun;
@@ -1312,7 +1312,7 @@ describe('Audit', () => {
       it('rejects if getElementInternals timeout occurs', done => {
         const stub = sinon.stub().returns(Promise.resolve([]));
         externalAPIs({
-          getElementInternalsTimeout: 200,
+          elementInternalsTimeout: 200,
           getElementInternals() {
             return new Promise(res => {
               setTimeout(res, 500);

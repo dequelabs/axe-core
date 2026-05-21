@@ -49,7 +49,7 @@ describe('externalAPIs', () => {
       subLogger.resetHistory();
       externalAPIs({
         getElementInternals: null,
-        getElementInternalsTimeout: null
+        elementInternalsTimeout: null
       });
     });
 
@@ -159,7 +159,7 @@ describe('externalAPIs', () => {
 
     it('allows configuring the timeout time', async () => {
       externalAPIs({
-        getElementInternalsTimeout: 250,
+        elementInternalsTimeout: 250,
         getElementInternals() {
           return new Promise(res => {
             setTimeout(res, 500);
@@ -177,7 +177,7 @@ describe('externalAPIs', () => {
 
     it('resets the timeout if passed null', async () => {
       externalAPIs({
-        getElementInternalsTimeout: 250,
+        elementInternalsTimeout: 250,
         getElementInternals() {
           return new Promise(res => {
             setTimeout(res, 500, externalInternals);
@@ -186,7 +186,7 @@ describe('externalAPIs', () => {
       });
 
       externalAPIs({
-        getElementInternalsTimeout: null
+        elementInternalsTimeout: null
       });
 
       await external.loadElementInternals();

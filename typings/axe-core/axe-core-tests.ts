@@ -447,7 +447,7 @@ axe.cleanup();
 axe.externalAPIs();
 axe.externalAPIs({});
 axe.externalAPIs({
-  getElementInternalsTimeout: 100
+  elementInternalsTimeout: 100
 });
 axe.externalAPIs({
   getElementInternals() {
@@ -455,7 +455,7 @@ axe.externalAPIs({
   }
 });
 axe.externalAPIs({
-  getElementInternalsTimeout: 100,
+  elementInternalsTimeout: 100,
   getElementInternals() {
     return Promise.resolve([
       {

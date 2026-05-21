@@ -681,7 +681,7 @@ declare namespace axe {
    * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
    */
   function externalAPIs(params?: {
-    getElementInternalsTimeout?: number;
+    elementInternalsTimeout?: number;
     getElementInternals?: () => Promise<ElementInternalsMap>;
   }): void;
 
