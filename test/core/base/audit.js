@@ -105,8 +105,8 @@ describe('Audit', () => {
   afterEach(() => {
     // reset elementInternals
     externalAPIs({
-      elementInternals: null,
-      elementInternalsTimeout: null
+      getElementInternals: null,
+      getElementInternalsTimeout: null
     });
     axe.teardown();
     audit.run = origAuditRun;
