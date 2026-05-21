@@ -8,7 +8,8 @@ var testDirs = [
   'checks',
   'api',
   'integration',
-  'virtual-rules'
+  'virtual-rules',
+  'gather-internals'
 ];
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
@@ -101,6 +102,7 @@ module.exports = config => {
       },
       'axe.js',
       { pattern: 'axe.min.js', included: false, served: true },
+      'tmp/walk-tree.js',
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {

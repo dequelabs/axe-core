@@ -108,6 +108,39 @@ module.exports = function (grunt) {
             cwd: 'lib/core',
             src: ['core.js'],
             dest: 'tmp/core'
+          },
+          // build so we can test it by itself
+          {
+            expand: true,
+            cwd: 'lib/gather-internals',
+            src: ['walk-tree.js'],
+            dest: 'tmp/',
+            options: {
+              globalName: '_gatherInternals'
+            }
+          },
+          {
+            expand: true,
+            src: ['lib/gather-internals/main.js'],
+            dest: './',
+            options: {
+              outfile: 'gather-internals.js',
+              // esbuild doesn't support returning from an iife so we'll have to do a bit of a hack to make it work
+              // @see https://github.com/evanw/esbuild/issues/2277
+              banner: {
+                js: '(() => {'
+              },
+              footer: {
+                js: `return elementInternalsMap;
+})();`
+              },
+              globalName: 'elementInternalsMap',
+              metafile: true
+            },
+            validateImports: {
+              max: 10,
+              maxSize: 4000
+            }
           }
         ]
       }
