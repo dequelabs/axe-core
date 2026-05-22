@@ -630,6 +630,14 @@ declare namespace axe {
   function reset(): void;
 
   /**
+   * Restores the default locale that was active before any
+   * `axe.configure({ locale })` call. No-op if no non-default
+   * locale has ever been applied. Does not affect any other
+   * configuration.
+   */
+  function resetLocale(): void;
+
+  /**
    * Function to register a plugin configuration in document and its subframes
    * @param  {Object}    plugin    A plugin configuration object
    */

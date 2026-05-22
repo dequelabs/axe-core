@@ -10,6 +10,7 @@
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
    1. [API Name: axe.reset](#api-name-axereset)
+   1. [API Name: axe.resetLocale](#api-name-axeresetlocale)
    1. [API Name: axe.run](#api-name-axerun)
       1. [Parameters axe.run](#parameters-axerun)
          1. [Context Parameter](#context-parameter)
@@ -291,6 +292,24 @@ Override any previous calls to `axe.configure` and restore the configuration to 
 
 ```js
 axe.reset();
+```
+
+#### Parameters
+
+None
+
+### API Name: axe.resetLocale
+
+#### Description
+
+Restore the default locale that was active before any `axe.configure({ locale })` call, without touching the rest of the configuration.
+
+`axe.configure({ locale })` has no inverse, and `axe.reset()` also clears branding, rule enable/disable overrides, `frameMessenger`, and other configuration. `axe.resetLocale()` reverts only the locale (rule descriptions, check messages, failure summaries, `lang`) back to the default that was in effect before the first `applyLocale` call. It is a no-op if no non-default locale has ever been applied, and safe to call repeatedly.
+
+#### Synopsis
+
+```js
+axe.resetLocale();
 ```
 
 #### Parameters
