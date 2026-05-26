@@ -290,6 +290,27 @@ defined files in the \`files\` array of \`package.json\`.
     }
   }
 
+  // check that the non-importable files are parsable
+  for (const file of nonImportableFiles) {
+    const target = `${pkg.name}/${file}`;
+    try {
+      const resolved = import.meta.resolve(target);
+      if (resolved.includes('node_modules')) {
+        console.error(`✗ ${target} resolves to node_modules`);
+        summary += `| \`${target}\` | ✗ Resolves to node_modules |\n`;
+        exitCode++;
+        continue;
+      }
+      execSync(`node --check "${fileURLToPath(resolved)}"`, { stdio: 'pipe' });
+      console.info(`✓ ${target} (parse-only, browser-only)`);
+      summary += `| \`${target}\` | ✓ Parse OK (browser-only) | n/a |\n`;
+    } catch (error) {
+      console.error(`✗ ${target}: ${error.message}`);
+      summary += `| \`${target}\` | ✗ Parse failed (browser-only) | n/a |\n`;
+      exitCode++;
+    }
+  }
+
   if (anyCaught) {
     exitCode++;
   }
