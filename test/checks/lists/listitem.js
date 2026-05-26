@@ -106,4 +106,22 @@ describe('listitem', () => {
     ]);
     assert.isFalse(result);
   });
+
+  describe('ElementInternals', () => {
+    it('should pass for element that uses elementInternals', () => {
+      const params = checkSetup(
+        '<testutils-element with-role="list"><li id="target">My list item</li></testutils-element>'
+      );
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+    });
+
+    it('returns false for element with unallowed elementInternals role', () => {
+      const params = checkSetup(
+        '<testutils-element><li id="target">My list item</li></testutils-element>'
+      );
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+    });
+  });
 });
