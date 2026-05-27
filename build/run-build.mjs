@@ -8,7 +8,7 @@ import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync, spawn } from 'node:child_process';
-import { build as esbuildBuild } from 'esbuild';
+import { build as esbuildBuild, context as esbuildContext } from 'esbuild';
 import { transformSync } from '@babel/core';
 import { minify } from 'uglify-js';
 import { globSync } from 'glob';
@@ -606,12 +606,127 @@ async function runValidateCommand() {
   }
 }
 
+const GENERATED_METADATA_MAP_REL = 'lib/core/base/metadata-function-map.js';
+
+/**
+ * Paths for esbuild watch (same scope as the former chokidar setup).
+ * @param {string} projectRoot
+ * @returns {string[]}
+ */
+function collectDevelopWatchFiles(projectRoot) {
+  const files = [];
+  for (const rel of globSync('lib/**/*', {
+    cwd: projectRoot,
+    nodir: true,
+    posix: true
+  })) {
+    if (rel === GENERATED_METADATA_MAP_REL) {
+      continue;
+    }
+    files.push(path.join(projectRoot, rel));
+  }
+  for (const rel of globSync('build/**/*.mjs', {
+    cwd: projectRoot,
+    nodir: true,
+    posix: true
+  })) {
+    files.push(path.join(projectRoot, rel));
+  }
+  for (const rel of globSync('test/**/*', {
+    cwd: projectRoot,
+    nodir: true,
+    posix: true
+  })) {
+    files.push(path.join(projectRoot, rel));
+  }
+  return files;
+}
+
+/**
+ * @param {string[]} watchFiles
+ * @param {Map<string, number>} mtimeMap
+ * @returns {string[]}
+ */
+function getChangedWatchFiles(watchFiles, mtimeMap) {
+  const changed = [];
+  for (const absPath of watchFiles) {
+    try {
+      const mtime = fs.statSync(absPath).mtimeMs;
+      const prev = mtimeMap.get(absPath);
+      if (prev === undefined) {
+        if (mtimeMap.size > 0) {
+          changed.push(absPath);
+        }
+      } else if (mtime > prev) {
+        changed.push(absPath);
+      }
+      mtimeMap.set(absPath, mtime);
+    } catch {
+      mtimeMap.delete(absPath);
+    }
+  }
+  return changed;
+}
+
+/**
+ * @param {string[]} watchFiles
+ * @param {Map<string, number>} mtimeMap
+ */
+function seedWatchFileMtimes(watchFiles, mtimeMap) {
+  for (const absPath of watchFiles) {
+    try {
+      mtimeMap.set(absPath, fs.statSync(absPath).mtimeMs);
+    } catch {
+      mtimeMap.delete(absPath);
+    }
+  }
+}
+
+/**
+ * @param {string} projectRoot
+ * @param {Map<string, number>} mtimeMap
+ * @param {(changedPaths: string[]) => void} onChange
+ */
+function createDevelopWatchPlugin(projectRoot, mtimeMap, onChange) {
+  const coreEntry = path.join(projectRoot, 'lib/core/core.js');
+  const coreEntryResolved = path.resolve(coreEntry);
+  return {
+    name: 'axe-develop-watch',
+    setup(build) {
+      let skipEnd = true;
+
+      build.onLoad({ filter: /[\\/]lib[\\/]core[\\/]core\.js$/ }, args => {
+        if (path.resolve(args.path) !== coreEntryResolved) {
+          return null;
+        }
+        return {
+          contents: fs.readFileSync(coreEntry, 'utf8'),
+          loader: 'js',
+          watchFiles: collectDevelopWatchFiles(projectRoot)
+        };
+      });
+
+      build.onEnd(() => {
+        if (skipEnd) {
+          skipEnd = false;
+          return;
+        }
+        const watchFiles = collectDevelopWatchFiles(projectRoot);
+        const changed = getChangedWatchFiles(watchFiles, mtimeMap);
+        if (changed.length) {
+          onChange(changed);
+        }
+      });
+    }
+  };
+}
+
 /**
  * File watch + optional http-server + rebuild / Karma (see `npm run develop`).
+ * Uses esbuild context watch with a plugin that registers extra watch paths.
  * @param {ReturnType<typeof parseBuildArgv>} parsed
  */
 async function runWatchMode(parsed) {
-  const { default: chokidar } = await import('chokidar');
   const chalk = (await import('chalk')).default;
 
   let httpServerChild = null;
@@ -643,20 +758,8 @@ async function runWatchMode(parsed) {
     );
   }
 
-  const onWatchExit = () => {
-    stopWatchHttpServer();
-  };
-  process.once('SIGINT', () => {
-    onWatchExit();
-    process.exit(128 + 2);
-  });
-  process.once('SIGTERM', () => {
-    onWatchExit();
-    process.exit(143);
-  });
-  process.on('exit', onWatchExit);
-
   let timer = null;
+  const mtimeMap = new Map();
   const run = async changedPath => {
     try {
       let absPath = null;
@@ -701,6 +804,7 @@ async function runWatchMode(parsed) {
         console.log(`${chalk.dim('watch:')} ${rel} ${chalk.dim('→')} ${plan}`);
       }
       await runFullBuild(parsed);
+      seedWatchFileMtimes(collectDevelopWatchFiles(root), mtimeMap);
       try {
         const { notify } = await import('node-notifier');
         notify({
@@ -732,66 +836,88 @@ async function runWatchMode(parsed) {
     }
   };
 
-  const schedule = (event, p) => {
+  const runTestOnly = absPath => {
+    const rel =
+      path.relative(path.resolve(root), absPath).replace(/\\/g, '/') || absPath;
+    console.log(`${chalk.dim('watch:')} ${rel} ${chalk.dim('→')} unit test`);
+    const tf = karmaTestFilesArg(root, absPath);
+    execSync(`npm run test:unit -- testFiles=${JSON.stringify(tf)}`, {
+      cwd: root,
+      stdio: 'inherit'
+    });
+  };
+
+  const schedule = changedPaths => {
+    const rootResolved = path.resolve(root);
+    const filtered = changedPaths.filter(p => {
+      const rel = path.relative(rootResolved, p).replace(/\\/g, '/');
+      return rel !== GENERATED_METADATA_MAP_REL;
+    });
+    if (!filtered.length) {
+      return;
+    }
     if (timer) {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
       timer = null;
-      run(p);
+      const relPaths = filtered.map(p =>
+        path.relative(rootResolved, p).replace(/\\/g, '/')
+      );
+      const testOnly =
+        relPaths.length > 0 && relPaths.every(rel => rel.startsWith('test/'));
+      if (testOnly) {
+        try {
+          const latest = filtered.reduce((a, b) =>
+            fs.statSync(b).mtimeMs > fs.statSync(a).mtimeMs ? b : a
+          );
+          runTestOnly(latest);
+        } catch {
+          process.exitCode = 1;
+        }
+        return;
+      }
+      const libOrBuild = filtered.find(p => {
+        const rel = path.relative(rootResolved, p).replace(/\\/g, '/');
+        return rel.startsWith('lib/') || rel.startsWith('build/');
+      });
+      run(libOrBuild ?? filtered[0] ?? null);
     }, 150);
   };
 
-  chokidar
-    .watch(['lib', 'build'], {
-      cwd: root,
-      ignoreInitial: true,
-      /** chokidar 4+ does not expand globs; watch directories instead */
-      ignored: fp => {
-        const abs = path.resolve(
-          path.isAbsolute(fp) ? fp : path.join(root, fp)
-        );
-        const rel = path.relative(path.resolve(root), abs).replace(/\\/g, '/');
-        if (rel === 'lib/core/base/metadata-function-map.js') {
-          return true;
-        }
-        if (rel === 'build') {
-          return false;
-        }
-        if (rel.startsWith('build/')) {
-          return !rel.endsWith('.mjs');
-        }
-        return false;
-      }
-    })
-    .on('all', schedule);
+  const watchFiles = collectDevelopWatchFiles(root);
+  seedWatchFileMtimes(watchFiles, mtimeMap);
 
-  chokidar
-    .watch('test', { cwd: root, ignoreInitial: true })
-    .on('all', (ev, p) => {
-      try {
-        const absPath = path.resolve(
-          path.isAbsolute(p) ? p : path.join(root, p)
-        );
-        const rel =
-          path.relative(path.resolve(root), absPath).replace(/\\/g, '/') || p;
-        console.log(
-          `${chalk.dim('watch:')} ${rel} ${chalk.dim('→')} unit test`
-        );
-        const tf = karmaTestFilesArg(root, absPath);
-        execSync(`npm run test:unit -- testFiles=${JSON.stringify(tf)}`, {
-          cwd: root,
-          stdio: 'inherit'
-        });
-      } catch {
-        process.exitCode = 1;
-      }
-    });
+  const watchCtx = await esbuildContext({
+    absWorkingDir: root,
+    entryPoints: [path.join(root, 'lib/core/core.js')],
+    outfile: path.join(root, 'tmp/develop-watch.js'),
+    bundle: true,
+    write: false,
+    logLevel: 'silent',
+    plugins: [createDevelopWatchPlugin(root, mtimeMap, schedule)]
+  });
+
+  const onWatchExit = () => {
+    stopWatchHttpServer();
+    watchCtx.dispose().catch(() => {});
+  };
+  process.once('SIGINT', () => {
+    onWatchExit();
+    process.exit(128 + 2);
+  });
+  process.once('SIGTERM', () => {
+    onWatchExit();
+    process.exit(143);
+  });
+  process.on('exit', onWatchExit);
 
   try {
     await run(null);
+    await watchCtx.watch();
     await new Promise(() => {});
   } catch (e) {
+    await watchCtx.dispose();
     stopWatchHttpServer();
     throw e;
   }
