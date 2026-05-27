@@ -2,6 +2,7 @@
 /**
  * axe-core build driver (replaces Gruntfile.js).
  */
+import assert from 'node:assert';
 import fs from 'node:fs';
 import net from 'node:net';
 import path from 'node:path';
@@ -241,6 +242,14 @@ function cleanOutputs(ctx) {
   for (const f of globSync('axe*.js', { cwd: ctx.root, posix: true })) {
     fs.unlinkSync(path.join(ctx.root, f));
   }
+  const gatherInternals = path.join(ctx.root, 'gather-internals.js');
+  if (fs.existsSync(gatherInternals)) {
+    fs.unlinkSync(gatherInternals);
+  }
+  const walkTreeTmp = path.join(ctx.root, 'tmp/walk-tree.js');
+  if (fs.existsSync(walkTreeTmp)) {
+    fs.unlinkSync(walkTreeTmp);
+  }
 }
 
 function toTitleCase(str) {
@@ -295,6 +304,60 @@ async function runEsbuildCore(ctx) {
     outfile: path.join(outdir, 'core.js'),
     minify: false,
     bundle: true
+  });
+}
+
+/**
+ * @param {string} entry
+ * @param {import('esbuild').Metafile} metafile
+ * @param {{ max: number, maxSize: number }} limits
+ */
+function assertEsbuildImportLimits(entry, metafile, limits) {
+  const { max, maxSize } = limits;
+  const entries = Object.entries(metafile.inputs);
+
+  assert(
+    entries.length <= max,
+    `${entry} imported too many files (max: ${max}): ${entries.length}`
+  );
+  for (const [key, value] of entries) {
+    assert(
+      value.bytes <= maxSize,
+      `${key} import size too large (max: ${maxSize}): ${value.bytes}`
+    );
+  }
+}
+
+/** Bundle gather-internals for extension injection and Karma tests. */
+async function runEsbuildGatherInternals(ctx) {
+  const tmpDir = path.join(ctx.root, 'tmp');
+  fs.mkdirSync(tmpDir, { recursive: true });
+
+  // Build so that we can use it in unit tests
+  await esbuildBuild({
+    entryPoints: [path.join(ctx.root, 'lib/gather-internals/walk-tree.js')],
+    outfile: path.join(tmpDir, 'walk-tree.js'),
+    minify: false,
+    bundle: true,
+    globalName: '_gatherInternals'
+  });
+
+  const mainEntry = path.join(ctx.root, 'lib/gather-internals/main.js');
+  const gatherResult = await esbuildBuild({
+    entryPoints: [mainEntry],
+    outfile: path.join(ctx.root, 'gather-internals.js'),
+    minify: false,
+    bundle: true,
+    // esbuild doesn't support returning from an iife
+    // @see https://github.com/evanw/esbuild/issues/2277
+    banner: { js: '(() => {' },
+    footer: { js: 'return elementInternalsMap;\n})();' },
+    globalName: 'elementInternalsMap',
+    metafile: true
+  });
+  assertEsbuildImportLimits(mainEntry, gatherResult.metafile, {
+    max: 10,
+    maxSize: 4000
   });
 }
 
@@ -500,6 +563,7 @@ async function runFullBuild(parsed) {
 
   runMetadataFunctionMap(ctx);
   await runEsbuildCore(ctx);
+  await runEsbuildGatherInternals(ctx);
   await runConfigureAll(ctx, langs, parsed.tags);
   runBabel(ctx);
   runConcatEngine(ctx, langs, pkg, year);

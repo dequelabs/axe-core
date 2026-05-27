@@ -3,6 +3,22 @@ describe('text.visible', () => {
 
   const fixture = document.getElementById('fixture');
   const visibleVirtual = axe.commons.text.visibleVirtual;
+  const fontApiSupport = !!document.fonts;
+
+  before(done => {
+    if (!fontApiSupport) {
+      done();
+      return;
+    }
+    const materialFont = new FontFace(
+      'Material Icons',
+      'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+    );
+    materialFont.load().then(() => {
+      document.fonts.add(materialFont);
+      done();
+    });
+  });
 
   afterEach(() => {
     document.getElementById('fixture').innerHTML = '';
@@ -103,6 +119,12 @@ describe('text.visible', () => {
       const tree = axe.utils.getFlattenedTree(fixture.firstChild);
       assert.equal(visibleVirtual(tree[0]), 'Stuffhello');
     });
+
+    it('should treat <br> elements as a space', () => {
+      fixture.innerHTML = '<button>button<br>label</button>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'button label');
+    });
   });
 
   describe('screen reader', () => {
@@ -174,5 +196,41 @@ describe('text.visible', () => {
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0], true), 'Hello');
     });
+  });
+
+  describe('options', () => {
+    (fontApiSupport ? it : it.skip)(
+      'should exclude icon ligature text when ignoreIconLigature is true',
+      () => {
+        fixture.innerHTML =
+          '<button>next page <span style="font-family: \'Material Icons\'">delete</span></button>';
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(
+          visibleVirtual(tree[0], false, false, {
+            ignoreIconLigature: true,
+            pixelThreshold: 0.1,
+            occurrenceThreshold: 3
+          }),
+          'next page'
+        );
+      }
+    );
+
+    (fontApiSupport ? it : it.skip)(
+      'should not exclude icon ligature text when ignoreIconLigature is false',
+      () => {
+        fixture.innerHTML =
+          '<button>next page <span style="font-family: \'Material Icons\'">delete</span></button>';
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(
+          visibleVirtual(tree[0], false, false, {
+            ignoreIconLigature: false,
+            pixelThreshold: 0.1,
+            occurrenceThreshold: 3
+          }),
+          'next page delete'
+        );
+      }
+    );
   });
 });

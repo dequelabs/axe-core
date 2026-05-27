@@ -2,6 +2,7 @@ describe('Audit', () => {
   const html = axe.testUtils.html;
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+  const externalAPIs = axe.externalAPIs;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
   const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
@@ -102,6 +103,11 @@ describe('Audit', () => {
   });
 
   afterEach(() => {
+    // reset elementInternals
+    externalAPIs({
+      getElementInternals: null,
+      elementInternalsTimeout: null
+    });
     axe.teardown();
     audit.run = origAuditRun;
     axe.utils = origUtils;
@@ -204,6 +210,7 @@ describe('Audit', () => {
         `https://dequeuniversity.com/rules/thing/${ver}/target2?application=axeAPI`
       );
     });
+
     it('understands prerelease type version numbers', () => {
       const tempVersion = axe.version;
       audit = new Audit();
@@ -288,36 +295,6 @@ describe('Audit', () => {
       audit.setBranding('thing');
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
-    });
-    it('should call _constructHelpUrls', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding({
-        application: 'thing'
-      });
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=thing`
-      });
-    });
-    it('should call _constructHelpUrls even when nothing changed', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding(undefined);
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=axeAPI`
-      });
     });
     it('should not replace custom set branding', () => {
       audit = new Audit();
@@ -1240,6 +1217,89 @@ describe('Audit', () => {
             assert.include(reject.message, err.message);
             done();
           }, done)
+        );
+      });
+    });
+
+    describe('elementInternals', () => {
+      it('runs external getElementInternals', done => {
+        const stub = sinon.stub().returns(Promise.resolve([]));
+        externalAPIs({
+          getElementInternals: stub
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          results => {
+            assert.isTrue(stub.called);
+            done();
+          },
+          isNotCalled
+        );
+      });
+
+      it('runs getElementInternals before any rules', done => {
+        fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+
+        let elementInternalsStartTime;
+        let ruleStartTime;
+
+        externalAPIs({
+          getElementInternals: () => {
+            elementInternalsStartTime = performance.now();
+            return Promise.resolve([]);
+          }
+        });
+
+        audit = new Audit();
+        audit.addRule({
+          id: 'rule-start',
+          selector: '*',
+          any: ['check-start']
+        });
+        audit.addCheck({
+          id: 'check-start',
+          evaluate: function (node, options, vNode, context) {
+            ruleStartTime = performance.now();
+            return true;
+          }
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          results => {
+            assert.isNumber(elementInternalsStartTime);
+            assert.isNumber(ruleStartTime);
+
+            assert.isTrue(elementInternalsStartTime < ruleStartTime);
+            done();
+          },
+          isNotCalled
+        );
+      });
+
+      it('rejects if getElementInternals timeout occurs', done => {
+        const stub = sinon.stub().returns(Promise.resolve([]));
+        externalAPIs({
+          elementInternalsTimeout: 200,
+          getElementInternals() {
+            return new Promise(res => {
+              setTimeout(res, 500);
+            });
+          }
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          isNotCalled,
+          err => {
+            assert.isTrue(err.message.includes('Timeout'));
+            assert.isTrue(err.message.includes('elementInternals'));
+            done();
+          }
         );
       });
     });

@@ -443,6 +443,39 @@ var pluginSrc: axe.AxePlugin = {
 axe.registerPlugin(pluginSrc);
 axe.cleanup();
 
+// ExternalAPIS
+axe.externalAPIs();
+axe.externalAPIs({});
+axe.externalAPIs({
+  elementInternalsTimeout: 100
+});
+axe.externalAPIs({
+  getElementInternals() {
+    return Promise.resolve([]);
+  }
+});
+axe.externalAPIs({
+  elementInternalsTimeout: 100,
+  getElementInternals() {
+    return Promise.resolve([
+      {
+        ancestry: 'div',
+        internals: {
+          role: 'heading',
+          ariaLabelledbyElements: {
+            type: 'NodeList',
+            value: ['button']
+          },
+          ariaActiveDescendantElement: {
+            type: 'HTMLElement',
+            value: 'input'
+          }
+        }
+      }
+    ]);
+  }
+});
+
 // Utils
 const dqElement = new axe.utils.DqElement(document.body);
 const element = axe.utils.shadowSelect(dqElement.selector[0]);

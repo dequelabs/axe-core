@@ -30,6 +30,18 @@ describe('axe.utils.isShadowRoot', () => {
     assert.isFalse(isShadowRoot({ nodeName: '0-BUZZ', shadowRoot: {} }));
     assert.isFalse(isShadowRoot({ nodeName: '--ELM--', shadowRoot: {} }));
   });
+  it('returns false for reserved custom element names', () => {
+    assert.isFalse(
+      isShadowRoot({ nodeName: 'ANNOTATION-XML', shadowRoot: {} })
+    );
+    assert.isFalse(isShadowRoot({ nodeName: 'COLOR-PROFILE', shadowRoot: {} }));
+    assert.isFalse(isShadowRoot({ nodeName: 'FONT-FACE', shadowRoot: {} }));
+    assert.isFalse(isShadowRoot({ nodeName: 'MISSING-GLYPH', shadowRoot: {} }));
+  });
+  it('returns true for Unicode custom element names', () => {
+    assert.isTrue(isShadowRoot({ nodeName: 'CAFÉ-MENU', shadowRoot: {} }));
+    assert.isTrue(isShadowRoot({ nodeName: 'MATH-Π', shadowRoot: {} }));
+  });
   it('returns false if the native element does not allow shadow DOM', () => {
     assert.isFalse(isShadowRoot({ nodeName: 'IFRAME', shadowRoot: {} }));
     assert.isFalse(isShadowRoot({ nodeName: 'STRONG', shadowRoot: {} }));
