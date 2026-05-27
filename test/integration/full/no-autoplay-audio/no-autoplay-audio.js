@@ -1,13 +1,11 @@
-describe('landmark-no-duplicate-main test failure', function () {
-  'use strict';
+describe('landmark-no-duplicate-main test failure', () => {
+  let results;
 
-  var results;
-
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['no-autoplay-audio'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -16,11 +14,11 @@ describe('landmark-no-duplicate-main test failure', function () {
     });
   });
 
-  describe('passes', function () {
-    it('should find 7', function () {
+  describe('passes', () => {
+    it('should find 7', () => {
       assert.isDefined(results.passes);
 
-      var passNodes = results.passes[0].nodes;
+      const passNodes = results.passes[0].nodes;
       assert.lengthOf(passNodes, 7);
       assert.deepEqual(passNodes[0].target, ['#pass1']);
       assert.deepEqual(passNodes[1].target, ['#pass2']);
@@ -32,19 +30,19 @@ describe('landmark-no-duplicate-main test failure', function () {
     });
   });
 
-  it('should find 0 violations', function () {
+  it('should find 0 violations', () => {
     assert.lengthOf(results.violations, 0);
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  describe('incomplete', function () {
-    it('should find 6', function () {
+  describe('incomplete', () => {
+    it('should find 6', () => {
       assert.isDefined(results.incomplete);
 
-      var incompleteNodes = results.incomplete[0].nodes;
+      const incompleteNodes = results.incomplete[0].nodes;
       assert.lengthOf(incompleteNodes, 6);
       assert.deepEqual(incompleteNodes[0].target, ['#incomplete1']);
       assert.deepEqual(incompleteNodes[1].target, ['#incomplete2']);

@@ -1,10 +1,9 @@
-describe('utils.matchesSelector', function () {
-  'use strict';
-  var matchesSelector = axe.utils.matchesSelector;
+describe('utils.matchesSelector', () => {
+  const matchesSelector = axe.utils.matchesSelector;
 
   function mockMethod(method, returnValue) {
-    var result = {};
-    result[method] = function () {
+    const result = {};
+    result[method] = () => {
       return returnValue;
     };
     result.ownerDocument = {
@@ -14,12 +13,12 @@ describe('utils.matchesSelector', function () {
         }
       }
     };
-    result.ownerDocument.defaultView.Element.prototype[method] = function () {};
+    result.ownerDocument.defaultView.Element.prototype[method] = () => {};
 
     return result;
   }
 
-  it('should check the prototype of the Element object for matching methods', function () {
+  it('should check the prototype of the Element object for matching methods', () => {
     assert.equal(matchesSelector(mockMethod('matches', 'test1')), 'test1');
     assert.equal(
       matchesSelector(mockMethod('matchesSelector', 'test2')),
@@ -39,9 +38,9 @@ describe('utils.matchesSelector', function () {
     );
   });
 
-  it('should actually work', function () {
-    var target,
-      fixture = document.getElementById('fixture');
+  it('should actually work', () => {
+    let target;
+    const fixture = document.getElementById('fixture');
 
     fixture.innerHTML = '<div id="test">Hi</div>';
     target = document.getElementById('test');
@@ -50,9 +49,9 @@ describe('utils.matchesSelector', function () {
     fixture.innerHTML = '';
   });
 
-  it('should return false if the element does not have a matching method', function () {
-    var target,
-      fixture = document.getElementById('fixture');
+  it('should return false if the element does not have a matching method', () => {
+    let target;
+    const fixture = document.getElementById('fixture');
 
     fixture.innerHTML = '<div id="test">Hi</div>';
     target = document.getElementById('test');

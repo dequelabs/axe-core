@@ -1,4 +1,5 @@
 describe('inline-style-property tests', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
   const checkSetup = axe.testUtils.checkSetup;
 
@@ -64,7 +65,7 @@ describe('inline-style-property tests', () => {
         'letter-spacing: 0.2em'
       ].join('; ');
       const params = checkSetup(
-        '<p style="' + style + '" id="target">Hello world</p>'
+        html`<p style="${style}" id="target">Hello world</p>`
       );
       const result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
@@ -126,10 +127,10 @@ describe('inline-style-property tests', () => {
       });
 
       it('is true when `inherited` is used along with !important', () => {
-        const params = checkSetup(
-          '<p style="letter-spacing: 0.1em">' +
-            '<span style="letter-spacing: inherit !important;" id="target">Hello world</span</p>'
-        );
+        const params = checkSetup(html`
+          <p style="letter-spacing: 0.1em">
+          <span style="letter-spacing: inherit !important;" id="target">Hello world</span</p>
+        `);
         const result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
         assert.deepEqual(checkContext._data, {
@@ -139,10 +140,10 @@ describe('inline-style-property tests', () => {
       });
 
       it('is true when `unset` is used along with !important', () => {
-        const params = checkSetup(
-          '<p style="letter-spacing: 0.1em">' +
-            '<span style="letter-spacing: unset !important;" id="target">Hello world</span</p>'
-        );
+        const params = checkSetup(html`
+          <p style="letter-spacing: 0.1em">
+          <span style="letter-spacing: unset !important;" id="target">Hello world</span</p>
+        `);
         const result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
         assert.deepEqual(checkContext._data, {
@@ -152,10 +153,10 @@ describe('inline-style-property tests', () => {
       });
 
       it('is true when `revert` is used along with !important', () => {
-        const params = checkSetup(
-          '<p style="letter-spacing: 0.1em">' +
-            '<span style="letter-spacing: revert !important;" id="target">Hello world</span</p>'
-        );
+        const params = checkSetup(html`
+          <p style="letter-spacing: 0.1em">
+          <span style="letter-spacing: revert !important;" id="target">Hello world</span</p>
+        `);
         const result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
         assert.deepEqual(checkContext._data, {
@@ -165,10 +166,10 @@ describe('inline-style-property tests', () => {
       });
 
       it('is true when `revert-layer` is used along with !important', () => {
-        const params = checkSetup(
-          '<p style="letter-spacing: 0.1em">' +
-            '<span style="letter-spacing: revert-layer !important;" id="target">Hello world</span</p>'
-        );
+        const params = checkSetup(html`
+          <p style="letter-spacing: 0.1em">
+          <span style="letter-spacing: revert-layer !important;" id="target">Hello world</span</p>
+        `);
         const result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
         assert.deepEqual(checkContext._data, {
@@ -250,22 +251,22 @@ describe('inline-style-property tests', () => {
     });
 
     it('is true when below 1.5em and not !important', () => {
-      const params = checkSetup(
-        '<p style="line-height: 1.2em; max-width: 200px;" id="target">' +
-          '	The toy brought back fond memories of being lost in the rain forest.' +
-          '</p>'
-      );
+      const params = checkSetup(html`
+        <p style="line-height: 1.2em; max-width: 200px;" id="target">
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);
     });
 
     it('is false when below 1.5em and !important', () => {
-      const params = checkSetup(
-        '<p style="line-height: 1.2em !important; max-width: 200px;" id="target">' +
-          '	The toy brought back fond memories of being lost in the rain forest.' +
-          '</p>'
-      );
+      const params = checkSetup(html`
+        <p style="line-height: 1.2em !important; max-width: 200px;" id="target">
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
       assert.deepEqual(checkContext._data, {
@@ -275,11 +276,11 @@ describe('inline-style-property tests', () => {
     });
 
     it('is true when 1.5em and !important', () => {
-      const params = checkSetup(
-        '<p style="line-height: 1.5em !important; max-width: 200px;" id="target">' +
-          '	The toy brought back fond memories of being lost in the rain forest.' +
-          '</p>'
-      );
+      const params = checkSetup(html`
+        <p style="line-height: 1.5em !important; max-width: 200px;" id="target">
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.deepEqual(checkContext._data, {
@@ -289,11 +290,14 @@ describe('inline-style-property tests', () => {
     });
 
     it('returns the 1em for `normal !important`', () => {
-      const params = checkSetup(
-        '<p style="line-height: normal !important; max-width: 200px;" id="target">' +
-          '	The toy brought back fond memories of being lost in the rain forest.' +
-          '</p>'
-      );
+      const params = checkSetup(html`
+        <p
+          style="line-height: normal !important; max-width: 200px;"
+          id="target"
+        >
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
       assert.deepEqual(checkContext._data, {
@@ -303,11 +307,11 @@ describe('inline-style-property tests', () => {
     });
 
     it('is true for single line texts', () => {
-      const params = checkSetup(
-        '<p style="line-height: 1.2em !important; max-width: 200px;" id="target">' +
-          '	Short' +
-          '</p>'
-      );
+      const params = checkSetup(html`
+        <p style="line-height: 1.2em !important; max-width: 200px;" id="target">
+          Short
+        </p>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);

@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.11.2",
+  "version": "4.11.4",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -61,7 +61,8 @@
     "axe.d.ts",
     "sri-history.json",
     "locales/",
-    "LICENSE-3RD-PARTY.txt"
+    "LICENSE-3RD-PARTY.txt",
+    "gather-internals.js"
   ],
   "standard-version": {
     "scripts": {
@@ -90,6 +91,7 @@
     "test:unit:api": "npm run test:unit -- testDirs=api",
     "test:unit:integration": "npm run test:unit -- testDirs=integration",
     "test:unit:virtual-rules": "npm run test:unit -- testDirs=virtual-rules",
+    "test:unit:gather-internals": "npm run test:unit -- testDirs=gather-internals",
     "integration": "node test/integration/full/test-webdriver.js",
     "integration:apg": "mocha --fail-zero test/aria-practices/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
@@ -110,6 +112,7 @@
     "rule-gen": "node build/rule-generator",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
+    "codemod:modernize-tests": "node build/codemods/modernize-test-files.mjs",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "prepare": "husky && npm run patch",
@@ -124,7 +127,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime-corejs3": "^7.20.7",
     "@deque/dot": "^1.1.5",
-    "@types/node": "^4.9.5",
+    "@types/node": "^25.6.0",
     "aria-practices": "github:w3c/aria-practices#ce0336bd82d7d3651abcbde86af644197ddbc629",
     "aria-query": "^5.1.3",
     "chai": "^4.3.7",
@@ -158,7 +161,7 @@
     "inquirer": "^8.2.5",
     "jquery": "^4.0.0",
     "jsdoc": "^4.0.2",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.0.2",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.1",
@@ -173,17 +176,19 @@
     "node-notifier": "^10.0.1",
     "npm-run-all": "^4.1.5",
     "outdent": "^0.8.0",
+    "parse5": "^8.0.0",
     "patch-package": "^8.0.0",
     "prettier": "^3.0.3",
+    "recast": "^0.23.11",
     "revalidator": "^0.3.1",
     "selenium-webdriver": "^4.7.1",
     "serve-handler": "^6.1.5",
     "sinon": "^21.0.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^9.5.0",
-    "start-server-and-test": "^2.0.1",
+    "start-server-and-test": "^3.0.2",
     "typedarray": "^0.0.7",
-    "typescript": "^5.2.2",
+    "typescript": "^6.0.3",
     "uglify-js": "^3.17.4",
     "wcag-act-rules": "github:w3c/wcag-act-rules#5adb55d19eb2cd7fb23213b2d1acedf9004dc063",
     "weakmap-polyfill": "^2.0.4"

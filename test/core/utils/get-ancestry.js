@@ -1,5 +1,5 @@
 describe('axe.utils.getAncestry', () => {
-  'use strict';
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
 
   afterEach(() => {
@@ -70,5 +70,32 @@ describe('axe.utils.getAncestry', () => {
       'html > body > div:nth-child(1) > section',
       'div:nth-child(2)'
     ]);
+  });
+
+  it('escapes the node name', () => {
+    fixture.innerHTML = html`
+<div>
+  <hello="world">
+    <button id="target1">button</button>
+  </hello="world">
+</div>
+<emoji-👍>
+  <button id="target2">button</button>
+</emoji-👍>
+`;
+
+    const sel1 = axe.utils.getAncestry(document.querySelector('#target1'));
+    assert.equal(
+      sel1,
+      'html > body > div:nth-child(1) > div:nth-child(1) > hello\\=\\"world\\" > button'
+    );
+    assert.isNotNull(document.querySelector(sel1));
+
+    const sel2 = axe.utils.getAncestry(document.querySelector('#target2'));
+    assert.equal(
+      sel2,
+      'html > body > div:nth-child(1) > emoji-👍:nth-child(2) > button'
+    );
+    assert.isNotNull(document.querySelector(sel2));
   });
 });

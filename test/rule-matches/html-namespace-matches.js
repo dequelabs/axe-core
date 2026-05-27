@@ -1,41 +1,40 @@
-describe('html-namespace-matches', function () {
-  'use strict';
+describe('html-namespace-matches', () => {
   let rule;
   let fixture;
   let axeFixtureSetup;
 
-  beforeEach(function () {
+  beforeEach(() => {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
     rule = axe.utils.getRule('role-img-alt');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('returns true when passed an HTML element', function () {
+  it('returns true when passed an HTML element', () => {
     axeFixtureSetup('<h1>Hello world</h1>');
     const node = fixture.querySelector('h1');
     const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isTrue(rule.matches(node, virtualNode));
   });
 
-  it('returns true when passed a custom HTML element', function () {
+  it('returns true when passed a custom HTML element', () => {
     axeFixtureSetup('<xx-heading>Hello world</xx-heading>');
     const node = fixture.querySelector('xx-heading');
     const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isTrue(rule.matches(node, virtualNode));
   });
 
-  it('returns false when passed an SVG element', function () {
+  it('returns false when passed an SVG element', () => {
     axeFixtureSetup('<svg><title>Pretty picture</title></svg>');
     const node = fixture.querySelector('svg');
     const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  it('returns false when passed an SVG circle element', function () {
+  it('returns false when passed an SVG circle element', () => {
     axeFixtureSetup(
       '<svg><circle><title>Pretty picture</title></circle></svg>'
     );
@@ -44,8 +43,8 @@ describe('html-namespace-matches', function () {
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  describe('Serial Virtual Node', function () {
-    it('returns true when passed an HTML element', function () {
+  describe('Serial Virtual Node', () => {
+    it('returns true when passed an HTML element', () => {
       const serialNode = new axe.SerialVirtualNode({
         nodeName: 'h1'
       });
@@ -54,7 +53,7 @@ describe('html-namespace-matches', function () {
       assert.isTrue(rule.matches(null, serialNode));
     });
 
-    it('returns true when passed a custom HTML element', function () {
+    it('returns true when passed a custom HTML element', () => {
       const serialNode = new axe.SerialVirtualNode({
         nodeName: 'xx-heading'
       });
@@ -63,7 +62,7 @@ describe('html-namespace-matches', function () {
       assert.isTrue(rule.matches(null, serialNode));
     });
 
-    it('returns false when passed an SVG circle element', function () {
+    it('returns false when passed an SVG circle element', () => {
       const serialNode = new axe.SerialVirtualNode({
         nodeName: 'circle'
       });

@@ -1,6 +1,6 @@
-describe('svg-img-alt virtual-rule', function () {
-  it('should pass for aria-label', function () {
-    var node = new axe.SerialVirtualNode({
+describe('svg-img-alt virtual-rule', () => {
+  it('should pass for aria-label', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img',
@@ -8,15 +8,15 @@ describe('svg-img-alt virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should incomplete for aria-labelledby', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'graphics-document',
@@ -24,18 +24,18 @@ describe('svg-img-alt virtual-rule', function () {
       }
     });
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function () {
-    var parent = new axe.SerialVirtualNode({
+  it('should pass for title', () => {
+    const parent = new axe.SerialVirtualNode({
       nodeName: 'svg'
     });
-    var node = new axe.SerialVirtualNode({
+    const node = new axe.SerialVirtualNode({
       nodeName: 'circle',
       attributes: {
         role: 'graphics-symbol',
@@ -49,24 +49,24 @@ describe('svg-img-alt virtual-rule', function () {
     node.parent = parent;
     parent.children = [node];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for title element', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should pass for title element', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img'
       }
     });
-    var title = new axe.SerialVirtualNode({
+    const title = new axe.SerialVirtualNode({
       nodeName: 'title'
     });
-    var text = new axe.SerialVirtualNode({
+    const text = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'foobar'
@@ -76,30 +76,30 @@ describe('svg-img-alt virtual-rule', function () {
     title.parent = node;
     node.children = [title];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when aria-label and children are missing', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should incomplete when aria-label and children are missing', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img'
       }
     });
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail when aria-label contains only whitespace', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when aria-label contains only whitespace', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img',
@@ -108,15 +108,15 @@ describe('svg-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when aria-label is empty', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img',
@@ -125,15 +125,15 @@ describe('svg-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when title is empty', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img',
@@ -142,28 +142,28 @@ describe('svg-img-alt virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when title element has missing children', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should incomplete when title element has missing children', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
         role: 'img'
       }
     });
-    var title = new axe.SerialVirtualNode({
+    const title = new axe.SerialVirtualNode({
       nodeName: 'title'
     });
 
     title.parent = node;
     node.children = [title];
 
-    var results = axe.runVirtualRule('svg-img-alt', node);
+    const results = axe.runVirtualRule('svg-img-alt', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

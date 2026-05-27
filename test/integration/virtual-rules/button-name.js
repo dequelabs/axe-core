@@ -196,7 +196,7 @@ describe('button-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for implicit label', function () {
+  it('should pass for implicit label', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -219,7 +219,7 @@ describe('button-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for explicit label', function () {
+  it('should incomplete for explicit label', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'button',
       attributes: {

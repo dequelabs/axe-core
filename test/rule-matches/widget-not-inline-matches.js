@@ -1,4 +1,5 @@
 describe('widget-not-inline-matches', () => {
+  const html = axe.testUtils.html;
   let rule;
   const { queryFixture, queryShadowFixture } = axe.testUtils;
 
@@ -72,21 +73,23 @@ describe('widget-not-inline-matches', () => {
 
   describe('inline components', () => {
     it('returns false for elements inline with text', () => {
-      const vNode = queryFixture(
-        '<p>Some ' + ' <a href="#" id="target">link</a>' + '</p>'
-      );
+      const vNode = queryFixture(html`
+        <p>
+          Some
+          <a href="#" id="target">link</a>
+        </p>
+      `);
       const node = vNode.actualNode;
       assert.isFalse(rule.matches(node, vNode));
     });
 
     it('returns false for multiple inline links', () => {
-      const vNode = queryFixture(
-        '<p>' +
-          ' <a href="#" id="target">link 1</a>, ' +
-          ' <a href="#">link 2</a>, ' +
-          ' <a href="#">link 3</a>' +
-          '</p>'
-      );
+      const vNode = queryFixture(html`
+        <p>
+          <a href="#" id="target">link 1</a>, <a href="#">link 2</a>,
+          <a href="#">link 3</a>
+        </p>
+      `);
       const node = vNode.actualNode;
       assert.isFalse(rule.matches(node, vNode));
     });
@@ -100,12 +103,18 @@ describe('widget-not-inline-matches', () => {
 
   describe('graphics (for which size may be essential)', () => {
     it('returns false for area elements', () => {
-      const vNode = queryFixture(
-        '<img usemap="#imgmap" src="#" alt="img"/>' +
-          '<map name="imgmap">' +
-          '  <area id="target" shape="circle" coords="10,10,10" href="#" alt="map" />' +
-          '</map>'
-      );
+      const vNode = queryFixture(html`
+        <img usemap="#imgmap" src="#" alt="img" />
+        <map name="imgmap">
+          <area
+            id="target"
+            shape="circle"
+            coords="10,10,10"
+            href="#"
+            alt="map"
+          />
+        </map>
+      `);
       const node = vNode.actualNode;
       assert.isFalse(rule.matches(node, vNode));
     });
@@ -119,11 +128,13 @@ describe('widget-not-inline-matches', () => {
     });
 
     it('returns false descendants of SVG elements', () => {
-      const vNode = queryFixture(
-        '<svg><a href="#" id="target">' +
-          '  <text y="15">link</text></a>' +
-          '</svg>'
-      );
+      const vNode = queryFixture(html`
+        <svg>
+          <a href="#" id="target">
+            <text y="15">link</text>
+          </a>
+        </svg>
+      `);
       const node = vNode.actualNode;
       assert.isFalse(rule.matches(node, vNode));
     });
@@ -132,21 +143,23 @@ describe('widget-not-inline-matches', () => {
   describe('nested widget', () => {
     describe('that are is in the tab order', () => {
       it('is true when the target is in the tab order', () => {
-        const vNode = queryFixture(`
-          <span role="link" tabindex="0">
+        const vNode = queryFixture(
+          html` <span role="link" tabindex="0">
             Link text
             <a href="#" id="target">Nested link</a>
-          </span>`);
+          </span>`
+        );
         const node = vNode.actualNode;
         assert.isTrue(rule.matches(node, vNode));
       });
 
       it('is false when the target is not in the tab order', () => {
-        const vNode = queryFixture(`
-          <span role="link" tabindex="0">
+        const vNode = queryFixture(
+          html` <span role="link" tabindex="0">
             Link text
             <a href="#" id="target" tabindex="-1">Nested link</a>
-          </span>`);
+          </span>`
+        );
         const node = vNode.actualNode;
         assert.isFalse(rule.matches(node, vNode));
       });
@@ -154,8 +167,8 @@ describe('widget-not-inline-matches', () => {
       describe('within a shadow DOM tree', () => {
         it('is true when the target is in the tab order', () => {
           const vNode = queryShadowFixture(
-            `<div role="link" tabindex="0"><span id="shadow"></span></div>`,
-            `<a href="#" id="target">Nested link</a>`
+            html`<div role="link" tabindex="0"><span id="shadow"></span></div>`,
+            html`<a href="#" id="target">Nested link</a>`
           );
           const node = vNode.actualNode;
           assert.isTrue(rule.matches(node, vNode));
@@ -163,8 +176,8 @@ describe('widget-not-inline-matches', () => {
 
         it('is false when the target is not in the tab order', () => {
           const vNode = queryShadowFixture(
-            `<div role="link" tabindex="0"><span id="shadow"></span></div>`,
-            `<a href="#" id="target" tabindex="-1">Nested link</a>`
+            html`<div role="link" tabindex="0"><span id="shadow"></span></div>`,
+            html`<a href="#" id="target" tabindex="-1">Nested link</a>`
           );
           const node = vNode.actualNode;
           assert.isFalse(rule.matches(node, vNode));
@@ -174,21 +187,23 @@ describe('widget-not-inline-matches', () => {
 
     describe('that is not in the tab order', () => {
       it('is true when the target is in the tab order', () => {
-        const vNode = queryFixture(`
-          <span role="link" tabindex="-1">
+        const vNode = queryFixture(
+          html` <span role="link" tabindex="-1">
             Link text
             <a href="#" id="target">Nested link</a>
-          </span>`);
+          </span>`
+        );
         const node = vNode.actualNode;
         assert.isTrue(rule.matches(node, vNode));
       });
 
       it('is true when the target is not in the tab order', () => {
-        const vNode = queryFixture(`
-          <span role="link" tabindex="-1">
+        const vNode = queryFixture(
+          html` <span role="link" tabindex="-1">
             Link text
             <a href="#" id="target" tabindex="-1">Nested link</a>
-          </span>`);
+          </span>`
+        );
         const node = vNode.actualNode;
         assert.isTrue(rule.matches(node, vNode));
       });

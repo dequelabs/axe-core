@@ -1,5 +1,4 @@
 describe('landmark-is-top-level', () => {
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
   const checkSetup = axe.testUtils.checkSetup;
   const shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   const check = checks['landmark-is-top-level'];
@@ -73,16 +72,13 @@ describe('landmark-is-top-level', () => {
     assert.deepEqual(checkContext._data, { role: 'banner' });
   });
 
-  (shadowSupported ? it : xit)(
-    'should test if the landmark in shadow DOM is top level',
-    () => {
-      const params = shadowCheckSetup(
-        '<div></div>',
-        '<main id="target">Main content</main>'
-      );
-      axe.utils.getFlattenedTree(document.documentElement);
-      assert.isTrue(check.evaluate.apply(checkContext, params));
-      assert.deepEqual(checkContext._data, { role: 'main' });
-    }
-  );
+  it('should test if the landmark in shadow DOM is top level', () => {
+    const params = shadowCheckSetup(
+      '<div></div>',
+      '<main id="target">Main content</main>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isTrue(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { role: 'main' });
+  });
 });

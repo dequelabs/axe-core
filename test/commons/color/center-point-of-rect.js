@@ -1,8 +1,6 @@
-describe('color.centerPointOfRect', function () {
-  'use strict';
-
-  it('returns `undefined` when element is placed outside of viewport (left position > window dimension)', function () {
-    var actual = axe.commons.color.centerPointOfRect({
+describe('color.centerPointOfRect', () => {
+  it('returns `undefined` when element is placed outside of viewport (left position > window dimension)', () => {
+    const actual = axe.commons.color.centerPointOfRect({
       left: 9999,
       top: 0,
       width: 200,
@@ -11,8 +9,8 @@ describe('color.centerPointOfRect', function () {
     assert.isUndefined(actual);
   });
 
-  it('returns `{x,y}` when element is with in viewport', function () {
-    var actual = axe.commons.color.centerPointOfRect({
+  it('returns `{x,y}` when element is with in viewport', () => {
+    const actual = axe.commons.color.centerPointOfRect({
       left: 0,
       top: 0,
       width: 200,
@@ -22,8 +20,8 @@ describe('color.centerPointOfRect', function () {
     assert.hasAllKeys(actual, ['x', 'y']);
   });
 
-  it('returns `{x,y}` when element is with in viewport (check returned coordinate values)', function () {
-    var actual = axe.commons.color.centerPointOfRect({
+  it('returns `{x,y}` when element is with in viewport (check returned coordinate values)', () => {
+    const actual = axe.commons.color.centerPointOfRect({
       left: 100,
       top: 100,
       width: 250,

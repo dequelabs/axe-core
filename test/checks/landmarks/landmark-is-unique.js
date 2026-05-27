@@ -1,29 +1,27 @@
-describe('landmark-is-unique', function () {
-  'use strict';
+describe('landmark-is-unique', () => {
+  const checkContext = new axe.testUtils.MockCheckContext();
+  let fixture;
+  let axeFixtureSetup;
 
-  var checkContext = new axe.testUtils.MockCheckContext();
-  var fixture;
-  var axeFixtureSetup;
-
-  beforeEach(function () {
+  beforeEach(() => {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('should return true, with correct role and no accessible text', function () {
+  it('should return true, with correct role and no accessible text', () => {
     axeFixtureSetup('<div role="main">test</div>');
-    var node = fixture.querySelector('div');
-    var expectedData = {
+    const node = fixture.querySelector('div');
+    const expectedData = {
       accessibleText: null,
       role: 'main'
     };
     axe._tree = axe.utils.getFlattenedTree(fixture);
-    var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+    const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('landmark-is-unique')
@@ -33,15 +31,15 @@ describe('landmark-is-unique', function () {
     assert.deepEqual(checkContext._relatedNodes, [node]);
   });
 
-  it('should return true, with correct role and the accessible text lowercased', function () {
+  it('should return true, with correct role and the accessible text lowercased', () => {
     axeFixtureSetup('<div role="main" aria-label="TEST text">test</div>');
-    var node = fixture.querySelector('div');
-    var expectedData = {
+    const node = fixture.querySelector('div');
+    const expectedData = {
       accessibleText: 'test text',
       role: 'main'
     };
     axe._tree = axe.utils.getFlattenedTree(fixture);
-    var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+    const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('landmark-is-unique')

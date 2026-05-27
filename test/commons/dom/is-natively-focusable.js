@@ -4,20 +4,22 @@ describe('dom.isNativelyFocusable', () => {
   const { flatTreeSetup } = axe.testUtils;
 
   function hideByClipping(el) {
-    el.style.cssText =
-      'position: absolute !important;' +
-      ' clip: rect(0px 0px 0px 0px); /* IE6, IE7 */' +
-      ' clip: rect(0px, 0px, 0px, 0px);';
+    el.style.cssText = `
+      position: absolute !important;
+       clip: rect(0px 0px 0px 0px); /* IE6, IE7 */
+       clip: rect(0px, 0px, 0px, 0px);
+    `;
   }
 
   function hideByMovingOffScreen(el) {
-    el.style.cssText =
-      'position:absolute;' +
-      ' left:-10000px;' +
-      ' top:auto;' +
-      ' width:1px;' +
-      ' height:1px;' +
-      ' overflow:hidden;';
+    el.style.cssText = `
+      position:absolute;
+       left:-10000px;
+       top:auto;
+       width:1px;
+       height:1px;
+       overflow:hidden;
+    `;
   }
 
   it('should return true for buttons with redundant tabindex', () => {

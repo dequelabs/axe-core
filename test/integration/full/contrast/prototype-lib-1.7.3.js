@@ -10,9 +10,9 @@
 var Prototype = {
   Version: '1.7.3',
 
-  Browser: (function () {
-    var ua = navigator.userAgent;
-    var isOpera =
+  Browser: (() => {
+    const ua = navigator.userAgent;
+    const isOpera =
       Object.prototype.toString.call(window.opera) == '[object Opera]';
     return {
       IE: !!window.attachEvent && !isOpera,
@@ -28,14 +28,14 @@ var Prototype = {
 
     SelectorsAPI: !!document.querySelector,
 
-    ElementExtensions: (function () {
-      var constructor = window.Element || window.HTMLElement;
+    ElementExtensions: (() => {
+      const constructor = window.Element || window.HTMLElement;
       return !!(constructor && constructor.prototype);
     })(),
-    SpecificElementExtensions: (function () {
+    SpecificElementExtensions: (() => {
       if (typeof window.HTMLDivElement !== 'undefined') return true;
 
-      var div = document.createElement('div'),
+      let div = document.createElement('div'),
         form = document.createElement('form'),
         isSupported = false;
 
@@ -52,9 +52,9 @@ var Prototype = {
   ScriptFragment: '<script[^>]*>([\\S\\s]*?)</script\\s*>',
   JSONFilter: /^\/\*-secure-([\s\S]*)\*\/\s*$/,
 
-  emptyFunction: function () {},
+  emptyFunction: () => {},
 
-  K: function (x) {
+  K: x => {
     return x;
   }
 };
@@ -63,8 +63,8 @@ if (Prototype.Browser.MobileSafari)
   Prototype.BrowserFeatures.SpecificElementExtensions = false;
 /* Based on Alex Arnell's inheritance implementation. */
 
-var Class = (function () {
-  var IS_DONTENUM_BUGGY = (function () {
+var Class = (() => {
+  const IS_DONTENUM_BUGGY = (() => {
     for (var p in { toString: 1 }) {
       if (p === 'toString') return false;
     }
@@ -73,8 +73,8 @@ var Class = (function () {
 
   function subclass() {}
   function create() {
-    var parent = null,
-      properties = $A(arguments);
+    let parent = null;
+    const properties = $A(arguments);
     if (Object.isFunction(properties[0])) parent = properties.shift();
 
     function klass() {
@@ -102,7 +102,7 @@ var Class = (function () {
   }
 
   function addMethods(source) {
-    var ancestor = this.superclass && this.superclass.prototype,
+    const ancestor = this.superclass && this.superclass.prototype,
       properties = Object.keys(source);
 
     if (IS_DONTENUM_BUGGY) {
@@ -121,20 +121,20 @@ var Class = (function () {
         value.argumentNames()[0] == '$super'
       ) {
         var method = value;
-        value = (function (m) {
+        value = (m => {
           return function () {
             return ancestor[m].apply(this, arguments);
           };
         })(property).wrap(method);
 
-        value.valueOf = (function (method) {
-          return function () {
+        value.valueOf = (method => {
+          return () => {
             return method.valueOf.call(method);
           };
         })(method);
 
-        value.toString = (function (method) {
-          return function () {
+        value.toString = (method => {
+          return () => {
             return method.toString.call(method);
           };
         })(method);
@@ -152,8 +152,8 @@ var Class = (function () {
     }
   };
 })();
-(function () {
-  var _toString = Object.prototype.toString,
+(() => {
+  const _toString = Object.prototype.toString,
     _hasOwnProperty = Object.prototype.hasOwnProperty,
     NULL_TYPE = 'Null',
     UNDEFINED_TYPE = 'Undefined',
@@ -173,7 +173,7 @@ var Class = (function () {
       JSON.stringify(0) === '0' &&
       typeof JSON.stringify(Prototype.K) === 'undefined';
 
-  var DONT_ENUMS = [
+  const DONT_ENUMS = [
     'toString',
     'toLocaleString',
     'valueOf',
@@ -183,7 +183,7 @@ var Class = (function () {
     'constructor'
   ];
 
-  var IS_DONTENUM_BUGGY = (function () {
+  const IS_DONTENUM_BUGGY = (() => {
     for (var p in { toString: 1 }) {
       if (p === 'toString') return false;
     }
@@ -197,7 +197,7 @@ var Class = (function () {
       case void 0:
         return UNDEFINED_TYPE;
     }
-    var type = typeof o;
+    const type = typeof o;
     switch (type) {
       case 'boolean':
         return BOOLEAN_TYPE;
@@ -230,12 +230,12 @@ var Class = (function () {
   }
 
   function Str(key, holder, stack) {
-    var value = holder[key];
+    let value = holder[key];
     if (Type(value) === OBJECT_TYPE && typeof value.toJSON === 'function') {
       value = value.toJSON(key);
     }
 
-    var _class = _toString.call(value);
+    const _class = _toString.call(value);
 
     switch (_class) {
       case NUMBER_CLASS:
@@ -253,7 +253,7 @@ var Class = (function () {
         return 'false';
     }
 
-    var type = typeof value;
+    const type = typeof value;
     switch (type) {
       case 'string':
         return value.inspect(true);
@@ -262,9 +262,7 @@ var Class = (function () {
       case 'object':
         for (var i = 0, length = stack.length; i < length; i++) {
           if (stack[i] === value) {
-            throw new TypeError(
-              "Cyclic reference to '" + value + "' in object"
-            );
+            throw new TypeError(`Cyclic reference to '${value}' in object`);
           }
         }
         stack.push(value);
@@ -275,17 +273,17 @@ var Class = (function () {
             var str = Str(i, value, stack);
             partial.push(typeof str === 'undefined' ? 'null' : str);
           }
-          partial = '[' + partial.join(',') + ']';
+          partial = `[${partial.join(',')}]`;
         } else {
           var keys = Object.keys(value);
           for (var i = 0, length = keys.length; i < length; i++) {
             var key = keys[i],
               str = Str(key, value, stack);
             if (typeof str !== 'undefined') {
-              partial.push(key.inspect(true) + ':' + str);
+              partial.push(`${key.inspect(true)}:${str}`);
             }
           }
-          partial = '{' + partial.join(',') + '}';
+          partial = `{${partial.join(',')}}`;
         }
         stack.pop();
         return partial;
@@ -308,7 +306,7 @@ var Class = (function () {
     if (Type(object) !== OBJECT_TYPE) {
       throw new TypeError();
     }
-    var results = [];
+    const results = [];
     for (var property in object) {
       if (_hasOwnProperty.call(object, property)) results.push(property);
     }
@@ -323,7 +321,7 @@ var Class = (function () {
   }
 
   function values(object) {
-    var results = [];
+    const results = [];
     for (var property in object) results.push(object[property]);
     return results;
   }
@@ -340,7 +338,7 @@ var Class = (function () {
     return _toString.call(object) === ARRAY_CLASS;
   }
 
-  var hasNativeIsArray =
+  const hasNativeIsArray =
     typeof Array.isArray == 'function' &&
     Array.isArray([]) &&
     !Array.isArray({});
@@ -394,12 +392,12 @@ var Class = (function () {
 })();
 Object.extend(
   Function.prototype,
-  (function () {
-    var slice = Array.prototype.slice;
+  (() => {
+    const slice = Array.prototype.slice;
 
     function update(array, args) {
-      var arrayLength = array.length,
-        length = args.length;
+      const arrayLength = array.length;
+      let length = args.length;
       while (length--) array[arrayLength + length] = args[length];
       return array;
     }
@@ -410,7 +408,7 @@ Object.extend(
     }
 
     function argumentNames() {
-      var names = this.toString()
+      const names = this.toString()
         .match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
         .replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
         .replace(/\s+/g, '')
@@ -424,13 +422,13 @@ Object.extend(
       if (!Object.isFunction(this))
         throw new TypeError('The object is not callable.');
 
-      var nop = function () {};
-      var __method = this,
+      const nop = () => {};
+      const __method = this,
         args = slice.call(arguments, 1);
 
-      var bound = function () {
-        var a = merge(args, arguments);
-        var c = this instanceof bound ? this : context;
+      const bound = function () {
+        const a = merge(args, arguments);
+        const c = this instanceof bound ? this : context;
         return __method.apply(c, a);
       };
 
@@ -441,56 +439,56 @@ Object.extend(
     }
 
     function bindAsEventListener(context) {
-      var __method = this,
+      const __method = this,
         args = slice.call(arguments, 1);
-      return function (event) {
-        var a = update([event || window.event], args);
+      return event => {
+        const a = update([event || window.event], args);
         return __method.apply(context, a);
       };
     }
 
     function curry() {
       if (!arguments.length) return this;
-      var __method = this,
+      const __method = this,
         args = slice.call(arguments, 0);
       return function () {
-        var a = merge(args, arguments);
+        const a = merge(args, arguments);
         return __method.apply(this, a);
       };
     }
 
     function delay(timeout) {
-      var __method = this,
+      const __method = this,
         args = slice.call(arguments, 1);
       timeout = timeout * 1000;
-      return window.setTimeout(function () {
+      return window.setTimeout(() => {
         return __method.apply(__method, args);
       }, timeout);
     }
 
     function defer() {
-      var args = update([0.01], arguments);
+      const args = update([0.01], arguments);
       return this.delay.apply(this, args);
     }
 
     function wrap(wrapper) {
-      var __method = this;
+      const __method = this;
       return function () {
-        var a = update([__method.bind(this)], arguments);
+        const a = update([__method.bind(this)], arguments);
         return wrapper.apply(this, a);
       };
     }
 
     function methodize() {
       if (this._methodized) return this._methodized;
-      var __method = this;
+      const __method = this;
       return (this._methodized = function () {
-        var a = update([this], arguments);
+        const a = update([this], arguments);
         return __method.apply(null, a);
       });
     }
 
-    var extensions = {
+    const extensions = {
       argumentNames: argumentNames,
       bindAsEventListener: bindAsEventListener,
       curry: curry,
@@ -506,22 +504,9 @@ Object.extend(
   })()
 );
 
-(function (proto) {
+(proto => {
   function toISOString() {
-    return (
-      this.getUTCFullYear() +
-      '-' +
-      (this.getUTCMonth() + 1).toPaddedString(2) +
-      '-' +
-      this.getUTCDate().toPaddedString(2) +
-      'T' +
-      this.getUTCHours().toPaddedString(2) +
-      ':' +
-      this.getUTCMinutes().toPaddedString(2) +
-      ':' +
-      this.getUTCSeconds().toPaddedString(2) +
-      'Z'
-    );
+    return `${this.getUTCFullYear()}-${(this.getUTCMonth() + 1).toPaddedString(2)}-${this.getUTCDate().toPaddedString(2)}T${this.getUTCHours().toPaddedString(2)}:${this.getUTCMinutes().toPaddedString(2)}:${this.getUTCSeconds().toPaddedString(2)}Z`;
   }
 
   function toJSON() {
@@ -534,7 +519,7 @@ Object.extend(
 
 RegExp.prototype.match = RegExp.prototype.test;
 
-RegExp.escape = function (str) {
+RegExp.escape = str => {
   return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 };
 var PeriodicalExecuter = Class.create({
@@ -577,7 +562,7 @@ var PeriodicalExecuter = Class.create({
   }
 });
 Object.extend(String, {
-  interpret: function (value) {
+  interpret: value => {
     return value == null ? '' : String(value);
   },
   specialChar: {
@@ -592,16 +577,16 @@ Object.extend(String, {
 
 Object.extend(
   String.prototype,
-  (function () {
-    var NATIVE_JSON_PARSE_SUPPORT =
+  (() => {
+    const NATIVE_JSON_PARSE_SUPPORT =
       window.JSON &&
       typeof JSON.parse === 'function' &&
       JSON.parse('{"test": true}').test;
 
     function prepareReplacement(replacement) {
       if (Object.isFunction(replacement)) return replacement;
-      var template = new Template(replacement);
-      return function (match) {
+      const template = new Template(replacement);
+      return match => {
         return template.evaluate(match);
       };
     }
@@ -611,7 +596,7 @@ Object.extend(
     }
 
     function gsub(pattern, replacement) {
-      var result = '',
+      let result = '',
         source = this,
         match;
       replacement = prepareReplacement(replacement);
@@ -640,7 +625,7 @@ Object.extend(
       replacement = prepareReplacement(replacement);
       count = Object.isUndefined(count) ? 1 : count;
 
-      return this.gsub(pattern, function (match) {
+      return this.gsub(pattern, match => {
         if (--count < 0) return match[0];
         return replacement(match);
       });
@@ -675,15 +660,15 @@ Object.extend(
     }
 
     function extractScripts() {
-      var matchAll = new RegExp(Prototype.ScriptFragment, 'img'),
+      const matchAll = new RegExp(Prototype.ScriptFragment, 'img'),
         matchOne = new RegExp(Prototype.ScriptFragment, 'im');
-      return (this.match(matchAll) || []).map(function (scriptTag) {
+      return (this.match(matchAll) || []).map(scriptTag => {
         return (scriptTag.match(matchOne) || ['', ''])[1];
       });
     }
 
     function evalScripts() {
-      return this.extractScripts().map(function (script) {
+      return this.extractScripts().map(script => {
         return eval(script);
       });
     }
@@ -702,10 +687,10 @@ Object.extend(
     }
 
     function toQueryParams(separator) {
-      var match = this.strip().match(/([^?#]*)(#.*)?$/);
+      const match = this.strip().match(/([^?#]*)(#.*)?$/);
       if (!match) return {};
 
-      return match[1].split(separator || '&').inject({}, function (hash, pair) {
+      return match[1].split(separator || '&').inject({}, (hash, pair) => {
         if ((pair = pair.split('='))[0]) {
           var key = decodeURIComponent(pair.shift()),
             value = pair.length > 1 ? pair.join('=') : pair[0];
@@ -740,7 +725,7 @@ Object.extend(
     }
 
     function camelize() {
-      return this.replace(/-+(.)?/g, function (match, chr) {
+      return this.replace(/-+(.)?/g, (match, chr) => {
         return chr ? chr.toUpperCase() : '';
       });
     }
@@ -762,15 +747,14 @@ Object.extend(
     }
 
     function inspect(useDoubleQuotes) {
-      var escapedString = this.replace(/[\x00-\x1f\\]/g, function (character) {
+      const escapedString = this.replace(/[\x00-\x1f\\]/g, character => {
         if (character in String.specialChar) {
           return String.specialChar[character];
         }
-        return '\\u00' + character.charCodeAt().toPaddedString(2, 16);
+        return `\\u00${character.charCodeAt().toPaddedString(2, 16)}`;
       });
-      if (useDoubleQuotes)
-        return '"' + escapedString.replace(/"/g, '\\"') + '"';
-      return "'" + escapedString.replace(/'/g, "\\'") + "'";
+      if (useDoubleQuotes) return `"${escapedString.replace(/"/g, '\\"')}"`;
+      return `'${escapedString.replace(/'/g, "\\'")}'`;
     }
 
     function unfilterJSON(filter) {
@@ -778,7 +762,7 @@ Object.extend(
     }
 
     function isJSON() {
-      var str = this;
+      let str = this;
       if (str.blank()) return false;
       str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
       str = str.replace(
@@ -790,22 +774,24 @@ Object.extend(
     }
 
     function evalJSON(sanitize) {
-      var json = this.unfilterJSON(),
-        cx =
-          /[\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff\u0000]/g;
+      let json = this.unfilterJSON();
+
+      const cx =
+        /[\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff\u0000]/g;
+
       if (cx.test(json)) {
-        json = json.replace(cx, function (a) {
-          return '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+        json = json.replace(cx, a => {
+          return `\\u${`0000${a.charCodeAt(0).toString(16)}`.slice(-4)}`;
         });
       }
       try {
-        if (!sanitize || json.isJSON()) return eval('(' + json + ')');
+        if (!sanitize || json.isJSON()) return eval(`(${json})`);
       } catch (e) {}
-      throw new SyntaxError('Badly formed JSON string: ' + this.inspect());
+      throw new SyntaxError(`Badly formed JSON string: ${this.inspect()}`);
     }
 
     function parseJSON() {
-      var json = this.unfilterJSON();
+      const json = this.unfilterJSON();
       return JSON.parse(json);
     }
 
@@ -823,7 +809,7 @@ Object.extend(
       position = Object.isNumber(position) ? position : this.length;
       if (position < 0) position = 0;
       if (position > this.length) position = this.length;
-      var d = position - pattern.length;
+      const d = position - pattern.length;
       return d >= 0 && this.indexOf(pattern, d) === d;
     }
 
@@ -884,15 +870,15 @@ var Template = Class.create({
     if (object && Object.isFunction(object.toTemplateReplacements))
       object = object.toTemplateReplacements();
 
-    return this.template.gsub(this.pattern, function (match) {
-      if (object == null) return match[1] + '';
+    return this.template.gsub(this.pattern, match => {
+      if (object == null) return `${match[1]}`;
 
-      var before = match[1] || '';
+      const before = match[1] || '';
       if (before == '\\') return match[2];
 
-      var ctx = object,
-        expr = match[3],
-        pattern = /^([^.[]+|\[((?:.*?[^\\])?)\])(\.|\[|$)/;
+      let ctx = object;
+      let expr = match[3];
+      const pattern = /^([^.[]+|\[((?:.*?[^\\])?)\])(\.|\[|$)/;
 
       match = pattern.exec(expr);
       if (match == null) return before;
@@ -917,7 +903,7 @@ Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
 
 var $break = {};
 
-var Enumerable = (function () {
+var Enumerable = (() => {
   function each(iterator, context) {
     try {
       this._each(iterator, context);
@@ -928,9 +914,9 @@ var Enumerable = (function () {
   }
 
   function eachSlice(number, iterator, context) {
-    var index = -number,
-      slices = [],
-      array = this.toArray();
+    let index = -number;
+    const slices = [];
+    const array = this.toArray();
     if (number < 1) return array;
     while ((index += number) < array.length)
       slices.push(array.slice(index, index + number));
@@ -939,7 +925,7 @@ var Enumerable = (function () {
 
   function all(iterator, context) {
     iterator = iterator || Prototype.K;
-    var result = true;
+    let result = true;
     this.each(function (value, index) {
       result = result && !!iterator.call(context, value, index, this);
       if (!result) throw $break;
@@ -949,7 +935,7 @@ var Enumerable = (function () {
 
   function any(iterator, context) {
     iterator = iterator || Prototype.K;
-    var result = false;
+    let result = false;
     this.each(function (value, index) {
       if ((result = !!iterator.call(context, value, index, this))) throw $break;
     }, this);
@@ -958,7 +944,7 @@ var Enumerable = (function () {
 
   function collect(iterator, context) {
     iterator = iterator || Prototype.K;
-    var results = [];
+    const results = [];
     this.each(function (value, index) {
       results.push(iterator.call(context, value, index, this));
     }, this);
@@ -966,7 +952,7 @@ var Enumerable = (function () {
   }
 
   function detect(iterator, context) {
-    var result;
+    let result;
     this.each(function (value, index) {
       if (iterator.call(context, value, index, this)) {
         result = value;
@@ -977,7 +963,7 @@ var Enumerable = (function () {
   }
 
   function findAll(iterator, context) {
-    var results = [];
+    const results = [];
     this.each(function (value, index) {
       if (iterator.call(context, value, index, this)) results.push(value);
     }, this);
@@ -986,7 +972,7 @@ var Enumerable = (function () {
 
   function grep(filter, iterator, context) {
     iterator = iterator || Prototype.K;
-    var results = [];
+    const results = [];
 
     if (Object.isString(filter)) filter = new RegExp(RegExp.escape(filter));
 
@@ -1001,8 +987,8 @@ var Enumerable = (function () {
     if (Object.isFunction(this.indexOf) && this.indexOf(object) != -1)
       return true;
 
-    var found = false;
-    this.each(function (value) {
+    let found = false;
+    this.each(value => {
       if (value == object) {
         found = true;
         throw $break;
@@ -1013,7 +999,7 @@ var Enumerable = (function () {
 
   function inGroupsOf(number, fillWith) {
     fillWith = Object.isUndefined(fillWith) ? null : fillWith;
-    return this.eachSlice(number, function (slice) {
+    return this.eachSlice(number, slice => {
       while (slice.length < number) slice.push(fillWith);
       return slice;
     });
@@ -1027,15 +1013,15 @@ var Enumerable = (function () {
   }
 
   function invoke(method) {
-    var args = $A(arguments).slice(1);
-    return this.map(function (value) {
+    const args = $A(arguments).slice(1);
+    return this.map(value => {
       return value[method].apply(value, args);
     });
   }
 
   function max(iterator, context) {
     iterator = iterator || Prototype.K;
-    var result;
+    let result;
     this.each(function (value, index) {
       value = iterator.call(context, value, index, this);
       if (result == null || value >= result) result = value;
@@ -1045,7 +1031,7 @@ var Enumerable = (function () {
 
   function min(iterator, context) {
     iterator = iterator || Prototype.K;
-    var result;
+    let result;
     this.each(function (value, index) {
       value = iterator.call(context, value, index, this);
       if (result == null || value < result) result = value;
@@ -1055,7 +1041,7 @@ var Enumerable = (function () {
 
   function partition(iterator, context) {
     iterator = iterator || Prototype.K;
-    var trues = [],
+    const trues = [],
       falses = [];
     this.each(function (value, index) {
       (iterator.call(context, value, index, this) ? trues : falses).push(value);
@@ -1064,15 +1050,15 @@ var Enumerable = (function () {
   }
 
   function pluck(property) {
-    var results = [];
-    this.each(function (value) {
+    const results = [];
+    this.each(value => {
       results.push(value[property]);
     });
     return results;
   }
 
   function reject(iterator, context) {
-    var results = [];
+    const results = [];
     this.each(function (value, index) {
       if (!iterator.call(context, value, index, this)) results.push(value);
     }, this);
@@ -1086,8 +1072,8 @@ var Enumerable = (function () {
         criteria: iterator.call(context, value, index, this)
       };
     }, this)
-      .sort(function (left, right) {
-        var a = left.criteria,
+      .sort((left, right) => {
+        const a = left.criteria,
           b = right.criteria;
         return a < b ? -1 : a > b ? 1 : 0;
       })
@@ -1099,12 +1085,12 @@ var Enumerable = (function () {
   }
 
   function zip() {
-    var iterator = Prototype.K,
-      args = $A(arguments);
+    let iterator = Prototype.K;
+    const args = $A(arguments);
     if (Object.isFunction(args.last())) iterator = args.pop();
 
-    var collections = [this].concat(args).map($A);
-    return this.map(function (value, index) {
+    const collections = [this].concat(args).map($A);
+    return this.map((value, index) => {
       return iterator(collections.pluck(index));
     });
   }
@@ -1114,7 +1100,7 @@ var Enumerable = (function () {
   }
 
   function inspect() {
-    return '#<Enumerable:' + this.toArray().inspect() + '>';
+    return `#<Enumerable:${this.toArray().inspect()}>`;
   }
 
   return {
@@ -1154,8 +1140,8 @@ var Enumerable = (function () {
 function $A(iterable) {
   if (!iterable) return [];
   if ('toArray' in Object(iterable)) return iterable.toArray();
-  var length = iterable.length || 0,
-    results = new Array(length);
+  let length = iterable.length || 0;
+  const results = new Array(length);
   while (length--) results[length] = iterable[length];
   return results;
 }
@@ -1168,10 +1154,10 @@ function $w(string) {
 
 Array.from = $A;
 
-(function () {
-  var arrayProto = Array.prototype,
-    slice = arrayProto.slice,
-    _each = arrayProto.forEach; // use native browser JS 1.6 implementation if available
+(() => {
+  const arrayProto = Array.prototype;
+  const slice = arrayProto.slice;
+  let _each = arrayProto.forEach;
 
   function each(iterator, context) {
     for (var i = 0, length = this.length >>> 0; i < length; i++) {
@@ -1194,13 +1180,13 @@ Array.from = $A;
   }
 
   function compact() {
-    return this.select(function (value) {
+    return this.select(value => {
       return value != null;
     });
   }
 
   function flatten() {
-    return this.inject([], function (array, value) {
+    return this.inject([], (array, value) => {
       if (Object.isArray(value)) return array.concat(value.flatten());
       array.push(value);
       return array;
@@ -1208,8 +1194,8 @@ Array.from = $A;
   }
 
   function without() {
-    var values = slice.call(arguments, 0);
-    return this.select(function (value) {
+    const values = slice.call(arguments, 0);
+    return this.select(value => {
       return !values.include(value);
     });
   }
@@ -1219,7 +1205,7 @@ Array.from = $A;
   }
 
   function uniq(sorted) {
-    return this.inject([], function (array, value, index) {
+    return this.inject([], (array, value, index) => {
       if (
         0 == index ||
         (sorted ? array.last() != value : !array.include(value))
@@ -1230,7 +1216,7 @@ Array.from = $A;
   }
 
   function intersect(array) {
-    return this.uniq().findAll(function (item) {
+    return this.uniq().findAll(item => {
       return array.indexOf(item) !== -1;
     });
   }
@@ -1244,13 +1230,13 @@ Array.from = $A;
   }
 
   function inspect() {
-    return '[' + this.map(Object.inspect).join(', ') + ']';
+    return `[${this.map(Object.inspect).join(', ')}]`;
   }
 
   function indexOf(item, i) {
     if (this == null) throw new TypeError();
 
-    var array = Object(this),
+    const array = Object(this),
       length = array.length >>> 0;
     if (length === 0) return -1;
 
@@ -1263,7 +1249,7 @@ Array.from = $A;
 
     if (i > length) return -1;
 
-    var k = i >= 0 ? i : Math.max(length - Math.abs(i), 0);
+    let k = i >= 0 ? i : Math.max(length - Math.abs(i), 0);
     for (; k < length; k++) if (k in array && array[k] === item) return k;
     return -1;
   }
@@ -1271,7 +1257,7 @@ Array.from = $A;
   function lastIndexOf(item, i) {
     if (this == null) throw new TypeError();
 
-    var array = Object(this),
+    const array = Object(this),
       length = array.length >>> 0;
     if (length === 0) return -1;
 
@@ -1286,17 +1272,17 @@ Array.from = $A;
       i = length;
     }
 
-    var k = i >= 0 ? Math.min(i, length - 1) : length - Math.abs(i);
+    let k = i >= 0 ? Math.min(i, length - 1) : length - Math.abs(i);
 
     for (; k >= 0; k--) if (k in array && array[k] === item) return k;
     return -1;
   }
 
   function concat(_) {
-    var array = [],
-      items = slice.call(arguments, 0),
-      item,
-      n = 0;
+    const array = [];
+    const items = slice.call(arguments, 0);
+    let item;
+    let n = 0;
     items.unshift(this);
     for (var i = 0, length = items.length; i < length; i++) {
       item = items[i];
@@ -1331,10 +1317,10 @@ Array.from = $A;
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
 
-    var object = Object(this);
-    var results = [],
-      context = arguments[1],
-      n = 0;
+    const object = Object(this);
+    const results = [];
+    const context = arguments[1];
+    let n = 0;
 
     for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object) {
@@ -1353,10 +1339,10 @@ Array.from = $A;
   function filter(iterator) {
     if (this == null || !Object.isFunction(iterator)) throw new TypeError();
 
-    var object = Object(this);
-    var results = [],
-      context = arguments[1],
-      value;
+    const object = Object(this);
+    const results = [];
+    const context = arguments[1];
+    let value;
 
     for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object) {
@@ -1376,9 +1362,9 @@ Array.from = $A;
   function some(iterator) {
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
-    var context = arguments[1];
+    const context = arguments[1];
 
-    var object = Object(this);
+    const object = Object(this);
     for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object && iterator.call(context, object[i], i, object)) {
         return true;
@@ -1395,9 +1381,9 @@ Array.from = $A;
   function every(iterator) {
     if (this == null) throw new TypeError();
     iterator = iterator || Prototype.K;
-    var context = arguments[1];
+    const context = arguments[1];
 
-    var object = Object(this);
+    const object = Object(this);
     for (var i = 0, length = object.length >>> 0; i < length; i++) {
       if (i in object && !iterator.call(context, object[i], i, object)) {
         return false;
@@ -1447,7 +1433,7 @@ Array.from = $A;
     inspect: inspect
   });
 
-  var CONCAT_ARGUMENTS_BUGGY = (function () {
+  const CONCAT_ARGUMENTS_BUGGY = (function () {
     return [].concat(arguments)[0][0] !== 1;
   })(1, 2);
 
@@ -1462,7 +1448,7 @@ function $H(object) {
 
 var Hash = Class.create(
   Enumerable,
-  (function () {
+  (() => {
     function initialize(object) {
       this._object = Object.isHash(object)
         ? object.toObject()
@@ -1470,7 +1456,7 @@ var Hash = Class.create(
     }
 
     function _each(iterator, context) {
-      var i = 0;
+      let i = 0;
       for (var key in this._object) {
         var value = this._object[key],
           pair = [key, value];
@@ -1490,7 +1476,7 @@ var Hash = Class.create(
     }
 
     function unset(key) {
-      var value = this._object[key];
+      const value = this._object[key];
       delete this._object[key];
       return value;
     }
@@ -1508,7 +1494,7 @@ var Hash = Class.create(
     }
 
     function index(value) {
-      var match = this.detect(function (pair) {
+      const match = this.detect(pair => {
         return pair.value === value;
       });
       return match && match.key;
@@ -1519,7 +1505,7 @@ var Hash = Class.create(
     }
 
     function update(object) {
-      return new Hash(object).inject(this, function (result, pair) {
+      return new Hash(object).inject(this, (result, pair) => {
         result.set(pair.key, pair.value);
         return result;
       });
@@ -1533,12 +1519,12 @@ var Hash = Class.create(
       value = value.gsub(/(\r)?\n/, '\r\n');
       value = encodeURIComponent(value);
       value = value.gsub(/%20/, '+');
-      return key + '=' + value;
+      return `${key}=${value}`;
     }
 
     function toQueryString() {
-      return this.inject([], function (results, pair) {
-        var key = encodeURIComponent(pair.key),
+      return this.inject([], (results, pair) => {
+        const key = encodeURIComponent(pair.key),
           values = pair.value;
 
         if (values && typeof values == 'object') {
@@ -1556,13 +1542,9 @@ var Hash = Class.create(
     }
 
     function inspect() {
-      return (
-        '#<Hash:{' +
-        this.map(function (pair) {
-          return pair.map(Object.inspect).join(': ');
-        }).join(', ') +
-        '}>'
-      );
+      return `#<Hash:{${this.map(pair => {
+        return pair.map(Object.inspect).join(': ');
+      }).join(', ')}}>`;
     }
 
     function clone() {
@@ -1593,7 +1575,7 @@ var Hash = Class.create(
 Hash.from = $H;
 Object.extend(
   Number.prototype,
-  (function () {
+  (() => {
     function toColorPart() {
       return this.toPaddedString(2, 16);
     }
@@ -1608,7 +1590,7 @@ Object.extend(
     }
 
     function toPaddedString(length, radix) {
-      var string = this.toString(radix || 10);
+      const string = this.toString(radix || 10);
       return '0'.times(length - string.length) + string;
     }
 
@@ -1647,7 +1629,7 @@ function $R(start, end, exclusive) {
 
 var ObjectRange = Class.create(
   Enumerable,
-  (function () {
+  (() => {
     function initialize(start, end, exclusive) {
       this.start = start;
       this.end = end;
@@ -1655,7 +1637,7 @@ var ObjectRange = Class.create(
     }
 
     function _each(iterator, context) {
-      var value = this.start,
+      let value = this.start,
         i;
       for (i = 0; this.include(value); i++) {
         iterator.call(context, value, i);
@@ -1681,7 +1663,7 @@ var Abstract = {};
 
 var Try = {
   these: function () {
-    var returnValue;
+    let returnValue;
 
     for (var i = 0, length = arguments.length; i < length; i++) {
       var lambda = arguments[i];
@@ -1696,16 +1678,16 @@ var Try = {
 };
 
 var Ajax = {
-  getTransport: function () {
+  getTransport: () => {
     return (
       Try.these(
-        function () {
+        () => {
           return new XMLHttpRequest();
         },
-        function () {
+        () => {
           return new ActiveXObject('Msxml2.XMLHTTP');
         },
-        function () {
+        () => {
           return new ActiveXObject('Microsoft.XMLHTTP');
         }
       ) || false
@@ -1731,7 +1713,7 @@ Ajax.Responders = {
   },
 
   dispatch: function (callback, request, transport, json) {
-    this.each(function (responder) {
+    this.each(responder => {
       if (Object.isFunction(responder[callback])) {
         try {
           responder[callback].apply(responder, [request, transport, json]);
@@ -1744,10 +1726,10 @@ Ajax.Responders = {
 Object.extend(Ajax.Responders, Enumerable);
 
 Ajax.Responders.register({
-  onCreate: function () {
+  onCreate: () => {
     Ajax.activeRequestCount++;
   },
-  onComplete: function () {
+  onComplete: () => {
     Ajax.activeRequestCount--;
   }
 });
@@ -1782,12 +1764,12 @@ Ajax.Request = Class.create(Ajax.Base, {
   request: function (url) {
     this.url = url;
     this.method = this.options.method;
-    var params = Object.isString(this.options.parameters)
+    let params = Object.isString(this.options.parameters)
       ? this.options.parameters
       : Object.toQueryString(this.options.parameters);
 
     if (!['get', 'post'].include(this.method)) {
-      params += (params ? '&' : '') + '_method=' + this.method;
+      params += `${params ? '&' : ''}_method=${this.method}`;
       this.method = 'post';
     }
 
@@ -1827,13 +1809,13 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   onStateChange: function () {
-    var readyState = this.transport.readyState;
+    const readyState = this.transport.readyState;
     if (readyState > 1 && !(readyState == 4 && this._complete))
       this.respondToReadyState(this.transport.readyState);
   },
 
   setRequestHeaders: function () {
-    var headers = {
+    const headers = {
       'X-Requested-With': 'XMLHttpRequest',
       'X-Prototype-Version': Prototype.Version,
       Accept: 'text/javascript, text/html, application/xml, text/xml, */*'
@@ -1842,7 +1824,7 @@ Ajax.Request = Class.create(Ajax.Base, {
     if (this.method == 'post') {
       headers['Content-type'] =
         this.options.contentType +
-        (this.options.encoding ? '; charset=' + this.options.encoding : '');
+        (this.options.encoding ? `; charset=${this.options.encoding}` : '');
 
       /* Force "Connection: close" for older Mozilla browsers to work
        * around a bug where XMLHttpRequest sends an incorrect
@@ -1862,7 +1844,7 @@ Ajax.Request = Class.create(Ajax.Base, {
         for (var i = 0, length = extras.length; i < length; i += 2)
           headers[extras[i]] = extras[i + 1];
       else
-        $H(extras).each(function (pair) {
+        $H(extras).each(pair => {
           headers[pair.key] = pair.value;
         });
     }
@@ -1873,7 +1855,7 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   success: function () {
-    var status = this.getStatus();
+    const status = this.getStatus();
     return !status || (status >= 200 && status < 300) || status == 304;
   },
 
@@ -1887,15 +1869,15 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   respondToReadyState: function (readyState) {
-    var state = Ajax.Request.Events[readyState],
+    const state = Ajax.Request.Events[readyState],
       response = new Ajax.Response(this);
 
     if (state == 'Complete') {
       try {
         this._complete = true;
         (
-          this.options['on' + response.status] ||
-          this.options['on' + (this.success() ? 'Success' : 'Failure')] ||
+          this.options[`on${response.status}`] ||
+          this.options[`on${this.success() ? 'Success' : 'Failure'}`] ||
           Prototype.emptyFunction
         )(response, response.headerJSON);
       } catch (e) {
@@ -1916,12 +1898,12 @@ Ajax.Request = Class.create(Ajax.Base, {
     }
 
     try {
-      (this.options['on' + state] || Prototype.emptyFunction)(
+      (this.options[`on${state}`] || Prototype.emptyFunction)(
         response,
         response.headerJSON
       );
       Ajax.Responders.dispatch(
-        'on' + state,
+        `on${state}`,
         this,
         response,
         response.headerJSON
@@ -1936,14 +1918,14 @@ Ajax.Request = Class.create(Ajax.Base, {
   },
 
   isSameOrigin: function () {
-    var m = this.url.match(/^\s*https?:\/\/[^\/]*/);
+    const m = this.url.match(/^\s*https?:\/\/[^\/]*/);
     return (
       !m ||
       m[0] ==
         '#{protocol}//#{domain}#{port}'.interpolate({
           protocol: location.protocol,
           domain: document.domain,
-          port: location.port ? ':' + location.port : ''
+          port: location.port ? `:${location.port}` : ''
         })
     );
   },
@@ -1981,7 +1963,7 @@ Ajax.Request.Events = [
 Ajax.Response = Class.create({
   initialize: function (request) {
     this.request = request;
-    var transport = (this.transport = request.transport),
+    const transport = (this.transport = request.transport),
       readyState = (this.readyState = transport.readyState);
 
     if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
@@ -2031,7 +2013,7 @@ Ajax.Response = Class.create({
   },
 
   _getHeaderJSON: function () {
-    var json = this.getHeader('X-JSON');
+    let json = this.getHeader('X-JSON');
     if (!json) return null;
 
     try {
@@ -2048,7 +2030,7 @@ Ajax.Response = Class.create({
   },
 
   _getResponseJSON: function () {
-    var options = this.request.options;
+    const options = this.request.options;
     if (
       !options.evalJSON ||
       (options.evalJSON != 'force' &&
@@ -2074,7 +2056,7 @@ Ajax.Updater = Class.create(Ajax.Request, {
     };
 
     options = Object.clone(options);
-    var onComplete = options.onComplete;
+    const onComplete = options.onComplete;
     options.onComplete = function (response, json) {
       this.updateContent(response.responseText);
       if (Object.isFunction(onComplete)) onComplete(response, json);
@@ -2084,8 +2066,8 @@ Ajax.Updater = Class.create(Ajax.Request, {
   },
 
   updateContent: function (responseText) {
-    var receiver = this.container[this.success() ? 'success' : 'failure'],
-      options = this.options;
+    let receiver = this.container[this.success() ? 'success' : 'failure'];
+    const options = this.options;
 
     if (!options.evalScripts) responseText = responseText.stripScripts();
 
@@ -2146,11 +2128,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 });
 
-(function (GLOBAL) {
-  var UNDEFINED;
-  var SLICE = Array.prototype.slice;
+(GLOBAL => {
+  let UNDEFINED;
+  const SLICE = Array.prototype.slice;
 
-  var DIV = document.createElement('div');
+  let DIV = document.createElement('div');
 
   function $(element) {
     if (arguments.length > 1) {
@@ -2184,7 +2166,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     });
   }
 
-  var ELEMENT_CACHE = {};
+  let ELEMENT_CACHE = {};
 
   function shouldUseCreationCache(tagName, attributes) {
     if (tagName === 'select') return false;
@@ -2192,7 +2174,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return true;
   }
 
-  var HAS_EXTENDED_CREATE_ELEMENT_SYNTAX = (function () {
+  const HAS_EXTENDED_CREATE_ELEMENT_SYNTAX = (() => {
     try {
       var el = document.createElement('<input name="x">');
       return el.tagName.toLowerCase() === 'input' && el.name === 'x';
@@ -2201,13 +2183,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   })();
 
-  var oldElement = GLOBAL.Element;
+  const oldElement = GLOBAL.Element;
   function Element(tagName, attributes) {
     attributes = attributes || {};
     tagName = tagName.toLowerCase();
 
     if (HAS_EXTENDED_CREATE_ELEMENT_SYNTAX && attributes.name) {
-      tagName = '<' + tagName + ' name="' + attributes.name + '">';
+      tagName = `<${tagName} name="${attributes.name}">`;
       delete attributes.name;
       return Element.writeAttribute(
         document.createElement(tagName),
@@ -2218,7 +2200,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (!ELEMENT_CACHE[tagName])
       ELEMENT_CACHE[tagName] = Element.extend(document.createElement(tagName));
 
-    var node = shouldUseCreationCache(tagName, attributes)
+    const node = shouldUseCreationCache(tagName, attributes)
       ? ELEMENT_CACHE[tagName].cloneNode(false)
       : document.createElement(tagName);
 
@@ -2232,21 +2214,21 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   Element.Methods = { ByTag: {}, Simulated: {} };
 
-  var methods = {};
+  const methods = {};
 
-  var INSPECT_ATTRIBUTES = { id: 'id', className: 'class' };
+  const INSPECT_ATTRIBUTES = { id: 'id', className: 'class' };
   function inspect(element) {
     element = $(element);
-    var result = '<' + element.tagName.toLowerCase();
+    let result = `<${element.tagName.toLowerCase()}`;
 
-    var attribute, value;
+    let attribute, value;
     for (var property in INSPECT_ATTRIBUTES) {
       attribute = INSPECT_ATTRIBUTES[property];
       value = (element[property] || '').toString();
-      if (value) result += ' ' + attribute + '=' + value.inspect(true);
+      if (value) result += ` ${attribute}=${value.inspect(true)}`;
     }
 
-    return result + '>';
+    return `${result}>`;
   }
 
   methods.inspect = inspect;
@@ -2288,8 +2270,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  var SELECT_ELEMENT_INNERHTML_BUGGY = (function () {
-    var el = document.createElement('select'),
+  const SELECT_ELEMENT_INNERHTML_BUGGY = (() => {
+    let el = document.createElement('select'),
       isBuggy = true;
     el.innerHTML = '<option value="test">test</option>';
     if (el.options && el.options[0]) {
@@ -2299,7 +2281,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return isBuggy;
   })();
 
-  var TABLE_ELEMENT_INNERHTML_BUGGY = (function () {
+  const TABLE_ELEMENT_INNERHTML_BUGGY = (() => {
     try {
       var el = document.createElement('table');
       if (el && el.tBodies) {
@@ -2313,7 +2295,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   })();
 
-  var LINK_ELEMENT_INNERHTML_BUGGY = (function () {
+  const LINK_ELEMENT_INNERHTML_BUGGY = (() => {
     try {
       var el = document.createElement('div');
       el.innerHTML = '<link />';
@@ -2325,13 +2307,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   })();
 
-  var ANY_INNERHTML_BUGGY =
+  const ANY_INNERHTML_BUGGY =
     SELECT_ELEMENT_INNERHTML_BUGGY ||
     TABLE_ELEMENT_INNERHTML_BUGGY ||
     LINK_ELEMENT_INNERHTML_BUGGY;
 
-  var SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING = (function () {
-    var s = document.createElement('script'),
+  const SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING = (() => {
+    let s = document.createElement('script'),
       isBuggy = false;
     try {
       s.appendChild(document.createTextNode(''));
@@ -2346,8 +2328,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function update(element, content) {
     element = $(element);
 
-    var descendants = element.getElementsByTagName('*'),
-      i = descendants.length;
+    const descendants = element.getElementsByTagName('*');
+    let i = descendants.length;
     while (i--) purgeElement(descendants[i]);
 
     if (content && content.toElement) content = content.toElement();
@@ -2355,7 +2337,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (Object.isElement(content)) return element.update().insert(content);
 
     content = Object.toHTML(content);
-    var tagName = element.tagName.toUpperCase();
+    const tagName = element.tagName.toUpperCase();
 
     if (tagName === 'SCRIPT' && SCRIPT_ELEMENT_REJECTS_TEXTNODE_APPENDING) {
       element.text = content;
@@ -2370,7 +2352,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
           tagName,
           content.stripScripts()
         );
-        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var k = 0, node; (node = nodes[k]); k++) element.appendChild(node);
       } else if (
         LINK_ELEMENT_INNERHTML_BUGGY &&
         Object.isString(content) &&
@@ -2384,7 +2366,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
           true
         );
 
-        for (var i = 0, node; (node = nodes[i]); i++) element.appendChild(node);
+        for (var j = 0, node; (node = nodes[j]); j++) element.appendChild(node);
       } else {
         element.innerHTML = content.stripScripts();
       }
@@ -2413,17 +2395,17 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  var INSERTION_TRANSLATIONS = {
-    before: function (element, node) {
+  const INSERTION_TRANSLATIONS = {
+    before: (element, node) => {
       element.parentNode.insertBefore(node, element);
     },
-    top: function (element, node) {
+    top: (element, node) => {
       element.insertBefore(node, element.firstChild);
     },
-    bottom: function (element, node) {
+    bottom: (element, node) => {
       element.appendChild(node);
     },
-    after: function (element, node) {
+    after: (element, node) => {
       element.parentNode.insertBefore(node, element.nextSibling);
     },
 
@@ -2436,7 +2418,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   };
 
-  var tags = INSERTION_TRANSLATIONS.tags;
+  const tags = INSERTION_TRANSLATIONS.tags;
 
   Object.extend(tags, {
     THEAD: tags.TBODY,
@@ -2453,7 +2435,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     content = Object.toHTML(content);
-    var parent = element.parentNode,
+    const parent = element.parentNode,
       tagName = parent.tagName.toUpperCase();
 
     if (tagName in INSERTION_TRANSLATIONS.tags) {
@@ -2467,11 +2449,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       var iterator;
       if (nextSibling)
-        iterator = function (node) {
+        iterator = node => {
           parent.insertBefore(node, nextSibling);
         };
       else
-        iterator = function (node) {
+        iterator = node => {
           parent.appendChild(node);
         };
 
@@ -2498,7 +2480,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function insertContentAt(element, content, position) {
     position = position.toLowerCase();
-    var method = INSERTION_TRANSLATIONS[position];
+    const method = INSERTION_TRANSLATIONS[position];
 
     if (content && content.toElement) content = content.toElement();
     if (Object.isElement(content)) {
@@ -2507,13 +2489,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     content = Object.toHTML(content);
-    var tagName = (
+    const tagName = (
       position === 'before' || position === 'after'
         ? element.parentNode
         : element
     ).tagName.toUpperCase();
 
-    var childNodes = getContentFromAnonymousElement(
+    const childNodes = getContentFromAnonymousElement(
       tagName,
       content.stripScripts()
     );
@@ -2556,7 +2538,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function cleanWhitespace(element) {
     element = $(element);
-    var node = element.firstChild;
+    let node = element.firstChild;
 
     while (node) {
       var nextNode = node.nextSibling;
@@ -2572,17 +2554,17 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getContentFromAnonymousElement(tagName, html, force) {
-    var t = INSERTION_TRANSLATIONS.tags[tagName],
+    let t = INSERTION_TRANSLATIONS.tags[tagName],
       div = DIV;
 
-    var workaround = !!t;
+    let workaround = !!t;
     if (!workaround && force) {
       workaround = true;
       t = ['', '', 0];
     }
 
     if (workaround) {
-      div.innerHTML = '&#160;' + t[0] + html + t[1];
+      div.innerHTML = `&#160;${t[0]}${html}${t[1]}`;
       div.removeChild(div.firstChild);
       for (var i = t[2]; i--; ) div = div.firstChild;
     } else {
@@ -2594,7 +2576,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function clone(element, deep) {
     if (!(element = $(element))) return;
-    var clone = element.cloneNode(deep);
+    const clone = element.cloneNode(deep);
     if (!HAS_UNIQUE_ID_PROPERTY) {
       clone._prototypeUID = UNDEFINED;
       if (deep) {
@@ -2607,7 +2589,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function purgeElement(element) {
-    var uid = getUniqueElementID(element);
+    const uid = getUniqueElementID(element);
     if (uid) {
       Element.stopObserving(element);
       if (!HAS_UNIQUE_ID_PROPERTY) element._prototypeUID = UNDEFINED;
@@ -2616,12 +2598,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function purgeCollection(elements) {
-    var i = elements.length;
+    let i = elements.length;
     while (i--) purgeElement(elements[i]);
   }
 
   function purgeCollection_IE(elements) {
-    var i = elements.length,
+    let i = elements.length,
       element,
       uid;
     while (i--) {
@@ -2640,8 +2622,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (!(element = $(element))) return;
     purgeElement(element);
 
-    var descendants = element.getElementsByTagName('*'),
-      i = descendants.length;
+    const descendants = element.getElementsByTagName('*');
+    let i = descendants.length;
 
     while (i--) purgeElement(descendants[i]);
 
@@ -2663,7 +2645,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function recursivelyCollect(element, property, maximumLength) {
     element = $(element);
     maximumLength = maximumLength || -1;
-    var elements = [];
+    const elements = [];
 
     while ((element = element[property])) {
       if (element.nodeType === Node.ELEMENT_NODE)
@@ -2692,8 +2674,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function immediateDescendants(element) {
-    var results = [],
-      child = $(element).firstChild;
+    const results = [];
+    let child = $(element).firstChild;
 
     while (child) {
       if (child.nodeType === Node.ELEMENT_NODE)
@@ -2715,7 +2697,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function siblings(element) {
     element = $(element);
-    var previous = previousSiblings(element),
+    const previous = previousSiblings(element),
       next = nextSiblings(element);
     return previous.reverse().concat(next);
   }
@@ -2762,7 +2744,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (Object.isNumber(expression)) ((index = expression), (expression = '*'));
 
-    var node = Prototype.Selector.select(expression, element)[index];
+    const node = Prototype.Selector.select(expression, element)[index];
     return Element.extend(node);
   }
 
@@ -2776,14 +2758,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function select(element) {
     element = $(element);
-    var expressions = SLICE.call(arguments, 1).join(', ');
+    const expressions = SLICE.call(arguments, 1).join(', ');
     return Prototype.Selector.select(expressions, element);
   }
 
   function adjacent(element) {
     element = $(element);
-    var expressions = SLICE.call(arguments, 1).join(', ');
-    var siblings = Element.siblings(element),
+    const expressions = SLICE.call(arguments, 1).join(', ');
+    const siblings = Element.siblings(element),
       results = [];
     for (var i = 0, sibling; (sibling = siblings[i]); i++) {
       if (Prototype.Selector.match(sibling, expressions)) results.push(sibling);
@@ -2813,7 +2795,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return (element.compareDocumentPosition(ancestor) & 8) === 8;
   }
 
-  var descendantOf;
+  let descendantOf;
   if (DIV.compareDocumentPosition) {
     descendantOf = descendantOf_compareDocumentPosition;
   } else if (DIV.contains) {
@@ -2845,14 +2827,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     childElements: immediateDescendants
   });
 
-  var idCounter = 1;
+  let idCounter = 1;
   function identify(element) {
     element = $(element);
-    var id = Element.readAttribute(element, 'id');
+    let id = Element.readAttribute(element, 'id');
     if (id) return id;
 
     do {
-      id = 'anonymous_element_' + idCounter++;
+      id = `anonymous_element_${idCounter++}`;
     } while ($(id));
 
     Element.writeAttribute(element, 'id', id);
@@ -2866,7 +2848,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function readAttribute_IE(element, name) {
     element = $(element);
 
-    var table = ATTRIBUTE_TRANSLATIONS.read;
+    const table = ATTRIBUTE_TRANSLATIONS.read;
     if (table.values[name]) return table.values[name](element, name);
 
     if (table.names[name]) name = table.names[name];
@@ -2884,10 +2866,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element.getAttribute(name);
   }
 
-  var PROBLEMATIC_ATTRIBUTE_READING = (function () {
+  const PROBLEMATIC_ATTRIBUTE_READING = (() => {
     DIV.setAttribute('onclick', []);
-    var value = DIV.getAttribute('onclick');
-    var isFunction = Object.isArray(value);
+    const value = DIV.getAttribute('onclick');
+    const isFunction = Object.isArray(value);
     DIV.removeAttribute('onclick');
     return isFunction;
   })();
@@ -2900,8 +2882,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function writeAttribute(element, name, value) {
     element = $(element);
-    var attributes = {},
-      table = ATTRIBUTE_TRANSLATIONS.write;
+    let attributes = {};
+    const table = ATTRIBUTE_TRANSLATIONS.write;
 
     if (typeof name === 'object') {
       attributes = name;
@@ -2924,19 +2906,19 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  var PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES = (function () {
+  const PROBLEMATIC_HAS_ATTRIBUTE_WITH_CHECKBOXES = (() => {
     if (!HAS_EXTENDED_CREATE_ELEMENT_SYNTAX) {
       return false;
     }
-    var checkbox = document.createElement('<input type="checkbox">');
+    const checkbox = document.createElement('<input type="checkbox">');
     checkbox.checked = true;
-    var node = checkbox.getAttributeNode('checked');
+    const node = checkbox.getAttributeNode('checked');
     return !node || !node.specified;
   })();
 
   function hasAttribute(element, attribute) {
     attribute = ATTRIBUTE_TRANSLATIONS.has[attribute] || attribute;
-    var node = $(element).getAttributeNode(attribute);
+    const node = $(element).getAttributeNode(attribute);
     return !!(node && node.specified);
   }
 
@@ -2954,11 +2936,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return new Element.ClassNames(element);
   }
 
-  var regExpCache = {};
+  const regExpCache = {};
   function getRegExpForClassName(className) {
     if (regExpCache[className]) return regExpCache[className];
 
-    var re = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+    const re = new RegExp(`(^|\\s+)${className}(\\s+|$)`);
     regExpCache[className] = re;
     return re;
   }
@@ -2966,7 +2948,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function hasClassName(element, className) {
     if (!(element = $(element))) return;
 
-    var elementClassName = element.className;
+    const elementClassName = element.className;
 
     if (elementClassName.length === 0) return false;
     if (elementClassName === className) return true;
@@ -2998,13 +2980,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (Object.isUndefined(bool)) bool = !hasClassName(element, className);
 
-    var method = Element[bool ? 'addClassName' : 'removeClassName'];
+    const method = Element[bool ? 'addClassName' : 'removeClassName'];
     return method(element, className);
   }
 
-  var ATTRIBUTE_TRANSLATIONS = {};
+  const ATTRIBUTE_TRANSLATIONS = {};
 
-  var classProp = 'className',
+  let classProp = 'className',
     forProp = 'for';
 
   DIV.setAttribute(classProp, 'x');
@@ -3013,7 +2995,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (DIV.className === 'x') classProp = 'class';
   }
 
-  var LABEL = document.createElement('label');
+  let LABEL = document.createElement('label');
   LABEL.setAttribute(forProp, 'x');
   if (LABEL.htmlFor !== 'x') {
     LABEL.setAttribute('htmlFor', 'x');
@@ -3030,7 +3012,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function _getAttrNode(element, attribute) {
-    var node = element.getAttributeNode(attribute);
+    const node = element.getAttributeNode(attribute);
     return node ? node.value : '';
   }
 
@@ -3039,13 +3021,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   DIV.onclick = Prototype.emptyFunction;
-  var onclickValue = DIV.getAttribute('onclick');
+  const onclickValue = DIV.getAttribute('onclick');
 
-  var _getEv;
+  let _getEv;
 
   if (String(onclickValue).indexOf('{') > -1) {
-    _getEv = function (element, attribute) {
-      var value = element.getAttribute(attribute);
+    _getEv = (element, attribute) => {
+      let value = element.getAttribute(attribute);
       if (!value) return null;
       value = value.toString();
       value = value.split('{')[1];
@@ -3053,8 +3035,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return value.strip();
     };
   } else if (onclickValue === '') {
-    _getEv = function (element, attribute) {
-      var value = element.getAttribute(attribute);
+    _getEv = (element, attribute) => {
+      const value = element.getAttribute(attribute);
       if (!value) return null;
       return value.strip();
     };
@@ -3069,10 +3051,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     values: {
-      style: function (element) {
+      style: element => {
         return element.style.cssText.toLowerCase();
       },
-      title: function (element) {
+      title: element => {
         return element.title;
       }
     }
@@ -3087,13 +3069,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     values: {
-      checked: function (element, value) {
+      checked: (element, value) => {
         value = !!value;
         element.checked = value;
         return value ? 'checked' : null;
       },
 
-      style: function (element, value) {
+      style: (element, value) => {
         element.style.cssText = value ? value : '';
       }
     }
@@ -3106,10 +3088,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     ATTRIBUTE_TRANSLATIONS.read.names
   );
 
-  var CAMEL_CASED_ATTRIBUTE_NAMES = $w(
-    'colSpan rowSpan vAlign dateTime ' +
-      'accessKey tabIndex encType maxLength readOnly longDesc frameBorder'
-  );
+  const CAMEL_CASED_ATTRIBUTE_NAMES = $w(`
+    colSpan rowSpan vAlign dateTime 
+    accessKey tabIndex encType maxLength readOnly longDesc frameBorder
+  `);
 
   for (var i = 0, attr; (attr = CAMEL_CASED_ATTRIBUTE_NAMES[i]); i++) {
     ATTRIBUTE_TRANSLATIONS.write.names[attr.toLowerCase()] = attr;
@@ -3168,11 +3150,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function setStyle(element, styles) {
     element = $(element);
-    var elementStyle = element.style,
-      match;
+    const elementStyle = element.style;
+    let match;
 
     if (Object.isString(styles)) {
-      elementStyle.cssText += ';' + styles;
+      elementStyle.cssText += `;${styles}`;
       if (styles.include('opacity')) {
         var opacity = styles.match(/opacity:\s*(\d?\.?\d*)/)[1];
         Element.setOpacity(element, opacity);
@@ -3201,7 +3183,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     element = $(element);
     style = normalizeStyleName(style);
 
-    var value = element.style[style];
+    let value = element.style[style];
     if (!value || value === 'auto') {
       var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
@@ -3219,7 +3201,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
         var dim = parseInt(getStyle(element, style), 10);
 
-        if (dim !== element['offset' + style.capitalize()]) return dim + 'px';
+        if (dim !== element[`offset${style.capitalize()}`]) return `${dim}px`;
 
         return Element.measure(element, style);
 
@@ -3232,7 +3214,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     element = $(element);
     style = normalizeStyleName_IE(style);
 
-    var value = element.style[style];
+    let value = element.style[style];
     if (!value && element.currentStyle) {
       value = element.currentStyle[style];
     }
@@ -3244,7 +3226,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (value === 'auto') {
       if ((style === 'width' || style === 'height') && Element.visible(element))
-        return Element.measure(element, style) + 'px';
+        return `${Element.measure(element, style)}px`;
       return null;
     }
 
@@ -3261,7 +3243,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element;
   }
 
-  var STANDARD_CSS_OPACITY_SUPPORTED = (function () {
+  const STANDARD_CSS_OPACITY_SUPPORTED = (() => {
     DIV.style.cssText = 'opacity:.55';
     return /^0.55/.test(DIV.style.opacity);
   })();
@@ -3278,8 +3260,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (STANDARD_CSS_OPACITY_SUPPORTED) return setOpacity(element, value);
 
     element = hasLayout_IE($(element));
-    var filter = Element.getStyle(element, 'filter'),
-      style = element.style;
+    let filter = Element.getStyle(element, 'filter');
+    const style = element.style;
 
     if (value == 1 || value === '') {
       filter = stripAlphaFromFilter_IE(filter);
@@ -3290,8 +3272,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     if (value < 0.00001) value = 0;
 
-    style.filter =
-      stripAlphaFromFilter_IE(filter) + ' alpha(opacity=' + value * 100 + ')';
+    style.filter = `${stripAlphaFromFilter_IE(filter)} alpha(opacity=${value * 100})`;
 
     return element;
   }
@@ -3303,9 +3284,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function getOpacity_IE(element) {
     if (STANDARD_CSS_OPACITY_SUPPORTED) return getOpacity(element);
 
-    var filter = Element.getStyle(element, 'filter');
+    const filter = Element.getStyle(element, 'filter');
     if (filter.length === 0) return 1.0;
-    var match = (filter || '').match(/alpha\(opacity=(.*)\)/i);
+    const match = (filter || '').match(/alpha\(opacity=(.*)\)/i);
     if (match && match[1]) return parseFloat(match[1]) / 100;
     return 1.0;
   }
@@ -3323,7 +3304,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     methods.getOpacity = getOpacity_IE;
   }
 
-  var UID = 0;
+  const UID = 0;
 
   GLOBAL.Element.Storage = { UID: 1 };
 
@@ -3341,13 +3322,13 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return element.uniqueID;
   }
 
-  var HAS_UNIQUE_ID_PROPERTY = 'uniqueID' in DIV;
+  const HAS_UNIQUE_ID_PROPERTY = 'uniqueID' in DIV;
   if (HAS_UNIQUE_ID_PROPERTY) getUniqueElementID = getUniqueElementID_IE;
 
   function getStorage(element) {
     if (!(element = $(element))) return;
 
-    var uid = getUniqueElementID(element);
+    const uid = getUniqueElementID(element);
 
     if (!Element.Storage[uid]) Element.Storage[uid] = $H();
 
@@ -3356,7 +3337,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function store(element, key, value) {
     if (!(element = $(element))) return;
-    var storage = getStorage(element);
+    const storage = getStorage(element);
     if (arguments.length === 2) {
       storage.update(key);
     } else {
@@ -3367,8 +3348,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function retrieve(element, key, defaultValue) {
     if (!(element = $(element))) return;
-    var storage = getStorage(element),
-      value = storage.get(key);
+    const storage = getStorage(element);
+    let value = storage.get(key);
 
     if (Object.isUndefined(value)) {
       storage.set(key, defaultValue);
@@ -3384,7 +3365,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     retrieve: retrieve
   });
 
-  var Methods = {},
+  const Methods = {},
     ByTag = Element.Methods.ByTag,
     F = Prototype.BrowserFeatures;
 
@@ -3397,9 +3378,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function checkElementPrototypeDeficiency(tagName) {
     if (typeof window.Element === 'undefined') return false;
     if (!HAS_EXTENDED_CREATE_ELEMENT_SYNTAX) return false;
-    var proto = window.Element.prototype;
+    const proto = window.Element.prototype;
     if (proto) {
-      var id = '_' + (Math.random() + '').slice(2),
+      var id = `_${`${Math.random()}`.slice(2)}`,
         el = document.createElement(tagName);
       proto[id] = 'x';
       var isBuggy = el[id] !== 'x';
@@ -3411,7 +3392,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return false;
   }
 
-  var HTMLOBJECTELEMENT_PROTOTYPE_BUGGY =
+  const HTMLOBJECTELEMENT_PROTOTYPE_BUGGY =
     checkElementPrototypeDeficiency('object');
 
   function extendElementWith(element, methods) {
@@ -3422,9 +3403,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
   }
 
-  var EXTENDED = {};
+  let EXTENDED = {};
   function elementIsExtended(element) {
-    var uid = getUniqueElementID(element);
+    const uid = getUniqueElementID(element);
     return uid in EXTENDED;
   }
 
@@ -3433,7 +3414,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (element.nodeType !== Node.ELEMENT_NODE || element == window)
       return element;
 
-    var methods = Object.clone(Methods),
+    const methods = Object.clone(Methods),
       tagName = element.tagName.toUpperCase();
 
     if (ByTag[tagName]) Object.extend(methods, ByTag[tagName]);
@@ -3446,7 +3427,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function extend_IE8(element) {
     if (!element || elementIsExtended(element)) return element;
 
-    var t = element.tagName;
+    const t = element.tagName;
     if (t && /^(?:object|applet|embed)$/i.test(t)) {
       extendElementWith(element, Element.Methods);
       extendElementWith(element, Element.Methods.Simulated);
@@ -3477,8 +3458,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function findDOMClass(tagName) {
-    var klass;
-    var trans = {
+    let klass;
+    const trans = {
       OPTGROUP: 'OptGroup',
       TEXTAREA: 'TextArea',
       P: 'Paragraph',
@@ -3510,15 +3491,15 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       FRAMESET: 'FrameSet',
       IFRAME: 'IFrame'
     };
-    if (trans[tagName]) klass = 'HTML' + trans[tagName] + 'Element';
+    if (trans[tagName]) klass = `HTML${trans[tagName]}Element`;
     if (window[klass]) return window[klass];
-    klass = 'HTML' + tagName + 'Element';
+    klass = `HTML${tagName}Element`;
     if (window[klass]) return window[klass];
-    klass = 'HTML' + tagName.capitalize() + 'Element';
+    klass = `HTML${tagName.capitalize()}Element`;
     if (window[klass]) return window[klass];
 
-    var element = document.createElement(tagName),
-      proto = element['__proto__'] || element.constructor.prototype;
+    let element = document.createElement(tagName);
+    const proto = element['__proto__'] || element.constructor.prototype;
 
     element = null;
     return proto;
@@ -3543,7 +3524,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       }
     }
 
-    var ELEMENT_PROTOTYPE = window.HTMLElement
+    const ELEMENT_PROTOTYPE = window.HTMLElement
       ? HTMLElement.prototype
       : Element.prototype;
 
@@ -3578,7 +3559,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   if (extend === Prototype.K) {
     GLOBAL.Element.extend.refresh = Prototype.emptyFunction;
   } else {
-    GLOBAL.Element.extend.refresh = function () {
+    GLOBAL.Element.extend.refresh = () => {
       if (Prototype.BrowserFeatures.ElementExtensions) return;
       Object.extend(Methods, Element.Methods);
       Object.extend(Methods, Element.Methods.Simulated);
@@ -3608,9 +3589,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   if (window.attachEvent) window.attachEvent('onunload', destroyCache_IE);
 })(this);
-(function () {
+(() => {
   function toDecimal(pctString) {
-    var match = pctString.match(/^(\d+)%?$/i);
+    const match = pctString.match(/^(\d+)%?$/i);
     if (!match) return null;
     return Number(match[1]) / 100;
   }
@@ -3618,7 +3599,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function getRawStyle(element, style) {
     element = $(element);
 
-    var value = element.style[style];
+    let value = element.style[style];
     if (!value || value === 'auto') {
       var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
@@ -3629,7 +3610,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getRawStyle_IE(element, style) {
-    var value = element.style[style];
+    let value = element.style[style];
     if (!value && element.currentStyle) {
       value = element.currentStyle[style];
     }
@@ -3637,12 +3618,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getContentWidth(element, context) {
-    var boxWidth = element.offsetWidth;
+    const boxWidth = element.offsetWidth;
 
-    var bl = getPixelValue(element, 'borderLeftWidth', context) || 0;
-    var br = getPixelValue(element, 'borderRightWidth', context) || 0;
-    var pl = getPixelValue(element, 'paddingLeft', context) || 0;
-    var pr = getPixelValue(element, 'paddingRight', context) || 0;
+    const bl = getPixelValue(element, 'borderLeftWidth', context) || 0;
+    const br = getPixelValue(element, 'borderRightWidth', context) || 0;
+    const pl = getPixelValue(element, 'paddingLeft', context) || 0;
+    const pr = getPixelValue(element, 'paddingRight', context) || 0;
 
     return boxWidth - bl - br - pl - pr;
   }
@@ -3655,7 +3636,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getPixelValue(value, property, context) {
-    var element = null;
+    let element = null;
     if (Object.isElement(value)) {
       element = value;
       value = getRawStyle(element, property);
@@ -3669,7 +3650,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return window.parseFloat(value);
     }
 
-    var isPercentage = value.include('%'),
+    const isPercentage = value.include('%'),
       isViewport = context === document.viewport;
 
     if (
@@ -3726,7 +3707,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function toCSSPixels(number) {
     if (Object.isString(number) && number.endsWith('px')) return number;
-    return number + 'px';
+    return `${number}px`;
   }
 
   function isDisplayed(element) {
@@ -3740,9 +3721,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     return true;
   }
 
-  var hasLayout = Prototype.K;
+  let hasLayout = Prototype.K;
   if ('currentStyle' in document.documentElement) {
-    hasLayout = function (element) {
+    hasLayout = element => {
       if (!element.currentStyle.hasLayout) {
         element.style.zoom = 1;
       }
@@ -3751,7 +3732,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function cssNameFor(key) {
-    if (key.include('border')) key = key + '-width';
+    if (key.include('border')) key = `${key}-width`;
     return key.camelize();
   }
 
@@ -3777,25 +3758,25 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return Hash.prototype.set.call(this, property, value);
     },
 
-    set: function (property, value) {
+    set: (property, value) => {
       throw 'Properties of Element.Layout are read-only.';
     },
 
     get: function ($super, property) {
-      var value = $super(property);
+      const value = $super(property);
       return value === null ? this._compute(property) : value;
     },
 
     _begin: function () {
       if (this._isPrepared()) return;
 
-      var element = this.element;
+      const element = this.element;
       if (isDisplayed(element)) {
         this._setPrepared(true);
         return;
       }
 
-      var originalStyles = {
+      const originalStyles = {
         position: element.style.position || '',
         width: element.style.width || '',
         visibility: element.style.visibility || '',
@@ -3804,18 +3785,18 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       element.store('prototype_original_styles', originalStyles);
 
-      var position = getRawStyle(element, 'position'),
-        width = element.offsetWidth;
+      const position = getRawStyle(element, 'position');
+      let width = element.offsetWidth;
 
       if (width === 0 || width === null) {
         element.style.display = 'block';
         width = element.offsetWidth;
       }
 
-      var context =
+      const context =
         position === 'fixed' ? document.viewport : element.parentNode;
 
-      var tempStyles = {
+      const tempStyles = {
         visibility: 'hidden',
         display: 'block'
       };
@@ -3824,8 +3805,8 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       element.setStyle(tempStyles);
 
-      var positionedWidth = element.offsetWidth,
-        newWidth;
+      const positionedWidth = element.offsetWidth;
+      let newWidth;
       if (width && positionedWidth === width) {
         newWidth = getContentWidth(element, context);
       } else if (position === 'absolute' || position === 'fixed') {
@@ -3844,21 +3825,21 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
           this.get('margin-right');
       }
 
-      element.setStyle({ width: newWidth + 'px' });
+      element.setStyle({ width: `${newWidth}px` });
 
       this._setPrepared(true);
     },
 
     _end: function () {
-      var element = this.element;
-      var originalStyles = element.retrieve('prototype_original_styles');
+      const element = this.element;
+      const originalStyles = element.retrieve('prototype_original_styles');
       element.store('prototype_original_styles', null);
       element.setStyle(originalStyles);
       this._setPrepared(false);
     },
 
     _compute: function (property) {
-      var COMPUTATIONS = Element.Layout.COMPUTATIONS;
+      const COMPUTATIONS = Element.Layout.COMPUTATIONS;
       if (!(property in COMPUTATIONS)) {
         throw 'Property not found.';
       }
@@ -3878,44 +3859,44 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     },
 
     toObject: function () {
-      var args = $A(arguments);
-      var keys =
+      const args = $A(arguments);
+      const keys =
         args.length === 0
           ? Element.Layout.PROPERTIES
           : args.join(' ').split(' ');
-      var obj = {};
+      const obj = {};
       keys.each(function (key) {
         if (!Element.Layout.PROPERTIES.include(key)) return;
-        var value = this.get(key);
+        const value = this.get(key);
         if (value != null) obj[key] = value;
       }, this);
       return obj;
     },
 
     toHash: function () {
-      var obj = this.toObject.apply(this, arguments);
+      const obj = this.toObject.apply(this, arguments);
       return new Hash(obj);
     },
 
     toCSS: function () {
-      var args = $A(arguments);
-      var keys =
+      const args = $A(arguments);
+      const keys =
         args.length === 0
           ? Element.Layout.PROPERTIES
           : args.join(' ').split(' ');
-      var css = {};
+      const css = {};
 
       keys.each(function (key) {
         if (!Element.Layout.PROPERTIES.include(key)) return;
         if (Element.Layout.COMPOSITE_PROPERTIES.include(key)) return;
 
-        var value = this.get(key);
-        if (value != null) css[cssNameFor(key)] = value + 'px';
+        const value = this.get(key);
+        if (value != null) css[cssNameFor(key)] = `${value}px`;
       }, this);
       return css;
     },
 
-    inspect: function () {
+    inspect: () => {
       return '#<Element.Layout>';
     }
   });
@@ -3933,16 +3914,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       height: function (element) {
         if (!this._preComputing) this._begin();
 
-        var bHeight = this.get('border-box-height');
+        const bHeight = this.get('border-box-height');
         if (bHeight <= 0) {
           if (!this._preComputing) this._end();
           return 0;
         }
 
-        var bTop = this.get('border-top'),
+        const bTop = this.get('border-top'),
           bBottom = this.get('border-bottom');
 
-        var pTop = this.get('padding-top'),
+        const pTop = this.get('padding-top'),
           pBottom = this.get('padding-bottom');
 
         if (!this._preComputing) this._end();
@@ -3953,16 +3934,16 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       width: function (element) {
         if (!this._preComputing) this._begin();
 
-        var bWidth = this.get('border-box-width');
+        const bWidth = this.get('border-box-width');
         if (bWidth <= 0) {
           if (!this._preComputing) this._end();
           return 0;
         }
 
-        var bLeft = this.get('border-left'),
+        const bLeft = this.get('border-left'),
           bRight = this.get('border-right');
 
-        var pLeft = this.get('padding-left'),
+        const pLeft = this.get('padding-left'),
           pRight = this.get('padding-right');
 
         if (!this._preComputing) this._end();
@@ -3970,7 +3951,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'padding-box-height': function (element) {
-        var height = this.get('height'),
+        const height = this.get('height'),
           pTop = this.get('padding-top'),
           pBottom = this.get('padding-bottom');
 
@@ -3978,7 +3959,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'padding-box-width': function (element) {
-        var width = this.get('width'),
+        const width = this.get('width'),
           pLeft = this.get('padding-left'),
           pRight = this.get('padding-right');
 
@@ -3987,20 +3968,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
       'border-box-height': function (element) {
         if (!this._preComputing) this._begin();
-        var height = element.offsetHeight;
+        const height = element.offsetHeight;
         if (!this._preComputing) this._end();
         return height;
       },
 
       'border-box-width': function (element) {
         if (!this._preComputing) this._begin();
-        var width = element.offsetWidth;
+        const width = element.offsetWidth;
         if (!this._preComputing) this._end();
         return width;
       },
 
       'margin-box-height': function (element) {
-        var bHeight = this.get('border-box-height'),
+        const bHeight = this.get('border-box-height'),
           mTop = this.get('margin-top'),
           mBottom = this.get('margin-bottom');
 
@@ -4010,7 +3991,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       },
 
       'margin-box-width': function (element) {
-        var bWidth = this.get('border-box-width'),
+        const bWidth = this.get('border-box-width'),
           mLeft = this.get('margin-left'),
           mRight = this.get('margin-right');
 
@@ -4019,81 +4000,81 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
         return bWidth + mLeft + mRight;
       },
 
-      top: function (element) {
-        var offset = element.positionedOffset();
+      top: element => {
+        const offset = element.positionedOffset();
         return offset.top;
       },
 
       bottom: function (element) {
-        var offset = element.positionedOffset(),
+        const offset = element.positionedOffset(),
           parent = element.getOffsetParent(),
           pHeight = parent.measure('height');
 
-        var mHeight = this.get('border-box-height');
+        const mHeight = this.get('border-box-height');
 
         return pHeight - mHeight - offset.top;
       },
 
-      left: function (element) {
-        var offset = element.positionedOffset();
+      left: element => {
+        const offset = element.positionedOffset();
         return offset.left;
       },
 
       right: function (element) {
-        var offset = element.positionedOffset(),
+        const offset = element.positionedOffset(),
           parent = element.getOffsetParent(),
           pWidth = parent.measure('width');
 
-        var mWidth = this.get('border-box-width');
+        const mWidth = this.get('border-box-width');
 
         return pWidth - mWidth - offset.left;
       },
 
-      'padding-top': function (element) {
+      'padding-top': element => {
         return getPixelValue(element, 'paddingTop');
       },
 
-      'padding-bottom': function (element) {
+      'padding-bottom': element => {
         return getPixelValue(element, 'paddingBottom');
       },
 
-      'padding-left': function (element) {
+      'padding-left': element => {
         return getPixelValue(element, 'paddingLeft');
       },
 
-      'padding-right': function (element) {
+      'padding-right': element => {
         return getPixelValue(element, 'paddingRight');
       },
 
-      'border-top': function (element) {
+      'border-top': element => {
         return getPixelValue(element, 'borderTopWidth');
       },
 
-      'border-bottom': function (element) {
+      'border-bottom': element => {
         return getPixelValue(element, 'borderBottomWidth');
       },
 
-      'border-left': function (element) {
+      'border-left': element => {
         return getPixelValue(element, 'borderLeftWidth');
       },
 
-      'border-right': function (element) {
+      'border-right': element => {
         return getPixelValue(element, 'borderRightWidth');
       },
 
-      'margin-top': function (element) {
+      'margin-top': element => {
         return getPixelValue(element, 'marginTop');
       },
 
-      'margin-bottom': function (element) {
+      'margin-bottom': element => {
         return getPixelValue(element, 'marginBottom');
       },
 
-      'margin-left': function (element) {
+      'margin-left': element => {
         return getPixelValue(element, 'marginLeft');
       },
 
-      'margin-right': function (element) {
+      'margin-right': element => {
         return getPixelValue(element, 'marginRight');
       }
     }
@@ -4101,17 +4082,17 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   if ('getBoundingClientRect' in document.documentElement) {
     Object.extend(Element.Layout.COMPUTATIONS, {
-      right: function (element) {
-        var parent = hasLayout(element.getOffsetParent());
-        var rect = element.getBoundingClientRect(),
+      right: element => {
+        const parent = hasLayout(element.getOffsetParent());
+        const rect = element.getBoundingClientRect(),
           pRect = parent.getBoundingClientRect();
 
         return (pRect.right - rect.right).round();
       },
 
-      bottom: function (element) {
-        var parent = hasLayout(element.getOffsetParent());
-        var rect = element.getBoundingClientRect(),
+      bottom: element => {
+        const parent = hasLayout(element.getOffsetParent());
+        const rect = element.getBoundingClientRect(),
           pRect = parent.getBoundingClientRect();
 
         return (pRect.bottom - rect.bottom).round();
@@ -4163,20 +4144,20 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function getDimensions(element) {
     element = $(element);
-    var display = Element.getStyle(element, 'display');
+    const display = Element.getStyle(element, 'display');
 
     if (display && display !== 'none') {
       return { width: element.offsetWidth, height: element.offsetHeight };
     }
 
-    var style = element.style;
-    var originalStyles = {
+    const style = element.style;
+    const originalStyles = {
       visibility: style.visibility,
       position: style.position,
       display: style.display
     };
 
-    var newStyles = {
+    const newStyles = {
       visibility: 'hidden',
       display: 'block'
     };
@@ -4185,7 +4166,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     Element.setStyle(element, newStyles);
 
-    var dimensions = {
+    const dimensions = {
       width: element.offsetWidth,
       height: element.offsetHeight
     };
@@ -4210,7 +4191,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     )
       return $(document.body);
 
-    var isInline = Element.getStyle(element, 'display') === 'inline';
+    const isInline = Element.getStyle(element, 'display') === 'inline';
     if (!isInline && element.offsetParent)
       return selfOrBody(element.offsetParent);
 
@@ -4225,7 +4206,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function cumulativeOffset(element) {
     element = $(element);
-    var valueT = 0,
+    let valueT = 0,
       valueL = 0;
     if (element.parentNode) {
       do {
@@ -4240,9 +4221,9 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function positionedOffset(element) {
     element = $(element);
 
-    var layout = element.getLayout();
+    const layout = element.getLayout();
 
-    var valueT = 0,
+    let valueT = 0,
       valueL = 0;
     do {
       valueT += element.offsetTop || 0;
@@ -4262,7 +4243,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function cumulativeScrollOffset(element) {
-    var valueT = 0,
+    let valueT = 0,
       valueL = 0;
     do {
       if (element === document.body) {
@@ -4285,12 +4266,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function viewportOffset(forElement) {
-    var valueT = 0,
-      valueL = 0,
-      docBody = document.body;
+    let valueT = 0;
+    let valueL = 0;
+    const docBody = document.body;
 
     forElement = $(forElement);
-    var element = forElement;
+    let element = forElement;
     do {
       valueT += element.offsetTop || 0;
       valueL += element.offsetLeft || 0;
@@ -4318,12 +4299,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return element;
     }
 
-    var offsetParent = getOffsetParent(element);
-    var eOffset = element.viewportOffset(),
+    const offsetParent = getOffsetParent(element);
+    const eOffset = element.viewportOffset(),
       pOffset = offsetParent.viewportOffset();
 
-    var offset = eOffset.relativeTo(pOffset);
-    var layout = element.getLayout();
+    const offset = eOffset.relativeTo(pOffset);
+    const layout = element.getLayout();
 
     element.store('prototype_absolutize_original_styles', {
       position: element.getStyle('position'),
@@ -4335,10 +4316,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
     element.setStyle({
       position: 'absolute',
-      top: offset.top + 'px',
-      left: offset.left + 'px',
-      width: layout.get('width') + 'px',
-      height: layout.get('height') + 'px'
+      top: `${offset.top}px`,
+      left: `${offset.left}px`,
+      width: `${layout.get('width')}px`,
+      height: `${layout.get('height')}px`
     });
 
     return element;
@@ -4350,7 +4331,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return element;
     }
 
-    var originalStyles = element.retrieve(
+    const originalStyles = element.retrieve(
       'prototype_absolutize_original_styles'
     );
 
@@ -4360,14 +4341,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function scrollTo(element) {
     element = $(element);
-    var pos = Element.cumulativeOffset(element);
+    const pos = Element.cumulativeOffset(element);
     window.scrollTo(pos.left, pos.top);
     return element;
   }
 
   function makePositioned(element) {
     element = $(element);
-    var position = Element.getStyle(element, 'position'),
+    const position = Element.getStyle(element, 'position'),
       styles = {};
     if (position === 'static' || !position) {
       styles.position = 'relative';
@@ -4383,7 +4364,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function undoPositioned(element) {
     element = $(element);
-    var storage = Element.getStorage(element),
+    const storage = Element.getStorage(element),
       madePositioned = storage.get('prototype_made_positioned');
 
     if (madePositioned) {
@@ -4402,7 +4383,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   function makeClipping(element) {
     element = $(element);
 
-    var storage = Element.getStorage(element),
+    const storage = Element.getStorage(element),
       madeClipping = storage.get('prototype_made_clipping');
 
     if (Object.isUndefined(madeClipping)) {
@@ -4416,7 +4397,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   function undoClipping(element) {
     element = $(element);
-    var storage = Element.getStorage(element),
+    const storage = Element.getStorage(element),
       overflow = storage.get('prototype_made_clipping');
 
     if (!Object.isUndefined(overflow)) {
@@ -4440,14 +4421,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       options || {}
     );
 
-    var docEl = document.documentElement;
+    const docEl = document.documentElement;
 
     source = $(source);
     element = $(element);
-    var p,
-      delta,
-      layout,
-      styles = {};
+    let p;
+    let delta;
+    let layout;
+    const styles = {};
 
     if (options.setLeft || options.setTop) {
       p = Element.viewportOffset(source);
@@ -4459,7 +4440,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     }
 
     function pageScrollXY() {
-      var x = 0,
+      let x = 0,
         y = 0;
       if (Object.isNumber(window.pageXOffset)) {
         x = window.pageXOffset;
@@ -4477,31 +4458,31 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       return { x: x, y: y };
     }
 
-    var pageXY = pageScrollXY();
+    const pageXY = pageScrollXY();
 
     if (options.setWidth || options.setHeight) {
       layout = Element.getLayout(source);
     }
 
     if (options.setLeft)
-      styles.left = p[0] + pageXY.x - delta[0] + options.offsetLeft + 'px';
+      styles.left = `${p[0] + pageXY.x - delta[0]}${options.offsetLeft}px`;
     if (options.setTop)
-      styles.top = p[1] + pageXY.y - delta[1] + options.offsetTop + 'px';
+      styles.top = `${p[1] + pageXY.y - delta[1]}${options.offsetTop}px`;
 
-    var currentLayout = element.getLayout();
+    const currentLayout = element.getLayout();
 
     if (options.setWidth) {
-      styles.width = layout.get('width') + 'px';
+      styles.width = `${layout.get('width')}px`;
     }
     if (options.setHeight) {
-      styles.height = layout.get('height') + 'px';
+      styles.height = `${layout.get('height')}px`;
     }
 
     return Element.setStyle(element, styles);
   }
 
   if (Prototype.Browser.IE) {
-    getOffsetParent = getOffsetParent.wrap(function (proceed, element) {
+    getOffsetParent = getOffsetParent.wrap((proceed, element) => {
       element = $(element);
 
       if (
@@ -4512,34 +4493,34 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
       )
         return $(document.body);
 
-      var position = element.getStyle('position');
+      const position = element.getStyle('position');
       if (position !== 'static') return proceed(element);
 
       element.setStyle({ position: 'relative' });
-      var value = proceed(element);
+      const value = proceed(element);
       element.setStyle({ position: position });
       return value;
     });
 
-    positionedOffset = positionedOffset.wrap(function (proceed, element) {
+    positionedOffset = positionedOffset.wrap((proceed, element) => {
       element = $(element);
       if (!element.parentNode) return new Element.Offset(0, 0);
-      var position = element.getStyle('position');
+      const position = element.getStyle('position');
       if (position !== 'static') return proceed(element);
 
-      var offsetParent = element.getOffsetParent();
+      const offsetParent = element.getOffsetParent();
       if (offsetParent && offsetParent.getStyle('position') === 'fixed')
         hasLayout(offsetParent);
 
       element.setStyle({ position: 'relative' });
-      var value = proceed(element);
+      const value = proceed(element);
       element.setStyle({ position: position });
       return value;
     });
   } else if (Prototype.Browser.Webkit) {
-    cumulativeOffset = function (element) {
+    cumulativeOffset = element => {
       element = $(element);
-      var valueT = 0,
+      let valueT = 0,
         valueL = 0;
       do {
         valueT += element.offsetTop || 0;
@@ -4596,11 +4577,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
 
   if ('getBoundingClientRect' in document.documentElement) {
     Element.addMethods({
-      viewportOffset: function (element) {
+      viewportOffset: element => {
         element = $(element);
         if (isDetached(element)) return new Element.Offset(0, 0);
 
-        var rect = element.getBoundingClientRect(),
+        const rect = element.getBoundingClientRect(),
           docEl = document.documentElement;
         return new Element.Offset(
           rect.left - docEl.clientLeft,
@@ -4611,10 +4592,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 })();
 
-(function () {
-  var IS_OLD_OPERA =
+(() => {
+  const IS_OLD_OPERA =
     Prototype.Browser.Opera && window.parseFloat(window.opera.version()) < 9.5;
-  var ROOT = null;
+  let ROOT = null;
   function getRootElement() {
     if (ROOT) return ROOT;
     ROOT = IS_OLD_OPERA ? document.body : document.documentElement;
@@ -4634,11 +4615,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   function getScrollOffsets() {
-    var x =
+    const x =
       window.pageXOffset ||
       document.documentElement.scrollLeft ||
       document.body.scrollLeft;
-    var y =
+    const y =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
       document.body.scrollTop;
@@ -4654,11 +4635,11 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   };
 })();
 window.$$ = function () {
-  var expression = $A(arguments).join(', ');
+  const expression = $A(arguments).join(', ');
   return Prototype.Selector.select(expression, document);
 };
 
-Prototype.Selector = (function () {
+Prototype.Selector = (() => {
   function select() {
     throw new Error('Method "Prototype.Selector.select" must be defined.');
   }
@@ -4669,10 +4650,10 @@ Prototype.Selector = (function () {
 
   function find(elements, expression, index) {
     index = index || 0;
-    var match = Prototype.Selector.match,
-      length = elements.length,
-      matchIndex = 0,
-      i;
+    const match = Prototype.Selector.match;
+    const length = elements.length;
+    let matchIndex = 0;
+    let i;
 
     for (i = 0; i < length; i++) {
       if (match(elements[i], expression) && index == matchIndex++) {
@@ -4688,7 +4669,7 @@ Prototype.Selector = (function () {
     return elements;
   }
 
-  var K = Prototype.K;
+  const K = Prototype.K;
 
   return {
     select: select,
@@ -4700,7 +4681,7 @@ Prototype.Selector = (function () {
 })();
 Prototype._original_property = window.Sizzle;
 
-(function () {
+(() => {
   function fakeDefine(fn) {
     Prototype._actual_sizzle = fn();
   }
@@ -4723,145 +4704,129 @@ Prototype._original_property = window.Sizzle;
  *
  * Date: 2014-02-05
  */
-(function (window) {
-  var i,
-    support,
-    Expr,
-    getText,
-    isXML,
-    compile,
-    select,
-    outermostContext,
-    sortInput,
-    hasDuplicate,
-    setDocument,
-    document,
-    docElem,
-    documentIsHTML,
-    rbuggyQSA,
-    rbuggyMatches,
-    matches,
-    contains,
-    expando = 'sizzle' + -new Date(),
-    preferredDoc = window.document,
-    dirruns = 0,
-    done = 0,
-    classCache = createCache(),
-    tokenCache = createCache(),
-    compilerCache = createCache(),
-    sortOrder = function (a, b) {
-      if (a === b) {
-        hasDuplicate = true;
-      }
-      return 0;
-    },
-    strundefined = typeof undefined,
-    MAX_NEGATIVE = 1 << 31,
-    hasOwn = {}.hasOwnProperty,
-    arr = [],
-    pop = arr.pop,
-    push_native = arr.push,
-    push = arr.push,
-    slice = arr.slice,
-    indexOf =
-      arr.indexOf ||
-      function (elem) {
-        var i = 0,
-          len = this.length;
-        for (; i < len; i++) {
-          if (this[i] === elem) {
-            return i;
-          }
+(window => {
+  let i;
+  let support;
+  let Expr;
+  let getText;
+  let isXML;
+  let compile;
+  let select;
+  let outermostContext;
+  let sortInput;
+  let hasDuplicate;
+  let setDocument;
+  let document;
+  let docElem;
+  let documentIsHTML;
+  let rbuggyQSA;
+  let rbuggyMatches;
+  let matches;
+  let contains;
+  const expando = `sizzle${-new Date()}`;
+  const preferredDoc = window.document;
+  let dirruns = 0;
+  let done = 0;
+  const classCache = createCache();
+  const tokenCache = createCache();
+  const compilerCache = createCache();
+
+  let sortOrder = (a, b) => {
+    if (a === b) {
+      hasDuplicate = true;
+    }
+    return 0;
+  };
+
+  const strundefined = typeof undefined;
+  const MAX_NEGATIVE = 1 << 31;
+  const hasOwn = {}.hasOwnProperty;
+  let arr = [];
+  const pop = arr.pop;
+  const push_native = arr.push;
+  let push = arr.push;
+  const slice = arr.slice;
+
+  const indexOf =
+    arr.indexOf ||
+    function (elem) {
+      let i = 0;
+      const len = this.length;
+      for (; i < len; i++) {
+        if (this[i] === elem) {
+          return i;
         }
-        return -1;
-      },
-    booleans =
-      'checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped',
-    whitespace = '[\\x20\\t\\r\\n\\f]',
-    characterEncoding = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+',
-    identifier = characterEncoding.replace('w', 'w#'),
-    attributes =
-      '\\[' +
-      whitespace +
-      '*(' +
-      characterEncoding +
-      ')' +
-      whitespace +
-      '*(?:([*^$|!~]?=)' +
-      whitespace +
-      '*(?:([\'"])((?:\\\\.|[^\\\\])*?)\\3|(' +
-      identifier +
-      ')|)|)' +
-      whitespace +
-      '*\\]',
-    pseudos =
-      ':(' +
-      characterEncoding +
-      ')(?:\\((([\'"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|' +
-      attributes.replace(3, 8) +
-      ')*)|.*)\\)|)',
-    rtrim = new RegExp(
-      '^' + whitespace + '+|((?:^|[^\\\\])(?:\\\\.)*)' + whitespace + '+$',
-      'g'
-    ),
-    rcomma = new RegExp('^' + whitespace + '*,' + whitespace + '*'),
-    rcombinators = new RegExp(
-      '^' + whitespace + '*([>+~]|' + whitespace + ')' + whitespace + '*'
-    ),
-    rattributeQuotes = new RegExp(
-      '=' + whitespace + '*([^\\]\'"]*?)' + whitespace + '*\\]',
-      'g'
-    ),
-    rpseudo = new RegExp(pseudos),
-    ridentifier = new RegExp('^' + identifier + '$'),
-    matchExpr = {
-      ID: new RegExp('^#(' + characterEncoding + ')'),
-      CLASS: new RegExp('^\\.(' + characterEncoding + ')'),
-      TAG: new RegExp('^(' + characterEncoding.replace('w', 'w*') + ')'),
-      ATTR: new RegExp('^' + attributes),
-      PSEUDO: new RegExp('^' + pseudos),
-      CHILD: new RegExp(
-        '^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(' +
-          whitespace +
-          '*(even|odd|(([+-]|)(\\d*)n|)' +
-          whitespace +
-          '*(?:([+-]|)' +
-          whitespace +
-          '*(\\d+)|))' +
-          whitespace +
-          '*\\)|)',
-        'i'
-      ),
-      bool: new RegExp('^(?:' + booleans + ')$', 'i'),
-      needsContext: new RegExp(
-        '^' +
-          whitespace +
-          '*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(' +
-          whitespace +
-          '*((?:-\\d)?\\d*)' +
-          whitespace +
-          '*\\)|)(?=[^-]|$)',
-        'i'
-      )
-    },
-    rinputs = /^(?:input|select|textarea|button)$/i,
-    rheader = /^h\d$/i,
-    rnative = /^[^{]+\{\s*\[native \w/,
-    rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
-    rsibling = /[+~]/,
-    rescape = /'|\\/g,
-    runescape = new RegExp(
-      '\\\\([\\da-f]{1,6}' + whitespace + '?|(' + whitespace + ')|.)',
-      'ig'
-    ),
-    funescape = function (_, escaped, escapedWhitespace) {
-      var high = '0x' + escaped - 0x10000;
-      return high !== high || escapedWhitespace
-        ? escaped
-        : high < 0
-          ? String.fromCharCode(high + 0x10000)
-          : String.fromCharCode((high >> 10) | 0xd800, (high & 0x3ff) | 0xdc00);
+      }
+      return -1;
     };
+
+  const booleans =
+    'checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped';
+
+  const whitespace = '[\\x20\\t\\r\\n\\f]';
+  const characterEncoding = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+';
+  const identifier = characterEncoding.replace('w', 'w#');
+
+  const attributes = `\\[${whitespace}*(${characterEncoding})${whitespace}*(?:([*^$|!~]?=)${whitespace}*(?:(['"])((?:\\\\.|[^\\\\])*?)\\3|(${identifier})|)|)${whitespace}*\\]`;
+
+  const pseudos = `:(${characterEncoding})(?:\\(((['"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|${attributes.replace(3, 8)})*)|.*)\\)|)`;
+
+  const rtrim = new RegExp(
+    `^${whitespace}+|((?:^|[^\\\\])(?:\\\\.)*)${whitespace}+$`,
+    'g'
+  );
+
+  const rcomma = new RegExp(`^${whitespace}*,${whitespace}*`);
+
+  const rcombinators = new RegExp(
+    `^${whitespace}*([>+~]|${whitespace})${whitespace}*`
+  );
+
+  const rattributeQuotes = new RegExp(
+    `=${whitespace}*([^\\]'"]*?)${whitespace}*\\]`,
+    'g'
+  );
+
+  const rpseudo = new RegExp(pseudos);
+  const ridentifier = new RegExp(`^${identifier}$`);
+
+  const matchExpr = {
+    ID: new RegExp(`^#(${characterEncoding})`),
+    CLASS: new RegExp(`^\\.(${characterEncoding})`),
+    TAG: new RegExp(`^(${characterEncoding.replace('w', 'w*')})`),
+    ATTR: new RegExp(`^${attributes}`),
+    PSEUDO: new RegExp(`^${pseudos}`),
+    CHILD: new RegExp(
+      `^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(${whitespace}*(even|odd|(([+-]|)(\\d*)n|)${whitespace}*(?:([+-]|)${whitespace}*(\\d+)|))${whitespace}*\\)|)`,
+      'i'
+    ),
+    bool: new RegExp(`^(?:${booleans})$`, 'i'),
+    needsContext: new RegExp(
+      `^${whitespace}*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(${whitespace}*((?:-\\d)?\\d*)${whitespace}*\\)|)(?=[^-]|$)`,
+      'i'
+    )
+  };
+
+  const rinputs = /^(?:input|select|textarea|button)$/i;
+  const rheader = /^h\d$/i;
+  const rnative = /^[^{]+\{\s*\[native \w/;
+  const rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/;
+  const rsibling = /[+~]/;
+  const rescape = /'|\\/g;
+
+  const runescape = new RegExp(
+    `\\\\([\\da-f]{1,6}${whitespace}?|(${whitespace})|.)`,
+    'ig'
+  );
+
+  const funescape = (_, escaped, escapedWhitespace) => {
+    const high = `0x${escaped}` - 0x10000;
+    return high !== high || escapedWhitespace
+      ? escaped
+      : high < 0
+        ? String.fromCharCode(high + 0x10000)
+        : String.fromCharCode((high >> 10) | 0xd800, (high & 0x3ff) | 0xdc00);
+  };
 
   try {
     push.apply(
@@ -4872,11 +4837,11 @@ Prototype._original_property = window.Sizzle;
   } catch (e) {
     push = {
       apply: arr.length
-        ? function (target, els) {
+        ? (target, els) => {
             push_native.apply(target, slice.call(els));
           }
-        : function (target, els) {
-            var j = target.length,
+        : (target, els) => {
+            let j = target.length,
               i = 0;
             while ((target[j++] = els[i++])) {}
             target.length = j - 1;
@@ -4885,7 +4850,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   function Sizzle(selector, context, results, seed) {
-    var match, elem, m, nodeType, i, groups, old, nid, newContext, newSelector;
+    let match, elem, m, nodeType, i, groups, old, nid, newContext, newSelector;
 
     if (
       (context ? context.ownerDocument || context : preferredDoc) !== document
@@ -4954,7 +4919,7 @@ Prototype._original_property = window.Sizzle;
           } else {
             context.setAttribute('id', nid);
           }
-          nid = "[id='" + nid + "'] ";
+          nid = `[id='${nid}'] `;
 
           i = groups.length;
           while (i--) {
@@ -4990,13 +4955,13 @@ Prototype._original_property = window.Sizzle;
    *  deleting the oldest entry
    */
   function createCache() {
-    var keys = [];
+    const keys = [];
 
     function cache(key, value) {
-      if (keys.push(key + ' ') > Expr.cacheLength) {
+      if (keys.push(`${key} `) > Expr.cacheLength) {
         delete cache[keys.shift()];
       }
-      return (cache[key + ' '] = value);
+      return (cache[`${key} `] = value);
     }
     return cache;
   }
@@ -5015,7 +4980,7 @@ Prototype._original_property = window.Sizzle;
    * @param {Function} fn Passed the created div and expects a boolean result
    */
   function assert(fn) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
 
     try {
       return !!fn(div);
@@ -5035,8 +5000,8 @@ Prototype._original_property = window.Sizzle;
    * @param {Function} handler The method that will be applied
    */
   function addHandle(attrs, handler) {
-    var arr = attrs.split('|'),
-      i = attrs.length;
+    const arr = attrs.split('|');
+    let i = attrs.length;
 
     while (i--) {
       Expr.attrHandle[arr[i]] = handler;
@@ -5050,12 +5015,13 @@ Prototype._original_property = window.Sizzle;
    * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
    */
   function siblingCheck(a, b) {
-    var cur = b && a,
-      diff =
-        cur &&
-        a.nodeType === 1 &&
-        b.nodeType === 1 &&
-        (~b.sourceIndex || MAX_NEGATIVE) - (~a.sourceIndex || MAX_NEGATIVE);
+    let cur = b && a;
+
+    const diff =
+      cur &&
+      a.nodeType === 1 &&
+      b.nodeType === 1 &&
+      (~b.sourceIndex || MAX_NEGATIVE) - (~a.sourceIndex || MAX_NEGATIVE);
 
     if (diff) {
       return diff;
@@ -5077,8 +5043,8 @@ Prototype._original_property = window.Sizzle;
    * @param {String} type
    */
   function createInputPseudo(type) {
-    return function (elem) {
-      var name = elem.nodeName.toLowerCase();
+    return elem => {
+      const name = elem.nodeName.toLowerCase();
       return name === 'input' && elem.type === type;
     };
   }
@@ -5088,8 +5054,8 @@ Prototype._original_property = window.Sizzle;
    * @param {String} type
    */
   function createButtonPseudo(type) {
-    return function (elem) {
-      var name = elem.nodeName.toLowerCase();
+    return elem => {
+      const name = elem.nodeName.toLowerCase();
       return (name === 'input' || name === 'button') && elem.type === type;
     };
   }
@@ -5099,12 +5065,12 @@ Prototype._original_property = window.Sizzle;
    * @param {Function} fn
    */
   function createPositionalPseudo(fn) {
-    return markFunction(function (argument) {
+    return markFunction(argument => {
       argument = +argument;
-      return markFunction(function (seed, matches) {
-        var j,
-          matchIndexes = fn([], seed.length, argument),
-          i = matchIndexes.length;
+      return markFunction((seed, matches) => {
+        let j;
+        const matchIndexes = fn([], seed.length, argument);
+        let i = matchIndexes.length;
 
         while (i--) {
           if (seed[(j = matchIndexes[i])]) {
@@ -5133,8 +5099,9 @@ Prototype._original_property = window.Sizzle;
    * @param {Element|Object} elem An element or a document
    * @returns {Boolean} True iff elem is a non-HTML XML node
    */
-  isXML = Sizzle.isXML = function (elem) {
-    var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+  isXML = Sizzle.isXML = elem => {
+    const documentElement =
+      elem && (elem.ownerDocument || elem).documentElement;
     return documentElement ? documentElement.nodeName !== 'HTML' : false;
   };
 
@@ -5143,10 +5110,10 @@ Prototype._original_property = window.Sizzle;
    * @param {Element|Object} [doc] An element or document object to use to set the document
    * @returns {Object} Returns the current document
    */
-  setDocument = Sizzle.setDocument = function (node) {
-    var hasCompare,
-      doc = node ? node.ownerDocument || node : preferredDoc,
-      parent = doc.defaultView;
+  setDocument = Sizzle.setDocument = node => {
+    let hasCompare;
+    const doc = node ? node.ownerDocument || node : preferredDoc;
+    const parent = doc.defaultView;
 
     if (doc === document || doc.nodeType !== 9 || !doc.documentElement) {
       return document;
@@ -5161,13 +5128,13 @@ Prototype._original_property = window.Sizzle;
       if (parent.addEventListener) {
         parent.addEventListener(
           'unload',
-          function () {
+          () => {
             setDocument();
           },
           false
         );
       } else if (parent.attachEvent) {
-        parent.attachEvent('onunload', function () {
+        parent.attachEvent('onunload', () => {
           setDocument();
         });
       }
@@ -5176,7 +5143,7 @@ Prototype._original_property = window.Sizzle;
     /* Attributes
   ---------------------------------------------------------------------- */
 
-    support.attributes = assert(function (div) {
+    support.attributes = assert(div => {
       div.className = 'i';
       return !div.getAttribute('className');
     });
@@ -5184,45 +5151,45 @@ Prototype._original_property = window.Sizzle;
     /* getElement(s)By*
   ---------------------------------------------------------------------- */
 
-    support.getElementsByTagName = assert(function (div) {
+    support.getElementsByTagName = assert(div => {
       div.appendChild(doc.createComment(''));
       return !div.getElementsByTagName('*').length;
     });
 
     support.getElementsByClassName =
       rnative.test(doc.getElementsByClassName) &&
-      assert(function (div) {
+      assert(div => {
         div.innerHTML = "<div class='a'></div><div class='a i'></div>";
 
         div.firstChild.className = 'i';
         return div.getElementsByClassName('i').length === 2;
       });
 
-    support.getById = assert(function (div) {
+    support.getById = assert(div => {
       docElem.appendChild(div).id = expando;
       return !doc.getElementsByName || !doc.getElementsByName(expando).length;
     });
 
     if (support.getById) {
-      Expr.find['ID'] = function (id, context) {
+      Expr.find['ID'] = (id, context) => {
         if (typeof context.getElementById !== strundefined && documentIsHTML) {
           var m = context.getElementById(id);
           return m && m.parentNode ? [m] : [];
         }
       };
-      Expr.filter['ID'] = function (id) {
-        var attrId = id.replace(runescape, funescape);
-        return function (elem) {
+      Expr.filter['ID'] = id => {
+        const attrId = id.replace(runescape, funescape);
+        return elem => {
           return elem.getAttribute('id') === attrId;
         };
       };
     } else {
       delete Expr.find['ID'];
 
-      Expr.filter['ID'] = function (id) {
-        var attrId = id.replace(runescape, funescape);
-        return function (elem) {
-          var node =
+      Expr.filter['ID'] = id => {
+        const attrId = id.replace(runescape, funescape);
+        return elem => {
+          const node =
             typeof elem.getAttributeNode !== strundefined &&
             elem.getAttributeNode('id');
           return node && node.value === attrId;
@@ -5231,16 +5198,16 @@ Prototype._original_property = window.Sizzle;
     }
 
     Expr.find['TAG'] = support.getElementsByTagName
-      ? function (tag, context) {
+      ? (tag, context) => {
           if (typeof context.getElementsByTagName !== strundefined) {
             return context.getElementsByTagName(tag);
           }
         }
-      : function (tag, context) {
-          var elem,
-            tmp = [],
-            i = 0,
-            results = context.getElementsByTagName(tag);
+      : (tag, context) => {
+          let elem;
+          const tmp = [];
+          let i = 0;
+          const results = context.getElementsByTagName(tag);
 
           if (tag === '*') {
             while ((elem = results[i++])) {
@@ -5256,14 +5223,14 @@ Prototype._original_property = window.Sizzle;
 
     Expr.find['CLASS'] =
       support.getElementsByClassName &&
-      function (className, context) {
+      ((className, context) => {
         if (
           typeof context.getElementsByClassName !== strundefined &&
           documentIsHTML
         ) {
           return context.getElementsByClassName(className);
         }
-      };
+      });
 
     /* QSA/matchesSelector
   ---------------------------------------------------------------------- */
@@ -5273,15 +5240,15 @@ Prototype._original_property = window.Sizzle;
     rbuggyQSA = [];
 
     if ((support.qsa = rnative.test(doc.querySelectorAll))) {
-      assert(function (div) {
+      assert(div => {
         div.innerHTML = "<select t=''><option selected=''></option></select>";
 
         if (div.querySelectorAll("[t^='']").length) {
-          rbuggyQSA.push('[*^$]=' + whitespace + '*(?:\'\'|"")');
+          rbuggyQSA.push(`[*^$]=${whitespace}*(?:''|"")`);
         }
 
         if (!div.querySelectorAll('[selected]').length) {
-          rbuggyQSA.push('\\[' + whitespace + '*(?:value|' + booleans + ')');
+          rbuggyQSA.push(`\\[${whitespace}*(?:value|${booleans})`);
         }
 
         if (!div.querySelectorAll(':checked').length) {
@@ -5289,13 +5256,13 @@ Prototype._original_property = window.Sizzle;
         }
       });
 
-      assert(function (div) {
-        var input = doc.createElement('input');
+      assert(div => {
+        const input = doc.createElement('input');
         input.setAttribute('type', 'hidden');
         div.appendChild(input).setAttribute('name', 'D');
 
         if (div.querySelectorAll('[name=d]').length) {
-          rbuggyQSA.push('name' + whitespace + '*[*^$|!~]?=');
+          rbuggyQSA.push(`name${whitespace}*[*^$|!~]?=`);
         }
 
         if (!div.querySelectorAll(':enabled').length) {
@@ -5316,7 +5283,7 @@ Prototype._original_property = window.Sizzle;
           docElem.msMatchesSelector)
       ))
     ) {
-      assert(function (div) {
+      assert(div => {
         support.disconnectedMatch = matches.call(div, 'div');
 
         matches.call(div, "[s!='']:x");
@@ -5333,8 +5300,8 @@ Prototype._original_property = window.Sizzle;
 
     contains =
       hasCompare || rnative.test(docElem.contains)
-        ? function (a, b) {
-            var adown = a.nodeType === 9 ? a.documentElement : a,
+        ? (a, b) => {
+            const adown = a.nodeType === 9 ? a.documentElement : a,
               bup = b && b.parentNode;
             return (
               a === bup ||
@@ -5348,7 +5315,7 @@ Prototype._original_property = window.Sizzle;
               )
             );
           }
-        : function (a, b) {
+        : (a, b) => {
             if (b) {
               while ((b = b.parentNode)) {
                 if (b === a) {
@@ -5363,13 +5330,13 @@ Prototype._original_property = window.Sizzle;
   ---------------------------------------------------------------------- */
 
     sortOrder = hasCompare
-      ? function (a, b) {
+      ? (a, b) => {
           if (a === b) {
             hasDuplicate = true;
             return 0;
           }
 
-          var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
+          let compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
           if (compare) {
             return compare;
           }
@@ -5403,18 +5370,18 @@ Prototype._original_property = window.Sizzle;
 
           return compare & 4 ? -1 : 1;
         }
-      : function (a, b) {
+      : (a, b) => {
           if (a === b) {
             hasDuplicate = true;
             return 0;
           }
 
-          var cur,
-            i = 0,
-            aup = a.parentNode,
-            bup = b.parentNode,
-            ap = [a],
-            bp = [b];
+          let cur;
+          let i = 0;
+          const aup = a.parentNode;
+          const bup = b.parentNode;
+          const ap = [a];
+          const bp = [b];
 
           if (!aup || !bup) {
             return a === doc
@@ -5457,11 +5424,11 @@ Prototype._original_property = window.Sizzle;
     return doc;
   };
 
-  Sizzle.matches = function (expr, elements) {
+  Sizzle.matches = (expr, elements) => {
     return Sizzle(expr, null, null, elements);
   };
 
-  Sizzle.matchesSelector = function (elem, expr) {
+  Sizzle.matchesSelector = (elem, expr) => {
     if ((elem.ownerDocument || elem) !== document) {
       setDocument(elem);
     }
@@ -5490,23 +5457,24 @@ Prototype._original_property = window.Sizzle;
     return Sizzle(expr, document, null, [elem]).length > 0;
   };
 
-  Sizzle.contains = function (context, elem) {
+  Sizzle.contains = (context, elem) => {
     if ((context.ownerDocument || context) !== document) {
       setDocument(context);
     }
     return contains(context, elem);
   };
 
-  Sizzle.attr = function (elem, name) {
+  Sizzle.attr = (elem, name) => {
     if ((elem.ownerDocument || elem) !== document) {
       setDocument(elem);
     }
 
-    var fn = Expr.attrHandle[name.toLowerCase()],
-      val =
-        fn && hasOwn.call(Expr.attrHandle, name.toLowerCase())
-          ? fn(elem, name, !documentIsHTML)
-          : undefined;
+    const fn = Expr.attrHandle[name.toLowerCase()];
+
+    let val =
+      fn && hasOwn.call(Expr.attrHandle, name.toLowerCase())
+        ? fn(elem, name, !documentIsHTML)
+        : undefined;
 
     return val !== undefined
       ? val
@@ -5517,19 +5485,19 @@ Prototype._original_property = window.Sizzle;
           : null;
   };
 
-  Sizzle.error = function (msg) {
-    throw new Error('Syntax error, unrecognized expression: ' + msg);
+  Sizzle.error = msg => {
+    throw new Error(`Syntax error, unrecognized expression: ${msg}`);
   };
 
   /**
    * Document sorting and removing duplicates
    * @param {ArrayLike} results
    */
-  Sizzle.uniqueSort = function (results) {
-    var elem,
-      duplicates = [],
-      j = 0,
-      i = 0;
+  Sizzle.uniqueSort = results => {
+    let elem;
+    const duplicates = [];
+    let j = 0;
+    let i = 0;
 
     hasDuplicate = !support.detectDuplicates;
     sortInput = !support.sortStable && results.slice(0);
@@ -5555,11 +5523,11 @@ Prototype._original_property = window.Sizzle;
    * Utility function for retrieving the text value of an array of DOM nodes
    * @param {Array|Element} elem
    */
-  getText = Sizzle.getText = function (elem) {
-    var node,
-      ret = '',
-      i = 0,
-      nodeType = elem.nodeType;
+  getText = Sizzle.getText = elem => {
+    let node;
+    let ret = '';
+    let i = 0;
+    const nodeType = elem.nodeType;
 
     if (!nodeType) {
       while ((node = elem[i++])) {
@@ -5599,19 +5567,19 @@ Prototype._original_property = window.Sizzle;
     },
 
     preFilter: {
-      ATTR: function (match) {
+      ATTR: match => {
         match[1] = match[1].replace(runescape, funescape);
 
         match[3] = (match[4] || match[5] || '').replace(runescape, funescape);
 
         if (match[2] === '~=') {
-          match[3] = ' ' + match[3] + ' ';
+          match[3] = ` ${match[3]} `;
         }
 
         return match.slice(0, 4);
       },
 
-      CHILD: function (match) {
+      CHILD: match => {
         /* matches from matchExpr["CHILD"]
         1 type (only|nth|...)
         2 what (child|of-type)
@@ -5640,9 +5608,9 @@ Prototype._original_property = window.Sizzle;
         return match;
       },
 
-      PSEUDO: function (match) {
-        var excess,
-          unquoted = !match[5] && match[2];
+      PSEUDO: match => {
+        let excess;
+        const unquoted = !match[5] && match[2];
 
         if (matchExpr['CHILD'].test(match[0])) {
           return null;
@@ -5666,28 +5634,28 @@ Prototype._original_property = window.Sizzle;
     },
 
     filter: {
-      TAG: function (nodeNameSelector) {
-        var nodeName = nodeNameSelector
+      TAG: nodeNameSelector => {
+        const nodeName = nodeNameSelector
           .replace(runescape, funescape)
           .toLowerCase();
         return nodeNameSelector === '*'
-          ? function () {
+          ? () => {
               return true;
             }
-          : function (elem) {
+          : elem => {
               return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
             };
       },
 
-      CLASS: function (className) {
-        var pattern = classCache[className + ' '];
+      CLASS: className => {
+        let pattern = classCache[`${className} `];
 
         return (
           pattern ||
           ((pattern = new RegExp(
-            '(^|' + whitespace + ')' + className + '(' + whitespace + '|$)'
+            `(^|${whitespace})${className}(${whitespace}|$)`
           )) &&
-            classCache(className, function (elem) {
+            classCache(className, elem => {
               return pattern.test(
                 (typeof elem.className === 'string' && elem.className) ||
                   (typeof elem.getAttribute !== strundefined &&
@@ -5698,9 +5666,9 @@ Prototype._original_property = window.Sizzle;
         );
       },
 
-      ATTR: function (name, operator, check) {
-        return function (elem) {
-          var result = Sizzle.attr(elem, name);
+      ATTR: (name, operator, check) => {
+        return elem => {
+          let result = Sizzle.attr(elem, name);
 
           if (result == null) {
             return operator === '!=';
@@ -5722,34 +5690,34 @@ Prototype._original_property = window.Sizzle;
                   : operator === '$='
                     ? check && result.slice(-check.length) === check
                     : operator === '~='
-                      ? (' ' + result + ' ').indexOf(check) > -1
+                      ? ` ${result} `.indexOf(check) > -1
                       : operator === '|='
                         ? result === check ||
-                          result.slice(0, check.length + 1) === check + '-'
+                          result.slice(0, check.length + 1) === `${check}-`
                         : false;
         };
       },
 
-      CHILD: function (type, what, argument, first, last) {
-        var simple = type.slice(0, 3) !== 'nth',
+      CHILD: (type, what, argument, first, last) => {
+        const simple = type.slice(0, 3) !== 'nth',
           forward = type.slice(-4) !== 'last',
           ofType = what === 'of-type';
 
         return first === 1 && last === 0
-          ? function (elem) {
+          ? elem => {
               return !!elem.parentNode;
             }
-          : function (elem, context, xml) {
-              var cache,
-                outerCache,
-                node,
-                diff,
-                nodeIndex,
-                start,
-                dir = simple !== forward ? 'nextSibling' : 'previousSibling',
-                parent = elem.parentNode,
-                name = ofType && elem.nodeName.toLowerCase(),
-                useCache = !xml && !ofType;
+          : (elem, context, xml) => {
+              let cache;
+              let outerCache;
+              let node;
+              let diff;
+              let nodeIndex;
+              let start;
+              let dir = simple !== forward ? 'nextSibling' : 'previousSibling';
+              const parent = elem.parentNode;
+              const name = ofType && elem.nodeName.toLowerCase();
+              const useCache = !xml && !ofType;
 
               if (parent) {
                 if (simple) {
@@ -5830,12 +5798,13 @@ Prototype._original_property = window.Sizzle;
             };
       },
 
-      PSEUDO: function (pseudo, argument) {
-        var args,
-          fn =
-            Expr.pseudos[pseudo] ||
-            Expr.setFilters[pseudo.toLowerCase()] ||
-            Sizzle.error('unsupported pseudo: ' + pseudo);
+      PSEUDO: (pseudo, argument) => {
+        let args;
+
+        const fn =
+          Expr.pseudos[pseudo] ||
+          Expr.setFilters[pseudo.toLowerCase()] ||
+          Sizzle.error(`unsupported pseudo: ${pseudo}`);
 
         if (fn[expando]) {
           return fn(argument);
@@ -5844,16 +5813,16 @@ Prototype._original_property = window.Sizzle;
         if (fn.length > 1) {
           args = [pseudo, pseudo, '', argument];
           return Expr.setFilters.hasOwnProperty(pseudo.toLowerCase())
-            ? markFunction(function (seed, matches) {
-                var idx,
-                  matched = fn(seed, argument),
-                  i = matched.length;
+            ? markFunction((seed, matches) => {
+                let idx;
+                const matched = fn(seed, argument);
+                let i = matched.length;
                 while (i--) {
                   idx = indexOf.call(seed, matched[i]);
                   seed[idx] = !(matches[idx] = matched[i]);
                 }
               })
-            : function (elem) {
+            : elem => {
                 return fn(elem, 0, args);
               };
         }
@@ -5863,16 +5832,16 @@ Prototype._original_property = window.Sizzle;
     },
 
     pseudos: {
-      not: markFunction(function (selector) {
-        var input = [],
+      not: markFunction(selector => {
+        const input = [],
           results = [],
           matcher = compile(selector.replace(rtrim, '$1'));
 
         return matcher[expando]
-          ? markFunction(function (seed, matches, context, xml) {
-              var elem,
-                unmatched = matcher(seed, null, xml, []),
-                i = seed.length;
+          ? markFunction((seed, matches, context, xml) => {
+              let elem;
+              const unmatched = matcher(seed, null, xml, []);
+              let i = seed.length;
 
               while (i--) {
                 if ((elem = unmatched[i])) {
@@ -5880,21 +5849,21 @@ Prototype._original_property = window.Sizzle;
                 }
               }
             })
-          : function (elem, context, xml) {
+          : (elem, context, xml) => {
               input[0] = elem;
               matcher(input, null, xml, results);
               return !results.pop();
             };
       }),
 
-      has: markFunction(function (selector) {
-        return function (elem) {
+      has: markFunction(selector => {
+        return elem => {
           return Sizzle(selector, elem).length > 0;
         };
       }),
 
-      contains: markFunction(function (text) {
-        return function (elem) {
+      contains: markFunction(text => {
+        return elem => {
           return (
             (elem.textContent || elem.innerText || getText(elem)).indexOf(
               text
@@ -5903,13 +5872,13 @@ Prototype._original_property = window.Sizzle;
         };
       }),
 
-      lang: markFunction(function (lang) {
+      lang: markFunction(lang => {
         if (!ridentifier.test(lang || '')) {
-          Sizzle.error('unsupported lang: ' + lang);
+          Sizzle.error(`unsupported lang: ${lang}`);
         }
         lang = lang.replace(runescape, funescape).toLowerCase();
-        return function (elem) {
-          var elemLang;
+        return elem => {
+          let elemLang;
           do {
             if (
               (elemLang = documentIsHTML
@@ -5917,23 +5886,23 @@ Prototype._original_property = window.Sizzle;
                 : elem.getAttribute('xml:lang') || elem.getAttribute('lang'))
             ) {
               elemLang = elemLang.toLowerCase();
-              return elemLang === lang || elemLang.indexOf(lang + '-') === 0;
+              return elemLang === lang || elemLang.indexOf(`${lang}-`) === 0;
             }
           } while ((elem = elem.parentNode) && elem.nodeType === 1);
           return false;
         };
       }),
 
-      target: function (elem) {
-        var hash = window.location && window.location.hash;
+      target: elem => {
+        const hash = window.location && window.location.hash;
         return hash && hash.slice(1) === elem.id;
       },
 
-      root: function (elem) {
+      root: elem => {
         return elem === docElem;
       },
 
-      focus: function (elem) {
+      focus: elem => {
         return (
           elem === document.activeElement &&
           (!document.hasFocus || document.hasFocus()) &&
@@ -5941,23 +5910,23 @@ Prototype._original_property = window.Sizzle;
         );
       },
 
-      enabled: function (elem) {
+      enabled: elem => {
         return elem.disabled === false;
       },
 
-      disabled: function (elem) {
+      disabled: elem => {
         return elem.disabled === true;
       },
 
-      checked: function (elem) {
-        var nodeName = elem.nodeName.toLowerCase();
+      checked: elem => {
+        const nodeName = elem.nodeName.toLowerCase();
         return (
           (nodeName === 'input' && !!elem.checked) ||
           (nodeName === 'option' && !!elem.selected)
         );
       },
 
-      selected: function (elem) {
+      selected: elem => {
         if (elem.parentNode) {
           elem.parentNode.selectedIndex;
         }
@@ -5965,7 +5934,7 @@ Prototype._original_property = window.Sizzle;
         return elem.selected === true;
       },
 
-      empty: function (elem) {
+      empty: elem => {
         for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
           if (elem.nodeType < 6) {
             return false;
@@ -5974,27 +5943,27 @@ Prototype._original_property = window.Sizzle;
         return true;
       },
 
-      parent: function (elem) {
+      parent: elem => {
         return !Expr.pseudos['empty'](elem);
       },
 
-      header: function (elem) {
+      header: elem => {
         return rheader.test(elem.nodeName);
       },
 
-      input: function (elem) {
+      input: elem => {
         return rinputs.test(elem.nodeName);
       },
 
-      button: function (elem) {
-        var name = elem.nodeName.toLowerCase();
+      button: elem => {
+        const name = elem.nodeName.toLowerCase();
         return (
           (name === 'input' && elem.type === 'button') || name === 'button'
         );
       },
 
-      text: function (elem) {
-        var attr;
+      text: elem => {
+        let attr;
         return (
           elem.nodeName.toLowerCase() === 'input' &&
           elem.type === 'text' &&
@@ -6003,44 +5972,44 @@ Prototype._original_property = window.Sizzle;
         );
       },
 
-      first: createPositionalPseudo(function () {
+      first: createPositionalPseudo(() => {
         return [0];
       }),
 
-      last: createPositionalPseudo(function (matchIndexes, length) {
+      last: createPositionalPseudo((matchIndexes, length) => {
         return [length - 1];
       }),
 
-      eq: createPositionalPseudo(function (matchIndexes, length, argument) {
+      eq: createPositionalPseudo((matchIndexes, length, argument) => {
         return [argument < 0 ? argument + length : argument];
       }),
 
-      even: createPositionalPseudo(function (matchIndexes, length) {
-        var i = 0;
+      even: createPositionalPseudo((matchIndexes, length) => {
+        let i = 0;
         for (; i < length; i += 2) {
           matchIndexes.push(i);
         }
         return matchIndexes;
       }),
 
-      odd: createPositionalPseudo(function (matchIndexes, length) {
-        var i = 1;
+      odd: createPositionalPseudo((matchIndexes, length) => {
+        let i = 1;
         for (; i < length; i += 2) {
           matchIndexes.push(i);
         }
         return matchIndexes;
       }),
 
-      lt: createPositionalPseudo(function (matchIndexes, length, argument) {
-        var i = argument < 0 ? argument + length : argument;
+      lt: createPositionalPseudo((matchIndexes, length, argument) => {
+        let i = argument < 0 ? argument + length : argument;
         for (; --i >= 0; ) {
           matchIndexes.push(i);
         }
         return matchIndexes;
       }),
 
-      gt: createPositionalPseudo(function (matchIndexes, length, argument) {
-        var i = argument < 0 ? argument + length : argument;
+      gt: createPositionalPseudo((matchIndexes, length, argument) => {
+        let i = argument < 0 ? argument + length : argument;
         for (; ++i < length; ) {
           matchIndexes.push(i);
         }
@@ -6069,14 +6038,14 @@ Prototype._original_property = window.Sizzle;
   Expr.setFilters = new setFilters();
 
   function tokenize(selector, parseOnly) {
-    var matched,
-      match,
-      tokens,
-      type,
-      soFar,
-      groups,
-      preFilters,
-      cached = tokenCache[selector + ' '];
+    let matched;
+    let match;
+    let tokens;
+    let type;
+    let soFar;
+    let groups;
+    let preFilters;
+    const cached = tokenCache[`${selector} `];
 
     if (cached) {
       return parseOnly ? 0 : cached.slice(0);
@@ -6133,9 +6102,9 @@ Prototype._original_property = window.Sizzle;
   }
 
   function toSelector(tokens) {
-    var i = 0,
-      len = tokens.length,
-      selector = '';
+    let i = 0;
+    const len = tokens.length;
+    let selector = '';
     for (; i < len; i++) {
       selector += tokens[i].value;
     }
@@ -6143,22 +6112,22 @@ Prototype._original_property = window.Sizzle;
   }
 
   function addCombinator(matcher, combinator, base) {
-    var dir = combinator.dir,
+    const dir = combinator.dir,
       checkNonElements = base && dir === 'parentNode',
       doneName = done++;
 
     return combinator.first
-      ? function (elem, context, xml) {
+      ? (elem, context, xml) => {
           while ((elem = elem[dir])) {
             if (elem.nodeType === 1 || checkNonElements) {
               return matcher(elem, context, xml);
             }
           }
         }
-      : function (elem, context, xml) {
-          var oldCache,
-            outerCache,
-            newCache = [dirruns, doneName];
+      : (elem, context, xml) => {
+          let oldCache;
+          let outerCache;
+          const newCache = [dirruns, doneName];
 
           if (xml) {
             while ((elem = elem[dir])) {
@@ -6193,8 +6162,8 @@ Prototype._original_property = window.Sizzle;
 
   function elementMatcher(matchers) {
     return matchers.length > 1
-      ? function (elem, context, xml) {
-          var i = matchers.length;
+      ? (elem, context, xml) => {
+          let i = matchers.length;
           while (i--) {
             if (!matchers[i](elem, context, xml)) {
               return false;
@@ -6206,8 +6175,8 @@ Prototype._original_property = window.Sizzle;
   }
 
   function multipleContexts(selector, contexts, results) {
-    var i = 0,
-      len = contexts.length;
+    let i = 0;
+    const len = contexts.length;
     for (; i < len; i++) {
       Sizzle(selector, contexts[i], results);
     }
@@ -6215,11 +6184,11 @@ Prototype._original_property = window.Sizzle;
   }
 
   function condense(unmatched, map, filter, context, xml) {
-    var elem,
-      newUnmatched = [],
-      i = 0,
-      len = unmatched.length,
-      mapped = map != null;
+    let elem;
+    const newUnmatched = [];
+    let i = 0;
+    const len = unmatched.length;
+    const mapped = map != null;
 
     for (; i < len; i++) {
       if ((elem = unmatched[i])) {
@@ -6249,29 +6218,32 @@ Prototype._original_property = window.Sizzle;
     if (postFinder && !postFinder[expando]) {
       postFinder = setMatcher(postFinder, postSelector);
     }
-    return markFunction(function (seed, results, context, xml) {
-      var temp,
-        i,
-        elem,
-        preMap = [],
-        postMap = [],
-        preexisting = results.length,
-        elems =
-          seed ||
-          multipleContexts(
-            selector || '*',
-            context.nodeType ? [context] : context,
-            []
-          ),
-        matcherIn =
-          preFilter && (seed || !selector)
-            ? condense(elems, preMap, preFilter, context, xml)
-            : elems,
-        matcherOut = matcher
-          ? postFinder || (seed ? preFilter : preexisting || postFilter)
-            ? []
-            : results
-          : matcherIn;
+    return markFunction((seed, results, context, xml) => {
+      let temp;
+      let i;
+      let elem;
+      const preMap = [];
+      const postMap = [];
+      const preexisting = results.length;
+
+      const elems =
+        seed ||
+        multipleContexts(
+          selector || '*',
+          context.nodeType ? [context] : context,
+          []
+        );
+
+      const matcherIn =
+        preFilter && (seed || !selector)
+          ? condense(elems, preMap, preFilter, context, xml)
+          : elems;
+
+      let matcherOut = matcher
+        ? postFinder || (seed ? preFilter : preexisting || postFilter)
+          ? []
+          : results
+        : matcherIn;
 
       if (matcher) {
         matcher(matcherIn, matcherOut, context, xml);
@@ -6328,37 +6300,40 @@ Prototype._original_property = window.Sizzle;
   }
 
   function matcherFromTokens(tokens) {
-    var checkContext,
-      matcher,
-      j,
-      len = tokens.length,
-      leadingRelative = Expr.relative[tokens[0].type],
-      implicitRelative = leadingRelative || Expr.relative[' '],
-      i = leadingRelative ? 1 : 0,
-      matchContext = addCombinator(
-        function (elem) {
-          return elem === checkContext;
-        },
-        implicitRelative,
-        true
-      ),
-      matchAnyContext = addCombinator(
-        function (elem) {
-          return indexOf.call(checkContext, elem) > -1;
-        },
-        implicitRelative,
-        true
-      ),
-      matchers = [
-        function (elem, context, xml) {
-          return (
-            (!leadingRelative && (xml || context !== outermostContext)) ||
-            ((checkContext = context).nodeType
-              ? matchContext(elem, context, xml)
-              : matchAnyContext(elem, context, xml))
-          );
-        }
-      ];
+    let checkContext;
+    let matcher;
+    let j;
+    const len = tokens.length;
+    const leadingRelative = Expr.relative[tokens[0].type];
+    const implicitRelative = leadingRelative || Expr.relative[' '];
+    let i = leadingRelative ? 1 : 0;
+
+    const matchContext = addCombinator(
+      elem => {
+        return elem === checkContext;
+      },
+      implicitRelative,
+      true
+    );
+
+    const matchAnyContext = addCombinator(
+      elem => {
+        return indexOf.call(checkContext, elem) > -1;
+      },
+      implicitRelative,
+      true
+    );
+
+    let matchers = [
+      (elem, context, xml) => {
+        return (
+          (!leadingRelative && (xml || context !== outermostContext)) ||
+          ((checkContext = context).nodeType
+            ? matchContext(elem, context, xml)
+            : matchAnyContext(elem, context, xml))
+        );
+      }
+    ];
 
     for (; i < len; i++) {
       if ((matcher = Expr.relative[tokens[i].type])) {
@@ -6395,21 +6370,23 @@ Prototype._original_property = window.Sizzle;
   }
 
   function matcherFromGroupMatchers(elementMatchers, setMatchers) {
-    var bySet = setMatchers.length > 0,
+    const bySet = setMatchers.length > 0,
       byElement = elementMatchers.length > 0,
-      superMatcher = function (seed, context, xml, results, outermost) {
-        var elem,
-          j,
-          matcher,
-          matchedCount = 0,
-          i = '0',
-          unmatched = seed && [],
-          setMatched = [],
-          contextBackup = outermostContext,
-          elems = seed || (byElement && Expr.find['TAG']('*', outermost)),
-          dirrunsUnique = (dirruns +=
-            contextBackup == null ? 1 : Math.random() || 0.1),
-          len = elems.length;
+      superMatcher = (seed, context, xml, results, outermost) => {
+        let elem;
+        let j;
+        let matcher;
+        let matchedCount = 0;
+        let i = '0';
+        const unmatched = seed && [];
+        let setMatched = [];
+        const contextBackup = outermostContext;
+        const elems = seed || (byElement && Expr.find['TAG']('*', outermost));
+
+        const dirrunsUnique = (dirruns +=
+          contextBackup == null ? 1 : Math.random() || 0.1);
+
+        const len = elems.length;
 
         if (outermost) {
           outermostContext = context !== document && context;
@@ -6482,14 +6459,11 @@ Prototype._original_property = window.Sizzle;
     return bySet ? markFunction(superMatcher) : superMatcher;
   }
 
-  compile = Sizzle.compile = function (
-    selector,
-    match /* Internal Use Only */
-  ) {
-    var i,
-      setMatchers = [],
-      elementMatchers = [],
-      cached = compilerCache[selector + ' '];
+  compile = Sizzle.compile = (selector, match /* Internal Use Only */) => {
+    let i;
+    const setMatchers = [];
+    const elementMatchers = [];
+    let cached = compilerCache[`${selector} `];
 
     if (!cached) {
       if (!match) {
@@ -6524,14 +6498,14 @@ Prototype._original_property = window.Sizzle;
    * @param {Array} [results]
    * @param {Array} [seed] A set of elements to match against
    */
-  select = Sizzle.select = function (selector, context, results, seed) {
-    var i,
-      tokens,
-      token,
-      type,
-      find,
-      compiled = typeof selector === 'function' && selector,
-      match = !seed && tokenize((selector = compiled.selector || selector));
+  select = Sizzle.select = (selector, context, results, seed) => {
+    let i;
+    let tokens;
+    let token;
+    let type;
+    let find;
+    const compiled = typeof selector === 'function' && selector;
+    const match = !seed && tokenize((selector = compiled.selector || selector));
 
     results = results || [];
 
@@ -6603,17 +6577,17 @@ Prototype._original_property = window.Sizzle;
 
   setDocument();
 
-  support.sortDetached = assert(function (div1) {
+  support.sortDetached = assert(div1 => {
     return div1.compareDocumentPosition(document.createElement('div')) & 1;
   });
 
   if (
-    !assert(function (div) {
+    !assert(div => {
       div.innerHTML = "<a href='#'></a>";
       return div.firstChild.getAttribute('href') === '#';
     })
   ) {
-    addHandle('type|href|height|width', function (elem, name, isXML) {
+    addHandle('type|href|height|width', (elem, name, isXML) => {
       if (!isXML) {
         return elem.getAttribute(name, name.toLowerCase() === 'type' ? 1 : 2);
       }
@@ -6622,13 +6596,13 @@ Prototype._original_property = window.Sizzle;
 
   if (
     !support.attributes ||
-    !assert(function (div) {
+    !assert(div => {
       div.innerHTML = '<input/>';
       div.firstChild.setAttribute('value', '');
       return div.firstChild.getAttribute('value') === '';
     })
   ) {
-    addHandle('value', function (elem, name, isXML) {
+    addHandle('value', (elem, name, isXML) => {
       if (!isXML && elem.nodeName.toLowerCase() === 'input') {
         return elem.defaultValue;
       }
@@ -6636,12 +6610,12 @@ Prototype._original_property = window.Sizzle;
   }
 
   if (
-    !assert(function (div) {
+    !assert(div => {
       return div.getAttribute('disabled') == null;
     })
   ) {
-    addHandle(booleans, function (elem, name, isXML) {
-      var val;
+    addHandle(booleans, (elem, name, isXML) => {
+      let val;
       if (!isXML) {
         return elem[name] === true
           ? name.toLowerCase()
@@ -6653,7 +6627,7 @@ Prototype._original_property = window.Sizzle;
   }
 
   if (typeof define === 'function' && define.amd) {
-    define(function () {
+    define(() => {
       return Sizzle;
     });
   } else if (typeof module !== 'undefined' && module.exports) {
@@ -6663,7 +6637,7 @@ Prototype._original_property = window.Sizzle;
   }
 })(window);
 
-(function () {
+(() => {
   if (typeof Sizzle !== 'undefined') {
     return;
   }
@@ -6679,8 +6653,8 @@ Prototype._original_property = window.Sizzle;
   }
 })();
 
-(function (engine) {
-  var extendElements = Prototype.Selector.extendElements;
+(engine => {
+  const extendElements = Prototype.Selector.extendElements;
 
   function select(selector, scope) {
     return extendElements(engine(selector, scope || document));
@@ -6699,25 +6673,25 @@ window.Sizzle = Prototype._original_property;
 delete Prototype._original_property;
 
 var Form = {
-  reset: function (form) {
+  reset: form => {
     form = $(form);
     form.reset();
     return form;
   },
 
-  serializeElements: function (elements, options) {
+  serializeElements: (elements, options) => {
     if (typeof options != 'object') options = { hash: !!options };
     else if (Object.isUndefined(options.hash)) options.hash = true;
-    var key,
-      value,
-      submitted = false,
-      submit = options.submit,
-      accumulator,
-      initial;
+    let key;
+    let value;
+    let submitted = false;
+    const submit = options.submit;
+    let accumulator;
+    let initial;
 
     if (options.hash) {
       initial = {};
-      accumulator = function (result, key, value) {
+      accumulator = (result, key, value) => {
         if (key in result) {
           if (!Object.isArray(result[key])) result[key] = [result[key]];
           result[key] = result[key].concat(value);
@@ -6726,30 +6700,30 @@ var Form = {
       };
     } else {
       initial = '';
-      accumulator = function (result, key, values) {
+      accumulator = (result, key, values) => {
         if (!Object.isArray(values)) {
           values = [values];
         }
         if (!values.length) {
           return result;
         }
-        var encodedKey = encodeURIComponent(key).gsub(/%20/, '+');
+        const encodedKey = encodeURIComponent(key).gsub(/%20/, '+');
         return (
           result +
           (result ? '&' : '') +
           values
-            .map(function (value) {
+            .map(value => {
               value = value.gsub(/(\r)?\n/, '\r\n');
               value = encodeURIComponent(value);
               value = value.gsub(/%20/, '+');
-              return encodedKey + '=' + value;
+              return `${encodedKey}=${value}`;
             })
             .join('&')
         );
       };
     }
 
-    return elements.inject(initial, function (result, element) {
+    return elements.inject(initial, (result, element) => {
       if (!element.disabled && element.name) {
         key = element.name;
         value = $(element).getValue();
@@ -6771,15 +6745,15 @@ var Form = {
 };
 
 Form.Methods = {
-  serialize: function (form, options) {
+  serialize: (form, options) => {
     return Form.serializeElements(Form.getElements(form), options);
   },
 
-  getElements: function (form) {
-    var elements = $(form).getElementsByTagName('*');
-    var element,
-      results = [],
-      serializers = Form.Element.Serializers;
+  getElements: form => {
+    const elements = $(form).getElementsByTagName('*');
+    let element;
+    const results = [];
+    const serializers = Form.Element.Serializers;
 
     for (var i = 0; (element = elements[i]); i++) {
       if (serializers[element.tagName.toLowerCase()])
@@ -6788,9 +6762,9 @@ Form.Methods = {
     return results;
   },
 
-  getInputs: function (form, typeName, name) {
+  getInputs: (form, typeName, name) => {
     form = $(form);
-    var inputs = form.getElementsByTagName('input');
+    const inputs = form.getElementsByTagName('input');
 
     if (!typeName && !name) return $A(inputs).map(Element.extend);
 
@@ -6808,51 +6782,51 @@ Form.Methods = {
     return matchingInputs;
   },
 
-  disable: function (form) {
+  disable: form => {
     form = $(form);
     Form.getElements(form).invoke('disable');
     return form;
   },
 
-  enable: function (form) {
+  enable: form => {
     form = $(form);
     Form.getElements(form).invoke('enable');
     return form;
   },
 
-  findFirstElement: function (form) {
-    var elements = $(form)
+  findFirstElement: form => {
+    const elements = $(form)
       .getElements()
-      .findAll(function (element) {
+      .findAll(element => {
         return 'hidden' != element.type && !element.disabled;
       });
-    var firstByIndex = elements
-      .findAll(function (element) {
+    const firstByIndex = elements
+      .findAll(element => {
         return element.hasAttribute('tabIndex') && element.tabIndex >= 0;
       })
-      .sortBy(function (element) {
+      .sortBy(element => {
         return element.tabIndex;
       })
       .first();
 
     return firstByIndex
       ? firstByIndex
-      : elements.find(function (element) {
+      : elements.find(element => {
           return /^(?:input|select|textarea)$/i.test(element.tagName);
         });
   },
 
-  focusFirstElement: function (form) {
+  focusFirstElement: form => {
     form = $(form);
-    var element = form.findFirstElement();
+    const element = form.findFirstElement();
     if (element) element.activate();
     return form;
   },
 
-  request: function (form, options) {
+  request: (form, options) => {
     ((form = $(form)), (options = Object.clone(options || {})));
 
-    var params = options.parameters,
+    let params = options.parameters,
       action = form.readAttribute('action') || '';
     if (action.blank()) action = window.location.href;
     options.parameters = form.serialize(true);
@@ -6872,19 +6846,19 @@ Form.Methods = {
 /*--------------------------------------------------------------------------*/
 
 Form.Element = {
-  focus: function (element) {
+  focus: element => {
     $(element).focus();
     return element;
   },
 
-  select: function (element) {
+  select: element => {
     $(element).select();
     return element;
   }
 };
 
 Form.Element.Methods = {
-  serialize: function (element) {
+  serialize: element => {
     element = $(element);
     if (!element.disabled && element.name) {
       var value = element.getValue();
@@ -6897,29 +6871,29 @@ Form.Element.Methods = {
     return '';
   },
 
-  getValue: function (element) {
+  getValue: element => {
     element = $(element);
-    var method = element.tagName.toLowerCase();
+    const method = element.tagName.toLowerCase();
     return Form.Element.Serializers[method](element);
   },
 
-  setValue: function (element, value) {
+  setValue: (element, value) => {
     element = $(element);
-    var method = element.tagName.toLowerCase();
+    const method = element.tagName.toLowerCase();
     Form.Element.Serializers[method](element, value);
     return element;
   },
 
-  clear: function (element) {
+  clear: element => {
     $(element).value = '';
     return element;
   },
 
-  present: function (element) {
+  present: element => {
     return $(element).value != '';
   },
 
-  activate: function (element) {
+  activate: element => {
     element = $(element);
     try {
       element.focus();
@@ -6933,13 +6907,13 @@ Form.Element.Methods = {
     return element;
   },
 
-  disable: function (element) {
+  disable: element => {
     element = $(element);
     element.disabled = true;
     return element;
   },
 
-  enable: function (element) {
+  enable: element => {
     element = $(element);
     element.disabled = false;
     return element;
@@ -6954,7 +6928,7 @@ var $F = Form.Element.Methods.getValue;
 
 /*--------------------------------------------------------------------------*/
 
-Form.Element.Serializers = (function () {
+Form.Element.Serializers = (() => {
   function input(element, value) {
     switch (element.type.toLowerCase()) {
       case 'checkbox':
@@ -6980,9 +6954,9 @@ Form.Element.Serializers = (function () {
     if (Object.isUndefined(value))
       return (element.type === 'select-one' ? selectOne : selectMany)(element);
 
-    var opt,
-      currentValue,
-      single = !Object.isArray(value);
+    let opt;
+    let currentValue;
+    const single = !Object.isArray(value);
     for (var i = 0, length = element.length; i < length; i++) {
       opt = element.options[i];
       currentValue = this.optionValue(opt);
@@ -6996,13 +6970,12 @@ Form.Element.Serializers = (function () {
   }
 
   function selectOne(element) {
-    var index = element.selectedIndex;
+    const index = element.selectedIndex;
     return index >= 0 ? optionValue(element.options[index]) : null;
   }
 
   function selectMany(element) {
-    var values,
-      length = element.length;
+    const length = element.length;
     if (!length) return null;
 
     for (var i = 0, values = []; i < length; i++) {
@@ -7038,7 +7011,7 @@ Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
   },
 
   execute: function () {
-    var value = this.getValue();
+    const value = this.getValue();
     if (
       Object.isString(this.lastValue) && Object.isString(value)
         ? this.lastValue != value
@@ -7076,7 +7049,7 @@ Abstract.EventObserver = Class.create({
   },
 
   onElementEvent: function () {
-    var value = this.getValue();
+    const value = this.getValue();
     if (this.lastValue != value) {
       this.callback(this.element, value);
       this.lastValue = value;
@@ -7113,13 +7086,13 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     return Form.serialize(this.element);
   }
 });
-(function (GLOBAL) {
-  var DIV = document.createElement('div');
-  var docEl = document.documentElement;
-  var MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
+(GLOBAL => {
+  let DIV = document.createElement('div');
+  let docEl = document.documentElement;
+  const MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
     'onmouseenter' in docEl && 'onmouseleave' in docEl;
 
-  var Event = {
+  const Event = {
     KEY_BACKSPACE: 8,
     KEY_TAB: 9,
     KEY_RETURN: 13,
@@ -7136,29 +7109,29 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     KEY_INSERT: 45
   };
 
-  var isIELegacyEvent = function (event) {
+  let isIELegacyEvent = event => {
     return false;
   };
 
   if (window.attachEvent) {
     if (window.addEventListener) {
-      isIELegacyEvent = function (event) {
+      isIELegacyEvent = event => {
         return !(event instanceof window.Event);
       };
     } else {
-      isIELegacyEvent = function (event) {
+      isIELegacyEvent = event => {
         return true;
       };
     }
   }
 
-  var _isButton;
+  let _isButton;
 
   function _isButtonForDOMEvents(event, code) {
     return event.which ? event.which === code + 1 : event.button === code;
   }
 
-  var legacyButtonMap = { 0: 1, 1: 4, 2: 2 };
+  const legacyButtonMap = { 0: 1, 1: 4, 2: 2 };
   function _isButtonForLegacyEvents(event, code) {
     return event.button === legacyButtonMap[code];
   }
@@ -7180,7 +7153,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     if (!window.addEventListener) {
       _isButton = _isButtonForLegacyEvents;
     } else {
-      _isButton = function (event, code) {
+      _isButton = (event, code) => {
         return isIELegacyEvent(event)
           ? _isButtonForLegacyEvents(event, code)
           : _isButtonForDOMEvents(event, code);
@@ -7211,9 +7184,9 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   function _element(event) {
     event = Event.extend(event);
 
-    var node = event.target,
-      type = event.type,
-      currentTarget = event.currentTarget;
+    let node = event.target;
+    const type = event.type;
+    const currentTarget = event.currentTarget;
 
     if (currentTarget && currentTarget.tagName) {
       if (
@@ -7230,8 +7203,8 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function findElement(event, expression) {
-    var element = _element(event),
-      selector = Prototype.Selector;
+    let element = _element(event);
+    const selector = Prototype.Selector;
     if (!expression) return Element.extend(element);
     while (element) {
       if (Object.isElement(element) && selector.match(element, expression))
@@ -7245,7 +7218,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function pointerX(event) {
-    var docElement = document.documentElement,
+    const docElement = document.documentElement,
       body = document.body || { scrollLeft: 0 };
 
     return (
@@ -7257,7 +7230,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function pointerY(event) {
-    var docElement = document.documentElement,
+    const docElement = document.documentElement,
       body = document.body || { scrollTop: 0 };
 
     return (
@@ -7291,14 +7264,14 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     stop: stop
   };
 
-  var methods = Object.keys(Event.Methods).inject({}, function (m, name) {
+  const methods = Object.keys(Event.Methods).inject({}, (m, name) => {
     m[name] = Event.Methods[name].methodize();
     return m;
   });
 
   if (window.attachEvent) {
     function _relatedTarget(event) {
-      var element;
+      let element;
       switch (event.type) {
         case 'mouseover':
         case 'mouseenter':
@@ -7321,12 +7294,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       preventDefault: function () {
         this.returnValue = false;
       },
-      inspect: function () {
+      inspect: () => {
         return '[object Event]';
       }
     };
 
-    Event.extend = function (event, element) {
+    Event.extend = (event, element) => {
       if (!event) return false;
 
       if (!isIELegacyEvent(event)) return event;
@@ -7334,7 +7307,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       if (event._extendedByPrototype) return event;
       event._extendedByPrototype = Prototype.emptyFunction;
 
-      var pointer = Event.pointer(event);
+      const pointer = Event.pointer(event);
 
       Object.extend(event, {
         target: event.srcElement || element,
@@ -7358,7 +7331,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     Object.extend(Event.prototype, methods);
   }
 
-  var EVENT_TRANSLATIONS = {
+  const EVENT_TRANSLATIONS = {
     mouseenter: 'mouseover',
     mouseleave: 'mouseout'
   };
@@ -7392,7 +7365,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   Event._isCustomEvent = isCustomEvent;
 
   function getOrCreateRegistryFor(element, uid) {
-    var CACHE = GLOBAL.Event.cache;
+    const CACHE = GLOBAL.Event.cache;
     if (Object.isUndefined(uid)) uid = getUniqueElementID(element);
     if (!CACHE[uid]) CACHE[uid] = { element: element };
     return CACHE[uid];
@@ -7404,16 +7377,16 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function register(element, eventName, handler) {
-    var registry = getOrCreateRegistryFor(element);
+    const registry = getOrCreateRegistryFor(element);
     if (!registry[eventName]) registry[eventName] = [];
-    var entries = registry[eventName];
+    const entries = registry[eventName];
 
-    var i = entries.length;
+    let i = entries.length;
     while (i--) if (entries[i].handler === handler) return null;
 
-    var uid = getUniqueElementID(element);
-    var responder = GLOBAL.Event._createResponder(uid, eventName, handler);
-    var entry = {
+    const uid = getUniqueElementID(element);
+    const responder = GLOBAL.Event._createResponder(uid, eventName, handler);
+    const entry = {
       responder: responder,
       handler: handler
     };
@@ -7423,10 +7396,10 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function unregister(element, eventName, handler) {
-    var registry = getOrCreateRegistryFor(element);
-    var entries = registry[eventName] || [];
+    const registry = getOrCreateRegistryFor(element);
+    const entries = registry[eventName] || [];
 
-    var i = entries.length,
+    let i = entries.length,
       entry;
     while (i--) {
       if (entries[i].handler === handler) {
@@ -7451,11 +7424,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function observe(element, eventName, handler) {
     element = $(element);
-    var entry = register(element, eventName, handler);
+    const entry = register(element, eventName, handler);
 
     if (entry === null) return element;
 
-    var responder = entry.responder;
+    const responder = entry.responder;
     if (isCustomEvent(eventName))
       observeCustomEvent(element, eventName, responder);
     else observeStandardEvent(element, eventName, responder);
@@ -7464,11 +7437,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function observeStandardEvent(element, eventName, responder) {
-    var actualEventName = getDOMEventName(eventName);
+    const actualEventName = getDOMEventName(eventName);
     if (element.addEventListener) {
       element.addEventListener(actualEventName, responder, false);
     } else {
-      element.attachEvent('on' + actualEventName, responder);
+      element.attachEvent(`on${actualEventName}`, responder);
     }
   }
 
@@ -7483,7 +7456,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
   function stopObserving(element, eventName, handler) {
     element = $(element);
-    var handlerGiven = !Object.isUndefined(handler),
+    const handlerGiven = !Object.isUndefined(handler),
       eventNameGiven = !Object.isUndefined(eventName);
 
     if (!eventNameGiven && !handlerGiven) {
@@ -7496,7 +7469,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
       return element;
     }
 
-    var entry = unregister(element, eventName, handler);
+    const entry = unregister(element, eventName, handler);
 
     if (!entry) return element;
     removeEvent(element, eventName, entry.responder);
@@ -7504,11 +7477,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingStandardEvent(element, eventName, responder) {
-    var actualEventName = getDOMEventName(eventName);
+    const actualEventName = getDOMEventName(eventName);
     if (element.removeEventListener) {
       element.removeEventListener(actualEventName, responder, false);
     } else {
-      element.detachEvent('on' + actualEventName, responder);
+      element.detachEvent(`on${actualEventName}`, responder);
     }
   }
 
@@ -7522,13 +7495,13 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingElement(element) {
-    var uid = getUniqueElementID(element),
+    const uid = getUniqueElementID(element),
       registry = GLOBAL.Event.cache[uid];
     if (!registry) return;
 
     destroyRegistryForElement(element, uid);
 
-    var entries, i;
+    let entries, i;
     for (var eventName in registry) {
       if (eventName === 'element') continue;
 
@@ -7539,15 +7512,15 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function stopObservingEventName(element, eventName) {
-    var registry = getOrCreateRegistryFor(element);
-    var entries = registry[eventName];
+    const registry = getOrCreateRegistryFor(element);
+    let entries = registry[eventName];
     if (entries) {
       delete registry[eventName];
     }
 
     entries = entries || [];
 
-    var i = entries.length;
+    let i = entries.length;
     while (i--) removeEvent(element, eventName, entries[i].responder);
 
     for (var name in registry) {
@@ -7576,12 +7549,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     if (Object.isUndefined(bubble)) bubble = true;
     memo = memo || {};
 
-    var event = fireEvent(element, eventName, memo, bubble);
+    const event = fireEvent(element, eventName, memo, bubble);
     return Event.extend(event);
   }
 
   function fireEvent_DOM(element, eventName, memo, bubble) {
-    var event = document.createEvent('HTMLEvents');
+    const event = document.createEvent('HTMLEvents');
     event.initEvent('dataavailable', bubble, true);
 
     event.eventName = eventName;
@@ -7592,7 +7565,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function fireEvent_IE(element, eventName, memo, bubble) {
-    var event = document.createEventObject();
+    const event = document.createEventObject();
     event.eventType = bubble ? 'ondataavailable' : 'onlosecapture';
 
     event.eventName = eventName;
@@ -7602,7 +7575,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     return event;
   }
 
-  var fireEvent = document.createEvent ? fireEvent_DOM : fireEvent_IE;
+  const fireEvent = document.createEvent ? fireEvent_DOM : fireEvent_IE;
 
   Event.Handler = Class.create({
     initialize: function (element, eventName, selector, callback) {
@@ -7624,7 +7597,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     },
 
     handleEvent: function (event) {
-      var element = Event.findElement(event, this.selector);
+      const element = Event.findElement(event, this.selector);
       if (element) this.callback.call(this.element, event, element);
     }
   });
@@ -7684,12 +7657,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   docEl = null;
 })(this);
 
-(function (GLOBAL) {
+(GLOBAL => {
   /* Code for creating leak-free event responders is based on work by
    John-David Dalton. */
 
-  var docEl = document.documentElement;
-  var MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
+  let docEl = document.documentElement;
+  const MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED =
     'onmouseenter' in docEl && 'onmouseleave' in docEl;
 
   function isSimulatedMouseEnterLeaveEvent(eventName) {
@@ -7705,19 +7678,19 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     if (isSimulatedMouseEnterLeaveEvent(eventName))
       return createMouseEnterLeaveResponder(uid, eventName, handler);
 
-    return function (event) {
+    return event => {
       if (!Event.cache) return;
 
-      var element = Event.cache[uid].element;
+      const element = Event.cache[uid].element;
       Event.extend(event, element);
       handler.call(element, event);
     };
   }
 
   function createResponderForCustomEvent(uid, eventName, handler) {
-    return function (event) {
-      var cache = Event.cache[uid];
-      var element = cache && cache.element;
+    return event => {
+      const cache = Event.cache[uid];
+      const element = cache && cache.element;
 
       if (Object.isUndefined(event.eventName)) return false;
 
@@ -7729,11 +7702,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function createMouseEnterLeaveResponder(uid, eventName, handler) {
-    return function (event) {
-      var element = Event.cache[uid].element;
+    return event => {
+      const element = Event.cache[uid].element;
 
       Event.extend(event, element);
-      var parent = event.relatedTarget;
+      let parent = event.relatedTarget;
 
       while (parent && parent !== element) {
         try {
@@ -7752,11 +7725,11 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   docEl = null;
 })(this);
 
-(function (GLOBAL) {
+(GLOBAL => {
   /* Support for the DOMContentLoaded event is based on work by Dan Webb,
      Matthias Miller, Dean Edwards, John Resig, and Diego Perini. */
 
-  var TIMER;
+  let TIMER;
 
   function fireContentLoadedEvent() {
     if (document.loaded) return;
@@ -7814,19 +7787,19 @@ Element.addMethods({
 });
 
 var Insertion = {
-  Before: function (element, content) {
+  Before: (element, content) => {
     return Element.insert(element, { before: content });
   },
 
-  Top: function (element, content) {
+  Top: (element, content) => {
     return Element.insert(element, { top: content });
   },
 
-  Bottom: function (element, content) {
+  Bottom: (element, content) => {
     return Element.insert(element, { bottom: content });
   },
 
-  After: function (element, content) {
+  After: (element, content) => {
     return Element.insert(element, { after: content });
   }
 };
@@ -7867,7 +7840,7 @@ var Position = {
   },
 
   withinIncludingScrolloffsets: function (element, x, y) {
-    var offsetcache = Element.cumulativeScrollOffset(element);
+    const offsetcache = Element.cumulativeScrollOffset(element);
 
     this.xcomp = x + offsetcache[0] - this.deltaX;
     this.ycomp = y + offsetcache[1] - this.deltaY;
@@ -7899,12 +7872,12 @@ var Position = {
 
   positionedOffset: Element.Methods.positionedOffset,
 
-  absolutize: function (element) {
+  absolutize: element => {
     Position.prepare();
     return Element.absolutize(element);
   },
 
-  relativize: function (element) {
+  relativize: element => {
     Position.prepare();
     return Element.relativize(element);
   },
@@ -7915,7 +7888,7 @@ var Position = {
 
   page: Element.Methods.viewportOffset,
 
-  clone: function (source, target, options) {
+  clone: (source, target, options) => {
     options = options || {};
     return Element.clonePosition(target, source, options);
   }
@@ -7924,42 +7897,40 @@ var Position = {
 /*--------------------------------------------------------------------------*/
 
 if (!document.getElementsByClassName)
-  document.getElementsByClassName = (function (instanceMethods) {
+  document.getElementsByClassName = (instanceMethods => {
     function iter(name) {
       return name.blank()
         ? null
-        : "[contains(concat(' ', @class, ' '), ' " + name + " ')]";
+        : `[contains(concat(' ', @class, ' '), ' ${name} ')]`;
     }
 
     instanceMethods.getElementsByClassName = Prototype.BrowserFeatures.XPath
-      ? function (element, className) {
+      ? (element, className) => {
           className = className.toString().strip();
-          var cond = /\s/.test(className)
+          const cond = /\s/.test(className)
             ? $w(className).map(iter).join('')
             : iter(className);
           return cond
-            ? document._getElementsByXPath('.//*' + cond, element)
+            ? document._getElementsByXPath(`.//*${cond}`, element)
             : [];
         }
-      : function (element, className) {
+      : (element, className) => {
           className = className.toString().strip();
-          var elements = [],
+          const elements = [],
             classNames = /\s/.test(className) ? $w(className) : null;
           if (!classNames && !className) return elements;
 
-          var nodes = $(element).getElementsByTagName('*');
-          className = ' ' + className + ' ';
+          const nodes = $(element).getElementsByTagName('*');
+          className = ` ${className} `;
 
           for (var i = 0, child, cn; (child = nodes[i]); i++) {
             if (
               child.className &&
-              (cn = ' ' + child.className + ' ') &&
+              (cn = ` ${child.className} `) &&
               (cn.include(className) ||
                 (classNames &&
-                  classNames.all(function (name) {
-                    return (
-                      !name.toString().blank() && cn.include(' ' + name + ' ')
-                    );
+                  classNames.all(name => {
+                    return !name.toString().blank() && cn.include(` ${name} `);
                   })))
             )
               elements.push(Element.extend(child));
@@ -7967,7 +7938,7 @@ if (!document.getElementsByClassName)
           return elements;
         };
 
-    return function (className, parentElement) {
+    return (className, parentElement) => {
       return $(parentElement || document.body).getElementsByClassName(
         className
       );
@@ -7985,7 +7956,7 @@ Element.ClassNames.prototype = {
   _each: function (iterator, context) {
     this.element.className
       .split(/\s+/)
-      .select(function (name) {
+      .select(name => {
         return name.length > 0;
       })
       ._each(iterator, context);
@@ -8014,7 +7985,7 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 
 /*--------------------------------------------------------------------------*/
 
-(function () {
+(() => {
   window.Selector = Class.create({
     initialize: function (expression) {
       this.expression = expression.strip();
@@ -8033,13 +8004,13 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
     },
 
     inspect: function () {
-      return '#<Selector: ' + this.expression + '>';
+      return `#<Selector: ${this.expression}>`;
     }
   });
 
   Object.extend(Selector, {
-    matchElements: function (elements, expression) {
-      var match = Prototype.Selector.match,
+    matchElements: (elements, expression) => {
+      const match = Prototype.Selector.match,
         results = [];
 
       for (var i = 0, length = elements.length; i < length; i++) {
@@ -8051,9 +8022,9 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
       return results;
     },
 
-    findElement: function (elements, expression, index) {
+    findElement: (elements, expression, index) => {
       index = index || 0;
-      var matchIndex = 0,
+      let matchIndex = 0,
         element;
       for (var i = 0, length = elements.length; i < length; i++) {
         element = elements[i];
@@ -8066,8 +8037,8 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
       }
     },
 
-    findChildElements: function (element, expressions) {
-      var selector = expressions.toArray().join(', ');
+    findChildElements: (element, expressions) => {
+      const selector = expressions.toArray().join(', ');
       return Prototype.Selector.select(selector, element || document);
     }
   });

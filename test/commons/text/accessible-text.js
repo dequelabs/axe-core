@@ -1,6 +1,6 @@
 describe('text.accessibleTextVirtual', () => {
   const fixture = document.getElementById('fixture');
-  const { html, shadowSupport } = axe.testUtils;
+  const { html } = axe.testUtils;
 
   afterEach(() => {
     fixture.innerHTML = '';
@@ -759,102 +759,87 @@ describe('text.accessibleTextVirtual', () => {
     }
   );
 
-  (shadowSupport.v1 ? it : xit)(
-    'should only find aria-labelledby element in the same context ',
-    () => {
-      fixture.innerHTML = html`
-        <div id="t2label">
-          This is
-          <input
-            type="text"
-            value="the value"
-            aria-labelledby="t1label"
-            aria-label="ARIA Label"
-            id="t1"
-          />
-          of <i>everything</i>
-        </div>
-        <div id="shadow"></div>
-      `;
+  it('should only find aria-labelledby element in the same context ', () => {
+    fixture.innerHTML = html`
+      <div id="t2label">
+        This is
+        <input
+          type="text"
+          value="the value"
+          aria-labelledby="t1label"
+          aria-label="ARIA Label"
+          id="t1"
+        />
+        of <i>everything</i>
+      </div>
+      <div id="shadow"></div>
+    `;
 
-      const shadow = document
-        .getElementById('shadow')
-        .attachShadow({ mode: 'open' });
-      shadow.innerHTML = html`
-        <div id="t1label">This is a <b>label</b></div>
-        <label for="t1">HTML Label</label>
-        <input type="text" id="t2" aria-labelledby="t2label" />
-      `;
+    const shadow = document
+      .getElementById('shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML = html`
+      <div id="t1label">This is a <b>label</b></div>
+      <label for="t1">HTML Label</label>
+      <input type="text" id="t2" aria-labelledby="t2label" />
+    `;
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-      assert.equal(
-        axe.commons.text.accessibleTextVirtual(target),
-        'ARIA Label'
-      );
-    }
-  );
+    axe.testUtils.flatTreeSetup(fixture);
+    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
+  });
 
-  (shadowSupport.v1 ? it : xit)(
-    'should find attributes within a shadow tree',
-    () => {
-      fixture.innerHTML = html` <div id="shadow"></div> `;
+  it('should find attributes within a shadow tree', () => {
+    fixture.innerHTML = html` <div id="shadow"></div> `;
 
-      const shadow = document
-        .getElementById('shadow')
-        .attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<input type="text" id="t1" title="I will be king">';
+    const shadow = document
+      .getElementById('shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<input type="text" id="t1" title="I will be king">';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-      assert.equal(
-        axe.commons.text.accessibleTextVirtual(target),
-        'I will be king'
-      );
-    }
-  );
+    axe.testUtils.flatTreeSetup(fixture);
+    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    assert.equal(
+      axe.commons.text.accessibleTextVirtual(target),
+      'I will be king'
+    );
+  });
 
-  (shadowSupport.v1 ? it : xit)(
-    'should find attributes within a slot on the shadow tree',
-    () => {
-      fixture.innerHTML =
-        '<div id="shadow"><input type="text" id="t1" title="you will be queen"></div>';
+  it('should find attributes within a slot on the shadow tree', () => {
+    fixture.innerHTML =
+      '<div id="shadow"><input type="text" id="t1" title="you will be queen"></div>';
 
-      const shadow = document
-        .getElementById('shadow')
-        .attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<slot></slot>';
+    const shadow = document
+      .getElementById('shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML = '<slot></slot>';
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-      assert.equal(
-        axe.commons.text.accessibleTextVirtual(target),
-        'you will be queen'
-      );
-    }
-  );
+    axe.testUtils.flatTreeSetup(fixture);
+    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    assert.equal(
+      axe.commons.text.accessibleTextVirtual(target),
+      'you will be queen'
+    );
+  });
 
-  (shadowSupport.v1 ? it : xit)(
-    'should find fallback content for shadow DOM',
-    () => {
-      fixture.innerHTML = html` <div id="shadow"></div> `;
+  it('should find fallback content for shadow DOM', () => {
+    fixture.innerHTML = html` <div id="shadow"></div> `;
 
-      const shadow = document
-        .getElementById('shadow')
-        .attachShadow({ mode: 'open' });
-      shadow.innerHTML = html`
-        <input type="text" id="t1" />
-        <label for="t1"><slot>Fallback content heroes</slot></label>
-      `;
+    const shadow = document
+      .getElementById('shadow')
+      .attachShadow({ mode: 'open' });
+    shadow.innerHTML = html`
+      <input type="text" id="t1" />
+      <label for="t1"><slot>Fallback content heroes</slot></label>
+    `;
 
-      axe.testUtils.flatTreeSetup(fixture);
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-      assert.equal(
-        axe.commons.text.accessibleTextVirtual(target),
-        'Fallback content heroes'
-      );
-    }
-  );
+    axe.testUtils.flatTreeSetup(fixture);
+    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    assert.equal(
+      axe.commons.text.accessibleTextVirtual(target),
+      'Fallback content heroes'
+    );
+  });
 
   describe('figure', () => {
     it('should check aria-labelledby', () => {
@@ -916,21 +901,18 @@ describe('text.accessibleTextVirtual', () => {
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
-    (shadowSupport.v1 ? it : xit)(
-      'should check within the composed (shadow) tree',
-      () => {
-        const node = document.createElement('div');
-        node.innerHTML = 'Hello';
-        const shadowRoot = node.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML =
-          '<figure>Not part of a11yName <figcaption><slot></slot></figcaption></figure>';
-        fixture.appendChild(node);
-        axe.testUtils.flatTreeSetup(fixture);
+    it('should check within the composed (shadow) tree', () => {
+      const node = document.createElement('div');
+      node.innerHTML = 'Hello';
+      const shadowRoot = node.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML =
+        '<figure>Not part of a11yName <figcaption><slot></slot></figcaption></figure>';
+      fixture.appendChild(node);
+      axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-        assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
-      }
-    );
+      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
+    });
   });
 
   describe('img', () => {
@@ -1144,8 +1126,8 @@ describe('text.accessibleTextVirtual', () => {
     const types = ['text', 'password', 'search', 'tel', 'email', 'url', null];
 
     it('should find aria-labelledby', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
         fixture.innerHTML = html`
           <div id="t1">Hello</div>
           <div id="t2">World</div>
@@ -1163,9 +1145,9 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find aria-label', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<input ${t} aria-label="Hello World">`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<input ${t} aria-label="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1178,9 +1160,11 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find an implicit label', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<label for="t1">Hello World<input ${t}></label>`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<label for="t1"
+          >Hello World<input ${t}
+        /></label>`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1193,9 +1177,10 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find an explicit label', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<label for="t1">Hello World</label><input ${t} id="t1">`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<label for="t1">Hello World</label
+          ><input ${t} id="t1" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1208,9 +1193,11 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find implicit labels with id that does not match to a label', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<label for="t1">Hello World<input ${t} id="foo"></label>`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<label for="t1"
+          >Hello World<input ${t} id="foo"
+        /></label>`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1223,9 +1210,9 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find a placeholder attribute', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<input ${t} placeholder="Hello World">`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<input ${t} placeholder="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1238,9 +1225,9 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find a title attribute', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<input ${t} title="Hello World">`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<input ${t} title="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1253,9 +1240,9 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should otherwise be empty string', () => {
-      types.forEach(function (type) {
-        const t = type ? ' type="' + type + '"' : '';
-        fixture.innerHTML = `<input ${t}>`;
+      types.forEach(type => {
+        const t = type ? ` type="${type}"` : '';
+        fixture.innerHTML = html`<input ${t} />`;
         axe.testUtils.flatTreeSetup(fixture);
 
         const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
@@ -1294,7 +1281,9 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find an implicit label', () => {
-      fixture.innerHTML = `<label for="t1">Hello World<textarea></textarea></label>`;
+      fixture.innerHTML = html`<label for="t1"
+        >Hello World<textarea></textarea>
+      </label>`;
       axe.testUtils.flatTreeSetup(fixture);
 
       const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
@@ -1305,7 +1294,8 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find an explicit label', () => {
-      fixture.innerHTML = `<label for="t1">Hello World</label><textarea id="t1"></textarea>`;
+      fixture.innerHTML = html`<label for="t1">Hello World</label
+        ><textarea id="t1"></textarea>`;
       axe.testUtils.flatTreeSetup(fixture);
 
       const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
@@ -1579,7 +1569,7 @@ describe('text.accessibleTextVirtual', () => {
     ];
 
     it('should find aria-labelledby', () => {
-      tags.forEach(function (tag) {
+      tags.forEach(tag => {
         fixture.innerHTML = html`
           <div id="t1">Hello</div>
           <div id="t2">World</div>
@@ -1599,7 +1589,7 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find aria-label', () => {
-      tags.forEach(function (tag) {
+      tags.forEach(tag => {
         const elm = document.createElement(tag);
         elm.setAttribute('aria-label', 'Hello World');
         elm.style.display = 'inline'; // Firefox hack, see above
@@ -1613,7 +1603,7 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should find a title attribute', () => {
-      tags.forEach(function (tag) {
+      tags.forEach(tag => {
         const elm = document.createElement(tag);
         elm.setAttribute('title', 'Hello World');
         elm.style.display = 'inline'; // Firefox hack, see above
@@ -1627,7 +1617,7 @@ describe('text.accessibleTextVirtual', () => {
     });
 
     it('should otherwise be empty string', () => {
-      tags.forEach(function (tag) {
+      tags.forEach(tag => {
         fixture.innerHTML = `<${tag}></${tag}>`;
         axe.testUtils.flatTreeSetup(fixture);
 
@@ -1649,8 +1639,48 @@ describe('text.accessibleTextVirtual', () => {
     });
   });
 
+  describe('natively hidden elements', () => {
+    const tags = ['style', 'script', 'noscript', 'template'];
+
+    it('should not use content as accessible name when directly referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = html`<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id">content</${tag}>`;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
+      });
+    });
+
+    it('should not use content when inside a hidden container referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = html`
+  <div id="t1" aria-labelledby="hidden-container"></div>
+  <div id="hidden-container" aria-hidden="true">
+    <${tag}>content</${tag}>
+    Expected label
+  </div>
+`;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(
+          axe.commons.text.accessibleTextVirtual(target),
+          'Expected label',
+          tag
+        );
+      });
+    });
+
+    it('should ignore aria-label as accessible name when directly referenced by aria-labelledby', () => {
+      tags.forEach(tag => {
+        fixture.innerHTML = html`<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id" aria-label="aria-label"></${tag}>`;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
+      });
+    });
+  });
+
   describe('text.accessibleText acceptance tests', () => {
-    'use strict';
     // Tests borrowed from the AccName 1.1 testing docs
     // https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539
 

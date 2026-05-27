@@ -1,11 +1,11 @@
 describe('utils.selector-cache', () => {
+  const html = axe.testUtils.html;
   const fixture = document.querySelector('#fixture');
   const cacheNodeSelectors =
     axe._thisWillBeDeletedDoNotUse.utils.cacheNodeSelectors;
   const getNodesMatchingExpression =
     axe._thisWillBeDeletedDoNotUse.utils.getNodesMatchingExpression;
   const convertSelector = axe.utils.convertSelector;
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
 
   let vNode;
   beforeEach(() => {
@@ -68,7 +68,11 @@ describe('utils.selector-cache', () => {
       ];
       for (const term of terms) {
         it(`works with ${term}`, () => {
-          fixture.innerHTML = `<div id="${term}" class="${term}" aria-label="${term}"></div>`;
+          fixture.innerHTML = html`<div
+            id="${term}"
+            class="${term}"
+            aria-label="${term}"
+          ></div>`;
           vNode = new axe.VirtualNode(fixture.firstChild);
           const map = {};
           cacheNodeSelectors(vNode, map);
@@ -89,10 +93,10 @@ describe('utils.selector-cache', () => {
       for (let i = 0; i < fixture.children.length; i++) {
         const child = fixture.children[i];
         const isShadow = child.hasAttribute('data-shadow');
-        const html = child.innerHTML;
+        const innerMarkup = child.innerHTML;
         if (isShadow) {
           const shadowRoot = child.attachShadow({ mode: 'open' });
-          shadowRoot.innerHTML = html;
+          shadowRoot.innerHTML = innerMarkup;
           child.innerHTML = '';
         }
       }
@@ -135,20 +139,14 @@ describe('utils.selector-cache', () => {
       assert.deepEqual(getNodesMatchingExpression(tree, expression), [vNode]);
     });
 
-    (shadowSupported ? it : xit)(
-      'should only return nodes matching shadowId when matching by id',
-      () => {
-        fixture.innerHTML =
-          '<div id="target"></div><div data-shadow><div id="target"></div></div>';
-        tree = createTree();
-        const expression = convertSelector('#target');
-        const expected = [tree[0].children[0]];
-        assert.deepEqual(
-          getNodesMatchingExpression(tree, expression),
-          expected
-        );
-      }
-    );
+    it('should only return nodes matching shadowId when matching by id', () => {
+      fixture.innerHTML =
+        '<div id="target"></div><div data-shadow><div id="target"></div></div>';
+      tree = createTree();
+      const expression = convertSelector('#target');
+      const expected = [tree[0].children[0]];
+      assert.deepEqual(getNodesMatchingExpression(tree, expression), expected);
+    });
 
     it('should return a list of matching nodes by class', () => {
       const expression = convertSelector('.foo');
@@ -227,17 +225,18 @@ describe('utils.selector-cache', () => {
     });
 
     it('should sort nodes by added order', () => {
-      fixture.innerHTML =
-        '<div id="id0"></div>' +
-        '<span id="id1"></span>' +
-        '<div id="id2"></div>' +
-        '<span id="id3"></span>' +
-        '<div id="id4"></div>' +
-        '<span id="id5"></span>' +
-        '<div id="id6"></div>' +
-        '<span id="id7"></span>' +
-        '<div id="id8"></div>' +
-        '<span id="id9"></span>';
+      fixture.innerHTML = html`
+        <div id="id0"></div>
+        <span id="id1"></span>
+        <div id="id2"></div>
+        <span id="id3"></span>
+        <div id="id4"></div>
+        <span id="id5"></span>
+        <div id="id6"></div>
+        <span id="id7"></span>
+        <div id="id8"></div>
+        <span id="id9"></span>
+      `;
       tree = createTree();
 
       const expression = convertSelector('div, span');

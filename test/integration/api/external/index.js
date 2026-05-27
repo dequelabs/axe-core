@@ -42,7 +42,7 @@ describe('external API', () => {
       const implicitRolesOrNull = getEntries(
         axe.commons.aria.lookupTable.role
       ).reduce(
-        function (roles, entry) {
+        (roles, entry) => {
           const role = entry[0];
           const val = entry[1];
           if (val.implicit) {
@@ -63,11 +63,9 @@ describe('external API', () => {
     });
     it('must have the signature String -> String {role.type}', () => {
       const keys = getKeys(axe.commons.aria.lookupTable.role);
-      const types = getValues(axe.commons.aria.lookupTable.role).map(
-        function (role) {
-          return role.type;
-        }
-      );
+      const types = getValues(axe.commons.aria.lookupTable.role).map(role => {
+        return role.type;
+      });
       keys.forEach(assert.isString);
       types.forEach(assert.isString);
     });
@@ -132,7 +130,7 @@ function isElement(el) {
 }
 
 function random(fromArr) {
-  return function (filter) {
+  return filter => {
     filter = filter || isTrue;
     const arr = fromArr.filter(filter);
     const seed = Math.random();
@@ -153,7 +151,7 @@ function collectNodes() {
   const walker = document.createTreeWalker(
     document,
     NodeFilter.SHOW_ALL,
-    function (node) {
+    node => {
       if (!document.body.contains(node)) {
         return NodeFilter.FILTER_SKIP;
       }
@@ -176,7 +174,7 @@ function collectNodes() {
 
 function flat(tree) {
   const result = [];
-  const insert = function (node) {
+  const insert = node => {
     result.push(node);
     (node.children || []).forEach(insert);
   };
@@ -202,13 +200,13 @@ function getEntries(obj) {
 }
 
 function getValues(obj) {
-  return getEntries(obj).map(function (entry) {
+  return getEntries(obj).map(entry => {
     return entry[1];
   });
 }
 
 function getKeys(obj) {
-  return getEntries(obj).map(function (entry) {
+  return getEntries(obj).map(entry => {
     return entry[0];
   });
 }

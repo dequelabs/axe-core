@@ -1,7 +1,5 @@
-describe('axe.utils.ruleShouldRun', function () {
-  'use strict';
-
-  it('should return false if rule.pageOnly and !context.page', function () {
+describe('axe.utils.ruleShouldRun', () => {
+  it('should return false if rule.pageOnly and !context.page', () => {
     assert.isFalse(
       axe.utils.ruleShouldRun(
         {
@@ -15,7 +13,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return false if rule.enabled is false, option.enabled is false and ruleID is not present runOnly', function () {
+  it('should return false if rule.enabled is false, option.enabled is false and ruleID is not present runOnly', () => {
     assert.isFalse(
       axe.utils.ruleShouldRun(
         {
@@ -38,7 +36,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return true if rule.enabled is false, option.enabled is false and ruleID is present in runOnly', function () {
+  it('should return true if rule.enabled is false, option.enabled is false and ruleID is present in runOnly', () => {
     assert.isTrue(
       axe.utils.ruleShouldRun(
         {
@@ -61,7 +59,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return true if rule.enabled is false, option is undefined and ruleID is present in runOnly', function () {
+  it('should return true if rule.enabled is false, option is undefined and ruleID is present in runOnly', () => {
     assert.isTrue(
       axe.utils.ruleShouldRun(
         {
@@ -79,7 +77,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return false even if enabled is set to true if ruleID is not present in runOnly', function () {
+  it('should return false even if enabled is set to true if ruleID is not present in runOnly', () => {
     assert.isFalse(
       axe.utils.ruleShouldRun(
         {
@@ -97,7 +95,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return false if rule.enabled is false', function () {
+  it('should return false if rule.enabled is false', () => {
     assert.isFalse(
       axe.utils.ruleShouldRun(
         {
@@ -111,7 +109,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return true if rule.enabled is true', function () {
+  it('should return true if rule.enabled is true', () => {
     assert.isTrue(
       axe.utils.ruleShouldRun(
         {
@@ -125,7 +123,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return true if option is set to true but rule is set to false', function () {
+  it('should return true if option is set to true but rule is set to false', () => {
     assert.isTrue(
       axe.utils.ruleShouldRun(
         {
@@ -144,7 +142,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should return false if option is set to false but rule is set to true', function () {
+  it('should return false if option is set to false but rule is set to true', () => {
     assert.isFalse(
       axe.utils.ruleShouldRun(
         {
@@ -163,7 +161,7 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  it('should use option.rules.enabled over option.runOnly tags', function () {
+  it('should use option.rules.enabled over option.runOnly tags', () => {
     assert.isTrue(
       axe.utils.ruleShouldRun(
         {
@@ -209,21 +207,21 @@ describe('axe.utils.ruleShouldRun', function () {
     );
   });
 
-  describe('default axe._tagExclude', function () {
-    var origTagExclude;
-    before(function () {
+  describe('default axe._tagExclude', () => {
+    let origTagExclude;
+    before(() => {
       axe._load({});
       origTagExclude = axe._audit.tagExclude;
     });
-    after(function () {
+    after(() => {
       axe._audit.tagExclude = origTagExclude;
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
       axe._audit.tagExclude = [];
     });
 
-    it('excludes rules with a tag put in axe._tagExclude', function () {
+    it('excludes rules with a tag put in axe._tagExclude', () => {
       axe._audit.tagExclude = ['the-cheat'];
       assert.isTrue(
         axe.utils.ruleShouldRun(
@@ -250,7 +248,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('adds axe.tagExclude to the existing exclude tags', function () {
+    it('adds axe.tagExclude to the existing exclude tags', () => {
       axe._audit.tagExclude = ['the-cheat'];
       assert.isFalse(
         axe.utils.ruleShouldRun(
@@ -270,7 +268,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('does not exclude tags explicitly included', function () {
+    it('does not exclude tags explicitly included', () => {
       axe._audit.tagExclude = ['the-cheat'];
       assert.isTrue(
         axe.utils.ruleShouldRun(
@@ -326,8 +324,8 @@ describe('axe.utils.ruleShouldRun', function () {
     });
   });
 
-  describe('runOnly type:tag', function () {
-    it('should return true if passed an array with a matching tag', function () {
+  describe('runOnly type:tag', () => {
+    it('should return true if passed an array with a matching tag', () => {
       assert.isTrue(
         axe.utils.ruleShouldRun(
           {
@@ -346,7 +344,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should return false if passed an array with a matching tag', function () {
+    it('should return false if passed an array with a matching tag', () => {
       assert.isFalse(
         axe.utils.ruleShouldRun(
           {
@@ -365,7 +363,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should accept string as an include value', function () {
+    it('should accept string as an include value', () => {
       assert.isTrue(
         axe.utils.ruleShouldRun(
           {
@@ -386,7 +384,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should accept array as an include value', function () {
+    it('should accept array as an include value', () => {
       assert.isTrue(
         axe.utils.ruleShouldRun(
           {
@@ -407,7 +405,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should accept string as an exclude value', function () {
+    it('should accept string as an exclude value', () => {
       assert.isFalse(
         axe.utils.ruleShouldRun(
           {
@@ -428,7 +426,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should accept array as an exclude value', function () {
+    it('should accept array as an exclude value', () => {
       assert.isFalse(
         axe.utils.ruleShouldRun(
           {
@@ -449,7 +447,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should return true if it matches include but not exclude', function () {
+    it('should return true if it matches include but not exclude', () => {
       assert.isTrue(
         axe.utils.ruleShouldRun(
           {
@@ -471,7 +469,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should return false if it matches no include', function () {
+    it('should return false if it matches no include', () => {
       assert.isFalse(
         axe.utils.ruleShouldRun(
           {
@@ -493,7 +491,7 @@ describe('axe.utils.ruleShouldRun', function () {
       );
     });
 
-    it('should return false if it matches include and exclude', function () {
+    it('should return false if it matches include and exclude', () => {
       assert.isFalse(
         axe.utils.ruleShouldRun(
           {

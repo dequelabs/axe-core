@@ -1,12 +1,11 @@
-describe('frame-focusable-content-matches', function () {
-  'use strict';
+describe('frame-focusable-content-matches', () => {
   let rule;
 
-  beforeEach(function () {
+  beforeEach(() => {
     rule = axe.utils.getRule('frame-focusable-content');
   });
 
-  it('returns false for the top-level context', function () {
+  it('returns false for the top-level context', () => {
     const result = rule.matches(null, null, {
       initiator: true,
       focusable: false,
@@ -18,7 +17,7 @@ describe('frame-focusable-content-matches', function () {
     assert.isFalse(result);
   });
 
-  it('returns false for focusable iframes', function () {
+  it('returns false for focusable iframes', () => {
     const result = rule.matches(null, null, {
       initiator: false,
       focusable: true,
@@ -30,7 +29,7 @@ describe('frame-focusable-content-matches', function () {
     assert.isFalse(result);
   });
 
-  it('returns false for non-focusable iframes that are too small (1x1)', function () {
+  it('returns false for non-focusable iframes that are too small (1x1)', () => {
     const result = rule.matches(null, null, {
       initiator: false,
       focusable: false,
@@ -42,7 +41,7 @@ describe('frame-focusable-content-matches', function () {
     assert.isFalse(result);
   });
 
-  it('returns false for non-focusable iframes that are too small (0x0)', function () {
+  it('returns false for non-focusable iframes that are too small (0x0)', () => {
     const result = rule.matches(null, null, {
       initiator: false,
       focusable: false,
@@ -54,7 +53,7 @@ describe('frame-focusable-content-matches', function () {
     assert.isFalse(result);
   });
 
-  it('returns true for non-focusable iframes', function () {
+  it('returns true for non-focusable iframes', () => {
     const result = rule.matches(null, null, {
       initiator: false,
       focusable: false,

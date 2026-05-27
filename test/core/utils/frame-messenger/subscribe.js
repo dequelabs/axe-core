@@ -1,8 +1,8 @@
 function afterMessage(win, callback) {
-  var handler = function () {
+  const handler = () => {
     win.removeEventListener('message', handler);
     // Wait one more tick for stuff to resolve
-    setTimeout(function () {
+    setTimeout(() => {
       callback();
     }, 10);
   };
@@ -10,7 +10,7 @@ function afterMessage(win, callback) {
 }
 
 function once(callback) {
-  var called = false;
+  let called = false;
   return function () {
     if (!called) {
       callback.apply(this, arguments);
@@ -19,8 +19,8 @@ function once(callback) {
   };
 }
 
-describe('frame-messenger', function () {
-  var fixture,
+describe('frame-messenger', () => {
+  let fixture,
     axeVersion,
     axeApplication,
     frame,
@@ -28,11 +28,10 @@ describe('frame-messenger', function () {
     respondable,
     frameSubscribe,
     axeLog;
-  var postMessage = window.postMessage;
-  var captureError = axe.testUtils.captureError;
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
+  const postMessage = window.postMessage;
+  const captureError = axe.testUtils.captureError;
 
-  beforeEach(function (done) {
+  beforeEach(done => {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
     axeLog = axe.log;
@@ -40,7 +39,7 @@ describe('frame-messenger', function () {
 
     frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
-    frame.addEventListener('load', function () {
+    frame.addEventListener('load', () => {
       frameWin = frame.contentWindow;
       frameSubscribe = frameWin.axe.utils.respondable.subscribe;
       done();
@@ -51,7 +50,7 @@ describe('frame-messenger', function () {
     fixture.appendChild(frame);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
     axe.log = axeLog;
@@ -59,144 +58,141 @@ describe('frame-messenger', function () {
     window.postMessage = postMessage;
   });
 
-  describe('subscribe', function () {
-    it('is called with the same topic', function (done) {
-      var called = false;
-      frameSubscribe('greeting', function () {
+  describe('subscribe', () => {
+    it('is called with the same topic', done => {
+      let called = false;
+      frameSubscribe('greeting', () => {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function () {
+        captureError(() => {
           assert.isTrue(called);
           done();
         }, done)
       );
     });
 
-    (shadowSupported ? it : xit)(
-      'works with frames in shadow DOM',
-      function (done) {
-        fixture.innerHTML = '<div id="shadow-root"></div>';
-        var shadowRoot = fixture
-          .querySelector('#shadow-root')
-          .attachShadow({ mode: 'open' });
-        frame = document.createElement('iframe');
-        frame.src = '../mock/frames/test.html';
+    it('works with frames in shadow DOM', done => {
+      fixture.innerHTML = '<div id="shadow-root"></div>';
+      const shadowRoot = fixture
+        .querySelector('#shadow-root')
+        .attachShadow({ mode: 'open' });
+      frame = document.createElement('iframe');
+      frame.src = '../mock/frames/test.html';
 
-        frame.addEventListener('load', function () {
-          var called = false;
-          frameWin = frame.contentWindow;
-          frameSubscribe = frameWin.axe.utils.respondable.subscribe;
+      frame.addEventListener('load', () => {
+        let called = false;
+        frameWin = frame.contentWindow;
+        frameSubscribe = frameWin.axe.utils.respondable.subscribe;
 
-          frameSubscribe('greeting', function (msg) {
-            assert.equal(msg, 'hello');
-            called = true;
-          });
-          respondable(frameWin, 'greeting', 'hello');
-          afterMessage(
-            frameWin,
-            captureError(function () {
-              assert.isTrue(called);
-              done();
-            }, done)
-          );
+        frameSubscribe('greeting', msg => {
+          assert.equal(msg, 'hello');
+          called = true;
         });
-        shadowRoot.appendChild(frame);
-      }
-    );
+        respondable(frameWin, 'greeting', 'hello');
+        afterMessage(
+          frameWin,
+          captureError(() => {
+            assert.isTrue(called);
+            done();
+          }, done)
+        );
+      });
+      shadowRoot.appendChild(frame);
+    });
 
-    it('is not called on a different topic', function (done) {
-      var called = false;
-      frameSubscribe('otherTopic', function () {
+    it('is not called on a different topic', done => {
+      let called = false;
+      frameSubscribe('otherTopic', () => {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function () {
+        captureError(() => {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called for different axe-core versions', function (done) {
-      var called = false;
+    it('is not called for different axe-core versions', done => {
+      let called = false;
       axe.version = '1.0.0';
-      frameSubscribe('greeting', function () {
+      frameSubscribe('greeting', () => {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function () {
+        captureError(() => {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called with the "x.y.z" wildcard', function (done) {
-      var called = false;
+    it('is not called with the "x.y.z" wildcard', done => {
+      let called = false;
       axe.version = 'x.y.z';
-      frameSubscribe('greeting', function () {
+      frameSubscribe('greeting', () => {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function () {
+        captureError(() => {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called for different applications', function (done) {
-      var called = false;
+    it('is not called for different applications', done => {
+      let called = false;
       axe._audit.application = 'Coconut';
-      frameSubscribe('greeting', function () {
+      frameSubscribe('greeting', () => {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function () {
+        captureError(() => {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('logs errors passed to respondable, rather than passing them on', function (done) {
-      axe.log = captureError(function (e) {
+    it('logs errors passed to respondable, rather than passing them on', done => {
+      axe.log = captureError(e => {
         assert.equal(e.message, 'expected message');
         done();
       }, done);
 
-      frameSubscribe('greeting', function () {
+      frameSubscribe('greeting', () => {
         done(new Error('subscribe should not be called'));
       });
       respondable(frameWin, 'greeting', new Error('expected message'));
     });
 
-    it('throws if frame.parent is not the window', function () {
+    it('throws if frame.parent is not the window', () => {
       frameWin.parent = frameWin;
-      assert.throws(function () {
+      assert.throws(() => {
         respondable(frameWin, 'greeting');
       });
     });
 
-    it('is not called when the source is not a frame in the page', function (done) {
-      var doneOnce = once(done);
-      var called = false;
-      frameWin.axe.log = function () {
+    it('is not called when the source is not a frame in the page', done => {
+      const doneOnce = once(done);
+      let called = false;
+      frameWin.axe.log = () => {
         called = true;
       };
 
-      frameSubscribe('greeting', function () {
+      frameSubscribe('greeting', () => {
         doneOnce(new Error('subscribe should not be called'));
       });
       respondable(frameWin, 'greeting');
@@ -204,7 +200,7 @@ describe('frame-messenger', function () {
       frameWin.parent = frameWin;
 
       setTimeout(
-        captureError(function () {
+        captureError(() => {
           assert.isTrue(called);
           doneOnce();
         }, doneOnce),
@@ -212,18 +208,18 @@ describe('frame-messenger', function () {
       );
     });
 
-    it('throws when targeting itself', function () {
-      assert.throws(function () {
+    it('throws when targeting itself', () => {
+      assert.throws(() => {
         respondable(window, 'greeting');
       });
-      assert.throws(function () {
+      assert.throws(() => {
         frameWin.respondable(frameWin, 'greeting');
       });
     });
 
-    it('throws when targeting a window that is not a frame in the page', function () {
-      var blankPage = window.open('');
-      var frameCopy = window.open(frameWin.location.href);
+    it('throws when targeting a window that is not a frame in the page', () => {
+      const blankPage = window.open('');
+      const frameCopy = window.open(frameWin.location.href);
 
       // seems ie11 can't open new windows?
       if (!blankPage) {
@@ -231,22 +227,22 @@ describe('frame-messenger', function () {
       }
 
       // Cleanup
-      setTimeout(function () {
+      setTimeout(() => {
         blankPage.close();
         frameCopy.close();
       });
 
-      assert.throws(function () {
+      assert.throws(() => {
         respondable(blankPage, 'greeting');
       });
-      assert.throws(function () {
+      assert.throws(() => {
         respondable(frameCopy, 'greeting');
       });
     });
 
-    it('is not triggered by "repeaters"', function (done) {
-      var calls = 0;
-      frameSubscribe('greeting', function () {
+    it('is not triggered by "repeaters"', done => {
+      let calls = 0;
+      frameSubscribe('greeting', () => {
         calls++;
       });
       // Repeat fire the event
@@ -257,7 +253,7 @@ describe('frame-messenger', function () {
 
       respondable(frameWin, 'greeting', 'hello');
       setTimeout(
-        captureError(function () {
+        captureError(() => {
           assert.equal(calls, 1);
           done();
         }, done),
@@ -265,31 +261,31 @@ describe('frame-messenger', function () {
       );
     });
 
-    it('is not called if origin does not match', function (done) {
+    it('is not called if origin does not match', done => {
       axe.configure({
         allowedOrigins: ['http://customOrigin.com']
       });
-      var spy = sinon.spy();
+      const spy = sinon.spy();
 
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');
 
-      setTimeout(function () {
+      setTimeout(() => {
         assert.isFalse(spy.called);
         done();
       }, 500);
     });
 
-    it('is called if origin is <unsafe_all_origins>', function (done) {
+    it('is called if origin is <unsafe_all_origins>', done => {
       axe.configure({
         allowedOrigins: ['<unsafe_all_origins>']
       });
-      var spy = sinon.spy();
+      const spy = sinon.spy();
 
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');
 
-      setTimeout(function () {
+      setTimeout(() => {
         assert.isTrue(spy.called);
         done();
       }, 500);

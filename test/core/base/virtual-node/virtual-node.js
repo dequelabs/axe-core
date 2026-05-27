@@ -6,6 +6,10 @@ describe('VirtualNode', () => {
     node = document.createElement('div');
   });
 
+  afterEach(() => {
+    axe._enableElementInternals = true;
+  });
+
   it('should be a function', () => {
     assert.isFunction(VirtualNode);
   });
@@ -440,6 +444,54 @@ describe('VirtualNode', () => {
         vNode.boundingClientRect;
         vNode.boundingClientRect;
         assert.equal(count, 1);
+      });
+    });
+
+    describe('internals', () => {
+      it('gets element internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        const internals = vNode.elementInternals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'button');
+      });
+
+      it('caches the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        let internals = vNode.elementInternals;
+        delete node._internals;
+        internals = vNode.elementInternals;
+        assert.equal(internals.role, 'button');
+      });
+
+      it('sets the internals', () => {
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        vNode.elementInternals = { role: 'link' };
+        const internals = vNode.elementInternals;
+        assert.ok(internals);
+        assert.equal(internals.role, 'link');
+      });
+
+      it('returns undefined when feature flag is off', () => {
+        delete axe._enableElementInternals;
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        const internals = vNode.elementInternals;
+
+        assert.isUndefined(internals);
+      });
+
+      it('returns internals when feature flag is on', () => {
+        delete axe._enableElementInternals;
+        axe._enableElementInternals = true;
+        node = document.createElement('testutils-element');
+        const vNode = new VirtualNode(node);
+        const internals = vNode.elementInternals;
+
+        assert.ok(internals);
+        assert.equal(internals.role, 'button');
       });
     });
   });

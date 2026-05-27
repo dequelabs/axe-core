@@ -1,20 +1,19 @@
-describe('target-size test', function () {
-  'use strict';
-  var results;
+describe('target-size test', () => {
+  let results;
 
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       // Add necessary markup for axe to recognize these as components:
-      document.querySelectorAll('section span').forEach(function (link) {
+      document.querySelectorAll('section span').forEach(link => {
         link.setAttribute('role', 'link');
         link.setAttribute('tabindex', '0');
       });
 
-      var options = {
+      const options = {
         runOnly: ['target-size'],
         elementRef: true
       };
-      axe.run('section', options, function (err, r) {
+      axe.run('section', options, (err, r) => {
         if (err) {
           done(err);
         }
@@ -22,11 +21,11 @@ describe('target-size test', function () {
         // Add some highlighting for visually identifying issues.
         // There are too many test cases to just do this by selector.
         results.violations[0] &&
-          results.violations[0].nodes.forEach(function (node) {
+          results.violations[0].nodes.forEach(node => {
             node.element.className += ' violations';
           });
         results.passes[0] &&
-          results.passes[0].nodes.forEach(function (node) {
+          results.passes[0].nodes.forEach(node => {
             node.element.className += ' passes';
           });
         done();
@@ -34,23 +33,25 @@ describe('target-size test', function () {
     });
   });
 
-  it('finds all passing nodes', function () {
-    var passResults = results.passes[0] ? results.passes[0].nodes : [];
-    var passedElms = document.querySelectorAll(
+  it('finds all passing nodes', () => {
+    const passResults = results.passes[0] ? results.passes[0].nodes : [];
+    const passedElms = document.querySelectorAll(
       'section:not([hidden]) div:not([hidden]) .passed'
     );
-    passResults.forEach(function (result) {
+    passResults.forEach(result => {
       assert.include(passedElms, result.element);
     });
     assert.lengthOf(passResults, passedElms.length);
   });
 
-  it('finds all failed nodes', function () {
-    var failResults = results.violations[0] ? results.violations[0].nodes : [];
-    var failedElms = document.querySelectorAll(
+  it('finds all failed nodes', () => {
+    const failResults = results.violations[0]
+      ? results.violations[0].nodes
+      : [];
+    const failedElms = document.querySelectorAll(
       'section:not([hidden]) div:not([hidden])  .failed'
     );
-    failResults.forEach(function (result) {
+    failResults.forEach(result => {
       assert.include(failedElms, result.element);
     });
     assert.lengthOf(failResults, failedElms.length);

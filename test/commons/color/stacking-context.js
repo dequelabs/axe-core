@@ -1,4 +1,5 @@
 describe('color.stackingContext', () => {
+  const html = axe.testUtils.html;
   const { Color, getStackingContext, stackingContextToColor } =
     axe.commons.color;
   const { getElementStack } = axe.commons.dom;
@@ -41,7 +42,7 @@ describe('color.stackingContext', () => {
     });
 
     it('creates a context for every node in the element stack', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <div id="elm1">
           <div id="elm2">
             <div id="target">Hello World</div>
@@ -80,7 +81,7 @@ describe('color.stackingContext', () => {
     });
 
     it('nests contexts', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <div id="elm1" style="position: absolute; z-index: 2">
           <div id="elm2">
             <div id="target">Hello World</div>
@@ -139,9 +140,11 @@ describe('color.stackingContext', () => {
     });
 
     it('creates a context for ancestors that create a stacking context but are not in the element stack', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <div id="elm1" style="opacity: 0.8">
-          <div id="target" style="position: absolute; z-index: 2">Hello World</div>
+          <div id="target" style="position: absolute; z-index: 2">
+            Hello World
+          </div>
         </div>
       `);
       const elmStack = getElementStack(vNode.actualNode).slice(0, -1);

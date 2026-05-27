@@ -1,20 +1,14 @@
 describe('dom.isHiddenForEveryone', () => {
-  'use strict';
+  const html = axe.testUtils.html;
 
   const fixture = document.getElementById('fixture');
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
   const isHiddenForEveryone = axe.commons.dom.isHiddenForEveryone;
   const queryFixture = axe.testUtils.queryFixture;
   const contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
   function createContentSlotted(mainProps, targetProps) {
     const group = document.createElement('div');
-    group.innerHTML =
-      '<main style="' +
-      mainProps +
-      '"><p style="' +
-      targetProps +
-      '"></p></main>';
+    group.innerHTML = `<main style="${mainProps}"><p style="${targetProps}"></p></main>`;
     return group;
   }
 
@@ -131,25 +125,25 @@ describe('dom.isHiddenForEveryone', () => {
   });
 
   it('should return true for if parent of element set to `display:none`', () => {
-    const vNode = queryFixture(
-      '<div style="display:none">' +
-        '<div style="display:block">' +
-        '<p id="target" style="display:block">I am not visible</p>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="display:none">
+        <div style="display:block">
+          <p id="target" style="display:block">I am not visible</p>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
 
   it('should return false for if parent of element set to `display:block`', () => {
-    const vNode = queryFixture(
-      '<div>' +
-        '<div style="display:block">' +
-        '<p id="target" style="display:block">I am visible</p>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div>
+        <div style="display:block">
+          <p id="target" style="display:block">I am visible</p>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isFalse(actual);
   });
@@ -164,93 +158,93 @@ describe('dom.isHiddenForEveryone', () => {
   });
 
   it('should return false and compute how `visibility` of self and parent is configured', () => {
-    const vNode = queryFixture(
-      '<div style="visibility:hidden;">' +
-        '<div style="visibility:visible;">' +
-        '<div id="target">I am visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="visibility:hidden;">
+        <div style="visibility:visible;">
+          <div id="target">I am visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isFalse(actual);
   });
 
   it('should return false and compute how `visibility` of self and parent is configured', () => {
-    const vNode = queryFixture(
-      '<div style="visibility:hidden">' +
-        '<div style="visibility:hidden">' +
-        '<div style="visibility:visible" id="target">I am visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="visibility:hidden">
+        <div style="visibility:hidden">
+          <div style="visibility:visible" id="target">I am visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isFalse(actual);
   });
 
   it('should return true and as parent is set to `visibility:hidden`', () => {
-    const vNode = queryFixture(
-      '<div style="visibility: hidden;">' +
-        '<div>' +
-        '<div id="target">I am not visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="visibility: hidden;">
+        <div>
+          <div id="target">I am not visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
 
   // mixing display and visibility
   it('should return true and compute using both `display` and `visibility` set on element and parent(s)', () => {
-    const vNode = queryFixture(
-      '<div style="display:none;">' +
-        '<div style="visibility:visible;">' +
-        '<div id="target">I am not visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="display:none;">
+        <div style="visibility:visible;">
+          <div id="target">I am not visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
 
   it('should return false and compute using both `display` and `visibility` set on element and parent(s)', () => {
-    const vNode = queryFixture(
-      '<div style="display:block;">' +
-        '<div style="visibility:visible;">' +
-        '<div id="target">I am visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="display:block;">
+        <div style="visibility:visible;">
+          <div id="target">I am visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isFalse(actual);
   });
 
   it('should return true and compute using both `display` and `visibility` set on element and parent(s)', () => {
-    const vNode = queryFixture(
-      '<div style="display:block;">' +
-        '<div style="visibility:visible;">' +
-        '<div id="target" style="visibility:hidden">I am not visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="display:block;">
+        <div style="visibility:visible;">
+          <div id="target" style="visibility:hidden">I am not visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
 
   it('should return true and compute using both `display` and `visibility` set on element and parent(s)', () => {
-    const vNode = queryFixture(
-      '<div style="visibility:hidden">' +
-        '<div style="display:none;">' +
-        '<div id="target" style="visibility:visible">I am not visible</div>' +
-        '</div>' +
-        '</div>'
-    );
+    const vNode = queryFixture(html`
+      <div style="visibility:hidden">
+        <div style="display:none;">
+          <div id="target" style="visibility:visible">I am not visible</div>
+        </div>
+      </div>
+    `);
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
 
   describe('details', () => {
     it('should return true for element in closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary>Hello World</summary>
           <p id="target">Hidden</p>
@@ -261,7 +255,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return false for closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details id="target">
           <summary>Hello World</summary>
           <p>Hidden</p>
@@ -272,7 +266,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return false for summary element closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary id="target">Hello World</summary>
           <p>Hidden</p>
@@ -283,7 +277,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return false for element in open details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details open>
           <summary>Hello World</summary>
           <p id="target">Hidden</p>
@@ -294,7 +288,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return true for grandchild element in closed details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary>Hello World</summary>
           <div><p id="target">Hidden</p></div>
@@ -305,7 +299,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return true for grandchild summary in close details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <div><summary id="target">Hello World</summary></div>
           <div><p>Hidden</p></div>
@@ -316,7 +310,7 @@ describe('dom.isHiddenForEveryone', () => {
     });
 
     it('should return true for not first summary in close details', () => {
-      const vNode = queryFixture(`
+      const vNode = queryFixture(html`
         <details>
           <summary>Hello World</summary>
           <summary id="target">Not summary</summary>
@@ -328,45 +322,36 @@ describe('dom.isHiddenForEveryone', () => {
     });
   });
 
-  (shadowSupported ? it : it.skip)(
-    'should return true if `display:none` inside shadowDOM',
-    () => {
-      fixture.innerHTML = '<div></div>';
-      makeShadowTree(fixture.firstChild, 'display:none;', '');
-      const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
-      const actual = isHiddenForEveryone(vNode);
-      assert.isTrue(actual);
-    }
-  );
+  it('should return true if `display:none` inside shadowDOM', () => {
+    fixture.innerHTML = '<div></div>';
+    makeShadowTree(fixture.firstChild, 'display:none;', '');
+    const tree = axe.utils.getFlattenedTree(fixture.firstChild);
+    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const actual = isHiddenForEveryone(vNode);
+    assert.isTrue(actual);
+  });
 
-  (shadowSupported ? it : xit)(
-    'should return true as parent shadowDOM host is set to `visibility:hidden`',
-    () => {
-      fixture.innerHTML = '<div></div>';
-      makeShadowTree(fixture.firstChild, 'visibility:hidden', '');
-      const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
-      const actual = isHiddenForEveryone(vNode);
-      assert.isTrue(actual);
-    }
-  );
+  it('should return true as parent shadowDOM host is set to `visibility:hidden`', () => {
+    fixture.innerHTML = '<div></div>';
+    makeShadowTree(fixture.firstChild, 'visibility:hidden', '');
+    const tree = axe.utils.getFlattenedTree(fixture.firstChild);
+    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const actual = isHiddenForEveryone(vNode);
+    assert.isTrue(actual);
+  });
 
-  (shadowSupported ? it : xit)(
-    'should return false as parent shadowDOM host  set to `visibility:hidden` is overriden',
-    () => {
-      fixture.innerHTML = '<div></div>';
-      makeShadowTree(
-        fixture.firstChild,
-        'visibility:hidden',
-        'visibility:visible'
-      );
-      const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
-      const actual = isHiddenForEveryone(vNode);
-      assert.isFalse(actual);
-    }
-  );
+  it('should return false as parent shadowDOM host  set to `visibility:hidden` is overriden', () => {
+    fixture.innerHTML = '<div></div>';
+    makeShadowTree(
+      fixture.firstChild,
+      'visibility:hidden',
+      'visibility:visible'
+    );
+    const tree = axe.utils.getFlattenedTree(fixture.firstChild);
+    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const actual = isHiddenForEveryone(vNode);
+    assert.isFalse(actual);
+  });
 
   (contentVisibilitySupported ? it : xit)(
     'should return true for `content-visibility: hidden` parent',

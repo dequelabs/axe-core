@@ -1,4 +1,5 @@
 describe('explicit-label', () => {
+  const html = axe.testUtils.html;
   const fixtureSetup = axe.testUtils.fixtureSetup;
   const checkSetup = axe.testUtils.checkSetup;
   const checkEvaluate = axe.testUtils.getCheckEvaluate('explicit-label');
@@ -23,11 +24,11 @@ describe('explicit-label', () => {
   });
 
   it('returns false if an empty label is present that uses aria-labelledby', () => {
-    const params = checkSetup(
-      '<input type="text" id="target">' +
-        '<label for="target" aria-labelledby="lbl"></label>' +
-        '<span id="lbl">aria label</span>'
-    );
+    const params = checkSetup(html`
+      <input type="text" id="target" />
+      <label for="target" aria-labelledby="lbl"></label>
+      <span id="lbl">aria label</span>
+    `);
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
@@ -65,22 +66,22 @@ describe('explicit-label', () => {
     });
 
     it('includes the `explicitLabel` text of the first non-empty label', () => {
-      const params = checkSetup(
-        '<label for="target">  </label>' +
-          '<label for="target"> text </label>' +
-          '<label for="target"> more text </label>' +
-          '<input type="text" id="target" />'
-      );
+      const params = checkSetup(html`
+        <label for="target"> </label>
+        <label for="target"> text </label>
+        <label for="target"> more text </label>
+        <input type="text" id="target" />
+      `);
       checkEvaluate.apply(checkContext, params);
       assert.deepEqual(checkContext._data, { explicitLabel: 'text' });
     });
 
     it('is empty { explicitLabel: "" } if the label is empty', () => {
-      const params = checkSetup(
-        '<label for="target">  </label>' +
-          '<label for="target"></label>' +
-          '<input type="text" id="target" />'
-      );
+      const params = checkSetup(html`
+        <label for="target"> </label>
+        <label for="target"></label>
+        <input type="text" id="target" />
+      `);
       checkEvaluate.apply(checkContext, params);
       assert.deepEqual(checkContext._data, { explicitLabel: '' });
     });
@@ -94,13 +95,13 @@ describe('explicit-label', () => {
     });
 
     it('includes each associated label', () => {
-      const params = checkSetup(
-        '<label for="target" id="lbl1"></label>' +
-          '<label for="target" id="lbl2"></label>' +
-          '<input type="text" id="target" />'
-      );
+      const params = checkSetup(html`
+        <label for="target" id="lbl1"></label>
+        <label for="target" id="lbl2"></label>
+        <input type="text" id="target" />
+      `);
       checkEvaluate.apply(checkContext, params);
-      const ids = checkContext._relatedNodes.map(node => '#' + node.id);
+      const ids = checkContext._relatedNodes.map(node => `#${node.id}`);
       assert.deepEqual(ids, ['#lbl1', '#lbl2']);
     });
   });

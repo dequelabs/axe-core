@@ -1,8 +1,6 @@
-describe('dom.getViewportSize', function () {
-  'use strict';
-
-  it('should return an object with width and height', function () {
-    var result = axe.commons.dom.getViewportSize(window);
+describe('dom.getViewportSize', () => {
+  it('should return an object with width and height', () => {
+    const result = axe.commons.dom.getViewportSize(window);
 
     assert.property(result, 'width');
     assert.property(result, 'height');
@@ -11,8 +9,8 @@ describe('dom.getViewportSize', function () {
     assert.isNumber(result.height);
   });
 
-  it('should have some fallbacks for old browsers', function () {
-    var result = axe.commons.dom.getViewportSize({
+  it('should have some fallbacks for old browsers', () => {
+    let result = axe.commons.dom.getViewportSize({
       document: {},
       innerWidth: 12,
       innerHeight: 47

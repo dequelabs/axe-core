@@ -1,129 +1,127 @@
-describe('axe._cache', function () {
-  'use strict';
-
-  describe('set', function () {
-    it('should set items without error', function () {
+describe('axe._cache', () => {
+  describe('set', () => {
+    it('should set items without error', () => {
       function fn() {
         axe._cache.set('foo', 'bar');
       }
       assert.doesNotThrow(fn);
     });
 
-    it('should set `undefined` without error', function () {
+    it('should set `undefined` without error', () => {
       function fn() {
         axe._cache.set('foo', undefined);
       }
       assert.doesNotThrow(fn);
     });
 
-    it('should throw for non-string keys', function () {
-      assert.throws(function () {
+    it('should throw for non-string keys', () => {
+      assert.throws(() => {
         axe._cache.set(1, 'bar');
       });
-      assert.throws(function () {
+      assert.throws(() => {
         axe._cache.set({}, 'bar');
       });
-      assert.throws(function () {
+      assert.throws(() => {
         axe._cache.set(null, 'bar');
       });
-      assert.throws(function () {
-        axe._cache.set(function () {
+      assert.throws(() => {
+        axe._cache.set(() => {
           return;
         }, 'bar');
       });
     });
 
-    it('should throw for empty string keys', function () {
-      assert.throws(function () {
+    it('should throw for empty string keys', () => {
+      assert.throws(() => {
         axe._cache.set('', 'bar');
       });
     });
   });
 
-  describe('get', function () {
-    it('should get an item from the cache', function () {
+  describe('get', () => {
+    it('should get an item from the cache', () => {
       axe._cache.set('foo', 'bar');
-      var value = axe._cache.get('foo');
+      const value = axe._cache.get('foo');
       assert.equal(value, 'bar');
     });
 
-    it('should return `undefined` for key lookup miss', function () {
+    it('should return `undefined` for key lookup miss', () => {
       assert.isUndefined(axe._cache.get('foo'));
     });
 
-    describe('with creator function', function () {
-      it('should set and return primitive types', function () {
+    describe('with creator function', () => {
+      it('should set and return primitive types', () => {
         assert.equal(
-          axe._cache.get('integer', function () {
+          axe._cache.get('integer', () => {
             return 1;
           }),
           1
         );
         assert.equal(
-          axe._cache.get('float', function () {
+          axe._cache.get('float', () => {
             return 1.1;
           }),
           1.1
         );
         assert.equal(
-          axe._cache.get('string', function () {
+          axe._cache.get('string', () => {
             return 'foo';
           }),
           'foo'
         );
         assert.isTrue(
-          axe._cache.get('boolean', function () {
+          axe._cache.get('boolean', () => {
             return true;
           })
         );
         assert.isNull(
-          axe._cache.get('null', function () {
+          axe._cache.get('null', () => {
             return null;
           })
         );
 
-        var obj = { foo: 'bar' };
+        const obj = { foo: 'bar' };
         assert.equal(
-          axe._cache.get('object', function () {
+          axe._cache.get('object', () => {
             return obj;
           }),
           obj
         );
 
-        var arr = [1, 2, 3];
+        const arr = [1, 2, 3];
         assert.equal(
-          axe._cache.get('array', function () {
+          axe._cache.get('array', () => {
             return arr;
           }),
           arr
         );
       });
 
-      it('should throw when creator is not a function', function () {
+      it('should throw when creator is not a function', () => {
         function fn() {
           axe._cache.get('foo', 'bar');
         }
         assert.throws(fn);
       });
 
-      it('should throw when creator function returns `undefined`', function () {
+      it('should throw when creator function returns `undefined`', () => {
         function fn() {
-          axe._cache.get('foo', function () {
+          axe._cache.get('foo', () => {
             return undefined;
           });
         }
         assert.throws(fn);
       });
 
-      it('should not evaluate creator if key already exists', function () {
-        var spy = sinon.spy();
+      it('should not evaluate creator if key already exists', () => {
+        const spy = sinon.spy();
         axe._cache.set('foo', 'bar');
         axe._cache.get('foo', spy);
         assert.isTrue(spy.notCalled);
       });
 
-      it('should evaluate creator once', function () {
-        var spy = sinon.spy(function () {
+      it('should evaluate creator once', () => {
+        const spy = sinon.spy(() => {
           return true;
         });
         axe._cache.get('foo', spy);
@@ -132,25 +130,25 @@ describe('axe._cache', function () {
         assert.isTrue(spy.calledOnce);
       });
 
-      it('should not override a value from `set()`', function () {
+      it('should not override a value from `set()`', () => {
         axe._cache.set('foo', 'bar');
-        axe._cache.get('foo', function () {
+        axe._cache.get('foo', () => {
           return 'baz';
         });
         assert.equal(axe._cache.get('foo'), 'bar');
       });
 
-      it('should override a value from `get()` with a `set()` value', function () {
-        axe._cache.get('foo', function () {
+      it('should override a value from `get()` with a `set()` value', () => {
+        axe._cache.get('foo', () => {
           return 'baz';
         });
         axe._cache.set('foo', 'bar');
         assert.equal(axe._cache.get('foo'), 'bar');
       });
 
-      it('should set value after calling with undefined', function () {
+      it('should set value after calling with undefined', () => {
         axe._cache.get('foo');
-        axe._cache.get('foo', function () {
+        axe._cache.get('foo', () => {
           return 'value';
         });
         assert.equal(axe._cache.get('foo'), 'value');
@@ -158,11 +156,11 @@ describe('axe._cache', function () {
     });
   });
 
-  describe('clear', function () {
-    it('should clear the cache', function () {
+  describe('clear', () => {
+    it('should clear the cache', () => {
       axe._cache.set('foo', 'bar');
       axe._cache.clear();
-      var value = axe._cache.get('foo');
+      const value = axe._cache.get('foo');
       assert.isUndefined(value);
     });
   });

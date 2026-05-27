@@ -406,5 +406,13 @@
   "4.11.2": {
     "axe.js": "sha256-l0az3GGxixpCq0IHsMxs3F4nvNGl/89Ypf8icbh6Xfk=",
     "axe.min.js": "sha256-dacAeIgHzdkplnXlC66fYnqfnzaOkpb+pxf3Ejreyxo="
+  },
+  "4.11.3": {
+    "axe.js": "sha256-MgD9sqZmQpnqTg+i7glZ32Zo9TQZ81mOpgg0HABdwoE=",
+    "axe.min.js": "sha256-BWVH7wRf9Q7eSaVMmaNWiQ/4lAxUFqVKnJEAhsVFM90="
+  },
+  "4.11.4": {
+    "axe.js": "sha256-MFYbxYKg+pR6osY47p1hwmvMOb7f5kMTHtPU7APqp/A=",
+    "axe.min.js": "sha256-+4OkN42Xjst9La5Io6N3ioTJcaxpLzr9RdcU+6icDw0="
   }
 }

@@ -1,20 +1,18 @@
-describe('axe.utils.collectResultsFromFrames', function () {
-  'use strict';
-
-  var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
-  var fixture = document.getElementById('fixture');
-  var noop = function () {};
-  var origSetTimeout = window.setTimeout;
+describe('axe.utils.collectResultsFromFrames', () => {
+  const Context = axe._thisWillBeDeletedDoNotUse.base.Context;
+  const fixture = document.getElementById('fixture');
+  const noop = () => {};
+  const origSetTimeout = window.setTimeout;
 
   function contextSetup(scope) {
-    var context = new Context(scope);
+    const context = new Context(scope);
     axe._tree = context.flatTree;
     axe._selectorData = axe.utils.getSelectorData(context.flatTree);
 
     return context;
   }
 
-  afterEach(function () {
+  afterEach(() => {
     window.setTimeout = origSetTimeout;
     fixture.innerHTML = '';
     axe._tree = undefined;
@@ -24,8 +22,8 @@ describe('axe.utils.collectResultsFromFrames', function () {
   it('should timeout the ping request after 500ms', function (done) {
     this.timeout = 1000;
 
-    var timeoutSet = false;
-    window.setTimeout = function (fn, to) {
+    let timeoutSet = false;
+    window.setTimeout = (fn, to) => {
       if (to === 500) {
         timeoutSet = true;
         fn();
@@ -36,16 +34,16 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
 
       axe.utils.collectResultsFromFrames(
         context,
         {},
         'stuff',
         'morestuff',
-        function () {
+        () => {
           assert.isTrue(timeoutSet);
           done();
         },
@@ -61,8 +59,8 @@ describe('axe.utils.collectResultsFromFrames', function () {
   it('should override the ping timeout with `options.pingWaitTime`, if provided', function (done) {
     this.timeout = 1000;
 
-    var timeoutSet = false;
-    window.setTimeout = function (fn, to) {
+    let timeoutSet = false;
+    window.setTimeout = (fn, to) => {
       if (to === 90000) {
         timeoutSet = true;
         fn();
@@ -73,17 +71,17 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
-      var params = { pingWaitTime: 90000 };
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
+      const params = { pingWaitTime: 90000 };
 
       axe.utils.collectResultsFromFrames(
         context,
         params,
         'stuff',
         'morestuff',
-        function () {
+        () => {
           assert.isTrue(timeoutSet);
           done();
         },
@@ -96,8 +94,8 @@ describe('axe.utils.collectResultsFromFrames', function () {
     fixture.appendChild(frame);
   });
 
-  it('should timeout the start request after 60s', function (done) {
-    window.setTimeout = function (fn, to) {
+  it('should timeout the start request after 60s', done => {
+    window.setTimeout = (fn, to) => {
       if (to === 60000) {
         assert.ok('timeout set');
         fn();
@@ -108,16 +106,16 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
       axe.utils.collectResultsFromFrames(
         context,
         {},
         'stuff',
         'morestuff',
         noop,
-        function (err) {
+        err => {
           assert.instanceOf(err, Error);
           assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
           done();
@@ -130,8 +128,8 @@ describe('axe.utils.collectResultsFromFrames', function () {
     fixture.appendChild(frame);
   });
 
-  it('should override the start timeout with `options.frameWaitTime`, if provided', function (done) {
-    window.setTimeout = function (fn, to) {
+  it('should override the start timeout with `options.frameWaitTime`, if provided', done => {
+    window.setTimeout = (fn, to) => {
       if (to === 90000) {
         assert.ok('timeout set');
         fn();
@@ -142,10 +140,10 @@ describe('axe.utils.collectResultsFromFrames', function () {
       return 'cats';
     };
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
-      var params = { frameWaitTime: 90000 };
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
+      const params = { frameWaitTime: 90000 };
 
       axe.utils.collectResultsFromFrames(
         context,
@@ -153,7 +151,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
         'stuff',
         'morestuff',
         noop,
-        function (err) {
+        err => {
           assert.instanceOf(err, Error);
           assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
           done();
@@ -166,7 +164,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
     fixture.appendChild(frame);
   });
 
-  it('should not throw given a recursive iframe', function (done) {
+  it('should not throw given a recursive iframe', done => {
     axe._load({
       rules: [
         {
@@ -175,7 +173,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
           any: [
             {
               id: 'iframe',
-              evaluate: function () {
+              evaluate: () => {
                 return true;
               }
             }
@@ -185,19 +183,19 @@ describe('axe.utils.collectResultsFromFrames', function () {
       messages: {}
     });
 
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
 
       axe.utils.collectResultsFromFrames(
         context,
         {},
         'rules',
         'morestuff',
-        function () {
+        () => {
           done();
         },
-        function (e) {
+        e => {
           assert.ok(false, e);
           done();
         }
@@ -209,19 +207,19 @@ describe('axe.utils.collectResultsFromFrames', function () {
     fixture.appendChild(frame);
   });
 
-  it('returns errors send from the frame', function (done) {
-    var frame = document.createElement('iframe');
-    frame.addEventListener('load', function () {
-      var context = contextSetup(document);
+  it('returns errors send from the frame', done => {
+    const frame = document.createElement('iframe');
+    frame.addEventListener('load', () => {
+      const context = contextSetup(document);
       axe.utils.collectResultsFromFrames(
         context,
         {},
         'rules',
         'morestuff',
-        function () {
+        () => {
           done(new Error('Should not be called'));
         },
-        function (err) {
+        err => {
           assert.instanceOf(err, Error);
           assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
           done();

@@ -1,6 +1,6 @@
-describe('meta-refresh virtual-rule', function () {
-  it('should be inapplicable for missing content', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+describe('meta-refresh virtual-rule', () => {
+  it('should be inapplicable for missing content', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh'
@@ -13,8 +13,8 @@ describe('meta-refresh virtual-rule', function () {
     assert.lengthOf(results.inapplicable, 1);
   });
 
-  it('should pass for content=0', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+  it('should pass for content=0', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -27,8 +27,8 @@ describe('meta-refresh virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for content=0 and url', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+  it('should pass for content=0 and url', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -41,8 +41,8 @@ describe('meta-refresh virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for content other than 0', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+  it('should fail for content other than 0', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -55,8 +55,8 @@ describe('meta-refresh virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for content other than 0 and url', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+  it('should fail for content other than 0 and url', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',
@@ -69,8 +69,8 @@ describe('meta-refresh virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for content greater than 20 hours', function () {
-    var results = axe.runVirtualRule('meta-refresh', {
+  it('should pass for content greater than 20 hours', () => {
+    const results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
         'http-equiv': 'refresh',

@@ -173,10 +173,7 @@ describe('runRules', () => {
           assert.deepEqual(JSON.parse(JSON.stringify(results)), [
             {
               id: 'div#target',
-              helpUrl:
-                'https://dequeuniversity.com/rules/axe/' +
-                ver +
-                '/div#target?application=axeAPI',
+              helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/div#target?application=axeAPI`,
               pageLevel: false,
               impact: null,
               inapplicable: [],
@@ -216,10 +213,7 @@ describe('runRules', () => {
             },
             {
               id: 'first-div',
-              helpUrl:
-                'https://dequeuniversity.com/rules/axe/' +
-                ver +
-                '/first-div?application=axeAPI',
+              helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/first-div?application=axeAPI`,
               pageLevel: false,
               impact: null,
               inapplicable: [],
@@ -462,10 +456,7 @@ describe('runRules', () => {
         assert.deepEqual(JSON.parse(JSON.stringify(results)), [
           {
             id: 'div#target',
-            helpUrl:
-              'https://dequeuniversity.com/rules/axe/' +
-              ver +
-              '/div#target?application=axeAPI',
+            helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/div#target?application=axeAPI`,
             pageLevel: false,
             foo: 'bar',
             stuff: 'blah',
@@ -506,10 +497,7 @@ describe('runRules', () => {
           },
           {
             id: 'first-div',
-            helpUrl:
-              'https://dequeuniversity.com/rules/axe/' +
-              ver +
-              '/first-div?application=axeAPI',
+            helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/first-div?application=axeAPI`,
             pageLevel: false,
             bar: 'foo',
             stuff: 'no',
