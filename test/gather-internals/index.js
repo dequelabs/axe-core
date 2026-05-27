@@ -330,7 +330,8 @@ describe('gather-internals.walkTree', () => {
     </form>`;
     const node = fixture.querySelector('gather-internals-element');
     const form = fixture.querySelector('#form');
-    node._internals.form = form;
+    // form-associated custom elements have their _internals.form set automatically
+    // by the browser; assigning it manually would throw in strict mode (read-only getter)
     const ancestry = getAncestry(form);
 
     walkTree();

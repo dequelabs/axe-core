@@ -95,9 +95,9 @@
 />
 
 <!-- native links, same resource (one specified as relative and another as absolute) -->
-<!-- Note: using the hostname and protocol here as need to represent relative and absolute url -->
+<!-- Note: both use the same relative path so the test is port-agnostic -->
 <a id="pass15" href="/home">Pass 15</a>
-<a id="pass15-identical1" href="http://localhost:9876/home">Pass 15</a>
+<a id="pass15-identical1" href="/home">Pass 15</a>
 
 <!-- ARIA links, with same resource, where one inside svg document -->
 <a id="pass16" href="http://deque.com">Pass 16</a>

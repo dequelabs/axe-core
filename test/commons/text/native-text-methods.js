@@ -209,27 +209,23 @@ describe('text.nativeTextMethods', () => {
     });
 
     it('returns `` when there is no title', () => {
-      it('returns the title text', () => {
-        fixtureSetup(html` <svg>some content</svg> `);
-        const svg = axe.utils.querySelectorAll(axe._tree[0], 'svg')[0];
-        assert.equal(svgTitleText(svg), '');
-      });
+      fixtureSetup(html` <svg>some content</svg> `);
+      const svg = axe.utils.querySelectorAll(axe._tree[0], 'svg')[0];
+      assert.equal(svgTitleText(svg), '');
     });
 
     it('returns `` when if the title is nested in another svg', () => {
-      it('returns the title text', () => {
-        fixtureSetup(html`
-          <svg id="fig1">
-            <svg>
-              <title>No title</title>
-              some content
-            </svg>
-            some other content
+      fixtureSetup(html`
+        <svg id="fig1">
+          <svg>
+            <title>No title</title>
+            some content
           </svg>
-        `);
-        const svg = axe.utils.querySelectorAll(axe._tree[0], '#fig1')[0];
-        assert.equal(svgTitleText(svg), '');
-      });
+          some other content
+        </svg>
+      `);
+      const svg = axe.utils.querySelectorAll(axe._tree[0], '#fig1')[0];
+      assert.equal(svgTitleText(svg), '');
     });
   });
 

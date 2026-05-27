@@ -4,6 +4,7 @@
 // level (old architecture that should not be relied on in any new code)
 var checks;
 var commons;
+var helpers;
 
 (() => {
   // Let the user know they need to disable their axe/attest extension before running the tests.
@@ -19,6 +20,7 @@ var commons;
   const originalAudit = axe._audit;
   const originalRules = axe._audit.rules;
   const originalCommons = (commons = axe.commons);
+  helpers = axe._thisWillBeDeletedDoNotUse.helpers;
 
   // Global chai configuration
   if (window.chai) {
@@ -579,7 +581,26 @@ var commons;
     return evaluateWrapper;
   };
 
-  if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  let hooksRegistered = false;
+
+  /**
+   * Register global mocha beforeEach/afterEach hooks that reset axe state
+   * between tests. Safe to call multiple times (idempotent).
+   *
+   * Called immediately when the test framework (mocha) is already set up
+   * (e.g. Karma), or deferred and called again after the framework module
+   * loads (e.g. web-test-runner, where <script type="module"> runs after
+   * regular scripts so `beforeEach` isn't yet defined at parse time).
+   */
+  testUtils.registerHooks = function registerHooks() {
+    if (hooksRegistered) {
+      return;
+    }
+    if (typeof beforeEach === 'undefined' || typeof afterEach === 'undefined') {
+      return;
+    }
+    hooksRegistered = true;
+
     // prevent setting read-only properties
     // @see https://github.com/dequelabs/axe-core/issues/3837
     const readonlyRect = new DOMRectReadOnly();
@@ -619,7 +640,11 @@ var commons;
       document.body.removeAttribute('style');
       document.documentElement.removeAttribute('style');
     });
-  }
+  };
+
+  // Immediate attempt: works when the test framework loads before testutils.js
+  // (e.g. Karma sets up mocha globally before running scripts).
+  testUtils.registerHooks();
 
   testUtils.captureError = function captureError(cb, errorHandler) {
     return function () {
