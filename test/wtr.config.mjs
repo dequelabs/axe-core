@@ -1,6 +1,7 @@
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import net from 'net';
 import { defaultReporter } from '@web/test-runner';
 import { Builder } from 'selenium-webdriver';
 import {
@@ -318,8 +319,22 @@ const defaultFiles = [
   'test/gather-internals/**/*.js'
 ];
 
+function findAvailablePort(startPort) {
+  return new Promise(resolve => {
+    const server = net.createServer();
+    server.listen(startPort, () => {
+      const { port } = server.address();
+      server.close(() => resolve(port));
+    });
+    server.on('error', () => resolve(findAvailablePort(startPort + 1)));
+  });
+}
+
+const port = await findAvailablePort(9876);
+
 export default {
   rootDir: projectRoot,
+  port,
   browsers: getBrowsers(),
   files: defaultFiles,
   ...sharedConfig
