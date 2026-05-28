@@ -12,6 +12,10 @@ describe('axe.utils.collectResultsFromFrames', () => {
     return context;
   }
 
+  beforeEach(() => {
+    axe._setLogger(noop);
+  });
+
   afterEach(() => {
     window.setTimeout = origSetTimeout;
     fixture.innerHTML = '';

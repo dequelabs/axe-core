@@ -74,6 +74,7 @@ describe('runRules', () => {
     fixture.innerHTML = '';
     axe._audit = null;
     axe.teardown();
+    sinon.restore();
   });
 
   it('should work', done => {
@@ -736,10 +737,13 @@ describe('runRules', () => {
       messages: {}
     });
 
+    const logger = sinon.stub();
+    axe._setLogger(logger);
     function resolve() {
       setTimeout(() => {
         assert.isFalse(rejectCalled);
-        axe.log = log;
+        const err = logger.firstCall.args[0];
+        assert.equal(err.message, 'err');
         done();
       }, 20);
       throw new Error('err');
@@ -748,11 +752,6 @@ describe('runRules', () => {
       rejectCalled = true;
     }
 
-    let log = axe.log;
-    axe.log = e => {
-      assert.equal(e.message, 'err');
-      axe.log = log;
-    };
     axe._runRules(document, {}, resolve, reject);
   });
 

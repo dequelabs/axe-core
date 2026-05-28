@@ -625,6 +625,9 @@ var helpers;
       axe.teardown();
       fixture.innerHTML = '';
 
+      // reset the logger for each test
+      axe._setLogger();
+
       // remove all attributes from fixture (otherwise a leftover
       // style attribute would cause avoid-inline-spacing integration
       // test to fail with [#fixture] being included in the results)

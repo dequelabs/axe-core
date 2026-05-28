@@ -297,10 +297,8 @@ const sharedConfig = {
 
   middleware: [proxyMiddleware],
 
-  // Suppress browser console output from the reporter. Test failures surface
-  // through Mocha assertions (the ❌ section), not through browser logs, so
-  // this output is pure noise. Use --manual + DevTools when you need to see it.
-  filterBrowserLogs: () => false,
+  // Show console.log but suppress info/warn/error (mostly 404 noise).
+  filterBrowserLogs: ({ type }) => type === 'log',
 
   // Resolve bare module specifiers from node_modules
   nodeResolve: true

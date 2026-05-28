@@ -73,6 +73,7 @@ describe('axe.run', () => {
   });
 
   it('works with performance logging enabled', done => {
+    axe._setLogger(() => {});
     axe.run(document, { performanceTimer: true }, (err, result) => {
       assert.isObject(result);
       done();
@@ -175,17 +176,15 @@ describe('axe.run', () => {
         resolve([], noop);
       };
 
-      const log = axe.log;
-      axe.log = e => {
-        assert.equal(e.message, 'err');
-        axe.log = log;
-      };
+      const logger = sinon.stub();
+      axe._setLogger(logger);
       axe.run(() => {
         calls += 1;
         if (calls === 1) {
           setTimeout(() => {
             assert.equal(calls, 1);
-            axe.log = log;
+            const err = logger.firstCall.args[0];
+            assert.equal(err.message, 'err');
             done();
           }, 20);
         }

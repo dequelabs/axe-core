@@ -1249,7 +1249,7 @@ describe('Audit', () => {
           getElementInternals: () => {
             elementInternalsStartTime = performance.now();
             return new Promise(res => {
-              setTimeout(res, 100);
+              setTimeout(() => res([]), 100);
             });
           }
         });
@@ -1291,7 +1291,7 @@ describe('Audit', () => {
           elementInternalsTimeout: 200,
           getElementInternals() {
             return new Promise(res => {
-              setTimeout(res, 500);
+              setTimeout(() => res([]), 500);
             });
           }
         });
