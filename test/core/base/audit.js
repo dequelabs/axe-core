@@ -1273,7 +1273,10 @@ describe('Audit', () => {
             assert.isNumber(elementInternalsStartTime);
             assert.isNumber(ruleStartTime);
 
-            assert.isTrue(elementInternalsStartTime < ruleStartTime);
+            assert.isTrue(
+              elementInternalsStartTime < ruleStartTime,
+              `elementInternals (${elementInternalsStartTime}ms) started after rules (${ruleStartTime}ms)`
+            );
             done();
           },
           isNotCalled
