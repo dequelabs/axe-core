@@ -64,6 +64,13 @@ describe('performance timer', () => {
     performanceTimer.logMeasures('foo');
 
     assert.equal(messages.length, 1);
+    console.log({
+      messages,
+      timestampPreMarkStart,
+      timestampPostMarkStart,
+      timestampPreMarkEnd,
+      timestampPostMarkEnd
+    });
     const actual = getNumber(messages[0]);
 
     assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
