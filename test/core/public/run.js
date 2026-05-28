@@ -142,7 +142,15 @@ describe('axe.run', () => {
         reject('Ninja rope!');
       };
 
+      // errorRunRules calls callback(err) directly AND reject(err) which in
+      // non-promise mode is also err => callback(err). Guard against the
+      // double-call so done() is only invoked once.
+      let called = false;
       axe.run({ reporter: 'raw' }, err => {
+        if (called) {
+          return;
+        }
+        called = true;
         assert.equal(err, 'Ninja rope!');
         done();
       });
