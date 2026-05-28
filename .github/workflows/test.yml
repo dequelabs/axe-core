@@ -127,6 +127,8 @@ jobs:
         uses: ./.github/actions/install-deps
       - *build
       - name: Run Tests Against Examples
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.install-deps.outputs.chrome-path }}
         run: npm run test:examples
 
   test_act:
