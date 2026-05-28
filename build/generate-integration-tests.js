@@ -55,4 +55,6 @@ for (const relPath of jsonFiles) {
   count++;
 }
 
-console.log(`Generated ${count} integration test files in tmp/integration-tests/`);
+console.log(
+  `Generated ${count} integration test files in tmp/integration-tests/`
+);
