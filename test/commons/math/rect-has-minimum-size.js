@@ -1,4 +1,4 @@
-describe.only('rectHasMinimumSize', () => {
+describe('rectHasMinimumSize', () => {
   const rectHasMinimumSize = axe.commons.math.rectHasMinimumSize;
 
   it('returns true if rect is large enough', () => {

@@ -1,12 +1,16 @@
 import { createRequire } from 'module';
-import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { globSync } from 'glob';
 import { defaultReporter } from '@web/test-runner';
 import { Builder } from 'selenium-webdriver';
-import { Options as ChromeOptions, ServiceBuilder as ChromeService } from 'selenium-webdriver/chrome.js';
-import { Options as FirefoxOptions, ServiceBuilder as GeckoService } from 'selenium-webdriver/firefox.js';
+import {
+  Options as ChromeOptions,
+  ServiceBuilder as ChromeService
+} from 'selenium-webdriver/chrome.js';
+import {
+  Options as FirefoxOptions,
+  ServiceBuilder as GeckoService
+} from 'selenium-webdriver/firefox.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,18 +47,28 @@ class DirectSeleniumLauncher {
     this.config = config;
     const cap = this.driverBuilder.getCapabilities();
     const browserName = cap.getBrowserName() || cap.get('browserName') || '';
-    const browserVersion = cap.getBrowserVersion() || cap.get('browserVersion') || '';
-    this.name = [browserName, browserVersion].filter(Boolean).join(' ') || 'Browser';
+    const browserVersion =
+      cap.getBrowserVersion() || cap.get('browserVersion') || '';
+    this.name =
+      [browserName, browserVersion].filter(Boolean).join(' ') || 'Browser';
     this.driver = await this.driverBuilder.build();
     // Keep-alive heartbeat (mirrors SeleniumLauncher for Sauce Labs compatibility)
     this._heartbeat = setInterval(async () => {
-      try { await this.driver?.getTitle(); } catch { clearInterval(this._heartbeat); }
+      try {
+        await this.driver?.getTitle();
+      } catch {
+        clearInterval(this._heartbeat);
+      }
     }, 60000);
   }
 
   async stop() {
     clearInterval(this._heartbeat);
-    try { await this.driver?.quit(); } catch { /* ignore */ }
+    try {
+      await this.driver?.quit();
+    } catch {
+      /* ignore */
+    }
     this.driver = undefined;
   }
 
@@ -66,7 +80,9 @@ class DirectSeleniumLauncher {
   startSession(id, url) {
     // resolveStop lets stopSession() unblock the next startSession in the chain
     let resolveStop;
-    const sessionDone = new Promise(resolve => { resolveStop = resolve; });
+    const sessionDone = new Promise(resolve => {
+      resolveStop = resolve;
+    });
     this._sessions.set(id, resolveStop);
 
     // navigate: wait for chain (previous session) then drive to url
@@ -83,7 +99,7 @@ class DirectSeleniumLauncher {
     return this._sessions.has(id);
   }
 
-  getBrowserUrl(_sessionId) {
+  getBrowserUrl() {
     return this.driver.getCurrentUrl();
   }
 
@@ -119,16 +135,14 @@ function buildChromeLauncher({ headless = true, debugPort } = {}) {
     options.addArguments(`--remote-debugging-port=${debugPort}`);
   }
 
-  const builder = new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(options);
+  const builder = new Builder().forBrowser('chrome').setChromeOptions(options);
 
-  // Use an explicit chromedriver path when provided via env; otherwise
-  // Selenium Manager (bundled in selenium-webdriver 4.6+) downloads it
-  // automatically to match the installed Chrome version.
-  if (process.env.CHROMEDRIVER_BIN) {
-    builder.setChromeService(new ChromeService(process.env.CHROMEDRIVER_BIN));
-  }
+  // Use an explicit chromedriver path when provided via env; otherwise fall
+  // back to the npm `chromedriver` package so Selenium Manager doesn't try
+  // to download a mismatched version at runtime.
+  const chromedriverBin =
+    process.env.CHROMEDRIVER_BIN || require('chromedriver').path;
+  builder.setChromeService(new ChromeService(chromedriverBin));
 
   return new DirectSeleniumLauncher(builder);
 }
@@ -250,28 +264,13 @@ const testRunnerHtml = testFramework => /* html */ `
 </html>
 `;
 
-// Wrap the default reporter to:
-//   1. Suppress 404 network request noise (tests intentionally fetch missing assets).
-//   2. Show an elapsed-time counter on stderr while the bundle is running so the
-//      terminal doesn't look frozen (each group is one WTR session, so the progress
-//      bar only ticks once per group rather than once per file).
+// Suppress 404 noise from the default reporter — tests intentionally fetch
+// missing assets and those errors are not useful in the output.
 const base = defaultReporter();
-let _timer = null;
-let _timerStart = null;
-
 const reporters = [
   {
     ...base,
-    start(args) {
-      _timerStart = Date.now();
-      _timer = setInterval(() => {
-        const s = Math.floor((Date.now() - _timerStart) / 1000);
-        process.stderr.write(`\r  running... ${s}s`);
-      }, 1000);
-      return base.start?.call(this, args);
-    },
     reportTestFileResults(args) {
-      // Zero out request404s so the default reporter skips that section
       return base.reportTestFileResults({
         ...args,
         sessionsForTestFile: args.sessionsForTestFile.map(s => ({
@@ -279,64 +278,9 @@ const reporters = [
           request404s: []
         }))
       });
-    },
-    reportSummary(args) {
-      if (_timer) {
-        clearInterval(_timer);
-        _timer = null;
-        process.stderr.write('\r' + ' '.repeat(20) + '\r');
-      }
-      return base.reportSummary?.call(this, args);
     }
   }
 ];
-
-/** File globs for each named test group.
- *  `files` — stub entry point served by groupBundlePlugin (one per group).
- *  `glob`  — the real test files concatenated into that stub at serve time. */
-export const groupDefs = [
-  { name: 'core',             files: 'test/groups/core.js',             glob: 'test/core/**/*.js'                     },
-  { name: 'commons',          files: 'test/groups/commons.js',          glob: 'test/commons/**/*.js'                   },
-  { name: 'rule-matches',     files: 'test/groups/rule-matches.js',     glob: 'test/rule-matches/**/*.js'              },
-  { name: 'checks',           files: 'test/groups/checks.js',           glob: 'test/checks/**/*.js'                    },
-  { name: 'api',              files: 'test/groups/api.js',              glob: 'test/integration/api/**/*.js'           },
-  { name: 'integration',      files: 'test/groups/integration.js',      glob: 'tmp/integration-tests/**/*.test.js'     },
-  { name: 'virtual-rules',    files: 'test/groups/virtual-rules.js',    glob: 'test/integration/virtual-rules/**/*.js' },
-  { name: 'gather-internals', files: 'test/groups/gather-internals.js', glob: 'test/gather-internals/**/*.js'          },
-];
-
-/**
- * WTR plugin that intercepts requests for group stub files and returns the
- * concatenated source of every real test file in that group.
- *
- * Each file is wrapped in an IIFE so `var` declarations don't leak across
- * files.  All files share one Mocha instance, so `.only` works naturally
- * across the entire group without any pre-scan.
- */
-function groupBundlePlugin() {
-  // Map URL path → glob pattern, built once at startup
-  const bundleMap = Object.fromEntries(
-    groupDefs.map(({ files, glob }) => ['/' + files, glob])
-  );
-
-  return {
-    name: 'group-bundle',
-    serve(context) {
-      const glob = bundleMap[context.path];
-      if (!glob) return;
-
-      const files = globSync(glob, { cwd: projectRoot });
-      const body = files
-        .map(f => {
-          const src = readFileSync(path.join(projectRoot, f), 'utf-8');
-          return `;(function(){\n// === ${f} ===\n${src}\n})();`;
-        })
-        .join('\n');
-
-      return { body, type: 'js' };
-    }
-  };
-}
 
 const sharedConfig = {
   reporters,
@@ -352,8 +296,6 @@ const sharedConfig = {
 
   middleware: [proxyMiddleware],
 
-  plugins: [groupBundlePlugin()],
-
   // Suppress browser console output from the reporter. Test failures surface
   // through Mocha assertions (the ❌ section), not through browser logs, so
   // this output is pure noise. Use --manual + DevTools when you need to see it.
@@ -363,22 +305,22 @@ const sharedConfig = {
   nodeResolve: true
 };
 
+// Default files when no --files flag is passed on the CLI.
+// Integration tests are excluded here because they require a separate build step
+// (npm run build:integration-tests); run them via npm run test:unit:integration.
+const defaultFiles = [
+  'test/core/**/*.js',
+  'test/commons/**/*.js',
+  'test/rule-matches/**/*.js',
+  'test/checks/**/*.js',
+  'test/integration/api/**/*.js',
+  'test/integration/virtual-rules/**/*.js',
+  'test/gather-internals/**/*.js'
+];
+
 export default {
-  // Serve files from the project root. Must be an absolute path or resolved
-  // relative to process.cwd() — we use an absolute path derived from this
-  // config file's location to be unambiguous.
   rootDir: projectRoot,
-
   browsers: getBrowsers(),
-
-  ...sharedConfig,
-
-  // Named groups — each maps to a npm test:unit:<name> script.
-  // Run a single group: npm run test:unit -- --group core
-  // Run all groups:     npm run test:unit
-  // Note: the 'integration' group requires `npm run build:integration-tests`
-  // to be run first to populate tmp/integration-tests/.
-  // Each group's `files` points to a stub in test/groups/; groupBundlePlugin
-  // intercepts that request and serves the real test files concatenated.
-  groups: groupDefs.map(({ name, files }) => ({ name, files, ...sharedConfig }))
+  files: defaultFiles,
+  ...sharedConfig
 };

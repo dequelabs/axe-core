@@ -9,12 +9,18 @@ module.exports = function (grunt) {
     'test',
     'This task runs unit tests based on which file was changed',
     function () {
-      const testFile = this.data.testFile;
+      const testFile = grunt.option('changed-file');
       console.log(`${chalk.green('>>')} File "${testFile}"`);
 
-      execSync(`npm run test:unit -- testFiles=${testFile}`, {
-        stdio: 'inherit'
-      });
+      let cmd = 'npm run test:unit';
+      if (
+        testFile &&
+        testFile.startsWith('test/') &&
+        testFile.endsWith('.js')
+      ) {
+        cmd += ` -- --files "${testFile}"`;
+      }
+      execSync(cmd, { stdio: 'inherit' });
     }
   );
 };

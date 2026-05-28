@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 
   // run tests only for affected files instead of all tests
   grunt.event.on('watch', function (action, filepath) {
-    grunt.config.set('watch.file', filepath);
+    grunt.option('changed-file', filepath);
   });
 
   process.env.NODE_NO_HTTP2 = 1; // to hide node warning - (node:18740) ExperimentalWarning: The http2 module is an experimental API.
@@ -262,9 +262,7 @@ module.exports = function (grunt) {
       }
     },
     test: {
-      data: {
-        testFile: '<%= watch.file %>'
-      }
+      data: {}
     },
     watch: {
       axe: {
