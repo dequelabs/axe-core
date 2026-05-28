@@ -23,7 +23,12 @@ const isValidURL = input => {
     // Setup Puppeteer
     browser = await puppeteer.launch({
       headless: 'new',
-      args: ['--no-sandbox', '--disable-dev-shm-usage']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu'
+      ]
     });
 
     // Get new page

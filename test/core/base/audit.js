@@ -1248,7 +1248,9 @@ describe('Audit', () => {
         externalAPIs({
           getElementInternals: () => {
             elementInternalsStartTime = performance.now();
-            return Promise.resolve([]);
+            return new Promise(res => {
+              setTimeout(res, 100);
+            });
           }
         });
 
