@@ -16,11 +16,11 @@ var helpers;
 
   const testUtils = (axe.testUtils = {});
 
-  const originalChecks = (checks = axe._audit.checks);
+  const originalChecks = (window.checks = checks = axe._audit.checks);
   const originalAudit = axe._audit;
   const originalRules = axe._audit.rules;
-  const originalCommons = (commons = axe.commons);
-  helpers = axe._thisWillBeDeletedDoNotUse.helpers;
+  const originalCommons = (window.commons = commons = axe.commons);
+  window.helpers = helpers = axe._thisWillBeDeletedDoNotUse.helpers;
 
   // Global chai configuration
   if (window.chai) {
@@ -514,6 +514,16 @@ var helpers;
      * @param {Context} context
      */
     const evaluateWrapper = function (node, options, virtualNode, context) {
+      if (!this) {
+        return evaluateWrapper.call(
+          testUtils.MockCheckContext(),
+          node,
+          options,
+          virtualNode,
+          context
+        );
+      }
+
       const opts = check.getOptions(options);
 
       const result = check.evaluate.call(
@@ -615,10 +625,10 @@ var helpers;
 
     beforeEach(() => {
       // reset from axe._load overriding
-      checks = originalChecks;
+      window.checks = checks = originalChecks;
       axe._audit = originalAudit;
       axe._audit.rules = originalRules;
-      commons = axe.commons = originalCommons;
+      window.commons = commons = axe.commons = originalCommons;
     });
 
     afterEach(() => {
