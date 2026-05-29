@@ -249,15 +249,18 @@ const testRunnerHtml = testFramework => /* html */ `
     </script>
 
     <!-- axe test utilities (MockCheckContext, fixtures, etc.) -->
-    <script src="/test/testutils.js"></script>
+    <!-- Loaded as a module so it can use top-level import statements.
+         Module scripts execute after classic scripts, so axe/chai/sinon globals
+         are available. The immediate registerHooks() call inside testutils returns
+         early (beforeEach not yet defined); the inline module below re-calls it
+         after the WTR framework has set up mocha globals. -->
+    <script type="module" src="/test/testutils.js"></script>
 
     <!-- WTR mocha test framework (must be a module) -->
     <script type="module" src="${testFramework}"></script>
 
     <!-- Register mocha beforeEach/afterEach hooks now that the test framework
-         has set up mocha globals. Regular scripts (testutils.js above) run
-         before module scripts, so beforeEach/afterEach are not yet available
-         when testutils.js loads. This inline module runs after the framework. -->
+         has set up mocha globals. This inline module runs after the framework. -->
     <script type="module">
       axe.testUtils.registerHooks();
     </script>
