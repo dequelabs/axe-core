@@ -13,6 +13,11 @@ describe('performance timer', () => {
   };
 
   beforeEach(() => {
+    // Clear any marks/measures left by previous tests. Firefox computes
+    // measure duration lazily, so stale entries from earlier tests can
+    // produce 0ms durations when their marks have already been cleared.
+    window.performance.clearMarks();
+    window.performance.clearMeasures();
     performanceTimer._log = msg => {
       messages.push(msg);
     };
