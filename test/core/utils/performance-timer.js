@@ -13,11 +13,8 @@ describe('performance timer', () => {
   };
 
   beforeEach(() => {
-    // Clear any marks/measures left by previous tests. Firefox computes
-    // measure duration lazily, so stale entries from earlier tests can
-    // produce 0ms durations when their marks have already been cleared.
-    window.performance.clearMarks();
-    window.performance.clearMeasures();
+    performance.clearMarks();
+    performance.clearMeasures();
     performanceTimer._log = msg => {
       messages.push(msg);
     };
@@ -69,13 +66,6 @@ describe('performance timer', () => {
     performanceTimer.logMeasures('foo');
 
     assert.equal(messages.length, 1);
-    console.log({
-      messages,
-      timestampPreMarkStart,
-      timestampPostMarkStart,
-      timestampPreMarkEnd,
-      timestampPostMarkEnd
-    });
     const actual = getNumber(messages[0]);
 
     assert.isAtLeast(actual, 100 - ANIMATION_FRAME_TOLERANCE_MS);
