@@ -1,5 +1,6 @@
+import performanceTimer from '/lib/core/utils/performance-timer.js';
+
 describe('performance timer', () => {
-  const { performanceTimer } = axe.utils;
   const originalLog = performanceTimer._log;
   let messages = [];
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
