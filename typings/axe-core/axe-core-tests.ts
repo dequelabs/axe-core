@@ -512,3 +512,13 @@ axe.commons.dom.isFocusable(document.body);
 axe.commons.dom.isNativelyFocusable(document.body);
 axe.commons.dom.getNodeGrid(document.body);
 axe.commons.text.accessibleText(document.body);
+
+// Types
+let metadata: axe.RuleMetadata;
+metadata = {
+  ruleId: 'color-contrast',
+  description: 'Check if colors pass WCAG contrast ratio',
+  help: 'Colors must pass contrast ratios',
+  helpUrl: 'https://help-url.com',
+  tags: ['wcag2.1', 'other-tag']
+};

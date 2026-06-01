@@ -352,7 +352,7 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
     actIds?: string[];
-    enabled: boolean;
+    enabled?: boolean;
   }
   interface SerialDqElement {
     source: string;
