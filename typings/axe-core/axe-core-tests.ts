@@ -515,10 +515,10 @@ axe.commons.text.accessibleText(document.body);
 
 // Types
 /**
-* Validate the original structure for metadata persists in support.
-* Do not amend this structure with new properties. As all new properteis
-* should be optional as to not break existing implementations.
-*/
+ * Validate the original structure for metadata persists in support.
+ * Do not amend this structure with new properties. As all new properteis
+ * should be optional as to not break existing implementations.
+ */
 let metadata: axe.RuleMetadata;
 metadata = {
   ruleId: 'color-contrast',
