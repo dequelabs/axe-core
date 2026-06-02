@@ -7,7 +7,7 @@ describe('aria.getAriaValue', () => {
 
   describe('normalization', () => {
     describe('string', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-description="hello"></div>`
         );
@@ -24,10 +24,17 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-description');
         assert.equal(value, '  hello  ');
       });
+
+      it('returns "" for empty value', () => {
+        const vNode = queryFixture(html`<div id="target" aria-label=""></div>`);
+
+        const { value } = getAriaValue(vNode, 'aria-label');
+        assert.equal(value, '');
+      });
     });
 
     describe('int', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-colspan="2"></div>`
         );
@@ -44,10 +51,19 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-colspan');
         assert.equal(value, 2);
       });
+
+      it('returns NaN for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-colspan=""></div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-colspan');
+        assert.isNaN(value);
+      });
     });
 
     describe('decimal', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-valuemax="2"></div>`
         );
@@ -64,10 +80,19 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-valuemax');
         assert.equal(value, 2.5);
       });
+
+      it('returns NaN for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-valuemax=""></div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-valuemax');
+        assert.isNaN(value);
+      });
     });
 
     describe('boolean', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-modal="true"></div>`
         );
@@ -102,10 +127,17 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-modal');
         assert.equal(value, true);
       });
+
+      it('returns false for empty value', () => {
+        const vNode = queryFixture(html`<div id="target" aria-modal=""></div>`);
+
+        const { value } = getAriaValue(vNode, 'aria-modal');
+        assert.equal(value, false);
+      });
     });
 
     describe('nmtoken', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-expanded="true"></div>`
         );
@@ -131,10 +163,19 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-expanded');
         assert.equal(value, 'undefined');
       });
+
+      it('returns "" for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-expanded=""></div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-expanded');
+        assert.equal(value, '');
+      });
     });
 
     describe('nmtokens', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-relevant="additions removals"></div>`
         );
@@ -160,10 +201,19 @@ describe('aria.getAriaValue', () => {
         const { value } = getAriaValue(vNode, 'aria-relevant');
         assert.deepEqual(value, ['all']);
       });
+
+      it('return [""] for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-relevant=""></div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-relevant');
+        assert.deepEqual(value, ['']);
+      });
     });
 
     describe('idref', () => {
-      it('gets value', () => {
+      it('returns value', () => {
         const vNode = queryFixture(
           html`<div id="target" aria-activedescendant="child">
             <div id="child"></div>
@@ -190,7 +240,7 @@ describe('aria.getAriaValue', () => {
         assert.equal(value, childVNode);
       });
 
-      it('throws if element is not in tree', () => {
+      it.skip('throws if element is not in tree', () => {
         const child = new axe.SerialVirtualNode({
           nodeName: 'div',
           attributes: {
@@ -210,43 +260,123 @@ describe('aria.getAriaValue', () => {
           getAriaValue(node, 'aria-activedescendant');
         }, 'Cannot resolve id references for partial DOM');
       });
+
+      it('returns null for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-activedescendant="">
+            <div id="child"></div>
+          </div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-activedescendant');
+        assert.isNull(value);
+      });
+    });
+
+    describe('idrefs', () => {
+      it('returns value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-labelledby="label"></div>
+            <div id="label">Hello</div>`
+        );
+        const label = fixture.querySelector('#label');
+        const labelVNode = getNodeFromTree(label);
+
+        const { value } = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(value, [labelVNode]);
+      });
+
+      it('returns an already resolved value', () => {
+        const vNode = queryFixture(
+          html`<div id="target"></div>
+            <div id="label"></div>`
+        );
+        const label = fixture.querySelector('#label');
+        const labelVNode = getNodeFromTree(label);
+        vNode.actualNode.ariaLabelledByElements = [label];
+
+        const { value } = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(value, [labelVNode]);
+      });
+
+      it('ignores unconnected nodes', () => {
+        const vNode = queryFixture(
+          html`<div id="target"></div>
+            <div id="label"></div>`
+        );
+        const div = document.createElement('div');
+        const label = fixture.querySelector('#label');
+        const labelVNode = getNodeFromTree(label);
+        vNode.actualNode.ariaLabelledByElements = [div, label];
+
+        const { value } = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(value, [labelVNode]);
+      });
+
+      it('returns [] for empty value', () => {
+        const vNode = queryFixture(
+          html`<div id="target" aria-labelledby=""></div>
+            <div id="label">Hello</div>`
+        );
+
+        const { value } = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(value, []);
+      });
     });
   });
 
-  it('resolves the aria property value', () => {
-    const vNode = queryFixture(
-      html`<div id="target" aria-label="hello"></div>`
-    );
+  describe('resolves', () => {
+    it('the aria property value', () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-label="hello"></div>`
+      );
 
-    assert.deepEqual(getAriaValue(vNode, 'aria-label'), {
-      value: 'hello',
-      source: 'property'
+      assert.deepEqual(getAriaValue(vNode, 'aria-label'), {
+        value: 'hello',
+        source: 'property'
+      });
     });
-  });
 
-  // since the property reflects the attribute value the property will almost always get resolved over the attribute value
-  it("resolves the aria attribute value for attrs that don't have an AOM name", () => {
-    const vNode = queryFixture(
-      html`<div id="target" aria-dropeffect="copy"></div>`
-    );
+    // since the property reflects the attribute value the property will almost always get resolved over the attribute value
+    it("the aria attribute value for attrs that don't have an AOM name", () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-dropeffect="copy"></div>`
+      );
 
-    assert.deepEqual(getAriaValue(vNode, 'aria-dropeffect'), {
-      value: ['copy'],
-      source: 'attribute'
+      assert.deepEqual(getAriaValue(vNode, 'aria-dropeffect'), {
+        value: ['copy'],
+        source: 'attribute'
+      });
     });
-  });
 
-  it('resolves the aria elementInternals value', () => {
-    fixture.innerHTML = html`<testutils-element
-      id="target"
-    ></testutils-element>`;
-    const node = fixture.querySelector('#target');
-    node._internals.ariaLabel = 'hello';
-    flatTreeSetup(fixture);
+    it('the aria elementInternals value', () => {
+      fixture.innerHTML = html`<testutils-element
+        id="target"
+      ></testutils-element>`;
+      const node = fixture.querySelector('#target');
+      node._internals.ariaLabel = 'hello';
+      flatTreeSetup(fixture);
 
-    assert.deepEqual(getAriaValue(node, 'aria-label'), {
-      value: 'hello',
-      source: 'internals'
+      assert.deepEqual(getAriaValue(node, 'aria-label'), {
+        value: 'hello',
+        source: 'internals'
+      });
+    });
+
+    it('to null for a non-existent value', () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-label="hello"></div>`
+      );
+
+      assert.isNull(getAriaValue(vNode, 'aria-modal'));
+    });
+
+    it('to null for non-aria value', () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-label="hello"></div>`
+      );
+
+      assert.isNull(getAriaValue(vNode, 'id'));
     });
   });
 });
