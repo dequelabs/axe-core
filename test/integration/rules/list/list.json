@@ -9,16 +9,20 @@
     ["#ulrolledallli"],
     ["#olrolledallli"],
     ["#ulrolledli"],
-    ["#olrolledli"]
+    ["#olrolledli"],
+    ["#ulrolledinternal"],
+    ["#olrolledinternal"]
   ],
   "passes": [
     ["#emptyul"],
     ["#scriptemptyul"],
     ["#properul"],
     ["#scriptproperul"],
+    ["#internalul"],
     ["#emptyol"],
     ["#scriptemptyol"],
     ["#properol"],
-    ["#scriptproperol"]
+    ["#scriptproperol"],
+    ["#internalol"]
   ]
 }

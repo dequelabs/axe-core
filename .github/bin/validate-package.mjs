@@ -210,7 +210,13 @@ defined files in the \`files\` array of \`package.json\`.
 | File | Status | Version |\n|------|--------|--------|
 `;
 
-  const importTargets = [...pkg.files.map(file => `${pkg.name}/${file}`)];
+  // these files are not part of the importable api
+  const nonImportableFiles = ['gather-internals.js'];
+  const importTargets = [
+    ...pkg.files
+      .filter(file => !nonImportableFiles.includes(file))
+      .map(file => `${pkg.name}/${file}`)
+  ];
   let anyCaught = false;
 
   console.log('Validating package files are importable:');
@@ -281,6 +287,27 @@ defined files in the \`files\` array of \`package.json\`.
       summary += `| \`${target}\` | ✗ Not Importable | Not Found |\n`;
       summary += `\n\`\`\`\n${error.message}\n\`\`\`\n`;
       anyCaught = true;
+    }
+  }
+
+  // check that the non-importable files are parsable
+  for (const file of nonImportableFiles) {
+    const target = `${pkg.name}/${file}`;
+    try {
+      const resolved = import.meta.resolve(target);
+      if (resolved.includes('node_modules')) {
+        console.error(`✗ ${target} resolves to node_modules`);
+        summary += `| \`${target}\` | ✗ Resolves to node_modules |\n`;
+        exitCode++;
+        continue;
+      }
+      execSync(`node --check "${fileURLToPath(resolved)}"`, { stdio: 'pipe' });
+      console.info(`✓ ${target} (parse-only, browser-only)`);
+      summary += `| \`${target}\` | ✓ Parse OK (browser-only) | n/a |\n`;
+    } catch (error) {
+      console.error(`✗ ${target}: ${error.message}`);
+      summary += `| \`${target}\` | ✗ Parse failed (browser-only) | n/a |\n`;
+      exitCode++;
     }
   }
 

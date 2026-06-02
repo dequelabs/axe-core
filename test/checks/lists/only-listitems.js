@@ -244,4 +244,23 @@ describe('only-listitems', () => {
       });
     });
   });
+
+  describe('ElementInternals', () => {
+    it('returns false for element that uses elementInternals', () => {
+      const checkArgs = checkSetup(
+        '<ul id="target"> <li>An item</li> <testutils-element with-role="listitem">custom item</testutils-element> </ul>'
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('returns true for element with unallowed elementInternals role', () => {
+      const checkArgs = checkSetup(
+        '<ul id="target"> <li>An item</li> <testutils-element>custom item</testutils-element> </ul>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        values: 'testutils-element'
+      });
+    });
+  });
 });

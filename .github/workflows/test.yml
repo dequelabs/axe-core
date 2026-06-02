@@ -117,6 +117,10 @@ jobs:
   test_examples:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    # Temporarily non-blocking due to an upstream issue with the examples.
+    # A failure here will not fail the Tests workflow, so it won't block deploys.
+    # Remove this once the upstream issue is resolved.
+    continue-on-error: true
     steps:
       - *checkout
       - &install-deps

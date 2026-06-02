@@ -1,12 +1,18 @@
 {
   "description": "listitem test",
   "rule": "listitem",
-  "violations": [["#uncontained"], ["#ulrolechanged"], ["#olrolechanged"]],
+  "violations": [
+    ["#uncontained"],
+    ["#ulrolechanged"],
+    ["#olrolechanged"],
+    ["#internalrolechanged"]
+  ],
   "passes": [
     ["#contained"],
     ["#alsocontained"],
     ["#presentation"],
     ["#none"],
-    ["#menuitem"]
+    ["#menuitem"],
+    ["#internal"]
   ]
 }

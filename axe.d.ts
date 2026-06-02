@@ -334,7 +334,7 @@ declare namespace axe {
     matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
     actIds?: string[];
-    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds' | 'enabled'>;
   }
   interface AxePlugin {
     id: string;
@@ -352,6 +352,7 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
     actIds?: string[];
+    enabled: boolean;
   }
   interface SerialDqElement {
     source: string;
@@ -630,6 +631,14 @@ declare namespace axe {
   function reset(): void;
 
   /**
+   * Restores the default locale that was active before any
+   * `axe.configure({ locale })` call. No-op if no non-default
+   * locale has ever been applied. Does not affect any other
+   * configuration.
+   */
+  function resetLocale(): void;
+
+  /**
    * Function to register a plugin configuration in document and its subframes
    * @param  {Object}    plugin    A plugin configuration object
    */
@@ -673,6 +682,31 @@ declare namespace axe {
     reporter: AxeReporter<T>,
     isDefault?: boolean
   ): void;
+
+  /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function externalAPIs(params?: {
+    elementInternalsTimeout?: number;
+    getElementInternals?: () => Promise<ElementInternalsMap>;
+  }): void;
+
+  type ElementInternalsMap = Array<{
+    ancestry: CrossTreeSelector;
+    internals: Record<string, InternalsData>;
+  }>;
+  type InternalsData = string | InternalsDataIdref | InternalsDataIdrefs;
+  type InternalsDataIdref = {
+    type: 'HTMLElement';
+    value: CrossTreeSelector;
+  };
+  type InternalsDataIdrefs = {
+    type: 'NodeList';
+    value: CrossTreeSelector[];
+  };
 
   // axe.frameMessenger
   type FrameMessenger = {
