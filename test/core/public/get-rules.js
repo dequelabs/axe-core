@@ -111,6 +111,60 @@ describe('axe.getRules', () => {
     assert.equal(retValue[1].enabled, false);
   });
 
+  it('should return false for experimental rules', () => {
+    axe._load({
+      messages: [],
+      rules: [
+        {
+          id: 'awesomeRule3',
+          selector: '',
+          excludeHidden: false,
+          any: [],
+          tags: ['tag1', 'experimental']
+        }
+      ],
+      data: {
+        rules: {
+          awesomeRule3: {
+            description: 'some interesting information',
+            help: 'halp'
+          }
+        }
+      }
+    });
+
+    const retValue = axe.getRules();
+    assert.lengthOf(retValue, 1);
+    assert.equal(retValue[0].enabled, false);
+  });
+
+  it('should return false for deprecated rules', () => {
+    axe._load({
+      messages: [],
+      rules: [
+        {
+          id: 'awesomeRule3',
+          selector: '',
+          excludeHidden: false,
+          any: [],
+          tags: ['tag1', 'deprecated']
+        }
+      ],
+      data: {
+        rules: {
+          awesomeRule3: {
+            description: 'some interesting information',
+            help: 'halp'
+          }
+        }
+      }
+    });
+
+    const retValue = axe.getRules();
+    assert.lengthOf(retValue, 1);
+    assert.equal(retValue[0].enabled, false);
+  });
+
   it('should return all rules if given empty array', () => {
     const retValue = axe.getRules([]);
     assert.equal(retValue[0].ruleId, 'awesomeRule1');

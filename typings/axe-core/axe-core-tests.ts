@@ -516,7 +516,7 @@ axe.commons.text.accessibleText(document.body);
 // Types
 /**
  * Validate the original structure for metadata persists in support.
- * Do not amend this structure with new properties. As all new properteis
+ * Do not amend this structure with new properties. As all new properties
  * should be optional as to not break existing implementations.
  */
 let metadata: axe.RuleMetadata;
@@ -527,3 +527,5 @@ metadata = {
   helpUrl: 'https://help-url.com',
   tags: ['wcag2.1', 'other-tag']
 };
+// 'enabled' is optional in RuleMetadata but required for getRules return
+axe.getRules(['wcag2aa'])[0].enabled.toString();

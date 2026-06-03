@@ -623,7 +623,7 @@ declare namespace axe {
    * @param  {Array}  tags  Optional array of tags
    * @return {Array}  Array of rules
    */
-  function getRules(tags?: string[]): RuleMetadata[];
+  function getRules(tags?: string[]): Required<RuleMetadata>[];
 
   /**
    * Restores the default axe configuration
