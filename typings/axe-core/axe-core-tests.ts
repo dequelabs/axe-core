@@ -529,3 +529,5 @@ metadata = {
 };
 // 'enabled' is optional in RuleMetadata but required for getRules return
 axe.getRules(['wcag2aa'])[0].enabled.toString();
+// @ts-expect-error 'actIds' is optional in RuleMetadata and getRules
+axe.getRules(['wcag2aa'])[0].actIds.toString();
