@@ -128,6 +128,30 @@ describe('aria.getAriaValue', () => {
     assert.equal(value, 'hello');
   });
 
+  it('works with attributes that have no AOM property equivalent', () => {
+    const vNode = queryFixture(
+      html`<div id="target" aria-dropeffect="copy"></div>`
+    );
+
+    const result = getAriaValue(vNode, 'aria-dropeffect');
+    assert.deepEqual(result, {
+      value: 'copy',
+      source: 'attribute'
+    });
+  });
+
+  it('works with empty attributes that have no AOM property equivalent', () => {
+    const vNode = queryFixture(
+      html`<div id="target" aria-dropeffect=""></div>`
+    );
+
+    const result = getAriaValue(vNode, 'aria-dropeffect');
+    assert.deepEqual(result, {
+      value: '',
+      source: 'attribute'
+    });
+  });
+
   describe('idref', () => {
     it('returns the attribute value over the property value', () => {
       const vNode = queryFixture(
