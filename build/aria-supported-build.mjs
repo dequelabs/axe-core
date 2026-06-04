@@ -18,6 +18,7 @@ export async function runAriaSupported(
   const require = createRequire(import.meta.url);
   const suffix = langSuffixes && langSuffixes.length ? langSuffixes[0] : '';
   const axePath = path.join(root, `axe${suffix}.js`);
+  delete require.cache[require.resolve(axePath)];
   const axe = require(axePath);
   const headings = {
     main:

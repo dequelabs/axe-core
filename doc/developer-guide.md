@@ -41,7 +41,9 @@ To build axe.js, simply run `npm run build` in the root folder of the axe-core r
 
 ## Watching for Changes
 
-You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Once run, any changes to files inside the [lib directory](../lib) will rebuild axe. After axe is built, it will try to run the relevant tests for the files changed. If you change a file inside the [test directory](../test) it will run the tests for the file changed.
+You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Changes under [lib](../lib), [build](../build), or [test](../test) trigger a rebuild or test run as appropriate. `npm run develop` also starts http-server on port 9876 when that port is free (same as `npm start`).
+
+Add `--log` after `--` for step-by-step build output (for example `npm run develop -- --log`).
 
 Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
 

@@ -151,7 +151,7 @@ To continually watch changes to the axe source files and re-build on changes, us
 npm run develop
 ```
 
-This will also rerun any tests that have been changed, and any changes to the axe source files will trigger a rerun of that files tests.
+Rebuilds on `lib/` and `build/` changes, starts http-server on port 9876 when that port is free, and reruns relevant tests.
 
 To run axe integration tests:
 
@@ -276,7 +276,7 @@ Log into a second ssh terminal (without -X) and execute the following commands
 
 ```console
 cd axe-core
-`npm run develop` (rebuilds on `lib/` changes) together with `npm start` / Karma for unit tests
+npm run develop
 ```
 
 Load your test file URL in the Chrome browser opened in XQuartz
