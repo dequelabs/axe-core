@@ -10,6 +10,7 @@
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
    1. [API Name: axe.reset](#api-name-axereset)
+   1. [API Name: axe.resetLocale](#api-name-axeresetlocale)
    1. [API Name: axe.run](#api-name-axerun)
       1. [Parameters axe.run](#parameters-axerun)
          1. [Context Parameter](#context-parameter)
@@ -24,6 +25,7 @@
    1. [API Name: axe.teardown](#api-name-axeteardown)
    1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
    1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial--axefinishrun)
+   1. [API name: axe.externalAPIs](#api-name-axeexternal-apis)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -135,7 +137,7 @@ Returns a list of all rules with their ID and description
 
 - `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules. See [axe-core tags](#axe-core-tags).
 
-**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>}`
+**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>, enabled: <boolean>}`. `enabled` is `true` for rules that run by default when `axe.run()` is called with no options, and `false` for rules that are disabled by default.
 
 #### Example 1
 
@@ -161,7 +163,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "section508",
       "section508.22.a"
     ],
-    actIds: ['c487ae']
+    actIds: ['c487ae'],
+    enabled: true
   },
   {
     description: "Ensure ARIA attributes are allowed for an element's role",
@@ -172,7 +175,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "cat.aria",
       "wcag2a",
       "wcag412"
-    ]
+    ],
+    enabled: true
   }
   …
 ]
@@ -290,6 +294,24 @@ Override any previous calls to `axe.configure` and restore the configuration to 
 
 ```js
 axe.reset();
+```
+
+#### Parameters
+
+None
+
+### API Name: axe.resetLocale
+
+#### Description
+
+Restore the default locale that was active before any `axe.configure({ locale })` call, without touching the rest of the configuration.
+
+`axe.configure({ locale })` has no inverse, and `axe.reset()` also clears branding, rule enable/disable overrides, `frameMessenger`, and other configuration. `axe.resetLocale()` reverts only the locale (rule descriptions, check messages, failure summaries, `lang`) back to the default that was in effect before the first `applyLocale` call. It is a no-op if no non-default locale has ever been applied, and safe to call repeatedly.
+
+#### Synopsis
+
+```js
+axe.resetLocale();
 ```
 
 #### Parameters
@@ -839,6 +861,10 @@ Set up an alternative communication channel between parent and child frames. By 
 ### API name: axe.runPartial / axe.finishRun
 
 Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
+
+### API name: axe.externalAPIs
+
+Set external API data for axe-core to use during the run. See [external-apis.md](external-apis.md) for details.
 
 ### Virtual DOM Utilities
 

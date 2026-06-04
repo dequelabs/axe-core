@@ -1,6 +1,4 @@
 describe('text.isIconLigature', () => {
-  'use strict';
-
   const isIconLigature = axe.commons.text.isIconLigature;
   const queryFixture = axe.testUtils.queryFixture;
   const fontApiSupport = !!document.fonts;

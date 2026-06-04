@@ -1,47 +1,45 @@
-describe('axe.constants', function () {
-  'use strict';
-
-  it('should create an object', function () {
+describe('axe.constants', () => {
+  it('should create an object', () => {
     assert.isObject(axe.constants);
   });
 
-  it('should have a results array', function () {
+  it('should have a results array', () => {
     assert.isArray(axe.constants.results);
   });
 
-  it('should have PASS', function () {
+  it('should have PASS', () => {
     assert.equal(axe.constants.PASS, 'passed');
   });
 
-  it('should have FAIL', function () {
+  it('should have FAIL', () => {
     assert.equal(axe.constants.FAIL, 'failed');
   });
 
-  it('should have NA', function () {
+  it('should have NA', () => {
     assert.equal(axe.constants.NA, 'inapplicable');
   });
 
-  it('should have CANTTELL', function () {
+  it('should have CANTTELL', () => {
     assert.equal(axe.constants.CANTTELL, 'cantTell');
   });
 
-  it('should have priorities for results', function () {
+  it('should have priorities for results', () => {
     assert.equal(axe.constants.NA_PRIO, 0);
   });
 
-  it('should have groups for results', function () {
+  it('should have groups for results', () => {
     assert.equal(axe.constants.FAIL_GROUP, 'violations');
   });
 
-  it('should have a gridSize', function () {
+  it('should have a gridSize', () => {
     assert.equal(axe.constants.gridSize, 200);
   });
 
-  it('should have a selectorSimilarFilterLimit', function () {
+  it('should have a selectorSimilarFilterLimit', () => {
     assert.equal(axe.constants.selectorSimilarFilterLimit, 700);
   });
 
-  it('has a serializableErrorProps array', function () {
+  it('has a serializableErrorProps array', () => {
     assert.isArray(axe.constants.serializableErrorProps);
     axe.constants.serializableErrorProps.forEach(prop => {
       assert.typeOf(prop, 'string', `prop ${prop} is not a string`);

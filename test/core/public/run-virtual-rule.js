@@ -1,5 +1,5 @@
-describe('axe.runVirtualRule', function () {
-  beforeEach(function () {
+describe('axe.runVirtualRule', () => {
+  beforeEach(() => {
     axe._load({
       rules: [
         {
@@ -11,7 +11,7 @@ describe('axe.runVirtualRule', function () {
       checks: [
         {
           id: 'fred',
-          evaluate: function () {
+          evaluate: () => {
             return true;
           }
         }
@@ -19,11 +19,11 @@ describe('axe.runVirtualRule', function () {
     });
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe._audit = null;
   });
 
-  it('should throw if the rule does not exist', function () {
+  it('should throw if the rule does not exist', () => {
     axe._audit.rules = [];
     function fn() {
       axe.runVirtualRule('aria-roles', { nodeName: 'div' });
@@ -32,7 +32,7 @@ describe('axe.runVirtualRule', function () {
     assert.throws(fn);
   });
 
-  it('should modify the rule to not excludeHidden', function () {
+  it('should modify the rule to not excludeHidden', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
@@ -51,7 +51,7 @@ describe('axe.runVirtualRule', function () {
     axe.runVirtualRule('aria-roles', { nodeName: 'div' });
   });
 
-  it('should not modify the original rule', function () {
+  it('should not modify the original rule', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
@@ -70,12 +70,12 @@ describe('axe.runVirtualRule', function () {
     axe.runVirtualRule('aria-roles', { nodeName: 'div' });
   });
 
-  it('should call rule.runSync', function () {
-    var called = false;
+  it('should call rule.runSync', () => {
+    let called = false;
     axe._audit.rules = [
       {
         id: 'aria-roles',
-        runSync: function () {
+        runSync: () => {
           called = true;
           return {
             id: 'aria-roles',
@@ -91,12 +91,12 @@ describe('axe.runVirtualRule', function () {
 
   describe('context', () => {
     const { Context } = axe._thisWillBeDeletedDoNotUse.base;
-    it('passes context with vNode included to rule.runSync', function () {
-      var node = new axe.SerialVirtualNode({ nodeName: 'div' });
+    it('passes context with vNode included to rule.runSync', () => {
+      const node = new axe.SerialVirtualNode({ nodeName: 'div' });
       axe._audit.rules = [
         {
           id: 'aria-roles',
-          runSync: function (context) {
+          runSync: context => {
             assert.equal(typeof context, 'object');
             assert.isTrue(Array.isArray(context.include));
             assert.equal(context.include[0], node);
@@ -118,11 +118,11 @@ describe('axe.runVirtualRule', function () {
         .map(([key]) => key)
         .sort();
 
-      var node = new axe.SerialVirtualNode({ nodeName: 'div' });
+      const node = new axe.SerialVirtualNode({ nodeName: 'div' });
       axe._audit.rules = [
         {
           id: 'aria-roles',
-          runSync: function (context) {
+          runSync: context => {
             const virtualContextProps = Object.keys(context).sort();
             assert.deepEqual(virtualContextProps, contextProps);
             return {
@@ -136,11 +136,11 @@ describe('axe.runVirtualRule', function () {
     });
   });
 
-  it('should pass through options to rule.runSync', function () {
+  it('should pass through options to rule.runSync', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
-        runSync: function (context, options) {
+        runSync: (context, options) => {
           assert.equal(options.foo, 'bar');
 
           return {
@@ -154,8 +154,8 @@ describe('axe.runVirtualRule', function () {
     axe.runVirtualRule('aria-roles', { nodeName: 'div' }, { foo: 'bar' });
   });
 
-  it('should convert a serialised node into a VirtualNode', function () {
-    var serialNode = {
+  it('should convert a serialised node into a VirtualNode', () => {
+    const serialNode = {
       nodeName: 'div',
       foo: 'bar',
       attributes: {
@@ -165,8 +165,8 @@ describe('axe.runVirtualRule', function () {
     axe._audit.rules = [
       {
         id: 'aria-roles',
-        runSync: function (context) {
-          var node = context.include[0];
+        runSync: context => {
+          const node = context.include[0];
           assert.instanceOf(node, axe.AbstractVirtualNode);
           assert.equal(node.props.foo, 'bar');
           assert.equal(node.attr('bar'), 'baz');
@@ -182,8 +182,8 @@ describe('axe.runVirtualRule', function () {
     axe.runVirtualRule('aria-roles', serialNode);
   });
 
-  it('should return correct structure', function () {
-    var results = axe.runVirtualRule('test', { nodeName: 'div' });
+  it('should return correct structure', () => {
+    const results = axe.runVirtualRule('test', { nodeName: 'div' });
     assert.isDefined(results.violations);
     assert.isDefined(results.passes);
     assert.isDefined(results.incomplete);

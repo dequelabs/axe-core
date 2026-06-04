@@ -1,20 +1,20 @@
 /* global xit */
-describe('hidden content', function () {
-  'use strict';
+describe('hidden content', () => {
+  const html = axe.testUtils.html;
 
-  var fixture = document.getElementById('fixture');
-  var shadowSupport = axe.testUtils.shadowSupport.v1;
-  var checkSetup = axe.testUtils.checkSetup;
-  var checkContext = axe.testUtils.MockCheckContext();
+  const fixture = document.getElementById('fixture');
+  const shadowSupport = axe.testUtils.shadowSupport.v1;
+  const checkSetup = axe.testUtils.checkSetup;
+  const checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     checkContext.reset();
     axe._tree = undefined;
   });
 
-  it('should return undefined with display:none and children', function () {
-    var params = checkSetup(
+  it('should return undefined with display:none and children', () => {
+    const params = checkSetup(
       '<div id="target" style="display: none;"><p>Some paragraph text.</p></div>'
     );
     assert.isUndefined(
@@ -24,8 +24,8 @@ describe('hidden content', function () {
     );
   });
 
-  it('should return undefined with visibility:hidden and children', function () {
-    var params = checkSetup(
+  it('should return undefined with visibility:hidden and children', () => {
+    const params = checkSetup(
       '<div id="target" style="visibility: hidden;"><p>Some paragraph text.</p></div>'
     );
     assert.isUndefined(
@@ -35,8 +35,8 @@ describe('hidden content', function () {
     );
   });
 
-  it('should return true with visibility:hidden and parent with visibility:hidden', function () {
-    var params = checkSetup(
+  it('should return true with visibility:hidden and parent with visibility:hidden', () => {
+    const params = checkSetup(
       '<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>'
     );
     assert.isTrue(
@@ -46,8 +46,8 @@ describe('hidden content', function () {
     );
   });
 
-  it('should return true with aria-hidden and no content', function () {
-    var params = checkSetup(
+  it('should return true with aria-hidden and no content', () => {
+    const params = checkSetup(
       '<span id="target" class="icon" aria-hidden="true"></span>'
     );
     assert.isTrue(
@@ -57,10 +57,10 @@ describe('hidden content', function () {
     );
   });
 
-  it('should skip whitelisted elements', function () {
-    var node = document.querySelector('head');
+  it('should skip whitelisted elements', () => {
+    const node = document.querySelector('head');
     axe.testUtils.flatTreeSetup(document.documentElement);
-    var virtualNode = axe.utils.getNodeFromTree(node);
+    const virtualNode = axe.utils.getNodeFromTree(node);
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('hidden-content')(
         node,
@@ -70,17 +70,20 @@ describe('hidden content', function () {
     );
   });
 
-  (shadowSupport ? it : xit)('works on elements in a shadow DOM', function () {
+  (shadowSupport ? it : xit)('works on elements in a shadow DOM', () => {
     fixture.innerHTML = '<div id="shadow"> <div id="content">text</div> </div>';
-    var shadowRoot = document
+    const shadowRoot = document
       .getElementById('shadow')
       .attachShadow({ mode: 'open' });
-    shadowRoot.innerHTML =
-      '<div id="target" style="display:none">' + '<slot></slot>' + '</div>';
+    shadowRoot.innerHTML = html`
+      <div id="target" style="display:none">
+        <slot></slot>
+      </div>
+    `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    var shadow = document.querySelector('#shadow');
-    var virtualShadow = axe.utils.getNodeFromTree(shadow);
+    const shadow = document.querySelector('#shadow');
+    const virtualShadow = axe.utils.getNodeFromTree(shadow);
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('hidden-content')(
         shadow,
@@ -89,8 +92,8 @@ describe('hidden content', function () {
       )
     );
 
-    var target = shadowRoot.querySelector('#target');
-    var virtualTarget = axe.utils.getNodeFromTree(target);
+    const target = shadowRoot.querySelector('#target');
+    const virtualTarget = axe.utils.getNodeFromTree(target);
     assert.isUndefined(
       axe.testUtils.getCheckEvaluate('hidden-content')(
         target,
@@ -99,8 +102,8 @@ describe('hidden content', function () {
       )
     );
 
-    var content = document.querySelector('#content');
-    var virtualContent = axe.utils.getNodeFromTree(content);
+    const content = document.querySelector('#content');
+    const virtualContent = axe.utils.getNodeFromTree(content);
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('hidden-content')(
         content,

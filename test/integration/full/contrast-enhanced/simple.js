@@ -1,12 +1,10 @@
-describe('color-contrast shadow dom test', function () {
-  'use strict';
-
-  describe('violations', function () {
-    it('should find issues in simple tree', function (done) {
+describe('color-contrast shadow dom test', () => {
+  describe('violations', () => {
+    it('should find issues in simple tree', done => {
       axe.run(
         '#fixture',
         { runOnly: { type: 'rule', values: ['color-contrast-enhanced'] } },
-        function (err, results) {
+        (err, results) => {
           assert.isNull(err);
           assert.lengthOf(results.passes, 1);
           assert.lengthOf(results.passes[0].nodes, 4);

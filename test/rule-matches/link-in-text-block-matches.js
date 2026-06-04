@@ -1,4 +1,5 @@
 describe('link-in-text-block-matches', () => {
+  const html = axe.testUtils.html;
   const { fixtureSetup } = axe.testUtils;
   const rule = axe.utils.getRule('link-in-text-block');
 
@@ -27,10 +28,15 @@ describe('link-in-text-block-matches', () => {
   });
 
   it('should return false if element has <style>', () => {
-    fixtureSetup(`
-      <p>Some paragraph with text
+    fixtureSetup(html`
+      <p>
+        Some paragraph with text
         <a id="target" href="#">
-          <style>a { color: #333 }</style>
+          <style>
+            a {
+              color: #333;
+            }
+          </style>
         </a>
       </p>
     `);
@@ -39,10 +45,13 @@ describe('link-in-text-block-matches', () => {
   });
 
   it('should return false if element has <script>', () => {
-    fixtureSetup(`
-      <p>Some paragraph with text
+    fixtureSetup(html`
+      <p>
+        Some paragraph with text
         <a id="target" href="#">
-          <script>console.log('foo')</script>
+          <script>
+            console.log('foo');
+          </script>
         </a>
       </p>
     `);

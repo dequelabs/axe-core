@@ -1,9 +1,7 @@
-describe('frame-tested-fail test', function () {
-  'use strict';
-
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe('frame-tested-fail test', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         {
           runOnly: { type: 'rule', values: ['frame-tested'] },
@@ -11,7 +9,7 @@ describe('frame-tested-fail test', function () {
             'frame-tested': { options: { isViolation: true } }
           }
         },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -20,11 +18,11 @@ describe('frame-tested-fail test', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 1', function () {
+  describe('violations', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.violations[0].nodes, 1);
     });
-    it('should find the failing iframe', function () {
+    it('should find the failing iframe', () => {
       assert.deepEqual(results.violations[0].nodes[0].target, [
         '#frame',
         '#fail'
@@ -32,14 +30,14 @@ describe('frame-tested-fail test', function () {
     });
   });
 
-  describe('incomplete', function () {
-    it('should find 0', function () {
+  describe('incomplete', () => {
+    it('should find 0', () => {
       assert.lengthOf(results.incomplete, 0);
     });
   });
 
-  describe('passes', function () {
-    it('should find 2', function () {
+  describe('passes', () => {
+    it('should find 2', () => {
       assert.lengthOf(results.passes, 1);
       assert.lengthOf(results.passes[0].nodes, 2);
 

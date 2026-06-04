@@ -1,8 +1,7 @@
-describe('axe.getRules', function () {
-  'use strict';
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+describe('axe.getRules', () => {
+  const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe._load({
       messages: [],
       rules: [
@@ -17,7 +16,8 @@ describe('axe.getRules', function () {
           id: 'awesomeRule2',
           any: [],
           tags: ['tag1', 'tag2'],
-          actIds: ['abc123', 'xyz789']
+          actIds: ['abc123', 'xyz789'],
+          enabled: false
         }
       ],
       data: {
@@ -35,12 +35,12 @@ describe('axe.getRules', function () {
     });
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe._audit = null;
   });
 
-  it('should return rules', function () {
-    var retValue = axe.getRules(['tag1']);
+  it('should return rules', () => {
+    let retValue = axe.getRules(['tag1']);
     assert.isArray(retValue);
     assert.lengthOf(retValue, 2);
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
@@ -48,9 +48,7 @@ describe('axe.getRules', function () {
     assert.equal(retValue[0].help, 'halp');
     assert.equal(
       retValue[0].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule1?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule1?application=axeAPI`
     );
     assert.deepEqual(retValue[0].tags, ['tag1']);
 
@@ -59,9 +57,7 @@ describe('axe.getRules', function () {
     assert.equal(retValue[1].help, 'halp me!');
     assert.equal(
       retValue[1].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule2?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule2?application=axeAPI`
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
     assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
@@ -74,30 +70,26 @@ describe('axe.getRules', function () {
     assert.equal(retValue[0].help, 'halp me!');
     assert.equal(
       retValue[0].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule2?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule2?application=axeAPI`
     );
     assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
     assert.deepEqual(retValue[0].actIds, ['abc123', 'xyz789']);
   });
 
-  it('should not return nothing', function () {
-    var retValue = axe.getRules(['bob']);
+  it('should not return nothing', () => {
+    const retValue = axe.getRules(['bob']);
     assert.isArray(retValue);
     assert.lengthOf(retValue, 0);
   });
 
-  it('should return all rules if given no tags - undefined', function () {
-    var retValue = axe.getRules();
+  it('should return all rules if given no tags - undefined', () => {
+    const retValue = axe.getRules();
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
     assert.equal(retValue[0].description, 'some interesting information');
     assert.equal(retValue[0].help, 'halp');
     assert.equal(
       retValue[0].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule1?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule1?application=axeAPI`
     );
     assert.deepEqual(retValue[0].tags, ['tag1']);
 
@@ -106,24 +98,27 @@ describe('axe.getRules', function () {
     assert.equal(retValue[1].help, 'halp me!');
     assert.equal(
       retValue[1].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule2?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule2?application=axeAPI`
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
     assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
   });
 
-  it('should return all rules if given empty array', function () {
-    var retValue = axe.getRules([]);
+  it('should return the enabled state of each rule', () => {
+    const retValue = axe.getRules();
+    assert.lengthOf(retValue, 2);
+    assert.equal(retValue[0].enabled, true);
+    assert.equal(retValue[1].enabled, false);
+  });
+
+  it('should return all rules if given empty array', () => {
+    const retValue = axe.getRules([]);
     assert.equal(retValue[0].ruleId, 'awesomeRule1');
     assert.equal(retValue[0].description, 'some interesting information');
     assert.equal(retValue[0].help, 'halp');
     assert.equal(
       retValue[0].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule1?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule1?application=axeAPI`
     );
     assert.deepEqual(retValue[0].tags, ['tag1']);
 
@@ -132,9 +127,7 @@ describe('axe.getRules', function () {
     assert.equal(retValue[1].help, 'halp me!');
     assert.equal(
       retValue[1].helpUrl,
-      'https://dequeuniversity.com/rules/axe/' +
-        ver +
-        '/awesomeRule2?application=axeAPI'
+      `https://dequeuniversity.com/rules/axe/${ver}/awesomeRule2?application=axeAPI`
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
     assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);

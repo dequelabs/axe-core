@@ -1,22 +1,20 @@
-describe('is-initiator-matches', function () {
-  'use strict';
-
+describe('is-initiator-matches', () => {
   let rule;
 
-  beforeEach(function () {
+  beforeEach(() => {
     rule = axe.utils.getRule('html-has-lang');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     const fixture = document.getElementById('fixture');
     fixture.innerHTML = '';
   });
 
-  it('should return true if the context is the initiator', function () {
+  it('should return true if the context is the initiator', () => {
     assert.isTrue(rule.matches(null, null, { initiator: true }));
   });
 
-  it('should return false if the context is not the initiator', function () {
+  it('should return false if the context is not the initiator', () => {
     assert.isFalse(rule.matches(null, null, { initiator: false }));
   });
 });

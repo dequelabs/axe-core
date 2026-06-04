@@ -16,6 +16,7 @@ test/integration/*/index.html
 # dist
 axe.js
 axe.*.js
+/gather-internals.js
 
 # generated src file
 lib/core/base/metadata-function-map.js

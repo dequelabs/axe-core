@@ -1,22 +1,20 @@
-describe('frame-tested', function () {
-  'use strict';
+describe('frame-tested', () => {
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
+  const frameTestedAfter = checks['frame-tested'].after;
 
-  var checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
-  var frameTestedAfter = checks['frame-tested'].after;
-
-  describe('evaluate', function () {
-    it('returns undefined', function () {
+  describe('evaluate', () => {
+    it('returns undefined', () => {
       assert.isUndefined(checkEvaluate());
     });
 
-    it('returns false if passed isViolation:true', function () {
+    it('returns false if passed isViolation:true', () => {
       assert.isFalse(checkEvaluate(null, { isViolation: true }));
     });
   });
 
-  describe('after', function () {
-    it('changes result to true if frame has been tested', function () {
-      var results = [
+  describe('after', () => {
+    it('changes result to true if frame has been tested', () => {
+      const results = [
         {
           result: undefined,
           node: {
@@ -49,7 +47,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      const afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
 
       assert.isTrue(afterResults[0].result);
@@ -63,8 +61,8 @@ describe('frame-tested', function () {
       ]);
     });
 
-    it('does not change result when iframe has not been tested', function () {
-      var results = [
+    it('does not change result when iframe has not been tested', () => {
+      const results = [
         {
           result: undefined,
           node: {
@@ -97,7 +95,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      const afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 3);
 
       assert.isTrue(afterResults[0].result);
@@ -116,8 +114,8 @@ describe('frame-tested', function () {
       ]);
     });
 
-    it('works with shadow DOM', function () {
-      var results = [
+    it('works with shadow DOM', () => {
+      const results = [
         {
           result: undefined,
           node: {
@@ -144,7 +142,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      const afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
 
       assert.isTrue(afterResults[0].result);
@@ -158,8 +156,8 @@ describe('frame-tested', function () {
       ]);
     });
 
-    it('works with nested shadow DOM and iframes', function () {
-      var results = [
+    it('works with nested shadow DOM and iframes', () => {
+      const results = [
         {
           result: undefined,
           node: {
@@ -220,7 +218,7 @@ describe('frame-tested', function () {
         }
       ];
 
-      var afterResults = frameTestedAfter(results);
+      const afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 4);
 
       assert.isTrue(afterResults[0].result);

@@ -1,6 +1,6 @@
 describe('link-in-text-block', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
-  const shadowSupport = axe.testUtils.shadowSupport;
   let styleElm;
 
   const checkContext = axe.testUtils.MockCheckContext();
@@ -53,35 +53,33 @@ describe('link-in-text-block', () => {
             if (!name) {
               return propPiece;
             } else {
-              return name + '-' + propPiece.toLowerCase();
+              return `${name}-${propPiece.toLowerCase()}`;
             }
           }, null);
 
         // Return indented line of style code
-        return '  ' + cssPropName + ':' + styleObj[prop] + ';';
+        return `  ${cssPropName}:${styleObj[prop]};`;
       })
       .join('\n');
 
     // Add to the style element
-    styleElm.innerHTML += selector + ' {\n' + cssLines + '\n}\n';
+    styleElm.innerHTML += `${selector} {
+${cssLines}
+}
+`;
   }
 
   function getLinkElm(linkStyle, paragraphStyle) {
     // Get a random id and build the style strings
-    const linkId = 'linkid-' + Math.floor(Math.random() * 100000);
-    const parId = 'parid-' + Math.floor(Math.random() * 100000);
+    const linkId = `linkid-${Math.floor(Math.random() * 100000)}`;
+    const parId = `parid-${Math.floor(Math.random() * 100000)}`;
 
-    createStyleString('#' + linkId, linkStyle);
-    createStyleString('#' + parId, paragraphStyle);
+    createStyleString(`#${linkId}`, linkStyle);
+    createStyleString(`#${parId}`, paragraphStyle);
 
-    fixture.innerHTML +=
-      '<p id="' +
-      parId +
-      '"> Text ' +
-      '<a href="/" id="' +
-      linkId +
-      '">link</a>' +
-      '</p>';
+    fixture.innerHTML += `<p id="${parId}"> Text 
+      <a href="/" id="${linkId}">link</a>
+      </p>`;
     axe.testUtils.flatTreeSetup(fixture);
     return document.getElementById(linkId);
   }
@@ -94,12 +92,17 @@ describe('link-in-text-block', () => {
     });
 
     it('passes the selected node and closest ancestral block element', () => {
-      fixture.innerHTML =
-        '<div> <span style="display:block; color: #010" id="parent">' +
-        '	<p style="display:inline"><a href="" id="link">' +
-        '		 link text ' +
-        '	</a> inside block </p> inside block' +
-        '</span> outside block </div>';
+      fixture.innerHTML = html`
+        <div>
+          <span style="display:block; color: #010" id="parent">
+            <p style="display:inline">
+              <a href="" id="link"> link text </a> inside block
+            </p>
+            inside block
+          </span>
+          outside block
+        </div>
+      `;
 
       axe.testUtils.flatTreeSetup(fixture);
       const linkElm = document.getElementById('link');
@@ -112,53 +115,44 @@ describe('link-in-text-block', () => {
       assert.equal(checkContext._data.messageKey, 'fgContrast');
     });
 
-    (shadowSupport.v1 ? it : xit)(
-      'works with the block outside the shadow tree',
-      () => {
-        const parentElm = document.createElement('div');
-        parentElm.setAttribute(
-          'style',
-          'color:#100; background-color:#FFFFFF;'
-        );
-        const shadow = parentElm.attachShadow({ mode: 'open' });
-        shadow.innerHTML =
-          '<a href="" style="color:#000; background-color:#FFFFFF; text-decoration:none;">Link</a>';
-        const linkElm = shadow.querySelector('a');
-        fixture.appendChild(parentElm);
+    it('works with the block outside the shadow tree', () => {
+      const parentElm = document.createElement('div');
+      parentElm.setAttribute('style', 'color:#100; background-color:#FFFFFF;');
+      const shadow = parentElm.attachShadow({ mode: 'open' });
+      shadow.innerHTML =
+        '<a href="" style="color:#000; background-color:#FFFFFF; text-decoration:none;">Link</a>';
+      const linkElm = shadow.querySelector('a');
+      fixture.appendChild(parentElm);
 
-        axe.testUtils.flatTreeSetup(fixture);
+      axe.testUtils.flatTreeSetup(fixture);
 
-        assert.isFalse(
-          axe.testUtils
-            .getCheckEvaluate('link-in-text-block')
-            .call(checkContext, linkElm)
-        );
-        assert.equal(checkContext._data.messageKey, 'fgContrast');
-      }
-    );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+    });
 
-    (shadowSupport.v1 ? it : xit)(
-      'works with the link inside the shadow tree slot',
-      () => {
-        const div = document.createElement('div');
-        div.setAttribute('style', 'color:#100; background-color:#FFFFFF;');
-        div.innerHTML =
-          '<a href="" style="color:#000;background-color:#FFFFFF;">Link</a>';
-        const shadow = div.attachShadow({ mode: 'open' });
-        shadow.innerHTML = '<p><slot></slot></p>';
-        fixture.appendChild(div);
+    it('works with the link inside the shadow tree slot', () => {
+      const div = document.createElement('div');
+      div.setAttribute('style', 'color:#100; background-color:#FFFFFF;');
+      div.innerHTML =
+        '<a href="" style="color:#000;background-color:#FFFFFF;">Link</a>';
+      const shadow = div.attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<p><slot></slot></p>';
+      fixture.appendChild(div);
 
-        axe.testUtils.flatTreeSetup(fixture);
-        const linkElm = div.querySelector('a');
+      axe.testUtils.flatTreeSetup(fixture);
+      const linkElm = div.querySelector('a');
 
-        assert.isFalse(
-          axe.testUtils
-            .getCheckEvaluate('link-in-text-block')
-            .call(checkContext, linkElm)
-        );
-        assert.equal(checkContext._data.messageKey, 'fgContrast');
-      }
-    );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+    });
   });
 
   describe('links distinguished through color', () => {
@@ -284,12 +278,18 @@ describe('link-in-text-block', () => {
     });
 
     it('should return the proper values stored in data (fgContrast)', () => {
-      fixture.innerHTML =
-        '<div> <span style="display:block; color: #100" id="parent">' +
-        ' <p style="display:inline"><a href="" id="link" style="color: #00e">' +
-        '    link text ' +
-        ' </a> inside block </p> inside block' +
-        '</span> outside block </div>';
+      fixture.innerHTML = html`
+        <div>
+          <span style="display:block; color: #100" id="parent">
+            <p style="display:inline">
+              <a href="" id="link" style="color: #00e"> link text </a> inside
+              block
+            </p>
+            inside block
+          </span>
+          outside block
+        </div>
+      `;
 
       axe.testUtils.flatTreeSetup(fixture);
       const linkElm = document.getElementById('link');

@@ -28,7 +28,7 @@ describe('Configure Options', () => {
               values: ['aria-allowed-attr']
             }
           },
-          function (error, results) {
+          (error, results) => {
             assert.lengthOf(results.violations, 0, 'violations');
             done();
           }
@@ -85,7 +85,7 @@ describe('Configure Options', () => {
               values: ['dylang']
             }
           },
-          function (err, results) {
+          (err, results) => {
             try {
               assert.isNull(err);
               assert.lengthOf(results.violations, 1, 'violations');
@@ -117,7 +117,7 @@ describe('Configure Options', () => {
               values: ['aria-required-attr']
             }
           },
-          function (error, results) {
+          (error, results) => {
             assert.lengthOf(results.violations, 1, 'violations');
             assert.sameMembers(results.violations[0].nodes[0].any[0].data, [
               'aria-snuggles'
@@ -145,7 +145,7 @@ describe('Configure Options', () => {
         ]
       });
 
-      axe.run(function (error, results) {
+      axe.run((error, results) => {
         assert.isNull(error);
         assert.lengthOf(results.passes, 1, 'passes');
         assert.equal(results.passes[0].id, 'html-has-lang');
@@ -179,7 +179,7 @@ describe('Configure Options', () => {
             values: ['aria-required-attr']
           }
         },
-        captureError(function (error, results) {
+        captureError((error, results) => {
           assert.isNull(error);
           assert.isNull(results.violations[0].nodes[0].html);
           done();
@@ -212,7 +212,7 @@ describe('Configure Options', () => {
               values: ['div#target']
             }
           },
-          captureError(function (error, results) {
+          captureError((error, results) => {
             assert.isNull(error);
             assert.deepEqual(results.passes[0].nodes[0].target, [
               'iframe',
@@ -253,7 +253,7 @@ describe('Configure Options', () => {
       };
       target.appendChild(iframe);
 
-      window.addEventListener('message', function (evt) {
+      window.addEventListener('message', evt => {
         const data = JSON.parse(evt.data);
         if (Array.isArray(data.payload)) {
           try {

@@ -1,5 +1,4 @@
 describe('target-size too many rects test', () => {
-  'use strict';
   let results;
 
   before(done => {
@@ -18,7 +17,6 @@ describe('target-size too many rects test', () => {
           done(err);
         }
         results = r;
-        console.log(results);
         done();
       });
     });

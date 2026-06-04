@@ -8,15 +8,16 @@ var testDirs = [
   'checks',
   'api',
   'integration',
-  'virtual-rules'
+  'virtual-rules',
+  'gather-internals'
 ];
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
 var args = process.argv.slice(2);
 
-args.forEach(function (arg) {
+args.forEach(arg => {
   // pattern: testDir=commons,core
-  var parts = arg.split('=');
+  const parts = arg.split('=');
   if (parts[0] === 'testDirs') {
     testDirs = parts[1].split(',');
   }
@@ -32,9 +33,9 @@ args.forEach(function (arg) {
 
 var testPaths = [];
 if (testFiles.length) {
-  testPaths = testFiles.map(function (file) {
-    var basename = path.basename(file);
-    var extname = path.extname(file);
+  testPaths = testFiles.map(file => {
+    const basename = path.basename(file);
+    const extname = path.extname(file);
 
     // do not transform test files unless it is the integration/rule
     // html, in which case run the json test file
@@ -57,7 +58,7 @@ if (testFiles.length) {
     }
   });
 } else if (testDirs.length) {
-  testPaths = testDirs.map(function (dir) {
+  testPaths = testDirs.map(dir => {
     if (dir === 'integration') {
       return path.join('test', dir, '**/*.json');
     }
@@ -68,7 +69,7 @@ if (testFiles.length) {
   });
 }
 
-module.exports = function (config) {
+module.exports = config => {
   config.set({
     basePath: '../',
     singleRun: true,
@@ -101,6 +102,7 @@ module.exports = function (config) {
       },
       'axe.js',
       { pattern: 'axe.min.js', included: false, served: true },
+      'tmp/walk-tree.js',
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
@@ -125,7 +127,7 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeDebugging: {
         base: 'Chrome',
-        flags: ['--remote-debugging-port=' + debugPort]
+        flags: [`--remote-debugging-port=${debugPort}`]
       }
     }
   });

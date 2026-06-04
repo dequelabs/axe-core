@@ -1,36 +1,35 @@
-describe('axe.utils.finalizeRuleResult', function () {
-  'use strict';
-  var original = axe._audit;
+describe('axe.utils.finalizeRuleResult', () => {
+  const original = axe._audit;
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe._audit = {
       rules: []
     };
   });
 
-  after(function () {
+  after(() => {
     axe._audit = original;
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(axe.utils.finalizeRuleResult);
   });
 
-  it('returns the first param object', function () {
-    var goingIn = {
+  it('returns the first param object', () => {
+    const goingIn = {
       nodes: []
     };
-    var comingOut = axe.utils.finalizeRuleResult(goingIn);
+    const comingOut = axe.utils.finalizeRuleResult(goingIn);
 
     assert.equal(goingIn, comingOut);
   });
 
-  it('assigns impact if rule.impact is defined', function () {
+  it('assigns impact if rule.impact is defined', () => {
     axe._audit = {
       rules: [{ id: 'foo', impact: 'critical' }]
     };
 
-    var output = axe.utils.finalizeRuleResult({
+    const output = axe.utils.finalizeRuleResult({
       id: 'foo',
       nodes: [
         {
@@ -51,12 +50,12 @@ describe('axe.utils.finalizeRuleResult', function () {
     assert.equal(output.violations[0].any[0].impact, 'critical');
   });
 
-  it('leaves impact as null when rule.impact is defined', function () {
+  it('leaves impact as null when rule.impact is defined', () => {
     axe._audit = {
       rules: [{ id: 'foo', impact: 'critical' }]
     };
 
-    var output = axe.utils.finalizeRuleResult({
+    const output = axe.utils.finalizeRuleResult({
       id: 'foo',
       nodes: [
         {

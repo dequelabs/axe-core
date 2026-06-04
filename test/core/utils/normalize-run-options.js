@@ -57,10 +57,10 @@ describe('axe.utils.normalizeRunOptions', () => {
     axeAudit = axe._audit;
     audit = new Audit();
     axe._audit = audit;
-    mockRules.forEach(function (r) {
+    mockRules.forEach(r => {
       audit.addRule(r);
     });
-    mockChecks.forEach(function (c) {
+    mockChecks.forEach(c => {
       audit.addCheck(c);
     });
   });
@@ -226,7 +226,7 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs an issue when a tag is unknown', () => {
     let message = '';
-    axe.log = function (m) {
+    axe.log = m => {
       message = m;
     };
     axe.utils.normalizeRunOptions({
@@ -240,7 +240,7 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs no issues for unknown WCAG level tags', () => {
     let message = '';
-    axe.log = function (m) {
+    axe.log = m => {
       message = m;
     };
     axe.utils.normalizeRunOptions({
@@ -254,7 +254,7 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs an issue when a tag is unknown, together with a wcag level tag', () => {
     let message = '';
-    axe.log = function (m) {
+    axe.log = m => {
       message = m;
     };
     axe.utils.normalizeRunOptions({

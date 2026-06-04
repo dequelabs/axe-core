@@ -1,35 +1,33 @@
 /*global cleanup */
-describe('cleanup', function () {
-  'use strict';
-
+describe('cleanup', () => {
   function createFrames(callback) {
-    var frame;
+    let frame;
     frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
-    frame.addEventListener('load', function () {
+    frame.addEventListener('load', () => {
       setTimeout(callback, 500);
     });
     fixture.appendChild(frame);
   }
 
-  var fixture = document.getElementById('fixture');
+  const fixture = document.getElementById('fixture');
 
-  var assertNotCalled = function () {
+  const assertNotCalled = () => {
     assert.ok(false, 'Should not be called');
   };
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe.plugins = {};
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe._audit = null;
   });
 
-  it('should throw if no audit is configured', function () {
+  it('should throw if no audit is configured', () => {
     assert.throws(
-      function () {
+      () => {
         axe.cleanup(document, {});
       },
       Error,
@@ -37,61 +35,61 @@ describe('cleanup', function () {
     );
   });
 
-  it('should call cleanup on all plugins', function (done) {
+  it('should call cleanup on all plugins', done => {
     /*eslint no-unused-vars: 0*/
-    var cleaned = false;
+    let cleaned = false;
     axe._load({
       rules: []
     });
     axe.registerPlugin({
       id: 'p',
-      run: function () {},
+      run: () => {},
       add: function (impl) {
         this._registry[impl.id] = impl;
       },
       commands: []
     });
-    axe.plugins.p.cleanup = function (res) {
+    axe.plugins.p.cleanup = res => {
       cleaned = true;
       res();
     };
-    axe.cleanup(function () {
+    axe.cleanup(() => {
       assert.equal(cleaned, true);
       done();
     }, assertNotCalled);
   });
 
-  it('should not throw exception if no arguments are provided', function (done) {
-    var cleaned = false;
+  it('should not throw exception if no arguments are provided', done => {
+    let cleaned = false;
     axe._load({
       rules: []
     });
     axe.registerPlugin({
       id: 'p',
-      run: function () {},
+      run: () => {},
       add: function (impl) {
         this._registry[impl.id] = impl;
       },
       commands: []
     });
-    axe.plugins.p.cleanup = function (res) {
+    axe.plugins.p.cleanup = res => {
       cleaned = true;
       res();
     };
-    assert.doesNotThrow(function () {
+    assert.doesNotThrow(() => {
       axe.cleanup();
       done();
     });
   });
 
-  it('should send command to frames to cleanup', function (done) {
-    createFrames(function () {
+  it('should send command to frames to cleanup', done => {
+    createFrames(() => {
       axe._load({});
 
-      var frame = fixture.querySelector('iframe');
-      var win = frame.contentWindow;
-      win.addEventListener('message', function (message) {
-        var data = JSON.parse(message.data);
+      const frame = fixture.querySelector('iframe');
+      const win = frame.contentWindow;
+      win.addEventListener('message', message => {
+        const data = JSON.parse(message.data);
         if (data.topic === 'axe.start') {
           assert.deepEqual(data.payload, { command: 'cleanup-plugin' });
           done();

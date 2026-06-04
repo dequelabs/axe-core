@@ -23,7 +23,7 @@ describe('axe.utils.sendCommandToFrame', () => {
       axe.utils.sendCommandToFrame(
         frame,
         params,
-        captureError(function (res) {
+        captureError(res => {
           assert.lengthOf(res, 1);
           assert.equal(res[0].id, 'html');
           done();
@@ -48,7 +48,7 @@ describe('axe.utils.sendCommandToFrame', () => {
 
     frame.addEventListener('load', () => {
       const topics = [];
-      frame.contentWindow.addEventListener('message', function (event) {
+      frame.contentWindow.addEventListener('message', event => {
         try {
           topics.push(JSON.parse(event.data).topic);
         } catch {
@@ -79,7 +79,7 @@ describe('axe.utils.sendCommandToFrame', () => {
 
   it('should timeout if there is no response from frame', done => {
     const orig = window.setTimeout;
-    window.setTimeout = function (fn, to) {
+    window.setTimeout = (fn, to) => {
       if (to === 30000) {
         assert.ok('timeout set');
         fn();
@@ -96,7 +96,7 @@ describe('axe.utils.sendCommandToFrame', () => {
       axe.utils.sendCommandToFrame(
         frame,
         params,
-        function (result) {
+        result => {
           assert.equal(result, null);
           done();
         },

@@ -5,7 +5,12 @@ const chromedriverPath =
 
 const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);
-  const options = new chrome.Options().addArguments('--headless');
+  const options = new chrome.Options().addArguments(
+    '--headless',
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu'
+  );
 
   if (process.env.CHROME_BIN) {
     options.setBinaryPath(process.env.CHROME_BIN);

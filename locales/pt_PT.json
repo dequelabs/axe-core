@@ -1,5 +1,5 @@
 {
-  "lang": "pt_PT",
+  "lang": "pt-PT",
   "rules": {
     "accesskeys": {
       "description": "Garantir que cada valor do atributo 'accesskey' seja único",

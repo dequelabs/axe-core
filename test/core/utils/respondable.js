@@ -1,13 +1,13 @@
-describe('axe.utils.respondable', function () {
-  var fixture = document.querySelector('#fixture');
-  var respondable = axe.utils.respondable;
-  var noop = sinon.spy();
-  var frameWin;
+describe('axe.utils.respondable', () => {
+  const fixture = document.querySelector('#fixture');
+  const respondable = axe.utils.respondable;
+  const noop = sinon.spy();
+  let frameWin;
 
-  beforeEach(function (done) {
-    var frame = document.createElement('iframe');
+  beforeEach(done => {
+    const frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
-    frame.addEventListener('load', function () {
+    frame.addEventListener('load', () => {
       frameWin = frame.contentWindow;
       done();
     });
@@ -16,12 +16,12 @@ describe('axe.utils.respondable', function () {
     fixture.appendChild(frame);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe._thisWillBeDeletedDoNotUse.utils.setDefaultFrameMessenger(respondable);
   });
 
-  it('should error if open is not a function', function () {
-    assert.throws(function () {
+  it('should error if open is not a function', () => {
+    assert.throws(() => {
       respondable.updateMessenger({
         post: noop,
         close: noop
@@ -29,27 +29,27 @@ describe('axe.utils.respondable', function () {
     });
   });
 
-  it('should error if post is not a function', function () {
-    assert.throws(function () {
+  it('should error if post is not a function', () => {
+    assert.throws(() => {
       respondable.updateMessenger({
         open: noop
       });
     });
   });
 
-  it('should error if open function return is not a function', function () {
-    assert.throws(function () {
+  it('should error if open function return is not a function', () => {
+    assert.throws(() => {
       respondable.updateMessenger({
         post: noop,
-        open: function () {
+        open: () => {
           return 1;
         }
       });
     });
   });
 
-  it('should call the open function and pass the listener', function () {
-    var open = sinon.spy();
+  it('should call the open function and pass the listener', () => {
+    const open = sinon.spy();
     respondable.updateMessenger({
       open: open,
       post: noop
@@ -59,10 +59,10 @@ describe('axe.utils.respondable', function () {
     assert.isTrue(typeof open.args[0][0] === 'function');
   });
 
-  it('should call previous close function', function () {
-    var close = sinon.spy();
+  it('should call previous close function', () => {
+    const close = sinon.spy();
     respondable.updateMessenger({
-      open: function () {
+      open: () => {
         return close;
       },
       post: noop
@@ -76,8 +76,8 @@ describe('axe.utils.respondable', function () {
     assert.isTrue(close.called);
   });
 
-  it('should use the post function when making a frame post', function () {
-    var post = sinon.spy();
+  it('should use the post function when making a frame post', () => {
+    const post = sinon.spy();
     respondable.updateMessenger({
       open: noop,
       post: post
@@ -87,9 +87,9 @@ describe('axe.utils.respondable', function () {
     assert.isTrue(post.called);
   });
 
-  it('should pass the post function the correct parameters', function () {
-    var post = sinon.spy();
-    var callback = sinon.spy();
+  it('should pass the post function the correct parameters', () => {
+    const post = sinon.spy();
+    const callback = sinon.spy();
 
     respondable.updateMessenger({
       open: noop,
@@ -110,15 +110,15 @@ describe('axe.utils.respondable', function () {
     );
   });
 
-  it('should work as a full integration', function () {
-    var listeners = {};
-    var listener = sinon.spy();
+  it('should work as a full integration', () => {
+    const listeners = {};
+    const listener = sinon.spy();
 
     respondable.updateMessenger({
-      open: function () {
+      open: () => {
         listeners.greeting = listener;
       },
-      post: function (win, data) {
+      post: (win, data) => {
         if (listeners[data.topic]) {
           listeners[data.topic]();
         }

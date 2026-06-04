@@ -1,4 +1,4 @@
-describe('aria-conditional-attr virtual-rule', function () {
+describe('aria-conditional-attr virtual-rule', () => {
   it('passes when aria-checked is consistent with native checkbox state', () => {
     const results = axe.runVirtualRule('aria-conditional-attr', {
       nodeName: 'input',
@@ -20,6 +20,36 @@ describe('aria-conditional-attr virtual-rule', function () {
       checked: true,
       attributes: {
         type: 'checkbox',
+        'aria-checked': 'false'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('passes when aria-checked is consistent with native radio state', () => {
+    const results = axe.runVirtualRule('aria-conditional-attr', {
+      nodeName: 'input',
+      checked: true,
+      attributes: {
+        type: 'radio',
+        'aria-checked': 'true'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('fails when aria-checked is inconsistent with native radio state', () => {
+    const results = axe.runVirtualRule('aria-conditional-attr', {
+      nodeName: 'input',
+      checked: true,
+      attributes: {
+        type: 'radio',
         'aria-checked': 'false'
       }
     });

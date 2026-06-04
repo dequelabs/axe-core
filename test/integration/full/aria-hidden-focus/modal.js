@@ -1,11 +1,10 @@
-describe('aria-hidden-focus test', function () {
-  'use strict';
-  var results;
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+describe('aria-hidden-focus test', () => {
+  let results;
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['aria-hidden-focus'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -14,24 +13,24 @@ describe('aria-hidden-focus test', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 0 violations', function () {
+  describe('violations', () => {
+    it('should find 0 violations', () => {
       assert.lengthOf(results.violations, 0);
     });
   });
 
-  describe('passes', function () {
-    it('should find 0 passes', function () {
+  describe('passes', () => {
+    it('should find 0 passes', () => {
       assert.lengthOf(results.violations, 0);
     });
   });
 
-  describe('incomplete', function () {
-    it('should find 1', function () {
+  describe('incomplete', () => {
+    it('should find 1', () => {
       assert.lengthOf(results.incomplete[0].nodes, 1);
     });
 
-    it('should find #incomplete1', function () {
+    it('should find #incomplete1', () => {
       assert.deepEqual(results.incomplete[0].nodes[0].target, ['#incomplete1']);
     });
   });

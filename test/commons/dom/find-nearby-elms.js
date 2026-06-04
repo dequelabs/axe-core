@@ -5,7 +5,7 @@ describe('findNearbyElms', () => {
 
   function getIds(vNodeList) {
     const ids = [];
-    vNodeList.forEach(function (vNode) {
+    vNodeList.forEach(vNode => {
       if (vNode.props.id && vNode.props.id !== 'fixture') {
         ids.push(vNode.props.id);
       }
@@ -16,16 +16,16 @@ describe('findNearbyElms', () => {
   describe('in the viewport', () => {
     beforeEach(() => {
       fixture = fixtureSetup(
-        '<div id="n0" style="height:30px; margin-bottom:30px;">0</div>' +
-          '<div id="n1" style="height:30px; margin-bottom:30px;">1</div>' +
-          '<div id="n2" style="height:30px; margin-bottom:30px;">2</div>' +
-          '<div id="n3" style="height:30px; margin-bottom:30px;">3</div>' +
-          '<div id="n4" style="height:30px; margin-bottom:30px;">4</div>' +
-          '<div id="n5" style="height:30px; margin-bottom:30px;">5</div>' +
-          '<div id="n6" style="height:30px; margin-bottom:30px;">6</div>' +
-          '<div id="n7" style="height:30px; margin-bottom:30px;">7</div>' +
-          '<div id="n8" style="height:30px; margin-bottom:30px;">8</div>' +
-          '<div id="n9" style="height:30px; margin-bottom:30px;">9</div>'
+        `<div id="n0" style="height:30px; margin-bottom:30px;">0</div>` +
+          `<div id="n1" style="height:30px; margin-bottom:30px;">1</div>` +
+          `<div id="n2" style="height:30px; margin-bottom:30px;">2</div>` +
+          `<div id="n3" style="height:30px; margin-bottom:30px;">3</div>` +
+          `<div id="n4" style="height:30px; margin-bottom:30px;">4</div>` +
+          `<div id="n5" style="height:30px; margin-bottom:30px;">5</div>` +
+          `<div id="n6" style="height:30px; margin-bottom:30px;">6</div>` +
+          `<div id="n7" style="height:30px; margin-bottom:30px;">7</div>` +
+          `<div id="n8" style="height:30px; margin-bottom:30px;">8</div>` +
+          `<div id="n9" style="height:30px; margin-bottom:30px;">9</div>`
       );
     });
 
@@ -43,9 +43,9 @@ describe('findNearbyElms', () => {
   describe('on the edge', () => {
     beforeEach(() => {
       fixture = fixtureSetup(
-        '<div id="n0" style="position: fixed; top:-31px; height: 60px">0</div>' +
-          '<div id="n1" style="position: fixed; top:-31px; height: 30px">1</div>' +
-          '<div id="n2" style="position: fixed; top:0; height: 30px">2</div>'
+        `<div id="n0" style="position: fixed; top:-31px; height: 60px">0</div>` +
+          `<div id="n1" style="position: fixed; top:-31px; height: 30px">1</div>` +
+          `<div id="n2" style="position: fixed; top:0; height: 30px">2</div>`
       );
     });
 
@@ -68,12 +68,12 @@ describe('findNearbyElms', () => {
   describe('when some nodes are fixed', () => {
     beforeEach(() => {
       fixture = fixtureSetup(
-        '<div style=" position: fixed;" id="n0">' +
-          '  <div id="n1" style="height:30px;">1</div>' +
-          '  <div id="n2" style="height:30px;">2</div>' +
-          '</div>' +
-          '<div id="n3" style="height:30px;">3</div>' +
-          '<div id="n4" style="height:30px;">4</div>'
+        `<div style=" position: fixed;" id="n0">` +
+          `<div id="n1" style="height:30px;">1</div>` +
+          `<div id="n2" style="height:30px;">2</div>` +
+          `</div>` +
+          `<div id="n3" style="height:30px;">3</div>` +
+          `<div id="n4" style="height:30px;">4</div>`
       );
     });
 

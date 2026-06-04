@@ -1,23 +1,27 @@
 describe('axe.utils.contains', () => {
+  const html = axe.testUtils.html;
   const fixture = document.getElementById('fixture');
   const { fixtureSetup, createNestedShadowDom } = axe.testUtils;
 
   it('is true when the first node is an ancestor', () => {
-    const tree = fixtureSetup(`<section> <img> </section>`);
+    const tree = fixtureSetup(html`<section><img /></section>`);
     const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
     assert.isTrue(axe.utils.contains(node1, node2));
   });
 
   it('is false when the first node is a descendant', () => {
-    const tree = fixtureSetup(`<section> <img> </section>`);
+    const tree = fixtureSetup(html`<section><img /></section>`);
     const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'section')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
   });
 
   it('is false when the nodes are siblings', () => {
-    const tree = fixtureSetup(`<section></section> <img>`);
+    const tree = fixtureSetup(
+      html`<section></section>
+        <img />`
+    );
     const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'section')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
@@ -25,13 +29,16 @@ describe('axe.utils.contains', () => {
   });
 
   it('is true when the passed the same node', () => {
-    const tree = fixtureSetup(`<img>`);
+    const tree = fixtureSetup(html`<img />`);
     const node = axe.utils.querySelectorAll(tree, 'img')[0];
     assert.isTrue(axe.utils.contains(node, node));
   });
 
   it('is false when the nodes are cousins', () => {
-    const tree = fixtureSetup(`<section> <input> </section> <img>`);
+    const tree = fixtureSetup(
+      html`<section><input /></section>
+        <img />`
+    );
     const node1 = axe.utils.querySelectorAll(tree, 'input')[0];
     const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
@@ -44,7 +51,7 @@ describe('axe.utils.contains', () => {
       const node2 = { actualNode: 'not really a node but it doesnt matter' };
       const node1 = {
         actualNode: {
-          contains: function (n2) {
+          contains: n2 => {
             success = true;
             assert.deepEqual(n2, node2.actualNode);
           },
@@ -72,8 +79,8 @@ describe('axe.utils.contains', () => {
     it('works when nodes are in the same tree', () => {
       createNestedShadowDom(
         fixture,
-        `<div id="shadowHost"></div>`,
-        `<section> <img> </section>`
+        html`<div id="shadowHost"></div>`,
+        html`<section><img /></section>`
       );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
@@ -85,8 +92,8 @@ describe('axe.utils.contains', () => {
     it('works when the nodes are in nested trees', () => {
       createNestedShadowDom(
         fixture,
-        `<section id="shadowHost"></section>`,
-        `<div> <img> </div>`
+        html`<section id="shadowHost"></section>`,
+        html`<div><img /></div>`
       );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
@@ -98,10 +105,10 @@ describe('axe.utils.contains', () => {
     it('works when the nodes are in nested multiple layers deep', () => {
       createNestedShadowDom(
         fixture,
-        `<main id="shadowHost"></main>`,
+        html`<main id="shadowHost"></main>`,
         '<article> <div id="shadowHost"></div> </article>',
         '<section> <div id="shadowHost"></div> </section>',
-        `<div> <img> </div>`
+        html`<div><img /></div>`
       );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'main')[0];
@@ -114,12 +121,12 @@ describe('axe.utils.contains', () => {
       createNestedShadowDom(
         fixture,
         '<div id="firstHost" class="shadowHost"></div>',
-        `<img>`
+        html`<img />`
       );
       createNestedShadowDom(
         fixture,
         '<div id="secondHost" class="shadowHost"></div>',
-        `<input>`
+        html`<input />`
       );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
@@ -132,8 +139,8 @@ describe('axe.utils.contains', () => {
     it('works with slotted elements inside shadow DOM', () => {
       createNestedShadowDom(
         fixture,
-        `<div id="shadowHost"> <img> </div>`,
-        `<section> <slot /> </section>`
+        html`<div id="shadowHost"><img /></div>`,
+        html`<section><slot /></section>`
       );
       const tree = axe.setup(fixture);
       const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
