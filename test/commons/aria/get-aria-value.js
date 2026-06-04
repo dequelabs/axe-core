@@ -1,6 +1,7 @@
 describe('aria.getAriaValue', () => {
   const { queryFixture, fixture, html } = axe.testUtils;
   const getAriaValue = axe.commons.aria.getAriaValue;
+  const SerialVirtualNode = axe.SerialVirtualNode;
 
   it('returns the aria attribute value', () => {
     const vNode = queryFixture(
@@ -158,6 +159,18 @@ describe('aria.getAriaValue', () => {
         source: 'property'
       });
     });
+
+    it('returns empty string if value is empty', () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-activedescendant=""></div>`
+      );
+
+      const result = getAriaValue(vNode, 'aria-activedescendant');
+      assert.deepEqual(result, {
+        value: '',
+        source: 'attribute'
+      });
+    });
   });
 
   describe('idrefs', () => {
@@ -191,6 +204,18 @@ describe('aria.getAriaValue', () => {
         source: 'property'
       });
     });
+
+    it('returns empty string if value is empty', () => {
+      const vNode = queryFixture(
+        html`<div id="target" aria-labelledby=""></div>`
+      );
+
+      const result = getAriaValue(vNode, 'aria-labelledby');
+      assert.deepEqual(result, {
+        value: '',
+        source: 'attribute'
+      });
+    });
   });
 
   describe('options', () => {
@@ -204,6 +229,88 @@ describe('aria.getAriaValue', () => {
           lowercase: true
         });
         assert.equal(value, 'true');
+      });
+    });
+  });
+
+  describe('SerialVirtualNode', () => {
+    it('returns the aria attribute value', () => {
+      // SerialVirtualNode will not support `props` or `elementInternals` so everything must be part of the `attributes`` property
+      const vNode = new SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-label': 'hello'
+        }
+      });
+
+      const result = getAriaValue(vNode, 'aria-label');
+      assert.deepEqual(result, {
+        value: 'hello',
+        source: 'attribute'
+      });
+    });
+
+    describe('idref', () => {
+      it('works with idref', () => {
+        const vNode = new SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-activedescendant': 'child'
+          }
+        });
+
+        const result = getAriaValue(vNode, 'aria-activedescendant');
+        assert.deepEqual(result, {
+          value: 'child',
+          source: 'attribute'
+        });
+      });
+
+      it('returns empty string if value is empty', () => {
+        const vNode = new SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-activedescendant': ''
+          }
+        });
+
+        const result = getAriaValue(vNode, 'aria-activedescendant');
+        assert.deepEqual(result, {
+          value: '',
+          source: 'attribute'
+        });
+      });
+    });
+
+    describe('idrefs', () => {
+      it('works with idrefs', () => {
+        const vNode = new SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-labelledby': 'label'
+          }
+        });
+
+        const result = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(result, {
+          value: 'label',
+          source: 'attribute'
+        });
+      });
+
+      it('returns empty string if value is empty', () => {
+        const vNode = new SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-labelledby': ''
+          }
+        });
+
+        const result = getAriaValue(vNode, 'aria-labelledby');
+        assert.deepEqual(result, {
+          value: '',
+          source: 'attribute'
+        });
       });
     });
   });
