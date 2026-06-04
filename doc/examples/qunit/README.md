@@ -16,7 +16,7 @@ result from HTML with a single error.
 ## To run the example
 
 - Move to the `doc/examples/qunit` directory
-- `npm test` to run QUnit in a headless browser (Puppeteer)
+- Open `test/test.html` in a browser, or run `npm test` for headless Chromium via [node-qunit-puppeteer](https://www.npmjs.com/package/node-qunit-puppeteer)
 
 You should see output indicating that the tests ran successfully, with zero
 failures.

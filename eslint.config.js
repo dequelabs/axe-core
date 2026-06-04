@@ -394,24 +394,6 @@ module.exports = [
     }
   },
   {
-    // QUnit example runner (Puppeteer); callbacks run in browser context
-    files: ['doc/examples/qunit/**/*.mjs'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.node,
-        ...globals.es2024,
-        window: true,
-        QUnit: true
-      }
-    },
-    rules: {
-      'no-console': 'off',
-      'no-restricted-imports': ['off']
-    }
-  },
-  {
     ignores: [
       '**/node_modules/*',
       '**/tmp/*',
