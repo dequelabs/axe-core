@@ -45,7 +45,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     clean: {
       core: ['dist', 'tmp/core', 'tmp/rules.js', 'axe.js', 'axe.*.js'],
-      tests: ['tmp/integration-tests.js']
+      tests: ['tmp/integration-tests']
     },
     babel: {
       options: {
