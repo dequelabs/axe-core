@@ -235,7 +235,7 @@ describe('aria.getAriaValue', () => {
 
   describe('SerialVirtualNode', () => {
     it('returns the aria attribute value', () => {
-      // SerialVirtualNode will not support `props` or `elementInternals` so everything must be part of the `attributes`` property
+      // SerialVirtualNode will not support `props` or `elementInternals` so everything must be part of the `attributes` property
       const vNode = new SerialVirtualNode({
         nodeName: 'div',
         attributes: {
