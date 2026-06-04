@@ -6,7 +6,7 @@
  *
  * Usage:
  *   npm run test:debug -- --files 'test/core/public/finish-run.js'
- *   The browser opens automatically and shows the Mocha HTML reporter.
+ *   The browser opens after pressing 'D' and shows a link to the test file.
  */
 import baseConfig, { buildChromeLauncher } from './wtr.config.mjs';
 

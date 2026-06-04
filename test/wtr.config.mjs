@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import net from 'net';
-import { defaultReporter } from '@web/test-runner';
+import { summaryReporter } from '@web/test-runner';
 import { Builder } from 'selenium-webdriver';
 import {
   Options as ChromeOptions,
@@ -90,7 +90,7 @@ class DirectSeleniumLauncher {
     const navigate = this._chain.then(() => this.driver.navigate().to(url));
 
     // The chain advances only after this session finishes (stopSession resolves sessionDone)
-    this._chain = navigate.then(() => sessionDone).catch(() => {});
+    this._chain = navigate.then(() => sessionDone);
 
     // startSession resolves once navigation is done; WTR then waits for WebSocket results
     return navigate;
@@ -268,26 +268,8 @@ const testRunnerHtml = testFramework => /* html */ `
 </html>
 `;
 
-// Suppress 404 noise from the default reporter — tests intentionally fetch
-// missing assets and those errors are not useful in the output.
-const base = defaultReporter();
-const reporters = [
-  {
-    ...base,
-    reportTestFileResults(args) {
-      return base.reportTestFileResults({
-        ...args,
-        sessionsForTestFile: args.sessionsForTestFile.map(s => ({
-          ...s,
-          request404s: []
-        }))
-      });
-    }
-  }
-];
-
 const sharedConfig = {
-  reporters,
+  reporters: [summaryReporter()],
 
   testFramework: {
     config: {
@@ -308,8 +290,6 @@ const sharedConfig = {
 };
 
 // Default files when no --files flag is passed on the CLI.
-// Integration tests are excluded here because they require a separate build step
-// (npm run build:integration-tests); run them via npm run test:unit:integration.
 const defaultFiles = [
   'test/core/**/*.js',
   'test/commons/**/*.js',
@@ -317,7 +297,8 @@ const defaultFiles = [
   'test/checks/**/*.js',
   'test/integration/api/**/*.js',
   'test/integration/virtual-rules/**/*.js',
-  'test/gather-internals/**/*.js'
+  'test/gather-internals/**/*.js',
+  'tmp/integration-tests/**/*.js'
 ];
 
 function findAvailablePort(startPort) {

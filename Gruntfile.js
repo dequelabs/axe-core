@@ -272,7 +272,7 @@ module.exports = function (grunt) {
       },
       tests: {
         options: { spawn: false },
-        files: ['test/**/*'],
+        files: ['test/**/*', '!test/integration/full/**/*'],
         tasks: ['test']
       }
     },

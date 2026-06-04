@@ -90,7 +90,7 @@
     "test:unit:rule-matches": "web-test-runner --config test/wtr.config.mjs --files 'test/rule-matches/**/*.js'",
     "test:unit:checks": "web-test-runner --config test/wtr.config.mjs --files 'test/checks/**/*.js'",
     "test:unit:api": "web-test-runner --config test/wtr.config.mjs --files 'test/integration/api/**/*.js'",
-    "test:unit:integration": "npm run build:integration-tests && web-test-runner --config test/wtr.config.mjs --files 'tmp/integration-tests/**/*.test.js'",
+    "test:unit:integration": "web-test-runner --config test/wtr.config.mjs --files 'tmp/integration-tests/**/*.test.js'",
     "test:unit:virtual-rules": "web-test-runner --config test/wtr.config.mjs --files 'test/integration/virtual-rules/**/*.js'",
     "test:unit:gather-internals": "web-test-runner --config test/wtr.config.mjs --files 'test/gather-internals/**/*.js'",
     "integration": "node test/integration/full/test-webdriver.js",
@@ -119,6 +119,7 @@
     "prepare": "husky && npm run patch",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
+    "pretest:unit:integration": "npm run build:integration-tests",
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
