@@ -16,7 +16,8 @@ describe('axe.getRules', () => {
           id: 'awesomeRule2',
           any: [],
           tags: ['tag1', 'tag2'],
-          actIds: ['abc123', 'xyz789']
+          actIds: ['abc123', 'xyz789'],
+          enabled: false
         }
       ],
       data: {
@@ -101,6 +102,13 @@ describe('axe.getRules', () => {
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
     assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
+  });
+
+  it('should return the enabled state of each rule', () => {
+    const retValue = axe.getRules();
+    assert.lengthOf(retValue, 2);
+    assert.equal(retValue[0].enabled, true);
+    assert.equal(retValue[1].enabled, false);
   });
 
   it('should return all rules if given empty array', () => {

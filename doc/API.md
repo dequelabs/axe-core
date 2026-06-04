@@ -137,7 +137,7 @@ Returns a list of all rules with their ID and description
 
 - `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules. See [axe-core tags](#axe-core-tags).
 
-**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>}`
+**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>, enabled: <boolean>}`. `enabled` is `true` for rules that run by default when `axe.run()` is called with no options, and `false` for rules that are disabled by default.
 
 #### Example 1
 
@@ -163,7 +163,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "section508",
       "section508.22.a"
     ],
-    actIds: ['c487ae']
+    actIds: ['c487ae'],
+    enabled: true
   },
   {
     description: "Ensure ARIA attributes are allowed for an element's role",
@@ -174,7 +175,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "cat.aria",
       "wcag2a",
       "wcag412"
-    ]
+    ],
+    enabled: true
   }
   …
 ]

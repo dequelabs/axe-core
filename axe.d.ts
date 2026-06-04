@@ -334,7 +334,7 @@ declare namespace axe {
     matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
     actIds?: string[];
-    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds' | 'enabled'>;
   }
   interface AxePlugin {
     id: string;
@@ -352,6 +352,7 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
     actIds?: string[];
+    enabled: boolean;
   }
   interface SerialDqElement {
     source: string;
