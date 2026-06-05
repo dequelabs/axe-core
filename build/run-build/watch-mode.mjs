@@ -1,17 +1,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { root } from './root.mjs';
-import { runFullBuild } from './full-build.mjs';
 import {
   RULE_SPEC_JSON_RE,
   WATCH_DEBOUNCE_MS,
   WATCH_HTTP_PORT,
+  WATCH_MAX_AUTO_TESTS,
   hasUnitTestForLibFile,
+  isActiveBuild,
+  isActiveTest,
   isTcpPortListening,
-  killActiveKarma,
+  killActiveBuild,
+  killActiveTest,
   projectRelPath,
   resolvedIntegrationRuleJsonForLibRuleSpec,
-  runKarmaUnitTests,
+  resolvedUnitTestPathForLibFile,
+  runFullBuildSubprocess,
+  runUnitTests,
   spawnWatchHttpServer,
   waitForTcpPortListening
 } from './watch-helpers.mjs';
@@ -49,25 +54,36 @@ function analyzeLibBuildChanges(projectRoot, changedPaths) {
   }
 
   const testableChanges = libSourceChanges.length + ruleSpecChanges.length;
-  const skipTests = testableChanges > 1;
+  const skipTests = testableChanges > WATCH_MAX_AUTO_TESTS;
 
-  let willRunLibTest = false;
-  let libAbsPath = null;
-  if (!skipTests && libSourceChanges.length === 1) {
-    libAbsPath = libSourceChanges[0].absPath;
-    willRunLibTest = hasUnitTestForLibFile(projectRoot, libAbsPath);
-  }
-
-  let willRunRuleIntegration = false;
-  let ruleIntegrationTestPath = null;
-  if (!skipTests && ruleSpecChanges.length === 1) {
-    ruleIntegrationTestPath = resolvedIntegrationRuleJsonForLibRuleSpec(
-      projectRoot,
-      ruleSpecChanges[0].rel
-    );
-    willRunRuleIntegration = Boolean(
-      ruleIntegrationTestPath && fs.existsSync(ruleIntegrationTestPath)
-    );
+  /** @type {string[]} */
+  const testPaths = [];
+  if (!skipTests) {
+    const seen = new Set();
+    for (const { absPath } of libSourceChanges) {
+      if (!hasUnitTestForLibFile(projectRoot, absPath)) {
+        continue;
+      }
+      const testPath = resolvedUnitTestPathForLibFile(projectRoot, absPath);
+      if (testPath && !seen.has(testPath)) {
+        seen.add(testPath);
+        testPaths.push(testPath);
+      }
+    }
+    for (const { rel } of ruleSpecChanges) {
+      const integrationPath = resolvedIntegrationRuleJsonForLibRuleSpec(
+        projectRoot,
+        rel
+      );
+      if (
+        integrationPath &&
+        fs.existsSync(integrationPath) &&
+        !seen.has(integrationPath)
+      ) {
+        seen.add(integrationPath);
+        testPaths.push(integrationPath);
+      }
+    }
   }
 
   const rels = changedPaths
@@ -75,25 +91,22 @@ function analyzeLibBuildChanges(projectRoot, changedPaths) {
     .map(p => projectRelPath(projectRoot, p));
 
   let plan = 'rebuild';
-  if (skipTests && testableChanges > 1) {
+  if (skipTests) {
     plan = 'rebuild (batch; skip tests)';
-  } else if (willRunLibTest) {
-    plan = 'rebuild + unit test';
-  } else if (willRunRuleIntegration) {
-    plan = 'rebuild + rule integration';
-  } else if (libSourceChanges.length === 1) {
+  } else if (testPaths.length === 1) {
+    plan = testPaths[0].replace(/\\/g, '/').includes('/integration/')
+      ? 'rebuild + rule integration'
+      : 'rebuild + unit test';
+  } else if (testPaths.length > 1) {
+    plan = `rebuild + unit tests (${testPaths.length} files)`;
+  } else if (testableChanges === 1) {
     plan = 'rebuild (no test file)';
-  } else if (ruleSpecChanges.length === 1) {
-    plan = 'rebuild (no integration test)';
   }
 
   return {
     rels,
     plan,
-    willRunLibTest,
-    libAbsPath,
-    willRunRuleIntegration,
-    ruleIntegrationTestPath
+    testPaths
   };
 }
 
@@ -133,150 +146,241 @@ export async function runWatchMode(parsed) {
     );
   }
 
+  let shuttingDown = false;
+  let shutdownExitCode = 128 + 2;
+  let forceExitOnSigint = false;
+  let workSuperseded = false;
+
+  let pipelineRunning = false;
+  let pipelineScheduled = false;
+  let needsInitialBuild = true;
+  /** @type {string[] | null} */
+  let inFlightLibPaths = null;
+  /** @type {Set<string>} */
+  let libBatch = new Set();
+  /** @type {Set<string>} */
+  let testBatch = new Set();
+  let pipelineTimer = null;
+
   const onWatchExit = () => {
-    killActiveKarma();
+    shuttingDown = true;
+    if (pipelineTimer) {
+      clearTimeout(pipelineTimer);
+      pipelineTimer = null;
+    }
+    killActiveTest();
+    killActiveBuild();
     stopWatchHttpServer();
   };
-  process.once('SIGINT', () => {
+
+  const handlePipelineError = err => {
+    if (shuttingDown || workSuperseded) {
+      return;
+    }
+    console.error(err);
+    process.exitCode = 1;
+  };
+
+  const exitIfShuttingDown = () => {
+    if (shuttingDown) {
+      process.exit(process.exitCode || shutdownExitCode);
+    }
+  };
+
+  const supersedeInFlightLibWork = () => {
+    if (!inFlightLibPaths?.length) {
+      return;
+    }
+    for (const changedPath of inFlightLibPaths) {
+      libBatch.add(changedPath);
+    }
+  };
+
+  process.on('SIGINT', () => {
+    shutdownExitCode = 128 + 2;
+    if (forceExitOnSigint) {
+      process.exit(shutdownExitCode);
+    }
+    forceExitOnSigint = true;
     onWatchExit();
-    process.exit(128 + 2);
+    if (!pipelineRunning) {
+      process.exit(shutdownExitCode);
+    }
   });
   process.once('SIGTERM', () => {
+    shutdownExitCode = 128 + 15;
     onWatchExit();
-    process.exit(143);
+    if (!pipelineRunning) {
+      process.exit(shutdownExitCode);
+    }
   });
   process.on('exit', onWatchExit);
 
-  let libBuildRunning = false;
-  let libBuildPending = false;
-  /** @type {Set<string>} */
-  let libBuildBatch = new Set();
-  let libBuildTimer = null;
-
-  let testRunning = false;
-  let testPending = false;
-  /** @type {Set<string>} */
-  let testBatch = new Set();
-  let testTimer = null;
-
   const runLibBuildBatch = async changedPaths => {
-    const {
-      rels,
-      plan,
-      willRunLibTest,
-      libAbsPath,
-      willRunRuleIntegration,
-      ruleIntegrationTestPath
-    } = analyzeLibBuildChanges(root, changedPaths);
-
-    if (rels.length) {
-      const label =
-        rels.length > 3 ? `${rels.slice(0, 3).join(', ')}…` : rels.join(', ');
-      console.log(`${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`);
-    }
-
-    await runFullBuild(parsed);
-
+    inFlightLibPaths = changedPaths;
     try {
-      const { notify } = await import('node-notifier');
-      notify({
-        title: 'Axe-core',
-        message: 'Build complete',
-        sound: 'Pop',
-        timeout: 2
-      });
-    } catch {
-      /* optional */
-    }
+      const { rels, plan, testPaths } = analyzeLibBuildChanges(
+        root,
+        changedPaths
+      );
 
-    if (willRunLibTest && libAbsPath) {
-      await runKarmaUnitTests(root, libAbsPath);
-    }
-    if (willRunRuleIntegration && ruleIntegrationTestPath) {
-      await runKarmaUnitTests(root, ruleIntegrationTestPath);
+      if (rels.length) {
+        const label =
+          rels.length > 3 ? `${rels.slice(0, 3).join(', ')}…` : rels.join(', ');
+        console.log(
+          `${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`
+        );
+      }
+
+      await runFullBuildSubprocess(root, parsed);
+
+      if (shuttingDown) {
+        return;
+      }
+      if (workSuperseded) {
+        workSuperseded = false;
+        return;
+      }
+
+      try {
+        const { notify } = await import('node-notifier');
+        notify({
+          title: 'Axe-core',
+          message: 'Build complete',
+          sound: 'Pop',
+          timeout: 2
+        });
+      } catch {
+        /* optional */
+      }
+
+      if (testPaths.length > 0) {
+        await runUnitTests(root, testPaths);
+      }
+    } finally {
+      inFlightLibPaths = null;
     }
   };
 
-  const flushLibBuildBatch = async () => {
-    libBuildTimer = null;
-    if (libBuildRunning) {
-      libBuildPending = true;
+  const runTestOnlyBatch = async paths => {
+    const rels = paths.map(p => projectRelPath(root, p));
+    const label =
+      rels.length > 3 ? `${rels.slice(0, 3).join(', ')}…` : rels.join(', ');
+    const plan =
+      paths.length > 1 ? `unit tests (${paths.length} files)` : 'unit test';
+    console.log(`${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`);
+    const absPaths = paths.map(p =>
+      path.resolve(path.isAbsolute(p) ? p : path.join(root, p))
+    );
+    await runUnitTests(root, absPaths);
+  };
+
+  const handleSupersededWork = () => {
+    if (!workSuperseded) {
+      return false;
+    }
+    workSuperseded = false;
+    return true;
+  };
+
+  const flushPipeline = async () => {
+    pipelineTimer = null;
+    if (pipelineRunning) {
+      pipelineScheduled = true;
       return;
     }
-    libBuildRunning = true;
+    pipelineRunning = true;
     try {
-      do {
-        libBuildPending = false;
-        const paths = Array.from(libBuildBatch);
-        libBuildBatch = new Set();
-        try {
-          await runLibBuildBatch(paths);
-        } catch (e) {
-          console.error(e);
-          process.exitCode = 1;
+      while (!shuttingDown) {
+        if (needsInitialBuild) {
+          needsInitialBuild = false;
+          try {
+            await runLibBuildBatch([]);
+          } catch (e) {
+            if (handleSupersededWork()) {
+              continue;
+            }
+            handlePipelineError(e);
+          }
+          continue;
         }
-      } while (libBuildPending || libBuildBatch.size > 0);
+        if (libBatch.size > 0) {
+          const paths = Array.from(libBatch);
+          libBatch = new Set();
+          try {
+            await runLibBuildBatch(paths);
+          } catch (e) {
+            if (handleSupersededWork()) {
+              continue;
+            }
+            handlePipelineError(e);
+          }
+          continue;
+        }
+        if (testBatch.size > 0) {
+          const paths = Array.from(testBatch);
+          testBatch = new Set();
+          try {
+            await runTestOnlyBatch(paths);
+          } catch (e) {
+            if (handleSupersededWork()) {
+              continue;
+            }
+            handlePipelineError(e);
+          }
+          continue;
+        }
+        break;
+      }
     } finally {
-      libBuildRunning = false;
+      pipelineRunning = false;
+      if (pipelineScheduled) {
+        pipelineScheduled = false;
+        flushPipeline();
+      } else {
+        exitIfShuttingDown();
+      }
     }
+  };
+
+  const schedulePipeline = () => {
+    if (shuttingDown) {
+      return;
+    }
+    if (pipelineTimer) {
+      clearTimeout(pipelineTimer);
+    }
+    pipelineTimer = setTimeout(flushPipeline, WATCH_DEBOUNCE_MS);
   };
 
   const scheduleLibBuild = changedPath => {
     if (changedPath) {
-      libBuildBatch.add(changedPath);
+      libBatch.add(changedPath);
     }
-    if (libBuildTimer) {
-      clearTimeout(libBuildTimer);
-    }
-    libBuildTimer = setTimeout(flushLibBuildBatch, WATCH_DEBOUNCE_MS);
-  };
-
-  const flushTestBatch = async () => {
-    testTimer = null;
-    if (testRunning) {
-      testPending = true;
-      return;
-    }
-    testRunning = true;
-    try {
-      do {
-        testPending = false;
-        const paths = Array.from(testBatch);
-        testBatch = new Set();
-        if (!paths.length) {
-          continue;
-        }
-        const rels = paths.map(p => projectRelPath(root, p));
-        const label =
-          rels.length > 3 ? `${rels.slice(0, 3).join(', ')}…` : rels.join(', ');
-        const plan =
-          paths.length > 1 ? `unit tests (${paths.length} files)` : 'unit test';
+    if (
+      pipelineRunning &&
+      (isActiveBuild() || (isActiveTest() && inFlightLibPaths))
+    ) {
+      workSuperseded = true;
+      supersedeInFlightLibWork();
+      if (parsed.log && isActiveBuild()) {
         console.log(
-          `${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`
+          `${chalk.dim('watch:')} cancelling build (superseded by new changes)`
         );
-        try {
-          const absPaths = paths.map(p =>
-            path.resolve(path.isAbsolute(p) ? p : path.join(root, p))
-          );
-          await runKarmaUnitTests(root, absPaths);
-        } catch (e) {
-          console.error(e);
-          process.exitCode = 1;
-        }
-      } while (testPending || testBatch.size > 0);
-    } finally {
-      testRunning = false;
+      }
+      killActiveBuild();
+      if (inFlightLibPaths) {
+        killActiveTest();
+      }
     }
+    schedulePipeline();
   };
 
   const scheduleTestRun = changedPath => {
     if (changedPath) {
       testBatch.add(changedPath);
     }
-    if (testTimer) {
-      clearTimeout(testTimer);
-    }
-    testTimer = setTimeout(flushTestBatch, WATCH_DEBOUNCE_MS);
+    schedulePipeline();
   };
 
   chokidar
@@ -312,7 +416,7 @@ export async function runWatchMode(parsed) {
     });
 
   try {
-    await flushLibBuildBatch();
+    await flushPipeline();
     await new Promise(() => {});
   } catch (e) {
     onWatchExit();

@@ -10,14 +10,85 @@ export const WATCH_HTTP_PORT = 9876;
 
 export const WATCH_DEBOUNCE_MS = 400;
 
-/** @type {import('node:child_process').ChildProcess | null} */
-let activeKarmaChild = null;
+/** Above this many lib/rule changes in one batch, skip auto-tests (e.g. branch swap). */
+export const WATCH_MAX_AUTO_TESTS = 10;
 
-export function killActiveKarma() {
-  if (activeKarmaChild && !activeKarmaChild.killed) {
-    activeKarmaChild.kill('SIGTERM');
-    activeKarmaChild = null;
+/** @type {import('node:child_process').ChildProcess | null} */
+let activeTestChild = null;
+
+/** @type {import('node:child_process').ChildProcess | null} */
+let activeBuildChild = null;
+
+export function killActiveTest() {
+  if (activeTestChild && !activeTestChild.killed) {
+    activeTestChild.kill('SIGTERM');
+    activeTestChild = null;
   }
+}
+
+export function killActiveBuild() {
+  if (activeBuildChild && !activeBuildChild.killed) {
+    activeBuildChild.kill('SIGTERM');
+    activeBuildChild = null;
+  }
+}
+
+/** @returns {boolean} */
+export function isActiveBuild() {
+  return activeBuildChild !== null && !activeBuildChild.killed;
+}
+
+/** @returns {boolean} */
+export function isActiveTest() {
+  return activeTestChild !== null && !activeTestChild.killed;
+}
+
+/**
+ * Run a full build in a child process so watch mode can terminate it on SIGINT.
+ * @param {string} projectRoot
+ * @param {ReturnType<import('./argv.mjs').parseBuildArgv>} parsed
+ * @returns {Promise<void>}
+ */
+export function runFullBuildSubprocess(projectRoot, parsed) {
+  return new Promise((resolve, reject) => {
+    killActiveBuild();
+    const buildScript = path.join(projectRoot, 'build/run-build.mjs');
+    const args = [buildScript, 'build'];
+    if (parsed.log) {
+      args.push('--log');
+    }
+    if (parsed.allLang) {
+      args.push('--all-lang');
+    }
+    if (parsed.lang) {
+      args.push(`--lang=${parsed.lang}`);
+    }
+    if (parsed.tags) {
+      args.push(`--tags=${parsed.tags}`);
+    }
+    const child = spawn(process.execPath, args, {
+      cwd: projectRoot,
+      stdio: 'inherit',
+      env: { ...process.env }
+    });
+    activeBuildChild = child;
+    child.on('error', err => {
+      activeBuildChild = null;
+      reject(err);
+    });
+    child.on('exit', (code, signal) => {
+      activeBuildChild = null;
+      if (signal) {
+        reject(new Error(`Build terminated by ${signal}`));
+        return;
+      }
+      if (code !== 0) {
+        reject(new Error(`Build failed with exit code ${code}`));
+        return;
+      }
+      resolve();
+    });
+  });
 }
 
 /**
@@ -25,14 +96,14 @@ export function killActiveKarma() {
  * @param {string | string[]} testAbsPaths
  * @returns {Promise<void>}
  */
-export function runKarmaUnitTests(projectRoot, testAbsPaths) {
+export function runUnitTests(projectRoot, testAbsPaths) {
   const paths = [].concat(testAbsPaths);
   const testFilesValue = paths
-    .map(p => karmaTestFilesArg(projectRoot, p))
+    .map(p => unitTestFilesArg(projectRoot, p))
     .join(',');
 
   return new Promise((resolve, reject) => {
-    killActiveKarma();
+    killActiveTest();
     const child = spawn(
       'npm',
       ['run', 'test:unit', '--', `testFiles=${testFilesValue}`],
@@ -42,13 +113,13 @@ export function runKarmaUnitTests(projectRoot, testAbsPaths) {
         env: { ...process.env }
       }
     );
-    activeKarmaChild = child;
+    activeTestChild = child;
     child.on('error', err => {
-      activeKarmaChild = null;
+      activeTestChild = null;
       reject(err);
     });
     child.on('exit', (code, signal) => {
-      activeKarmaChild = null;
+      activeTestChild = null;
       if (signal) {
         reject(new Error(`Unit tests terminated by ${signal}`));
         return;
@@ -80,10 +151,10 @@ export function projectRelPath(projectRoot, changedPath) {
 }
 
 /**
- * Same mapping as `test/karma.conf.js` (testFiles branch) for lib sources.
+ * Same mapping as the unit test runner `testFiles` option for lib sources.
  * @param {string} projectRoot
  * @param {string} libAbsPath
- * @returns {string | null} Absolute path to the test file Karma would load
+ * @returns {string | null} Absolute path to the unit test file for a lib source
  */
 export function resolvedUnitTestPathForLibFile(projectRoot, libAbsPath) {
   const rel = path
@@ -141,13 +212,13 @@ export function resolvedIntegrationRuleJsonForLibRuleSpec(
 }
 
 /**
- * Karma preprocessors in `test/karma.conf.js` use repo-relative globs; pass
- * `testFiles=` as a project-relative `/` path when the file is under the repo.
+ * Unit test `testFiles=` uses repo-relative globs; pass a project-relative `/`
+ * path when the file is under the repo.
  * @param {string} projectRoot
  * @param {string} absolutePath
  * @returns {string}
  */
-export function karmaTestFilesArg(projectRoot, absolutePath) {
+export function unitTestFilesArg(projectRoot, absolutePath) {
   const rel = path
     .relative(path.resolve(projectRoot), path.resolve(absolutePath))
     .replace(/\\/g, '/');
@@ -197,7 +268,7 @@ export async function waitForTcpPortListening(port, opts = {}) {
 }
 
 /**
- * Same flags as `npm start` in package.json (http-server for Karma / integration).
+ * Same flags as `npm start` in package.json (http-server for unit tests / integration).
  * @param {string} projectRoot
  * @returns {import('node:child_process').ChildProcess}
  */
