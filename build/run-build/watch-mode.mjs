@@ -1,114 +1,21 @@
-import fs from 'node:fs';
 import path from 'node:path';
+import { analyzeLibBuildChanges } from './analyze-lib-build-changes.mjs';
 import { root } from './root.mjs';
+import { createWatchPipeline } from './watch-pipeline.mjs';
 import {
-  RULE_SPEC_JSON_RE,
   WATCH_DEBOUNCE_MS,
   WATCH_HTTP_PORT,
-  WATCH_MAX_AUTO_TESTS,
-  hasUnitTestForLibFile,
   isActiveBuild,
   isActiveTest,
   isTcpPortListening,
   killActiveBuild,
   killActiveTest,
   projectRelPath,
-  resolvedIntegrationRuleJsonForLibRuleSpec,
-  resolvedUnitTestPathForLibFile,
   runFullBuildSubprocess,
   runUnitTests,
   spawnWatchHttpServer,
   waitForTcpPortListening
 } from './watch-helpers.mjs';
-
-/**
- * @param {string} projectRoot
- * @param {string[]} changedPaths
- */
-function analyzeLibBuildChanges(projectRoot, changedPaths) {
-  const libSourceChanges = [];
-  const ruleSpecChanges = [];
-
-  for (const changedPath of changedPaths) {
-    if (!changedPath) {
-      continue;
-    }
-    const absPath = path.resolve(
-      path.isAbsolute(changedPath)
-        ? changedPath
-        : path.join(projectRoot, changedPath)
-    );
-    const norm = absPath.replace(/\\/g, '/');
-    const rel = projectRelPath(projectRoot, changedPath);
-
-    if (norm.endsWith('/lib/core/base/metadata-function-map.js')) {
-      continue;
-    }
-    if (RULE_SPEC_JSON_RE.test(rel)) {
-      ruleSpecChanges.push({ absPath, rel });
-      continue;
-    }
-    if (norm.includes('/lib/')) {
-      libSourceChanges.push({ absPath, rel });
-    }
-  }
-
-  const testableChanges = libSourceChanges.length + ruleSpecChanges.length;
-  const skipTests = testableChanges > WATCH_MAX_AUTO_TESTS;
-
-  /** @type {string[]} */
-  const testPaths = [];
-  if (!skipTests) {
-    const seen = new Set();
-    for (const { absPath } of libSourceChanges) {
-      if (!hasUnitTestForLibFile(projectRoot, absPath)) {
-        continue;
-      }
-      const testPath = resolvedUnitTestPathForLibFile(projectRoot, absPath);
-      if (testPath && !seen.has(testPath)) {
-        seen.add(testPath);
-        testPaths.push(testPath);
-      }
-    }
-    for (const { rel } of ruleSpecChanges) {
-      const integrationPath = resolvedIntegrationRuleJsonForLibRuleSpec(
-        projectRoot,
-        rel
-      );
-      if (
-        integrationPath &&
-        fs.existsSync(integrationPath) &&
-        !seen.has(integrationPath)
-      ) {
-        seen.add(integrationPath);
-        testPaths.push(integrationPath);
-      }
-    }
-  }
-
-  const rels = changedPaths
-    .filter(Boolean)
-    .map(p => projectRelPath(projectRoot, p));
-
-  let plan = 'rebuild';
-  if (skipTests) {
-    plan = 'rebuild (batch; skip tests)';
-  } else if (testPaths.length === 1) {
-    plan = testPaths[0].replace(/\\/g, '/').includes('/integration/')
-      ? 'rebuild + rule integration'
-      : 'rebuild + unit test';
-  } else if (testPaths.length > 1) {
-    plan = `rebuild + unit tests (${testPaths.length} files)`;
-  } else if (testableChanges === 1) {
-    plan = 'rebuild (no test file)';
-  }
-
-  return {
-    rels,
-    plan,
-    testPaths
-  };
-}
 
 /**
  * @param {ReturnType<import('./argv.mjs').parseBuildArgv>} parsed
@@ -148,11 +55,8 @@ export async function runWatchMode(parsed) {
 
   let shuttingDown = false;
   let shutdownExitCode = 128 + 2;
-  let forceExitOnSigint = false;
   let workSuperseded = false;
 
-  let pipelineRunning = false;
-  let pipelineScheduled = false;
   let needsInitialBuild = true;
   /** @type {string[] | null} */
   let inFlightLibPaths = null;
@@ -196,23 +100,20 @@ export async function runWatchMode(parsed) {
     }
   };
 
-  process.on('SIGINT', () => {
-    shutdownExitCode = 128 + 2;
-    if (forceExitOnSigint) {
-      process.exit(shutdownExitCode);
+  const shutdownWatch = code => {
+    if (shuttingDown) {
+      process.exit(code);
     }
-    forceExitOnSigint = true;
+    shutdownExitCode = code;
     onWatchExit();
-    if (!pipelineRunning) {
-      process.exit(shutdownExitCode);
-    }
+    process.exit(code);
+  };
+
+  process.on('SIGINT', () => {
+    shutdownWatch(128 + 2);
   });
   process.once('SIGTERM', () => {
-    shutdownExitCode = 128 + 15;
-    onWatchExit();
-    if (!pipelineRunning) {
-      process.exit(shutdownExitCode);
-    }
+    shutdownWatch(128 + 15);
   });
   process.on('exit', onWatchExit);
 
@@ -283,64 +184,50 @@ export async function runWatchMode(parsed) {
     return true;
   };
 
+  /**
+   * @param {() => Promise<void>} runStep
+   * @returns {Promise<boolean>} true when the step ran (continue the pipeline loop)
+   */
+  const runPipelineStep = async runStep => {
+    try {
+      await runStep();
+    } catch (e) {
+      if (handleSupersededWork()) {
+        return true;
+      }
+      handlePipelineError(e);
+    }
+    return true;
+  };
+
+  /** @returns {Promise<boolean>} false when there is no more queued work */
+  const drainPipelineQueue = async () => {
+    if (needsInitialBuild) {
+      needsInitialBuild = false;
+      return runPipelineStep(() => runLibBuildBatch([]));
+    }
+    if (libBatch.size > 0) {
+      const paths = Array.from(libBatch);
+      libBatch = new Set();
+      return runPipelineStep(() => runLibBuildBatch(paths));
+    }
+    if (testBatch.size > 0) {
+      const paths = Array.from(testBatch);
+      testBatch = new Set();
+      return runPipelineStep(() => runTestOnlyBatch(paths));
+    }
+    return false;
+  };
+
+  const pipeline = createWatchPipeline({
+    drain: drainPipelineQueue,
+    shouldContinue: () => !shuttingDown,
+    onIdle: exitIfShuttingDown
+  });
+
   const flushPipeline = async () => {
     pipelineTimer = null;
-    if (pipelineRunning) {
-      pipelineScheduled = true;
-      return;
-    }
-    pipelineRunning = true;
-    try {
-      while (!shuttingDown) {
-        if (needsInitialBuild) {
-          needsInitialBuild = false;
-          try {
-            await runLibBuildBatch([]);
-          } catch (e) {
-            if (handleSupersededWork()) {
-              continue;
-            }
-            handlePipelineError(e);
-          }
-          continue;
-        }
-        if (libBatch.size > 0) {
-          const paths = Array.from(libBatch);
-          libBatch = new Set();
-          try {
-            await runLibBuildBatch(paths);
-          } catch (e) {
-            if (handleSupersededWork()) {
-              continue;
-            }
-            handlePipelineError(e);
-          }
-          continue;
-        }
-        if (testBatch.size > 0) {
-          const paths = Array.from(testBatch);
-          testBatch = new Set();
-          try {
-            await runTestOnlyBatch(paths);
-          } catch (e) {
-            if (handleSupersededWork()) {
-              continue;
-            }
-            handlePipelineError(e);
-          }
-          continue;
-        }
-        break;
-      }
-    } finally {
-      pipelineRunning = false;
-      if (pipelineScheduled) {
-        pipelineScheduled = false;
-        flushPipeline();
-      } else {
-        exitIfShuttingDown();
-      }
-    }
+    await pipeline.flushPipeline();
   };
 
   const schedulePipeline = () => {
@@ -357,21 +244,19 @@ export async function runWatchMode(parsed) {
     if (changedPath) {
       libBatch.add(changedPath);
     }
-    if (
-      pipelineRunning &&
-      (isActiveBuild() || (isActiveTest() && inFlightLibPaths))
-    ) {
+    if (pipeline.isRunning() && (isActiveBuild() || isActiveTest())) {
       workSuperseded = true;
       supersedeInFlightLibWork();
-      if (parsed.log && isActiveBuild()) {
+      if (parsed.log) {
+        const action = isActiveBuild()
+          ? 'cancelling build'
+          : 'cancelling tests';
         console.log(
-          `${chalk.dim('watch:')} cancelling build (superseded by new changes)`
+          `${chalk.dim('watch:')} ${action} (superseded by new changes)`
         );
       }
       killActiveBuild();
-      if (inFlightLibPaths) {
-        killActiveTest();
-      }
+      killActiveTest();
     }
     schedulePipeline();
   };

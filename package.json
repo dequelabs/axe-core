@@ -119,6 +119,7 @@
     "prepare": "husky && npm run patch",
     "prebuild": "node ./build/check-node-version.mjs",
     "pretest": "node ./build/check-node-version.mjs",
+    "test:build": "node --test build/run-build/*.test.mjs",
     "validate": "node build/run-build.mjs validate",
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
