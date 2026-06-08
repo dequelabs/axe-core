@@ -14,32 +14,22 @@ function makeShadowTreeIDR(node) {
 }
 
 describe('dom.idrefs', () => {
-  const html = axe.testUtils.html;
-
-  const fixture = document.getElementById('fixture');
-
-  afterEach(() => {
-    fixture.innerHTML = '';
-  });
+  const { html, queryFixture, fixture, flatTreeSetup } = axe.testUtils;
+  const idrefs = axe.commons.dom.idrefs;
 
   it('should find referenced nodes by ID', () => {
-    fixture.innerHTML = html`
-      <div aria-cats="target1 target2" id="start"></div>
+    const vNode = queryFixture(html`
+      <div aria-cats="target1 target2" id="target"></div>
       <div id="target1"></div>
       <div id="target2"></div>
-    `;
+    `);
 
-    const start = document.getElementById('start'),
-      expected = [
-        document.getElementById('target1'),
-        document.getElementById('target2')
-      ];
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
 
-    assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
-      expected,
-      'Should find it!'
-    );
+    assert.deepEqual(idrefs(vNode, 'aria-cats'), expected, 'Should find it!');
   });
 
   it('should find only referenced nodes within the current root: shadow DOM', () => {
@@ -47,11 +37,12 @@ describe('dom.idrefs', () => {
     // to specifically test this
     fixture.innerHTML = '<div target="target"><div id="target"></div></div>';
     makeShadowTreeIDR(fixture.firstChild);
+    flatTreeSetup(fixture);
     const start = fixture.firstChild.shadowRoot.querySelector('.parent');
     const expected = [fixture.firstChild.shadowRoot.getElementById('target')];
 
     assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'target'),
+      idrefs(start, 'target'),
       expected,
       'should only find stuff in the shadow DOM'
     );
@@ -63,58 +54,123 @@ describe('dom.idrefs', () => {
     fixture.innerHTML =
       '<div target="target" class="parent"><div id="target"></div></div>';
     makeShadowTreeIDR(fixture.firstChild);
+    flatTreeSetup(fixture);
     const start = fixture.querySelector('.parent');
     const expected = [document.getElementById('target')];
 
     assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'target'),
+      idrefs(start, 'target'),
       expected,
       'should only find stuff in the document'
     );
   });
 
   it('should insert null if a reference is not found', () => {
-    fixture.innerHTML = html`
-      <div aria-cats="target1 target2 target3" id="start"></div>
+    const vNode = queryFixture(html`
+      <div aria-cats="target1 target2 target3" id="target"></div>
       <div id="target1"></div>
       <div id="target2"></div>
-    `;
+    `);
 
-    const start = document.getElementById('start'),
-      expected = [
-        document.getElementById('target1'),
-        document.getElementById('target2'),
-        null
-      ];
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2'),
+      null
+    ];
+
+    assert.deepEqual(idrefs(vNode, 'aria-cats'), expected, 'Should find it!');
+  });
+
+  it('should not fail when extra whitespace is used', () => {
+    const vNode = queryFixture(html`
+      <div
+        aria-cats="     target1
+  target2  target3
+  "
+        id="target"
+      ></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2'),
+      null
+    ];
+
+    assert.deepEqual(idrefs(vNode, 'aria-cats'), expected, 'Should find it!');
+  });
+
+  it('should work with idrefs property', () => {
+    const vNode = queryFixture(html`
+      <div id="target"></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+
+    vNode.actualNode.ariaControlsElements = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
+
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
 
     assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
+      idrefs(vNode, 'aria-controls'),
       expected,
       'Should find it!'
     );
   });
 
-  it('should not fail when extra whitespace is used', () => {
-    fixture.innerHTML = html`
-      <div
-        aria-cats="    	target1 
-  target2  target3 
-  "
-        id="start"
-      ></div>
+  it('should work with idrefs elementInternals', () => {
+    const vNode = queryFixture(html`
+      <testutils-element id="target"></testutils-element>
       <div id="target1"></div>
       <div id="target2"></div>
-    `;
+    `);
 
-    const start = document.getElementById('start'),
-      expected = [
-        document.getElementById('target1'),
-        document.getElementById('target2'),
-        null
-      ];
+    vNode.actualNode._internals.ariaLabelledByElements = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
+
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
 
     assert.deepEqual(
-      axe.commons.dom.idrefs(start, 'aria-cats'),
+      idrefs(vNode, 'aria-labelledby'),
+      expected,
+      'Should find it!'
+    );
+  });
+
+  it('should not insert null if an idrefs property reference is not connected', () => {
+    const vNode = queryFixture(html`
+      <div id="target"></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+    const div = document.createElement('div');
+
+    vNode.actualNode.ariaControlsElements = [
+      document.getElementById('target1'),
+      document.getElementById('target2'),
+      div
+    ];
+
+    const expected = [
+      document.getElementById('target1'),
+      document.getElementById('target2')
+    ];
+
+    assert.deepEqual(
+      idrefs(vNode, 'aria-controls'),
       expected,
       'Should find it!'
     );
