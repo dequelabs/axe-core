@@ -45,6 +45,15 @@ describe('aria.getAriaValue', () => {
     assert.isNull(getAriaValue(vNode, 'id'));
   });
 
+  it('returns `role` value', () => {
+    const vNode = queryFixture(
+      html`<div id="target" role="fallback button"></div>`
+    );
+
+    const { value } = getAriaValue(vNode, 'role');
+    assert.equal(value, 'fallback button');
+  });
+
   it('trims non-string values', () => {
     const vNode = queryFixture(
       html`<div
