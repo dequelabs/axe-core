@@ -45,13 +45,31 @@ describe('aria.getAriaValue', () => {
     assert.isNull(getAriaValue(vNode, 'id'));
   });
 
-  it('returns `role` value', () => {
+  it('returns `role` attribute value', () => {
     const vNode = queryFixture(
       html`<div id="target" role="fallback button"></div>`
     );
 
-    const { value } = getAriaValue(vNode, 'role');
-    assert.equal(value, 'fallback button');
+    const result = getAriaValue(vNode, 'role');
+    assert.deepEqual(result, {
+      value: 'fallback button',
+      source: 'attribute'
+    });
+  });
+
+  it('returns `role` elementInternals value', () => {
+    const vNode = queryFixture(
+      html`<testutils-element
+        id="target"
+        with-role="fallback button"
+      ></testutils-element>`
+    );
+
+    const result = getAriaValue(vNode, 'role');
+    assert.deepEqual(result, {
+      value: 'fallback button',
+      source: 'internals'
+    });
   });
 
   it('trims non-string values', () => {
