@@ -38,6 +38,9 @@ var helpers;
 
   // create a custom element that all tests can use
   if (!customElements.get('testutils-element')) {
+    const withAriaRegex = /^with-(aria-.+)$/;
+    const idrefTypes = ['idref', 'idrefs'];
+
     customElements.define(
       'testutils-element',
       class TestutilsElement extends HTMLElement {
@@ -49,6 +52,40 @@ var helpers;
             const role = this.getAttribute('with-role');
             this._internals.role = role ?? 'button';
           }
+
+          // convert with-aria-* attributes to the internals value
+          Array.from(this.attributes).forEach(attr => {
+            const { name, value } = attr;
+            const match = name.match(withAriaRegex);
+            if (!match) {
+              return;
+            }
+
+            const ariaName = match[1];
+            const attrStandard = axe._audit.standards.ariaAttrs[ariaName];
+            if (!attrStandard || !attrStandard.prop) {
+              return;
+            }
+
+            const { type, prop } = attrStandard;
+            if (!idrefTypes.includes(type)) {
+              this._internals[prop] = value;
+              return;
+            }
+
+            const doc = axe.utils.getRootNode(this);
+            // convert idref(s) to DOM node(s)
+            if (type === 'idref') {
+              const node = doc.getElementById(value);
+              this._internals[prop] = node;
+            } else if (type === 'idrefs') {
+              const values = [];
+              for (const id of axe.utils.tokenList(value)) {
+                values.push(doc.getElementById(id));
+              }
+              this._internals[prop] = values;
+            }
+          });
         }
       }
     );
