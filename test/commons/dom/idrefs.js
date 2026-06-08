@@ -18,11 +18,14 @@ describe('dom.idrefs', () => {
   const idrefs = axe.commons.dom.idrefs;
 
   it('should find referenced nodes by ID', () => {
-    const vNode = queryFixture(html`
-      <div aria-cats="target1 target2" id="target"></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+    const vNode = queryFixture(
+      html`
+        <div aria-cats="target1 target2" id="start"></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
 
     const expected = [
       document.getElementById('target1'),
@@ -66,11 +69,14 @@ describe('dom.idrefs', () => {
   });
 
   it('should insert null if a reference is not found', () => {
-    const vNode = queryFixture(html`
-      <div aria-cats="target1 target2 target3" id="target"></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+    const vNode = queryFixture(
+      html`
+        <div aria-cats="target1 target2 target3" id="start"></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
 
     const expected = [
       document.getElementById('target1'),
@@ -82,16 +88,19 @@ describe('dom.idrefs', () => {
   });
 
   it('should not fail when extra whitespace is used', () => {
-    const vNode = queryFixture(html`
-      <div
-        aria-cats="     target1
+    const vNode = queryFixture(
+      html`
+        <div
+          aria-cats="     target1
   target2  target3
   "
-        id="target"
-      ></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+          id="start"
+        ></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
 
     const expected = [
       document.getElementById('target1'),
@@ -103,11 +112,14 @@ describe('dom.idrefs', () => {
   });
 
   it('should work with idrefs property', () => {
-    const vNode = queryFixture(html`
-      <div id="target"></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+    const vNode = queryFixture(
+      html`
+        <div id="start"></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
 
     vNode.actualNode.ariaControlsElements = [
       document.getElementById('target1'),
@@ -127,11 +139,14 @@ describe('dom.idrefs', () => {
   });
 
   it('should work with idrefs elementInternals', () => {
-    const vNode = queryFixture(html`
-      <testutils-element id="target"></testutils-element>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+    const vNode = queryFixture(
+      html`
+        <testutils-element id="start"></testutils-element>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
 
     vNode.actualNode._internals.ariaLabelledByElements = [
       document.getElementById('target1'),
@@ -151,11 +166,14 @@ describe('dom.idrefs', () => {
   });
 
   it('should not insert null if an idrefs property reference is not connected', () => {
-    const vNode = queryFixture(html`
-      <div id="target"></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
+    const vNode = queryFixture(
+      html`
+        <div id="start"></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `,
+      '#start'
+    );
     const div = document.createElement('div');
 
     vNode.actualNode.ariaControlsElements = [
