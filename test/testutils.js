@@ -4,6 +4,7 @@
 // level (old architecture that should not be relied on in any new code)
 var checks;
 var commons;
+var helpers;
 
 (() => {
   // Let the user know they need to disable their axe/attest extension before running the tests.
@@ -15,10 +16,11 @@ var commons;
 
   const testUtils = (axe.testUtils = {});
 
-  const originalChecks = (checks = axe._audit.checks);
+  const originalChecks = (window.checks = checks = axe._audit.checks);
   const originalAudit = axe._audit;
   const originalRules = axe._audit.rules;
-  const originalCommons = (commons = axe.commons);
+  const originalCommons = (window.commons = commons = axe.commons);
+  window.helpers = helpers = axe._thisWillBeDeletedDoNotUse.helpers;
 
   // Global chai configuration
   if (window.chai) {
@@ -512,6 +514,16 @@ var commons;
      * @param {Context} context
      */
     const evaluateWrapper = function (node, options, virtualNode, context) {
+      if (!this) {
+        return evaluateWrapper.call(
+          testUtils.MockCheckContext(),
+          node,
+          options,
+          virtualNode,
+          context
+        );
+      }
+
       const opts = check.getOptions(options);
 
       const result = check.evaluate.call(
@@ -579,7 +591,26 @@ var commons;
     return evaluateWrapper;
   };
 
-  if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  let hooksRegistered = false;
+
+  /**
+   * Register global mocha beforeEach/afterEach hooks that reset axe state
+   * between tests. Safe to call multiple times (idempotent).
+   *
+   * Called immediately when the test framework (mocha) is already set up
+   * (e.g. Karma), or deferred and called again after the framework module
+   * loads (e.g. web-test-runner, where <script type="module"> runs after
+   * regular scripts so `beforeEach` isn't yet defined at parse time).
+   */
+  testUtils.registerHooks = function registerHooks() {
+    if (hooksRegistered) {
+      return;
+    }
+    if (typeof beforeEach === 'undefined' || typeof afterEach === 'undefined') {
+      return;
+    }
+    hooksRegistered = true;
+
     // prevent setting read-only properties
     // @see https://github.com/dequelabs/axe-core/issues/3837
     const readonlyRect = new DOMRectReadOnly();
@@ -594,15 +625,18 @@ var commons;
 
     beforeEach(() => {
       // reset from axe._load overriding
-      checks = originalChecks;
+      window.checks = checks = originalChecks;
       axe._audit = originalAudit;
       axe._audit.rules = originalRules;
-      commons = axe.commons = originalCommons;
+      window.commons = commons = axe.commons = originalCommons;
     });
 
     afterEach(() => {
       axe.teardown();
       fixture.innerHTML = '';
+
+      // reset the logger for each test
+      axe._setLogger();
 
       // remove all attributes from fixture (otherwise a leftover
       // style attribute would cause avoid-inline-spacing integration
@@ -619,7 +653,11 @@ var commons;
       document.body.removeAttribute('style');
       document.documentElement.removeAttribute('style');
     });
-  }
+  };
+
+  // Immediate attempt: works when the test framework loads before testutils.js
+  // (e.g. Karma sets up mocha globally before running scripts).
+  testUtils.registerHooks();
 
   testUtils.captureError = function captureError(cb, errorHandler) {
     return function () {

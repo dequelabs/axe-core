@@ -254,13 +254,12 @@ describe('axe.finishRun', () => {
         parent = parent || fixture;
         const doc = parent.ownerDocument;
         const iframe = doc.createElement('iframe');
+        // srcdoc triggers the load event after all resources finish — avoids
+        // the document.write() + onload race where the script may load before
+        // the handler is registered.
+        iframe.srcdoc = `<!DOCTYPE html><html><body>${markup}<script src="/axe.js"><\/script></body></html>`;
+        iframe.addEventListener('load', () => resolve(iframe.contentWindow));
         parent.appendChild(iframe);
-        const frameDoc = iframe.contentDocument;
-        frameDoc.write(`${markup}<script src="/axe.js"></script>`);
-        frameDoc.close();
-        frameDoc.querySelector('script').onload = () => {
-          resolve(iframe.contentWindow);
-        };
       });
     }
 

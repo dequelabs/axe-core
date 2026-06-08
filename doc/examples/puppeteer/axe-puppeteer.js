@@ -1,12 +1,15 @@
 const puppeteer = require('puppeteer');
 const axeCore = require('axe-core');
-const { parse: parseURL } = require('url');
 const assert = require('assert');
 
 // Cheap URL validation
 const isValidURL = input => {
-  const u = parseURL(input);
-  return u.protocol && u.host;
+  try {
+    const u = new URL(input);
+    return u.protocol && u.host;
+  } catch {
+    return false;
+  }
 };
 
 (async () => {
@@ -18,7 +21,15 @@ const isValidURL = input => {
   let results;
   try {
     // Setup Puppeteer
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+      headless: 'new',
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu'
+      ]
+    });
 
     // Get new page
     const page = await browser.newPage();

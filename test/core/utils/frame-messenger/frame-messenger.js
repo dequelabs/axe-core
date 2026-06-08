@@ -5,15 +5,13 @@ describe('frame-messenger', () => {
     frame,
     frameWin,
     respondable,
-    frameSubscribe,
-    axeLog;
+    frameSubscribe;
   const postMessage = window.postMessage;
   const captureError = axe.testUtils.captureError;
 
   beforeEach(done => {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
-    axeLog = axe.log;
     axeApplication = axe._audit.application;
 
     frame = document.createElement('iframe');
@@ -32,7 +30,6 @@ describe('frame-messenger', () => {
   afterEach(() => {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
-    axe.log = axeLog;
     axe.reset();
     window.postMessage = postMessage;
   });
@@ -195,9 +192,9 @@ describe('frame-messenger', () => {
       allowedOrigins: ['<unsafe_all_origins>']
     });
     let called = false;
-    frameWin.axe.log = () => {
+    frameWin.axe._setLogger(() => {
       called = true;
-    };
+    });
 
     frameWin.postMessage(null, '*');
 

@@ -1,5 +1,6 @@
+import performanceTimer from '/lib/core/utils/performance-timer.js';
+
 describe('performance timer', () => {
-  const { performanceTimer } = axe.utils;
   const originalLog = performanceTimer._log;
   let messages = [];
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -13,6 +14,8 @@ describe('performance timer', () => {
   };
 
   beforeEach(() => {
+    performance.clearMarks();
+    performance.clearMeasures();
     performanceTimer._log = msg => {
       messages.push(msg);
     };
