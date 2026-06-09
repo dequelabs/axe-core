@@ -26,15 +26,13 @@ describe('frame-messenger', () => {
     frame,
     frameWin,
     respondable,
-    frameSubscribe,
-    axeLog;
+    frameSubscribe;
   const postMessage = window.postMessage;
   const captureError = axe.testUtils.captureError;
 
   beforeEach(done => {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
-    axeLog = axe.log;
     axeApplication = axe._audit.application;
 
     frame = document.createElement('iframe');
@@ -53,7 +51,6 @@ describe('frame-messenger', () => {
   afterEach(() => {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
-    axe.log = axeLog;
     axe.reset();
     window.postMessage = postMessage;
   });
@@ -167,10 +164,12 @@ describe('frame-messenger', () => {
     });
 
     it('logs errors passed to respondable, rather than passing them on', done => {
-      axe.log = captureError(e => {
-        assert.equal(e.message, 'expected message');
-        done();
-      }, done);
+      axe._setLogger(
+        captureError(e => {
+          assert.equal(e.message, 'expected message');
+          done();
+        }, done)
+      );
 
       frameSubscribe('greeting', () => {
         done(new Error('subscribe should not be called'));
@@ -188,9 +187,9 @@ describe('frame-messenger', () => {
     it('is not called when the source is not a frame in the page', done => {
       const doneOnce = once(done);
       let called = false;
-      frameWin.axe.log = () => {
+      frameWin.axe._setLogger(() => {
         called = true;
-      };
+      });
 
       frameSubscribe('greeting', () => {
         doneOnce(new Error('subscribe should not be called'));

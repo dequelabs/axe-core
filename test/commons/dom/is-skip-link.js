@@ -120,9 +120,11 @@ describe('dom.isSkipLink', () => {
     baseEl.href = 'https://www.google.com/';
     document.getElementsByTagName('head')[0].appendChild(baseEl);
 
-    fixture.innerHTML = html`<a href="${window.location.pathname}#target"
-      >Click Here</a
-    >`;
+    // Use a stable path that won't accidentally match the angular skip-link
+    // regex (/#) regardless of what window.location.pathname is in the test runner.
+    // With base https://www.google.com/ the resolved URL becomes
+    // https://www.google.com/page.html#target, which is a different origin.
+    fixture.innerHTML = html`<a href="/page.html#target">Click Here</a>`;
     axe._tree = axe.utils.getFlattenedTree(fixture);
     const node = fixture.querySelector('a');
     assert.isFalse(axe.commons.dom.isSkipLink(node));

@@ -49,11 +49,9 @@ describe('axe.utils.normalizeRunOptions', () => {
     }
   ];
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
-  let axeLog;
   let axeAudit;
   let audit;
   beforeEach(() => {
-    axeLog = axe.log;
     axeAudit = axe._audit;
     audit = new Audit();
     axe._audit = audit;
@@ -65,7 +63,6 @@ describe('axe.utils.normalizeRunOptions', () => {
     });
   });
   afterEach(() => {
-    axe.log = axeLog;
     axe._audit = axeAudit;
   });
 
@@ -153,6 +150,7 @@ describe('axe.utils.normalizeRunOptions', () => {
   });
 
   it('defaults runOnly to type: tag', () => {
+    axe._setLogger(() => {});
     const opt = { runOnly: ['fakeTag'] };
     const out = axe.utils.normalizeRunOptions(opt);
     assert.equal(out.runOnly.type, 'tag');
@@ -204,6 +202,7 @@ describe('axe.utils.normalizeRunOptions', () => {
   });
 
   it("doesn't throw an error when option.runOnly has an unknown tag", () => {
+    axe._setLogger(() => {});
     assert.doesNotThrow(() => {
       axe.utils.normalizeRunOptions({
         runOnly: {
@@ -226,9 +225,9 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs an issue when a tag is unknown', () => {
     let message = '';
-    axe.log = m => {
+    axe._setLogger(m => {
       message = m;
-    };
+    });
     axe.utils.normalizeRunOptions({
       runOnly: {
         type: 'tags',
@@ -240,9 +239,9 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs no issues for unknown WCAG level tags', () => {
     let message = '';
-    axe.log = m => {
+    axe._setLogger(m => {
       message = m;
-    };
+    });
     axe.utils.normalizeRunOptions({
       runOnly: {
         type: 'tags',
@@ -254,9 +253,9 @@ describe('axe.utils.normalizeRunOptions', () => {
 
   it('logs an issue when a tag is unknown, together with a wcag level tag', () => {
     let message = '';
-    axe.log = m => {
+    axe._setLogger(m => {
       message = m;
-    };
+    });
     axe.utils.normalizeRunOptions({
       runOnly: {
         type: 'tags',

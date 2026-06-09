@@ -40,14 +40,16 @@ jobs:
           npm run build
       - name: Run Firefox Nightly Browser Tests
         env:
+          WTR_BROWSER: firefox-nightly
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
-        run: npm run test -- --browsers FirefoxNightly
+        run: npm run test
       - name: Run Chrome Beta Browser Tests
         if: ${{ !cancelled() && steps.build.conclusion == 'success' }}
         env:
+          WTR_BROWSER: chrome
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test -- --browsers Chrome
+        run: npm run test
   act:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

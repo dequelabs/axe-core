@@ -124,7 +124,7 @@ module.exports = [
   },
   {
     // disallow imports from node modules
-    ignores: ['lib/core/imports/**/*.js'],
+    ignores: ['lib/core/imports/**/*.js', 'test/**'],
     rules: {
       'no-restricted-imports': [
         'error',

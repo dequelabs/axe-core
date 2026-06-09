@@ -43,7 +43,7 @@ To build axe.js, simply run `npm run build` in the root folder of the axe-core r
 
 You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Once run, any changes to files inside the [lib directory](../lib) will rebuild axe. After axe is built, it will try to run the relevant tests for the files changed. If you change a file inside the [test directory](../test) it will run the tests for the file changed.
 
-Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
+Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly.
 
 **Note:** We are still working on knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
 
@@ -72,23 +72,19 @@ There are also a set of tests that are not considered unit tests that you can ru
 
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
-If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../.vscode/launch.json) is provided. You can also navigate to the newly opened page using any supported browser.
+If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will start the Web Test Runner server. Press `D` to open a headed Chrome and run the tests. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../.vscode/launch.json) is provided. You can also navigate to the newly opened page using any supported browser.
 
-You can scope which set of tests to debug by passing the `testDirs` argument. Supported values are:
-
-- `core`
-- `commons`
-- `checks`
-- `rule-matches`
-- `integration`
-- `virtual-rules`
-- `api`
+You can scope which set of tests to debug by passing the `files` argument and a path.
 
 Example:
 
-- `npm run test:debug -- testDirs=core`
+- `npm run test:debug -- files 'test/core/**/*.js'`
 
 Lastly, you can run the [full integration tests](../test/integration/full) by starting a local server by running `npm start`. Once started, you can open any supported browser and navigate to any test in the full integration tests directory.
+
+### Using Mocha `.only` in Tests
+
+The use of `.only` for tests is supported. However Web Test Runner runs each test file in an isolated Mocha instance. This means using `.only` does not work across test files, just within the file it is used in. You can isolate a specific test by using the `files` argument.
 
 ### API Reference
 

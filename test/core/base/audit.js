@@ -1248,7 +1248,9 @@ describe('Audit', () => {
         externalAPIs({
           getElementInternals: () => {
             elementInternalsStartTime = performance.now();
-            return Promise.resolve([]);
+            return new Promise(res => {
+              setTimeout(() => res([]), 100);
+            });
           }
         });
 
@@ -1273,7 +1275,10 @@ describe('Audit', () => {
             assert.isNumber(elementInternalsStartTime);
             assert.isNumber(ruleStartTime);
 
-            assert.isTrue(elementInternalsStartTime < ruleStartTime);
+            assert.isTrue(
+              elementInternalsStartTime < ruleStartTime,
+              `elementInternals (${elementInternalsStartTime}ms) started after rules (${ruleStartTime}ms)`
+            );
             done();
           },
           isNotCalled
@@ -1286,7 +1291,7 @@ describe('Audit', () => {
           elementInternalsTimeout: 200,
           getElementInternals() {
             return new Promise(res => {
-              setTimeout(res, 500);
+              setTimeout(() => res([]), 500);
             });
           }
         });

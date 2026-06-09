@@ -71,7 +71,7 @@ We expect all code to be 100% covered by tests. We don't have or want code cover
 
 Tests should be added to the `test` directory using the same file path and name of the source file the test is for. For example, the source file `lib/commons/text/sanitize.js` should have a test file at `test/commons/text/sanitize.js`.
 
-Axe uses Karma / Mocha / Chai as its testing framework.
+Axe uses Web Test Runner / Mocha / Chai / Sinon as its testing framework.
 
 ### Documentation and Comments
 
@@ -202,13 +202,12 @@ If you need to debug the unit tests in a browser, you can run:
 npm run test:debug
 ```
 
-This will start the Karma server and open up the Chrome browser. Click the `Debug` button to start debugging the tests. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](./.vscode/launch.json) is provided. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
+This will start the Web Test Runner server. Press `D` to open the Chrome browser. Click the link to a test to start debugging. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](./.vscode/launch.json) is provided. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
 
-Because the amount of tests is so large, it's recommended to debug only a specific set of unit tests rather than the whole test suite. You can use the `testDirs` argument when using the debug command and pass a specific test directory. The test directory names are the same as those used for `test:unit:*`:
+Because the amount of tests is so large, it's recommended to debug only a specific set of unit tests rather than the whole test suite. You can use the `files` argument when using the debug command and pass a test files glob pattern.
 
 ```console
-# accepts a single directory or a comma-separated list of directories
-npm run test:debug -- testDirs=core,commons
+npm run test:debug -- --files 'test/core'
 ```
 
 ## Using axe with TypeScript
