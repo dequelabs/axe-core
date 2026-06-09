@@ -61,28 +61,12 @@ describe('aria.hasAriaValue', () => {
     assert.isFalse(hasAriaValue(vNode, 'aria-sort'));
   });
 
-  it('returns false for non-aria value', () => {
+  it('throws for non-aria value', () => {
     const vNode = queryFixture(
       html`<div id="target" aria-label="hello"></div>`
     );
 
-    assert.isFalse(hasAriaValue(vNode, 'id'));
-  });
-
-  it('returns `role` attribute', () => {
-    const vNode = queryFixture(html`<div id="target" role="button"></div>`);
-
-    assert.isTrue(hasAriaValue(vNode, 'role'));
-  });
-
-  it('returns `role` elementInternals', () => {
-    const vNode = queryFixture(
-      html`<testutils-element id="target"></testutils-element>`
-    );
-    const node = vNode.actualNode;
-    node._internals.role = 'button';
-
-    assert.isTrue(hasAriaValue(vNode, 'role'));
+    assert.throws(() => hasAriaValue(vNode, 'id'));
   });
 
   describe('SerialVirtualNode', () => {
