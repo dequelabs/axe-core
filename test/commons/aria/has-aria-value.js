@@ -37,15 +37,21 @@ describe('aria.hasAriaValue', () => {
     assert.isTrue(hasAriaValue(vNode, 'aria-label'));
   });
 
-  it('returns true if elementInternals idrefs is empty', () => {
-    const vNode = queryFixture(
-      html`<testutils-element id="target"></testutils-element>`
-    );
-    const node = vNode.actualNode;
-    node._internals.ariaLabelledByElements = [];
+  // TODO: remove when we resolve https://github.com/dequelabs/axe-core/issues/5139
+  // accessing empty idrefs element internal values crashes firefox
+  // @see https://bugzilla.mozilla.org/show_bug.cgi?id=2045887
+  (navigator.userAgent.indexOf('Firefox') > 0 ? it.skip : it)(
+    'returns true if elementInternals idrefs is empty',
+    () => {
+      const vNode = queryFixture(
+        html`<testutils-element id="target"></testutils-element>`
+      );
+      const node = vNode.actualNode;
+      node._internals.ariaLabelledByElements = [];
 
-    assert.isTrue(hasAriaValue(vNode, 'aria-labelledby'));
-  });
+      assert.isTrue(hasAriaValue(vNode, 'aria-labelledby'));
+    }
+  );
 
   it('returns false if missing attribute', () => {
     const vNode = queryFixture(
