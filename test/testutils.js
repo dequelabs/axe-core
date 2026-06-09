@@ -226,10 +226,10 @@ var helpers;
     // Normalize target, allow it to be the provided string or use '#target' to query composed tree
     let shadowSelector = '#shadow';
     if (typeof targetSelector === 'object') {
-    if (typeof targetSelector === 'object' && targetSelector !== null) {
-      shadowSelector = targetSelector.shadow ?? '#shadow';
-      targetSelector = targetSelector.target ?? '#target';
-    }
+      if (typeof targetSelector === 'object' && targetSelector !== null) {
+        shadowSelector = targetSelector.shadow ?? '#shadow';
+        targetSelector = targetSelector.target ?? '#target';
+      }
     }
 
     const fixtureNode = testUtils.injectIntoFixture(content);
