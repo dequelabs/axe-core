@@ -39,7 +39,7 @@ function assertEsbuildImportLimits(entry, metafile, limits) {
   }
 }
 
-/** Bundle gather-internals for extension injection and Karma tests. */
+/** Bundle gather-internals for extension injection and unit tests. */
 export async function runEsbuildGatherInternals(ctx) {
   const tmpDir = path.join(ctx.root, 'tmp');
   fs.mkdirSync(tmpDir, { recursive: true });

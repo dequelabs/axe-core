@@ -1,11 +1,8 @@
 'use strict';
 
 /**
- * Generates test files for integration rule tests in tmp/integration-tests/.
- * This replaces the Karma preprocessor (test/integration/rules/preprocessor.js)
- * that combined *.json + *.html pairs into executable JS at serve-time.
- *
- * Output files are picked up by web-test-runner via the test:unit:integration script.
+ * Generates executable JS from integration rule *.json + *.html pairs in
+ * tmp/integration-tests/. Picked up by web-test-runner via test:unit:integration.
  */
 
 const path = require('path');

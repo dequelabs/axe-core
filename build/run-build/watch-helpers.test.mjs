@@ -57,7 +57,7 @@ describe('resolvedIntegrationRuleJsonForLibRuleSpec', () => {
 });
 
 describe('unitTestFilesArg', () => {
-  test('returns repo-relative paths for karma testFiles', () => {
+  test('returns repo-relative paths for WTR --files', () => {
     const abs = path.join(root, 'test/commons/text/sanitize.js');
     assert.equal(unitTestFilesArg(root, abs), 'test/commons/text/sanitize.js');
   });

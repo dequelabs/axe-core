@@ -98,21 +98,17 @@ export function runFullBuildSubprocess(projectRoot, parsed) {
  */
 export function runUnitTests(projectRoot, testAbsPaths) {
   const paths = [].concat(testAbsPaths);
-  const testFilesValue = paths
+  const fileArgs = paths
     .map(p => unitTestFilesArg(projectRoot, p))
-    .join(',');
+    .flatMap(file => ['--files', file]);
 
   return new Promise((resolve, reject) => {
     killActiveTest();
-    const child = spawn(
-      'npm',
-      ['run', 'test:unit', '--', `testFiles=${testFilesValue}`],
-      {
-        cwd: projectRoot,
-        stdio: 'inherit',
-        env: { ...process.env }
-      }
-    );
+    const child = spawn('npm', ['run', 'test:unit', '--', ...fileArgs], {
+      cwd: projectRoot,
+      stdio: 'inherit',
+      env: { ...process.env }
+    });
     activeTestChild = child;
     child.on('error', err => {
       activeTestChild = null;
@@ -151,7 +147,7 @@ export function projectRelPath(projectRoot, changedPath) {
 }
 
 /**
- * Same mapping as the unit test runner `testFiles` option for lib sources.
+ * Maps lib sources to their corresponding unit test file paths.
  * @param {string} projectRoot
  * @param {string} libAbsPath
  * @returns {string | null} Absolute path to the unit test file for a lib source
@@ -212,8 +208,8 @@ export function resolvedIntegrationRuleJsonForLibRuleSpec(
 }
 
 /**
- * Unit test `testFiles=` uses repo-relative globs; pass a project-relative `/`
- * path when the file is under the repo.
+ * WTR `--files` expects repo-relative paths; pass a project-relative `/` path
+ * when the file is under the repo.
  * @param {string} projectRoot
  * @param {string} absolutePath
  * @returns {string}
