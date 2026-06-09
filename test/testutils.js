@@ -233,6 +233,7 @@ var helpers;
     const fixtureNode = testUtils.injectIntoFixture(content);
     let container =
       fixtureNode.querySelector(shadowSelector) ||
+      fixtureNode.querySelector(targetSelector) ||
       fixtureNode.firstElementChild;
 
     // attach a shadowRoot with the content provided
