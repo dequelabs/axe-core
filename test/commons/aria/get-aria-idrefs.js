@@ -214,11 +214,23 @@ describe('aria.getAriaIdrefs', () => {
   });
 
   describe('SerialVirtualNode', () => {
-    it('resolves nothing without a real DOM node', () => {
+    it('returns an empty array for an empty attribute', () => {
       const vNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
           'aria-labelledby': ''
+        }
+      });
+
+      assert.deepEqual(getAriaIdrefs(vNode, 'aria-labelledby'), []);
+    });
+
+    it('returns an empty array for a non-empty attribute without throwing', () => {
+      // no real DOM node to resolve the ids against
+      const vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-labelledby': 'label'
         }
       });
 

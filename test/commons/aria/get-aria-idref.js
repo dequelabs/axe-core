@@ -71,4 +71,18 @@ describe('aria.getAriaIdref', () => {
       assert.equal(result.attr('id'), 'child');
     });
   });
+
+  describe('SerialVirtualNode', () => {
+    it('returns null for a non-empty attribute without throwing', () => {
+      // no real DOM node to resolve the id against
+      const vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-activedescendant': 'child'
+        }
+      });
+
+      assert.isNull(getAriaIdref(vNode, 'aria-activedescendant'));
+    });
+  });
 });
