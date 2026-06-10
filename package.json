@@ -162,7 +162,7 @@
     "jquery": "^4.0.0",
     "jsdoc": "^4.0.2",
     "jsdom": "^29.0.2",
-    "lint-staged": "^16.1.0",
+    "lint-staged": "^17.0.7",
     "memoizee": "^0.4.15",
     "mocha": "^11.1.0",
     "node-notifier": "^10.0.1",
