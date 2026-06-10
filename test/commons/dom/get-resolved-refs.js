@@ -141,7 +141,7 @@ describe('dom.getResolvedRefs', () => {
     assert.deepEqual(getResolvedRefs(vNode, 'aria-controls'), expected);
   });
 
-  it('should remove self id references from attribute', () => {
+  it('should not remove self id references from attribute', () => {
     const vNode = queryFixture(html`
       <div aria-cats="target1 target target2" id="target"></div>
       <div id="target1"></div>
@@ -150,13 +150,14 @@ describe('dom.getResolvedRefs', () => {
 
     const expected = [
       getNodeFromTree(document.getElementById('target1')),
+      getNodeFromTree(document.getElementById('target')),
       getNodeFromTree(document.getElementById('target2'))
     ];
 
     assert.deepEqual(getResolvedRefs(vNode, 'aria-cats'), expected);
   });
 
-  it('should remove self id references from elementInternals', () => {
+  it('should not remove self id references from elementInternals', () => {
     const vNode = queryFixture(html`
       <testutils-element id="target"></testutils-element>
       <div id="target1"></div>
@@ -171,6 +172,7 @@ describe('dom.getResolvedRefs', () => {
 
     const expected = [
       getNodeFromTree(document.getElementById('target1')),
+      getNodeFromTree(document.getElementById('target')),
       getNodeFromTree(document.getElementById('target2'))
     ];
 
@@ -208,5 +210,49 @@ describe('dom.getResolvedRefs', () => {
     ];
 
     assert.deepEqual(getResolvedRefs(vNode, 'aria-labelledby'), expected);
+  });
+
+  describe('options.self=false', () => {
+    it('should remove self id references from attribute', () => {
+      const vNode = queryFixture(html`
+        <div aria-cats="target1 target target2" id="target"></div>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `);
+
+      const expected = [
+        getNodeFromTree(document.getElementById('target1')),
+        getNodeFromTree(document.getElementById('target2'))
+      ];
+
+      assert.deepEqual(
+        getResolvedRefs(vNode, 'aria-cats', { self: false }),
+        expected
+      );
+    });
+
+    it('should remove self id references from elementInternals', () => {
+      const vNode = queryFixture(html`
+        <testutils-element id="target"></testutils-element>
+        <div id="target1"></div>
+        <div id="target2"></div>
+      `);
+
+      vNode.actualNode._internals.ariaLabelledByElements = [
+        document.getElementById('target1'),
+        document.getElementById('target'),
+        document.getElementById('target2')
+      ];
+
+      const expected = [
+        getNodeFromTree(document.getElementById('target1')),
+        getNodeFromTree(document.getElementById('target2'))
+      ];
+
+      assert.deepEqual(
+        getResolvedRefs(vNode, 'aria-labelledby', { self: false }),
+        expected
+      );
+    });
   });
 });
