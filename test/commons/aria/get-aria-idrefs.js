@@ -29,6 +29,19 @@ describe('aria.getAriaIdrefs', () => {
     assert.deepEqual(ids(result), ['child']);
   });
 
+  it('resolves multiple refs for an idref-typed attribute with an element-array property', () => {
+    // aria-errormessage is type `idref` but reflects to a *plural* property
+    // (ariaErrorMessageElements), so the resolver must stay value-shape driven
+    const vNode = queryFixture(
+      html`<div id="target" aria-errormessage="err1 err2"></div>
+        <div id="err1"></div>
+        <div id="err2"></div>`
+    );
+
+    const result = getAriaIdrefs(vNode, 'aria-errormessage');
+    assert.deepEqual(ids(result), ['err1', 'err2']);
+  });
+
   it('filters out ids that do not resolve to an element', () => {
     const vNode = queryFixture(
       html`<div id="target" aria-labelledby="label1 missing label2"></div>
@@ -151,6 +164,52 @@ describe('aria.getAriaIdrefs', () => {
 
       const result = getAriaIdrefs(vNode, 'aria-labelledby');
       assert.deepEqual(ids(result), ['label1']);
+    });
+
+    describe('global internals map', () => {
+      afterEach(() => {
+        delete globalThis._elementInternals;
+      });
+
+      it('resolves an element-array value from the global map', () => {
+        const vNode = queryFixture(
+          html`<testutils-element id="target"></testutils-element>
+            <div id="label1"></div>
+            <div id="label2"></div>`
+        );
+        const node = vNode.actualNode;
+        node._internals.ariaLabelledByElements = [
+          fixture.querySelector('#label1'),
+          fixture.querySelector('#label2')
+        ];
+        globalThis._elementInternals = new WeakMap();
+        globalThis._elementInternals.set(node, node._internals);
+
+        const result = getAriaIdrefs(vNode, 'aria-labelledby');
+        assert.deepEqual(ids(result), ['label1', 'label2']);
+      });
+
+      it('uses the global map internals over the _internals property', () => {
+        const vNode = queryFixture(
+          html`<testutils-element id="target"></testutils-element>
+            <div id="label1"></div>
+            <div id="label2"></div>`
+        );
+        const node = vNode.actualNode;
+        node._internals.ariaLabelledByElements = [
+          fixture.querySelector('#label1')
+        ];
+        // can't attach internals twice, so fake an ElementInternals object
+        const mapInternals = {
+          ariaLabelledByElements: [fixture.querySelector('#label2')]
+        };
+        Object.setPrototypeOf(mapInternals, window.ElementInternals.prototype);
+        globalThis._elementInternals = new WeakMap();
+        globalThis._elementInternals.set(node, mapInternals);
+
+        const result = getAriaIdrefs(vNode, 'aria-labelledby');
+        assert.deepEqual(ids(result), ['label2']);
+      });
     });
   });
 
