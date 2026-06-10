@@ -6,6 +6,10 @@ var checks;
 var commons;
 var helpers;
 
+// find a "<template" tag with the first attribute being "shadowrootmode" followed by an equal sign and the value "open". allows any amount of whitespace in between everything and either quotes (" or ') or no quotes for the value
+const declarativeShadowDOMRegex =
+  /<template\s+shadowrootmode\s*=\s*(['"]?)open\1/;
+
 (() => {
   // Let the user know they need to disable their axe/attest extension before running the tests.
   if (window.__AXE_EXTENSION__) {
@@ -187,13 +191,18 @@ var helpers;
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
    * @return HTMLElement
    */
-  testUtils.injectIntoFixture = content => {
+  testUtils.injectIntoFixture = (content, options = {}) => {
     if (typeof content !== 'undefined') {
       fixture.innerHTML = '';
     }
 
     if (typeof content === 'string') {
-      fixture.innerHTML = content;
+      if (options.shadow) {
+        // allow declarative shadow DOM which requires using setUnsafeHTML to parse
+        fixture.setHTMLUnsafe(content);
+      } else {
+        fixture.innerHTML = content;
+      }
     } else if (content instanceof Node) {
       fixture.appendChild(content);
     } else if (Array.isArray(content)) {
@@ -212,8 +221,8 @@ var helpers;
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
    * @return HTMLElement
    */
-  testUtils.fixtureSetup = content => {
-    testUtils.injectIntoFixture(content);
+  testUtils.fixtureSetup = (content, options = {}) => {
+    testUtils.injectIntoFixture(content, options);
     axe.teardown();
     return axe.setup(fixture);
   };
@@ -524,14 +533,60 @@ var helpers;
    */
   testUtils.queryFixture = function queryFixture(html, query) {
     query = query || '#target';
-    const rootNode = testUtils.fixtureSetup(html);
-    const vNode = axe.utils.querySelectorAll(rootNode, query)[0];
+    const options = {};
+
+    // automatically detect declarative shadow DOM
+    if (declarativeShadowDOMRegex.test(html)) {
+      options.shadow = true;
+    }
+
+    const rootNode = testUtils.fixtureSetup(html, options);
+
+    let vNode;
+    if (!options.shadow) {
+      vNode = axe.utils.querySelectorAll(rootNode, query)[0];
+    } else {
+      // find target in deepest to shallowest root order first
+      const roots = [
+        rootNode.actualNode,
+        ...getShadowRootsUnder(rootNode.actualNode)
+      ].reverse();
+      for (const root of roots) {
+        vNode = axe.utils.getNodeFromTree(root.querySelector(query));
+        if (vNode) {
+          break;
+        }
+      }
+    }
+
+    // find the target in the shadow tree first
     assert.exists(
       vNode,
       `Node does not exist in query \`${query}\`. This is usually fixed by adding the default target (\`id="target"\`) to your html parameter. If you do not intend on querying the fixture for #target, consider using \`axe.testUtils.fixtureSetup()\` instead.`
     );
     return vNode;
   };
+
+  /**
+   * Find all shadow roots in a tree.
+   * @param {HTMLElement|Node} root
+   * @see https://github.com/whatwg/dom/issues/1422
+   */
+  function getShadowRootsUnder(root = document, recursive = true) {
+    let ret = root.shadowRoot ? [root.shadowRoot] : [];
+    ret.push(
+      ...[...root.querySelectorAll('*')].flatMap(element => {
+        if (!element.shadowRoot) {return [];}
+
+        let rets = [element.shadowRoot];
+        if (recursive) {
+          rets.push(...getShadowRootsUnder(element.shadowRoot));
+        }
+        return rets;
+      })
+    );
+    return ret;
+  }
 
   /**
    * Return the checks evaluate method and apply default options
