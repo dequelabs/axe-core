@@ -20,7 +20,8 @@ describe('dom.getResolvedRefs', () => {
 
   it('should find only referenced nodes within the current root: shadow DOM', () => {
     const targetVNode = queryShadowFixture(
-      html`<div id="shadow"><div id="target"></div></div>`,
+      html`<div id="shadow"></div>
+        <div id="target"></div>`,
       html`<div target="target"><div id="target"></div></div>`
     );
 
@@ -32,7 +33,8 @@ describe('dom.getResolvedRefs', () => {
 
   it('should find only referenced nodes within the current root: document', () => {
     queryShadowFixture(
-      html`<div target="target" id="shadow"><div id="target"></div></div>`,
+      html`<div target="target" id="shadow"></div>
+        <div id="target"></div>`,
       html`<div target="target"><div id="target"></div></div>`
     );
 
@@ -40,22 +42,6 @@ describe('dom.getResolvedRefs', () => {
     const expected = [getNodeFromTree(fixture.querySelector('#target'))];
 
     assert.deepEqual(getResolvedRefs(node, 'target'), expected);
-  });
-
-  it('should insert null if a reference is not found', () => {
-    const vNode = queryFixture(html`
-      <div aria-cats="target1 target2 target3" id="target"></div>
-      <div id="target1"></div>
-      <div id="target2"></div>
-    `);
-
-    const expected = [
-      getNodeFromTree(document.getElementById('target1')),
-      getNodeFromTree(document.getElementById('target2')),
-      null
-    ];
-
-    assert.deepEqual(getResolvedRefs(vNode, 'aria-cats'), expected);
   });
 
   it('should not fail when extra whitespace is used', () => {
@@ -117,6 +103,41 @@ describe('dom.getResolvedRefs', () => {
     ];
 
     assert.deepEqual(getResolvedRefs(vNode, 'aria-labelledby'), expected);
+  });
+
+  it('should insert null if a reference is not found', () => {
+    const vNode = queryFixture(html`
+      <div aria-cats="target1 target2 target3" id="target"></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+
+    const expected = [
+      getNodeFromTree(document.getElementById('target1')),
+      getNodeFromTree(document.getElementById('target2')),
+      null
+    ];
+
+    assert.deepEqual(getResolvedRefs(vNode, 'aria-cats'), expected);
+  });
+
+  it('should insert null if a reference is not in the virtual tree', () => {
+    const vNode = queryFixture(html`
+      <div aria-cats="target1 target2 target3" id="target"></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+    const div = document.createElement('div');
+    div.id = 'target3';
+    fixture.append(div);
+
+    const expected = [
+      getNodeFromTree(document.getElementById('target1')),
+      getNodeFromTree(document.getElementById('target2')),
+      null
+    ];
+
+    assert.deepEqual(getResolvedRefs(vNode, 'aria-cats'), expected);
   });
 
   it('should not insert null if an idrefs property reference is not connected', () => {
