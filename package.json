@@ -175,7 +175,7 @@
     "revalidator": "^0.3.1",
     "selenium-webdriver": "^4.7.1",
     "serve-handler": "^6.1.5",
-    "sinon": "^21.0.0",
+    "sinon": "^22.0.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^9.5.0",
     "start-server-and-test": "^3.0.2",
