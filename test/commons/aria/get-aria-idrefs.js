@@ -166,6 +166,21 @@ describe('aria.getAriaIdrefs', () => {
       assert.deepEqual(ids(result), ['label1']);
     });
 
+    it('resolves an internals reference across a shadow boundary', () => {
+      // internals element references may point at nodes in another tree scope
+      const vNode = queryShadowFixture(
+        html`<div id="shadow"></div>
+          <div id="label"></div>`,
+        html`<testutils-element id="target"></testutils-element>`
+      );
+      vNode.actualNode._internals.ariaLabelledByElements = [
+        fixture.querySelector('#label')
+      ];
+
+      const result = getAriaIdrefs(vNode, 'aria-labelledby');
+      assert.deepEqual(ids(result), ['label']);
+    });
+
     describe('global internals map', () => {
       afterEach(() => {
         delete globalThis._elementInternals;
