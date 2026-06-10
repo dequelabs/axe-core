@@ -4,7 +4,12 @@ import { describe, test } from 'node:test';
 import { root } from './root.mjs';
 import {
   RULE_SPEC_JSON_RE,
+  describeWatchTestPlan,
+  partitionWatchTestPaths,
   projectRelPath,
+  resolveWatchUnitTestPaths,
+  resolvedFullIntegrationTestHtmlPaths,
+  resolvedGeneratedIntegrationTestPath,
   resolvedIntegrationRuleJsonForLibRuleSpec,
   resolvedUnitTestPathForLibFile,
   unitTestFilesArg
@@ -52,6 +57,192 @@ describe('resolvedIntegrationRuleJsonForLibRuleSpec', () => {
     assert.equal(
       integration,
       path.join(root, 'test/integration/rules/button-name/button-name.json')
+    );
+  });
+});
+
+describe('resolvedGeneratedIntegrationTestPath', () => {
+  test('maps rule integration json to generated test files', () => {
+    const json = path.join(
+      root,
+      'test/integration/rules/accesskeys/accesskeys.json'
+    );
+    assert.equal(
+      resolvedGeneratedIntegrationTestPath(root, json),
+      path.join(root, 'tmp/integration-tests/accesskeys/accesskeys.test.js')
+    );
+  });
+
+  test('maps rule integration html via sibling json', () => {
+    const html = path.join(
+      root,
+      'test/integration/rules/landmark-unique/landmark-unique-fail.html'
+    );
+    assert.equal(
+      resolvedGeneratedIntegrationTestPath(root, html),
+      path.join(
+        root,
+        'tmp/integration-tests/landmark-unique/landmark-unique-fail.test.js'
+      )
+    );
+  });
+
+  test('maps fixture html to the parent rule test', () => {
+    const html = path.join(
+      root,
+      'test/integration/rules/accesskeys/frame.html'
+    );
+    assert.equal(
+      resolvedGeneratedIntegrationTestPath(root, html),
+      path.join(root, 'tmp/integration-tests/accesskeys/accesskeys.test.js')
+    );
+  });
+});
+
+describe('resolvedFullIntegrationTestHtmlPaths', () => {
+  test('maps html files directly', () => {
+    const html = path.join(root, 'test/integration/full/async/async.html');
+    assert.deepEqual(resolvedFullIntegrationTestHtmlPaths(root, html), [
+      'test/integration/full/async/async.html'
+    ]);
+  });
+
+  test('maps js files to sibling html', () => {
+    const js = path.join(root, 'test/integration/full/async/async.js');
+    assert.deepEqual(resolvedFullIntegrationTestHtmlPaths(root, js), [
+      'test/integration/full/async/async.html'
+    ]);
+  });
+
+  test('maps helper js files via html references', () => {
+    const js = path.join(
+      root,
+      'test/integration/full/serializer/custom-source-serializer.js'
+    );
+    assert.deepEqual(resolvedFullIntegrationTestHtmlPaths(root, js), [
+      'test/integration/full/serializer/serializer.html'
+    ]);
+  });
+
+  test('maps frame fixtures to the parent html page', () => {
+    const html = path.join(
+      root,
+      'test/integration/full/serializer/frames/level1.html'
+    );
+    assert.deepEqual(resolvedFullIntegrationTestHtmlPaths(root, html), [
+      'test/integration/full/serializer/serializer.html'
+    ]);
+  });
+});
+
+describe('resolveWatchUnitTestPaths', () => {
+  test('builds integration tests before running generated files', () => {
+    const html = path.join(
+      root,
+      'test/integration/rules/accesskeys/accesskeys.html'
+    );
+    const { testPaths, needsIntegrationTestBuild } = resolveWatchUnitTestPaths(
+      root,
+      [html]
+    );
+    assert.equal(needsIntegrationTestBuild, true);
+    assert.deepEqual(testPaths, [
+      path.join(root, 'tmp/integration-tests/accesskeys/accesskeys.test.js')
+    ]);
+  });
+
+  test('passes through direct unit test js files', () => {
+    const unitTest = path.join(root, 'test/commons/text/sanitize.js');
+    const {
+      testPaths,
+      needsIntegrationTestBuild,
+      fullIntegrationTestHtmlPaths
+    } = resolveWatchUnitTestPaths(root, [unitTest]);
+    assert.equal(needsIntegrationTestBuild, false);
+    assert.deepEqual(testPaths, [unitTest]);
+    assert.deepEqual(fullIntegrationTestHtmlPaths, []);
+  });
+
+  test('resolves full integration html targets', () => {
+    const html = path.join(root, 'test/integration/full/async/async.html');
+    const { testPaths, fullIntegrationTestHtmlPaths } =
+      resolveWatchUnitTestPaths(root, [html]);
+    assert.deepEqual(testPaths, []);
+    assert.deepEqual(fullIntegrationTestHtmlPaths, [
+      'test/integration/full/async/async.html'
+    ]);
+  });
+
+  test('ignores the webdriver harness script', () => {
+    const harness = path.join(root, 'test/integration/full/test-webdriver.js');
+    const result = resolveWatchUnitTestPaths(root, [harness]);
+    assert.deepEqual(result.testPaths, []);
+    assert.deepEqual(result.fullIntegrationTestHtmlPaths, []);
+    assert.equal(result.needsIntegrationTestBuild, false);
+  });
+});
+
+describe('partitionWatchTestPaths', () => {
+  test('splits unit and integration test targets', () => {
+    const unitTest = path.join(root, 'test/commons/text/sanitize.js');
+    const integrationTest = path.join(
+      root,
+      'tmp/integration-tests/accesskeys/accesskeys.test.js'
+    );
+    const { unitTestPaths, integrationTestPaths } = partitionWatchTestPaths([
+      integrationTest,
+      unitTest
+    ]);
+    assert.deepEqual(unitTestPaths, [unitTest]);
+    assert.deepEqual(integrationTestPaths, [integrationTest]);
+  });
+});
+
+describe('describeWatchTestPlan', () => {
+  test('lists unit tests before integration work', () => {
+    const unitTest = path.join(root, 'test/commons/text/sanitize.js');
+    const integrationTest = path.join(
+      root,
+      'tmp/integration-tests/accesskeys/accesskeys.test.js'
+    );
+    assert.equal(
+      describeWatchTestPlan({
+        unitTestPaths: [unitTest],
+        integrationTestPaths: [integrationTest],
+        needsIntegrationTestBuild: true
+      }),
+      'unit test + build integration tests + rule integration'
+    );
+  });
+
+  test('lists full integration after rule integration', () => {
+    assert.equal(
+      describeWatchTestPlan({
+        unitTestPaths: [],
+        integrationTestPaths: [
+          path.join(root, 'tmp/integration-tests/accesskeys/accesskeys.test.js')
+        ],
+        fullIntegrationTestHtmlPaths: [
+          'test/integration/full/async/async.html'
+        ],
+        needsIntegrationTestBuild: true
+      }),
+      'build integration tests + rule integration + full integration'
+    );
+  });
+
+  test('describes integration-only batches', () => {
+    const integrationTest = path.join(
+      root,
+      'tmp/integration-tests/accesskeys/accesskeys.test.js'
+    );
+    assert.equal(
+      describeWatchTestPlan({
+        unitTestPaths: [],
+        integrationTestPaths: [integrationTest],
+        needsIntegrationTestBuild: true
+      }),
+      'build integration tests + rule integration'
     );
   });
 });

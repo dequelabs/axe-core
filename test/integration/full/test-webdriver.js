@@ -9,11 +9,17 @@ const args = process.argv.slice(2);
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
 let browserArg = 'chrome';
+const urlArgs = [];
 args.forEach(arg => {
-  // pattern: browsers=Chrome
   const parts = arg.split('=');
-  if (parts[0] === 'browser') {
-    browserArg = parts[1].toLowerCase();
+  const key = parts[0];
+  const value = parts.slice(1).join('=');
+  if (key === 'browser') {
+    browserArg = value.toLowerCase();
+    return;
+  }
+  if (key === 'url' && value) {
+    urlArgs.push(value.replace(/\\/g, '/'));
   }
 });
 
@@ -154,10 +160,14 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
-    ignore: '**/frames/**/*.{html,xhtml}'
-  }).map(url => {
-    return `http://localhost:9876/${url}`;
+  const testUrls = (
+    urlArgs.length
+      ? urlArgs
+      : globSync(['test/integration/full/**/*.{html,xhtml}'], {
+          ignore: '**/frames/**/*.{html,xhtml}'
+        })
+  ).map(url => {
+    return `http://localhost:9876/${url.replace(/^\//, '')}`;
   });
 
   if (

@@ -38,12 +38,12 @@ describe('analyzeLibBuildChanges', () => {
     const { plan, testPaths } = analyzeLibBuildChanges(root, [
       'lib/rules/button-name.json'
     ]);
-    assert.equal(plan, 'rebuild + rule integration');
+    assert.equal(plan, 'rebuild + build integration tests + rule integration');
     assert.ok(
       testPaths.some(p =>
         p
           .replace(/\\/g, '/')
-          .endsWith('test/integration/rules/button-name/button-name.json')
+          .endsWith('tmp/integration-tests/button-name/button-name.test.js')
       )
     );
   });

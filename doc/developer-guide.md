@@ -47,7 +47,7 @@ Add `--log` after `--` for step-by-step build output (for example `npm run devel
 
 Build/watch helpers have focused Node tests (not run in CI): `npm run test:build`.
 
-Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly.
+Changes under [test/integration/full](../test/integration/full) run the matching full-page integration test in headless Chrome via `test-webdriver.js` (watch mode expects http-server on port 9876, same as `npm start`).
 
 **Note:** We are still working on knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
 

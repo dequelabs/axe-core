@@ -11,8 +11,11 @@ import {
   killActiveBuild,
   killActiveTest,
   projectRelPath,
+  describeWatchTestPlan,
+  partitionWatchTestPaths,
+  resolveWatchUnitTestPaths,
   runFullBuildSubprocess,
-  runUnitTests,
+  runWatchTests,
   spawnWatchHttpServer,
   waitForTcpPortListening
 } from './watch-helpers.mjs';
@@ -156,7 +159,13 @@ export async function runWatchMode(parsed) {
       }
 
       if (testPaths.length > 0) {
-        await runUnitTests(root, testPaths);
+        const { unitTestPaths, integrationTestPaths } =
+          partitionWatchTestPaths(testPaths);
+        await runWatchTests(root, {
+          unitTestPaths,
+          integrationTestPaths,
+          needsIntegrationTestBuild: integrationTestPaths.length > 0
+        });
       }
     } finally {
       inFlightLibPaths = null;
@@ -167,13 +176,29 @@ export async function runWatchMode(parsed) {
     const rels = paths.map(p => projectRelPath(root, p));
     const label =
       rels.length > 3 ? `${rels.slice(0, 3).join(', ')}…` : rels.join(', ');
-    const plan =
-      paths.length > 1 ? `unit tests (${paths.length} files)` : 'unit test';
-    console.log(`${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`);
     const absPaths = paths.map(p =>
       path.resolve(path.isAbsolute(p) ? p : path.join(root, p))
     );
-    await runUnitTests(root, absPaths);
+    const {
+      testPaths,
+      needsIntegrationTestBuild,
+      fullIntegrationTestHtmlPaths
+    } = resolveWatchUnitTestPaths(root, absPaths);
+    const { unitTestPaths, integrationTestPaths } =
+      partitionWatchTestPaths(testPaths);
+    const plan = describeWatchTestPlan({
+      unitTestPaths,
+      integrationTestPaths,
+      fullIntegrationTestHtmlPaths,
+      needsIntegrationTestBuild
+    });
+    console.log(`${chalk.dim('watch:')} ${label} ${chalk.dim('→')} ${plan}`);
+    await runWatchTests(root, {
+      unitTestPaths,
+      integrationTestPaths,
+      fullIntegrationTestHtmlPaths,
+      needsIntegrationTestBuild
+    });
   };
 
   const handleSupersededWork = () => {

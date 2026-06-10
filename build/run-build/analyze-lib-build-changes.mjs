@@ -5,6 +5,9 @@ import {
   WATCH_MAX_AUTO_TESTS,
   hasUnitTestForLibFile,
   projectRelPath,
+  describeWatchTestPlan,
+  partitionWatchTestPaths,
+  resolvedGeneratedIntegrationTestPath,
   resolvedIntegrationRuleJsonForLibRuleSpec,
   resolvedUnitTestPathForLibFile
 } from './watch-helpers.mjs';
@@ -60,17 +63,20 @@ export function analyzeLibBuildChanges(projectRoot, changedPaths) {
       }
     }
     for (const { rel } of ruleSpecChanges) {
-      const integrationPath = resolvedIntegrationRuleJsonForLibRuleSpec(
+      const integrationJson = resolvedIntegrationRuleJsonForLibRuleSpec(
         projectRoot,
         rel
       );
-      if (
-        integrationPath &&
-        fs.existsSync(integrationPath) &&
-        !seen.has(integrationPath)
-      ) {
-        seen.add(integrationPath);
-        testPaths.push(integrationPath);
+      if (!integrationJson || !fs.existsSync(integrationJson)) {
+        continue;
+      }
+      const generatedPath = resolvedGeneratedIntegrationTestPath(
+        projectRoot,
+        integrationJson
+      );
+      if (generatedPath && !seen.has(generatedPath)) {
+        seen.add(generatedPath);
+        testPaths.push(generatedPath);
       }
     }
   }
@@ -82,12 +88,15 @@ export function analyzeLibBuildChanges(projectRoot, changedPaths) {
   let plan = 'rebuild';
   if (skipTests) {
     plan = 'rebuild (batch; skip tests)';
-  } else if (testPaths.length === 1) {
-    plan = testPaths[0].replace(/\\/g, '/').includes('/integration/')
-      ? 'rebuild + rule integration'
-      : 'rebuild + unit test';
-  } else if (testPaths.length > 1) {
-    plan = `rebuild + unit tests (${testPaths.length} files)`;
+  } else if (testPaths.length > 0) {
+    const { unitTestPaths, integrationTestPaths } =
+      partitionWatchTestPaths(testPaths);
+    const testPlan = describeWatchTestPlan({
+      unitTestPaths,
+      integrationTestPaths,
+      needsIntegrationTestBuild: integrationTestPaths.length > 0
+    });
+    plan = `rebuild + ${testPlan}`;
   } else if (testableChanges === 1) {
     plan = 'rebuild (no test file)';
   }
