@@ -576,7 +576,9 @@ const declarativeShadowDOMRegex =
     let ret = root.shadowRoot ? [root.shadowRoot] : [];
     ret.push(
       ...[...root.querySelectorAll('*')].flatMap(element => {
-        if (!element.shadowRoot) {return [];}
+        if (!element.shadowRoot) {
+          return [];
+        }
 
         let rets = [element.shadowRoot];
         if (recursive) {
