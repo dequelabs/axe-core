@@ -84,6 +84,20 @@ module.exports = [
             'CallExpression[callee.object.property.name=actualNode][callee.property.name=contains]',
           message:
             "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
+        },
+        {
+          // window.HTMLElement
+          selector:
+            'MemberExpression[object.name=window][property.name=HTMLElement]',
+          message:
+            "Don't use window.HTMLElement as it doesn't include all DOM node types, such as SVGs. Use window.Node instead."
+        },
+        {
+          // globalThis.HTMLElement
+          selector:
+            'MemberExpression[object.name=globalThis][property.name=HTMLElement]',
+          message:
+            "Don't use globalThis.HTMLElement as it doesn't include all DOM node types, such as SVGs. Use globalThis.Node instead."
         }
       ]
     },
