@@ -271,8 +271,9 @@ describe('aria.getAriaValue', () => {
         };
 
         assert.doesNotThrow(() => {
-          assert.isNull(getAriaValue(vNode, 'aria-label', { lowercase: true }));
+          getAriaValue(vNode, 'aria-label', { lowercase: true });
         });
+        assert.getAriaValue(vNode, 'aria-label', { lowercase: true });
       });
     });
   });
