@@ -1,5 +1,5 @@
 describe('dom.getResolvedRefs', () => {
-  const { html, queryFixture, queryShadowFixture, fixture } = axe.testUtils;
+  const { html, queryFixture, fixture } = axe.testUtils;
   const getResolvedRefs = axe.commons.dom.getResolvedRefs;
   const getNodeFromTree = axe.utils.getNodeFromTree;
 
@@ -19,23 +19,33 @@ describe('dom.getResolvedRefs', () => {
   });
 
   it('should find only referenced nodes within the current root: shadow DOM', () => {
-    const targetVNode = queryShadowFixture(
-      html`<div id="shadow"></div>
-        <div id="target"></div>`,
-      html`<div target="target"><div id="target"></div></div>`
+    const vNode = queryFixture(
+      html`<div id="shadow">
+          <template shadowrootmode="open">
+            <div target="target">
+              <div id="target"></div>
+            </div>
+          </template>
+        </div>
+        <div id="target"></div>`
     );
 
-    const node = fixture.querySelector('#shadow').shadowRoot.firstChild;
-    const expected = [targetVNode];
+    const node = fixture.querySelector('#shadow').shadowRoot.firstElementChild;
+    const expected = [vNode];
 
     assert.deepEqual(getResolvedRefs(node, 'target'), expected);
   });
 
   it('should find only referenced nodes within the current root: document', () => {
-    queryShadowFixture(
-      html`<div target="target" id="shadow"></div>
-        <div id="target"></div>`,
-      html`<div target="target"><div id="target"></div></div>`
+    queryFixture(
+      html`<div target="target" id="shadow">
+          <template shadowrootmode="open">
+            <div target="target">
+              <div id="target"></div>
+            </div>
+          </template>
+        </div>
+        <div id="target"></div>`
     );
 
     const node = fixture.querySelector('[target]');

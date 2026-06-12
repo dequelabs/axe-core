@@ -189,6 +189,8 @@ const declarativeShadowDOMRegex =
   /**
    * Method for injecting content into a fixture
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
    * @return HTMLElement
    */
   testUtils.injectIntoFixture = (content, options = {}) => {
@@ -198,7 +200,7 @@ const declarativeShadowDOMRegex =
 
     if (typeof content === 'string') {
       if (options.shadow) {
-        // allow declarative shadow DOM which requires using setUnsafeHTML to parse
+        // allow declarative shadow DOM which requires using setHTMLUnsafe to parse
         fixture.setHTMLUnsafe(content);
       } else {
         fixture.innerHTML = content;
@@ -219,6 +221,8 @@ const declarativeShadowDOMRegex =
    * the flattened DOM tree (light and Shadow DOM together)
    *
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
    * @return HTMLElement
    */
   testUtils.fixtureSetup = (content, options = {}) => {
@@ -243,11 +247,21 @@ const declarativeShadowDOMRegex =
     }
     // Normalize target, allow it to be the inserted node or '#target'
     target = target || (content instanceof Node ? content : '#target');
-    const rootNode = testUtils.fixtureSetup(content);
+
+    // Automatically detect declarative shadow DOM
+    let fixtureOptions = {};
+    if (
+      typeof content === 'string' &&
+      declarativeShadowDOMRegex.test(content)
+    ) {
+      fixtureOptions.shadow = true;
+    }
+
+    const rootNode = testUtils.fixtureSetup(content, fixtureOptions);
 
     let node;
     if (typeof target === 'string') {
-      node = axe.utils.querySelectorAll(rootNode, target)[0];
+      node = findTarget(rootNode, target, fixtureOptions);
     } else if (target instanceof Node) {
       node = axe.utils.getNodeFromTree(target);
     } else {
@@ -311,6 +325,7 @@ const declarativeShadowDOMRegex =
    * @param Node|String 	Stuff to go into the shadow boundary (html or node)
    * @param Object				Options argument for the check (optional, default: {})
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+   * @deprecated use checkSetup with declarative shadow DOM
    * @return Array
    */
   testUtils.shadowCheckSetup = (
@@ -544,23 +559,7 @@ const declarativeShadowDOMRegex =
     }
 
     const rootNode = testUtils.fixtureSetup(html, options);
-
-    let vNode;
-    if (!options.shadow) {
-      vNode = axe.utils.querySelectorAll(rootNode, query)[0];
-    } else {
-      // find target in deepest to shallowest root order first
-      const roots = [
-        rootNode.actualNode,
-        ...getShadowRootsUnder(rootNode.actualNode)
-      ].reverse();
-      for (const root of roots) {
-        vNode = axe.utils.getNodeFromTree(root.querySelector(query));
-        if (vNode) {
-          break;
-        }
-      }
-    }
+    const vNode = findTarget(rootNode, query, options);
 
     // find the target in the shadow tree first
     assert.exists(
@@ -569,6 +568,33 @@ const declarativeShadowDOMRegex =
     );
     return vNode;
   };
+
+  /**
+   * Find the target selector in the root
+   *
+   * @param {Node} rootNode
+   * @param {String} target - the CSS selector query to find target DOM node
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
+   * @return {VirtualNode}
+   */
+  function findTarget(rootNode, target, options = {}) {
+    if (!options.shadow) {
+      return axe.utils.querySelectorAll(rootNode, target)[0];
+    }
+
+    // find target in deepest to shallowest root order first
+    const roots = [
+      rootNode.actualNode,
+      ...getShadowRootsUnder(rootNode.actualNode)
+    ].reverse();
+    for (const root of roots) {
+      const vNode = axe.utils.getNodeFromTree(root.querySelector(target));
+      if (vNode) {
+        return vNode;
+      }
+    }
+  }
 
   /**
    * Find all shadow roots in a tree.
@@ -793,6 +819,9 @@ const declarativeShadowDOMRegex =
     return promiseResults;
   };
 
+  /**
+   * @deprecated use queryFixture with declarative shadow DOM
+   */
   testUtils.shadowQuerySelector = function shadowQuerySelector(
     axeSelector,
     doc
@@ -807,6 +836,9 @@ const declarativeShadowDOMRegex =
     return elm;
   };
 
+  /**
+   * @deprecated use queryFixture with declarative shadow DOM
+   */
   testUtils.createNestedShadowDom = function createFixtureShadowTree(
     fixtureNode,
     ...htmlCodes
