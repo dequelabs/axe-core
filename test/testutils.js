@@ -255,33 +255,36 @@ var helpers;
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
    * @return VirtualNode
    */
-  testUtils.queryShadowFixture = (content, shadowContent, targetSelector) => {
+  testUtils.queryShadowFixture = (
+    content,
+    shadowContent,
+    targetSelector = '#target'
+  ) => {
     // Normalize target, allow it to be the provided string or use '#target' to query composed tree
-    if (typeof targetSelector !== 'string') {
-      targetSelector = '#target';
+    let shadowSelector = '#shadow';
+    if (typeof targetSelector === 'object' && targetSelector !== null) {
+      shadowSelector = targetSelector.shadow ?? '#shadow';
+      targetSelector = targetSelector.target ?? '#target';
     }
 
     const fixtureNode = testUtils.injectIntoFixture(content);
-    let targetCandidate = fixtureNode.querySelector(targetSelector);
-    let container = targetCandidate;
-    if (!targetCandidate) {
-      // check if content specifies a shadow container
-      container = fixtureNode.querySelector('#shadow');
-      if (!container) {
-        container = fixtureNode.firstElementChild;
-      }
-    }
+    let container =
+      fixtureNode.querySelector(shadowSelector) ||
+      fixtureNode.querySelector(targetSelector) ||
+      fixtureNode.firstElementChild;
+
     // attach a shadowRoot with the content provided
     const shadowRoot = container.attachShadow({ mode: 'open' });
     if (typeof shadowContent === 'string') {
       shadowRoot.innerHTML = shadowContent;
-    } else if (content instanceof Node) {
+    } else if (shadowContent instanceof Node) {
       shadowRoot.appendChild(shadowContent);
     }
 
-    if (!targetCandidate) {
-      targetCandidate = shadowRoot.querySelector(targetSelector);
-    }
+    let targetCandidate =
+      shadowRoot.querySelector(targetSelector) ||
+      fixtureNode.querySelector(targetSelector);
+
     if (!targetSelector && !targetCandidate) {
       throw 'shadowCheckSetup requires at least one fragment to have #target, or a provided targetSelector';
     }
