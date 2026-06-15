@@ -1,6 +1,7 @@
 describe('heading-order', () => {
   const checkContext = axe.testUtils.MockCheckContext();
   const queryFixture = axe.testUtils.queryFixture;
+  const html = axe.testUtils.html;
 
   afterEach(() => {
     checkContext.reset();
@@ -800,6 +801,29 @@ describe('heading-order', () => {
       ];
       const afterResults = checks['heading-order'].after(results);
       assert.isFalse(afterResults[0].result);
+    });
+  });
+
+  it('should use aria-level from elementInternals', () => {
+    const vNode = queryFixture(
+      html`<testutils-element
+        id="target"
+        role="heading"
+        with-aria-level="2"
+      ></testutils-element>`
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > testutils-element'],
+          level: 2
+        }
+      ]
     });
   });
 });
