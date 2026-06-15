@@ -393,6 +393,27 @@ describe('aria-errormessage', () => {
     );
   });
 
+  describe('elementInternals', () => {
+    it('should return true when aria-errormessage and aria-invalid are set via elementInternals', () => {
+      const params = checkSetup(html`
+        <div>
+          <testutils-element
+            id="target"
+            no-role
+            with-aria-invalid="true"
+            with-aria-errormessage="live"
+          ></testutils-element>
+          <div id="live" aria-live="assertive">Error message</div>
+        </div>
+      `);
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .apply(checkContext, params)
+      );
+    });
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return undefined', () => {
       const vNode = new axe.SerialVirtualNode({

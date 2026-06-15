@@ -140,6 +140,21 @@ describe('aria-required-attr', () => {
     });
   });
 
+  it('returns true when required attribute is provided via elementInternals', () => {
+    const { html } = axe.testUtils;
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        no-role
+        role="switch"
+        tabindex="1"
+        with-aria-checked="false"
+      ></testutils-element>`
+    );
+    assert.isTrue(requiredAttrCheck.apply(checkContext, params));
+    assert.isNull(checkContext._data);
+  });
+
   describe('options', () => {
     it('requires provided attribute names for a role', () => {
       axe.configure({
