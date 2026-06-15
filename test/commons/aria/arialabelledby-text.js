@@ -108,4 +108,16 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, spaced);
   });
+
+  it('returns the accessible name via elementInternals aria-labelledby', () => {
+    const target = queryFixture(html`
+      <span id="foo-label">Foo text</span>
+      <testutils-element
+        id="target"
+        with-aria-labelledby="foo-label"
+      ></testutils-element>
+    `);
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Foo text');
+  });
 });

@@ -85,4 +85,29 @@ describe('aria.labelVirtual', () => {
       assert.isNull(axe.commons.aria.labelVirtual(target));
     });
   });
+
+  describe('elementInternals', () => {
+    it('returns the visible text of aria-labelledby via elementInternals', () => {
+      fixtureSetup(html`
+        <div id="monkey-label">monkey</div>
+        <testutils-element
+          id="target"
+          with-aria-labelledby="monkey-label"
+        ></testutils-element>
+      `);
+      const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      assert.equal(axe.commons.aria.labelVirtual(target), 'monkey');
+    });
+
+    it('returns the aria-label text via elementInternals', () => {
+      fixtureSetup(
+        html`<testutils-element
+          id="target"
+          with-aria-label="my label"
+        ></testutils-element>`
+      );
+      const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      assert.equal(axe.commons.aria.labelVirtual(target), 'my label');
+    });
+  });
 });

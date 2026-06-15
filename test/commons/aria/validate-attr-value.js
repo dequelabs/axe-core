@@ -262,6 +262,23 @@ describe('aria.validateAttrValue', () => {
         setAttr(node, 'goats', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
+
+      it('validates idrefs from elementInternals', () => {
+        const { html, queryFixture } = axe.testUtils;
+        const vNode = queryFixture(html`
+          <span id="label-ref">label</span>
+          <testutils-element
+            id="target"
+            with-aria-labelledby="label-ref"
+          ></testutils-element>
+        `);
+        // aria-labelledby is idrefs type
+        const result = axe.commons.aria.validateAttrValue(
+          vNode,
+          'aria-labelledby'
+        );
+        assert.isTrue(result);
+      });
     });
 
     describe('string', () => {

@@ -33,4 +33,15 @@ describe('aria.arialabelText', () => {
     const node = document.createTextNode('my text node');
     assert.equal(aria.arialabelText(node), '');
   });
+
+  it('returns the aria-label from elementInternals', () => {
+    const { html, queryFixture } = axe.testUtils;
+    const vNode = queryFixture(
+      html`<testutils-element
+        id="target"
+        with-aria-label="my label"
+      ></testutils-element>`
+    );
+    assert.equal(aria.arialabelText(vNode), 'my label');
+  });
 });
