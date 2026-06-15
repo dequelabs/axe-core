@@ -337,4 +337,19 @@ describe('multiple-label', () => {
         .call(checkContext, shadowTarget.firstElementChild)
     );
   });
+
+  describe('ElementInternals', () => {
+    it('should return false given multiple labels, one label AT visible, and elementInternals aria-labelledby for AT visible', () => {
+      const checkEvaluate = axe.testUtils.getCheckEvaluate('multiple-label');
+      const params = axe.testUtils.checkSetup(html`
+        <label for="target" aria-hidden="true" id="l1">Please</label>
+        <label for="target" id="l2">Excuse</label>
+        <testutils-element
+          id="target"
+          with-aria-labelledby="l2"
+        ></testutils-element>
+      `);
+      assert.isFalse(checkEvaluate.call(checkContext, ...params));
+    });
+  });
 });

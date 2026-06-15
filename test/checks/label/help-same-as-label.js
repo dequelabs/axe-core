@@ -1,4 +1,6 @@
 describe('help-same-as-label', () => {
+  const { checkSetup, html } = axe.testUtils;
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('help-same-as-label');
   const fixture = document.getElementById('fixture');
 
   afterEach(() => {
@@ -81,5 +83,19 @@ describe('help-same-as-label', () => {
         axe.utils.getNodeFromTree(node)
       )
     );
+  });
+
+  describe('ElementInternals', () => {
+    it('should return true if an element has a label and elementInternals aria-describedby with the same text', () => {
+      const params = checkSetup(html`
+        <div id="dby">Duplicate</div>
+        <testutils-element
+          id="target"
+          aria-label="Duplicate"
+          with-aria-describedby="dby"
+        ></testutils-element>
+      `);
+      assert.isTrue(checkEvaluate.apply(null, params));
+    });
   });
 });
