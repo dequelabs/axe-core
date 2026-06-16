@@ -272,7 +272,6 @@ describe('aria.validateAttrValue', () => {
             with-aria-labelledby="label-ref"
           ></testutils-element>
         `);
-        // aria-labelledby is idrefs type
         const result = axe.commons.aria.validateAttrValue(
           vNode,
           'aria-labelledby'
