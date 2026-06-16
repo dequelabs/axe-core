@@ -1,0 +1,17 @@
+<!-- Violation: content outside any landmark or live region -->
+<div id="violation1">Outside any region</div>
+
+<!-- Pass: content inside a landmark -->
+<main>
+  <div id="pass1">Inside main landmark</div>
+
+  <!-- Pass: content inside an aria-live region (HTML attribute) -->
+  <div aria-live="polite">
+    <div id="pass2">Inside aria-live region</div>
+  </div>
+</main>
+
+<!-- Pass: content inside an aria-live region set via ElementInternals -->
+<testutils-element no-role with-aria-live="polite">
+  <div id="pass3">Inside aria-live region via elementInternals</div>
+</testutils-element>
