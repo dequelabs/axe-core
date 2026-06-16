@@ -100,6 +100,35 @@ describe('th-has-data-cells', () => {
     );
   });
 
+  it('should return true if referred to with the aria-labelledby AOM property', () => {
+    // built-in table cells can't have ElementInternals, but the reflected
+    // ariaLabelledByElements property can reference headers without an attribute
+    fixture.innerHTML = html`
+      <table>
+        <tr>
+          <td>hi</td>
+          <td>hello</td>
+        </tr>
+        <tr>
+          <th id="a">H</th>
+          <th id="b">H</th>
+        </tr>
+      </table>
+    `;
+
+    axe.testUtils.flatTreeSetup(fixture);
+    const node = fixture.querySelector('table');
+    const tds = node.querySelectorAll('td');
+    tds[0].ariaLabelledByElements = [node.querySelector('#a')];
+    tds[1].ariaLabelledByElements = [node.querySelector('#b')];
+
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('th-has-data-cells')
+        .call(checkContext, node)
+    );
+  });
+
   it('should return true if the th element is empty', () => {
     fixture.innerHTML = html`
       <table>
