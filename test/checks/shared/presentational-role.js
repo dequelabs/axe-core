@@ -62,6 +62,27 @@ describe('presentational-role', () => {
     assert.deepEqual(checkContext._data.messageKey, 'both');
   });
 
+  it('detects a global aria attribute set via the reflected AOM property', () => {
+    const vNode = queryFixture(
+      '<button id="target" role="none">Still a button</button>'
+    );
+    // set via the property (no aria-live attribute present)
+    vNode.actualNode.ariaLive = 'assertive';
+
+    assert.isFalse(checkEvaluate.call(checkContext, null, null, vNode));
+    assert.deepEqual(checkContext._data.messageKey, 'both');
+  });
+
+  it('detects a global aria attribute set via element internals', () => {
+    const vNode = queryFixture(
+      '<testutils-element id="target" no-role role="none" tabindex="0">x</testutils-element>'
+    );
+    vNode.actualNode._internals.ariaLive = 'assertive';
+
+    assert.isFalse(checkEvaluate.call(checkContext, null, null, vNode));
+    assert.deepEqual(checkContext._data.messageKey, 'both');
+  });
+
   it('should return false for iframe element with role=none and title', () => {
     const vNode = queryFixture(
       '<iframe id="target" role="none" title="  "></iframe>'
