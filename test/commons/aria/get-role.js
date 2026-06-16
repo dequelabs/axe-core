@@ -91,6 +91,14 @@ describe('aria.getRole', () => {
     assert.equal(aria.getRole(node), 'button');
   });
 
+  it('does not run role resolution with presentation role on custom element with an internal role', () => {
+    fixture.innerHTML =
+      '<ul><testutils-element with-role="listitem" id="target" role="presentation" aria-label="foo"></testutils-element></ul>';
+    flatTreeSetup(fixture);
+    const node = fixture.querySelector('#target');
+    assert.isNull(aria.getRole(node));
+  });
+
   describe('presentational role inheritance', () => {
     it('handles presentation role inheritance for ul', () => {
       fixture.innerHTML =
