@@ -85,7 +85,7 @@ describe('aria.hasAriaValue', () => {
     assert.isTrue(hasAriaValue(node, 'aria-label'));
   });
 
-  it('returns true if element has elementInternals', () => {
+  it('returns true if element not in the tree has elementInternals', () => {
     fixture.innerHTML = html`<testutils-element
       id="target"
       with-aria-label="hello"
