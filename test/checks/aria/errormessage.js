@@ -243,7 +243,8 @@ describe('aria-errormessage', () => {
     );
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
-      values: ['id-message-1']
+      values: ['id-message-1'],
+      source: ''
     });
   });
 
@@ -264,7 +265,8 @@ describe('aria-errormessage', () => {
     );
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
-      values: ['id-message-1']
+      values: ['id-message-1'],
+      source: ''
     });
   });
 
@@ -285,7 +287,8 @@ describe('aria-errormessage', () => {
     );
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
-      values: ['id-message-1']
+      values: ['id-message-1'],
+      source: ''
     });
   });
 
@@ -306,7 +309,8 @@ describe('aria-errormessage', () => {
     );
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
-      values: ['id-message-1']
+      values: ['id-message-1'],
+      source: ''
     });
   });
 
@@ -393,6 +397,120 @@ describe('aria-errormessage', () => {
     );
   });
 
+  describe('ElementInternals', () => {
+    const fixture = axe.testUtils.fixture;
+
+    afterEach(() => {
+      delete globalThis._elementInternals;
+    });
+
+    it('honors aria-invalid supplied via element internals', () => {
+      const vNode = queryFixture(html`
+        <testutils-element
+          id="target"
+          aria-errormessage="msg"
+        ></testutils-element>
+        <div id="msg" aria-live="assertive">Error</div>
+      `);
+      vNode.actualNode._internals.ariaInvalid = 'true';
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('returns false when invalid via internals and the message lacks a technique', () => {
+      const vNode = queryFixture(html`
+        <testutils-element
+          id="target"
+          aria-errormessage="msg"
+        ></testutils-element>
+        <div id="msg">Error</div>
+      `);
+      vNode.actualNode._internals.ariaInvalid = 'true';
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('passes when aria-invalid is false via internals', () => {
+      const vNode = queryFixture(html`
+        <testutils-element
+          id="target"
+          aria-errormessage="msg"
+        ></testutils-element>
+        <div id="msg">Error</div>
+      `);
+      vNode.actualNode._internals.ariaInvalid = 'false';
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('resolves aria-errormessage supplied via element internals', () => {
+      const vNode = queryFixture(html`
+        <testutils-element id="target"></testutils-element>
+        <div id="msg" aria-live="assertive">Error</div>
+      `);
+      vNode.actualNode._internals.ariaInvalid = 'true';
+      vNode.actualNode._internals.ariaErrorMessageElements = [
+        fixture.querySelector('#msg')
+      ];
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('resolves internals supplied through the global axeInternalsMap', () => {
+      const vNode = queryFixture(html`
+        <testutils-element id="target"></testutils-element>
+        <div id="msg" aria-live="assertive">Error</div>
+      `);
+      const node = vNode.actualNode;
+      node._internals.ariaInvalid = 'true';
+      node._internals.ariaErrorMessageElements = [
+        fixture.querySelector('#msg')
+      ];
+      // expose the internals through the global map protocol instead of a property
+      globalThis._elementInternals = new WeakMap();
+      globalThis._elementInternals.set(node, node._internals);
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('notes the value source in the message data for an internals reference', () => {
+      const vNode = queryFixture(html`
+        <testutils-element id="target"></testutils-element>
+        <div id="msg" aria-live="assertive" hidden>Error</div>
+      `);
+      vNode.actualNode._internals.ariaInvalid = 'true';
+      vNode.actualNode._internals.ariaErrorMessageElements = [
+        fixture.querySelector('#msg')
+      ];
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.equal(checkContext._data.messageKey, 'hidden');
+      assert.equal(
+        checkContext._data.source,
+        ' The aria-errormessage value is set via element internals, not an HTML attribute.'
+      );
+    });
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return undefined', () => {
       const vNode = new axe.SerialVirtualNode({
@@ -409,7 +527,8 @@ describe('aria-errormessage', () => {
       );
       assert.deepEqual(checkContext._data, {
         messageKey: 'idrefs',
-        values: ['test']
+        values: ['test'],
+        source: ''
       });
     });
   });
