@@ -437,7 +437,7 @@ describe('text.formControlValue', () => {
     });
 
     it('returns the selected aria option value from elementInternals', () => {
-      const vNode = queryFixture(html`
+      const target = queryFixture(html`
         <div id="target" role="listbox">
           <testutils-element no-role role="option" with-aria-selected="true"
             >Selected Option</testutils-element
@@ -445,10 +445,7 @@ describe('text.formControlValue', () => {
           <div role="option" aria-selected="false">Unselected</div>
         </div>
       `);
-      assert.equal(
-        axe.commons.text.formControlValueMethods.ariaListboxValue(vNode, {}),
-        'Selected Option'
-      );
+      assert.equal(ariaListboxValue(target), 'Selected Option');
     });
   });
 
@@ -537,7 +534,7 @@ describe('text.formControlValue', () => {
     });
 
     it('returns the aria range value from elementInternals', () => {
-      const vNode = queryFixture(
+      const target = queryFixture(
         html`<testutils-element
           id="target"
           role="slider"
@@ -546,10 +543,7 @@ describe('text.formControlValue', () => {
           with-aria-valuemax="100"
         ></testutils-element>`
       );
-      assert.equal(
-        axe.commons.text.formControlValueMethods.ariaRangeValue(vNode),
-        '50'
-      );
+      assert.equal(ariaRangeValue(target), '50');
     });
   });
 });
