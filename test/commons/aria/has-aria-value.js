@@ -1,5 +1,5 @@
 describe('aria.hasAriaValue', () => {
-  const { queryFixture, html } = axe.testUtils;
+  const { queryFixture, fixture, html } = axe.testUtils;
   const hasAriaValue = axe.commons.aria.hasAriaValue;
   const SerialVirtualNode = axe.SerialVirtualNode;
 
@@ -76,6 +76,23 @@ describe('aria.hasAriaValue', () => {
     };
 
     assert.isFalse(hasAriaValue(vNode, 'aria-label'));
+  });
+
+  it('returns true if element not in the tree has attribute', () => {
+    fixture.innerHTML = html`<div id="target" aria-label="hello"></div>`;
+    const node = fixture.querySelector('#target');
+
+    assert.isTrue(hasAriaValue(node, 'aria-label'));
+  });
+
+  it('returns true if element has elementInternals', () => {
+    fixture.innerHTML = html`<testutils-element
+      id="target"
+      with-aria-label="hello"
+    ></testutils-element>`;
+    const node = fixture.querySelector('#target');
+
+    assert.isTrue(hasAriaValue(node, 'aria-label'));
   });
 
   describe('SerialVirtualNode', () => {

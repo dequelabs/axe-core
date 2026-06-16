@@ -161,6 +161,31 @@ describe('aria.getAriaValue', () => {
     assert.isNull(getAriaValue(vNode, 'aria-label'));
   });
 
+  it('returns attribute from an element not in the tree', () => {
+    fixture.innerHTML = html`<div id="target" aria-label="hello"></div>`;
+    const node = fixture.querySelector('#target');
+
+    const result = getAriaValue(node, 'aria-label');
+    assert.deepEqual(result, {
+      value: 'hello',
+      source: 'attribute'
+    });
+  });
+
+  it('returns element internals from an element not in the tree', () => {
+    fixture.innerHTML = html`<testutils-element
+      id="target"
+      with-aria-label="hello"
+    ></testutils-element>`;
+    const node = fixture.querySelector('#target');
+
+    const result = getAriaValue(node, 'aria-label');
+    assert.deepEqual(result, {
+      value: 'hello',
+      source: 'internals'
+    });
+  });
+
   describe('idref', () => {
     it('returns the attribute value over the property value', () => {
       const vNode = queryFixture(
