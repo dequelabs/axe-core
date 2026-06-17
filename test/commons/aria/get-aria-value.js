@@ -229,6 +229,21 @@ describe('aria.getAriaValue', () => {
         source: 'attribute'
       });
     });
+
+    it('returns stringified value from an element not in the tree', () => {
+      fixture.innerHTML = html`<div id="target">
+        <div id="child"></div>
+      </div>`;
+      const node = fixture.querySelector('#target');
+      const child = fixture.querySelector('#child');
+      node.ariaActiveDescendantElement = child;
+
+      const result = getAriaValue(node, 'aria-activedescendant');
+      assert.deepEqual(result, {
+        value: 'DIV',
+        source: 'property'
+      });
+    });
   });
 
   describe('idrefs', () => {
@@ -272,6 +287,22 @@ describe('aria.getAriaValue', () => {
       assert.deepEqual(result, {
         value: '',
         source: 'attribute'
+      });
+    });
+
+    it('returns stringified value from an element not in the tree', () => {
+      fixture.innerHTML = html`<div id="target"></div>
+        <div id="label1"></div>
+        <div id="label2"></div>`;
+      const node = fixture.querySelector('#target');
+      const label1 = fixture.querySelector('#label1');
+      const label2 = fixture.querySelector('#label2');
+      node.ariaLabelledByElements = [label1, label2];
+
+      const result = getAriaValue(node, 'aria-labelledby');
+      assert.deepEqual(result, {
+        value: '[DIV,DIV]',
+        source: 'property'
       });
     });
   });
