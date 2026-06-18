@@ -44,4 +44,40 @@ describe('text.nativeTextAlternative', () => {
     const vNode = queryFixture('<img id="target" alt="foo" role="none" />');
     assert.equal(nativeTextAlternative(vNode), '');
   });
+
+  describe('form-associated custom elements', () => {
+    it('returns the explicit label text of a form-associated custom element', () => {
+      const vNode = queryFixture(`
+        <label for="target">My explicit label</label>
+        <testutils-form-element id="target"></testutils-form-element>
+      `);
+      assert.equal(nativeTextAlternative(vNode), 'My explicit label');
+    });
+
+    it('returns the implicit label text of a form-associated custom element', () => {
+      const vNode = queryFixture(
+        '<label>My implicit label' +
+          '<testutils-form-element id="target"></testutils-form-element></label>'
+      );
+      assert.equal(nativeTextAlternative(vNode), 'My implicit label');
+    });
+
+    it('does not add a label for non-form-associated custom elements', () => {
+      const vNode = queryFixture(`
+        <label for="target">My explicit label</label>
+        <testutils-element id="target" no-role></testutils-element>
+      `);
+      assert.equal(nativeTextAlternative(vNode), '');
+    });
+
+    it('does not add a label when element internals are disabled', () => {
+      axe._enableElementInternals = false;
+      const vNode = queryFixture(`
+        <label for="target">My explicit label</label>
+        <testutils-form-element id="target"></testutils-form-element>
+      `);
+      assert.equal(nativeTextAlternative(vNode), '');
+      axe._enableElementInternals = true;
+    });
+  });
 });

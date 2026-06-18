@@ -95,6 +95,23 @@ const declarativeShadowDOMRegex =
     );
   }
 
+  // create a form-associated custom element that label tests can use. Unlike
+  // testutils-element, this is form-associated so `internals.labels` resolves
+  // the element's associated `<label>` elements instead of throwing.
+  if (!customElements.get('testutils-form-element')) {
+    customElements.define(
+      'testutils-form-element',
+      class TestutilsFormElement extends HTMLElement {
+        static formAssociated = true;
+
+        constructor() {
+          super();
+          this._internals = this.attachInternals();
+        }
+      }
+    );
+  }
+
   // turn on elementInternals feature flag
   // TODO: remove when feature is fully enabled
   axe._enableElementInternals = true;

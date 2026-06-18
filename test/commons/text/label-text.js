@@ -2,6 +2,7 @@ describe('text.labelText', () => {
   const html = axe.testUtils.html;
   const labelText = axe.commons.text.labelText;
   const queryFixture = axe.testUtils.queryFixture;
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
 
   it('returns the text of an implicit label', () => {
     const target = queryFixture(html`
@@ -103,6 +104,84 @@ describe('text.labelText', () => {
         html`<label for="target">My explicit label</label><input id="target" />`
       );
       assert.equal(labelText(target, { inLabelledByContext: true }), '');
+    });
+  });
+
+  describe('form-associated custom elements', () => {
+    it('returns the text of an explicit label from element internals', () => {
+      const target = queryFixture(html`
+        <label for="target">My explicit label</label>
+        <testutils-form-element id="target"></testutils-form-element>
+      `);
+      assert.equal(labelText(target), 'My explicit label');
+    });
+
+    it('returns the text of an implicit label from element internals', () => {
+      const target = queryFixture(
+        html`<label
+          >My implicit label<testutils-form-element
+            id="target"
+          ></testutils-form-element
+        ></label>`
+      );
+      assert.equal(labelText(target), 'My implicit label');
+    });
+
+    it('concatenates multiple labels from element internals', () => {
+      const target = queryFixture(html`
+        <label for="target">My label 1</label>
+        <label for="target">My label 2</label>
+        <testutils-form-element id="target"></testutils-form-element>
+      `);
+      assert.equal(labelText(target), 'My label 1 My label 2');
+    });
+
+    it('does not return an implicit + explicit label twice', () => {
+      const target = queryFixture(
+        html`<label for="target"
+          >My implicit and explicit label<testutils-form-element
+            id="target"
+          ></testutils-form-element
+        ></label>`
+      );
+      assert.equal(labelText(target), 'My implicit and explicit label');
+    });
+
+    it('resolves labels when internals come from the global map', () => {
+      const target = queryFixture(html`
+        <label for="target">My explicit label</label>
+        <testutils-form-element id="target"></testutils-form-element>
+      `);
+      const { actualNode } = target;
+      const internals = actualNode._internals;
+      // remove the property protocol so the global map is the only source.
+      // elementInternals is read lazily, so the first read happens below
+      delete actualNode._internals;
+      globalThis._elementInternals = new WeakMap();
+      globalThis._elementInternals.set(actualNode, internals);
+
+      assert.equal(labelText(target), 'My explicit label');
+
+      delete globalThis._elementInternals;
+    });
+
+    it('falls back to DOM resolution for non-form-associated custom elements', () => {
+      const target = queryFixture(html`
+        <label for="target">My explicit label</label>
+        <testutils-element id="target" no-role></testutils-element>
+      `);
+      // testutils-element is not form-associated, so reading internals.labels
+      // throws and we fall through to resolving label[for] from the DOM
+      assert.equal(labelText(target), 'My explicit label');
+    });
+
+    it('resolves labels inside a shadow tree', () => {
+      const target = queryShadowFixture(
+        '<div id="shadow"></div>',
+        `<label for="target">My explicit label</label>
+         <testutils-form-element id="target"></testutils-form-element>`
+      );
+      assert.equal(labelText(target), 'My explicit label');
     });
   });
 });
