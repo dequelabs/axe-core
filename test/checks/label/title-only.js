@@ -65,6 +65,20 @@ describe('title-only', () => {
     );
   });
 
+  it('should return false if aria-describedby is empty and there is no title or label', () => {
+    const node = document.createElement('input');
+    node.type = 'text';
+    node.setAttribute('aria-describedby', '');
+
+    fixture.appendChild(node);
+
+    axe.testUtils.flatTreeSetup(fixture);
+
+    assert.isFalse(
+      checkEvaluate(node, undefined, axe.utils.getNodeFromTree(node))
+    );
+  });
+
   describe('ElementInternals', () => {
     it('should return true if an element only has elementInternals aria-describedby', () => {
       const params = checkSetup(html`
