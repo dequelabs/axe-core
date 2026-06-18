@@ -25,4 +25,17 @@ describe('aria-busy', () => {
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
+
+  it('should return true if aria-busy is set to true via elementInternals', () => {
+    const { html } = axe.testUtils;
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        no-role
+        role="list"
+        with-aria-busy="true"
+      ></testutils-element>`
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
 });
