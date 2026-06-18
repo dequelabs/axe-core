@@ -245,6 +245,27 @@ describe('aria.getRole', () => {
         aria.getRole(node);
       });
     });
+
+    // Presentational role inheritance is keyed off the HTML tag name of the
+    // required child (e.g. `li`, `td`), not its computed role. A custom element
+    // exposing an internal `listitem` role is not an HTML `<li>`, so it does not
+    // inherit a presentational role from an ancestor `role="none"` list. Whether
+    // it should is an open spec/browser question — see issue #5181.
+    it('does not inherit presentation onto an ElementInternals listitem role', () => {
+      fixture.innerHTML =
+        '<ul role="none"><testutils-element with-role="listitem" id="target"></testutils-element></ul>';
+      flatTreeSetup(fixture);
+      const node = fixture.querySelector('#target');
+      assert.equal(aria.getRole(node), 'listitem');
+    });
+
+    it('does not inherit presentation onto an ElementInternals non-child role', () => {
+      fixture.innerHTML =
+        '<ul role="none"><testutils-element with-role="button" id="target"></testutils-element></ul>';
+      flatTreeSetup(fixture);
+      const node = fixture.querySelector('#target');
+      assert.equal(aria.getRole(node), 'button');
+    });
   });
 
   describe('noImplicit', () => {
