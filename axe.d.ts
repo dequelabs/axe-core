@@ -6,7 +6,7 @@ declare namespace axe {
 
   type TagValue = string;
 
-  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'rawEnv' | 'no-passes';
+  type ReporterVersion = 'v1' | 'v2' | 'raw' | 'rawEnv' | 'no-passes' | 'earl';
 
   type RunOnlyType = 'rule' | 'rules' | 'tag' | 'tags';
 
@@ -422,6 +422,31 @@ declare namespace axe {
     resolve: (report: T) => void,
     reject: (error: Error) => void
   ) => void;
+
+  interface EarlAssertion {
+    '@type': 'Assertion';
+    mode: string;
+    subject: {
+      '@type': string[];
+      source: string;
+    };
+    assertedBy: string;
+    result: {
+      '@type': 'TestResult';
+      outcome: string;
+    };
+    test?: {
+      '@type': 'TestCase';
+      title: string;
+      '@id': string;
+      isPartOf?: string[];
+    };
+  }
+
+  interface EarlReport {
+    '@context': { [key: string]: unknown };
+    '@graph': EarlAssertion[];
+  }
 
   interface VirtualNode {
     actualNode?: Node;
