@@ -222,7 +222,7 @@ axe.configure({
     - `raw` to return the raw result data without formatting: `axe.configure({ reporter: "raw" });`
     - `raw-env` to return the raw result data with environment data: `axe.configure({ reporter: "raw-env" });`
     - `no-passes` to return only violation results: `axe.configure({ reporter: "no-passes" });`
-    - `earl` to return a [W3C EARL](https://www.w3.org/TR/EARL10-Schema/) (Evaluation and Report Language) report as a JSON-LD `{ "@context", "@graph" }` document: `axe.configure({ reporter: "earl" });`. WCAG Success Criterion links (`isPartOf`) are provided for WCAG 2.1 and earlier; results tagged with WCAG 2.2 criteria omit `isPartOf`.
+    - `earl` to return a [W3C EARL](https://www.w3.org/TR/EARL10-Schema/) (Evaluation and Report Language) report as a JSON-LD `{ "@context", "@graph" }` document. Set it globally with `axe.configure({ reporter: "earl" });` or per run with `axe.run(context, { reporter: "earl" })`. WCAG Success Criterion links (`isPartOf`) are provided for WCAG 2.1 and earlier; results tagged with WCAG 2.2 criteria omit `isPartOf`.
   - `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes

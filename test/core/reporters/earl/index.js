@@ -264,7 +264,7 @@ describe('reporters - earl', () => {
     const realVersion = axe.version;
     try {
       axe.version = '9.8.7';
-      const assertion = getEarlReport(runResults)['@graph'][0];
+      let assertion = getEarlReport(runResults)['@graph'][0];
       assert.equal(
         assertion.assertedBy,
         'https://github.com/dequelabs/axe-core/releases/tag/v9.8.7'
@@ -272,6 +272,18 @@ describe('reporters - earl', () => {
       assert.equal(
         assertion.test['@id'],
         'https://dequeuniversity.com/rules/axe/9.8/image-alt?application=axeAPI'
+      );
+
+      // A two-digit minor (e.g. 4.10) must survive the regex intact.
+      axe.version = '4.10.2';
+      assertion = getEarlReport(runResults)['@graph'][0];
+      assert.equal(
+        assertion.assertedBy,
+        'https://github.com/dequelabs/axe-core/releases/tag/v4.10.2'
+      );
+      assert.equal(
+        assertion.test['@id'],
+        'https://dequeuniversity.com/rules/axe/4.10/image-alt?application=axeAPI'
       );
     } finally {
       axe.version = realVersion;
@@ -285,6 +297,20 @@ describe('reporters - earl', () => {
     report['@graph'].forEach(assertion => {
       assert.equal(assertion.subject.source, 'https://deque.com/');
     });
+  });
+
+  it('normalizes an absent or non-string url to an empty-string source', () => {
+    // getEnvironmentData passes environmentData through verbatim, so a missing
+    // or non-string url must become '' rather than reach (and throw in)
+    // earlAssertion, whose source must be a string.
+    [{ environmentData: {} }, { environmentData: { url: 42 } }].forEach(
+      options => {
+        const report = getEarlReport(runResults, options);
+        report['@graph'].forEach(assertion => {
+          assert.strictEqual(assertion.subject.source, '');
+        });
+      }
+    );
   });
 
   it('supports the options-as-callback shorthand', () => {

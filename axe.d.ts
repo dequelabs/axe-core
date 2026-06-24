@@ -443,6 +443,11 @@ declare namespace axe {
     };
   }
 
+  /**
+   * Result shape produced by the `earl` reporter. When invoking it through
+   * `axe.run`, pass it as the type argument:
+   * `axe.run<axe.EarlReport>(context, { reporter: 'earl' })`.
+   */
   interface EarlReport {
     '@context': { [key: string]: unknown };
     '@graph': EarlAssertion[];
