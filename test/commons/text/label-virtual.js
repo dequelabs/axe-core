@@ -59,6 +59,19 @@ describe('text.labelVirtual', () => {
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
+    it('should prefer ariaLabelledByElements over aria-labelledby', () => {
+      fixture.innerHTML = html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <input id="target" aria-labelledby="monkeys" />
+      `;
+
+      const tree = axe.testUtils.flatTreeSetup(document.body);
+      const target = axe.utils.querySelectorAll(tree, '#target')[0];
+      target.actualNode.ariaLabelledByElements = [fixture.querySelector('#bananas')];
+      assert.equal(axe.commons.text.labelVirtual(target), 'bananas');
+    });
+
     it('should take precedence over explicit labels', () => {
       fixture.innerHTML = html`
         <div id="monkeys">monkeys</div>

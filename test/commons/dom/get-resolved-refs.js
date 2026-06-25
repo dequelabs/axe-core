@@ -95,6 +95,20 @@ describe('dom.getResolvedRefs', () => {
     assert.deepEqual(getResolvedRefs(vNode, 'aria-controls'), expected);
   });
 
+  it('should prefer idrefs property over the attribute value', () => {
+    const vNode = queryFixture(html`
+      <div id="target" aria-labelledby="target1"></div>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+
+    vNode.actualNode.ariaLabelledByElements = [document.getElementById('target2')];
+
+    const expected = [getNodeFromTree(document.getElementById('target2'))];
+
+    assert.deepEqual(getResolvedRefs(vNode, 'aria-labelledby'), expected);
+  });
+
   it('should work with idrefs elementInternals', () => {
     const vNode = queryFixture(html`
       <testutils-element id="target"></testutils-element>
