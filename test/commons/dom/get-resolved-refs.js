@@ -102,7 +102,9 @@ describe('dom.getResolvedRefs', () => {
       <div id="target2"></div>
     `);
 
-    vNode.actualNode.ariaLabelledByElements = [document.getElementById('target2')];
+    vNode.actualNode.ariaLabelledByElements = [
+      document.getElementById('target2')
+    ];
 
     const expected = [getNodeFromTree(document.getElementById('target2'))];
 

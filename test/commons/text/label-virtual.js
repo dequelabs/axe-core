@@ -68,7 +68,9 @@ describe('text.labelVirtual', () => {
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
       const target = axe.utils.querySelectorAll(tree, '#target')[0];
-      target.actualNode.ariaLabelledByElements = [fixture.querySelector('#bananas')];
+      target.actualNode.ariaLabelledByElements = [
+        fixture.querySelector('#bananas')
+      ];
       assert.equal(axe.commons.text.labelVirtual(target), 'bananas');
     });
 

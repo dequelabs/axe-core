@@ -65,7 +65,9 @@ describe('aria.labelVirtual', () => {
         <input id="target" aria-labelledby="monkeys" />
       `);
       const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-      target.actualNode.ariaLabelledByElements = [fixture.querySelector('#bananas')];
+      target.actualNode.ariaLabelledByElements = [
+        fixture.querySelector('#bananas')
+      ];
 
       assert.equal(axe.commons.aria.labelVirtual(target), 'bananas');
     });
