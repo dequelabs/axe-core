@@ -108,4 +108,17 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, spaced);
   });
+
+  it('returns the accessible name from ariaLabelledByElements when aria-labelledby is unset', () => {
+    const target = queryFixture(html`
+      <div role="heading" id="target"></div>
+      <div id="foo">Foo text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling
+    ];
+
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Foo text');
+  });
 });
