@@ -259,6 +259,22 @@ describe('multiple-label', () => {
     );
   });
 
+  it('should return false when ariaLabelledByElements overrides aria-labelledby with aria-label present', () => {
+    fixtureSetup(html`
+      <input type="checkbox" id="F" aria-labelledby="G" aria-label="Nope" />
+      <label for="F" id="G" aria-hidden="true">Please</label>
+      <label for="F" id="H">Excuse</label>
+    `);
+    const target = fixture.querySelector('#F');
+    target.ariaLabelledByElements = [fixture.querySelector('#H')];
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(checkContext, target)
+    );
+  });
+
   it('should return false given multiple labels, one label visible, and no aria-labelledby', () => {
     fixtureSetup(html`
       <input type="checkbox" id="I" />

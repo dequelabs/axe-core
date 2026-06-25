@@ -135,4 +135,23 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, 'Bar text');
   });
+
+  it('prefers ariaLabelledByElements over aria-labelledby and aria-label', () => {
+    const target = queryFixture(html`
+      <div
+        role="heading"
+        id="target"
+        aria-labelledby="foo"
+        aria-label="Baz text"
+      ></div>
+      <div id="foo">Foo text</div>
+      <div id="bar">Bar text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling.nextElementSibling
+    ];
+
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Bar text');
+  });
 });

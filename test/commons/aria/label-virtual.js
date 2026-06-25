@@ -72,6 +72,20 @@ describe('aria.labelVirtual', () => {
       assert.equal(axe.commons.aria.labelVirtual(target), 'bananas');
     });
 
+    it('should prefer ariaLabelledByElements over aria-labelledby and aria-label', () => {
+      fixtureSetup(html`
+        <div id="monkeys">monkeys</div>
+        <div id="bananas">bananas</div>
+        <input id="target" aria-labelledby="monkeys" aria-label="grapes" />
+      `);
+      const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+      target.actualNode.ariaLabelledByElements = [
+        fixture.querySelector('#bananas')
+      ];
+
+      assert.equal(axe.commons.aria.labelVirtual(target), 'bananas');
+    });
+
     it('should ignore whitespace only labels', () => {
       fixtureSetup(html`
         <div id="monkeys"></div>
