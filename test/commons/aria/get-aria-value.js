@@ -3,6 +3,10 @@ describe('aria.getAriaValue', () => {
   const getAriaValue = axe.commons.aria.getAriaValue;
   const SerialVirtualNode = axe.SerialVirtualNode;
 
+  afterEach(() => {
+    axe._enableElementInternals = true;
+  });
+
   it('returns the aria attribute value', () => {
     const vNode = queryFixture(
       html`<div id="target" aria-label="hello"></div>`
@@ -173,6 +177,7 @@ describe('aria.getAriaValue', () => {
   });
 
   it('returns element internals from an element not in the tree', () => {
+    axe._elemen;
     fixture.innerHTML = html`<testutils-element
       id="target"
       with-aria-label="hello"
@@ -184,6 +189,17 @@ describe('aria.getAriaValue', () => {
       value: 'hello',
       source: 'internals'
     });
+  });
+
+  it('does not return element internals from an element not in the tree when feature flag is off', () => {
+    axe._enableElementInternals = false;
+    fixture.innerHTML = html`<testutils-element
+      id="target"
+      with-aria-label="hello"
+    ></testutils-element>`;
+    const node = fixture.querySelector('#target');
+
+    assert.isNull(getAriaValue(node, 'aria-label'));
   });
 
   describe('idref', () => {
