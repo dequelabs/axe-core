@@ -249,8 +249,11 @@ describe('aria.getRole', () => {
     // Presentational role inheritance is keyed off the HTML tag name of the
     // required child (e.g. `li`, `td`), not its computed role. A custom element
     // exposing an internal `listitem` role is not an HTML `<li>`, so it does not
-    // inherit a presentational role from an ancestor `role="none"` list. Whether
-    // it should is an open spec/browser question — see issue #5181.
+    // inherit a presentational role from an ancestor `role="none"` list. This
+    // matches Chrome and Firefox, which both leave the element as `listitem`
+    // (while stripping a native `<li>` to `none`/`generic`). Per spec it should
+    // inherit, but no browser implements internal-role conflict resolution yet
+    // — tracked in #5162.
     it('does not inherit presentation onto an ElementInternals listitem role', () => {
       fixture.innerHTML =
         '<ul role="none"><testutils-element with-role="listitem" id="target"></testutils-element></ul>';
