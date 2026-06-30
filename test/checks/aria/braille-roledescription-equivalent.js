@@ -27,6 +27,18 @@ describe('braille-roledescription-equivalent tests', () => {
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
+  it('returns true when both braille and roledescription are set via elementInternals', () => {
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        no-role
+        with-aria-brailleroledescription="foo"
+        with-aria-roledescription="bar"
+      ></testutils-element>`
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
   describe('when aria-brailleroledescription has text', () => {
     it('returns false without aria-roledescription', () => {
       const params = checkSetup(html`
