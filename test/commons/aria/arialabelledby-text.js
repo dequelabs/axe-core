@@ -120,4 +120,49 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, 'Foo text');
   });
+
+  // ariaLabelledByElements (reflected AOM property) coverage adapted from
+  // @jcfranco's work in #5187 (issue #4943)
+  it('returns the accessible name from ariaLabelledByElements when aria-labelledby is unset', () => {
+    const target = queryFixture(html`
+      <div role="heading" id="target"></div>
+      <div id="foo">Foo text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Foo text');
+  });
+
+  it('prefers ariaLabelledByElements over aria-labelledby', () => {
+    const target = queryFixture(html`
+      <div role="heading" id="target" aria-labelledby="foo"></div>
+      <div id="foo">Foo text</div>
+      <div id="bar">Bar text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Bar text');
+  });
+
+  it('prefers ariaLabelledByElements over aria-labelledby and aria-label', () => {
+    const target = queryFixture(html`
+      <div
+        role="heading"
+        id="target"
+        aria-labelledby="foo"
+        aria-label="Baz text"
+      ></div>
+      <div id="foo">Foo text</div>
+      <div id="bar">Bar text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Bar text');
+  });
 });
