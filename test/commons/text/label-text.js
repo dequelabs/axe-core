@@ -160,9 +160,11 @@ describe('text.labelText', () => {
       globalThis._elementInternals = new WeakMap();
       globalThis._elementInternals.set(actualNode, internals);
 
-      assert.equal(labelText(target), 'My explicit label');
-
-      delete globalThis._elementInternals;
+      try {
+        assert.equal(labelText(target), 'My explicit label');
+      } finally {
+        delete globalThis._elementInternals;
+      }
     });
 
     it('falls back to DOM resolution for non-form-associated custom elements', () => {

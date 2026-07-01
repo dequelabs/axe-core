@@ -72,12 +72,15 @@ describe('text.nativeTextAlternative', () => {
 
     it('does not add a label when element internals are disabled', () => {
       axe._enableElementInternals = false;
-      const vNode = queryFixture(`
-        <label for="target">My explicit label</label>
-        <testutils-form-element id="target"></testutils-form-element>
-      `);
-      assert.equal(nativeTextAlternative(vNode), '');
-      axe._enableElementInternals = true;
+      try {
+        const vNode = queryFixture(`
+          <label for="target">My explicit label</label>
+          <testutils-form-element id="target"></testutils-form-element>
+        `);
+        assert.equal(nativeTextAlternative(vNode), '');
+      } finally {
+        axe._enableElementInternals = true;
+      }
     });
   });
 });
