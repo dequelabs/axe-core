@@ -149,6 +149,7 @@ Axe-core supports the following locales. Do note that since locales are contribu
 - Polish
 - Portuguese (Brazilian)
 - Spanish
+- Swedish
 
 ## Updates & Security
 
