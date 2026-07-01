@@ -13,6 +13,7 @@ describe('standards.getGlobalAriaAttrs', () => {
     // Source: https://www.w3.org/TR/wai-aria-1.1/#global_states
     const globalAttrs = getGlobalAriaAttrs();
     assert.deepEqual(globalAttrs, [
+      'aria-actions',
       'aria-atomic',
       'aria-braillelabel',
       'aria-brailleroledescription',
