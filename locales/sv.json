@@ -47,7 +47,7 @@
     },
     "aria-input-field-name": {
       "description": "Säkerställ att varje ARIA-inmatningsfält har ett tillgängligt namn",
-      "help": "ARIA-inmatningsfält must ha ett tillgängligt namn"
+      "help": "ARIA-inmatningsfält måste ha ett tillgängligt namn"
     },
     "aria-meter-name": {
       "description": "Säkerställ att varje ARIA-meter-nod har ett tillgängligt namn",
@@ -227,7 +227,7 @@
     },
     "image-alt": {
       "description": "Säkerställ att <img>-element har alternativ text eller en roll som är 'none' eller 'presentation'",
-      "help": "Bilder must ha alternativ text"
+      "help": "Bilder måste ha alternativ text"
     },
     "image-redundant-alt": {
       "description": "Säkerställ att bildens alternativa text inte upprepas som vanlig text",
@@ -247,7 +247,7 @@
     },
     "label-title-only": {
       "description": "Säkerställ att varje formulärelement har en synlig etikett och inte enbart är etikettsatt med dolda etiketter, eller title- eller aria-describedby-attribut",
-      "help": "Formulärelement bör have en synlig etikett"
+      "help": "Formulärelement bör ha en synlig etikett"
     },
     "label": {
       "description": "Säkerställ att varje formulärelement har en etikett",
@@ -335,7 +335,7 @@
     },
     "object-alt": {
       "description": "Säkerställ att <object>-element har alternativ text",
-      "help": "<object>-element must ha alternativ text"
+      "help": "<object>-element måste ha alternativ text"
     },
     "p-as-heading": {
       "description": "Säkerställ att fetstil, kursiv text och teckenstorlek inte används för att formatera <p>-element som en rubrik",
@@ -822,7 +822,7 @@
       "fail": "Landmärket måste ha ett unikt aria-label, aria-labelledby eller title för att göra landmärken urskiljbara"
     },
     "has-lang": {
-      "pass": "The <html>-elementet har ett lang-attribut",
+      "pass": "<html>-elementet har ett lang-attribut",
       "fail": {
         "noXHTML": "xml:lang-attributet är inte giltigt på HTML-sidor, använd lang-attributet.",
         "noLang": "<html>-elementet har inget lang-attribut"
@@ -947,7 +947,7 @@
     },
     "p-as-heading": {
       "pass": "<p>-element är inte formaterade som rubriker",
-      "fail": "Rubrikelement bör användas istället for formaterade <p>-element",
+      "fail": "Rubrikelement bör användas istället för formaterade <p>-element",
       "incomplete": "Det går inte att avgöra om <p>-element är formaterade som rubriker"
     },
     "region": {
