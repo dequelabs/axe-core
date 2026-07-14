@@ -138,7 +138,7 @@
     "aria-query": "^5.1.3",
     "chai": "^4.3.7",
     "chalk": "^4.x",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "chromedriver": "latest",
     "clean-jsdoc-theme": "^4.2.17",
     "clone": "^2.1.2",
