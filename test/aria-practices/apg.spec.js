@@ -42,7 +42,8 @@ describe('aria-practices', function () {
 
   const skippedPages = [
     'toolbar/examples/help.html', // Embedded into another page
-    'tabs/examples/tabs-actions.html' // dequelabs/axe-core#4584
+    'tabs/examples/tabs-actions.html', // dequelabs/axe-core#4584
+    'listbox/examples/listbox-actions.html' // dequelabs/axe-core#4584
   ];
 
   it('finds examples', () => {
