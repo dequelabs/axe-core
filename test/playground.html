@@ -4,26 +4,57 @@
   <!-- The playground is used for quick local host axe-core during development -->
 
   <main>
-    <h1>Hello World</h1>
+    <div id="label">Hello</div>
+    <div id="closedShadow"></div>
+    <div id="openedShadow"></div>
+
+    <button aria-labelledby="label"></button>
+
+
+    <my-elm></my-elm>
   </main>
 
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    axe.testUtils.awaitNestedLoad(
-      window,
-      () => {
-        axe.run(
-          {
-            runOnly: 'color-contrast',
-            elementRef: true
-          },
-          (err, results) => {
-            console.log(err || results);
-          }
-        );
-      },
-      err => console.error(err)
-    );
+    const closedShadowRoot = closedShadow.attachShadow({ mode: 'closed' });
+    closedShadowRoot.innerHTML = '<div id="closed">Closed Shadow</div>';
+    window.closedDiv = closedShadowRoot.firstElementChild;
+
+    const openedShadowRoot = openedShadow.attachShadow({ mode: 'open' });
+    openedShadowRoot.innerHTML = '<div id="open">Opened Shadow</div>';
+    window.openedDiv = openedShadowRoot.firstElementChild;
+
+    customElements.define(
+      'my-elm',
+      class myElm extends HTMLElement {
+        constructor() {
+          super();
+
+          this._internals = this.attachInternals();
+          this._internals.role = 'button';
+          this.ariaLabelledByElements = [label, closedDiv, openedDiv];
+        }
+      }
+    )
+
+
+    // thing.ariaLabelledByElements = [div];
+
+    // axe.testUtils.awaitNestedLoad(
+    //   window,
+    //   () => {
+    //     axe.run(
+    //       {
+    //         runOnly: 'color-contrast',
+    //         elementRef: true
+    //       },
+    //       (err, results) => {
+    //         console.log(err || results);
+    //       }
+    //     );
+    //   },
+    //   err => console.error(err)
+    // );
   </script>
 </html>
