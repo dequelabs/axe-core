@@ -36,6 +36,8 @@ updates:
         versions: ['>=5.0.0']
       - dependency-name: 'conventional-commits-parser'
         versions: ['>=6.0.0']
+      - dependency-name: 'chokidar'
+        versions: ['>=5.0.0']
       # Prevent Webpack error caused by v0.11+ of esbuild
       # @see https://github.com/dequelabs/axe-core/issues/3771
       - dependency-name: 'esbuild'
