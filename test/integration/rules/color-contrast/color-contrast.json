@@ -11,7 +11,9 @@
     ["#fail9"],
     ["#fail10"],
     ["#fail11"],
-    ["#fail12"]
+    ["#fail12"],
+    ["#fail13"],
+    ["#fail14"]
   ],
   "passes": [
     ["#pass1"],
@@ -38,7 +40,10 @@
     ["#pass21"],
     ["#pass22"],
     ["#pass23"],
-    ["#pass24"]
+    ["#pass24"],
+    ["#pass25"],
+    ["#pass26"],
+    ["#pass27"]
   ],
   "incomplete": [
     ["#canttell1"],

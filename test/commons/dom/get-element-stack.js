@@ -762,6 +762,76 @@ describe('dom.getElementStack', () => {
         'fixture'
       ]);
     });
+
+    it('should correctly order real and pseudo stacks correctly', () => {
+      fixture.innerHTML = html`
+        <div id="1" style="position: fixed; z-index: 50">
+          <!-- real stack -->
+          <div id="2" style="position: relative">
+            <!-- pseudo stack -->
+            <div id="3" style="position: relative">
+              <!-- pseudo stack -->
+              <div id="target" style="opacity: 0.5">text</div>
+              <!-- real stack -->
+            </div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '2', '1']);
+    });
+
+    it('should correctly order nested combinations of positioning and stacking contexts', () => {
+      fixture.innerHTML = html`
+        <div
+          id="1"
+          style="position: relative; z-index: 4; width: 200px; height: 200px;"
+        >
+          <div id="2" style="position: absolute;">
+            <div id="3" style="transform: translate3d(0px, 0px, 0px);">
+              <span id="target">text</span>
+            </div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+    });
+
+    it('should correctly order z-index: 0', () => {
+      fixture.innerHTML = html`
+        <div id="parent" style="position: relative; z-index: 0">
+          <div
+            id="target"
+            style="position: relative; z-index: -1; background: red"
+          >
+            text
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', 'parent', 'fixture']);
+    });
+
+    it('should correctly order filter', () => {
+      fixture.innerHTML = html`
+        <div id="container" style="position: fixed; background: #333;">
+          <span id="target" style="filter: contrast(100%); color: #eee">
+            Hello world
+          </span>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', 'container']);
+    });
   });
 
   describe('scroll regions', () => {
