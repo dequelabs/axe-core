@@ -763,7 +763,7 @@ describe('dom.getElementStack', () => {
       ]);
     });
 
-    it('should correctly order real and pseudo stacks correctly', () => {
+    it('should correctly order real and pseudo stacks', () => {
       fixture.innerHTML = html`
         <div id="1" style="position: fixed; z-index: 50">
           <!-- real stack -->
