@@ -765,14 +765,14 @@ describe('dom.getElementStack', () => {
 
     it('should correctly order real and pseudo stacks', () => {
       fixture.innerHTML = html`
+        <!-- real stack -->
         <div id="1" style="position: fixed; z-index: 50">
-          <!-- real stack -->
+          <!-- pseudo stack -->
           <div id="2" style="position: relative">
             <!-- pseudo stack -->
             <div id="3" style="position: relative">
-              <!-- pseudo stack -->
-              <div id="target" style="opacity: 0.5">text</div>
               <!-- real stack -->
+              <div id="target" style="opacity: 0.5">text</div>
             </div>
           </div>
         </div>
