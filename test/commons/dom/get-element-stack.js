@@ -835,15 +835,25 @@ describe('dom.getElementStack', () => {
 
     it('should correctly order floating and non-positioned stacking contexts', () => {
       fixture.innerHTML = html`
-        <div id="1" style="position: relative; z-index: 5">
-          <div id="2" style="float: left;">hello world there</div>
+        <div id="one" style="position: relative; z-index: 5">
+          <div id="two" style="float: left;">hello world there</div>
           <div id="target" style="opacity: 0.95; width: 140px;">text</div>
         </div>
       `;
+
       axe.testUtils.flatTreeSetup(fixture);
       const target = fixture.querySelector('#target');
+      const one = fixture.querySelector('#one');
+      const two = fixture.querySelector('#two');
+
+      console.log({
+        one: one.getBoundingClientRect(),
+        two: two.getBoundingClientRect(),
+        target: target.getBoundingClientRect()
+      });
+
       const stack = mapToIDs(getElementStack(target));
-      assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
+      assert.deepEqual(stack, ['target', 'two', 'one', 'fixture']);
     });
 
     it('should correctly order floating non-positioned stacking contexts and non-positioned stacking contexts', () => {
