@@ -832,6 +832,32 @@ describe('dom.getElementStack', () => {
       const stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, ['target', 'container']);
     });
+
+    it('should correctly order floating and non-positioned stacking contexts', () => {
+      fixture.innerHTML = html`
+        <div id="1" style="position: relative; z-index: 5">
+          <div id="2" style="float: left;">hello world there</div>
+          <div id="target" style="opacity: 0.95; width: 140px;">text</div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
+    });
+
+    it('should correctly order floating non-positioned stacking contexts and non-positioned stacking contexts', () => {
+      fixture.innerHTML = html`
+        <div id="1" style="position: relative; z-index: 5">
+          <div id="2" style="float: left; opacity: 0.5">hello world there</div>
+          <div id="target" style="opacity: 0.95; width: 140px;">text</div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
+    });
   });
 
   describe('scroll regions', () => {
