@@ -314,7 +314,8 @@ const declarativeShadowDOMRegex =
     }
 
     // query the composed tree AFTER shadowDOM has been attached
-    const vFixture = axe.setup();
+    axe.setup();
+    const vFixture = axe.utils.getNodeFromTree(fixture);
     return axe.utils.getNodeFromTree(targetCandidate) || vFixture;
   };
 
