@@ -34,7 +34,10 @@ describe('aria.getAriaValue', () => {
       html`<div id="target" aria-label="hello"></div>`
     );
 
-    assert.isNull(getAriaValue(vNode, 'aria-modal'));
+    assert.deepEqual(getAriaValue(vNode, 'aria-modal'), {
+      value: null,
+      source: null
+    });
   });
 
   it('returns null for non-aria value', () => {
@@ -42,7 +45,10 @@ describe('aria.getAriaValue', () => {
       html`<div id="target" aria-label="hello"></div>`
     );
 
-    assert.isNull(getAriaValue(vNode, 'id'));
+    assert.deepEqual(getAriaValue(vNode, 'id'), {
+      value: null,
+      source: null
+    });
   });
 
   it('trims non-string values', () => {
@@ -95,7 +101,7 @@ describe('aria.getAriaValue', () => {
       html`<div
         id="target"
         aria-modal="TRUE"
-        aria-expanded="FalSE"
+        aria-grabbed="FalSE"
         aria-relevant="additions REMOVALS"
         aria-label="FoO"
         aria-activedescendant="childNode"
@@ -106,7 +112,7 @@ describe('aria.getAriaValue', () => {
     let result = getAriaValue(vNode, 'aria-modal');
     assert.equal(result.value, 'TRUE');
 
-    result = getAriaValue(vNode, 'aria-expanded');
+    result = getAriaValue(vNode, 'aria-grabbed');
     assert.equal(result.value, 'FalSE');
 
     result = getAriaValue(vNode, 'aria-relevant');
@@ -117,6 +123,25 @@ describe('aria.getAriaValue', () => {
 
     result = getAriaValue(vNode, 'aria-labelledby');
     assert.equal(result.value, 'fooBar');
+  });
+
+  it('lowercases caseInsenstive standards attrs', () => {
+    axe.configure({
+      standards: {
+        ariaAttrs: {
+          'aria-cat': {
+            type: 'nmtoken',
+            values: ['true', 'false', 'undefined'],
+            caseInsensitive: true
+          }
+        }
+      }
+    });
+
+    const vNode = queryFixture(html`<div id="target" aria-cat="FalSE"></div>`);
+
+    const { value } = getAriaValue(vNode, 'aria-cat');
+    assert.equal(value, 'false');
   });
 
   it('accepts DOM nodes', () => {
@@ -158,7 +183,10 @@ describe('aria.getAriaValue', () => {
       role: 'button'
     };
 
-    assert.isNull(getAriaValue(vNode, 'aria-label'));
+    assert.deepEqual(getAriaValue(vNode, 'aria-label'), {
+      value: null,
+      source: null
+    });
   });
 
   describe('idref', () => {
@@ -273,7 +301,13 @@ describe('aria.getAriaValue', () => {
         assert.doesNotThrow(() => {
           getAriaValue(vNode, 'aria-label', { lowercase: true });
         });
-        assert.isNull(getAriaValue(vNode, 'aria-label', { lowercase: true }));
+        assert.deepEqual(
+          getAriaValue(vNode, 'aria-label', { lowercase: true }),
+          {
+            value: null,
+            source: null
+          }
+        );
       });
     });
   });
