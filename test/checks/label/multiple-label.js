@@ -19,7 +19,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -31,7 +36,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -50,7 +60,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2, l3]);
   });
@@ -64,7 +79,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -80,7 +100,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -95,7 +120,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -113,7 +143,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
   });
@@ -130,7 +165,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -147,7 +187,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -162,7 +207,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -175,7 +225,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -193,7 +248,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -211,7 +271,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -225,7 +290,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -239,7 +309,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -256,7 +331,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -271,7 +351,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -285,7 +370,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -303,7 +393,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -317,7 +412,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -332,7 +432,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
   });
 
@@ -349,7 +454,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
   });
 
@@ -366,7 +476,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
   });
 

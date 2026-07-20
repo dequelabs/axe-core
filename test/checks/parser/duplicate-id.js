@@ -14,7 +14,9 @@ describe('duplicate-id', () => {
     fixture.innerHTML = '<div id="target"></div>';
     const node = fixture.querySelector('#target');
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.equal(checkContext._data, node.id);
     assert.deepEqual(checkContext._relatedNodes, []);
@@ -24,7 +26,9 @@ describe('duplicate-id', () => {
     fixture.innerHTML = '<div id="target"></div><div id="target"></div>';
     const node = fixture.querySelector('#target');
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.equal(checkContext._data, node.id);
     assert.deepEqual(checkContext._relatedNodes, [node.nextSibling]);
@@ -47,7 +51,9 @@ describe('duplicate-id', () => {
     const node = fixture.querySelector('[data-testelm="1"]');
 
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
   });
 
@@ -63,7 +69,9 @@ describe('duplicate-id', () => {
     const node = fixture.querySelector('[data-testelm="1"]');
 
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
   });
 
@@ -76,7 +84,9 @@ describe('duplicate-id', () => {
     fixture.appendChild(div);
 
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.lengthOf(checkContext._relatedNodes, 1);
     assert.deepEqual(checkContext._relatedNodes, [shadow.querySelector('p')]);
@@ -90,7 +100,9 @@ describe('duplicate-id', () => {
     fixture.appendChild(node);
 
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.lengthOf(checkContext._relatedNodes, 0);
   });
@@ -104,7 +116,9 @@ describe('duplicate-id', () => {
     fixture.appendChild(div);
 
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.lengthOf(checkContext._relatedNodes, 0);
   });
@@ -118,7 +132,9 @@ describe('duplicate-id', () => {
     fixture.appendChild(node);
 
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('duplicate-id').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('duplicate-id')
+        .call(checkContext, node, undefined, new axe.VirtualNode(node))
     );
     assert.lengthOf(checkContext._relatedNodes, 1);
     assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
