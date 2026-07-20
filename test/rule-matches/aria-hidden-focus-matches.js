@@ -14,7 +14,7 @@ describe('aria-hidden-focus-matches', () => {
 
   it('returns true if no parent has aria-hidden', () => {
     const vNode = queryFixture(html` <div id="target"></div> `);
-    const actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode, vNode);
     assert.isTrue(actual);
   });
 
@@ -24,7 +24,7 @@ describe('aria-hidden-focus-matches', () => {
         <div id="target" aria-hidden="true"></div>
       </div>
     `);
-    const actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode, vNode);
     assert.isFalse(actual);
   });
 
@@ -36,7 +36,7 @@ describe('aria-hidden-focus-matches', () => {
         </div>
       </div>
     `);
-    const actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode, vNode);
     assert.isFalse(actual);
   });
 
@@ -48,7 +48,7 @@ describe('aria-hidden-focus-matches', () => {
         </div>
       </div>
     `);
-    const actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode, vNode);
     assert.isFalse(actual);
   });
 
@@ -60,7 +60,7 @@ describe('aria-hidden-focus-matches', () => {
         </div>
       </testutils-element>
     `);
-    const actual = rule.matches(vNode.actualNode);
+    const actual = rule.matches(vNode.actualNode, vNode);
     assert.isFalse(actual);
   });
 });
