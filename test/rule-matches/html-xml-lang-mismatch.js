@@ -20,20 +20,20 @@ describe('xml-lang-mismatch-matches', () => {
     });
 
     it('returns false if the element does not contain lang or xml:lang attribute', () => {
-      const actual = rule.matches(dom);
+      const actual = rule.matches(dom, new axe.VirtualNode(dom));
       assert.isFalse(actual);
     });
 
     it('returns false if the element contains either/ only one of the lang or xml:lang attribute', () => {
       dom.setAttribute('lang', 'nl');
-      const actual = rule.matches(dom);
+      const actual = rule.matches(dom, new axe.VirtualNode(dom));
       assert.isFalse(actual);
     });
 
     it('returns true if the element contains both lang and xml:lang attribute', () => {
       dom.setAttribute('lang', 'en');
       dom.setAttribute('xml:lang', 'nl');
-      const actual = rule.matches(dom);
+      const actual = rule.matches(dom, new axe.VirtualNode(dom));
       assert.isTrue(actual);
     });
 
@@ -41,7 +41,7 @@ describe('xml-lang-mismatch-matches', () => {
       const node = document.createElement('svg');
       node.setAttribute('lang', '');
       node.setAttribute('xml:lang', 'nl');
-      const actual = rule.matches(node);
+      const actual = rule.matches(node, new axe.VirtualNode(node));
       assert.isFalse(actual);
     });
   });

@@ -19,7 +19,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -31,7 +36,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -50,7 +60,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2, l3]);
   });
@@ -64,7 +79,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -80,7 +100,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
@@ -95,7 +120,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -113,7 +143,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
   });
@@ -130,7 +165,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -147,7 +187,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -162,7 +207,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
@@ -175,7 +225,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -193,7 +248,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -211,7 +271,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -225,7 +290,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -239,7 +309,54 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
+    );
+  });
+
+  // ariaLabelledByElements (reflected AOM property) coverage adapted from
+  // @jcfranco's work in #5187 (issue #4943)
+  it('should return false when ariaLabelledByElements overrides aria-labelledby', () => {
+    fixtureSetup(html`
+      <input type="checkbox" id="F" aria-labelledby="G" />
+      <label for="F" id="G" aria-hidden="true">Please</label>
+      <label for="F" id="H">Excuse</label>
+    `);
+    const target = fixture.querySelector('#F');
+    target.ariaLabelledByElements = [fixture.querySelector('#H')];
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
+    );
+  });
+
+  it('should return false when ariaLabelledByElements overrides aria-labelledby with aria-label present', () => {
+    fixtureSetup(html`
+      <input type="checkbox" id="F" aria-labelledby="G" aria-label="Nope" />
+      <label for="F" id="G" aria-hidden="true">Please</label>
+      <label for="F" id="H">Excuse</label>
+    `);
+    const target = fixture.querySelector('#F');
+    target.ariaLabelledByElements = [fixture.querySelector('#H')];
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -253,7 +370,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -271,7 +393,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -285,7 +412,12 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, target)
+        .call(
+          checkContext,
+          target,
+          undefined,
+          axe.utils.getNodeFromTree(target)
+        )
     );
   });
 
@@ -300,7 +432,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
   });
 
@@ -317,7 +454,12 @@ describe('multiple-label', () => {
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
   });
 
@@ -334,7 +476,27 @@ describe('multiple-label', () => {
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('multiple-label')
-        .call(checkContext, shadowTarget.firstElementChild)
+        .call(
+          checkContext,
+          shadowTarget.firstElementChild,
+          undefined,
+          axe.utils.getNodeFromTree(shadowTarget.firstElementChild)
+        )
     );
+  });
+
+  describe('ElementInternals', () => {
+    it('should return false given multiple labels, one label AT visible, and elementInternals aria-labelledby for AT visible', () => {
+      const checkEvaluate = axe.testUtils.getCheckEvaluate('multiple-label');
+      const params = axe.testUtils.checkSetup(html`
+        <label for="target" aria-hidden="true" id="l1">Please</label>
+        <label for="target" id="l2">Excuse</label>
+        <testutils-element
+          id="target"
+          with-aria-labelledby="l2"
+        ></testutils-element>
+      `);
+      assert.isFalse(checkEvaluate.call(checkContext, ...params));
+    });
   });
 });

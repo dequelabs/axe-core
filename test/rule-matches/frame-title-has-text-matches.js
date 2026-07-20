@@ -13,18 +13,18 @@ describe('layout-table-matches', () => {
   it('should return true if title attribute has text', () => {
     fixture.innerHTML = '<iframe title="hello"></iframe>';
     const node = fixture.firstChild;
-    assert.isTrue(rule.matches(node));
+    assert.isTrue(rule.matches(node, new axe.VirtualNode(node)));
   });
 
   it('should return false if title attribute is empty', () => {
     fixture.innerHTML = '<iframe title=""></iframe>';
     const node = fixture.firstChild;
-    assert.isFalse(rule.matches(node));
+    assert.isFalse(rule.matches(node, new axe.VirtualNode(node)));
   });
 
   it('should return false if title attribute contains only whitespace', () => {
     fixture.innerHTML = '<iframe title="    "></iframe>';
     const node = fixture.firstChild;
-    assert.isFalse(rule.matches(node));
+    assert.isFalse(rule.matches(node, new axe.VirtualNode(node)));
   });
 });

@@ -43,8 +43,8 @@ const img = document.createElement('img');
 document.body.appendChild(img);
 await axe.run(img);
 
-// Test a Node list:
-const nodes = document.querySelector('main, header');
+// Test a NodeList, such as one returned by document.querySelectorAll:
+const nodes = document.querySelectorAll('main, header');
 await axe.run(nodes);
 
 // Test an array of nodes:
@@ -73,8 +73,8 @@ There are often areas of a page that as a developer you have no control over. Yo
 // Test everything except the ad banners:
 await axe.run({ exclude: '.ad-banner' });
 
-// Test everything except these DOM nodes:
-const youtubeVids = document.querySelector('iframe[src^="youtube.com"]');
+// Test everything except these DOM nodes (a NodeList works too):
+const youtubeVids = document.querySelectorAll('iframe[src^="youtube.com"]');
 await axe.run({ exclude: youtubeVids });
 ```
 

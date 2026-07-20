@@ -333,6 +333,7 @@
   <div aria-labelledby="" id="pass182">hi</div>
   <div aria-owns="" id="pass183">hi</div>
   <div aria-placeholder="" id="pass184">hi</div>
+  <div aria-actions="" id="pass193">hi</div>
   <div aria-errormessage="invalidId" id="pass185">hi</div>
   <div aria-errormessage="invalidId" aria-invalid="false" id="pass186">hi</div>
 
@@ -398,3 +399,11 @@
     May have injected html to control dynamically later, who knows!
   </div>
 </div>
+
+<testutils-element
+  no-role
+  role="combobox"
+  aria-controls="nonexistent-id"
+  with-aria-expanded="false"
+  id="internals-pass"
+></testutils-element>

@@ -428,8 +428,7 @@ describe('region', () => {
     const div = document.createElement('div');
     const shadow = div.attachShadow({ mode: 'open' });
     shadow.innerHTML = 'Some text';
-    fixtureSetup(div);
-    const virutalNode = axe._tree[0];
+    const virutalNode = fixtureSetup(div);
 
     // fixture is the outermost element
     assert.isFalse(
@@ -481,5 +480,15 @@ describe('region', () => {
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
     assert.lengthOf(checkContext._relatedNodes, 0);
+  });
+
+  it('allows content in aria-live=assertive set via elementInternals', () => {
+    const checkArgs = checkSetup(html`
+      <testutils-element id="target" no-role with-aria-live="assertive"
+        ><p>This is random content.</p></testutils-element
+      >
+      <div role="main">Content</div>
+    `);
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 });
