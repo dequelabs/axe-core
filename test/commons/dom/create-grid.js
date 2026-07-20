@@ -89,6 +89,7 @@ describe('create-grid', () => {
       // implementation details that can easily change
       assert.hasAllKeys(vNode._stackingOrder[0], [
         'stackLevel',
+        'pseudo',
         'treeOrder',
         'vNode'
       ]);
