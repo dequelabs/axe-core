@@ -30,7 +30,7 @@ describe('create-grid', () => {
 
     createGrid();
     assert.isDefined(fixture._grid);
-    assert.equal(fixture._grid, fixture.children[0]._grid);
+    assert.isTrue(fixture._grid === fixture.children[0]._grid);
   });
 
   it('adds elements to the correct cell in the grid', () => {
