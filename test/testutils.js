@@ -228,7 +228,8 @@ const declarativeShadowDOMRegex =
   testUtils.fixtureSetup = (content, options = {}) => {
     testUtils.injectIntoFixture(content, options);
     axe.teardown();
-    return axe.setup(fixture);
+    axe.setup();
+    return axe.utils.getNodeFromTree(fixture);
   };
 
   /**
@@ -313,7 +314,8 @@ const declarativeShadowDOMRegex =
     }
 
     // query the composed tree AFTER shadowDOM has been attached
-    const vFixture = axe.setup(fixtureNode);
+    axe.setup();
+    const vFixture = axe.utils.getNodeFromTree(fixture);
     return axe.utils.getNodeFromTree(targetCandidate) || vFixture;
   };
 
@@ -347,7 +349,7 @@ const declarativeShadowDOMRegex =
   };
 
   /**
-   * Setup axe._tree flat tree
+   * Setup axe._tree flat tree. Note that this will create a partial virtual tree.
    * @param Node   Stuff to go in the flat tree
    * @returns vNode[]
    */

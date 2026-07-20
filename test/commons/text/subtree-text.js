@@ -33,14 +33,14 @@ describe('text.subtreeText', () => {
   });
 
   it('returns `` for embedded content', () => {
-    fixtureSetup(
+    const fixture = fixtureSetup(
       `<video>foo</video>` +
         `<audio>foo</audio>` +
         `<canvas>foo</canvas>` +
         `<iframe>foo</iframe>` +
         `<svg>foo</svg>`
     );
-    const children = axe._tree[0].children;
+    const children = fixture.children;
     assert.lengthOf(children, 5);
     children.forEach(embeddedContent => {
       assert.equal(subtreeText(embeddedContent), '');

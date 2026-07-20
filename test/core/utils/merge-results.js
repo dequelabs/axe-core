@@ -1,6 +1,7 @@
 describe('axe.utils.mergeResults', () => {
   const queryFixture = axe.testUtils.queryFixture;
   const RuleError = axe.utils.RuleError;
+  const fixture = axe.testUtils.fixture;
 
   it('should normalize empty results', () => {
     const result = axe.utils.mergeResults([
@@ -17,6 +18,7 @@ describe('axe.utils.mergeResults', () => {
 
   it('merges frame content, including all selector types', () => {
     const iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
+    const startIndex = axe.utils.getNodeFromTree(fixture).nodeIndex;
     let node = {
       selector: ['#foo'],
       xpath: ['html/#foo'],
@@ -46,11 +48,12 @@ describe('axe.utils.mergeResults', () => {
       'html > body > div:nth-child(1) > iframe',
       'html > div'
     ]);
-    assert.deepEqual(node.nodeIndexes, [1, 123]);
+    assert.deepEqual(node.nodeIndexes, [startIndex + 1, 123]);
   });
 
   it('merges frame specs', () => {
     const iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
+    const startIndex = axe.utils.getNodeFromTree(fixture).nodeIndex;
     const frameSpec = new axe.utils.DqElement(iframe).toJSON();
     let node = {
       selector: ['#foo'],
@@ -81,7 +84,7 @@ describe('axe.utils.mergeResults', () => {
       'html > body > div:nth-child(1) > iframe',
       'html > div'
     ]);
-    assert.deepEqual(node.nodeIndexes, [1, 123]);
+    assert.deepEqual(node.nodeIndexes, [startIndex + 1, 123]);
   });
 
   it('sorts results from iframes into their correct DOM position', () => {
