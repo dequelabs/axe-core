@@ -180,7 +180,7 @@
     "sri-toolbox": "^0.2.0",
     "start-server-and-test": "^3.0.2",
     "typedarray": "^0.0.7",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "uglify-js": "^3.17.4",
     "wcag-act-rules": "github:w3c/wcag-act-rules#5adb55d19eb2cd7fb23213b2d1acedf9004dc063",
     "weakmap-polyfill": "^2.0.4"
