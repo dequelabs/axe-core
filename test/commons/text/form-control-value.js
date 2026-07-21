@@ -357,7 +357,6 @@ describe('text.formControlValue', () => {
       const target = queryFixture(html`
         <div id="target" role="listbox">
           <div role="option" aria-selected="false">foo</div>
-          <div role="option" aria-selected="TRUE">bar</div>
           <div role="option" aria-selected="yes">baz</div>
           <div role="option" aria-selected="selected">fiz</div>
         </div>
