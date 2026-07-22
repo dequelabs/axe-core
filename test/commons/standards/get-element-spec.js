@@ -39,6 +39,25 @@ describe('standards.getElementSpec', () => {
     assert.deepEqual(getElementSpec(vNode), {});
   });
 
+  it('should not allow a role on a summary that is the summary for its details', () => {
+    const vNode = queryFixture(
+      '<details><summary id="target">summary</summary></details>'
+    );
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, false);
+  });
+
+  it('should allow any role on a summary that is not the summary for its details', () => {
+    const vNode = queryFixture(
+      '<details><summary>first</summary><summary id="target">second</summary></details>'
+    );
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
+  it('should allow any role on a standalone summary', () => {
+    const vNode = queryFixture('<summary id="target">summary</summary>');
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
   describe('variants', () => {
     before(() => {
       axe.configure({

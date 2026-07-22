@@ -90,4 +90,73 @@ describe('aria-allowed-role virtual-rule', () => {
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
+
+  it('should fail an unallowed role on a summary for its details', () => {
+    const details = new axe.SerialVirtualNode({ nodeName: 'details' });
+    const summary = new axe.SerialVirtualNode({
+      nodeName: 'summary',
+      attributes: {
+        role: 'tab'
+      }
+    });
+    summary.parent = details;
+    details.children = [summary];
+
+    const results = axe.runVirtualRule('aria-allowed-role', summary);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass the implicit button role on a summary for its details', () => {
+    const details = new axe.SerialVirtualNode({ nodeName: 'details' });
+    const summary = new axe.SerialVirtualNode({
+      nodeName: 'summary',
+      attributes: {
+        role: 'button'
+      }
+    });
+    summary.parent = details;
+    details.children = [summary];
+
+    const results = axe.runVirtualRule('aria-allowed-role', summary);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should allow any role on a summary that is not the summary for its details', () => {
+    const details = new axe.SerialVirtualNode({ nodeName: 'details' });
+    const firstSummary = new axe.SerialVirtualNode({ nodeName: 'summary' });
+    const secondSummary = new axe.SerialVirtualNode({
+      nodeName: 'summary',
+      attributes: {
+        role: 'tab'
+      }
+    });
+    firstSummary.parent = details;
+    secondSummary.parent = details;
+    details.children = [firstSummary, secondSummary];
+
+    const results = axe.runVirtualRule('aria-allowed-role', secondSummary);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should allow any role on a summary without a details parent', () => {
+    const results = axe.runVirtualRule('aria-allowed-role', {
+      nodeName: 'summary',
+      attributes: {
+        role: 'group'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
