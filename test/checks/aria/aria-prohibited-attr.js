@@ -287,4 +287,38 @@ describe('aria-prohibited-attr', () => {
       assert.isTrue(checkEvaluate.apply(checkContext, params));
     });
   });
+
+  describe('section and aside', () => {
+    it('should allow aria-labelledby on a section without an accessible name', () => {
+      const params = checkSetup(
+        '<section id="target" aria-labelledby="foo"></section><p id="foo"></p>',
+        { elementsAllowedAriaLabel: ['section', 'aside'] }
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should allow aria-labelledby on an aside nested in sectioning content', () => {
+      const params = checkSetup(
+        '<article><aside id="target" aria-labelledby="foo"></aside></article><p id="foo"></p>',
+        { elementsAllowedAriaLabel: ['section', 'aside'] }
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should allow aria-label on a section with an accessible name', () => {
+      const params = checkSetup(
+        '<section id="target" aria-label="Cart"></section>'
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should allow aria-labelledby on a section without a name in shadow DOM', () => {
+      const params = axe.testUtils.shadowCheckSetup(
+        '<div id="shadow"></div>',
+        '<section id="target" aria-labelledby="foo"></section><p id="foo"></p>',
+        { elementsAllowedAriaLabel: ['section', 'aside'] }
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+  });
 });

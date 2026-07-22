@@ -99,18 +99,10 @@ All checks allow these global options:
       </td>
       <td align="left">
         <pre lang=js><code>[
-  "audio",
   "applet",
-  "canvas",
-  "dl",
-  "embed",
-  "iframe",
   "input",
-  "label",
-  "meter",
-  "object",
-  "svg",
-  "video"
+  "section",
+  "aside"
 ]</code></pre>
         </td>
       <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
