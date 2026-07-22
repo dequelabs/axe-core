@@ -426,4 +426,40 @@ describe('aria-allowed-role', () => {
         .call(checkContext, null, null, vNode)
     );
   });
+
+  it('returns false for a figure with a child figcaption and an unallowed role', () => {
+    const vNode = queryFixture(
+      '<figure id="target" role="group"><figcaption>caption</figcaption></figure>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['group']);
+  });
+
+  it('returns true for a figure with a child figcaption and role doc-example', () => {
+    const vNode = queryFixture(
+      '<figure id="target" role="doc-example"><figcaption>caption</figcaption></figure>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
+  it('returns false for a figure with a child figcaption and an unallowed role in shadow DOM', () => {
+    const vNode = axe.testUtils.queryShadowFixture(
+      '<div id="shadow"></div>',
+      '<figure id="target" role="group"><figcaption>caption</figcaption></figure>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['group']);
+  });
 });
