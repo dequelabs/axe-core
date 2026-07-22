@@ -73,4 +73,30 @@ describe('aria-roles virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should pass for the sectionheader role', () => {
+    const results = axe.runVirtualRule('aria-roles', {
+      nodeName: 'div',
+      attributes: {
+        role: 'sectionheader'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass for the sectionfooter role', () => {
+    const results = axe.runVirtualRule('aria-roles', {
+      nodeName: 'div',
+      attributes: {
+        role: 'sectionfooter'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
