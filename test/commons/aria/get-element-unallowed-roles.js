@@ -42,6 +42,22 @@ describe('aria.getElementUnallowedRoles', () => {
     assert.isEmpty(actual);
   });
 
+  it('returns empty on role=separator with type=button on input elm', () => {
+    const node = document.createElement('input');
+    node.setAttribute('role', 'separator');
+    node.setAttribute('type', 'button');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
+  it('returns empty on role=treeitem with type=button on input elm', () => {
+    const node = document.createElement('input');
+    node.setAttribute('role', 'treeitem');
+    node.setAttribute('type', 'button');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
   it('returns unallowed role=option when used on section elm', () => {
     const node = document.createElement('section');
     const role = 'option';
