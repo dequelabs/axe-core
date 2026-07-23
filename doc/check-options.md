@@ -102,7 +102,8 @@ All checks allow these global options:
   "applet",
   "input",
   "section",
-  "aside"
+  "aside",
+  "form"
 ]</code></pre>
         </td>
       <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>

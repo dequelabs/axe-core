@@ -320,6 +320,21 @@ describe('aria-prohibited-attr', () => {
       );
       assert.isFalse(checkEvaluate.apply(checkContext, params));
     });
+
+    it('should allow aria-labelledby on a form without an accessible name', () => {
+      const params = checkSetup(
+        '<form id="target" aria-labelledby="foo"></form><p id="foo"></p>',
+        { elementsAllowedAriaLabel: ['section', 'aside', 'form'] }
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should allow aria-label on a form with an accessible name', () => {
+      const params = checkSetup(
+        '<form id="target" aria-label="Search"></form>'
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
   });
 
   describe('elementsProhibitedAriaLabel (body and label)', () => {
