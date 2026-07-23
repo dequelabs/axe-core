@@ -129,7 +129,7 @@
     "@axe-core/webdriverjs": "^4.10.2",
     "@babel/core": "^7.20.12",
     "@babel/plugin-transform-object-rest-spread": "^7.29.7",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-env": "^8.0.2",
     "@babel/runtime-corejs3": "^7.20.7",
     "@deque/dot": "^1.1.5",
     "@types/node": "^4.9.5",
