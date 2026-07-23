@@ -9,7 +9,7 @@
     "description": "Ensure role attribute has an appropriate value for the element",
     "help": "ARIA role should be appropriate for the element"
   },
-  "all": [],
+  "all": ["not-recommended-role"],
   "any": ["aria-allowed-role"],
   "none": []
 }

@@ -1,0 +1,14 @@
+{
+  "id": "not-recommended-attr",
+  "evaluate": "not-recommended-attr-evaluate",
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "No not recommended ARIA attributes are used",
+      "incomplete": {
+        "singular": "The attribute is not recommended and should be reviewed: ${data.values}",
+        "plural": "The attributes are not recommended and should be reviewed: ${data.values}"
+      }
+    }
+  }
+}

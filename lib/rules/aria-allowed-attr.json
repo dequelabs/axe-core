@@ -19,7 +19,8 @@
   "all": [
     "aria-allowed-attr",
     "aria-allowed-attr-elm",
-    "aria-no-deprecated-attr"
+    "aria-no-deprecated-attr",
+    "not-recommended-attr"
   ],
   "any": [],
   "none": ["aria-unsupported-attr"]

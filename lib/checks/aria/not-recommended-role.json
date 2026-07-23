@@ -1,0 +1,11 @@
+{
+  "id": "not-recommended-role",
+  "evaluate": "not-recommended-role-evaluate",
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "ARIA role is recommended",
+      "incomplete": "The role used is not recommended and should be reviewed: ${data}"
+    }
+  }
+}

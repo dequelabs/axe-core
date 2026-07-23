@@ -621,6 +621,17 @@
       "pass": "There is no mismatch between a <label> and accessible name",
       "incomplete": "Check that the <label> does not need be part of the ARIA ${data} field's name"
     },
+    "not-recommended-attr": {
+      "pass": "No not recommended ARIA attributes are used",
+      "incomplete": {
+        "singular": "The attribute is not recommended and should be reviewed: ${data.values}",
+        "plural": "The attributes are not recommended and should be reviewed: ${data.values}"
+      }
+    },
+    "not-recommended-role": {
+      "pass": "ARIA role is recommended",
+      "incomplete": "The role used is not recommended and should be reviewed: ${data}"
+    },
     "unsupportedrole": {
       "pass": "ARIA role is supported",
       "fail": "The role used is not widely supported in screen readers and assistive technologies: ${data}"

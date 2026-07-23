@@ -54,6 +54,30 @@ describe('aria-allowed-role virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should incomplete for a not recommended role', () => {
+    axe.configure({
+      standards: {
+        ariaRoles: {
+          melon: {
+            type: 'widget',
+            notRecommended: true
+          }
+        }
+      }
+    });
+
+    const results = axe.runVirtualRule('aria-allowed-role', {
+      nodeName: 'div',
+      attributes: {
+        role: 'melon'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
   it('should incomplete for hidden element', () => {
     const results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',

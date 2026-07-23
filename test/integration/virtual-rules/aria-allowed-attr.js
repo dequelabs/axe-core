@@ -1,4 +1,8 @@
 describe('aria-allowed-attr virtual-rule', () => {
+  afterEach(() => {
+    axe.reset();
+  });
+
   it('should pass for required attributes', () => {
     const results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
@@ -139,6 +143,32 @@ describe('aria-allowed-attr virtual-rule', () => {
       attributes: {
         role: 'button',
         'aria-grabbed': true
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
+  it('should incomplete for a not recommended attribute', () => {
+    axe.configure({
+      standards: {
+        ariaAttrs: {
+          'aria-fizz': {
+            type: 'nmtoken',
+            global: true,
+            notRecommended: true
+          }
+        }
+      }
+    });
+
+    const results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'button',
+        'aria-fizz': 'buzz'
       }
     });
 
