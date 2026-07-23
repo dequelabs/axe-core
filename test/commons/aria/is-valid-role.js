@@ -27,4 +27,8 @@ describe('aria.isValidRole', () => {
       axe.commons.aria.isValidRole('input', { allowAbstract: true })
     );
   });
+
+  it('returns true for the synonym role `image`', () => {
+    assert.isTrue(axe.commons.aria.isValidRole('image'));
+  });
 });
