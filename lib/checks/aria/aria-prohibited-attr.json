@@ -2,7 +2,8 @@
   "id": "aria-prohibited-attr",
   "evaluate": "aria-prohibited-attr-evaluate",
   "options": {
-    "elementsAllowedAriaLabel": ["applet", "input", "section", "aside"]
+    "elementsAllowedAriaLabel": ["applet", "input", "section", "aside"],
+    "elementsProhibitedAriaLabel": ["body", "label"]
   },
   "metadata": {
     "impact": "serious",

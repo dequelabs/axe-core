@@ -321,4 +321,78 @@ describe('aria-prohibited-attr', () => {
       assert.isFalse(checkEvaluate.apply(checkContext, params));
     });
   });
+
+  describe('elementsProhibitedAriaLabel (body and label)', () => {
+    it('should return true for aria-label on a label', () => {
+      const params = checkSetup(
+        '<label id="target" aria-label="foo"></label>',
+        {
+          elementsProhibitedAriaLabel: ['body', 'label']
+        }
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'label',
+        role: null,
+        messageKey: 'noRoleSingular',
+        prohibited: ['aria-label']
+      });
+    });
+
+    it('should return true for aria-labelledby on a label', () => {
+      const params = checkSetup(
+        '<label id="target" aria-labelledby="foo"></label>',
+        { elementsProhibitedAriaLabel: ['body', 'label'] }
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'label',
+        role: null,
+        messageKey: 'noRoleSingular',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
+    it('should return true for multiple prohibited attributes on a label', () => {
+      const params = checkSetup(
+        '<label id="target" aria-label="foo" aria-labelledby="foo"></label>',
+        { elementsProhibitedAriaLabel: ['body', 'label'] }
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'label',
+        role: null,
+        messageKey: 'noRolePlural',
+        prohibited: ['aria-label', 'aria-labelledby']
+      });
+    });
+
+    it('should return undefined for a label with a prohibited attribute and text content', () => {
+      const params = checkSetup(
+        '<label id="target" aria-label="foo">Text</label>',
+        { elementsProhibitedAriaLabel: ['body', 'label'] }
+      );
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should allow a label opted out via elementsAllowedAriaLabel', () => {
+      const params = checkSetup(
+        '<label id="target" aria-label="foo"></label>',
+        {
+          elementsProhibitedAriaLabel: ['body', 'label'],
+          elementsAllowedAriaLabel: ['label']
+        }
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true for aria-label on a label in shadow DOM', () => {
+      const params = axe.testUtils.shadowCheckSetup(
+        '<div id="shadow"></div>',
+        '<label id="target" aria-label="foo"></label>',
+        { elementsProhibitedAriaLabel: ['body', 'label'] }
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+  });
 });

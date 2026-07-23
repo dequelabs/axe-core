@@ -107,6 +107,18 @@ All checks allow these global options:
         </td>
       <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
     </tr>
+    <tr>
+      <td>
+        <code>elementsProhibitedAriaLabel</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  "body",
+  "label"
+]</code></pre>
+        </td>
+      <td align="left">List of element names that are prohibited from having an `aria-label` or `aria-labelledby` attribute, regardless of the role they expose</td>
+    </tr>
   </tbody>
 </table>
 

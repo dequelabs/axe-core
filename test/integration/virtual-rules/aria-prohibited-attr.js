@@ -137,4 +137,52 @@ describe('aria-prohibited-attr virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should fail for aria-label on a body element', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'body',
+      attributes: {
+        'aria-label': 'foo'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for aria-label on a label element', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'label',
+      attributes: {
+        'aria-label': 'foo'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for aria-labelledby on a label element', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'label',
+      attributes: {
+        'aria-labelledby': 'foo'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });

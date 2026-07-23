@@ -16,7 +16,12 @@
     ["#pass12"],
     ["#pass13"]
   ],
-  "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]],
+  "incomplete": [
+    ["#incomplete1"],
+    ["#incomplete2"],
+    ["#incomplete3"],
+    ["#incomplete4"]
+  ],
   "violations": [
     ["#fail1"],
     ["#fail2"],
@@ -53,6 +58,8 @@
     ["#fail33"],
     ["#fail34"],
     ["#fail35"],
-    ["#fail36"]
+    ["#fail36"],
+    ["#fail37"],
+    ["#fail38"]
   ]
 }
