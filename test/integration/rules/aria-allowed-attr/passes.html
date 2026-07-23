@@ -2143,3 +2143,17 @@
 >
   ok
 </testutils-element>
+
+<!-- global aria-haspopup allowed on a summary that is the details summary -->
+<details>
+  <summary id="pass106" aria-haspopup="true">Summary</summary>
+  content
+</details>
+<!-- aria-expanded allowed on a summary that is not the details summary -->
+<details open>
+  <summary>first</summary>
+  <summary id="pass107" aria-expanded="true">second</summary>
+  content
+</details>
+<!-- aria-expanded allowed on a standalone summary -->
+<summary id="pass108" aria-expanded="true">Summary</summary>

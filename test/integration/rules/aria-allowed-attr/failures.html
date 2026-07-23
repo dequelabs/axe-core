@@ -21,3 +21,13 @@
 
 <!-- deprecated attr combined with an unallowed attr fails rather than incompletes -->
 <div role="button" id="fail12" aria-grabbed="true" aria-level="2"></div>
+
+<!-- aria-expanded/aria-pressed disallowed on a summary that is the details summary -->
+<details>
+  <summary id="fail13" aria-expanded="true">Summary</summary>
+  content
+</details>
+<details>
+  <summary id="fail14" aria-pressed="true">Summary</summary>
+  content
+</details>
