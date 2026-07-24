@@ -2566,7 +2566,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     if (workaround) {
       div.innerHTML = `&#160;${t[0]}${html}${t[1]}`;
       div.removeChild(div.firstChild);
-      for (var i = t[2]; i--; ) div = div.firstChild;
+      for (var i = t[2]; i--;) div = div.firstChild;
     } else {
       div.innerHTML = html;
     }
@@ -6002,7 +6002,7 @@ Prototype._original_property = window.Sizzle;
 
       lt: createPositionalPseudo((matchIndexes, length, argument) => {
         let i = argument < 0 ? argument + length : argument;
-        for (; --i >= 0; ) {
+        for (; --i >= 0;) {
           matchIndexes.push(i);
         }
         return matchIndexes;
@@ -6010,7 +6010,7 @@ Prototype._original_property = window.Sizzle;
 
       gt: createPositionalPseudo((matchIndexes, length, argument) => {
         let i = argument < 0 ? argument + length : argument;
-        for (; ++i < length; ) {
+        for (; ++i < length;) {
           matchIndexes.push(i);
         }
         return matchIndexes;
