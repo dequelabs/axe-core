@@ -181,6 +181,55 @@ describe('matches.fromDefinition', () => {
     );
   });
 
+  it('matches a definition with an `hasAncestor` property', () => {
+    const virtualNode = queryFixture(
+      '<nav><div><input id="target"/></div></nav>'
+    );
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasAncestor: 'div'
+      })
+    );
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasAncestor: '<sectioning_content>'
+      })
+    );
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasAncestor: 'div'
+      })
+    );
+  });
+
+  it('matches a definition with an `hasDescendant` property', () => {
+    const virtualNode = queryFixture('<div id="target"><input/></div>');
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasDescendant: 'input'
+      })
+    );
+    assert.isFalse(
+      fromDefinition(virtualNode, {
+        hasDescendant: 'button'
+      })
+    );
+  });
+
+  it('matches a definition with an `firstOfType` property', () => {
+    const virtualNode = queryFixture('<div><input id="target"/><input/></div>');
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        firstOfType: 'input'
+      })
+    );
+    assert.isFalse(
+      fromDefinition(virtualNode, {
+        firstOfType: 'button'
+      })
+    );
+  });
+
   it('returns true when all matching properties return true', () => {
     const virtualNode = queryFixture(
       '<input id="target" value="bar" aria-disabled="true" />'
