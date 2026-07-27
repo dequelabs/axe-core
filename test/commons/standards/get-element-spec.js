@@ -21,7 +21,8 @@ describe('standards.getElementSpec', () => {
         htmlElms: {
           abbr: {
             contentTypes: ['phrasing', 'flow'],
-            allowedRoles: true
+            allowedRoles: true,
+            namingProhibited: true
           }
         }
       }
@@ -30,7 +31,8 @@ describe('standards.getElementSpec', () => {
     const vNode = queryFixture('<abbr id="target"></abbr>');
     assert.deepEqual(getElementSpec(vNode), {
       contentTypes: ['phrasing', 'flow'],
-      allowedRoles: true
+      allowedRoles: true,
+      namingProhibited: true
     });
   });
 

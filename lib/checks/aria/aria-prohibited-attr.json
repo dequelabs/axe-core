@@ -2,7 +2,7 @@
   "id": "aria-prohibited-attr",
   "evaluate": "aria-prohibited-attr-evaluate",
   "options": {
-    "elementsAllowedAriaLabel": ["applet", "input"]
+    "elementsAllowedAriaLabel": ["applet"]
   },
   "metadata": {
     "impact": "serious",

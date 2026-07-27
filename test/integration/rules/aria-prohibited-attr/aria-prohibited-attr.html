@@ -12,6 +12,9 @@
   aria-label="Internals progressbar"
 ></testutils-element>
 <div role="button" aria-actions="value" id="pass10"></div>
+<section id="pass11" aria-labelledby="foo">
+  <p id="foo"></p>
+</section>
 
 <div role="caption" aria-label="value" id="fail1"></div>
 <div role="caption" aria-labelledby="value" id="fail2"></div>
@@ -55,6 +58,7 @@ conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has on
 ></testutils-element>
 <div role="code" aria-actions="value" id="fail35"></div>
 <div role="mark" aria-actions="value" id="fail36"></div>
+<label id="fail37" aria-label="foo"></label>
 
 <div id="incomplete1" aria-label="foo">Foo</div>
 <div id="incomplete2" aria-labelledby="missing">Foo</div>

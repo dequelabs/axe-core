@@ -148,7 +148,7 @@ describe('aria-prohibited-attr', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow `elementsAllowedAriaLabel` nodes with a prohibited role', () => {
+  it('should not allow `elementsAllowedAriaLabel` nodes with a role with prohibited attrs', () => {
     const params = checkSetup(
       '<div id="target" role="code" aria-label="hello world"></div>',
       { elementsAllowedAriaLabel: ['div'] }
@@ -193,6 +193,36 @@ describe('aria-prohibited-attr', () => {
       role: null,
       messageKey: 'noRoleSingular',
       prohibited: ['aria-label']
+    });
+  });
+
+  it('should not allow aria-label on custom element without role', () => {
+    const params = checkSetup(
+      '<custom-elm id="target" aria-label="value"></custom-elm>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'custom-elm',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should not allow aria-* attributes if element does not allow it', () => {
+    const params = checkSetup(`
+      <table>
+        <colgroup>
+          <col id="target" aria-invalid="true"></col>'
+        </colgroup>
+      </table>
+    `);
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'col',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-invalid']
     });
   });
 
