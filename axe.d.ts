@@ -37,12 +37,7 @@ declare namespace axe {
     | 'sectionhead';
 
   type HtmlContentTypes =
-    | 'flow'
-    | 'sectioning'
-    | 'heading'
-    | 'phrasing'
-    | 'embedded'
-    | 'interactive';
+    'flow' | 'sectioning' | 'heading' | 'phrasing' | 'embedded' | 'interactive';
 
   // Array of length 2 or greater
   type MultiArray<T> = [T, T, ...T[]];
@@ -65,10 +60,7 @@ declare namespace axe {
 
   // Context options
   type Selector =
-    | Node
-    | BaseSelector
-    | LabelledShadowDomSelector
-    | LabelledFramesSelector;
+    Node | BaseSelector | LabelledShadowDomSelector | LabelledFramesSelector;
   type SelectorList = Array<Selector | FramesSelector> | NodeList;
   type ContextProp = Selector | SelectorList;
   type ContextObject =
@@ -85,9 +77,7 @@ declare namespace axe {
   type ElementContext = ContextSpec;
 
   type SerialSelector =
-    | BaseSelector
-    | LabelledShadowDomSelector
-    | LabelledFramesSelector;
+    BaseSelector | LabelledShadowDomSelector | LabelledFramesSelector;
   type SerialFrameSelector = SerialSelector | FramesSelector;
   type SerialSelectorList = Array<SerialFrameSelector>;
 
@@ -310,8 +300,7 @@ declare namespace axe {
           virtualNode: VirtualNode
         ) => boolean | undefined | void);
     after?:
-      | string
-      | ((results: AfterResult[], options: unknown) => AfterResult[]);
+      string | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
     matches?: string;
     enabled?: boolean;
