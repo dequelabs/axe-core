@@ -34,13 +34,16 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    # Must precede setup-node so its `cache: pnpm` can resolve the store path.
+    - name: Setup pnpm
+      uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
     - name: Setup Node.js
       uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
         registry-url: 'https://registry.npmjs.org'
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version == '' && '.nvmrc' || '' }}
-        cache: npm
+        cache: pnpm
     - name: Fix Chrome Sandbox Permissions
       shell: bash
       run: |
@@ -67,7 +70,7 @@ runs:
         firefox-version: ${{ inputs.nightly == 'true' && 'latest-nightly' || 'latest' }}
     - name: Install Project Dependencies
       shell: bash
-      run: npm ci
+      run: pnpm install --frozen-lockfile
     - name: Start Xvfb
       if: ${{ inputs.start-xvfb }}
       env:

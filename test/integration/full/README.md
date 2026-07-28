@@ -2,11 +2,11 @@
 
 Full Integration tests are tests that require a complete HTML page rather than testing content inside of a fixture element. Full integration tests are run using a non-headless browser and requires a page navigation to the relevant HTML test file.
 
-To run the full integration tests, run `npm run test:integration`. Different browsers can be used using various npm scripts:
+To run the full integration tests, run `pnpm run test:integration`. Different browsers can be used using various package scripts:
 
-- `npm run test:integration:chrome` - Run the tests using Chrome (default when using `test:integration`)
-- `npm run test:integration:firefox` - Run the tests using Firefox
-- `npm run test:integration:ie` - Run the tests using Internet Explorer (requires running on Windows machine)
+- `pnpm run test:integration:chrome` - Run the tests using Chrome (default when using `test:integration`)
+- `pnpm run test:integration:firefox` - Run the tests using Firefox
+- `pnpm run test:integration:ie` - Run the tests using Internet Explorer (requires running on Windows machine)
 
 Because the full integration tests are not run using Mocha, Mocha styles and scripts, Chai, axe-core, [testutils.js](../../tesstutils.js), and the [adapter.js](../adapter.js) file will need to be loaded on the page.
 

@@ -1,2 +1,2 @@
 node build/run-build.mjs configure
-npx lint-staged
+pnpm exec lint-staged

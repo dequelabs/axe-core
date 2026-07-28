@@ -10,10 +10,12 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+      # Must precede setup-node so its `cache: pnpm` can resolve the store path.
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
+          cache: 'pnpm'
       - name: Run release script and open PR
         run: |
           git config user.name "API Team CI User"
@@ -23,8 +25,8 @@ jobs:
           echo "Branch: $Branch"
           git checkout -b "$Branch"
 
-          npm ci
-          npm run release
+          pnpm install --frozen-lockfile
+          pnpm run release
 
           git push origin "$Branch" --force
 

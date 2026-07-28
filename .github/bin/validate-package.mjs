@@ -12,11 +12,8 @@
  * GitHub Actions, providing detailed feedback on each
  * validation step.
  *
- * Running this script locally has a few implications to be
- * aware of:
- * 1. It links and unlinks the package globally. So this
- * could impact other workspaces where current links are used.
- * 2. To test the step summary, set the `GITHUB_STEP_SUMMARY`
+ * Running this script locally has one implication to be aware of:
+ * to test the step summary, set the `GITHUB_STEP_SUMMARY`
  * environment variable to a file path. If this file does not
  * exist, it will be created.
  */
@@ -24,11 +21,16 @@
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { access, appendFile, readFile } from 'node:fs/promises';
+import {
+  access,
+  appendFile,
+  readFile,
+  symlink,
+  unlink
+} from 'node:fs/promises';
 import { execSync } from 'node:child_process';
 import pkg from '../../package.json' with { type: 'json' };
 
-const isDebug = process.env.DEBUG === 'true';
 const repoRoot = resolve(import.meta.dirname, '..', '..');
 /**
  * Start the exit code at 0 for a successful run. If any checks
@@ -406,37 +408,25 @@ for the version defined in \`sri-history.json\`.
 // Start running checks that don't require linking first.
 await fileExistenceCheck();
 
-/**
- * @type {import('child_process').ExecSyncOptionsWithBufferEncoding}
- */
-const execOptions = {
-  cwd: repoRoot,
-  stdio: isDebug ? 'inherit' : 'pipe',
-  timeout: 200000
-};
+const selfLink = resolve(repoRoot, 'node_modules', pkg.name);
 
-console.log('Creating npm link for package validation...');
+console.log('Creating self link for package validation...');
 
 try {
-  // Link the package globally, then update the package
-  // internally to use the linked version.
-  // This is needed because we don't have `exports` defined
-  // yet, so self referencing imports won't work.
-  // We also have a circular dependency on the package.
-  // That means if we try to resolve the import without
-  // linking, it will resolve the version in `node_modules`
-  // from npm.
-  execSync('npm link', execOptions);
-  execSync(`npm link ${pkg.name}`, execOptions);
+  // Point the package at itself, which self referencing imports can't do
+  // because `exports` isn't defined yet. A plain symlink is enough, and it
+  // avoids the global package-manager state a `link` command would leave
+  // behind on a developer's machine.
+  await symlink(repoRoot, selfLink, 'dir');
 
   // Run any checks that require the package to reference itself.
   await validateCommonJS();
   await validateImportable();
   await validateSriHashes();
 } catch (error) {
-  console.error('Failed to create npm link:', error.message);
+  console.error('Failed to create self link:', error.message);
   await appendToSummaryFile(`
-    ## Failed to create npm link
+    ## Failed to create self link
 
     <details><summary>Click to expand error details</summary>
 
@@ -447,14 +437,12 @@ try {
     This failure prevented running critical validation checks.
     Therefore the entire validation has failed.
   `);
-  console.error(`Failed to create npm link: ${error.message}`);
   exitCode++;
 }
 
-console.log('Removing npm link...');
+console.log('Removing self link...');
 try {
-  execSync(`npm unlink ${pkg.name}`, execOptions);
-  execSync('npm unlink -g', execOptions);
+  await unlink(selfLink);
 } catch (error) {
   // Not a hard failure if unlinking fails since all these
   // checks are last. As long as they completed fine,
@@ -462,7 +450,7 @@ try {
   // This is more for when running locally to test if
   // something goes wrong. As the developer's machine state
   // is impacted and they need to know about it.
-  console.error('Failed to remove npm link:', error.message);
+  console.error('Failed to remove self link:', error.message);
 }
 
 process.exit(exitCode);
