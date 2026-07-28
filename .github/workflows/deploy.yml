@@ -80,7 +80,7 @@ jobs:
       - &install-project-deps
         name: Install Project Dependencies
         shell: bash
-        run: pnpm install --frozen-lockfile
+        run: pnpm ci
       - &build
         name: Build
         run: pnpm run build

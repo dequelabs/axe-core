@@ -24,7 +24,7 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm ci
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
         run: echo ".github" >> .prettierignore && cat .prettierignore

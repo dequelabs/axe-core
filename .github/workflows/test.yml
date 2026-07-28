@@ -43,7 +43,7 @@ jobs:
           cache: 'pnpm'
       - &install-deps-directly
         name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm ci
       - name: Run ESLint
         run: pnpm run eslint
 

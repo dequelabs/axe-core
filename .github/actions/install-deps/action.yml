@@ -70,7 +70,7 @@ runs:
         firefox-version: ${{ inputs.nightly == 'true' && 'latest-nightly' || 'latest' }}
     - name: Install Project Dependencies
       shell: bash
-      run: pnpm install --frozen-lockfile
+      run: pnpm ci
     - name: Start Xvfb
       if: ${{ inputs.start-xvfb }}
       env:

@@ -25,7 +25,7 @@ jobs:
 
       - name: Build
         run: |
-          pnpm install --frozen-lockfile
+          pnpm ci
           pnpm run build
 
       - name: Check for changes
