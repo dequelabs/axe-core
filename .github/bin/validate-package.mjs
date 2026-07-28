@@ -12,9 +12,9 @@
  * GitHub Actions, providing detailed feedback on each
  * validation step.
  *
- * Running this script locally has one implication to be aware of:
- * to test the step summary, set the `GITHUB_STEP_SUMMARY`
- * environment variable to a file path. If this file does not
+ * Running this script locally may modify `node_modules/` by creating a temporary
+ * self-referencing symlink (removed at the end of the run). To test the step
+ * summary, set the `GITHUB_STEP_SUMMARY` environment variable to a file path. If this file does not
  * exist, it will be created.
  */
 
