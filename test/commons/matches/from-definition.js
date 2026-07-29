@@ -216,16 +216,20 @@ describe('matches.fromDefinition', () => {
     );
   });
 
-  it('matches a definition with an `firstOfType` property', () => {
-    const virtualNode = queryFixture('<div><input id="target"/><input/></div>');
+  it('matches a definition with an `summaryForDetails` property', () => {
+    const virtualNode = queryFixture(
+      '<details><summary id="target"></summary><summary id="other"></summary></details>'
+    );
+    const otherNode = fixture.querySelector('#other');
+    const otherVNode = axe.utils.getNodeFromTree(otherNode);
     assert.isTrue(
       fromDefinition(virtualNode, {
-        firstOfType: 'input'
+        summaryForDetails: true
       })
     );
     assert.isFalse(
-      fromDefinition(virtualNode, {
-        firstOfType: 'button'
+      fromDefinition(otherVNode, {
+        summaryForDetails: true
       })
     );
   });
