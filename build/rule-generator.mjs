@@ -19,10 +19,10 @@ async function run() {
   if (!axeExists) {
     console.log(
       chalk.red.bold(
-        `Axe does not exist. Triggering build using - 'npm run build'. Rule generation will continue after build.`
+        `Axe does not exist. Triggering build using - 'pnpm run build'. Rule generation will continue after build.`
       )
     );
-    await execa('npm run build', { shell: true });
+    await execa('pnpm run build', { shell: true });
   }
 
   console.log(chalk.hex('#0077c8')('Axe Rule Generator'));

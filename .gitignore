@@ -1,7 +1,8 @@
 # defaults
 node_modules
 npm-shrinkwrap.json
-doc/examples/*/package-lock.json
+package-lock.json
+doc/examples/*/pnpm-lock.yaml
 .DS_Store
 .idea
 
