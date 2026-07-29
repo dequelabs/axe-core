@@ -11,12 +11,12 @@ axe-core in Jest (using JSDOM and Enzyme).
 - Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
 - Move to the `doc/examples/jest_react` directory
-- `npm install` to install dependencies
+- `npm install` (or `pnpm install`) to install dependencies
 
 ## To run the example
 
 - Move to the `doc/examples/jest_react` directory
-- `npm test` to run Jest
+- `npm test` (or `pnpm test`) to run Jest
 
 You should see output indicating that the tests ran successfully, with zero
 failures.
