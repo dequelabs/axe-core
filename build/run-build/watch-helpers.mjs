@@ -633,7 +633,7 @@ export async function waitForTcpPortListening(port, opts = {}) {
 }
 
 /**
- * Same flags as `npm start` in package.json (http-server for unit tests / integration).
+ * Same flags as `pnpm start` in package.json (http-server for unit tests / integration).
  * @param {string} projectRoot
  * @returns {import('node:child_process').ChildProcess}
  */
