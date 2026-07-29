@@ -1,0 +1,12 @@
+# Keys for the git-hosted test corpora must match the resolved tarball spec
+# exactly, so bumping either pin means updating it here too.
+allowBuilds:
+  aria-practices@https://codeload.github.com/w3c/aria-practices/tar.gz/18c1a2fca626f7aeb33270e23ae9b18833e2164d: true
+  chromedriver: true # test runners fall back to `require('chromedriver').path`
+  core-js: false
+  core-js-pure: false
+  es5-ext: false
+  esbuild: true # fetches the platform-specific binary
+  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063: true
+patchedDependencies:
+  colorjs.io@0.4.3: patches/colorjs.io@0.4.3.patch
