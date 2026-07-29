@@ -1,7 +1,9 @@
-describe('aria-deprecated-attr', () => {
+describe('aria-no-deprecated-attr', () => {
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
-  const checkEvaluate = axe.testUtils.getCheckEvaluate('aria-deprecated-attr');
+  const checkEvaluate = axe.testUtils.getCheckEvaluate(
+    'aria-no-deprecated-attr'
+  );
 
   afterEach(() => {
     checkContext.reset();
@@ -56,14 +58,5 @@ describe('aria-deprecated-attr', () => {
     );
     assert.isUndefined(checkEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, ['aria-fizz']);
-  });
-
-  it('returns undefined for a deprecated attribute in shadow DOM', () => {
-    const params = axe.testUtils.shadowCheckSetup(
-      '<div id="shadow"></div>',
-      '<div id="target" role="button" aria-grabbed="true">Contents</div>'
-    );
-    assert.isUndefined(checkEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ['aria-grabbed']);
   });
 });

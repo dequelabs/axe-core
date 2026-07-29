@@ -16,7 +16,11 @@
     "description": "Ensure an element's role supports its ARIA attributes",
     "help": "Elements must only use supported ARIA attributes"
   },
-  "all": ["aria-allowed-attr", "aria-allowed-attr-elm", "aria-deprecated-attr"],
+  "all": [
+    "aria-allowed-attr",
+    "aria-allowed-attr-elm",
+    "aria-no-deprecated-attr"
+  ],
   "any": [],
   "none": ["aria-unsupported-attr"]
 }

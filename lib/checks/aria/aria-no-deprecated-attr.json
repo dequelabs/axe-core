@@ -1,6 +1,6 @@
 {
-  "id": "aria-deprecated-attr",
-  "evaluate": "aria-deprecated-attr-evaluate",
+  "id": "aria-no-deprecated-attr",
+  "evaluate": "aria-no-deprecated-attr-evaluate",
   "metadata": {
     "impact": "minor",
     "messages": {
