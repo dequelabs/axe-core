@@ -1,5 +1,5 @@
-describe('matches.summaryForDetails', () => {
-  const summaryForDetails = axe.commons.matches.summaryForDetails;
+describe('matches.isSummaryForDetails', () => {
+  const isSummaryForDetails = axe.commons.matches.isSummaryForDetails;
   const { html, queryFixture } = axe.testUtils;
 
   it('returns true if first of summary for details', () => {
@@ -9,7 +9,7 @@ describe('matches.summaryForDetails', () => {
         <summary></summary>
       </details>
     `);
-    assert.isTrue(summaryForDetails(vNode));
+    assert.isTrue(isSummaryForDetails(vNode));
   });
 
   it('only matches direct children', () => {
@@ -22,7 +22,7 @@ describe('matches.summaryForDetails', () => {
         <summary></summary>
       </details>
     `);
-    assert.isTrue(summaryForDetails(vNode));
+    assert.isTrue(isSummaryForDetails(vNode));
   });
 
   it('returns false if not first summary for details', () => {
@@ -32,7 +32,7 @@ describe('matches.summaryForDetails', () => {
         <summary id="target"></summary>
       </details>
     `);
-    assert.isFalse(summaryForDetails(vNode));
+    assert.isFalse(isSummaryForDetails(vNode));
   });
 
   it('returns false if parent is not a details', () => {
@@ -41,7 +41,7 @@ describe('matches.summaryForDetails', () => {
         <summary id="target"></summary>
       </div>
     `);
-    assert.isFalse(summaryForDetails(vNode));
+    assert.isFalse(isSummaryForDetails(vNode));
   });
 
   it('works with SerialVirtualNode', () => {
@@ -58,6 +58,6 @@ describe('matches.summaryForDetails', () => {
     child1.parent = serialNode;
     child2.parent = serialNode;
     serialNode.children = [child1, child2];
-    assert.isTrue(summaryForDetails(child1));
+    assert.isTrue(isSummaryForDetails(child1));
   });
 });

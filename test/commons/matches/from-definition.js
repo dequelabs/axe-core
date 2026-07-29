@@ -216,7 +216,7 @@ describe('matches.fromDefinition', () => {
     );
   });
 
-  it('matches a definition with an `summaryForDetails` property', () => {
+  it('matches a definition with an `isSummaryForDetails` property', () => {
     const virtualNode = queryFixture(
       '<details><summary id="target"></summary><summary id="other"></summary></details>'
     );
@@ -224,12 +224,12 @@ describe('matches.fromDefinition', () => {
     const otherVNode = axe.utils.getNodeFromTree(otherNode);
     assert.isTrue(
       fromDefinition(virtualNode, {
-        summaryForDetails: true
+        isSummaryForDetails: true
       })
     );
     assert.isFalse(
       fromDefinition(otherVNode, {
-        summaryForDetails: true
+        isSummaryForDetails: true
       })
     );
   });
