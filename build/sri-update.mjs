@@ -5,7 +5,7 @@
  * to validate that something is a known axe-core source
  * file.
  *
- * When running `npm run release`, this script will execute and
+ * When running `pnpm run release`, this script will execute and
  * update sri-history.json with the SRIs of axe{.*}.js.
  * @deprecated
  */

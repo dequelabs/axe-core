@@ -33,58 +33,59 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 1. You must have Node.js version 24 or higher installed.
    If you have [nvm](https://github.com/nvm-sh/nvm) installed, simply do `nvm use` in the root of this repository.
-1. Install npm development dependencies. In the root folder of your axe-core repository, run `npm install`
+1. This project uses [pnpm](https://pnpm.io/). Install it using any method from the [pnpm installation guide](https://pnpm.io/installation); pnpm switches itself to the version pinned in the `packageManager` field of `package.json`.
+1. Install development dependencies. In the root folder of your axe-core repository, run `pnpm install`
 
 ### Building axe.js
 
-To build axe.js, simply run `npm run build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
+To build axe.js, simply run `pnpm run build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
 
 ## Watching for Changes
 
-You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Changes under [lib](../lib), [build](../build), or [test](../test) trigger a rebuild or test run as appropriate. `npm run develop` also starts http-server on port 9876 when that port is free (same as `npm start`).
+You can watch for changes and automatically build axe and run relevant tests using `pnpm run develop`. Changes under [lib](../lib), [build](../build), or [test](../test) trigger a rebuild or test run as appropriate. `pnpm run develop` also starts http-server on port 9876 when that port is free (same as `pnpm start`).
 
-Add `--log` after `--` for step-by-step build output (for example `npm run develop -- --log`).
+Add `--log` after `--` for step-by-step build output (for example `pnpm run develop -- --log`).
 
-Build/watch helpers have focused Node tests (not run in CI): `npm run test:build`.
+Build/watch helpers have focused Node tests (not run in CI): `pnpm run test:build`.
 
-Changes under [test/integration/full](../test/integration/full) run the matching full-page integration test in headless Chrome via `test-webdriver.js` (watch mode expects http-server on port 9876, same as `npm start`).
+Changes under [test/integration/full](../test/integration/full) run the matching full-page integration test in headless Chrome via `test-webdriver.js` (watch mode expects http-server on port 9876, same as `pnpm start`).
 
 **Note:** We are still working on knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
 
 ### Running Tests
 
-To run all tests from the command line you can run `npm test`, which will run all unit and integration tests using headless Chrome. Having axe built and up-to-date is required in order to run tests. If you update files inside the [lib directory](../lib) you will need to rebuild axe before running tests.
+To run all tests from the command line you can run `pnpm test`, which will run all unit and integration tests using headless Chrome. Having axe built and up-to-date is required in order to run tests. If you update files inside the [lib directory](../lib) you will need to rebuild axe before running tests.
 
-You can scope which set of tests to run through various npm scripts:
+You can scope which set of tests to run through various package scripts:
 
-- `npm run test:unit:core` - Run only [core tests](../test/core/)
-- `npm run test:unit:commons` - Run only [commons tests](../test/commons/)
-- `npm run test:unit:checks` - Run only [check tests](../test/checks/)
-- `npm run test:unit:rule-matches` - Run only [rule matches](../test/rule-matches/)
-- `npm run test:unit:integration` - Run only [rule integration tests](../test/integration/rules/)
-- `npm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
-- `npm run test:unit:api` - Run only [api tests](../test/integration/api)
+- `pnpm run test:unit:core` - Run only [core tests](../test/core/)
+- `pnpm run test:unit:commons` - Run only [commons tests](../test/commons/)
+- `pnpm run test:unit:checks` - Run only [check tests](../test/checks/)
+- `pnpm run test:unit:rule-matches` - Run only [rule matches](../test/rule-matches/)
+- `pnpm run test:unit:integration` - Run only [rule integration tests](../test/integration/rules/)
+- `pnpm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
+- `pnpm run test:unit:api` - Run only [api tests](../test/integration/api)
 
-There are also a set of tests that are not considered unit tests that you can run through various npm scripts:
+There are also a set of tests that are not considered unit tests that you can run through various package scripts:
 
-- `npm run test:act` - Run the [act tests](../test/act-mapping)
-- `npm run test:apg` - Run the [aria-practices tests](../test/aria-practices)
-- `npm run test:examples` - Run the [example tests](../doc/examples)
-- `npm run test:locales` - Run the [local tests](../test/test-locales.js)
-- `npm run test:node` - Run the [node tests](../test/node)
-- `npm run test:tsc` - Run the [typescript tests](../typeings/axe-core)
+- `pnpm run test:act` - Run the [act tests](../test/act-mapping)
+- `pnpm run test:apg` - Run the [aria-practices tests](../test/aria-practices)
+- `pnpm run test:examples` - Run the [example tests](../doc/examples)
+- `pnpm run test:locales` - Run the [local tests](../test/test-locales.js)
+- `pnpm run test:node` - Run the [node tests](../test/node)
+- `pnpm run test:tsc` - Run the [typescript tests](../typeings/axe-core)
 
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
-If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will start the Web Test Runner server. Press `D` to open a headed Chrome and run the tests. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../.vscode/launch.json) is provided. You can also navigate to the newly opened page using any supported browser.
+If you need to debug a test in a non-headless browser, you can run `pnpm run test:debug` which will start the Web Test Runner server. Press `D` to open a headed Chrome and run the tests. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](../.vscode/launch.json) is provided. You can also navigate to the newly opened page using any supported browser.
 
 You can scope which set of tests to debug by passing the `files` argument and a path.
 
 Example:
 
-- `npm run test:debug -- files 'test/core/**/*.js'`
+- `pnpm run test:debug -- files 'test/core/**/*.js'`
 
-Lastly, you can run the [full integration tests](../test/integration/full) by starting a local server by running `npm start`. Once started, you can open any supported browser and navigate to any test in the full integration tests directory.
+Lastly, you can run the [full integration tests](../test/integration/full) by starting a local server by running `pnpm start`. Once started, you can open any supported browser and navigate to any test in the full integration tests directory.
 
 ### Using Mocha `.only` in Tests
 
@@ -136,7 +137,7 @@ The `any`, `all` and `none` arrays must contain either a `String` which referenc
 - `id` - `String` The unique ID of the Check.
 - `options` - `Mixed` Any options the Check requires that are specific to the Rule.
 
-There is a build step which will ensure each Rule has a valid format, which can be run with `npm run validate`.
+There is a build step which will ensure each Rule has a valid format, which can be run with `pnpm run validate`.
 
 #### Matches Function
 
@@ -539,7 +540,7 @@ Axe provides a CLI for generating the necessary files and configuration assets f
 To invoke the rule generator, run:
 
 ```sh
-npm run rule-gen
+pnpm run rule-gen
 ```
 
 The CLI acts a wizard, by asking a series of questions related to generation of the rule, for example:

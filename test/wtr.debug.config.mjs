@@ -5,7 +5,7 @@
  * the browser (same as Karma's debug.html page).
  *
  * Usage:
- *   npm run test:debug -- --files 'test/core/public/finish-run.js'
+ *   pnpm run test:debug -- --files 'test/core/public/finish-run.js'
  *   The browser opens after pressing 'D' and shows a link to the test file.
  */
 import baseConfig, { buildChromeLauncher } from './wtr.config.mjs';

@@ -35,21 +35,19 @@ jobs:
       - &build
         name: Build
         id: build
-        run: |
-          npm run prepare
-          npm run build
+        run: pnpm run build
       - name: Run Firefox Nightly Browser Tests
         env:
           WTR_BROWSER: firefox-nightly
           FIREFOX_NIGHTLY_BIN: ${{ steps.install-deps.outputs.firefox-path }}
-        run: npm run test
+        run: pnpm run test
       - name: Run Chrome Beta Browser Tests
         if: ${{ !cancelled() && steps.build.conclusion == 'success' }}
         env:
           WTR_BROWSER: chrome
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test
+        run: pnpm run test
   act:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -60,13 +58,15 @@ jobs:
         id: install-deps
         uses: ./.github/actions/install-deps
       - *build
+      # Builds are allowed wholesale because `allowBuilds` keys on a resolved
+      # commit, which a floating branch install cannot know ahead of time.
       - name: Install Latest WCAG ACT Rules
-        run: npm install w3c/wcag-act-rules#main
+        run: pnpm add --config.dangerouslyAllowAllBuilds=true github:w3c/wcag-act-rules#main
       - name: Run ACT Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test:act
+        run: pnpm run test:act
   aria-practices:
     runs-on: ubuntu-24.04
     timeout-minutes: 7
@@ -74,10 +74,11 @@ jobs:
       - *checkout
       - *install-deps
       - *build
+      # See the ACT job above for why builds are allowed wholesale here.
       - name: Install Latest W3C Aria Practices
-        run: npm install w3c/aria-practices#main
+        run: pnpm add --config.dangerouslyAllowAllBuilds=true github:w3c/aria-practices#main
       - name: Run ARIA Practices Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test:apg
+        run: pnpm run test:apg
