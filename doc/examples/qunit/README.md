@@ -11,12 +11,12 @@ result from HTML with a single error.
 - Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
 - Move to the `doc/examples/qunit` directory
-- `npm install` to install dependencies
+- `npm install` (or `pnpm install`) to install dependencies
 
 ## To run the example
 
 - Move to the `doc/examples/qunit` directory
-- Open `test/test.html` in a browser, or run `npm test` for headless Chromium via [node-qunit-puppeteer](https://www.npmjs.com/package/node-qunit-puppeteer)
+- Open `test/test.html` in a browser, or run `npm test` (or `pnpm test`) for headless Chromium via [node-qunit-puppeteer](https://www.npmjs.com/package/node-qunit-puppeteer)
 
 You should see output indicating that the tests ran successfully, with zero
 failures.
