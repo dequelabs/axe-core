@@ -41,7 +41,8 @@ function initJsdom(callback) {
       12: ['jsdom@19.0.0'],
       14: ['jsdom@21.1.2'],
       16: ['jsdom@22.1.0'],
-      18: ['jsdom@26.1.0']
+      18: ['jsdom@26.1.0'],
+      20: ['jsdom@29.1.1']
     };
 
     var majorNodeVersion = process.versions.node.split('.')[0];
