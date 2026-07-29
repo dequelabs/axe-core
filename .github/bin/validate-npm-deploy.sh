@@ -7,15 +7,20 @@ if [ -z "$PACKAGE_NAME" ] || [ -z "$VERSION" ]; then
   exit 1
 fi
 
-NPM_ROOT_PATH=$(npm root -g)
+# Installed into a throwaway project rather than globally, because pnpm's global
+# root is a content-addressed store that `require` cannot resolve from.
+VALIDATE_DIR=$(mktemp -d)
+trap 'rm -rf "$VALIDATE_DIR"' EXIT
 
-npm install -g "${PACKAGE_NAME}@${VERSION}" || {
-  echo "::error::✗ Failed to install package: ${PACKAGE_NAME}@${VERSION}"
+cd "$VALIDATE_DIR" || {
+  echo "::error::✗ Failed to change directory to validation dir: $VALIDATE_DIR"
   exit 1
 }
 
-cd "$NPM_ROOT_PATH" || {
-  echo "::error::✗ Failed to change directory to global npm root: $NPM_ROOT_PATH"
+echo '{ "name": "deploy-validation", "private": true }' > package.json
+
+pnpm add "${PACKAGE_NAME}@${VERSION}" || {
+  echo "::error::✗ Failed to install package: ${PACKAGE_NAME}@${VERSION}"
   exit 1
 }
 
@@ -24,8 +29,8 @@ node -pe "window={}; document={}; require('${PACKAGE_NAME}');" || {
   exit 1
 }
 
-cd "${NPM_ROOT_PATH}/${PACKAGE_NAME}" || {
-  echo "::error::✗ Failed to change directory to package path: ${NPM_ROOT_PATH}/${PACKAGE_NAME}"
+cd "node_modules/${PACKAGE_NAME}" || {
+  echo "::error::✗ Failed to change directory to package path: ${VALIDATE_DIR}/node_modules/${PACKAGE_NAME}"
   exit 1
 }
 
