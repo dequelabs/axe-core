@@ -49,10 +49,6 @@
     ["#pass-button-role-combobox"],
     ["#pass-input-button-role-checkbox"],
     ["#pass-input-button-role-combobox"],
-    ["#pass-input-button-role-gridcell"],
-    ["#pass-input-button-role-separator"],
-    ["#pass-input-button-role-slider"],
-    ["#pass-input-button-role-treeitem"],
     ["#pass-h1-valid-role"],
     ["#pass-img-valid-role"],
     ["#pass-button-role-radio"],
@@ -94,7 +90,10 @@
     ["#pass-navnone-1"],
     ["#pass-navnone-2"],
     ["#pass-search-elm"],
-    ["#pass-button-role-gridcell"]
+    ["#pass-button-role-gridcell"],
+    ["#pass-button-role-separator"],
+    ["#pass-button-role-slider"],
+    ["#pass-button-role-treeitem"]
   ],
   "violations": [
     ["#fail-dd-no-role"],

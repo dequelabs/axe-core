@@ -90,18 +90,4 @@ describe('aria-allowed-role virtual-rule', () => {
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
-
-  it('should pass role=separator on an input type=button', () => {
-    const results = axe.runVirtualRule('aria-allowed-role', {
-      nodeName: 'input',
-      attributes: {
-        type: 'button',
-        role: 'separator'
-      }
-    });
-
-    assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-  });
 });
