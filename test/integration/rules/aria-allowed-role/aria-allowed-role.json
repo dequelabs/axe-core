@@ -90,7 +90,10 @@
     ["#pass-navnone-1"],
     ["#pass-navnone-2"],
     ["#pass-search-elm"],
-    ["#pass-button-role-gridcell"]
+    ["#pass-button-role-gridcell"],
+    ["#pass-button-role-separator"],
+    ["#pass-button-role-slider"],
+    ["#pass-button-role-treeitem"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
