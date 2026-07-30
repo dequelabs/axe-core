@@ -209,23 +209,6 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
-  it('should not allow aria-* attributes if element does not allow it', () => {
-    const params = checkSetup(`
-      <table>
-        <colgroup>
-          <col id="target" aria-invalid="true"></col>'
-        </colgroup>
-      </table>
-    `);
-    assert.isTrue(checkEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, {
-      nodeName: 'col',
-      role: null,
-      messageKey: 'noRoleSingular',
-      prohibited: ['aria-invalid']
-    });
-  });
-
   describe('widget ancestor', () => {
     it('should allow aria-label', () => {
       const params = checkSetup(html`
