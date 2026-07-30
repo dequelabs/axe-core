@@ -6,7 +6,7 @@ import { execSync } from 'node:child_process';
  * @param {ReturnType<import('../build-context.mjs').createBuildContext>} ctx
  */
 export function runPostbuild(ctx) {
-  execSync('npm run postbuild', {
+  execSync('pnpm run postbuild', {
     cwd: ctx.root,
     stdio: 'inherit',
     env: { ...process.env }
