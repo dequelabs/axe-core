@@ -175,6 +175,15 @@ describe('matches.inSectioningContent', () => {
     assert.isFalse(inSectioningContent(vNode, true));
   });
 
+  it('does not test itself', () => {
+    const vNode = queryFixture(html`
+      <div>
+        <main id="target"></main>
+      </div>
+    `);
+    assert.isFalse(inSectioningContent(vNode, true));
+  });
+
   it('allows passing false', () => {
     const vNode = queryFixture(html`
       <main>
