@@ -199,16 +199,16 @@ describe('matches.fromDefinition', () => {
     );
   });
 
-  it('matches a definition with an `hasDescendant` property', () => {
+  it('matches a definition with an `hasChild` property', () => {
     const virtualNode = queryFixture('<div id="target"><input/></div>');
     assert.isTrue(
       fromDefinition(virtualNode, {
-        hasDescendant: 'input'
+        hasChild: 'input'
       })
     );
     assert.isFalse(
       fromDefinition(virtualNode, {
-        hasDescendant: 'button'
+        hasChild: 'button'
       })
     );
   });
