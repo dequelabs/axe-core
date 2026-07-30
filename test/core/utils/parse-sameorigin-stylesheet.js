@@ -117,6 +117,111 @@ describe('axe.utils.parseSameOriginStylesheet', () => {
     });
   });
 
+  it('resolves a relative @import url against the url of the stylesheet', done => {
+    // no stylesheet is added to the page, the sheet below is passed directly
+    stylesForPage = [];
+
+    const cssomDir = '/test/integration/full/preload-cssom/';
+    // only `href` and `cssRules` are used by `parseSameOriginStylesheet`.
+    // the sheet is in another directory than the document, so resolving the
+    // `@import` against the document url would request the wrong file.
+    const sheet = {
+      href: new URL(cssomDir + 'style-with-import.css', location.origin).href,
+      cssRules: [{ type: 3, href: 'base.css' }]
+    };
+    const options = {
+      rootNode: document,
+      shadowId: undefined,
+      convertDataToStylesheet: convertDataToStylesheet
+    };
+
+    const importedUrls = [];
+    axe.utils
+      .parseSameOriginStylesheet(sheet, options, [1, 0], importedUrls, false)
+      .then(data => {
+        assert.deepEqual(importedUrls, [
+          new URL(cssomDir + 'base.css', location.origin).href
+        ]);
+        axe.testUtils.assertStylesheet(
+          data[0].sheet,
+          '.style-from-base-css',
+          '.style-from-base-css {font-size: 100%; }'
+        );
+        done();
+      })
+      .catch(done);
+  });
+
+  it('resolves a relative @import url against the document url for an inline style', done => {
+    stylesForPage = [];
+
+    // `href` is null for an inline `<style>` element
+    const sheet = {
+      href: null,
+      cssRules: [
+        { type: 3, href: '../integration/full/preload-cssom/base.css' }
+      ]
+    };
+    const options = {
+      rootNode: document,
+      shadowId: undefined,
+      convertDataToStylesheet: convertDataToStylesheet
+    };
+
+    const importedUrls = [];
+    axe.utils
+      .parseSameOriginStylesheet(sheet, options, [1, 0], importedUrls, false)
+      .then(() => {
+        assert.deepEqual(importedUrls, [
+          new URL(
+            '../integration/full/preload-cssom/base.css',
+            document.baseURI
+          ).href
+        ]);
+        done();
+      })
+      .catch(done);
+  });
+
+  it('leaves the @import url as written when there is no URL constructor', done => {
+    stylesForPage = [];
+
+    const importHref = '../integration/full/preload-cssom/base.css';
+    const sheet = {
+      href: null,
+      cssRules: [{ type: 3, href: importHref }]
+    };
+    const options = {
+      rootNode: document,
+      shadowId: undefined,
+      convertDataToStylesheet: convertDataToStylesheet
+    };
+
+    // IE11 has `window.URL`, but it cannot be used as a constructor
+    const nativeUrl = window.URL;
+    window.URL = {};
+
+    const importedUrls = [];
+    // the url is resolved while `parseSameOriginStylesheet` runs, so `URL` can
+    // be put back as soon as the call returns
+    const promise = axe.utils.parseSameOriginStylesheet(
+      sheet,
+      options,
+      [1, 0],
+      importedUrls,
+      false
+    );
+    window.URL = nativeUrl;
+
+    promise
+      .then(data => {
+        assert.deepEqual(importedUrls, [importHref]);
+        assert.isFalse(data[0].isCrossOrigin);
+        done();
+      })
+      .catch(done);
+  });
+
   it('returns inline style specified in the stylesheet', done => {
     // add style that has @import style
     stylesForPage = [styleSheets.inlineStyle];
