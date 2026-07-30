@@ -181,23 +181,20 @@ describe('matches.fromDefinition', () => {
     );
   });
 
-  it('matches a definition with an `hasAncestor` property', () => {
+  it('matches a definition with an `inSectioningContent` property', () => {
     const virtualNode = queryFixture(
-      '<nav><div><input id="target"/></div></nav>'
+      '<nav><div><input id="target"/></div></nav><div id="other"></div>'
     );
+    const otherNode = fixture.querySelector('#other');
+    const otherVNode = axe.utils.getNodeFromTree(otherNode);
     assert.isTrue(
       fromDefinition(virtualNode, {
-        hasAncestor: 'div'
+        inSectioningContent: true
       })
     );
-    assert.isTrue(
-      fromDefinition(virtualNode, {
-        hasAncestor: '<sectioning_content>'
-      })
-    );
-    assert.isTrue(
-      fromDefinition(virtualNode, {
-        hasAncestor: 'div'
+    assert.isFalse(
+      fromDefinition(otherVNode, {
+        inSectioningContent: true
       })
     );
   });
