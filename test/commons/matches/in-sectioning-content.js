@@ -233,4 +233,12 @@ describe('matches.inSectioningContent', () => {
     child1.children = [child2];
     assert.throws(() => inSectioningContent(child2, true));
   });
+
+  it('throws if only node is incomplete tree', () => {
+    const serialNode = new axe.SerialVirtualNode({
+      nodeName: 'div'
+    });
+
+    assert.throws(() => inSectioningContent(serialNode, true));
+  });
 });
