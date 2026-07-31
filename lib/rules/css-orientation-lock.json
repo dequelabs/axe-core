@@ -3,7 +3,7 @@
   "impact": "serious",
   "selector": "html:not(html *)",
   "tags": [
-    "cat.structure",
+    "cat.presentation-and-content",
     "wcag134",
     "wcag21aa",
     "EN-301-549",

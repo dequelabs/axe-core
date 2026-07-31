@@ -103,21 +103,23 @@ The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some ru
 
 All rules have a `cat.*` tag, which indicates what type of content it is part of. The following `cat.*` tags exist in axe-core:
 
-| Category name                 |
-| ----------------------------- |
-| `cat.aria`                    |
-| `cat.color`                   |
-| `cat.forms`                   |
-| `cat.keyboard`                |
-| `cat.language`                |
-| `cat.name-role-value`         |
-| `cat.parsing`                 |
-| `cat.semantics`               |
-| `cat.sensory-and-visual-cues` |
-| `cat.structure`               |
-| `cat.tables`                  |
-| `cat.text-alternatives`       |
-| `cat.time-and-media`          |
+| Category name                  |
+| ------------------------------ |
+| `cat.aria`                     |
+| `cat.color`                    |
+| `cat.forms`                    |
+| `cat.input-other`              |
+| `cat.keyboard`                 |
+| `cat.language`                 |
+| `cat.name-role-value`          |
+| `cat.parsing`                  |
+| `cat.presentation-and-content` |
+| `cat.semantics`                |
+| `cat.sensory-and-visual-cues`  |
+| `cat.structure`                |
+| `cat.tables`                   |
+| `cat.text-alternatives`        |
+| `cat.time-and-media`           |
 
 ### API Name: axe.getRules
 

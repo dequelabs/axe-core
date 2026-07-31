@@ -4,7 +4,7 @@
   "selector": "p",
   "matches": "p-as-heading-matches",
   "tags": [
-    "cat.semantics",
+    "cat.structure",
     "wcag2a",
     "wcag131",
     "EN-301-549",

@@ -3,7 +3,7 @@
   "impact": "critical",
   "selector": "video",
   "tags": [
-    "cat.text-alternatives",
+    "cat.time-and-media",
     "wcag2a",
     "wcag122",
     "section508",

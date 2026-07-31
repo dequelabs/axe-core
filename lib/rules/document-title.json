@@ -4,7 +4,7 @@
   "selector": "html:not(html *)",
   "matches": "is-initiator-matches",
   "tags": [
-    "cat.text-alternatives",
+    "cat.structure",
     "wcag2a",
     "wcag242",
     "TTv5",

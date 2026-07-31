@@ -6,7 +6,7 @@
   "matches": "bypass-matches",
   "reviewOnFail": true,
   "tags": [
-    "cat.keyboard",
+    "cat.structure",
     "wcag2a",
     "wcag241",
     "section508",
