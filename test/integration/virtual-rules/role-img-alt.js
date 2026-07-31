@@ -102,7 +102,7 @@ describe('role-img-alt virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for the synonym role=image with aria-label', () => {
+  it('should pass for role=image with aria-label', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -118,7 +118,7 @@ describe('role-img-alt virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for the synonym role=image without a name', () => {
+  it('should fail for role=image without a name', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
