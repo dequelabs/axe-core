@@ -18,6 +18,9 @@ describe('aria-labelledby referencing a slot in shadow DOM (issue 4335)', () => 
   });
 
   it('does not surface a "Cannot read properties" rule error', () => {
+    // Fail with the underlying axe.run exception rather than a secondary
+    // TypeError if the run threw and left `results` undefined.
+    assert.isNull(runError, runError && runError.stack);
     // Regression guard for #4335: computing the section's accessible name
     // (its aria-labelledby points at a <slot> that is not tracked in the
     // virtual tree) previously threw "Cannot read properties of undefined
@@ -26,6 +29,7 @@ describe('aria-labelledby referencing a slot in shadow DOM (issue 4335)', () => 
   });
 
   it('evaluates the shadow DOM content (guards against a no-op test)', () => {
+    assert.isNull(runError, runError && runError.stack);
     const evaluated =
       results.passes.length +
       results.violations.length +
