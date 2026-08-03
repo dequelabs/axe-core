@@ -148,12 +148,21 @@ describe('aria-allowed-role virtual-rule', () => {
   });
 
   it('should allow any role on a summary without a details parent', () => {
-    const results = axe.runVirtualRule('aria-allowed-role', {
+    // isSummaryForDetails resolves the parent, so give the summary a
+    // non-details parent rather than a disconnected node.
+    const vNode = new axe.SerialVirtualNode({
       nodeName: 'summary',
       attributes: {
         role: 'group'
       }
     });
+    const parent = new axe.SerialVirtualNode({
+      nodeName: 'div'
+    });
+    parent.children = [vNode];
+    vNode.parent = parent;
+
+    const results = axe.runVirtualRule('aria-allowed-role', vNode);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
