@@ -181,6 +181,56 @@ describe('matches.fromDefinition', () => {
     );
   });
 
+  it('matches a definition with an `inSectioningContent` property', () => {
+    const virtualNode = queryFixture(
+      '<nav><div><input id="target"/></div></nav><div id="other"></div>'
+    );
+    const otherNode = fixture.querySelector('#other');
+    const otherVNode = axe.utils.getNodeFromTree(otherNode);
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        inSectioningContent: true
+      })
+    );
+    assert.isFalse(
+      fromDefinition(otherVNode, {
+        inSectioningContent: true
+      })
+    );
+  });
+
+  it('matches a definition with an `hasChild` property', () => {
+    const virtualNode = queryFixture('<div id="target"><input/></div>');
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasChild: 'input'
+      })
+    );
+    assert.isFalse(
+      fromDefinition(virtualNode, {
+        hasChild: 'button'
+      })
+    );
+  });
+
+  it('matches a definition with an `isSummaryForDetails` property', () => {
+    const virtualNode = queryFixture(
+      '<details><summary id="target"></summary><summary id="other"></summary></details>'
+    );
+    const otherNode = fixture.querySelector('#other');
+    const otherVNode = axe.utils.getNodeFromTree(otherNode);
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        isSummaryForDetails: true
+      })
+    );
+    assert.isFalse(
+      fromDefinition(otherVNode, {
+        isSummaryForDetails: true
+      })
+    );
+  });
+
   it('returns true when all matching properties return true', () => {
     const virtualNode = queryFixture(
       '<input id="target" value="bar" aria-disabled="true" />'
