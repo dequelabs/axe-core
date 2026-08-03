@@ -1,7 +1,7 @@
 {
   "id": "role-img-alt",
   "impact": "serious",
-  "selector": "[role='img']:not(img, area, input, object)",
+  "selector": ":is([role='img'], [role='image']):not(img, area, input, object)",
   "matches": "html-namespace-matches",
   "tags": [
     "cat.text-alternatives",

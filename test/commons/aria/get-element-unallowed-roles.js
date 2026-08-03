@@ -214,4 +214,40 @@ describe('aria.getElementUnallowedRoles', () => {
     assert.isNotEmpty(actual);
     assert.include(actual, 'application');
   });
+
+  it('returns empty for role=image on an svg elm', () => {
+    const node = document.createElement('svg');
+    node.setAttribute('role', 'image');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
+  it('returns empty for role=image on an embed elm', () => {
+    const node = document.createElement('embed');
+    node.setAttribute('role', 'image');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
+  it('returns empty for role=image on an object elm', () => {
+    const node = document.createElement('object');
+    node.setAttribute('role', 'image');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
+  it('returns empty for role=image on an iframe elm', () => {
+    const node = document.createElement('iframe');
+    node.setAttribute('role', 'image');
+    flatTreeSetup(node);
+    assert.isEmpty(getElementUnallowedRoles(node));
+  });
+
+  it('reports role=image (as authored) when it is not allowed on the element', () => {
+    const node = document.createElement('hr');
+    node.setAttribute('role', 'image');
+    flatTreeSetup(node);
+    const actual = getElementUnallowedRoles(node);
+    assert.include(actual, 'image');
+  });
 });

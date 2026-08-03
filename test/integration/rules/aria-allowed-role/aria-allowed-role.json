@@ -31,6 +31,7 @@
     ["#pass-header-valid-role"],
     ["#pass-footer-valid-role"],
     ["#pass-embed-valid-role"],
+    ["#pass-embed-role-image"],
     ["#pass-div-has-any-role"],
     ["#pass-input-text-redundant-role"],
     ["#pass-input-multiple-roles"],
