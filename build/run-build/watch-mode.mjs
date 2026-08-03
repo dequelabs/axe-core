@@ -52,7 +52,7 @@ export async function runWatchMode(parsed) {
       throw e;
     }
     console.log(
-      `${chalk.dim('watch:')} http-server at http://127.0.0.1:${WATCH_HTTP_PORT}/ (npm start)`
+      `${chalk.dim('watch:')} http-server at http://127.0.0.1:${WATCH_HTTP_PORT}/ (pnpm start)`
     );
   }
 

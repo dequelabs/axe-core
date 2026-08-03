@@ -31,39 +31,43 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
+      # Must precede setup-node so its `cache: pnpm` can resolve the store path.
+      - &setup-pnpm
+        name: Set up pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       - &setup-node
         name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
+          cache: 'pnpm'
       - &install-deps-directly
         name: Install Dependencies
-        run: npm ci
+        run: pnpm ci
       - name: Run ESLint
-        run: npm run eslint
+        run: pnpm run eslint
 
   fmt_check:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - *checkout
+      - *setup-pnpm
       - *setup-node
       - *install-deps-directly
-      - run: npm run fmt:check
+      - run: pnpm run fmt:check
 
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - *checkout
+      - *setup-pnpm
       - *setup-node
       - *install-deps-directly
       - &build
         name: Build
-        run: |
-          npm run prepare
-          npm run build
+        run: pnpm run build
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: axe-core
@@ -89,12 +93,12 @@ jobs:
           WTR_BROWSER: chrome
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test
+        run: pnpm run test
       - name: Run Chrome Integration Tests
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test:integration:chrome
+        run: pnpm run test:integration:chrome
 
   test_firefox:
     runs-on: ubuntu-24.04
@@ -109,11 +113,11 @@ jobs:
         env:
           WTR_BROWSER: firefox
           FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
-        run: npm run test
+        run: pnpm run test
       - name: Run Firefox Integration Tests
         env:
           FIREFOX_BIN: ${{ steps.install-deps.outputs.firefox-path }}
-        run: npm run test:integration:firefox
+        run: pnpm run test:integration:firefox
 
   # Run examples under `doc/examples`
   test_examples:
@@ -133,7 +137,7 @@ jobs:
       - name: Run Tests Against Examples
         env:
           PUPPETEER_EXECUTABLE_PATH: ${{ steps.install-deps.outputs.chrome-path }}
-        run: npm run test:examples
+        run: pnpm run test:examples
 
   test_act:
     runs-on: ubuntu-24.04
@@ -151,7 +155,7 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test:act
+        run: pnpm run test:act
 
   test_aria_practices:
     runs-on: ubuntu-24.04
@@ -165,7 +169,7 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: npm run test:apg
+        run: pnpm run test:apg
 
   test_locales:
     runs-on: ubuntu-24.04
@@ -176,7 +180,7 @@ jobs:
       - *install-deps
       - *restore-axe-build
       - name: Run Locale Tests
-        run: npm run test:locales
+        run: pnpm run test:locales
 
   test_virtual_rules:
     runs-on: ubuntu-24.04
@@ -187,7 +191,7 @@ jobs:
       - *install-deps
       - *restore-axe-build
       - name: Run Virtual Rules Tests
-        run: npm run test:virtual-rules
+        run: pnpm run test:virtual-rules
 
   test_jsdom:
     runs-on: ubuntu-24.04
@@ -198,7 +202,7 @@ jobs:
       - *install-deps
       - *restore-axe-build
       - name: Run jsdom Tests
-        run: npm run test:jsdom
+        run: pnpm run test:jsdom
 
   build_api_docs:
     runs-on: ubuntu-24.04
@@ -207,7 +211,7 @@ jobs:
       - *checkout
       - *install-deps
       - name: Run API Docs Build
-        run: npm run api-docs
+        run: pnpm run api-docs
 
   test_rule_help_version:
     runs-on: ubuntu-24.04
@@ -217,7 +221,7 @@ jobs:
       - *checkout
       - *install-deps
       - name: Run Rule Help Version Tests
-        run: npm run test:rule-help-version
+        run: pnpm run test:rule-help-version
 
   sri-validate:
     runs-on: ubuntu-24.04
@@ -230,7 +234,7 @@ jobs:
       - *install-deps
       - *restore-axe-build
       - name: Validate Subresource Integrity
-        run: npm run sri-validate
+        run: pnpm run sri-validate
 
   test_node:
     # The package can't be built on Node 6 anymore, but should still run there.
@@ -249,9 +253,11 @@ jobs:
     steps:
       - *checkout
       - name: Set up Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node }}
       - *restore-axe-build
+      # Invoked directly rather than through pnpm: this matrix covers Node
+      # versions far older than pnpm itself can run on.
       - name: Run Node.js Tests
-        run: npm run test:node
+        run: node test/node/node.js

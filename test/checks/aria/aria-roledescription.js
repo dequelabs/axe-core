@@ -38,6 +38,17 @@ describe('aria-roledescription', () => {
     assert.isNull(checkContext._data, null);
   });
 
+  it('returns true for role=image, matching the img role', () => {
+    const vNode = queryFixture(
+      '<div role="image" aria-roledescription="Awesome Image" id="target">A circle</div>'
+    );
+    const actual = axe.testUtils
+      .getCheckEvaluate('aria-roledescription')
+      .call(checkContext, null, {}, vNode);
+    assert.equal(actual, true);
+    assert.isNull(checkContext._data, null);
+  });
+
   it('returns undefined for elements with an unsupported role', () => {
     const vNode = queryFixture(
       '<div role="main" aria-roledescription="Awesome Main" id="target">The main element</div>'
