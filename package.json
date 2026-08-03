@@ -142,7 +142,7 @@
     "clean-jsdoc-theme": "^4.2.17",
     "clone": "^2.1.2",
     "colorjs.io": "0.4.3",
-    "commit-and-tag-version": "^12.7.3",
+    "commit-and-tag-version": "^13.1.0",
     "conventional-commits-parser": "^5.0.0",
     "core-js": "^3.27.1",
     "core-js-pure": "^3.27.1",
