@@ -5,6 +5,7 @@
     "supportedRoles": [
       "button",
       "img",
+      "image",
       "checkbox",
       "radio",
       "combobox",

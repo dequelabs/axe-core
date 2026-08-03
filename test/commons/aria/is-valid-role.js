@@ -27,4 +27,8 @@ describe('aria.isValidRole', () => {
       axe.commons.aria.isValidRole('input', { allowAbstract: true })
     );
   });
+
+  it('returns true for the `image` role', () => {
+    assert.isTrue(axe.commons.aria.isValidRole('image'));
+  });
 });
