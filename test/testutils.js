@@ -6,6 +6,10 @@ var checks;
 var commons;
 var helpers;
 
+// find a "<template" tag with the first attribute being "shadowrootmode" followed by an equal sign and the value "open". allows any amount of whitespace in between everything and either quotes (" or ') or no quotes for the value
+const declarativeShadowDOMRegex =
+  /<template\s+shadowrootmode\s*=\s*(['"]?)open\1/;
+
 (() => {
   // Let the user know they need to disable their axe/attest extension before running the tests.
   if (window.__AXE_EXTENSION__) {
@@ -86,6 +90,23 @@ var helpers;
               this._internals[prop] = values;
             }
           });
+        }
+      }
+    );
+  }
+
+  // create a form-associated custom element that label tests can use. Unlike
+  // testutils-element, this is form-associated so `internals.labels` resolves
+  // the element's associated `<label>` elements instead of throwing.
+  if (!customElements.get('testutils-form-element')) {
+    customElements.define(
+      'testutils-form-element',
+      class TestutilsFormElement extends HTMLElement {
+        static formAssociated = true;
+
+        constructor() {
+          super();
+          this._internals = this.attachInternals();
         }
       }
     );
@@ -185,15 +206,22 @@ var helpers;
   /**
    * Method for injecting content into a fixture
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
    * @return HTMLElement
    */
-  testUtils.injectIntoFixture = content => {
+  testUtils.injectIntoFixture = (content, options = {}) => {
     if (typeof content !== 'undefined') {
       fixture.innerHTML = '';
     }
 
     if (typeof content === 'string') {
-      fixture.innerHTML = content;
+      if (options.shadow) {
+        // allow declarative shadow DOM which requires using setHTMLUnsafe to parse
+        fixture.setHTMLUnsafe(content);
+      } else {
+        fixture.innerHTML = content;
+      }
     } else if (content instanceof Node) {
       fixture.appendChild(content);
     } else if (Array.isArray(content)) {
@@ -210,12 +238,15 @@ var helpers;
    * the flattened DOM tree (light and Shadow DOM together)
    *
    * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
    * @return HTMLElement
    */
-  testUtils.fixtureSetup = content => {
-    testUtils.injectIntoFixture(content);
+  testUtils.fixtureSetup = (content, options = {}) => {
+    testUtils.injectIntoFixture(content, options);
     axe.teardown();
-    return axe.setup(fixture);
+    axe.setup();
+    return axe.utils.getNodeFromTree(fixture);
   };
 
   /**
@@ -234,11 +265,21 @@ var helpers;
     }
     // Normalize target, allow it to be the inserted node or '#target'
     target = target || (content instanceof Node ? content : '#target');
-    const rootNode = testUtils.fixtureSetup(content);
+
+    // Automatically detect declarative shadow DOM
+    let fixtureOptions = {};
+    if (
+      typeof content === 'string' &&
+      declarativeShadowDOMRegex.test(content)
+    ) {
+      fixtureOptions.shadow = true;
+    }
+
+    const rootNode = testUtils.fixtureSetup(content, fixtureOptions);
 
     let node;
     if (typeof target === 'string') {
-      node = axe.utils.querySelectorAll(rootNode, target)[0];
+      node = findTarget(rootNode, target, fixtureOptions);
     } else if (target instanceof Node) {
       node = axe.utils.getNodeFromTree(target);
     } else {
@@ -255,39 +296,43 @@ var helpers;
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
    * @return VirtualNode
    */
-  testUtils.queryShadowFixture = (content, shadowContent, targetSelector) => {
+  testUtils.queryShadowFixture = (
+    content,
+    shadowContent,
+    targetSelector = '#target'
+  ) => {
     // Normalize target, allow it to be the provided string or use '#target' to query composed tree
-    if (typeof targetSelector !== 'string') {
-      targetSelector = '#target';
+    let shadowSelector = '#shadow';
+    if (typeof targetSelector === 'object' && targetSelector !== null) {
+      shadowSelector = targetSelector.shadow ?? '#shadow';
+      targetSelector = targetSelector.target ?? '#target';
     }
 
     const fixtureNode = testUtils.injectIntoFixture(content);
-    let targetCandidate = fixtureNode.querySelector(targetSelector);
-    let container = targetCandidate;
-    if (!targetCandidate) {
-      // check if content specifies a shadow container
-      container = fixtureNode.querySelector('#shadow');
-      if (!container) {
-        container = fixtureNode.firstElementChild;
-      }
-    }
+    let container =
+      fixtureNode.querySelector(shadowSelector) ||
+      fixtureNode.querySelector(targetSelector) ||
+      fixtureNode.firstElementChild;
+
     // attach a shadowRoot with the content provided
     const shadowRoot = container.attachShadow({ mode: 'open' });
     if (typeof shadowContent === 'string') {
       shadowRoot.innerHTML = shadowContent;
-    } else if (content instanceof Node) {
+    } else if (shadowContent instanceof Node) {
       shadowRoot.appendChild(shadowContent);
     }
 
-    if (!targetCandidate) {
-      targetCandidate = shadowRoot.querySelector(targetSelector);
-    }
+    let targetCandidate =
+      shadowRoot.querySelector(targetSelector) ||
+      fixtureNode.querySelector(targetSelector);
+
     if (!targetSelector && !targetCandidate) {
       throw 'shadowCheckSetup requires at least one fragment to have #target, or a provided targetSelector';
     }
 
     // query the composed tree AFTER shadowDOM has been attached
-    const vFixture = axe.setup(fixtureNode);
+    axe.setup();
+    const vFixture = axe.utils.getNodeFromTree(fixture);
     return axe.utils.getNodeFromTree(targetCandidate) || vFixture;
   };
 
@@ -299,6 +344,7 @@ var helpers;
    * @param Node|String 	Stuff to go into the shadow boundary (html or node)
    * @param Object				Options argument for the check (optional, default: {})
    * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+   * @deprecated use checkSetup with declarative shadow DOM
    * @return Array
    */
   testUtils.shadowCheckSetup = (
@@ -320,7 +366,7 @@ var helpers;
   };
 
   /**
-   * Setup axe._tree flat tree
+   * Setup axe._tree flat tree. Note that this will create a partial virtual tree.
    * @param Node   Stuff to go in the flat tree
    * @returns vNode[]
    */
@@ -524,14 +570,73 @@ var helpers;
    */
   testUtils.queryFixture = function queryFixture(html, query) {
     query = query || '#target';
-    const rootNode = testUtils.fixtureSetup(html);
-    const vNode = axe.utils.querySelectorAll(rootNode, query)[0];
+    const options = {};
+
+    // automatically detect declarative shadow DOM
+    if (declarativeShadowDOMRegex.test(html)) {
+      options.shadow = true;
+    }
+
+    const rootNode = testUtils.fixtureSetup(html, options);
+    const vNode = findTarget(rootNode, query, options);
+
+    // find the target in the shadow tree first
     assert.exists(
       vNode,
       `Node does not exist in query \`${query}\`. This is usually fixed by adding the default target (\`id="target"\`) to your html parameter. If you do not intend on querying the fixture for #target, consider using \`axe.testUtils.fixtureSetup()\` instead.`
     );
     return vNode;
   };
+
+  /**
+   * Find the target selector in the root
+   *
+   * @param {Node} rootNode
+   * @param {String} target - the CSS selector query to find target DOM node
+   * @param {Object} [options]
+   * @param {Boolean} [options.shadow] True if using declarative shadow DOM
+   * @return {VirtualNode}
+   */
+  function findTarget(rootNode, target, options = {}) {
+    if (!options.shadow) {
+      return axe.utils.querySelectorAll(rootNode, target)[0];
+    }
+
+    // find target in deepest to shallowest root order first
+    const roots = [
+      rootNode.actualNode,
+      ...getShadowRootsUnder(rootNode.actualNode)
+    ].reverse();
+    for (const root of roots) {
+      const vNode = axe.utils.getNodeFromTree(root.querySelector(target));
+      if (vNode) {
+        return vNode;
+      }
+    }
+  }
+
+  /**
+   * Find all shadow roots in a tree.
+   * @param {HTMLElement|Node} root
+   * @see https://github.com/whatwg/dom/issues/1422
+   */
+  function getShadowRootsUnder(root = document, recursive = true) {
+    let ret = root.shadowRoot ? [root.shadowRoot] : [];
+    ret.push(
+      ...[...root.querySelectorAll('*')].flatMap(element => {
+        if (!element.shadowRoot) {
+          return [];
+        }
+
+        let rets = [element.shadowRoot];
+        if (recursive) {
+          rets.push(...getShadowRootsUnder(element.shadowRoot));
+        }
+        return rets;
+      })
+    );
+    return ret;
+  }
 
   /**
    * Return the checks evaluate method and apply default options
@@ -733,6 +838,9 @@ var helpers;
     return promiseResults;
   };
 
+  /**
+   * @deprecated use queryFixture with declarative shadow DOM
+   */
   testUtils.shadowQuerySelector = function shadowQuerySelector(
     axeSelector,
     doc
@@ -747,6 +855,9 @@ var helpers;
     return elm;
   };
 
+  /**
+   * @deprecated use queryFixture with declarative shadow DOM
+   */
   testUtils.createNestedShadowDom = function createFixtureShadowTree(
     fixtureNode,
     ...htmlCodes

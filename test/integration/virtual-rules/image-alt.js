@@ -90,6 +90,34 @@ describe('image-alt virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should pass for whitespace alt with role=presentation', () => {
+    const results = axe.runVirtualRule('image-alt', {
+      nodeName: 'img',
+      attributes: {
+        alt: ' ',
+        role: 'presentation'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass for whitespace alt with role=none', () => {
+    const results = axe.runVirtualRule('image-alt', {
+      nodeName: 'img',
+      attributes: {
+        alt: ' ',
+        role: 'none'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail when alt is missing', () => {
     const results = axe.runVirtualRule('image-alt', {
       nodeName: 'img',

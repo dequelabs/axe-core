@@ -304,6 +304,20 @@ describe('aria-valid-attr-value', () => {
     });
   });
 
+  describe('elementInternals', () => {
+    it('skips aria-controls check when aria-expanded=false is set via elementInternals', () => {
+      const vNode = axe.testUtils.queryFixture(html`
+        <testutils-element
+          id="target"
+          no-role
+          aria-controls="nonexistent"
+          with-aria-expanded="false"
+        ></testutils-element>
+      `);
+      assert.isTrue(validAttrValueCheck.call(checkContext, null, null, vNode));
+    });
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return undefined for idref attribute', () => {
       const vNode = new axe.SerialVirtualNode({

@@ -533,5 +533,19 @@ describe('aria-required-children', () => {
         values: 'testutils-element'
       });
     });
+
+    it('should pass when missing required children but aria-busy is set via elementInternals', () => {
+      const params = checkSetup(
+        html`<testutils-element
+          id="target"
+          no-role
+          role="list"
+          with-aria-busy="true"
+          ><span>Item 1</span></testutils-element
+        >`
+      );
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, { messageKey: 'aria-busy' });
+    });
   });
 });

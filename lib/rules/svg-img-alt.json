@@ -1,7 +1,7 @@
 {
   "id": "svg-img-alt",
   "impact": "serious",
-  "selector": "[role=\"img\"], [role=\"graphics-symbol\"], svg[role=\"graphics-document\"]",
+  "selector": ":is([role='img'], [role='image']), [role='graphics-symbol'], svg[role='graphics-document']",
   "matches": "svg-namespace-matches",
   "tags": [
     "cat.text-alternatives",

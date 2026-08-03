@@ -43,8 +43,8 @@ const img = document.createElement('img');
 document.body.appendChild(img);
 await axe.run(img);
 
-// Test a Node list:
-const nodes = document.querySelector('main, header');
+// Test a NodeList, such as one returned by document.querySelectorAll:
+const nodes = document.querySelectorAll('main, header');
 await axe.run(nodes);
 
 // Test an array of nodes:
@@ -73,8 +73,8 @@ There are often areas of a page that as a developer you have no control over. Yo
 // Test everything except the ad banners:
 await axe.run({ exclude: '.ad-banner' });
 
-// Test everything except these DOM nodes:
-const youtubeVids = document.querySelector('iframe[src^="youtube.com"]');
+// Test everything except these DOM nodes (a NodeList works too):
+const youtubeVids = document.querySelectorAll('iframe[src^="youtube.com"]');
 await axe.run({ exclude: youtubeVids });
 ```
 
@@ -197,6 +197,22 @@ To select elements in nested shadow DOM trees, axe will need a selector for each
 // Test #search, inside each .header, inside each <app-root>
 axe.run({ fromShadowDom: ['app-root', '.header', '#search'] });
 ```
+
+To select elements which reside in the light DOM of a nested shadow DOM tree (for example when using a `<slot>` element), the selector should resolve to the elements position in the light DOM and not to the resolved position inside the nested shadow DOM tree. For example, if we wanted to selected the `deeply-nested-element` from the following DOM tree structure:
+
+```
+custom-element
+  #shadow-root
+    nested-element
+      #shadow-root
+        <slot>
+    deeply-nested-element
+      #shadow-root
+        <slot>
+      button#target
+```
+
+The selector should be `['custom-element', 'deeply-nested-element']` and not `['custom-element', 'nested-element', 'deeply-nested-element']` as the `deeply-nested-element` resides inside the `custom-elements` light DOM.
 
 The `fromShadowDom` selector object can also be used as part of an `exclude` or `include` property. It can be by itself, or part of an array along with other selectors. The following example shows how to exclude all `.comment` elements inside the `<blog-comments>` custom element, as well as excluding the `footer` element:
 

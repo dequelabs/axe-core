@@ -1,5 +1,7 @@
 describe('aria-hidden', () => {
+  const { html, checkSetup } = axe.testUtils;
   const checkContext = axe.testUtils.MockCheckContext();
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('aria-hidden-body');
   const body = document.body;
   afterEach(() => {
     checkContext.reset();
@@ -33,5 +35,16 @@ describe('aria-hidden', () => {
         .getCheckEvaluate('aria-hidden-body')
         .call(checkContext, null, {}, tree[0])
     );
+  });
+
+  it('should return false if aria-hidden is set to true via elementInternals', () => {
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        no-role
+        with-aria-hidden="true"
+      ></testutils-element>`
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 });

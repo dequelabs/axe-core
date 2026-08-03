@@ -49,6 +49,26 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
+  it('should return true for prohibited aria-actions', () => {
+    const params = checkSetup(
+      '<div id="target" role="code" aria-actions="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: 'code',
+      messageKey: 'hasRoleSingular',
+      prohibited: ['aria-actions']
+    });
+  });
+
+  it('should return false for aria-actions on a role that allows it', () => {
+    const params = checkSetup(
+      '<div id="target" role="button" aria-actions="foo"></div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
   it('should return undefined if element has no role and has text content (singular)', () => {
     const params = checkSetup(
       '<div id="target" aria-label="foo">Contents</div>'

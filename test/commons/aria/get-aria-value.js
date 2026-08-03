@@ -152,6 +152,15 @@ describe('aria.getAriaValue', () => {
     });
   });
 
+  it('returns null for missing elementInternals property when set via external api', () => {
+    const vNode = queryFixture(html`<div id="target"></div>`);
+    vNode.elementInternals = {
+      role: 'button'
+    };
+
+    assert.isNull(getAriaValue(vNode, 'aria-label'));
+  });
+
   describe('idref', () => {
     it('returns the attribute value over the property value', () => {
       const vNode = queryFixture(
@@ -253,6 +262,18 @@ describe('aria.getAriaValue', () => {
           lowercase: true
         });
         assert.equal(value, 'true');
+      });
+
+      it('does not throw for missing elementInternals property when set via external api', () => {
+        const vNode = queryFixture(html`<div id="target"></div>`);
+        vNode.elementInternals = {
+          role: 'button'
+        };
+
+        assert.doesNotThrow(() => {
+          getAriaValue(vNode, 'aria-label', { lowercase: true });
+        });
+        assert.isNull(getAriaValue(vNode, 'aria-label', { lowercase: true }));
       });
     });
   });

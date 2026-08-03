@@ -64,7 +64,7 @@ The axe APIs are provided in the JavaScript file axe.js. It must be included in 
 
 ### Full API Reference for Developers
 
-For a full listing of API offered by axe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
+For a full listing of API offered by axe, clone the repository and run `pnpm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
 
 ### API Notes
 

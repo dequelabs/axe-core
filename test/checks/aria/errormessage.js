@@ -1,9 +1,6 @@
 describe('aria-errormessage', () => {
-  const html = axe.testUtils.html;
-
-  const queryFixture = axe.testUtils.queryFixture;
-  const shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-  const checkContext = axe.testUtils.MockCheckContext();
+  const { html, queryFixture, checkSetup, MockCheckContext } = axe.testUtils;
+  const checkContext = MockCheckContext();
 
   afterEach(() => {
     checkContext.reset();
@@ -350,9 +347,12 @@ describe('aria-errormessage', () => {
   });
 
   it('should return undefined if aria-errormessage value crosses shadow boundary', () => {
-    const params = shadowCheckSetup(
-      '<div id="target" aria-errormessage="live" aria-invalid="true"></div>',
-      '<div id="live" aria-live="assertive"></div>'
+    const params = checkSetup(
+      html`<div id="target" aria-errormessage="live" aria-invalid="true">
+        <template shadowrootmode="open">
+          <div id="live" aria-live="assertive"></div>
+        </template>
+      </div>`
     );
     assert.isUndefined(
       axe.testUtils
@@ -362,12 +362,13 @@ describe('aria-errormessage', () => {
   });
 
   it('should return false if aria-errormessage and invalid reference are both inside shadow dom', () => {
-    const params = shadowCheckSetup(
-      '<div></div>',
-      html`
-        <div id="target" aria-errormessage="live" aria-invalid="true"></div>
-        <div id="live"></div>
-      `
+    const params = checkSetup(
+      html`<div>
+        <template shadowrootmode="open">
+          <div id="target" aria-errormessage="live" aria-invalid="true"></div>
+          <div id="live"></div>
+        </template>
+      </div>`
     );
     assert.isFalse(
       axe.testUtils
@@ -377,12 +378,13 @@ describe('aria-errormessage', () => {
   });
 
   it('should return true if aria-errormessage and valid reference are both inside shadow dom', () => {
-    const params = shadowCheckSetup(
-      '<div></div>',
-      html`
-        <div id="target" aria-errormessage="live" aria-invalid="true"></div>
-        <div id="live" aria-live="assertive"></div>
-      `
+    const params = checkSetup(
+      html`<div>
+        <template shadowrootmode="open">
+          <div id="target" aria-errormessage="live" aria-invalid="true"></div>
+          <div id="live" aria-live="assertive"></div>
+        </template>
+      </div>`
     );
     assert.isTrue(
       axe.testUtils

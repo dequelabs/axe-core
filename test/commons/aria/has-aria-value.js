@@ -69,6 +69,15 @@ describe('aria.hasAriaValue', () => {
     assert.throws(() => hasAriaValue(vNode, 'id'));
   });
 
+  it('returns false for missing elementInternals property when set via external api', () => {
+    const vNode = queryFixture(html`<div id="target"></div>`);
+    vNode.elementInternals = {
+      role: 'button'
+    };
+
+    assert.isFalse(hasAriaValue(vNode, 'aria-label'));
+  });
+
   describe('SerialVirtualNode', () => {
     it('returns true if element has attribute', () => {
       // SerialVirtualNode will not support `props` or `elementInternals` so everything must be part of the `attributes` property

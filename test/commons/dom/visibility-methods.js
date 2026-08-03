@@ -150,6 +150,16 @@ describe('dom.visibility-methods', () => {
       const vNode = queryFixture('<div id="target"></div>');
       assert.isFalse(ariaHidden(vNode));
     });
+
+    it('should return true for element with ElementInternals ariaHidden=true', () => {
+      const vNode = queryFixture(
+        html`<testutils-element
+          id="target"
+          with-aria-hidden="true"
+        ></testutils-element>`
+      );
+      assert.isTrue(ariaHidden(vNode));
+    });
   });
 
   describe('opacityHidden', () => {
