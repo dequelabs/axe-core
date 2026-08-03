@@ -100,7 +100,7 @@ describe('aria.getAriaValue', () => {
     const vNode = queryFixture(
       html`<div
         id="target"
-        aria-modal="TRUE"
+        aria-busy="TRUE"
         aria-grabbed="FalSE"
         aria-relevant="additions REMOVALS"
         aria-label="FoO"
@@ -109,7 +109,7 @@ describe('aria.getAriaValue', () => {
       ></div>`
     );
 
-    let result = getAriaValue(vNode, 'aria-modal');
+    let result = getAriaValue(vNode, 'aria-busy');
     assert.equal(result.value, 'TRUE');
 
     result = getAriaValue(vNode, 'aria-grabbed');
