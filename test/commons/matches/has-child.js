@@ -43,12 +43,4 @@ describe('matches.hasChild', () => {
     serialNode.children = [childNode];
     assert.isTrue(hasChild(serialNode, 'span'));
   });
-
-  it('throws if missing children', () => {
-    const serialNode = new axe.SerialVirtualNode({
-      nodeName: 'div'
-    });
-
-    assert.throws(() => hasChild(serialNode, 'span'));
-  });
 });

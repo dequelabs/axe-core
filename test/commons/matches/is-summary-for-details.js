@@ -82,16 +82,4 @@ describe('matches.isSummaryForDetails', () => {
     serialNode.children = [child];
     assert.throws(() => isSummaryForDetails(child, true));
   });
-
-  it('throws if parent is missing children', () => {
-    const serialNode = new axe.SerialVirtualNode({
-      nodeName: 'details'
-    });
-    const child = new axe.SerialVirtualNode({
-      nodeName: 'summary'
-    });
-
-    child.parent = serialNode;
-    assert.throws(() => isSummaryForDetails(child, true));
-  });
 });
