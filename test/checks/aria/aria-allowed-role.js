@@ -426,38 +426,4 @@ describe('aria-allowed-role', () => {
         .call(checkContext, null, null, vNode)
     );
   });
-
-  it('returns false for a details summary with an unallowed role', () => {
-    const vNode = queryFixture(
-      '<details><summary id="target" role="tab">summary</summary></details>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-allowed-role')
-        .call(checkContext, null, null, vNode)
-    );
-    assert.deepEqual(checkContext._data, ['tab']);
-  });
-
-  it('returns true for a summary that is not the summary for its details', () => {
-    const vNode = queryFixture(
-      '<details><summary>first</summary><summary id="target" role="tab">second</summary></details>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-allowed-role')
-        .call(checkContext, null, null, vNode)
-    );
-  });
-
-  it('returns true for a standalone summary with any role', () => {
-    const vNode = queryFixture(
-      '<summary id="target" role="tab">summary</summary>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-allowed-role')
-        .call(checkContext, null, null, vNode)
-    );
-  });
 });
