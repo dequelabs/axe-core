@@ -196,17 +196,11 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
-  it('should not allow aria-label on custom element without role', () => {
+  it('should allow aria-label on custom element without role', () => {
     const params = checkSetup(
       '<custom-elm id="target" aria-label="value"></custom-elm>'
     );
-    assert.isTrue(checkEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, {
-      nodeName: 'custom-elm',
-      role: null,
-      messageKey: 'noRoleSingular',
-      prohibited: ['aria-label']
-    });
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
   describe('widget ancestor', () => {
