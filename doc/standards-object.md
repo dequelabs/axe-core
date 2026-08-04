@@ -99,7 +99,7 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
 - `aria-allowed-attr` - Checks if the attribute can be used on the element from the `allowedAriaAttrs` properties.
 - `aria-allowed-role` - Checks if the role can be used on the HTML element from the `allowedRoles` property.
 - `aria-required-attrs` - Checks if any required attrs are defined implicitly on the element from the `implicitAttrs` property.
-- `aria-prohibited-attrs` - Checks if the attribute should not be used on the element from the `noAriaAttrs` and `namingProhibited` properties.
+- `aria-prohibited-attrs` - Checks if the attribute should not be used on the element from the `namingProhibited` property.
 
 ### Structure
 
@@ -111,7 +111,6 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
   - `embedded`
   - `interactive`
 - `allowedRoles` - boolean or array(required). If element is allowed to use ARIA roles, a value of `true` means any role while a list of roles means only those are allowed. A value of `false` means no roles are allowed.
-- `noAriaAttrs` - boolean(optional. Defaults `true`). If the element is allowed to use global ARIA attributes and any allowed for the elements role.
 - `namingProhibited` - boolean(optional. Default: `false`). If the element is not allowed to specify an aria-label or aria-labelledby attribute.
 - `allowedAriaAttrs` - array(optional). If specified, restricts which ARIA attributes may be used with this element (when no explicit role is set). Used by the `aria-allowed-attr` rule.
 - `shadowRoot` - boolean(optional. Default `false`). If the element is allowed to have a shadow root.
@@ -136,7 +135,7 @@ meta: {
         }
     },
     allowedRoles: false,
-    noAriaAttrs: true
+    allowedAriaAttrs: []
 }
 ```
 
