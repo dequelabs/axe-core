@@ -51,6 +51,13 @@ describe('standards.getElementSpec', () => {
     assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
   });
 
+  it('should allow any role on a figure whose figcaption is in a nested figure', () => {
+    const vNode = queryFixture(
+      '<figure id="target"><figure><figcaption>caption</figcaption></figure></figure>'
+    );
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
   describe('variants', () => {
     before(() => {
       axe.configure({
