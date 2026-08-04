@@ -165,4 +165,14 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, 'Bar text');
   });
+
+  it('does not throw when aria-labelledby references a slot in shadow DOM (issue 4335)', () => {
+    // The slot is not tracked in the virtual tree; resolving the reference
+    // previously threw "Cannot read properties of undefined (reading 'props')".
+    const target = axe.testUtils.queryShadowFixture(
+      '<div id="shadow"></div>',
+      '<section id="target" aria-labelledby="foo"></section><slot id="foo"></slot>'
+    );
+    assert.equal(aria.arialabelledbyText(target), '');
+  });
 });
