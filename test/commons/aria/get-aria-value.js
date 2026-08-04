@@ -101,7 +101,7 @@ describe('aria.getAriaValue', () => {
       html`<div
         id="target"
         aria-busy="TRUE"
-        aria-grabbed="FalSE"
+        aria-current="FalSE"
         aria-relevant="additions REMOVALS"
         aria-label="FoO"
         aria-activedescendant="childNode"
@@ -112,7 +112,7 @@ describe('aria.getAriaValue', () => {
     let result = getAriaValue(vNode, 'aria-busy');
     assert.equal(result.value, 'TRUE');
 
-    result = getAriaValue(vNode, 'aria-grabbed');
+    result = getAriaValue(vNode, 'aria-current');
     assert.equal(result.value, 'FalSE');
 
     result = getAriaValue(vNode, 'aria-relevant');
