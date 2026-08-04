@@ -39,6 +39,25 @@ describe('standards.getElementSpec', () => {
     assert.deepEqual(getElementSpec(vNode), {});
   });
 
+  it('should restrict figure allowedRoles when it has a child figcaption', () => {
+    const vNode = queryFixture(
+      '<figure id="target"><figcaption>caption</figcaption></figure>'
+    );
+    assert.deepEqual(getElementSpec(vNode).allowedRoles, ['doc-example']);
+  });
+
+  it('should allow any role on a figure without a child figcaption', () => {
+    const vNode = queryFixture('<figure id="target"></figure>');
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
+  it('should allow any role on a figure whose figcaption is in a nested figure', () => {
+    const vNode = queryFixture(
+      '<figure id="target"><figure><figcaption>caption</figcaption></figure></figure>'
+    );
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
   describe('variants', () => {
     before(() => {
       axe.configure({
