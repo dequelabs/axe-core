@@ -199,6 +199,21 @@ describe('aria.arialabelledbyText', () => {
     assert.equal(aria.arialabelledbyText(vNode), '');
   });
 
+  it('returns "" when aria-labelledby references an id inside a closed (declarative) shadow root (issue 5221)', () => {
+    // #foo lives in a closed declarative shadow root, so it is unreachable from
+    // the light DOM's getElementById and absent from the virtual tree; the
+    // string idref must resolve to nothing.
+    fixtureSetup(
+      '<div id="host">' +
+        '<template shadowrootmode="closed"><span id="foo">Foo text</span></template>' +
+        '</div>' +
+        '<div role="heading" id="target" aria-labelledby="foo"></div>',
+      { shadow: true }
+    );
+    const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    assert.equal(aria.arialabelledbyText(target), '');
+  });
+
   it('returns "" when ariaLabelledByElements references a node outside the virtual tree (issue 5221)', () => {
     const target = queryFixture('<div role="heading" id="target"></div>');
     const outOfTree = document.createElement('div');
