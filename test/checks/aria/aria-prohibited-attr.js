@@ -36,8 +36,9 @@ describe('aria-prohibited-attr', () => {
   });
 
   it('should return true for multiple prohibited attributes', () => {
+    // labelledby does not resolve, so AccName uses aria-label
     const params = checkSetup(
-      '<div id="target" role="code" aria-hidden="false"  aria-label="foo" aria-labelledby="foo"></div>'
+      '<div id="target" role="code" aria-hidden="false" aria-label="foo" aria-labelledby="foo"></div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, {
@@ -107,6 +108,7 @@ describe('aria-prohibited-attr', () => {
   });
 
   it('should return true if element has no role and no text content (plural)', () => {
+    // labelledby does not resolve, so AccName uses aria-label
     const params = checkSetup(
       '<div id="target" aria-label="foo" aria-labelledby="foo"></div>'
     );
@@ -262,7 +264,7 @@ describe('aria-prohibited-attr', () => {
 
     it('should not allow aria-labelledby on descendant of non-widget', () => {
       const params = checkSetup(html`
-        <div id="foo">hello world</div>
+        <div id="foo" hidden>hello world</div>
         <div role="grid">
           <span>
             <span id="target" aria-labelledby="foo"></span>
@@ -292,6 +294,207 @@ describe('aria-prohibited-attr', () => {
         </button>
       `);
       assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+  });
+
+  describe('visible aria-labelledby references', () => {
+    it('should return undefined for a visible reference outside the element', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hd"></div>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: null,
+        messageKey: 'visibleLabelSingular',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
+    it('continues to fail other prohibited attributes', () => {
+      const params = checkSetup(html`
+        <code
+          id="target"
+          role="code"
+          aria-labelledby="hd"
+          aria-actions="hd"
+        ></code>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'code',
+        role: 'code',
+        messageKey: 'hasRolePlural',
+        prohibited: ['aria-actions', 'aria-labelledby']
+      });
+    });
+
+    it('should return undefined with a visible labelledby and aria-label', () => {
+      // aria-label is an exception, as it is ignored when aria-labelledby resolves
+      const params = checkSetup(html`
+        <code id="target" aria-labelledby="hd" aria-label="Hello world"></code>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'code',
+        role: null,
+        messageKey: 'visibleLabelPlural',
+        prohibited: ['aria-label', 'aria-labelledby']
+      });
+    });
+
+    it('should return undefined for a visible reference on a prohibiting role', () => {
+      const params = checkSetup(html`
+        <div id="target" role="code" aria-labelledby="hd"></div>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: 'code',
+        messageKey: 'visibleLabelSingular',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
+    it('should return true when any of multiple references is not visible', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hidden hd"></div>
+        <h1 id="hidden" hidden>Hidden</h1>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined when all of multiple references are visible', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="a b"></div>
+        <h1 id="a">Hello</h1>
+        <h1 id="b">world</h1>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined for a visible empty reference', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hd"></div>
+        <p id="hd"></p>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true for a visible empty reference and aria-label', () => {
+      // The accessible name comes from the prohibited aria-label, because
+      // aria-labelledby resolves to an empty string
+      const params = checkSetup(html`
+        <code id="target" aria-labelledby="hd" aria-label="Hello world"></code>
+        <p id="hd"></p>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'code',
+        role: null,
+        messageKey: 'noRolePlural',
+        prohibited: ['aria-label', 'aria-labelledby']
+      });
+    });
+
+    it('should return true for a whitespace only reference and aria-label', () => {
+      const params = checkSetup(html`
+        <code id="target" aria-labelledby="hd" aria-label="Hello world"></code>
+        <p id="hd">&nbsp;</p>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined for a reference to itself', () => {
+      // The accessible name is empty, as the element has no content
+      const params = checkSetup(
+        '<div id="target" aria-labelledby="target"></div>'
+      );
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: null,
+        messageKey: 'visibleLabelSingular',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
+    it('should return undefined for a missing reference', () => {
+      const params = checkSetup(
+        '<div id="target" aria-labelledby="missing"></div>'
+      );
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: null,
+        messageKey: 'unresolvedLabel',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
+    it('should return undefined when a reference is missing among visible ones', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="missing hd"></div>
+        <h1 id="hd">Hello world</h1>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true when a reference is missing among hidden ones', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="missing hd"></div>
+        <h1 id="hd" hidden>Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true for a hidden reference', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hd"></div>
+        <h1 id="hd" hidden>Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true for a display:none reference', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hd"></div>
+        <h1 id="hd" style="display: none">Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return true for an aria-hidden reference', () => {
+      const params = checkSetup(html`
+        <div id="target" aria-labelledby="hd"></div>
+        <h1 id="hd" aria-hidden="true">Hello world</h1>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined for a visible reference on a custom element', () => {
+      const params = checkSetup(html`
+        <h1 id="hd">Hello world</h1>
+        <my-element id="target" role="code" aria-labelledby="hd"></my-element>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined for a visible reference inside shadow DOM', () => {
+      const params = checkSetup(html`
+        <div>
+          <template shadowrootmode="open">
+            <div id="target" aria-labelledby="hd"></div>
+            <h1 id="hd">Hello world</h1>
+          </template>
+        </div>
+      `);
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
     });
   });
 });
