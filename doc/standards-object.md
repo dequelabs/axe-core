@@ -51,6 +51,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 - `allowEmpty` - boolean(optional, default `false`). If the attribute is allowed to have no value.
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
 - `unsupported` - boolean(optional, default `false`). If the attribute is unsupported. Use this property to disable an attribute.
+- `caseInsensitive` - boolean(optional, default `false`). If the value of the attribute is case insensitive.
 
 ## Aria Roles
 
