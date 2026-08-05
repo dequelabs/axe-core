@@ -49,6 +49,42 @@ describe('dom.getModalDialog', () => {
     assert.isNull(getModalDialog());
   });
 
+  describe('unsupported environments', () => {
+    let elementsFromPoint, elementFromPoint;
+
+    beforeEach(() => {
+      elementsFromPoint = document.elementsFromPoint;
+      elementFromPoint = document.elementFromPoint;
+    });
+
+    afterEach(() => {
+      document.elementsFromPoint = elementsFromPoint;
+      document.elementFromPoint = elementFromPoint;
+    });
+
+    it('returns null when elementsFromPoint is not supported', () => {
+      fixture.innerHTML = html`
+        <dialog id="target"><span>Hello</span></dialog>
+      `;
+      document.querySelector('#target').showModal();
+      flatTreeSetup(fixture);
+      document.elementsFromPoint = undefined;
+
+      assert.isNull(getModalDialog());
+    });
+
+    it('returns null when elementFromPoint is not supported', () => {
+      fixture.innerHTML = html`
+        <dialog id="target"><span>Hello</span></dialog>
+      `;
+      document.querySelector('#target').showModal();
+      flatTreeSetup(fixture);
+      document.elementFromPoint = undefined;
+
+      assert.isNull(getModalDialog());
+    });
+  });
+
   describe('fallback', () => {
     it('returns true for modal dialog when elementsFromPoint does not return the dialog', () => {
       fixture.innerHTML = html`
