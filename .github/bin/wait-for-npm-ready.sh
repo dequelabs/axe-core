@@ -7,8 +7,8 @@ if [ -z "$VERSION" ] || [ -z "$PACKAGE_NAME" ]; then
   exit 1
 fi
 
-SLEEP_SECONDS=${SLEEP_SECONDS:-10}
-MAX_ATTEMPTS=${MAX_ATTEMPTS:-30}
+SLEEP_SECONDS=${SLEEP_SECONDS:-120}
+MAX_ATTEMPTS=${MAX_ATTEMPTS:-12}
 
 echo "::group::Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
 
