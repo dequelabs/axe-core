@@ -37,12 +37,16 @@ describe('aria-practices', function () {
       'target-size',
       'heading-order', // w3c/aria-practices#2119
       'scrollable-region-focusable' // w3c/aria-practices#2114
-    ]
+    ],
+    // axe recognizes the aria-actions attribute (dequelabs/axe-core#5199) but
+    // not yet the authoring pattern: action controls associated via aria-actions
+    // still trip these structural rules. Tracked in dequelabs/axe-core#5215.
+    'tabs/examples/tabs-actions.html': ['aria-required-children'],
+    'listbox/examples/listbox-actions.html': ['nested-interactive']
   };
 
   const skippedPages = [
-    'toolbar/examples/help.html', // Embedded into another page
-    'tabs/examples/tabs-actions.html' // dequelabs/axe-core#4584
+    'toolbar/examples/help.html' // Embedded into another page
   ];
 
   it('finds examples', () => {

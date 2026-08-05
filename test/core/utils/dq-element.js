@@ -111,9 +111,16 @@ describe('DqElement', () => {
   describe('nodeIndexes', () => {
     it('is taken from virtualNode', () => {
       fixtureSetup('<i></i><b></b><s></s>');
-      assert.deepEqual(new DqElement(fixture.children[0]).nodeIndexes, [1]);
-      assert.deepEqual(new DqElement(fixture.children[1]).nodeIndexes, [2]);
-      assert.deepEqual(new DqElement(fixture.children[2]).nodeIndexes, [3]);
+      const startIndex = axe.utils.getNodeFromTree(fixture).nodeIndex;
+      assert.deepEqual(new DqElement(fixture.children[0]).nodeIndexes, [
+        startIndex + 1
+      ]);
+      assert.deepEqual(new DqElement(fixture.children[1]).nodeIndexes, [
+        startIndex + 2
+      ]);
+      assert.deepEqual(new DqElement(fixture.children[2]).nodeIndexes, [
+        startIndex + 3
+      ]);
     });
 
     it('is taken from spec, over virtualNode', () => {

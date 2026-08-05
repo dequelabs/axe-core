@@ -62,6 +62,17 @@ describe('presentational-role', () => {
     assert.deepEqual(checkContext._data.messageKey, 'both');
   });
 
+  it('does not trigger conflict resolution for a global aria attribute set via element internals', () => {
+    // internals do not participate in role conflict resolution; no browser
+    // supports it yet (see issue #5162), so the presentational role sticks
+    const vNode = queryFixture(
+      '<testutils-element id="target" no-role role="none" with-aria-live="assertive">x</testutils-element>'
+    );
+
+    assert.isTrue(checkEvaluate.call(checkContext, null, null, vNode));
+    assert.deepEqual(checkContext._data.role, 'none');
+  });
+
   it('should return false for iframe element with role=none and title', () => {
     const vNode = queryFixture(
       '<iframe id="target" role="none" title="  "></iframe>'

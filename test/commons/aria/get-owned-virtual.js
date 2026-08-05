@@ -167,4 +167,18 @@ describe('aria.getOwnedVirtual', () => {
     const owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 0);
   });
+
+  it('includes aria-owned elements referenced via elementInternals', () => {
+    fixtureSetup(html`
+      <h4 id="hdr-extra">extra heading</h4>
+      <testutils-element id="target" with-aria-owns="hdr-extra">
+        <h1>heading 1</h1>
+      </testutils-element>
+    `);
+    const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
+    const owned = aria
+      .getOwnedVirtual(target)
+      .filter(({ props }) => props.nodeType === 1);
+    assert.isTrue(owned.some(n => n.actualNode.id === 'hdr-extra'));
+  });
 });

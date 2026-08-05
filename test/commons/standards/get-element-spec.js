@@ -21,7 +21,8 @@ describe('standards.getElementSpec', () => {
         htmlElms: {
           abbr: {
             contentTypes: ['phrasing', 'flow'],
-            allowedRoles: true
+            allowedRoles: true,
+            namingProhibited: true
           }
         }
       }
@@ -30,13 +31,33 @@ describe('standards.getElementSpec', () => {
     const vNode = queryFixture('<abbr id="target"></abbr>');
     assert.deepEqual(getElementSpec(vNode), {
       contentTypes: ['phrasing', 'flow'],
-      allowedRoles: true
+      allowedRoles: true,
+      namingProhibited: true
     });
   });
 
   it('should return empty object if passed an invalid element', () => {
     const vNode = queryFixture('<foo-bar id="target"></foo-bar>');
     assert.deepEqual(getElementSpec(vNode), {});
+  });
+
+  it('should restrict figure allowedRoles when it has a child figcaption', () => {
+    const vNode = queryFixture(
+      '<figure id="target"><figcaption>caption</figcaption></figure>'
+    );
+    assert.deepEqual(getElementSpec(vNode).allowedRoles, ['doc-example']);
+  });
+
+  it('should allow any role on a figure without a child figcaption', () => {
+    const vNode = queryFixture('<figure id="target"></figure>');
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+  });
+
+  it('should allow any role on a figure whose figcaption is in a nested figure', () => {
+    const vNode = queryFixture(
+      '<figure id="target"><figure><figcaption>caption</figcaption></figure></figure>'
+    );
+    assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
   });
 
   describe('variants', () => {

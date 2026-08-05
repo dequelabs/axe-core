@@ -545,6 +545,46 @@ describe('axe.utils.getSelector', () => {
     assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
+  it('should escape control characters in attribute (issue 5204)', () => {
+    const div1 = document.createElement('div');
+    div1.setAttribute('data-thing', 'foobar');
+
+    const div2 = document.createElement('div');
+    // Form feed (U+000C), vertical tab (U+000B) and U+001F previously passed
+    // through raw, producing an invalid selector that threw in matches().
+    div2.setAttribute(
+      'data-thing',
+      ' ' + String.fromCharCode(0x0c, 0x0b, 0x1f)
+    );
+
+    const expected = 'div[data-thing=" \\c \\b \\1f "]';
+    fixtureSetup([div1, div2]);
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
+  });
+
+  it('should escape CR and CRLF in attribute (issue 5204)', () => {
+    const div1 = document.createElement('div');
+    div1.setAttribute('data-thing', 'foobar');
+
+    const div2 = document.createElement('div');
+    // CR (U+000D) and CRLF now round-trip as `\d ` / `\d \a ` rather than
+    // collapsing to `\a ` (the old newline handling this change subsumes).
+    div2.setAttribute(
+      'data-thing',
+      'a' +
+        String.fromCharCode(0x0d) +
+        'b' +
+        String.fromCharCode(0x0d, 0x0a) +
+        'c'
+    );
+
+    const expected = 'div[data-thing="a\\d b\\d \\a c"]';
+    fixtureSetup([div1, div2]);
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
+  });
+
   it('should not generate universal selectors', () => {
     const node = document.createElement('div');
     node.setAttribute('role', 'menuitem');
