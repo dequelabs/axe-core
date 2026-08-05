@@ -59,6 +59,23 @@ describe('aria-prohibited-attr virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should fail for prohibited aria-labelledby without throwing', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'code',
+        'aria-labelledby': 'hd'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail for prohibited aria-actions', () => {
     const vNode = new axe.SerialVirtualNode({
       nodeName: 'div',
