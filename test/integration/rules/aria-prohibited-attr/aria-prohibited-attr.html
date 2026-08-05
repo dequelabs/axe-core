@@ -141,3 +141,10 @@ conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has on
 <div id="incomplete1" aria-label="foo">Foo</div>
 <div id="incomplete2" aria-labelledby="missing">Foo</div>
 <div id="incomplete3" aria-label="foo" role="code">Foo</div>
+<div id="incomplete4" aria-labelledby="hd"></div>
+<h1 id="hd">Hello world</h1>
+<div id="incomplete5" aria-labelledby="missing-only"></div>
+
+<div id="value" hidden>value</div>
+<div id="fail101" aria-labelledby="hidden-hd"></div>
+<h1 id="hidden-hd" hidden>Hello world</h1>
