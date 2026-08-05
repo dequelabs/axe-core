@@ -2,6 +2,8 @@ describe('aria.arialabelledbyText', () => {
   const html = axe.testUtils.html;
   const aria = axe.commons.aria;
   const queryFixture = axe.testUtils.queryFixture;
+  const fixtureSetup = axe.testUtils.fixtureSetup;
+  const fixture = axe.testUtils.fixture;
 
   it('returns the accessible name of the aria-labelledby references', () => {
     const target = queryFixture(html`
@@ -166,13 +168,40 @@ describe('aria.arialabelledbyText', () => {
     assert.equal(accName, 'Bar text');
   });
 
-  it('does not throw when aria-labelledby references a slot in shadow DOM (issue 4335)', () => {
+  it('does not throw when aria-labelledby references a slot in shadow DOM', () => {
     // The slot is not tracked in the virtual tree; resolving the reference
     // previously threw "Cannot read properties of undefined (reading 'props')".
     const target = axe.testUtils.queryShadowFixture(
       '<div id="shadow"></div>',
       '<section id="target" aria-labelledby="foo"></section><slot id="foo"></slot>'
     );
+    assert.equal(aria.arialabelledbyText(target), '');
+  });
+
+  it('returns "" when ElementInternals references a node in a closed shadow root', () => {
+    // A custom element labels itself, via ElementInternals, with an element in
+    // its own closed shadow root. The referenced node is outside the virtual
+    // tree, so it resolves to nothing.
+    const target = document.createElement('testutils-element');
+    target.id = 'target';
+    const shadowRoot = target.attachShadow({ mode: 'closed' });
+    shadowRoot.innerHTML = '<span>Foo text</span>';
+
+    fixtureSetup(target);
+    target._internals.ariaLabelledByElements = [shadowRoot.firstElementChild];
+
+    const vNode = axe.utils.getNodeFromTree(target);
+    assert.equal(aria.arialabelledbyText(vNode), '');
+  });
+
+  it('returns "" when ariaLabelledByElements references a node outside the virtual tree', () => {
+    const target = queryFixture('<div role="heading" id="target"></div>');
+    const outOfTree = document.createElement('div');
+    outOfTree.textContent = 'Foo text';
+    // Appended after axe.setup, so the node is never part of the virtual tree.
+    fixture.appendChild(outOfTree);
+    target.actualNode.ariaLabelledByElements = [outOfTree];
+
     assert.equal(aria.arialabelledbyText(target), '');
   });
 });
