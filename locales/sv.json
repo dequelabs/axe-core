@@ -1,0 +1,1147 @@
+{
+  "lang": "sv",
+  "rules": {
+    "accesskeys": {
+      "description": "Säkerställ att värdet för varje accesskey-attribut är unikt",
+      "help": "Värdet för accesskey-attributet ska vara unikt"
+    },
+    "area-alt": {
+      "description": "Säkerställ att <area>-element i bildkartor har alternativ text",
+      "help": "Aktiva <area>-element måste ha alternativ text"
+    },
+    "aria-allowed-attr": {
+      "description": "Säkerställ att ett elements roll stöder dess ARIA-attribut",
+      "help": "Element får endast använda ARIA-attribut som stöds"
+    },
+    "aria-allowed-role": {
+      "description": "Säkerställ att rollattributet har ett lämpligt värde för elementet",
+      "help": "ARIA-rollen ska vara lämplig för elementet"
+    },
+    "aria-braille-equivalent": {
+      "description": "Säkerställ att aria-braillelabel och aria-brailleroledescription har en motsvarighet i vanlig text",
+      "help": "aria-braille-attribut måste ha en motsvarighet i vanlig text"
+    },
+    "aria-command-name": {
+      "description": "Säkerställ att varje ARIA-knapp, länk och menyalternativ har ett tillgängligt namn",
+      "help": "ARIA-kommandon måste ha ett tillgängligt namn"
+    },
+    "aria-conditional-attr": {
+      "description": "Säkerställ att ARIA-attribut används enligt specifikationen för elementets roll",
+      "help": "ARIA-attribut måste användas enligt specifikationen för elementets roll"
+    },
+    "aria-deprecated-role": {
+      "description": "Säkerställ att element inte använder föråldrade roller",
+      "help": "Föråldrade ARIA-roller får inte användas"
+    },
+    "aria-dialog-name": {
+      "description": "Säkerställ att varje ARIA-dialogruta och alertdialog-nod har ett tillgängligt namn",
+      "help": "ARIA-dialogrutor och alertdialog-noder ska ha ett tillgängligt namn"
+    },
+    "aria-hidden-body": {
+      "description": "Säkerställ att aria-hidden=\"true\" inte finns på dokumentets body-element.",
+      "help": "aria-hidden=\"true\" får inte finnas på dokumentets body-element"
+    },
+    "aria-hidden-focus": {
+      "description": "Säkerställ att aria-hidden-element inte är fokuserbara och inte heller innehåller fokuserbara element",
+      "help": "ARIA-hidden-element får inte vara fokuserbara eller innehålla fokuserbara element"
+    },
+    "aria-input-field-name": {
+      "description": "Säkerställ att varje ARIA-inmatningsfält har ett tillgängligt namn",
+      "help": "ARIA-inmatningsfält måste ha ett tillgängligt namn"
+    },
+    "aria-meter-name": {
+      "description": "Säkerställ att varje ARIA-meter-nod har ett tillgängligt namn",
+      "help": "ARIA-meter-noder måste ha ett tillgängligt namn"
+    },
+    "aria-progressbar-name": {
+      "description": "Säkerställ att varje ARIA-progressbar-nod har ett tillgängligt namn",
+      "help": "ARIA-progressbar-noder måste ha ett tillgängligt namn"
+    },
+    "aria-prohibited-attr": {
+      "description": "Säkerställ att ARIA-attribut inte är förbjudna för ett elements roll",
+      "help": "Element får endast använda tillåtna ARIA-attribut"
+    },
+    "aria-required-attr": {
+      "description": "Säkerställ att element med ARIA-roller har alla obligatoriska ARIA-attribut",
+      "help": "Obligatoriska ARIA-attribut måste tillhandahållas"
+    },
+    "aria-required-children": {
+      "description": "Säkerställ att element med en ARIA-roll som kräver underordnade roller innehåller dessa",
+      "help": "Vissa ARIA-roller måste innehålla specifika underordnade element"
+    },
+    "aria-required-parent": {
+      "description": "Säkerställ att element med en ARIA-roll som kräver överordnade roller omsluts av dessa",
+      "help": "Vissa ARIA-roller måste omslutas av specifika överordnade element"
+    },
+    "aria-roledescription": {
+      "description": "Säkerställ att aria-roledescription endast används på element med en implicit eller explicit roll",
+      "help": "aria-roledescription måste finnas på element med en semantisk roll"
+    },
+    "aria-roles": {
+      "description": "Säkerställ att alla element med ett rollattribut använder ett giltigt värde",
+      "help": "ARIA-roller som används måste motsvara giltiga värden"
+    },
+    "aria-tab-name": {
+      "description": "Säkerställ att varje ARIA-tab-nod har ett tillgängligt namn",
+      "help": "ARIA-tab-noder måste ha ett tillgängligt namn"
+    },
+    "aria-text": {
+      "description": "Säkerställ att role=\"text\" används på element utan fokuserbara efterkommande element",
+      "help": "\"role=text\" bör inte ha några fokuserbara efterkommande element"
+    },
+    "aria-toggle-field-name": {
+      "description": "Säkerställ att varje ARIA-växlingsfält har ett tillgängligt namn",
+      "help": "ARIA-växlingsfält måste ha ett tillgängligt namn"
+    },
+    "aria-tooltip-name": {
+      "description": "Säkerställ att varje ARIA-tooltip-nod har ett tillgängligt namn",
+      "help": "ARIA-tooltip-noder måste ha ett tillgängligt namn"
+    },
+    "aria-treeitem-name": {
+      "description": "Säkerställ att varje ARIA-treeitem-nod har ett tillgängligt namn",
+      "help": "ARIA-treeitem-noder ska ha ett tillgängligt namn"
+    },
+    "aria-valid-attr-value": {
+      "description": "Säkerställ att alla ARIA-attribut har giltiga värden",
+      "help": "ARIA-attribut måste motsvara giltiga värden"
+    },
+    "aria-valid-attr": {
+      "description": "Säkerställ att attribut som börjar med aria- är giltiga ARIA-attribut",
+      "help": "ARIA-attribut måste ha giltiga namn"
+    },
+    "audio-caption": {
+      "description": "Säkerställ att <audio>-element har textning",
+      "help": "<audio>-element måste ha ett spår för textning"
+    },
+    "autocomplete-valid": {
+      "description": "Säkerställ att autocomplete-attributet är korrekt och lämpligt för formulärfältet",
+      "help": "autocomplete-attributet måste användas korrekt"
+    },
+    "avoid-inline-spacing": {
+      "description": "Säkerställ att textavstånd som ställts in via stilattribut kan justeras med anpassade stilmallar",
+      "help": "Inbäddat textavstånd måste kunna justeras med anpassade stilmallar"
+    },
+    "blink": {
+      "description": "Säkerställ att <blink>-element inte används",
+      "help": "<blink>-element är föråldrade och får inte användas"
+    },
+    "button-name": {
+      "description": "Säkerställ att knappar har urskiljbar text",
+      "help": "Knappar måste ha urskiljbar text"
+    },
+    "bypass": {
+      "description": "Säkerställ att varje sida har minst en mekanism för att användaren ska kunna hoppa över navigering och gå direkt till innehållet",
+      "help": "Sidan måste ha ett sätt att hoppa över upprepade block"
+    },
+    "color-contrast-enhanced": {
+      "description": "Säkerställ att kontrasten mellan förgrunds- och bakgrundsfärger uppfyller tröskelvärdena för WCAG 2 AAA utökad kontrast",
+      "help": "Element måste uppfylla tröskelvärdena för utökad färgkontrast"
+    },
+    "color-contrast": {
+      "description": "Säkerställ att kontrasten mellan förgrunds- och bakgrundsfärger uppfyller tröskelvärdena för WCAG 2 AA minimikontrast",
+      "help": "Element måste uppfylla tröskelvärdena för minsta färgkontrast"
+    },
+    "css-orientation-lock": {
+      "description": "Säkerställ att innehållet inte är låst till en specifik skärmorientering och att innehållet kan användas i alla skärmorienteringar",
+      "help": "CSS-mediefrågor får inte låsa skärmorienteringen"
+    },
+    "definition-list": {
+      "description": "Säkerställ att <dl>-element är korrekt strukturerade",
+      "help": "<dl>-element får endast direkt innehålla korrekt ordnade <dt>- och <dd>-grupper, <script>-, <template>- eller <div>-element"
+    },
+    "dlitem": {
+      "description": "Säkerställ att <dt>- och <dd>-element ingår i en <dl>",
+      "help": "<dt>- och <dd>-element måste ingå i en <dl>"
+    },
+    "document-title": {
+      "description": "Säkerställ att varje HTML-dokument innehåller ett <title>-element som inte är tomt",
+      "help": "Dokument måste ha ett <title>-element för att underlätta navigering"
+    },
+    "duplicate-id-active": {
+      "description": "Säkerställ att varje id-attributvärde för aktiva element är unikt",
+      "help": "ID:n för aktiva element måste vara unika"
+    },
+    "duplicate-id-aria": {
+      "description": "Säkerställ att varje id-attributvärde som används i ARIA och i etiketter är unikt",
+      "help": "ID:n som används i ARIA och etiketter måste vara unika"
+    },
+    "duplicate-id": {
+      "description": "Säkerställ att varje id-attributvärde är unikt",
+      "help": "id-attributets värde måste vara unikt"
+    },
+    "empty-heading": {
+      "description": "Säkerställ att rubriker har urskiljbar text",
+      "help": "Rubriker bör inte vara tomma"
+    },
+    "empty-table-header": {
+      "description": "Säkerställ att tabellrubriker har urskiljbar text",
+      "help": "Tabellrubrikers text bör inte vara tom"
+    },
+    "focus-order-semantics": {
+      "description": "Säkerställ att element i fokusordningen har en roll som är lämplig för interaktivt innehåll",
+      "help": "Element i fokusordningen bör ha en lämplig roll"
+    },
+    "form-field-multiple-labels": {
+      "description": "Säkerställ att ett formulärfält inte har flera label-element",
+      "help": "Formulärfält får inte ha flera label-element"
+    },
+    "frame-focusable-content": {
+      "description": "Säkerställ att <frame>- och <iframe>-element med fokuserbart innehåll inte har tabindex=-1",
+      "help": "Ramar med fokuserbart innehåll får inte ha tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Säkerställ att <iframe>- och <frame>-element innehåller axe-core-skriptet",
+      "help": "Ramar bör testas med axe-core"
+    },
+    "frame-title-unique": {
+      "description": "Säkerställ att <iframe>- och <frame>-element innehåller ett unikt title-attribut",
+      "help": "Ramar måste ha ett unikt title-attribut"
+    },
+    "frame-title": {
+      "description": "Säkerställ att <iframe>- och <frame>-element har ett tillgängligt namn",
+      "help": "Ramar måste ha ett tillgängligt namn"
+    },
+    "heading-order": {
+      "description": "Säkerställ att ordningen på rubriker är semantiskt korrekt",
+      "help": "Rubriknivåer bör endast öka med ett steg i taget"
+    },
+    "hidden-content": {
+      "description": "Informera användare om dolt innehåll.",
+      "help": "Dolt innehåll på sidan bör analyseras"
+    },
+    "html-has-lang": {
+      "description": "Säkerställ att varje HTML-dokument har ett lang-attribut",
+      "help": "<html>-elementet måste ha ett lang-attribut"
+    },
+    "html-lang-valid": {
+      "description": "Säkerställ att lang-attributet på <html>-elementet har ett giltigt värde",
+      "help": "<html>-elementet måste ha ett giltigt värde för lang-attributet"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Säkerställ att HTML-element med både giltiga lang- och xml:lang-attribut stämmer överens om sidans basspråk",
+      "help": "HTML-element med lang och xml:lang måste ha samma basspråk"
+    },
+    "identical-links-same-purpose": {
+      "description": "Säkerställ att länkar med samma tillgängliga namn fyller ett liknande syfte",
+      "help": "Länkar med samma namn måste fylla ett liknande syfte"
+    },
+    "image-alt": {
+      "description": "Säkerställ att <img>-element har alternativ text eller en roll som är 'none' eller 'presentation'",
+      "help": "Bilder måste ha alternativ text"
+    },
+    "image-redundant-alt": {
+      "description": "Säkerställ att bildens alternativa text inte upprepas som vanlig text",
+      "help": "Alternativ text för bilder bör inte upprepas som vanlig text"
+    },
+    "input-button-name": {
+      "description": "Säkerställ att inmatningsknappar har urskiljbar text",
+      "help": "Inmatningsknappar måste ha urskiljbar text"
+    },
+    "input-image-alt": {
+      "description": "Säkerställ att <input type=\"image\">-element har alternativ text",
+      "help": "Bildknappar måste ha alternativ text"
+    },
+    "label-content-name-mismatch": {
+      "description": "Säkerställ att element som etiketteras genom sitt innehåll inkluderar den synliga texten i sitt tillgängliga namn",
+      "help": "Element måste inkludera sin synliga text i det tillgängliga namnet"
+    },
+    "label-title-only": {
+      "description": "Säkerställ att varje formulärelement har en synlig etikett och inte enbart är märkt med dolda etiketter, title- eller aria-describedby-attribut",
+      "help": "Formulärelement bör ha en synlig etikett"
+    },
+    "label": {
+      "description": "Säkerställ att varje formulärelement har en etikett",
+      "help": "Formulärelement måste ha etiketter"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Säkerställ att banner-landmärket är på toppnivå",
+      "help": "Banner-landmärket bör inte ingå i ett annat landmärke"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Säkerställ att det kompletterande landmärket eller aside-elementet är på toppnivå",
+      "help": "Aside-element bör inte ingå i ett annat landmärke"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Säkerställ att contentinfo-landmärket är på toppnivå",
+      "help": "Contentinfo-landmärket bör inte ingå i ett annat landmärke"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Säkerställ att main-landmärket är på toppnivå",
+      "help": "Main-landmärket bör inte ingå i ett annat landmärke"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Säkerställ att dokumentet har högst ett banner-landmärke",
+      "help": "Dokumentet bör inte ha mer än ett banner-landmärke"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Säkerställ att dokumentet har högst ett contentinfo-landmärke",
+      "help": "Dokumentet bör inte ha mer än ett contentinfo-landmärke"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Säkerställ att dokumentet har högst ett main-landmärke",
+      "help": "Dokumentet bör inte ha mer än ett main-landmärke"
+    },
+    "landmark-one-main": {
+      "description": "Säkerställ att dokumentet har ett main-landmärke",
+      "help": "Dokumentet ska ha ett main-landmärke"
+    },
+    "landmark-unique": {
+      "description": "Säkerställ att landmärken är unika",
+      "help": "Landmärken bör ha en unik kombination av roll eller roll/etikett/titel (dvs. tillgängligt namn)"
+    },
+    "link-in-text-block": {
+      "description": "Säkerställ att länkar kan skiljas från omgivande text utan att enbart förlita sig på färg",
+      "help": "Länkar måste kunna urskiljas utan att förlita sig på färg"
+    },
+    "link-name": {
+      "description": "Säkerställ att länkar har urskiljbar text",
+      "help": "Länkar måste ha urskiljbar text"
+    },
+    "list": {
+      "description": "Säkerställ att listor är korrekt strukturerade",
+      "help": "<ul> och <ol> får endast direkt innehålla <li>-, <script>- eller <template>-element"
+    },
+    "listitem": {
+      "description": "Säkerställ att <li>-element används semantiskt",
+      "help": "<li>-element måste ingå i en <ul> eller <ol>"
+    },
+    "marquee": {
+      "description": "Säkerställ att <marquee>-element inte används",
+      "help": "<marquee>-element är föråldrade och får inte användas"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Säkerställ att <meta http-equiv=\"refresh\"> inte används för tidsfördröjd omdirigering/uppdatering",
+      "help": "Tidsfördröjd uppdatering får inte användas"
+    },
+    "meta-refresh": {
+      "description": "Säkerställ att <meta http-equiv=\"refresh\"> inte används för tidsfördröjd omdirigering/uppdatering",
+      "help": "Tidsfördröjd uppdatering under 20 timmar får inte användas"
+    },
+    "meta-viewport-large": {
+      "description": "Säkerställ att <meta name=\"viewport\"> kan förstoras i betydande grad",
+      "help": "Användare ska kunna zooma och förstora texten upp till 500 %"
+    },
+    "meta-viewport": {
+      "description": "Säkerställ att <meta name=\"viewport\"> inte inaktiverar textförstoring och zoomning",
+      "help": "Zoomning och förstoring får inte inaktiveras"
+    },
+    "nested-interactive": {
+      "description": "Säkerställ att interaktiva kontroller inte är nästlade, eftersom de inte alltid annonseras av skärmläsare eller kan orsaka fokusproblem för hjälpmedel",
+      "help": "Interaktiva kontroller får inte vara nästlade"
+    },
+    "no-autoplay-audio": {
+      "description": "Säkerställ att <video>- eller <audio>-element inte automatiskt spelar upp ljud i mer än 3 sekunder utan en kontrollmekanism för att stoppa eller stänga av ljudet",
+      "help": "<video>- eller <audio>-element får inte spelas upp automatiskt"
+    },
+    "object-alt": {
+      "description": "Säkerställ att <object>-element har alternativ text",
+      "help": "<object>-element måste ha alternativ text"
+    },
+    "p-as-heading": {
+      "description": "Säkerställ att fetstil, kursiv text och teckenstorlek inte används för att formatera <p>-element som en rubrik",
+      "help": "Formaterade <p>-element får inte användas som rubriker"
+    },
+    "page-has-heading-one": {
+      "description": "Säkerställ att sidan, eller åtminstone en av dess ramar, innehåller en rubrik på nivå ett",
+      "help": "Sidan bör innehålla en rubrik på nivå ett"
+    },
+    "presentation-role-conflict": {
+      "description": "Säkerställ att element markerade som presentation inte har globala ARIA-attribut eller tabindex, så att alla skärmläsare ignorerar dem",
+      "help": "Element markerade som presentation bör konsekvent ignoreras"
+    },
+    "region": {
+      "description": "Säkerställ att allt sidinnehåll ingår i landmärken",
+      "help": "Allt sidinnehåll bör ingå i landmärken"
+    },
+    "role-img-alt": {
+      "description": "Säkerställ att [role=\"img\"]-element har alternativ text",
+      "help": "[role=\"img\"]-element måste ha alternativ text"
+    },
+    "scope-attr-valid": {
+      "description": "Säkerställ att scope-attributet används korrekt på tabeller",
+      "help": "scope-attributet ska användas korrekt"
+    },
+    "scrollable-region-focusable": {
+      "description": "Säkerställ att element med rullningsbart innehåll är tillgängliga via tangentbord i Safari",
+      "help": "Rullningsbara regioner måste ha tangentbordsåtkomst"
+    },
+    "select-name": {
+      "description": "Säkerställ att select-element har ett tillgängligt namn",
+      "help": "Select-element måste ha ett tillgängligt namn"
+    },
+    "server-side-image-map": {
+      "description": "Säkerställ att serverbaserade bildkartor inte används",
+      "help": "Serverbaserade bildkartor får inte användas"
+    },
+    "skip-link": {
+      "description": "Säkerställ att alla hoppa över-länkar har ett fokuserbart mål",
+      "help": "Målet för hoppa över-länken ska finnas och vara fokuserbart"
+    },
+    "summary-name": {
+      "description": "Säkerställ att summary-element har urskiljbar text",
+      "help": "Summary-element måste ha urskiljbar text"
+    },
+    "svg-img-alt": {
+      "description": "Säkerställ att <svg>-element med rollen img, graphics-document eller graphics-symbol har en tillgänglig text",
+      "help": "<svg>-element med rollen img måste ha alternativ text"
+    },
+    "tabindex": {
+      "description": "Säkerställ att värden för tabindex-attribut inte är större än 0",
+      "help": "Element bör inte ha ett tabindex som är större än noll"
+    },
+    "table-duplicate-name": {
+      "description": "Säkerställ att <caption>-elementet inte innehåller samma text som summary-attributet",
+      "help": "Tabeller bör inte ha samma sammanfattning och rubrik"
+    },
+    "table-fake-caption": {
+      "description": "Säkerställ att tabeller med en rubrik använder <caption>-elementet.",
+      "help": "Data- eller rubrikceller får inte användas för att ge en rubrik till en datatabell."
+    },
+    "target-size": {
+      "description": "Säkerställ att klickytor har tillräcklig storlek och marginal",
+      "help": "Alla klickytor måste vara minst 24px stora eller ha tillräckligt med utrymme runt sig"
+    },
+    "td-has-header": {
+      "description": "Säkerställ att varje datacell som inte är tom i en <table> större än 3x3 har en eller flera tabellrubriker",
+      "help": "Dataceller (<td>) som inte är tomma i större tabeller (<table>) måste ha en tillhörande tabellrubrik"
+    },
+    "td-headers-attr": {
+      "description": "Säkerställ att varje cell i en tabell som använder headers-attributet endast hänvisar till andra <th>-element i den tabellen",
+      "help": "Tabellcellers headers-attribut måste hänvisa till andra <th>-element i samma tabell"
+    },
+    "th-has-data-cells": {
+      "description": "Säkerställ att <th>-element och element med role=columnheader/rowheader har dataceller som de beskriver",
+      "help": "Tabellrubriker i en datatabell måste hänvisa till dataceller"
+    },
+    "valid-lang": {
+      "description": "Säkerställ att lang-attribut har giltiga värden",
+      "help": "lang-attributet måste ha ett giltigt värde"
+    },
+    "video-caption": {
+      "description": "Säkerställ att <video>-element har textning",
+      "help": "<video>-element måste ha undertexter"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstrakta roller används inte",
+      "fail": {
+        "singular": "Abstrakt roll kan inte användas direkt: ${data.values}",
+        "plural": "Abstrakta roller kan inte användas direkt: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "ARIA-attribut är tillåtna för detta element",
+      "fail": {
+        "singular": "ARIA-attributet är inte tillåtet på ${data.nodeName}-element: ${data.values}",
+        "plural": "ARIA-attributen är inte tillåtna på ${data.nodeName}-element: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "ARIA-attribut används korrekt för den definierade rollen",
+      "fail": {
+        "singular": "ARIA-attribut är inte tillåtet: ${data.values}",
+        "plural": "ARIA-attribut är inte tillåtna: ${data.values}"
+      },
+      "incomplete": "Kontrollera att det inte uppstår problem om ARIA-attributet ignoreras på detta element: ${data.values}"
+    },
+    "aria-allowed-role": {
+      "pass": "ARIA-rollen är tillåten för det givna elementet",
+      "fail": {
+        "singular": "ARIA-rollen ${data.values} är inte tillåten för det givna elementet",
+        "plural": "ARIA-rollerna ${data.values} är inte tillåtna för det givna elementet"
+      },
+      "incomplete": {
+        "singular": "ARIA-rollen ${data.values} måste tas bort när elementet görs synligt, eftersom den inte är tillåten för elementet",
+        "plural": "ARIA-rollerna ${data.values} måste tas bort när elementet görs synligt, eftersom de inte är tillåtna för elementet"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elementet har ett aria-busy-attribut",
+      "fail": "Elementet använder aria-busy=\"true\" samtidigt som en laddningsindikator visas"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA-attribut är tillåtet",
+      "fail": {
+        "checkbox": "Ta bort aria-checked eller sätt det till \"${data.checkState}\" för att matcha kryssrutans faktiska tillstånd",
+        "radio": "Ta bort aria-checked eller sätt det till \"${data.checkState}\" för att matcha radioknappens faktiska tillstånd",
+        "rowSingular": "Detta attribut stöds för treegrid-rader, men inte för ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "Dessa attribut stöds för treegrid-rader, men inte för ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage finns och refererar till element som är synliga för skärmläsare och använder en teknik för aria-errormessage som stöds",
+      "fail": {
+        "singular": "aria-errormessage-värdet `${data.values}` måste använda en teknik för att annonsera meddelandet (t.ex. aria-live, aria-describedby, role=alert, etc.)",
+        "plural": "aria-errormessage-värdena `${data.values}` måste använda en teknik för att annonsera meddelandet (t.ex. aria-live, aria-describedby, role=alert, etc.)",
+        "unsupported": "Flera ID:n i aria-errormessage stöds inte i stor utsträckning av hjälpmedel",
+        "hidden": "aria-errormessage-värdet `${data.values}` kan inte referera till ett dolt element"
+      },
+      "incomplete": {
+        "singular": "Säkerställ att aria-errormessage-värdet `${data.values}` refererar till ett befintligt element",
+        "plural": "Säkerställ att aria-errormessage-värdena `${data.values}` refererar till befintliga element",
+        "idrefs": "Det går inte att avgöra om elementet för aria-errormessage finns på sidan: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Inget aria-hidden-attribut finns på dokumentets body-element",
+      "fail": "aria-hidden=true bör inte finnas på dokumentets body-element"
+    },
+    "aria-level": {
+      "pass": "aria-level-värden är giltiga",
+      "incomplete": "aria-level-värden större än 6 stöds inte i alla kombinationer av skärmläsare och webbläsare"
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA-attribut är tillåtet",
+      "fail": {
+        "hasRolePlural": "Attributen ${data.prohibited} kan inte användas med rollen \"${data.role}\".",
+        "hasRoleSingular": "Attributet ${data.prohibited} kan inte användas med rollen \"${data.role}\".",
+        "noRolePlural": "Attributen ${data.prohibited} kan inte användas på ett ${data.nodeName}-element utan en giltig roll.",
+        "noRoleSingular": "Attributet ${data.prohibited} kan inte användas på ett ${data.nodeName}-element utan en giltig roll."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Attributet ${data.prohibited} har inte fullt stöd med rollen \"${data.role}\".",
+        "hasRolePlural": "Attributen ${data.prohibited} har inte fullt stöd med rollen \"${data.role}\".",
+        "noRoleSingular": "Attributet ${data.prohibited} har inte fullt stöd på ett ${data.nodeName}-element utan en giltig roll.",
+        "noRolePlural": "Attributen ${data.prohibited} har inte fullt stöd på ett ${data.nodeName}-element utan en giltig roll."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Alla obligatoriska ARIA-attribut finns",
+      "fail": {
+        "singular": "Obligatoriskt ARIA-attribut saknas: ${data.values}",
+        "plural": "Obligatoriska ARIA-attribut saknas: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Obligatoriska underordnade ARIA-element finns",
+        "aria-busy": "Elementet har ett aria-busy-attribut, så det är tillåtet att utelämna obligatoriska underordnade element"
+      },
+      "fail": {
+        "singular": "Obligatorisk underordnad ARIA-roll saknas: ${data.values}",
+        "plural": "Obligatoriska underordnade ARIA-roller saknas: ${data.values}",
+        "unallowed": "Elementet har underordnade element som inte är tillåtna: ${data.values}",
+        "aria-busy-fail": "Elementet har underordnade element som inte är tillåtna: ${data.values}; att ha aria-busy=\"true\" tillåter inte underordnade element med roller som inte är tillåtna"
+      },
+      "incomplete": {
+        "singular": "Förväntar sig att underordnad ARIA-roll läggs till: ${data.values}",
+        "plural": "Förväntar sig att underordnade ARIA-roller läggs till: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Obligatorisk överordnad ARIA-roll finns",
+      "fail": {
+        "singular": "Obligatorisk överordnad ARIA-roll saknas: ${data.values}",
+        "plural": "Obligatoriska överordnade ARIA-roller saknas: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription används på en semantisk roll som stöds",
+      "incomplete": "Kontrollera att aria-roledescription annonseras av skärmläsare som stöds",
+      "fail": "Ge elementet en roll som stöder aria-roledescription"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA-attributet stöds",
+      "fail": "ARIA-attributet stöds inte i stor utsträckning av skärmläsare och hjälpmedel: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA-attributvärden är giltiga",
+      "fail": {
+        "singular": "Ogiltigt ARIA-attributvärde: ${data.values}",
+        "plural": "Ogiltiga ARIA-attributvärden: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA-attributets element-ID finns inte på sidan: ${data.needsReview}",
+        "noIdShadow": "ARIA-attributets element-ID finns inte på sidan eller är en avkomling till ett annat shadow DOM-träd: ${data.needsReview}",
+        "ariaCurrent": "ARIA-attributets värde är ogiltigt och kommer att hanteras som \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Det går inte att avgöra om ARIA-attributets element-ID finns på sidan: ${data.needsReview}",
+        "empty": "ARIA-attributets värde ignoreras eftersom det är tomt: ${data.needsReview}",
+        "controlsWithinPopup": "Det går inte att avgöra om ID-referensen i aria-controls finns på sidan när aria-haspopup används: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA-attributnamnet är giltigt",
+      "fail": {
+        "singular": "Ogiltigt ARIA-attributnamn: ${data.values}",
+        "plural": "Ogiltiga ARIA-attributnamn: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel används på ett element med tillgänglig text",
+      "fail": "aria-braillelabel används på ett element utan tillgänglig text",
+      "incomplete": "Det går inte att beräkna tillgänglig text"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription används på ett element med aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription används på ett element utan aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription används på ett element med en tom aria-roledescription"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA-rollen är inte föråldrad",
+      "fail": "Rollen som används är föråldrad: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Endast ett rollvärde används",
+      "fail": "Använd endast ett rollvärde, eftersom reservroller (fallback roles) inte stöds i äldre webbläsare",
+      "incomplete": "Använd endast rollen 'presentation' eller 'none' eftersom de är synonyma."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elementet har ett globalt ARIA-attribut: ${data.values}",
+        "plural": "Elementet har globala ARIA-attribut: ${data.values}"
+      },
+      "fail": "Elementet saknar globalt ARIA-attribut"
+    },
+    "has-widget-role": {
+      "pass": "Elementet har en widget-roll.",
+      "fail": "Elementet har inte en widget-roll."
+    },
+    "invalidrole": {
+      "pass": "ARIA-rollen är giltig",
+      "fail": {
+        "singular": "Rollen måste vara en av de giltiga ARIA-rollerna: ${data.values}",
+        "plural": "Rollerna måste vara bland de giltiga ARIA-rollerna: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Elementet är fokuserbart.",
+      "fail": "Elementet är inte fokuserbart."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "Det finns ingen avvikelse mellan en <label> och det tillgängliga namnet",
+      "incomplete": "Kontrollera att <label>-elementet inte behöver vara en del av namnet för ARIA-${data}-fältet"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA-rollen stöds",
+      "fail": "Rollen som används stöds inte i stor utsträckning av skärmläsare och hjälpmedel: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Elementet har giltig semantik för ett element i fokusordningen.",
+      "fail": "Elementet har ogiltig semantik för ett element i fokusordningen."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elementet har tillräcklig färgkontrast på ${data.contrastRatio}",
+      "fail": {
+        "default": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} (förgrundsfärg: ${data.fgColor}, bakgrundsfärg: ${data.bgColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} mellan förgrunden och skuggfärgen (förgrundsfärg: ${data.fgColor}, text-shadow-färg: ${data.shadowColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} mellan skuggfärgen och bakgrundsfärgen (text-shadow-färg: ${data.shadowColor}, bakgrundsfärg: ${data.bgColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Det går inte att bestämma kontrastförhållandet",
+        "bgImage": "Elementets bakgrundsfärg kunde inte bestämmas på grund av en bakgrundsbild",
+        "bgGradient": "Elementets bakgrundsfärg kunde inte bestämmas på grund av en bakgrundsgradient",
+        "imgNode": "Elementets bakgrundsfärg kunde inte bestämmas eftersom elementet innehåller en bildnod",
+        "bgOverlap": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det överlappas av ett annat element",
+        "fgAlpha": "Elementets förgrundsfärg kunde inte bestämmas på grund av alfa-transparens",
+        "elmPartiallyObscured": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det är delvis dolt av ett annat element",
+        "elmPartiallyObscuring": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det delvis överlappar andra element",
+        "outsideViewport": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det är utanför visningsytan (viewport)",
+        "equalRatio": "Elementet har ett kontrastförhållande på 1:1 med bakgrunden",
+        "shortTextContent": "Elementets innehåll är för kort för att det ska gå att avgöra om det faktiskt är textinnehåll",
+        "nonBmp": "Elementets innehåll innehåller endast icke-texttecken",
+        "pseudoContent": "Elementets bakgrundsfärg kunde inte bestämmas på grund av ett pseudoelement",
+        "colorParse": "Kunde inte tolka färgsträngen ${data.colorParse}"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elementet har tillräcklig färgkontrast på ${data.contrastRatio}",
+        "hidden": "Elementet är dolt"
+      },
+      "fail": {
+        "default": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} (förgrundsfärg: ${data.fgColor}, bakgrundsfärg: ${data.bgColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} mellan förgrunden och skuggfärgen (förgrundsfärg: ${data.fgColor}, text-shadow-färg: ${data.shadowColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementet har otillräcklig färgkontrast på ${data.contrastRatio} mellan skuggfärgen och bakgrundsfärgen (text-shadow-färg: ${data.shadowColor}, bakgrundsfärg: ${data.bgColor}, teckenstorlek: ${data.fontSize}, teckenvikt: ${data.fontWeight}). Förväntat kontrastförhållande är ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Det går inte att bestämma kontrastförhållandet",
+        "bgImage": "Elementets bakgrundsfärg kunde inte bestämmas på grund av en bakgrundsbild",
+        "bgGradient": "Elementets bakgrundsfärg kunde inte bestämmas på grund av en bakgrundsgradient",
+        "imgNode": "Elementets bakgrundsfärg kunde inte bestämmas eftersom elementet innehåller en bildnod",
+        "bgOverlap": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det överlappas av ett annat element",
+        "complexTextShadows": "Elementets kontrast kunde inte bestämmas eftersom det använder komplexa textskuggor",
+        "fgAlpha": "Elementets förgrundsfärg kunde inte bestämmas på grund av alfa-transparens",
+        "elmPartiallyObscured": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det är delvis dolt av ett annat element",
+        "elmPartiallyObscuring": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det delvis överlappar andra element",
+        "outsideViewport": "Elementets bakgrundsfärg kunde inte bestämmas eftersom det är utanför visningsytan (viewport)",
+        "equalRatio": "Elementet har ett kontrastförhållande på 1:1 med bakgrunden",
+        "shortTextContent": "Elementets innehåll är för kort för att det ska gå att avgöra om det faktiskt är textinnehåll",
+        "nonBmp": "Elementets innehåll innehåller endast icke-texttecken",
+        "pseudoContent": "Elementets bakgrundsfärg kunde inte bestämmas på grund av ett pseudoelement",
+        "colorParse": "Kunde inte tolka färgsträngen ${data.colorParse}"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Länkar kan skiljas från omgivande text genom visuell formatering",
+      "incomplete": {
+        "default": "Kontrollera om länken behöver formateras för att skilja den från närliggande text",
+        "pseudoContent": "Kontrollera om länkens pseudoformatering är tillräcklig för att skilja den från den omgivande texten"
+      },
+      "fail": "Länken saknar formatering (såsom understrykning) för att skilja den från den omgivande texten"
+    },
+    "link-in-text-block": {
+      "pass": "Länkar kan skiljas från omgivande text på något annat sätt än enbart med hjälp av färg",
+      "fail": {
+        "fgContrast": "Länken har otillräcklig färgkontrast på ${data.contrastRatio}:1 mot den omgivande texten. (Minsta kontrast är ${data.requiredContrastRatio}:1, länktext: ${data.nodeColor}, omgivande text: ${data.parentColor})",
+        "bgContrast": "Länkens bakgrund har otillräcklig färgkontrast på ${data.contrastRatio} (Minsta kontrast är ${data.requiredContrastRatio}:1, länkens bakgrundsfärg: ${data.nodeBackgroundColor}, omgivande bakgrundsfärg: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elementets förgrundskontrast kunde inte bestämmas",
+        "bgContrast": "Elementets bakgrundskontrast kunde inte bestämmas",
+        "bgImage": "Elementets kontrastförhållande kunde inte bestämmas på grund av en bakgrundsbild",
+        "bgGradient": "Elementets kontrastförhållande kunde inte bestämmas på grund av en bakgrundsgradient",
+        "imgNode": "Elementets kontrastförhållande kunde inte bestämmas eftersom elementet innehåller en bildnod",
+        "bgOverlap": "Elementets kontrastförhållande kunde inte bestämmas på grund av överlappande element"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "Autocomplete-värdet finns på ett lämpligt element",
+      "fail": "Autocomplete-värdet är olämpligt för denna typ av inmatningsfält"
+    },
+    "autocomplete-valid": {
+      "pass": "Autocomplete-attributet är korrekt formaterat",
+      "fail": "Autocomplete-attributet är felaktigt formaterat",
+      "incomplete": "Autocomplete-attributet har ett icke-standardiserat värde. Kontrollera om ett standardvärde kan användas i stället."
+    },
+    "accesskeys": {
+      "pass": "Accesskey-attributets värde är unikt",
+      "fail": "Dokumentet har flera element med samma accesskey"
+    },
+    "focusable-content": {
+      "pass": "Elementet innehåller fokuserbara element",
+      "fail": "Elementet bör ha fokuserbart innehåll"
+    },
+    "focusable-disabled": {
+      "pass": "Inga fokuserbara element ingår i elementet",
+      "incomplete": "Kontrollera om de fokuserbara elementen omedelbart flyttar fokusindikatorn",
+      "fail": "Fokuserbart innehåll bör inaktiveras eller tas bort från DOM-strukturen"
+    },
+    "focusable-element": {
+      "pass": "Elementet är fokuserbart",
+      "fail": "Elementet bör vara fokuserbart"
+    },
+    "focusable-modal-open": {
+      "pass": "Det finns inga fokuserbara element tillgängliga när en modal är öppen",
+      "incomplete": "Kontrollera att det fokuserbara elementet inte är tabbart i nuvarande tillstånd"
+    },
+    "focusable-no-name": {
+      "pass": "Elementet ingår inte i tabbordningen eller har en tillgänglig text",
+      "fail": "Elementet ingår i tabbordningen men saknar tillgänglig text",
+      "incomplete": "Det går inte att avgöra om elementet har ett tillgängligt namn"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Inga fokuserbara element ingår i elementet",
+      "incomplete": "Kontrollera om de fokuserbara elementen omedelbart flyttar fokusindikatorn",
+      "fail": "Fokuserbart innehåll bör ha tabindex=\"-1\" eller tas bort från DOM-strukturen"
+    },
+    "frame-focusable-content": {
+      "pass": "Elementet har inga fokuserbara efterkommande element",
+      "fail": "Elementet har fokuserbara efterkommande element",
+      "incomplete": "Kunde inte avgöra om elementet har efterkommande element"
+    },
+    "landmark-is-top-level": {
+      "pass": "${data.role}-landmärket är på toppnivå.",
+      "fail": "${data.role}-landmärket ingår i ett annat landmärke."
+    },
+    "no-focusable-content": {
+      "pass": "Elementet har inga fokuserbara efterkommande element",
+      "fail": {
+        "default": "Elementet har fokuserbara efterkommande element",
+        "notHidden": "Att använda ett negativt tabindex på ett element inuti en interaktiv kontroll förhindrar inte hjälpmedel från att fokusera på elementet (inte ens med aria-hidden=\"true\")"
+      },
+      "incomplete": "Kunde inte avgöra om elementet har efterkommande element"
+    },
+    "page-has-heading-one": {
+      "pass": "Sidan har minst en rubrik på nivå ett",
+      "fail": "Sidan måste ha en rubrik på nivå ett"
+    },
+    "page-has-main": {
+      "pass": "Dokumentet har minst ett main-landmärke",
+      "fail": "Dokumentet saknar ett main-landmärke"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Dokumentet har inte mer än ett banner-landmärke",
+      "fail": "Dokumentet har mer än ett banner-landmärke"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Dokumentet har inte mer än ett contentinfo-landmärke",
+      "fail": "Dokumentet har mer än ett contentinfo-landmärke"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Dokumentet har inte mer än ett main-landmärke",
+      "fail": "Dokumentet har mer än ett main-landmärke"
+    },
+    "tabindex": {
+      "pass": "Elementet har inte ett tabindex som är större än 0",
+      "fail": "Elementet har ett tabindex som är större än 0"
+    },
+    "alt-space-value": {
+      "pass": "Elementet har ett giltigt värde för alt-attributet",
+      "fail": "Elementet har ett alt-attribut som endast innehåller ett blanksteg, vilket inte ignoreras av alla skärmläsare"
+    },
+    "duplicate-img-label": {
+      "pass": "Elementet duplicerar inte befintlig text i alt-texten för <img>",
+      "fail": "Elementet innehåller ett <img>-element med alt-text som duplicerar befintlig text"
+    },
+    "explicit-label": {
+      "pass": "Elementet har en explicit <label>",
+      "fail": "Elementet saknar en explicit <label>",
+      "incomplete": "Det går inte att avgöra om formulärelementet har en explicit <label>"
+    },
+    "help-same-as-label": {
+      "pass": "Hjälptext (title eller aria-describedby) duplicerar inte etikettens text",
+      "fail": "Hjälptexten (title eller aria-describedby) är identisk med etikettens text"
+    },
+    "hidden-explicit-label": {
+      "pass": "Formulärelementet har en synlig explicit <label>",
+      "fail": "Formulärelementet har en explicit <label> som är dold",
+      "incomplete": "Det går inte att avgöra om formulärelementet har en explicit <label> som är dold"
+    },
+    "implicit-label": {
+      "pass": "Elementet har en implicit (omslutande) <label>",
+      "fail": "Elementet saknar en implicit (omslutande) <label>",
+      "incomplete": "Det går inte att avgöra om formulärelementet har en implicit (omslutande) <label>"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elementet inkluderar synlig text som en del av sitt tillgängliga namn",
+      "fail": "Text inuti elementet ingår inte i det tillgängliga namnet"
+    },
+    "multiple-label": {
+      "pass": "Formulärfältet har inte flera label-element",
+      "incomplete": "Flera label-element stöds inte i stor utsträckning av hjälpmedel. Säkerställ att den första etiketten innehåller all nödvändig information."
+    },
+    "title-only": {
+      "pass": "Formulärelementet använder inte enbart title-attributet som sin etikett",
+      "fail": "Endast title-attributet används för att generera etiketten för formulärelementet"
+    },
+    "landmark-is-unique": {
+      "pass": "Landmärken måste ha en unik kombination av roll eller roll/etikett/titel (dvs. tillgängligt namn)",
+      "fail": "Landmärket måste ha ett unikt aria-label, aria-labelledby eller title för att göra det urskiljbart"
+    },
+    "has-lang": {
+      "pass": "<html>-elementet har ett lang-attribut",
+      "fail": {
+        "noXHTML": "xml:lang-attributet är inte giltigt på HTML-sidor, använd lang-attributet.",
+        "noLang": "<html>-elementet har inget lang-attribut"
+      }
+    },
+    "valid-lang": {
+      "pass": "Värdet på lang-attributet ingår i listan över giltiga språk",
+      "fail": "Värdet på lang-attributet ingår inte i listan över giltiga språk"
+    },
+    "xml-lang-mismatch": {
+      "pass": "Attributen lang och xml:lang har samma basspråk",
+      "fail": "Attributen lang och xml:lang har inte samma basspråk"
+    },
+    "dlitem": {
+      "pass": "Beskrivningslistans element har ett överordnat <dl>-element",
+      "fail": "Beskrivningslistans element saknar ett överordnat <dl>-element"
+    },
+    "listitem": {
+      "pass": "Listelementet har ett överordnat <ul>-, <ol>- eller role=\"list\"-element",
+      "fail": {
+        "default": "Listelementet saknar ett överordnat <ul>- eller <ol>-element",
+        "roleNotValid": "Listelementets överordnade element har en roll som inte är role=\"list\""
+      }
+    },
+    "only-dlitems": {
+      "pass": "dl-elementet har endast tillåtna direkta underelement: <dt>-, <dd>- eller <div>-element",
+      "fail": "dl-elementet har direkta underelement som inte är tillåtna: ${data.values}"
+    },
+    "only-listitems": {
+      "pass": "Listelementet har endast tillåtna direkta underelement inuti <li>-element",
+      "fail": "Listelementet har direkta underelement som inte är tillåtna: ${data.values}"
+    },
+    "structured-dlitems": {
+      "pass": "När elementet inte är tomt innehåller det både <dt>- och <dd>-element",
+      "fail": "När elementet inte är tomt saknar det minst ett <dt>-element följt av minst ett <dd>-element"
+    },
+    "caption": {
+      "pass": "Multimediaelementet har ett spår för textning",
+      "incomplete": "Kontrollera att textning är tillgänglig för elementet"
+    },
+    "frame-tested": {
+      "pass": "Iframe-elementet (iframe) testades med axe-core",
+      "fail": "Iframe-elementet (iframe) kunde inte testas med axe-core",
+      "incomplete": "Iframe-elementet (iframe) måste fortfarande testas med axe-core"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> eller <audio> spelar inte upp ljud längre än tillåten varaktighet, eller så finns en kontrollmekanism",
+      "fail": "<video> eller <audio> spelar upp ljud längre än tillåten varaktighet och saknar kontrollmekanism",
+      "incomplete": "Kontrollera att <video> eller <audio> inte spelar upp ljud längre än tillåten varaktighet eller tillhandahåller en kontrollmekanism"
+    },
+    "css-orientation-lock": {
+      "pass": "Skärmen fungerar och det finns inget orienteringslås",
+      "fail": "CSS-orienteringslås tillämpas och gör skärmen oanvändbar",
+      "incomplete": "CSS-orienteringslås kan inte fastställas"
+    },
+    "meta-viewport-large": {
+      "pass": "<meta>-taggen förhindrar inte betydande zoomning på mobila enheter",
+      "fail": "<meta>-taggen begränsar zoomning på mobila enheter"
+    },
+    "meta-viewport": {
+      "pass": "<meta>-taggen inaktiverar inte zoomning på mobila enheter",
+      "fail": "${data} på <meta>-taggen inaktiverar zoomning på mobila enheter"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Klickytan har tillräckligt med utrymme till sina närmaste grannar. Säker klickbar yta har en diameter på ${data.closestOffset}px, vilket är minst ${data.minOffset}px.",
+        "large": "Klickytan överstiger med råge minsta storlek på ${data.minOffset}px."
+      },
+      "fail": "Klickytan har otillräckligt utrymme till sina närmaste grannar. Säker klickbar yta har en diameter på ${data.closestOffset}px i stället för minst ${data.minOffset}px.",
+      "incomplete": {
+        "default": "Element med negativt tabindex har otillräckligt utrymme till sina närmaste grannar. Säker klickbar yta har en diameter på ${data.closestOffset}px i stället för minst ${data.minOffset}px. Är detta en klickyta?",
+        "nonTabbableNeighbor": "Klickytan har otillräckligt utrymme till sina närmaste grannar. Säker klickbar yta har en diameter på ${data.closestOffset}px i stället för minst ${data.minOffset}px. Är grannen en klickyta?",
+        "tooManyRects": "Kunde inte hämta klickytans storlek eftersom det finns för många överlappande element"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Kontrollen har tillräcklig storlek (${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px)",
+        "obscured": "Kontrollen ignoreras eftersom den är helt dold och därmed inte klickbar",
+        "large": "Klickytan överstiger med råge minsta storlek på ${data.minSize}px."
+      },
+      "fail": {
+        "default": "Klickytan har otillräcklig storlek (${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px)",
+        "partiallyObscured": "Klickytan har otillräcklig storlek eftersom den är delvis dold (minsta utrymme är ${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Element med negativt tabindex har otillräcklig storlek (${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px). Är detta en klickyta?",
+        "contentOverflow": "Elementets storlek kunde inte bestämmas exakt på grund av överflödigt innehåll",
+        "partiallyObscured": "Element med negativt tabindex har otillräcklig storlek eftersom det är delvis dolt (minsta utrymme är ${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px). Är detta en klickyta?",
+        "partiallyObscuredNonTabbable": "Klickytan har otillräcklig storlek eftersom den är delvis dold av en granne med negativt tabindex (minsta utrymme är ${data.width}px gånger ${data.height}px, ska vara minst ${data.minSize}px gånger ${data.minSize}px). Är grannen en klickyta?",
+        "tooManyRects": "Kunde inte hämta klickytans storlek eftersom det finns för många överlappande element"
+      }
+    },
+    "header-present": {
+      "pass": "Sidan har en rubrik",
+      "fail": "Sidan saknar rubrik"
+    },
+    "heading-order": {
+      "pass": "Rubriknivåerna är giltiga",
+      "fail": "Rubriknivåerna är ogiltiga",
+      "incomplete": "Det går inte att avgöra föregående rubrik"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Det finns inga andra länkar med samma namn som går till en annan URL",
+      "incomplete": "Kontrollera att länkarna har samma syfte eller är avsiktligt tvetydiga."
+    },
+    "internal-link-present": {
+      "pass": "Giltig hoppa över-länk hittades",
+      "fail": "Ingen giltig hoppa över-länk hittades"
+    },
+    "landmark": {
+      "pass": "Sidan har en landmärkesregion",
+      "fail": "Sidan saknar en landmärkesregion"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta>-taggen uppdaterar inte sidan omedelbart",
+      "fail": "<meta>-taggen tvingar fram tidsinställd uppdatering av sidan"
+    },
+    "meta-refresh": {
+      "pass": "<meta>-taggen uppdaterar inte sidan omedelbart",
+      "fail": "<meta>-taggen tvingar fram tidsinställd uppdatering av sidan (mindre än 20 timmar)"
+    },
+    "p-as-heading": {
+      "pass": "<p>-element är inte formaterade som rubriker",
+      "fail": "Rubrikelement bör användas i stället för formaterade <p>-element",
+      "incomplete": "Det går inte att avgöra om <p>-element är formaterade som rubriker"
+    },
+    "region": {
+      "pass": "Allt sidinnehåll ingår i landmärken",
+      "fail": "En del sidinnehåll ingår inte i landmärken"
+    },
+    "skip-link": {
+      "pass": "Mål för hoppa över-länk finns",
+      "incomplete": "Målet för hoppa över-länken bör bli synligt vid aktivering",
+      "fail": "Inget mål för hoppa över-länk finns"
+    },
+    "unique-frame-title": {
+      "pass": "Elementets title-attribut är unikt",
+      "fail": "Elementets title-attribut är inte unikt"
+    },
+    "duplicate-id-active": {
+      "pass": "Dokumentet har inga aktiva element som delar samma id-attribut",
+      "fail": "Dokumentet har aktiva element med samma id-attribut: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Dokumentet har inga element som refereras med ARIA eller etiketter som delar samma id-attribut",
+      "fail": "Dokumentet har flera element som refereras med ARIA med samma id-attribut: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Dokumentet har inga statiska element som delar samma id-attribut",
+      "fail": "Dokumentet har flera statiska element med samma id-attribut: ${data}"
+    },
+    "aria-label": {
+      "pass": "aria-label-attributet finns och är inte tomt",
+      "fail": "aria-label-attributet saknas eller är tomt"
+    },
+    "aria-labelledby": {
+      "pass": "aria-labelledby-attributet finns och refererar till element som är synliga för skärmläsare",
+      "fail": "aria-labelledby-attributet saknas, refererar till element som inte finns eller refererar till element som är tomma",
+      "incomplete": "Säkerställ att aria-labelledby refererar till ett befintligt element"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Inga inbäddade stilar (inline styles) med '!important' som påverkar textavstånd har angetts",
+      "fail": {
+        "singular": "Ta bort '!important' från den inbäddade stilen ${data.values}, eftersom de flesta webbläsare inte stöder att åsidosätta detta",
+        "plural": "Ta bort '!important' från de inbäddade stilarna ${data.values}, eftersom de flesta webbläsare inte stöder att åsidosätta detta"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elementet har inre text som är synlig för skärmläsare",
+      "fail": "Elementet saknar inre text som är synlig för skärmläsare",
+      "incomplete": "Det går inte att avgöra om elementet har underelement"
+    },
+    "doc-has-title": {
+      "pass": "Dokumentet har ett <title>-element som inte är tomt",
+      "fail": "Dokumentet saknar ett <title>-element som inte är tomt"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "Axe stötte på ett fel; testa sidan för den här typen av problem manuellt"
+    },
+    "exists": {
+      "pass": "Elementet finns inte",
+      "incomplete": "Elementet finns"
+    },
+    "has-alt": {
+      "pass": "Elementet har ett alt-attribut",
+      "fail": "Elementet saknar ett alt-attribut"
+    },
+    "has-visible-text": {
+      "pass": "Elementet har text som är synlig för skärmläsare",
+      "fail": "Elementet saknar text som är synlig för skärmläsare",
+      "incomplete": "Det går inte att avgöra om elementet har underelement"
+    },
+    "important-letter-spacing": {
+      "pass": "letter-spacing i stilattributet är inte inställt på !important, eller uppfyller minimikravet",
+      "fail": "letter-spacing i stilattributet får inte använda !important, eller måste vara minst ${data.minValue}em (nuvarande ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "line-height i stilattributet är inte inställt på !important, eller uppfyller minimikravet",
+      "fail": "line-height i stilattributet får inte använda !important, eller måste vara minst ${data.minValue}em (nuvarande ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing i stilattributet är inte inställt på !important, eller uppfyller minimikravet",
+      "fail": "word-spacing i stilattributet får inte använda !important, eller måste vara minst ${data.minValue}em (nuvarande ${data.value}em)"
+    },
+    "is-on-screen": {
+      "pass": "Elementet är inte synligt",
+      "fail": "Elementet är synligt"
+    },
+    "non-empty-alt": {
+      "pass": "Elementet har ett alt-attribut som inte är tomt",
+      "fail": {
+        "noAttr": "Elementet saknar alt-attribut",
+        "emptyAttr": "Elementet har ett tomt alt-attribut"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elementet har inget value-attribut",
+        "has-label": "Elementet har ett value-attribut som inte är tomt"
+      },
+      "fail": "Elementet har ett value-attribut och value-attributet är tomt"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elementet har ett placeholder-attribut",
+      "fail": {
+        "noAttr": "Elementet saknar placeholder-attribut",
+        "emptyAttr": "Elementet har ett tomt placeholder-attribut"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elementet har ett title-attribut",
+      "fail": {
+        "noAttr": "Elementet saknar title-attribut",
+        "emptyAttr": "Elementet har ett tomt title-attribut"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elementet har ett value-attribut som inte är tomt",
+      "fail": {
+        "noAttr": "Elementet saknar value-attribut",
+        "emptyAttr": "Elementet har ett tomt value-attribut"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elementets standardsemantik åsidosattes med role=\"${data.role}\"",
+      "fail": {
+        "default": "Elementets standardsemantik åsidosattes inte med role=\"none\" eller role=\"presentation\"",
+        "globalAria": "Elementets roll är inte presentation eftersom det har ett globalt ARIA-attribut",
+        "focusable": "Elementets roll är inte presentation eftersom det är fokuserbart",
+        "both": "Elementets roll är inte presentation eftersom det har ett globalt ARIA-attribut och är fokuserbart",
+        "iframe": "Att använda attributet \"title\" på ett ${data.nodeName}-element med en presentation-roll fungerar inkonsekvent mellan skärmläsare"
+      }
+    },
+    "role-none": {
+      "pass": "Elementets standardsemantik åsidosattes med role=\"none\"",
+      "fail": "Elementets standardsemantik åsidosattes inte med role=\"none\""
+    },
+    "role-presentation": {
+      "pass": "Elementets standardsemantik åsidosattes med role=\"presentation\"",
+      "fail": "Elementets standardsemantik åsidosattes inte med role=\"presentation\""
+    },
+    "svg-non-empty-title": {
+      "pass": "Elementet har ett underelement som är en titel",
+      "fail": {
+        "noTitle": "Elementet saknar underelement som är en titel",
+        "emptyTitle": "Elementets underordnade titel är tom"
+      },
+      "incomplete": "Det går inte att avgöra om elementet har ett underelement som är en titel"
+    },
+    "caption-faked": {
+      "pass": "Den första raden i en tabell används inte som en rubrik (caption)",
+      "fail": "Det första underelementet i tabellen ska vara en caption i stället för en tabellcell"
+    },
+    "html5-scope": {
+      "pass": "Scope-attributet används endast på tabellrubrikselement (<th>)",
+      "fail": "I HTML 5 får scope-attribut endast användas på tabellrubrikselement (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "Innehållet i summary-attributet och <caption> är inte duplicerat",
+      "fail": "Innehållet i summary-attributet och <caption>-elementet är identiska",
+      "incomplete": "Det går inte att avgöra om <table>-elementet har en caption"
+    },
+    "scope-value": {
+      "pass": "Scope-attributet används korrekt",
+      "fail": "Värdet på scope-attributet får endast vara 'row' eller 'col'"
+    },
+    "td-has-header": {
+      "pass": "Alla dataceller som inte är tomma har tabellrubriker",
+      "fail": "Vissa dataceller som inte är tomma saknar tabellrubriker"
+    },
+    "td-headers-attr": {
+      "pass": "Headers-attributet används uteslutande för att referera till andra rubrikceller i tabellen",
+      "incomplete": "Headers-attributet är tomt",
+      "fail": {
+        "cell-header-not-in-table": "Headers-attributet används inte uteslutande för att referera till andra rubrikceller i tabellen",
+        "cell-header-not-th": "Headers-attributet måste referera till rubrikceller, inte dataceller",
+        "header-refs-self": "Elementet med headers-attribut refererar till sig självt"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Alla tabellrubrikceller refererar till dataceller",
+      "fail": "Vissa tabellrubrikceller refererar inte till dataceller",
+      "incomplete": "Tabellens dataceller saknas eller är tomma"
+    },
+    "hidden-content": {
+      "pass": "Allt innehåll på sidan har analyserats.",
+      "fail": "Det uppstod problem vid analysen av innehållet på den här sidan.",
+      "incomplete": "Det finns dolt innehåll på sidan som inte analyserades. Du måste utlösa visningen av detta innehåll för att kunna analysera det."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Åtgärda något av följande:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Åtgärda alla följande:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe kunde inte avgöra orsaken. Dags att plocka fram elementinspektören!"
+}

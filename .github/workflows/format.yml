@@ -14,21 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-      - name: Install dependencies
-        run: npm ci
-      - uses: actions/setup-node@v6
+      # Must precede setup-node so its `cache: pnpm` can resolve the store path.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm ci
       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
       - name: Prevent workflows from being formatted
         run: echo ".github" >> .prettierignore && cat .prettierignore
-      - run: npm run fmt
+      - run: pnpm run fmt
       # Prevent the prettierignore change from being committed.
       - run: git checkout .prettierignore
-      - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # tag=v5
+      - uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # tag=v5
         with:
           commit_message: ':robot: Automated formatting fixes'

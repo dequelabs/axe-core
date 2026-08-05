@@ -196,6 +196,16 @@ describe('Context', () => {
       assert.deepEqual(selectors(result.include), ['#foo', '#bar', '#baz']);
     });
 
+    it('accepts a NodeList', () => {
+      fixture.innerHTML =
+        '<div id="foo"></div><div id="bar"></div><div id="baz"></div>';
+      const nodeList = fixture.querySelectorAll('div');
+
+      const result = new Context(nodeList);
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar', '#baz']);
+      assert.isEmpty(result.exclude);
+    });
+
     describe('throwing errors', () => {
       let isInFrame;
 
@@ -259,6 +269,17 @@ describe('Context', () => {
       ]);
       assert.isArray(context.flatTree);
       assert.isAtLeast(context.flatTree.length, 1);
+    });
+
+    it('accepts a NodeList for the include and exclude properties', () => {
+      fixture.innerHTML =
+        '<div id="foo"></div><div id="bar"></div><div id="baz"></div>';
+      const result = new Context({
+        include: fixture.querySelectorAll('#foo, #bar'),
+        exclude: fixture.querySelectorAll('#baz')
+      });
+      assert.deepEqual(selectors(result.include), ['#foo', '#bar']);
+      assert.deepEqual(selectors(result.exclude), ['#baz']);
     });
 
     it('should disregard bad input, non-matching selectors', () => {

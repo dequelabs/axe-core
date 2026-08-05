@@ -1,7 +1,7 @@
 {
   "id": "svg-img-alt",
   "impact": "serious",
-  "selector": "[role=\"img\"], [role=\"graphics-symbol\"], svg[role=\"graphics-document\"]",
+  "selector": ":is([role='img'], [role='image']), [role='graphics-symbol'], svg[role='graphics-document']",
   "matches": "svg-namespace-matches",
   "tags": [
     "cat.text-alternatives",
@@ -19,8 +19,8 @@
   ],
   "actIds": ["7d6734"],
   "metadata": {
-    "description": "Ensure <svg> elements with an img, graphics-document or graphics-symbol role have accessible text",
-    "help": "<svg> elements with an img role must have alternative text"
+    "description": "Ensure <svg> elements with an img, image, graphics-document or graphics-symbol role have accessible text",
+    "help": "<svg> elements with an img or image role must have alternative text"
   },
   "all": [],
   "any": [

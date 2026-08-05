@@ -91,6 +91,14 @@ describe('aria.getRole', () => {
     assert.equal(aria.getRole(node), 'button');
   });
 
+  it('does not run role resolution with presentation role on custom element with an internal role', () => {
+    fixture.innerHTML =
+      '<ul><testutils-element with-role="listitem" id="target" role="presentation" aria-label="foo"></testutils-element></ul>';
+    flatTreeSetup(fixture);
+    const node = fixture.querySelector('#target');
+    assert.isNull(aria.getRole(node));
+  });
+
   describe('presentational role inheritance', () => {
     it('handles presentation role inheritance for ul', () => {
       fixture.innerHTML =
@@ -236,6 +244,30 @@ describe('aria.getRole', () => {
       assert.throws(() => {
         aria.getRole(node);
       });
+    });
+
+    // Presentational role inheritance is keyed off the HTML tag name of the
+    // required child (e.g. `li`, `td`), not its computed role. A custom element
+    // exposing an internal `listitem` role is not an HTML `<li>`, so it does not
+    // inherit a presentational role from an ancestor `role="none"` list. This
+    // matches Chrome and Firefox, which both leave the element as `listitem`
+    // (while stripping a native `<li>` to `none`/`generic`). Per spec it should
+    // inherit, but no browser implements internal-role conflict resolution yet
+    // — tracked in #5162.
+    it('does not inherit presentation onto an ElementInternals listitem role', () => {
+      fixture.innerHTML =
+        '<ul role="none"><testutils-element with-role="listitem" id="target"></testutils-element></ul>';
+      flatTreeSetup(fixture);
+      const node = fixture.querySelector('#target');
+      assert.equal(aria.getRole(node), 'listitem');
+    });
+
+    it('does not inherit presentation onto an ElementInternals non-child role', () => {
+      fixture.innerHTML =
+        '<ul role="none"><testutils-element with-role="button" id="target"></testutils-element></ul>';
+      flatTreeSetup(fixture);
+      const node = fixture.querySelector('#target');
+      assert.equal(aria.getRole(node), 'button');
     });
   });
 

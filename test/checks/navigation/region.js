@@ -428,8 +428,7 @@ describe('region', () => {
     const div = document.createElement('div');
     const shadow = div.attachShadow({ mode: 'open' });
     shadow.innerHTML = 'Some text';
-    fixtureSetup(div);
-    const virutalNode = axe._tree[0];
+    const virutalNode = fixtureSetup(div);
 
     // fixture is the outermost element
     assert.isFalse(

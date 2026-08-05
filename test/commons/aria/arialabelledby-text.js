@@ -108,4 +108,71 @@ describe('aria.arialabelledbyText', () => {
     const accName = aria.arialabelledbyText(target);
     assert.equal(accName, spaced);
   });
+
+  it('returns the accessible name via elementInternals aria-labelledby', () => {
+    const target = queryFixture(html`
+      <span id="foo-label">Foo text</span>
+      <testutils-element
+        id="target"
+        with-aria-labelledby="foo-label"
+      ></testutils-element>
+    `);
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Foo text');
+  });
+
+  // ariaLabelledByElements (reflected AOM property) coverage adapted from
+  // @jcfranco's work in #5187 (issue #4943)
+  it('returns the accessible name from ariaLabelledByElements when aria-labelledby is unset', () => {
+    const target = queryFixture(html`
+      <div role="heading" id="target"></div>
+      <div id="foo">Foo text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Foo text');
+  });
+
+  it('prefers ariaLabelledByElements over aria-labelledby', () => {
+    const target = queryFixture(html`
+      <div role="heading" id="target" aria-labelledby="foo"></div>
+      <div id="foo">Foo text</div>
+      <div id="bar">Bar text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Bar text');
+  });
+
+  it('prefers ariaLabelledByElements over aria-labelledby and aria-label', () => {
+    const target = queryFixture(html`
+      <div
+        role="heading"
+        id="target"
+        aria-labelledby="foo"
+        aria-label="Baz text"
+      ></div>
+      <div id="foo">Foo text</div>
+      <div id="bar">Bar text</div>
+    `);
+    target.actualNode.ariaLabelledByElements = [
+      target.actualNode.nextElementSibling.nextElementSibling
+    ];
+    const accName = aria.arialabelledbyText(target);
+    assert.equal(accName, 'Bar text');
+  });
+
+  it('does not throw when aria-labelledby references a slot in shadow DOM (issue 4335)', () => {
+    // The slot is not tracked in the virtual tree; resolving the reference
+    // previously threw "Cannot read properties of undefined (reading 'props')".
+    const target = axe.testUtils.queryShadowFixture(
+      '<div id="shadow"></div>',
+      '<section id="target" aria-labelledby="foo"></section><slot id="foo"></slot>'
+    );
+    assert.equal(aria.arialabelledbyText(target), '');
+  });
 });

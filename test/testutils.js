@@ -95,9 +95,22 @@ const declarativeShadowDOMRegex =
     );
   }
 
-  // turn on elementInternals feature flag
-  // TODO: remove when feature is fully enabled
-  axe._enableElementInternals = true;
+  // create a form-associated custom element that label tests can use. Unlike
+  // testutils-element, this is form-associated so `internals.labels` resolves
+  // the element's associated `<label>` elements instead of throwing.
+  if (!customElements.get('testutils-form-element')) {
+    customElements.define(
+      'testutils-form-element',
+      class TestutilsFormElement extends HTMLElement {
+        static formAssociated = true;
+
+        constructor() {
+          super();
+          this._internals = this.attachInternals();
+        }
+      }
+    );
+  }
 
   // determine which checks are used only in the `none` array of rules
   const noneChecks = [];
@@ -228,7 +241,8 @@ const declarativeShadowDOMRegex =
   testUtils.fixtureSetup = (content, options = {}) => {
     testUtils.injectIntoFixture(content, options);
     axe.teardown();
-    return axe.setup(fixture);
+    axe.setup();
+    return axe.utils.getNodeFromTree(fixture);
   };
 
   /**
@@ -313,7 +327,8 @@ const declarativeShadowDOMRegex =
     }
 
     // query the composed tree AFTER shadowDOM has been attached
-    const vFixture = axe.setup(fixtureNode);
+    axe.setup();
+    const vFixture = axe.utils.getNodeFromTree(fixture);
     return axe.utils.getNodeFromTree(targetCandidate) || vFixture;
   };
 
@@ -347,7 +362,7 @@ const declarativeShadowDOMRegex =
   };
 
   /**
-   * Setup axe._tree flat tree
+   * Setup axe._tree flat tree. Note that this will create a partial virtual tree.
    * @param Node   Stuff to go in the flat tree
    * @returns vNode[]
    */

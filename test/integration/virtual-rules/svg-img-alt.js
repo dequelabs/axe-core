@@ -169,4 +169,36 @@ describe('svg-img-alt virtual-rule', () => {
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
+
+  it('should pass for role=image with aria-label', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'svg',
+      attributes: {
+        role: 'image',
+        'aria-label': 'foobar'
+      }
+    });
+
+    const results = axe.runVirtualRule('svg-img-alt', node);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for role=image without a name', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'svg',
+      attributes: {
+        role: 'image'
+      }
+    });
+    node.children = [];
+
+    const results = axe.runVirtualRule('svg-img-alt', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });

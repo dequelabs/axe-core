@@ -98,20 +98,7 @@ All checks allow these global options:
         <code>elementsAllowedAriaLabel</code>
       </td>
       <td align="left">
-        <pre lang=js><code>[
-  "audio",
-  "applet",
-  "canvas",
-  "dl",
-  "embed",
-  "iframe",
-  "input",
-  "label",
-  "meter",
-  "object",
-  "svg",
-  "video"
-]</code></pre>
+        <pre lang=js><code>["applet"]</code></pre>
         </td>
       <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
     </tr>
