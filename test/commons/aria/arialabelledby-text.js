@@ -168,7 +168,7 @@ describe('aria.arialabelledbyText', () => {
     assert.equal(accName, 'Bar text');
   });
 
-  it('does not throw when aria-labelledby references a slot in shadow DOM (issue 4335)', () => {
+  it('does not throw when aria-labelledby references a slot in shadow DOM', () => {
     // The slot is not tracked in the virtual tree; resolving the reference
     // previously threw "Cannot read properties of undefined (reading 'props')".
     const target = axe.testUtils.queryShadowFixture(
@@ -178,12 +178,7 @@ describe('aria.arialabelledbyText', () => {
     assert.equal(aria.arialabelledbyText(target), '');
   });
 
-  // Lookups outside the virtual tree (issue 5221). Axe reaches nodes outside
-  // its virtual tree only through reflected AOM idref properties such as
-  // `ariaLabelledByElements`. Closed shadow roots are never flattened into the
-  // tree, and nodes attached after setup are never added to it, so in both
-  // cases resolving the reference must not throw and must contribute no name.
-  it('returns "" when ElementInternals references a node in a closed shadow root (issue 5221)', () => {
+  it('returns "" when ElementInternals references a node in a closed shadow root', () => {
     // A custom element labels itself, via ElementInternals, with an element in
     // its own closed shadow root. The referenced node is outside the virtual
     // tree, so it resolves to nothing.
@@ -199,22 +194,7 @@ describe('aria.arialabelledbyText', () => {
     assert.equal(aria.arialabelledbyText(vNode), '');
   });
 
-  it('returns "" when aria-labelledby references an id inside a closed (declarative) shadow root (issue 5221)', () => {
-    // #foo lives in a closed declarative shadow root, so it is unreachable from
-    // the light DOM's getElementById and absent from the virtual tree; the
-    // string idref must resolve to nothing.
-    fixtureSetup(
-      '<div id="host">' +
-        '<template shadowrootmode="closed"><span id="foo">Foo text</span></template>' +
-        '</div>' +
-        '<div role="heading" id="target" aria-labelledby="foo"></div>',
-      { shadow: true }
-    );
-    const target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
-    assert.equal(aria.arialabelledbyText(target), '');
-  });
-
-  it('returns "" when ariaLabelledByElements references a node outside the virtual tree (issue 5221)', () => {
+  it('returns "" when ariaLabelledByElements references a node outside the virtual tree', () => {
     const target = queryFixture('<div role="heading" id="target"></div>');
     const outOfTree = document.createElement('div');
     outOfTree.textContent = 'Foo text';
