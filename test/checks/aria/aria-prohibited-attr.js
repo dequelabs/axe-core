@@ -148,7 +148,7 @@ describe('aria-prohibited-attr', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow `elementsAllowedAriaLabel` nodes with a prohibited role', () => {
+  it('should not allow `elementsAllowedAriaLabel` nodes with a role with prohibited attrs', () => {
     const params = checkSetup(
       '<div id="target" role="code" aria-label="hello world"></div>',
       { elementsAllowedAriaLabel: ['div'] }
@@ -194,6 +194,13 @@ describe('aria-prohibited-attr', () => {
       messageKey: 'noRoleSingular',
       prohibited: ['aria-label']
     });
+  });
+
+  it('should allow aria-label on custom element without role', () => {
+    const params = checkSetup(
+      '<custom-elm id="target" aria-label="value"></custom-elm>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
   describe('widget ancestor', () => {
