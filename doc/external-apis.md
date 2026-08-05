@@ -60,9 +60,6 @@ const internals = await chrome.scripting.executeScript({
 
 See [element-internals.md](element-internals.md) for more information on what ElementInternal properties are supported.
 
-> [!Note]
-> Support for ElementInternals is behind a feature flag `axe._enableElementInternals`, which must manually be set to `true` before axe runs, even when passing in `elementInternals` data.
-
 ## axe.externalAPIs({ elementInternalsTimeout })
 
 Since gathering ElementInternals data is an async operation, you can configure how long axe-core will wait for `elementInternals` promise to resolve. By default the timeout is set to 1 second. If the timeout occurs axe-core will not run and will throw an error.

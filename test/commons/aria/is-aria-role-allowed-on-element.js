@@ -86,6 +86,24 @@ describe('aria.isAriaRoleAllowedOnElement', () => {
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
+  it('returns false for FIGURE with a child figcaption and role group', () => {
+    const node = document.createElement('figure');
+    const role = 'group';
+    node.setAttribute('role', role);
+    node.innerHTML = '<figcaption>caption</figcaption>';
+    flatTreeSetup(node);
+    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true for FIGURE with a child figcaption and role doc-example', () => {
+    const node = document.createElement('figure');
+    const role = 'doc-example';
+    node.setAttribute('role', role);
+    node.innerHTML = '<figcaption>caption</figcaption>';
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
   it('returns true for SVG with role img', () => {
     const node = document.createElement('svg');
     const role = 'img';

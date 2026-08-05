@@ -1,2 +1,2 @@
-npx grunt configure
-npx lint-staged
+node build/run-build.mjs configure
+pnpm exec lint-staged

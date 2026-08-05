@@ -2,6 +2,61 @@ const prettier = require('eslint-config-prettier');
 const globals = require('globals');
 const mochaNoOnly = require('eslint-plugin-mocha-no-only');
 
+// Shared `no-restricted-syntax` selectors. ESLint flat config replaces (does
+// not merge) rule options when the same rule is defined in a later config, so
+// every `no-restricted-syntax` declaration below must spread this list to keep
+// these base restrictions in force
+const restrictedSyntax = [
+  {
+    selector: 'MemberExpression[property.name=tagName]',
+    message: "Don't use node.tagName, use node.nodeName instead."
+  },
+  // node.attributes can be clobbered so is unsafe to use
+  // @see https://github.com/dequelabs/axe-core/pull/1432
+  {
+    // node.attributes
+    selector: 'MemberExpression[object.name=node][property.name=attributes]',
+    message:
+      "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
+  },
+  {
+    // vNode.actualNode.attributes
+    selector:
+      'MemberExpression[object.property.name=actualNode][property.name=attributes]',
+    message:
+      "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
+  },
+  // node.contains doesn't work with shadow dom
+  // @see https://github.com/dequelabs/axe-core/issues/4194
+  {
+    // node.contains()
+    selector:
+      'CallExpression[callee.object.name=node][callee.property.name=contains]',
+    message:
+      "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
+  },
+  {
+    // vNode.actualNode.contains()
+    selector:
+      'CallExpression[callee.object.property.name=actualNode][callee.property.name=contains]',
+    message:
+      "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
+  },
+  {
+    // window.HTMLElement
+    selector: 'MemberExpression[object.name=window][property.name=HTMLElement]',
+    message:
+      "Don't use window.HTMLElement as it doesn't include all DOM node types, such as SVGs. Use window.Node instead."
+  },
+  {
+    // globalThis.HTMLElement
+    selector:
+      'MemberExpression[object.name=globalThis][property.name=HTMLElement]',
+    message:
+      "Don't use globalThis.HTMLElement as it doesn't include all DOM node types, such as SVGs. Use globalThis.Node instead."
+  }
+];
+
 module.exports = [
   prettier,
   {
@@ -47,45 +102,7 @@ module.exports = [
       'no-new-func': 0,
       'no-new-wrappers': 0,
       'no-shadow': 2,
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'MemberExpression[property.name=tagName]',
-          message: "Don't use node.tagName, use node.nodeName instead."
-        },
-        // node.attributes can be clobbered so is unsafe to use
-        // @see https://github.com/dequelabs/axe-core/pull/1432
-        {
-          // node.attributes
-          selector:
-            'MemberExpression[object.name=node][property.name=attributes]',
-          message:
-            "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
-        },
-        {
-          // vNode.actualNode.attributes
-          selector:
-            'MemberExpression[object.property.name=actualNode][property.name=attributes]',
-          message:
-            "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
-        },
-        // node.contains doesn't work with shadow dom
-        // @see https://github.com/dequelabs/axe-core/issues/4194
-        {
-          // node.contains()
-          selector:
-            'CallExpression[callee.object.name=node][callee.property.name=contains]',
-          message:
-            "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
-        },
-        {
-          // vNode.actualNode.contains()
-          selector:
-            'CallExpression[callee.object.property.name=actualNode][callee.property.name=contains]',
-          message:
-            "Don't use node.contains(node2) as it doesn't work across shadow DOM. Use axe.utils.contains(node, node2) instead."
-        }
-      ]
+      'no-restricted-syntax': ['error', ...restrictedSyntax]
     },
     plugins: {
       'mocha-no-only': mochaNoOnly
@@ -291,6 +308,7 @@ module.exports = [
     rules: {
       'no-restricted-syntax': [
         'error',
+        ...restrictedSyntax,
         {
           selector: 'MemberExpression[object.name=vNode]',
           message:
@@ -364,6 +382,21 @@ module.exports = [
     }
   },
   {
+    files: ['build/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2024
+      }
+    },
+    rules: {
+      'no-console': 'off',
+      'no-restricted-imports': ['off']
+    }
+  },
+  {
     files: ['.github/bin/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -383,13 +416,13 @@ module.exports = [
       '**/node_modules/*',
       '**/tmp/*',
       'patches/*',
-      'build/tasks/aria-supported.js',
       'doc/api/*',
       'doc/examples/jest_react/*.js',
       'lib/core/imports/polyfills.js',
       'lib/core/utils/uuid.js',
       'axe.js',
-      'axe.min.js'
+      'axe.min.js',
+      'test/integration/full/patch/patch.mjs'
     ]
   }
 ];

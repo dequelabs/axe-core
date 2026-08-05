@@ -27,6 +27,17 @@ describe('braille-label-equivalent tests', () => {
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
+  it('returns true without aria-braillelabel via elementInternals when there is an accessible name', () => {
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        aria-label="hello"
+        with-aria-braillelabel="foo"
+      ></testutils-element>`
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
   describe('when aria-braillelabel has text', () => {
     it('returns false when the accessible name is empty', () => {
       const params = checkSetup(html`

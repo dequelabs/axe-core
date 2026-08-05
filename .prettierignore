@@ -1,2 +1,7 @@
 node_modules/
+pnpm-lock.yaml
 doc/api
+axe.js
+axe.min.js
+axe.*.js
+tmp/

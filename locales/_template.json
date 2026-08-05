@@ -354,8 +354,8 @@
       "help": "All page content should be contained by landmarks"
     },
     "role-img-alt": {
-      "description": "Ensure [role=\"img\"] elements have alternative text",
-      "help": "[role=\"img\"] elements must have alternative text"
+      "description": "Ensure [role=\"img\"] and [role=\"image\"] elements have alternative text",
+      "help": "[role=\"img\"] and [role=\"image\"] elements must have alternative text"
     },
     "scope-attr-valid": {
       "description": "Ensure the scope attribute is used correctly on tables",
@@ -382,8 +382,8 @@
       "help": "Summary elements must have discernible text"
     },
     "svg-img-alt": {
-      "description": "Ensure <svg> elements with an img, graphics-document or graphics-symbol role have accessible text",
-      "help": "<svg> elements with an img role must have alternative text"
+      "description": "Ensure <svg> elements with an img, image, graphics-document or graphics-symbol role have accessible text",
+      "help": "<svg> elements with an img or image role must have alternative text"
     },
     "tabindex": {
       "description": "Ensure tabindex attribute values are not greater than 0",
@@ -491,6 +491,13 @@
       "pass": "aria-level values are valid",
       "incomplete": "aria-level values greater than 6 are not supported in all screenreader and browser combinations"
     },
+    "aria-no-deprecated-attr": {
+      "pass": "No deprecated ARIA attributes are used",
+      "incomplete": {
+        "singular": "The attribute is deprecated and should not be used: ${data.values}",
+        "plural": "The attributes are deprecated and should not be used: ${data.values}"
+      }
+    },
     "aria-prohibited-attr": {
       "pass": "ARIA attribute is allowed",
       "fail": {
@@ -503,7 +510,10 @@
         "hasRoleSingular": "${data.prohibited} attribute is not well supported with role \"${data.role}\".",
         "hasRolePlural": "${data.prohibited} attributes are not well supported with role \"${data.role}\".",
         "noRoleSingular": "${data.prohibited} attribute is not well supported on a ${data.nodeName} with no valid role attribute.",
-        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute."
+        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute.",
+        "visibleLabelSingular": "${data.prohibited} attribute is not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the label is not necessary.",
+        "visibleLabelPlural": "${data.prohibited} attributes are not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the labels are not necessary.",
+        "unresolvedLabel": "${data.prohibited} attribute is not well supported, and does not reference an existing element. Verify the label is not necessary."
       }
     },
     "aria-required-attr": {

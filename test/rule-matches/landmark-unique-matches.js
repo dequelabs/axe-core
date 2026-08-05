@@ -39,7 +39,7 @@ describe('landmark-unique-matches', () => {
     assert.isFalse(rule.matches(node, virtualNode));
   });
 
-  describe('form and section elements must have accessible names to be matched', () => {
+  describe('form and section elements match as landmarks conditionally based on accessible name and role', () => {
     const sectionFormElements = ['section', 'form'];
 
     sectionFormElements.forEach(elementType => {
@@ -52,8 +52,39 @@ describe('landmark-unique-matches', () => {
         assert.isTrue(rule.matches(node, virtualNode));
       });
 
+      it(`should match because it is a ${elementType} with an explicit landmark role and a label`, () => {
+        const explicitRole =
+          elementType === 'section' ? 'navigation' : 'search';
+        axeFixtureSetup(
+          `<${elementType} role="${explicitRole}" aria-label="sample label">some ${elementType}</${elementType}>`
+        );
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isTrue(rule.matches(node, virtualNode));
+      });
+
+      it(`should match because it is a ${elementType} with an explicit landmark role but no label`, () => {
+        const explicitRole =
+          elementType === 'section' ? 'navigation' : 'search';
+        axeFixtureSetup(
+          `<${elementType} role="${explicitRole}">some ${elementType}</${elementType}>`
+        );
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isTrue(rule.matches(node, virtualNode));
+      });
+
       it(`should not match because it is a ${elementType} without a label`, () => {
         axeFixtureSetup(`<${elementType}>some ${elementType}</${elementType}>`);
+        const node = fixture.querySelector(elementType);
+        const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+        assert.isFalse(rule.matches(node, virtualNode));
+      });
+
+      it(`should not match because it is a ${elementType} with a label but a non-landmark role`, function () {
+        axeFixtureSetup(
+          `<${elementType} role="tabpanel" aria-label="sample label">some ${elementType}</${elementType}>`
+        );
         const node = fixture.querySelector(elementType);
         const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
         assert.isFalse(rule.matches(node, virtualNode));

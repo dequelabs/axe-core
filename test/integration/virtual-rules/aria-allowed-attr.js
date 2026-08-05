@@ -132,4 +132,33 @@ describe('aria-allowed-attr virtual-rule', () => {
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 1);
   });
+
+  it('should incomplete for a deprecated attribute', () => {
+    const results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'button',
+        'aria-grabbed': true
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
+  it('should fail a deprecated attribute combined with an unallowed attribute', () => {
+    const results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'button',
+        'aria-grabbed': true,
+        'aria-level': 2
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });

@@ -1,125 +1,123 @@
 describe('forms.isDisabled', () => {
-  const html = axe.testUtils.html;
+  const { html, queryFixture, queryShadowFixture } = axe.testUtils;
   const isDisabled = axe.commons.forms.isDisabled;
-  const fixtureSetup = axe.testUtils.fixtureSetup;
-  const fixture = document.getElementById('fixture');
-
-  afterEach(() => {
-    fixture.innerHTML = '';
-  });
 
   describe('with disabled attr', () => {
     it('returns false when not set', () => {
-      fixtureSetup('<input type="text" />');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      const vNode = queryFixture(html`<input id="target" type="text" />`);
 
-      assert.isFalse(isDisabled(node));
+      assert.isFalse(isDisabled(vNode));
     });
 
     it('returns true for an element that can be disabled', () => {
-      fixtureSetup('<input type="text" disabled />');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      const vNode = queryFixture(
+        html`<input id="target" type="text" disabled />`
+      );
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns false for an element that can not be disabled', () => {
-      fixtureSetup('<span disabled>Hello</span>');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      const vNode = queryFixture(html`<span id="target" disabled>Hello</span>`);
 
-      assert.isFalse(isDisabled(node));
+      assert.isFalse(isDisabled(vNode));
     });
 
     it('returns true when disabled has a value', () => {
-      fixtureSetup('<input type="text" disabled="yes" />');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+      const vNode = queryFixture(
+        html`<input id="target" type="text" disabled="yes" />`
+      );
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns true when in a disabled fieldset', () => {
-      fixtureSetup(html`
+      const vNode = queryFixture(html`
         <fieldset disabled>
-          <span>Hello world</span>
+          <span id="target">Hello world</span>
         </fieldset>
       `);
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns true when in a disabled button', () => {
-      fixtureSetup(html`
+      const vNode = queryFixture(html`
         <button disabled>
-          <span>Hello world</span>
+          <span id="target">Hello world</span>
         </button>
       `);
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns true for an ancestor in the flat tree that can be disabled', () => {
-      fixture.innerHTML = '<fieldset disabled><section></section</fieldset>';
-      const shadowRoot = fixture
-        .querySelector('section')
-        .attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<input type="text" />';
-      axe._tree = axe.utils.getFlattenedTree(fixture);
+      const vNode = queryShadowFixture(
+        html`<fieldset disabled><section id="shadow"></section></fieldset>`,
+        html`<input id="target" type="text" />`
+      );
 
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
   });
 
   describe('with aria-disabled attr', () => {
     it('returns true for an element with aria-disabled=true', () => {
-      fixtureSetup('<span aria-disabled="true">hello</span>');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      const vNode = queryFixture(
+        html`<span id="target" aria-disabled="true">hello</span>`
+      );
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns false for an element when aria-disabled is not true', () => {
-      fixtureSetup('<span aria-disabled="not true">hello</span>');
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
+      const vNode = queryFixture(
+        html`<span id="target" aria-disabled="not true">hello</span>`
+      );
 
-      assert.isFalse(isDisabled(node));
+      assert.isFalse(isDisabled(vNode));
     });
 
     it('returns true if the closest ancestor with aria-disabled is set to true', () => {
-      fixtureSetup(html`
+      const vNode = queryFixture(html`
         <section aria-disabled="false">
-          <div aria-disabled="true"><span>hello</span></div>
+          <div aria-disabled="true"><span id="target">hello</span></div>
         </section>
       `);
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
 
     it('returns false if the closest ancestor with aria-disabled is set to false', () => {
-      fixtureSetup(html`
+      const vNode = queryFixture(html`
         <section aria-disabled="true">
-          <div aria-disabled="false"><span>hello</span></div>
+          <div aria-disabled="false"><span id="target">hello</span></div>
         </section>
       `);
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
-      assert.isFalse(isDisabled(node));
+      assert.isFalse(isDisabled(vNode));
+    });
+
+    it('returns true for an element with elementInternals aria-disabled=true', () => {
+      const vNode = queryFixture(
+        html`<testutils-element id="target" with-aria-disabled="true"
+          >hello</testutils-element
+        >`
+      );
+
+      assert.isTrue(isDisabled(vNode));
     });
   });
 
   describe('with both disabled and aria-disabled', () => {
     it('returns true when aria-disabled=false and disabled=disabled', () => {
-      fixtureSetup(html`
+      const vNode = queryFixture(html`
         <fieldset aria-disabled="false" disabled>
-          <span>hello</span>
+          <span id="target">hello</span>
         </fieldset>
       `);
-      const node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
-      assert.isTrue(isDisabled(node));
+      assert.isTrue(isDisabled(vNode));
     });
   });
 });

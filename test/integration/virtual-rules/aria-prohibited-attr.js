@@ -59,6 +59,54 @@ describe('aria-prohibited-attr virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should fail for prohibited aria-labelledby without throwing', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'code',
+        'aria-labelledby': 'hd'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for prohibited aria-actions', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'code',
+        'aria-actions': 'foo'
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('aria-prohibited-attr', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass for aria-actions on a role that allows it', () => {
+    const results = axe.runVirtualRule('aria-prohibited-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'button',
+        'aria-actions': 'foo'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail for invalid role', () => {
     const vNode = new axe.SerialVirtualNode({
       nodeName: 'div',

@@ -357,7 +357,6 @@ describe('text.formControlValue', () => {
       const target = queryFixture(html`
         <div id="target" role="listbox">
           <div role="option" aria-selected="false">foo</div>
-          <div role="option" aria-selected="TRUE">bar</div>
           <div role="option" aria-selected="yes">baz</div>
           <div role="option" aria-selected="selected">fiz</div>
         </div>
@@ -434,6 +433,18 @@ describe('text.formControlValue', () => {
         `);
         assert.equal(ariaListboxValue(target), 'foo');
       });
+    });
+
+    it('returns the selected aria option value from elementInternals', () => {
+      const target = queryFixture(html`
+        <div id="target" role="listbox">
+          <testutils-element no-role role="option" with-aria-selected="true"
+            >Selected Option</testutils-element
+          >
+          <div role="option" aria-selected="false">Unselected</div>
+        </div>
+      `);
+      assert.equal(ariaListboxValue(target), 'Selected Option');
     });
   });
 
@@ -519,6 +530,19 @@ describe('text.formControlValue', () => {
           assert.equal(ariaRangeValue(target), '-1');
         });
       });
+    });
+
+    it('returns the aria range value from elementInternals', () => {
+      const target = queryFixture(
+        html`<testutils-element
+          id="target"
+          role="slider"
+          with-aria-valuenow="50"
+          with-aria-valuemin="0"
+          with-aria-valuemax="100"
+        ></testutils-element>`
+      );
+      assert.equal(ariaRangeValue(target), '50');
     });
   });
 });

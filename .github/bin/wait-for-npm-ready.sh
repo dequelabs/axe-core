@@ -7,16 +7,16 @@ if [ -z "$VERSION" ] || [ -z "$PACKAGE_NAME" ]; then
   exit 1
 fi
 
-SLEEP_SECONDS=${SLEEP_SECONDS:-10}
-MAX_ATTEMPTS=${MAX_ATTEMPTS:-30}
+SLEEP_SECONDS=${SLEEP_SECONDS:-120}
+MAX_ATTEMPTS=${MAX_ATTEMPTS:-12}
 
 echo "::group::Waiting for ${PACKAGE_NAME}@${VERSION} to be available on npm registry..."
 
 for i in $(seq 1 "$MAX_ATTEMPTS"); do
   echo "Attempt $i of $MAX_ATTEMPTS..."
 
-  if npm view "${PACKAGE_NAME}@${VERSION}" version > /dev/null 2>&1; then
-    PUBLISHED_VERSION=$(npm view "${PACKAGE_NAME}@${VERSION}" version)
+  if pnpm view "${PACKAGE_NAME}@${VERSION}" version > /dev/null 2>&1; then
+    PUBLISHED_VERSION=$(pnpm view "${PACKAGE_NAME}@${VERSION}" version)
     echo "✓ Package ${PACKAGE_NAME}@${PUBLISHED_VERSION} is now available on npm!"
     echo "::endgroup::"
     exit 0

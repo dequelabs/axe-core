@@ -27,6 +27,26 @@
 </ol>
 <section id="pass-section-role-marquee" role="marquee"></section>
 <figure id="pass-figure-role-group" role="group"></figure>
+<figure id="pass-figure-figcaption-doc-example" role="doc-example">
+  <figcaption>caption</figcaption>
+</figure>
+<figure id="pass-figure-figcaption-figure-role" role="figure">
+  <figcaption>caption</figcaption>
+</figure>
+<figure id="fail-figure-figcaption-role-group" role="group">
+  <figcaption>caption</figcaption>
+</figure>
+<details>
+  <summary id="pass-summary-implicit-button" role="button">summary</summary>
+</details>
+<details>
+  <summary>first</summary>
+  <summary id="pass-summary-not-details-summary" role="tab">second</summary>
+</details>
+<summary id="pass-summary-standalone" role="group">summary</summary>
+<details>
+  <summary id="fail-summary-details-role-tab" role="tab">summary</summary>
+</details>
 <section id="pass-section-valid-role-application" role="application"></section>
 <section id="pass-section-valid-role-content-info" role="contentinfo"></section>
 <section id="pass-section-valid-role-dialog" role="dialog"></section>
@@ -38,6 +58,7 @@
 <header id="pass-header-valid-role" role="group"></header>
 <footer id="pass-footer-valid-role" role="group"></footer>
 <embed id="pass-embed-valid-role" role="img" />
+<embed id="pass-embed-role-image" role="image" />
 <input type="text" role="textbox" id="pass-input-text-redundant-role" />
 <input type="text" role="textbox combobox" id="pass-input-multiple-roles" />
 <input
@@ -213,6 +234,9 @@
   title="IconCheckmark"
   aria-label="IconCheckmark icon"
 ></button>
+<button id="pass-button-role-separator" role="separator"></button>
+<button id="pass-button-role-slider" role="slider"></button>
+<button id="pass-button-role-treeitem" role="treeitem"></button>
 
 <dd id="fail-dd-no-role" role="link"></dd>
 <dt id="fail-dt-no-role" role="banner"></dt>

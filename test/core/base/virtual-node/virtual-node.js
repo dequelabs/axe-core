@@ -6,10 +6,6 @@ describe('VirtualNode', () => {
     node = document.createElement('div');
   });
 
-  afterEach(() => {
-    axe._enableElementInternals = true;
-  });
-
   it('should be a function', () => {
     assert.isFunction(VirtualNode);
   });
@@ -472,26 +468,6 @@ describe('VirtualNode', () => {
         const internals = vNode.elementInternals;
         assert.ok(internals);
         assert.equal(internals.role, 'link');
-      });
-
-      it('returns undefined when feature flag is off', () => {
-        delete axe._enableElementInternals;
-        node = document.createElement('testutils-element');
-        const vNode = new VirtualNode(node);
-        const internals = vNode.elementInternals;
-
-        assert.isUndefined(internals);
-      });
-
-      it('returns internals when feature flag is on', () => {
-        delete axe._enableElementInternals;
-        axe._enableElementInternals = true;
-        node = document.createElement('testutils-element');
-        const vNode = new VirtualNode(node);
-        const internals = vNode.elementInternals;
-
-        assert.ok(internals);
-        assert.equal(internals.role, 'button');
       });
     });
   });

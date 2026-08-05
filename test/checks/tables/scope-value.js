@@ -9,14 +9,26 @@ describe('scope-value', () => {
     fixture.innerHTML = '<table><tr><td scope="col"></td></tr></table>';
     const node = fixture.querySelector('td');
 
-    assert.isTrue(axe.testUtils.getCheckEvaluate('scope-value')(node));
+    assert.isTrue(
+      axe.testUtils.getCheckEvaluate('scope-value')(
+        node,
+        undefined,
+        new axe.VirtualNode(node)
+      )
+    );
   });
 
   it('should return true if scope is "row"', () => {
     fixture.innerHTML = '<table><tr><td scope="row"></td></tr></table>';
     const node = fixture.querySelector('td');
 
-    assert.isTrue(axe.testUtils.getCheckEvaluate('scope-value')(node));
+    assert.isTrue(
+      axe.testUtils.getCheckEvaluate('scope-value')(
+        node,
+        undefined,
+        new axe.VirtualNode(node)
+      )
+    );
   });
 
   it('should return false otherwise', () => {
@@ -24,7 +36,13 @@ describe('scope-value', () => {
       '<table><tr><td scope="hahahahanothx"></td></tr></table>';
     const node = fixture.querySelector('td');
 
-    assert.isFalse(axe.testUtils.getCheckEvaluate('scope-value')(node));
+    assert.isFalse(
+      axe.testUtils.getCheckEvaluate('scope-value')(
+        node,
+        undefined,
+        new axe.VirtualNode(node)
+      )
+    );
   });
 
   it('should support options.values', () => {
@@ -33,9 +51,13 @@ describe('scope-value', () => {
     const node = fixture.querySelector('td');
 
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('scope-value')(node, {
-        values: ['hahahahanothx']
-      })
+      axe.testUtils.getCheckEvaluate('scope-value')(
+        node,
+        {
+          values: ['hahahahanothx']
+        },
+        new axe.VirtualNode(node)
+      )
     );
   });
 });

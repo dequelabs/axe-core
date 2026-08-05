@@ -28,6 +28,12 @@ First download the package:
 npm install axe-core --save-dev
 ```
 
+Or, using pnpm:
+
+```console
+pnpm add --save-dev axe-core
+```
+
 Now include the javascript file in each of your iframes in your fixtures or test systems:
 
 ```html
@@ -95,17 +101,13 @@ The [axe-core API](doc/API.md) package consists of:
 
 Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
 
-`grunt build --lang=nl`
-
-or equivalently:
-
-`npm run build -- --lang=nl`
+`pnpm run build -- --lang=nl`
 
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build all localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of languages to the `--lang` flag, like `--lang=nl,ja`.
 
-To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file in the `./locales` directory, with the default English text in it for you to translate. Alternatively, you could copy `./locales/_template.json`. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/doc/check-message-template.md).
+To create a new translation for axe, start by running `pnpm run translate -- --lang=<langcode>`. This will create a json file in the `./locales` directory, with the default English text in it for you to translate. Alternatively, you could copy `./locales/_template.json`. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/doc/check-message-template.md).
 
-To update an existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
+To update an existing translation file, re-run `pnpm run translate -- --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
 Additionally, locale can be applied at runtime by passing a `locale` object to `axe.configure()`. The locale object must be of the same shape as existing locales in the `./locales` directory. For example:
 
@@ -153,6 +155,7 @@ Axe-core supports the following locales. Do note that since locales are contribu
 - Polish
 - Portuguese (Brazilian)
 - Spanish
+- Swedish
 
 ## Updates & Security
 

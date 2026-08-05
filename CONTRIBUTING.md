@@ -18,7 +18,7 @@ Please respect the coding style of the files you are changing and adhere to that
 The files in this project are formatted by [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). Both are run when code is committed. Additionally, you can run ESLint manually:
 
 ```console
-npm run eslint
+pnpm run eslint
 ```
 
 ### When to use HTMLElement vs Virtual Node
@@ -125,48 +125,52 @@ function CheckResult(check) {
 
 In order to get going, fork and clone the repository. Then, if you do not have [Node.js](https://nodejs.org/download/) installed, install it!
 
+This project uses [pnpm](https://pnpm.io/).
+Install it using whichever method you prefer from the [pnpm installation guide](https://pnpm.io/installation).
+The version you install does not need to match the project exactly: `package.json` pins the expected version in its `packageManager` field, and pnpm switches itself to that version when run inside this repository.
+
 Once the basic infrastructure is installed, from the repository root, do the following:
 
 ```console
-npm install
+pnpm install
 ```
 
 Then build the package:
 
 ```console
-npm run build
+pnpm run build
 ```
 
 ## Developing and testing
 
-In order to run axe tests, `axe.js` must be built using `npm run build`. To run the unit tests:
+In order to run axe tests, `axe.js` must be built using `pnpm run build`. To run the unit tests:
 
 ```console
-npm test
+pnpm test
 ```
 
 To continually watch changes to the axe source files and re-build on changes, use:
 
 ```console
-npm run develop
+pnpm run develop
 ```
 
-This will also rerun any tests that have been changed, and any changes to the axe source files will trigger a rerun of that files tests.
+Rebuilds on `lib/` and `build/` changes, starts http-server on port 9876 when that port is free, and reruns relevant tests.
 
 To run axe integration tests:
 
 ```console
-npm run test:integration
+pnpm run test:integration
 ```
 
 Lastly, there are a few other tests that get run during the continuous integration process:
 
 ```console
 # run the tests from `doc/examples/*` using the current local build of `axe.js`
-npm run test:examples
+pnpm run test:examples
 
 # run the tests from `test/node`
-npm run test:node
+pnpm run test:node
 ```
 
 ### Running and debugging specific unit tests
@@ -175,31 +179,31 @@ If you want to run a specific set of unit tests instead of all the unit tests, y
 
 ```console
 # run just the tests from `test/core`
-npm run test:unit:core
+pnpm run test:unit:core
 
 # run just the tests from `test/commons`
-npm run test:unit:commons
+pnpm run test:unit:commons
 
 # run just the tests from `test/rule-matches`
-npm run test:unit:rule-matches
+pnpm run test:unit:rule-matches
 
 # run just the tests from `test/checks`
-npm run test:unit:checks
+pnpm run test:unit:checks
 
 # run just the tests from `test/integration/rules`
-npm run test:unit:integration
+pnpm run test:unit:integration
 
 # run just the tests from `test/integration/api`
-npm run test:unit:api
+pnpm run test:unit:api
 
 # run just the tests from `test/integration/virtual-rules`
-npm run test:unit:virtual-rules
+pnpm run test:unit:virtual-rules
 ```
 
 If you need to debug the unit tests in a browser, you can run:
 
 ```console
-npm run test:debug
+pnpm run test:debug
 ```
 
 This will start the Web Test Runner server. Press `D` to open the Chrome browser. Click the link to a test to start debugging. You can either use that browser's debugger or attach an external debugger on port 9765; [a VS Code launch profile](./.vscode/launch.json) is provided. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
@@ -207,7 +211,7 @@ This will start the Web Test Runner server. Press `D` to open the Chrome browser
 Because the amount of tests is so large, it's recommended to debug only a specific set of unit tests rather than the whole test suite. You can use the `files` argument when using the debug command and pass a test files glob pattern.
 
 ```console
-npm run test:debug -- --files 'test/core'
+pnpm run test:debug -- --files 'test/core'
 ```
 
 ## Using axe with TypeScript
@@ -219,7 +223,7 @@ The TypeScript definition file for axe-core is distributed with this module and 
 You can run TypeScript definition tests using the following command:
 
 ```console
-npm run test:tsc
+pnpm run test:tsc
 ```
 
 ## Including axe's type definition in tests
@@ -275,7 +279,7 @@ Log into a second ssh terminal (without -X) and execute the following commands
 
 ```console
 cd axe-core
-grunt connect watch
+pnpm run develop
 ```
 
 Load your test file URL in the Chrome browser opened in XQuartz
