@@ -1,10 +1,8 @@
-describe('index', function () {
-  'use strict';
-
-  it('should redefine `define`', function () {
+describe('index', () => {
+  it('should redefine `define`', () => {
     assert.equal(typeof define, 'undefined');
   });
-  it('should redefine `require`', function () {
+  it('should redefine `require`', () => {
     assert.equal(typeof require, 'undefined');
   });
 });

@@ -1,4 +1,4 @@
-describe('math.rects-overlap', function () {
+describe('math.rects-overlap', () => {
   const rectsOverlap = axe.commons.math.rectsOverlap;
 
   let rectA, rectB;

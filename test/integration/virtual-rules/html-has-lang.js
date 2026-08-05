@@ -1,6 +1,6 @@
-describe('html-has-lang virtual-rule', function () {
-  it('should pass for lang', function () {
-    var results = axe.runVirtualRule('html-has-lang', {
+describe('html-has-lang virtual-rule', () => {
+  it('should pass for lang', () => {
+    const results = axe.runVirtualRule('html-has-lang', {
       nodeName: 'html',
       attributes: {
         lang: 'en'
@@ -12,8 +12,8 @@ describe('html-has-lang virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for lang and xml:lang', function () {
-    var results = axe.runVirtualRule('html-has-lang', {
+  it('should pass for lang and xml:lang', () => {
+    const results = axe.runVirtualRule('html-has-lang', {
       nodeName: 'html',
       attributes: {
         lang: 'en',
@@ -26,8 +26,8 @@ describe('html-has-lang virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for missing lang', function () {
-    var results = axe.runVirtualRule('html-has-lang', {
+  it('should fail for missing lang', () => {
+    const results = axe.runVirtualRule('html-has-lang', {
       nodeName: 'html'
     });
 
@@ -36,8 +36,8 @@ describe('html-has-lang virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for just xml:lang', function () {
-    var results = axe.runVirtualRule('html-has-lang', {
+  it('should fail for just xml:lang', () => {
+    const results = axe.runVirtualRule('html-has-lang', {
       nodeName: 'html',
       attributes: {
         'xml:lang': 'en'

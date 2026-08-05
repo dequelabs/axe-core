@@ -512,5 +512,46 @@
 </div>
 
 <textarea id="pass24" style="background-color: white; color: black">
-Hello world</textarea
->
+Hello world</textarea>
+
+<div style="position: relative; z-index: 1; width: 200px; height: 200px">
+  <div style="position: absolute">
+    <div style="transform: translate3d(0px, 0px, 0px)">
+      <span id="fail13" style="background-color: #111; color: #000"
+        >low contrast</span
+      >
+      <span id="pass25" style="background-color: #fff; color: #000"
+        >ok contrast</span
+      >
+    </div>
+  </div>
+</div>
+
+<div style="position: relative; z-index: 1; width: 200px; height: 200px">
+  <div style="position: absolute">
+    <div style="opacity: 0.99">
+      <span id="fail14" style="background-color: #111; color: #000"
+        >low contrast</span
+      >
+      <span id="pass26" style="background-color: #fff; color: #000"
+        >ok contrast</span
+      >
+    </div>
+  </div>
+</div>
+
+<div style="position: fixed; top: 100px; left: 100px; background: #333">
+  <span id="pass27" style="filter: contrast(100%); color: #eee">
+    Hello world
+  </span>
+</div>
+
+<div style="position: fixed; z-index: 50; top: 200px; height: 200px">
+  <div style="position: fixed; background: #280071">
+    <div style="position: relative">
+      <div id="pass28" style="transform: matrix(1, 0, 0, 1, 0, 0); color: #fff">
+        text
+      </div>
+    </div>
+  </div>
+</div>

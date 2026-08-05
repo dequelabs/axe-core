@@ -1,22 +1,20 @@
 /*global axe*/
-describe('axe.utils.areStylesSet', function () {
-  'use strict';
+describe('axe.utils.areStylesSet', () => {
+  const fixture = document.getElementById('fixture');
 
-  var fixture = document.getElementById('fixture');
-
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(axe.utils.areStylesSet);
   });
 
-  it('should return true if `display:none` is set', function () {
+  it('should return true if `display:none` is set', () => {
     fixture.innerHTML =
       '<div id="target" style="display:none;">Display None</div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -26,11 +24,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `display:none` is set', function () {
+  it('should return true if `display:none` is set', () => {
     fixture.innerHTML =
       '<div style="display:none;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -40,11 +38,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `visibility:hidden` is set', function () {
+  it('should return true if `visibility:hidden` is set', () => {
     fixture.innerHTML =
       '<div style="visibility:hidden;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -54,11 +52,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `visibility:hidden` is set', function () {
+  it('should return true if `visibility:hidden` is set', () => {
     fixture.innerHTML =
       '<div id="target" style="visibility:hidden;">Display None</div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -68,11 +66,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `visibility:hidden` is set', function () {
+  it('should return true if `visibility:hidden` is set', () => {
     fixture.innerHTML =
       '<div id="target" style="visibility:hidden;">Display None</div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -91,11 +89,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `visibility:hidden` is set', function () {
+  it('should return true if `visibility:hidden` is set', () => {
     fixture.innerHTML =
       '<div style="visibility:hidden;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -114,11 +112,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return true if `display:none` is set', function () {
+  it('should return true if `display:none` is set', () => {
     fixture.innerHTML =
       '<div style="display:none;"><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isTrue(
       axe.utils.areStylesSet(
         el,
@@ -137,11 +135,11 @@ describe('axe.utils.areStylesSet', function () {
     );
   });
 
-  it('should return false if nothing is set', function () {
+  it('should return false if nothing is set', () => {
     fixture.innerHTML =
       '<div style=""><div id="target">Display None</div></div>';
 
-    var el = document.getElementById('target');
+    const el = document.getElementById('target');
     assert.isFalse(
       axe.utils.areStylesSet(
         el,

@@ -1,5 +1,5 @@
 describe('aria-prohibited-attr', () => {
-  'use strict';
+  const html = axe.testUtils.html;
 
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
@@ -47,6 +47,26 @@ describe('aria-prohibited-attr', () => {
       // attribute order not important
       prohibited: ['aria-label', 'aria-labelledby']
     });
+  });
+
+  it('should return true for prohibited aria-actions', () => {
+    const params = checkSetup(
+      '<div id="target" role="code" aria-actions="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: 'code',
+      messageKey: 'hasRoleSingular',
+      prohibited: ['aria-actions']
+    });
+  });
+
+  it('should return false for aria-actions on a role that allows it', () => {
+    const params = checkSetup(
+      '<div id="target" role="button" aria-actions="foo"></div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
   it('should return undefined if element has no role and has text content (singular)', () => {
@@ -128,7 +148,7 @@ describe('aria-prohibited-attr', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow `elementsAllowedAriaLabel` nodes with a prohibited role', () => {
+  it('should not allow `elementsAllowedAriaLabel` nodes with a role with prohibited attrs', () => {
     const params = checkSetup(
       '<div id="target" role="code" aria-label="hello world"></div>',
       { elementsAllowedAriaLabel: ['div'] }
@@ -143,7 +163,7 @@ describe('aria-prohibited-attr', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow aria-label on divs that have an invalid role', function () {
+  it('should not allow aria-label on divs that have an invalid role', () => {
     const params = checkSetup(
       '<div id="target" role="foo" aria-label="foo"></div>'
     );
@@ -156,14 +176,14 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
-  it('should allow aria-label on divs with a valid fallback role', function () {
+  it('should allow aria-label on divs with a valid fallback role', () => {
     const params = checkSetup(
       '<div id="target" role="foo dialog" aria-label="foo"></div>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should not allow aria-label on divs with no valid fallback roles', function () {
+  it('should not allow aria-label on divs with no valid fallback roles', () => {
     const params = checkSetup(
       '<div id="target" role="foo bar" aria-label="foo"></div>'
     );
@@ -176,9 +196,16 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
+  it('should allow aria-label on custom element without role', () => {
+    const params = checkSetup(
+      '<custom-elm id="target" aria-label="value"></custom-elm>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
   describe('widget ancestor', () => {
     it('should allow aria-label', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <button>
           <span>
             <span id="target" aria-label="hello world"></span>
@@ -189,7 +216,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should allow aria-labelledby', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <div id="foo">hello world</div>
         <button>
           <span>
@@ -201,7 +228,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should skip "role=none" roles in between ancestor', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <button>
           <h1 role="none">
             <span id="target" aria-label="hello world"></span>
@@ -212,7 +239,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should skip "role=presentation" roles in between ancestor', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <a href="#">
           <h1 role="presentation">
             <span id="target" aria-label="hello world"></span>
@@ -223,7 +250,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should not allow aria-label on descendant of non-widget', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <div role="grid">
           <span>
             <span id="target" aria-label="foo"></span>
@@ -234,7 +261,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should not allow aria-labelledby on descendant of non-widget', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <div id="foo">hello world</div>
         <div role="grid">
           <span>
@@ -246,7 +273,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should use closet non-presentational ancestor', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <button>
           <span role="grid">
             <span id="target" aria-label="foo"></span>
@@ -257,7 +284,7 @@ describe('aria-prohibited-attr', () => {
     });
 
     it('should use closet chromium role', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <button>
           <label>
             <span id="target" aria-label="foo"></span>

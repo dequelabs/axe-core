@@ -505,7 +505,6 @@ describe('aria.validateAttrValue', () => {
 });
 
 function makeShadowTreeVAV(node) {
-  'use strict';
   const root = node.attachShadow({ mode: 'open' });
   const div = document.createElement('div');
   div.className = 'parent';
@@ -514,11 +513,11 @@ function makeShadowTreeVAV(node) {
 }
 
 function createContentVAV() {
-  'use strict';
   const group = document.createElement('div');
-  group.innerHTML =
-    '<label id="mylabel">Label</label>' +
-    '<input id="myinput" aria-labelledby="mylabel" type="text" />' +
-    '<input id="invalid" aria-labelledby="doesnotexist" type="text" />';
+  group.innerHTML = `
+    <label id="mylabel">Label</label>
+    <input id="myinput" aria-labelledby="mylabel" type="text" />
+    <input id="invalid" aria-labelledby="doesnotexist" type="text" />
+  `;
   return group;
 }

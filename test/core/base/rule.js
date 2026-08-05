@@ -6,7 +6,7 @@ describe('Rule', () => {
   const fixture = document.getElementById('fixture');
   const { fixtureSetup, captureError } = axe.testUtils;
   const noop = () => {};
-  const isNotCalled = function (err) {
+  const isNotCalled = err => {
     throw err || new Error('Reject should not be called');
   };
 
@@ -80,7 +80,7 @@ describe('Rule', () => {
         });
 
         assert.deepEqual(
-          nodes.map(function (n) {
+          nodes.map(n => {
             return n.actualNode;
           }),
           [node]
@@ -108,7 +108,7 @@ describe('Rule', () => {
 
         assert.lengthOf(result, 3);
         assert.sameMembers(
-          result.map(function (n) {
+          result.map(n => {
             return n.actualNode;
           }),
           nodes
@@ -143,7 +143,7 @@ describe('Rule', () => {
         });
 
         assert.deepEqual(
-          result.map(function (n) {
+          result.map(n => {
             return n.actualNode;
           }),
           [fixture.firstChild]
@@ -161,7 +161,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false;
         const rule = new Rule({
-          matches: function (node) {
+          matches: node => {
             assert.equal(node, div);
             success = true;
             return [];
@@ -186,7 +186,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false,
           rule = new Rule({
-            matches: function (node, virtualNode) {
+            matches: (node, virtualNode) => {
               assert.equal(virtualNode.actualNode, div);
               success = true;
               return [];
@@ -211,7 +211,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false,
           rule = new Rule({
-            matches: function (node, virtualNode, context) {
+            matches: (node, virtualNode, context) => {
               assert.isDefined(context);
               assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
               assert.lengthOf(context.include, 1);
@@ -243,7 +243,7 @@ describe('Rule', () => {
           {
             checks: {
               cats: {
-                run: function (node, options, context, resolve) {
+                run: (node, options, context, resolve) => {
                   success = true;
                   resolve(true);
                 }
@@ -275,7 +275,7 @@ describe('Rule', () => {
           {
             checks: {
               cats: {
-                run: function (node, options, context, resolve) {
+                run: (node, options, context, resolve) => {
                   success = true;
                   resolve(true);
                 }
@@ -307,7 +307,7 @@ describe('Rule', () => {
           {
             checks: {
               cats: {
-                run: function (node, options, context, resolve) {
+                run: (node, options, context, resolve) => {
                   success = true;
                   resolve(true);
                 }
@@ -348,7 +348,7 @@ describe('Rule', () => {
             checks: {
               cats: {
                 id: 'cats',
-                run: function (node, opts, context, resolve) {
+                run: (node, opts, context, resolve) => {
                   assert.equal(opts.enabled, 'bananas');
                   assert.equal(opts.options, 'minkeys');
                   resolve(true);
@@ -403,7 +403,7 @@ describe('Rule', () => {
             checks: {
               cats: {
                 id: 'cats',
-                run: function (node, opts, context, resolve) {
+                run: (node, opts, context, resolve) => {
                   assert.equal(opts.enabled, 'apples');
                   assert.equal(opts.options, 'apes');
                   resolve(true);
@@ -444,7 +444,7 @@ describe('Rule', () => {
             include: [axe.utils.getFlattenedTree(document)[0]]
           },
           {},
-          function (r) {
+          r => {
             assert.lengthOf(r.nodes, 0);
           },
           isNotCalled
@@ -612,7 +612,7 @@ describe('Rule', () => {
           },
           {},
           noop,
-          function (err) {
+          err => {
             assert.equal(err.message, 'Holy hand grenade');
             done();
           },
@@ -629,7 +629,7 @@ describe('Rule', () => {
           {
             checks: {
               cats: {
-                run: function (nope, options, context, resolve, reject) {
+                run: (nope, options, context, resolve, reject) => {
                   reject(new Error('your reality'));
                 }
               }
@@ -643,7 +643,7 @@ describe('Rule', () => {
           },
           {},
           noop,
-          function (err) {
+          err => {
             assert.equal(err.message, 'your reality');
             done();
           },
@@ -683,7 +683,7 @@ describe('Rule', () => {
             include: [axe.utils.getFlattenedTree(fixture)[0]]
           },
           {},
-          function (results) {
+          results => {
             assert.isUndefined(results.nodes[0].all[0].result);
             assert.isUndefined(results.nodes[0].any[0].result);
             assert.isUndefined(results.nodes[0].none[0].result);
@@ -772,7 +772,7 @@ describe('Rule', () => {
             {
               checks: {
                 cats: {
-                  run: function (node, options, context, resolve) {
+                  run: (node, options, context, resolve) => {
                     success = true;
                     resolve(true);
                   }
@@ -809,7 +809,7 @@ describe('Rule', () => {
             {
               checks: {
                 cats: {
-                  run: function (node, options, context, resolve) {
+                  run: (node, options, context, resolve) => {
                     success = true;
                     resolve(true);
                   }
@@ -842,7 +842,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false;
         const rule = new Rule({
-          matches: function (node) {
+          matches: node => {
             assert.equal(node, div);
             success = true;
             return [];
@@ -867,7 +867,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false;
         const rule = new Rule({
-          matches: function (node, virtualNode) {
+          matches: (node, virtualNode) => {
             assert.equal(virtualNode.actualNode, div);
             success = true;
             return [];
@@ -892,7 +892,7 @@ describe('Rule', () => {
         fixture.appendChild(div);
         let success = false;
         const rule = new Rule({
-          matches: function (node, virtualNode, context) {
+          matches: (node, virtualNode, context) => {
             assert.isDefined(context);
             assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
             assert.lengthOf(context.include, 1);
@@ -1050,7 +1050,7 @@ describe('Rule', () => {
             checks: {
               cats: {
                 id: 'cats',
-                runSync: function (node, opts) {
+                runSync: (node, opts) => {
                   assert.equal(opts.enabled, 'bananas');
                   assert.equal(opts.options, 'minkeys');
                 }
@@ -1105,7 +1105,7 @@ describe('Rule', () => {
             checks: {
               cats: {
                 id: 'cats',
-                runSync: function (node, opts) {
+                runSync: (node, opts) => {
                   assert.equal(opts.enabled, 'apples');
                   assert.equal(opts.options, 'apes');
                 }
@@ -1515,7 +1515,7 @@ describe('Rule', () => {
               cats: {
                 id: 'cats',
                 enabled: true,
-                after: function (results, options) {
+                after: (results, options) => {
                   assert.deepEqual(options, { dogs: true });
                   success = true;
                   return results;
@@ -1560,7 +1560,7 @@ describe('Rule', () => {
               cats: {
                 id: 'cats',
                 enabled: true,
-                after: function (results) {
+                after: results => {
                   assert.equal(results[0].node, 'customNode');
                   success = true;
                   return results;
@@ -1603,7 +1603,7 @@ describe('Rule', () => {
             checks: {
               cats: {
                 id: 'cats',
-                after: function (results) {
+                after: results => {
                   return [results[0]];
                 }
               }
@@ -1749,7 +1749,7 @@ describe('Rule', () => {
               cats: new Check({
                 id: 'cats',
                 enabled: true,
-                after: function (results) {
+                after: results => {
                   results[0].result = false;
                   return results;
                 }
@@ -1796,7 +1796,7 @@ describe('Rule', () => {
               cats: new Check({
                 id: 'cats',
                 enabled: true,
-                after: function (results) {
+                after: results => {
                   results[0].result = false;
                   return results;
                 }
@@ -1843,7 +1843,7 @@ describe('Rule', () => {
               cats: new Check({
                 id: 'cats',
                 enabled: true,
-                after: function (results) {
+                after: results => {
                   results[0].result = true;
                   return results;
                 }

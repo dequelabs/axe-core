@@ -6,6 +6,20 @@
 <div role="button"><span id="pass6" aria-label="value"></span></div>
 <div role="button"><span id="pass7" aria-labelledby="value"></span></div>
 <div role="foo dialog" aria-label="foo" id="pass8"></div>
+<testutils-element
+  id="pass9"
+  with-role="progressbar"
+  aria-label="Internals progressbar"
+></testutils-element>
+<div role="button" aria-actions="value" id="pass10"></div>
+<section id="pass11" aria-labelledby="foo">
+  <p id="foo"></p>
+</section>
+<testutils-element
+  id="pass12"
+  no-role
+  aria-label="Internals progressbar"
+></testutils-element>
 
 <div role="caption" aria-label="value" id="fail1"></div>
 <div role="caption" aria-labelledby="value" id="fail2"></div>
@@ -27,21 +41,102 @@
 <div role="superscript" aria-labelledby="value" id="fail18"></div>
 <div aria-label="value" id="fail19"></div>
 <div aria-labelledby="value" id="fail20"></div>
+<div role="mark" aria-label="value" id="fail21"></div>
+<div role="mark" aria-labelledby="value" id="fail22"></div>
+<div role="suggestion" aria-label="value" id="fail23"></div>
+<div role="suggestion" aria-labelledby="value" id="fail24"></div>
+<div role="grid"><span id="fail25" aria-label="value"></span></div>
+<div role="grid"><span id="fail26" aria-labelledby="value"></span></div>
+<div role="foo" aria-label="foo" id="fail27"></div>
+<div role="foo bar" aria-label="foo" id="fail28"></div>
+<div role="code" aria-actions="value" id="fail29"></div>
+<div role="mark" aria-actions="value" id="fail30"></div>
+
 <!- aria-label(ledby) is prohibited on none / presentation. Axe-core considers this to trigger presentation role
 conflict, which was true in ARIA 1.1. This changed in ARIA 1.2 but so far has only been implemented in Chomium. -->
-<span aria-label="value" id="fail21"></span>
-<strong aria-label="value" id="fail22"></strong>
-<kbd aria-label="value" id="fail23"></kbd>
-<abbr aria-label="value" id="fail24"></abbr>
-<custom-elm aria-label="value" id="fail25"></custom-elm>
-<div role="mark" aria-label="value" id="fail26"></div>
-<div role="mark" aria-labelledby="value" id="fail27"></div>
-<div role="suggestion" aria-label="value" id="fail28"></div>
-<div role="suggestion" aria-labelledby="value" id="fail29"></div>
-<div role="grid"><span id="fail30" aria-label="value"></span></div>
-<div role="grid"><span id="fail31" aria-labelledby="value"></span></div>
-<div role="foo" aria-label="foo" id="fail32"></div>
-<div role="foo bar" aria-label="foo" id="fail33"></div>
+<a id="fail31" aria-label="value"></a>
+<a id="fail32" aria-labelledby="value"></a>
+<abbr id="fail33" aria-label="value"></abbr>
+<abbr id="fail34" aria-labelledby="value"></abbr>
+<map name="info">
+  <area id="fail35" aria-label="value" />
+  <area id="fail36" aria-labelledby="value" />
+</map>
+<img usemap="#info" />
+<b id="fail37" aria-label="value"></b>
+<b id="fail38" aria-labelledby="value"></b>
+<bdi id="fail39" aria-label="value"></bdi>
+<bdi id="fail40" aria-labelledby="value"></bdi>
+<bdo id="fail41" aria-label="value"></bdo>
+<bdo id="fail42" aria-labelledby="value"></bdo>
+<table>
+  <caption id="fail43" aria-label="value"></caption>
+  <caption id="fail44" aria-labelledby="value"></caption>
+</table>
+<cite id="fail45" aria-label="value"></cite>
+<cite id="fail46" aria-labelledby="value"></cite>
+<code id="fail47" aria-label="value"></code>
+<code id="fail48" aria-labelledby="value"></code>
+<data id="fail49" aria-label="value"></data>
+<data id="fail50" aria-labelledby="value"></data>
+<dl>
+  <dt></dt>
+  <dd id="fail51" aria-label="value"></dd>
+  <dt></dt>
+  <dd id="fail52" aria-labelledby="value"></dd>
+</dl>
+<del id="fail53" aria-label="value"></del>
+<del id="fail54" aria-labelledby="value"></del>
+<div id="fail55" aria-label="value"></div>
+<div id="fail56" aria-labelledby="value"></div>
+<em id="fail57" aria-label="value"></em>
+<em id="fail58" aria-labelledby="value"></em>
+<figure>
+  <figcaption id="fail59" aria-label="value"></figcaption>
+  <figcaption id="fail60" aria-labelledby="value"></figcaption>
+</figure>
+<i id="fail61" aria-label="value"></i>
+<i id="fail62" aria-labelledby="value"></i>
+<ins id="fail63" aria-label="value"></ins>
+<ins id="fail64" aria-labelledby="value"></ins>
+<kbd id="fail65" aria-label="value"></kbd>
+<kbd id="fail66" aria-labelledby="value"></kbd>
+<label id="fail67" aria-label="value"></label>
+<label id="fail68" aria-labelledby="value"></label>
+<fieldset>
+  <legend id="fail69" aria-label="value"></legend>
+  <legend id="fail70" aria-labelledby="value"></legend>
+</fieldset>
+<mark id="fail71" aria-label="value"></mark>
+<mark id="fail72" aria-labelledby="value"></mark>
+<p id="fail73" aria-label="value"></p>
+<p id="fail74" aria-labelledby="value"></p>
+<pre id="fail75" aria-label="value"></pre>
+<pre id="fail76" aria-labelledby="value"></pre>
+<q id="fail77" aria-label="value"></q>
+<q id="fail78" aria-labelledby="value"></q>
+<rt id="fail79" aria-label="value"></rt>
+<rt id="fail80" aria-labelledby="value"></rt>
+<s id="fail81" aria-label="value"></s>
+<s id="fail82" aria-labelledby="value"></s>
+<samp id="fail83" aria-label="value"></samp>
+<samp id="fail84" aria-labelledby="value"></samp>
+<small id="fail85" aria-label="value"></small>
+<small id="fail86" aria-labelledby="value"></small>
+<span id="fail87" aria-label="value"></span>
+<span id="fail88" aria-labelledby="value"></span>
+<strong id="fail89" aria-label="value"></strong>
+<strong id="fail90" aria-labelledby="value"></strong>
+<sub id="fail91" aria-label="value"></sub>
+<sub id="fail92" aria-labelledby="value"></sub>
+<sup id="fail93" aria-label="value"></sup>
+<sup id="fail94" aria-labelledby="value"></sup>
+<time id="fail95" aria-label="value"></time>
+<time id="fail96" aria-labelledby="value"></time>
+<u id="fail97" aria-label="value"></u>
+<u id="fail98" aria-labelledby="value"></u>
+<var id="fail99" aria-label="value"></var>
+<var id="fail100" aria-labelledby="value"></var>
 
 <div id="incomplete1" aria-label="foo">Foo</div>
 <div id="incomplete2" aria-labelledby="missing">Foo</div>

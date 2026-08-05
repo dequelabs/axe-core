@@ -50,6 +50,9 @@
       <p>Content</p>
     </section>
     <iframe id="region-frame" src="frames/region.html"></iframe>
+    <testutils-element no-role with-aria-live="polite">
+      <p>Content inside live region via elementInternals</p>
+    </testutils-element>
     <div id="mocha" role="complementary"></div>
     <script src="/test/testutils.js"></script>
     <script src="region-pass.js"></script>

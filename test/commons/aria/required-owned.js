@@ -1,11 +1,9 @@
-describe('aria.requiredOwned', function () {
-  'use strict';
-
-  afterEach(function () {
+describe('aria.requiredOwned', () => {
+  afterEach(() => {
     axe.reset();
   });
 
-  it('should returned the context property for the proper role', function () {
+  it('should returned the context property for the proper role', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -18,7 +16,7 @@ describe('aria.requiredOwned', function () {
     assert.deepEqual(axe.commons.aria.requiredOwned('cats'), ['yes']);
   });
 
-  it('should returned null if the required context is not an array', function () {
+  it('should returned null if the required context is not an array', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -31,14 +29,14 @@ describe('aria.requiredOwned', function () {
     assert.isNull(axe.commons.aria.requiredOwned('cats'));
   });
 
-  it('should return null if there are no required context nodes', function () {
-    var result = axe.commons.aria.requiredOwned('cats');
+  it('should return null if there are no required context nodes', () => {
+    const result = axe.commons.aria.requiredOwned('cats');
 
     assert.isNull(result);
   });
 
-  it('should return a unique copy of the context', function () {
-    var context = ['yes', 'no'];
+  it('should return a unique copy of the context', () => {
+    const context = ['yes', 'no'];
 
     axe.configure({
       standards: {
@@ -50,7 +48,7 @@ describe('aria.requiredOwned', function () {
       }
     });
 
-    var result = axe.commons.aria.requiredOwned('cats');
+    const result = axe.commons.aria.requiredOwned('cats');
     assert.notEqual(result, context);
   });
 });

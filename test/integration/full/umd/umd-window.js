@@ -1,52 +1,50 @@
 /*global Promise */
-describe('UMD window', function () {
-  'use strict';
-
-  it('should expose axe as a property of window', function () {
+describe('UMD window', () => {
+  it('should expose axe as a property of window', () => {
     assert.property(window, 'axe');
   });
 
-  it('should expose Promise as a property of window', function () {
+  it('should expose Promise as a property of window', () => {
     assert.property(window, 'Promise');
   });
 
-  it('should resolve Promise(s)', function (done) {
-    var p1 = new Promise(function (resolve) {
-      setTimeout(function () {
+  it('should resolve Promise(s)', done => {
+    const p1 = new Promise(resolve => {
+      setTimeout(() => {
         resolve('Hello');
       });
     });
-    var p2 = new Promise(function (resolve) {
-      setTimeout(function () {
+    const p2 = new Promise(resolve => {
+      setTimeout(() => {
         resolve('World!');
       });
     });
     Promise.all([p1, p2])
-      .then(function (values) {
+      .then(values => {
         assert.lengthOf(values, 2);
         assert.equal(values.join(' '), 'Hello World!');
         done();
       })
-      .catch(function () {
+      .catch(() => {
         done(new Error('Expected to resolve.'));
       });
   });
-  it('should reject Promise', function (done) {
-    new Promise(function (resolve, reject) {
-      setTimeout(function () {
+  it('should reject Promise', done => {
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
         reject(new Error('Boom!'));
       });
     })
-      .then(function () {
+      .then(() => {
         done(new Error('Expected to reject.'));
       })
-      .catch(function (err) {
+      .catch(err => {
         assert.isDefined(err);
         done();
       });
   });
 
-  it('should ensure axe has prototype chained keys', function () {
+  it('should ensure axe has prototype chained keys', () => {
     assert.hasAnyKeys(axe, ['utils', 'commons', 'core']);
   });
 });

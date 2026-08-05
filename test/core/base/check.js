@@ -7,7 +7,7 @@ describe('Check', () => {
 
   const fixture = document.getElementById('fixture');
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
@@ -225,7 +225,7 @@ describe('Check', () => {
       });
 
       it('should normalize non-object options for internal checks', done => {
-        metadataFunctionMap['custom-check'] = function (node, options) {
+        metadataFunctionMap['custom-check'] = (node, options) => {
           assert.deepEqual(options, { value: 'foo' });
           done();
         };
@@ -279,7 +279,7 @@ describe('Check', () => {
           context = {},
           result = { monkeys: 'bananas' };
 
-        axe.utils.checkHelper = function (checkResult, opts, callback) {
+        axe.utils.checkHelper = (checkResult, opts, callback) => {
           assert.instanceOf(checkResult, window.CheckResult);
           assert.equal(callback, cb);
           return result;
@@ -299,11 +299,11 @@ describe('Check', () => {
         new Check({
           evaluate() {
             const ready = this.async();
-            setTimeout(function () {
+            setTimeout(() => {
               ready(data);
             }, 10);
           }
-        }).run(fixture, {}, {}, function (d) {
+        }).run(fixture, {}, {}, d => {
           assert.instanceOf(d, CheckResult);
           assert.deepEqual(d.result, data);
           done();
@@ -314,7 +314,7 @@ describe('Check', () => {
         new Check({
           evaluate() {},
           enabled: false
-        }).run(fixture, {}, {}, function (data) {
+        }).run(fixture, {}, {}, data => {
           assert.isNull(data);
           done();
         });
@@ -329,7 +329,7 @@ describe('Check', () => {
             enabled: false
           },
           {},
-          function (data) {
+          data => {
             assert.isNull(data);
             done();
           }
@@ -341,7 +341,7 @@ describe('Check', () => {
           evaluate() {
             return true;
           }
-        }).run(fixture, {}, {}, function (data) {
+        }).run(fixture, {}, {}, data => {
           assert.instanceOf(data, CheckResult);
           assert.isTrue(data.result);
           done();
@@ -353,7 +353,7 @@ describe('Check', () => {
           evaluate() {
             throw new Error('Grenade!');
           }
-        }).run(fixture, {}, {}, noop, function (err) {
+        }).run(fixture, {}, {}, noop, err => {
           assert.instanceOf(err, Error);
           assert.equal(err.message, 'Grenade!');
           done();
@@ -398,7 +398,7 @@ describe('Check', () => {
       });
 
       it('should normalize non-object options for internal checks', done => {
-        metadataFunctionMap['custom-check'] = function (node, options) {
+        metadataFunctionMap['custom-check'] = (node, options) => {
           assert.deepEqual(options, { value: 'foo' });
           done();
         };
@@ -448,7 +448,7 @@ describe('Check', () => {
           new Check({
             evaluate() {
               const ready = this.async();
-              setTimeout(function () {
+              setTimeout(() => {
                 ready(data);
               }, 10);
             }
@@ -510,7 +510,7 @@ describe('Check', () => {
 
     describe('getOptions', () => {
       let check;
-      beforeEach(function () {
+      beforeEach(() => {
         check = new Check({
           options: {
             foo: 'bar'

@@ -1,4 +1,5 @@
 describe('dom.isFixedPosition', () => {
+  const html = axe.testUtils.html;
   const isFixedPosition = axe.commons.dom.isFixedPosition;
   const { queryFixture, queryShadowFixture } = axe.testUtils;
 
@@ -19,7 +20,7 @@ describe('dom.isFixedPosition', () => {
   for (const position of ['relative', 'absolute', 'sticky']) {
     it(`returns false for element with "position: ${position}"`, () => {
       const vNode = queryFixture(
-        `<div id="target" style="position: ${position}"></div>`
+        html`<div id="target" style="position: ${position}"></div>`
       );
 
       assert.isFalse(isFixedPosition(vNode));
@@ -42,8 +43,8 @@ describe('dom.isFixedPosition', () => {
     assert.isTrue(isFixedPosition(vNode));
   });
 
-  it('returns false on detached elements', function () {
-    var el = document.createElement('div');
+  it('returns false on detached elements', () => {
+    const el = document.createElement('div');
     el.innerHTML = 'I am not visible because I am detached!';
 
     assert.isFalse(axe.commons.dom.isFixedPosition(el));

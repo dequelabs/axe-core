@@ -192,16 +192,16 @@ describe('color-contrast blending test', () => {
 
     Array.from(nodes.children).forEach((node, index) => {
       const id = node.id;
-      const target = node.querySelector('#' + id + '-target');
-      const result = node.querySelector('#' + id + '-result');
+      const target = node.querySelector(`#${id}-target`);
+      const result = node.querySelector(`#${id}-result`);
       const blendModeIndex = blendMode + (index + 1);
 
       node.id = blendModeIndex;
-      target.id = blendModeIndex + '-target';
-      result.id = blendModeIndex + '-result';
+      target.id = `${blendModeIndex}-target`;
+      result.id = `${blendModeIndex}-result`;
 
       target.textContent = blendModeIndex;
-      result.textContent = blendModeIndex + ' result';
+      result.textContent = `${blendModeIndex} result`;
 
       target.style.mixBlendMode = blendMode;
       group.appendChild(node);
@@ -212,8 +212,8 @@ describe('color-contrast blending test', () => {
   const testElms = Array.from(document.querySelectorAll('.test-group > div'));
   testElms.forEach(testElm => {
     const id = testElm.id;
-    const target = testElm.querySelector('#' + id + '-target');
-    const result = testElm.querySelector('#' + id + '-result');
+    const target = testElm.querySelector(`#${id}-target`);
+    const result = testElm.querySelector(`#${id}-result`);
     include.push(target);
     resultElms.push(result);
   });
@@ -238,7 +238,7 @@ describe('color-contrast blending test', () => {
               0,
               node.target[0].lastIndexOf('-')
             );
-            const resultNode = document.querySelector(id + '-result');
+            const resultNode = document.querySelector(`${id}-result`);
             resultNode.style.backgroundColor = bgColor;
           });
         });
@@ -249,7 +249,7 @@ describe('color-contrast blending test', () => {
   });
 
   resultElms.forEach((elm, index) => {
-    it('produces the correct blended color for ' + elm.id, () => {
+    it(`produces the correct blended color for ${elm.id}`, () => {
       const style = window.getComputedStyle(elm);
       assert.equal(style.getPropertyValue('background-color'), expected[index]);
     });

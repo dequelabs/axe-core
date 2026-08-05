@@ -1,15 +1,13 @@
-describe('has-visible-text', function () {
-  'use strict';
+describe('has-visible-text', () => {
+  const checkSetup = axe.testUtils.checkSetup;
+  const checkContext = axe.testUtils.MockCheckContext();
 
-  var checkSetup = axe.testUtils.checkSetup;
-  var checkContext = axe.testUtils.MockCheckContext();
-
-  afterEach(function () {
+  afterEach(() => {
     checkContext.reset();
   });
 
-  it('should return false if there is no visible text', function () {
-    var params = checkSetup('<p id="target"></p>');
+  it('should return false if there is no visible text', () => {
+    const params = checkSetup('<p id="target"></p>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('has-visible-text')
@@ -17,8 +15,8 @@ describe('has-visible-text', function () {
     );
   });
 
-  it('should return false if there is text, but its hidden', function () {
-    var params = checkSetup(
+  it('should return false if there is text, but its hidden', () => {
+    const params = checkSetup(
       '<p id="target"><span style="display:none">hello!</span></p>'
     );
     assert.isFalse(
@@ -28,8 +26,8 @@ describe('has-visible-text', function () {
     );
   });
 
-  it('should return true if there is visible text', function () {
-    var params = checkSetup('<p id="target">hello!</p>');
+  it('should return true if there is visible text', () => {
+    const params = checkSetup('<p id="target">hello!</p>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('has-visible-text')
@@ -37,9 +35,9 @@ describe('has-visible-text', function () {
     );
   });
 
-  describe('SerialVirtualNode', function () {
-    it('should return false if element is not named from contents', function () {
-      var node = new axe.SerialVirtualNode({
+  describe('SerialVirtualNode', () => {
+    it('should return false if element is not named from contents', () => {
+      const node = new axe.SerialVirtualNode({
         nodeName: 'article'
       });
 
@@ -48,8 +46,8 @@ describe('has-visible-text', function () {
       );
     });
 
-    it('should return incomplete if no other properties are set', function () {
-      var node = new axe.SerialVirtualNode({
+    it('should return incomplete if no other properties are set', () => {
+      const node = new axe.SerialVirtualNode({
         nodeName: 'button'
       });
 
@@ -58,8 +56,8 @@ describe('has-visible-text', function () {
       );
     });
 
-    it('should return false if there is no visible text', function () {
-      var node = new axe.SerialVirtualNode({
+    it('should return false if there is no visible text', () => {
+      const node = new axe.SerialVirtualNode({
         nodeName: 'button'
       });
       node.children = [];
@@ -69,11 +67,11 @@ describe('has-visible-text', function () {
       );
     });
 
-    it('should return true if there is visible text', function () {
-      var node = new axe.SerialVirtualNode({
+    it('should return true if there is visible text', () => {
+      const node = new axe.SerialVirtualNode({
         nodeName: 'p'
       });
-      var child = new axe.SerialVirtualNode({
+      const child = new axe.SerialVirtualNode({
         nodeName: '#text',
         nodeType: 3,
         nodeValue: 'hello!'

@@ -1,6 +1,6 @@
-describe('frame-title virtual-rule', function () {
-  it('should pass for aria-label', function () {
-    var results = axe.runVirtualRule('frame-title', {
+describe('frame-title virtual-rule', () => {
+  it('should pass for aria-label', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         'aria-label': 'foobar'
@@ -12,8 +12,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should incomplete for aria-labelledby', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         'aria-labelledby': 'foobar'
@@ -25,8 +25,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should pass for title', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         title: 'foobar'
@@ -38,8 +38,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should pass for role=presentation', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         role: 'presentation'
@@ -51,8 +51,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should pass for role=none', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         role: 'none'
@@ -64,8 +64,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should fail when aria-label is empty', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         'aria-label': ''
@@ -77,8 +77,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should fail when title is empty', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         title: ''
@@ -90,8 +90,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for role=presentation and title', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should fail for role=presentation and title', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         role: 'presentation',
@@ -104,8 +104,8 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for role=none and title', function () {
-    var results = axe.runVirtualRule('frame-title', {
+  it('should fail for role=none and title', () => {
+    const results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
         role: 'none',

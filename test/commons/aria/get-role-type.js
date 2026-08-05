@@ -1,9 +1,8 @@
-describe('aria.getRoleType', function () {
-  'use strict';
-  var queryFixture = axe.testUtils.queryFixture;
-  var getRoleType = axe.commons.aria.getRoleType;
+describe('aria.getRoleType', () => {
+  const queryFixture = axe.testUtils.queryFixture;
+  const getRoleType = axe.commons.aria.getRoleType;
 
-  beforeEach(function () {
+  beforeEach(() => {
     axe._load({});
     axe.configure({
       standards: {
@@ -16,33 +15,33 @@ describe('aria.getRoleType', function () {
     });
   });
 
-  afterEach(function () {
+  afterEach(() => {
     axe.reset();
   });
 
-  it('should return the type from the lookup table', function () {
+  it('should return the type from the lookup table', () => {
     assert.equal(getRoleType('cats'), 'stuff');
   });
 
-  it('should return null if role is not found in the lookup table', function () {
+  it('should return null if role is not found in the lookup table', () => {
     assert.isNull(getRoleType('dogs'));
   });
 
-  it('should return null when passed null', function () {
+  it('should return null when passed null', () => {
     assert.isNull(getRoleType(null));
   });
 
-  it('should return null when passed undefined', function () {
+  it('should return null when passed undefined', () => {
     assert.isNull(getRoleType(undefined));
   });
 
-  it('returns the type from the role of a virtual node', function () {
-    var vNode = queryFixture('<span id="target" role="cats"></span>');
+  it('returns the type from the role of a virtual node', () => {
+    const vNode = queryFixture('<span id="target" role="cats"></span>');
     assert.equal(getRoleType(vNode), 'stuff');
   });
 
-  it('returns the type from the role of a DOM node', function () {
-    var domNode = queryFixture(
+  it('returns the type from the role of a DOM node', () => {
+    const domNode = queryFixture(
       '<span id="target" role="cats"></span>'
     ).actualNode;
     assert.equal(getRoleType(domNode), 'stuff');

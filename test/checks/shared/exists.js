@@ -1,7 +1,5 @@
-describe('exists', function () {
-  'use strict';
-
-  it('should return undefined', function () {
+describe('exists', () => {
+  it('should return undefined', () => {
     assert.isUndefined(checks.exists.evaluate());
   });
 });

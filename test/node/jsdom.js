@@ -2,20 +2,21 @@ const axe = require('../../');
 const jsdom = require('jsdom');
 const assert = require('assert');
 
-const domStr =
-  '<!DOCTYPE html>' +
-  '<html lang="en">' +
-  '<head>' +
-  '<meta charset="UTF-8">' +
-  '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-  '<title>Document</title>' +
-  '</head>' +
-  '<body>' +
-  'Hello' +
-  '<a id="hash-link" href="#main">Main</a>' +
-  '<a id="skip" href="https://page.com#main">Skip Link</a>' +
-  '</body>' +
-  '</html>';
+const domStr = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  </head>
+  <body>
+  Hello
+  <a id="hash-link" href="#main">Main</a>
+  <a id="skip" href="https://page.com#main">Skip Link</a>
+  </body>
+  </html>
+`;
 
 describe('jsdom axe-core', () => {
   it('should run without setting globals', () => {
@@ -25,7 +26,7 @@ describe('jsdom axe-core', () => {
       .run(dom.window.document.documentElement, {
         rules: { 'color-contrast': { enabled: false } }
       })
-      .then(function (results) {
+      .then(results => {
         assert.notEqual(results.violations.length, 0);
       });
   });
@@ -37,7 +38,7 @@ describe('jsdom axe-core', () => {
       .run(dom.window.document.documentElement, {
         rules: { 'color-contrast': { enabled: false } }
       })
-      .then(function (results) {
+      .then(results => {
         assert.notStrictEqual(results.violations.length, 0);
 
         dom = new jsdom.JSDOM(domStr);
@@ -46,7 +47,7 @@ describe('jsdom axe-core', () => {
           .run(dom.window.document.documentElement, {
             rules: { 'color-contrast': { enabled: false } }
           })
-          .then(function (res) {
+          .then(res => {
             assert.notStrictEqual(res.violations.length, 0);
           });
       });
@@ -95,7 +96,7 @@ describe('jsdom axe-core', () => {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function (results) {
+        .then(results => {
           assert.strictEqual(results.passes.length, 1);
         });
     });
@@ -125,7 +126,7 @@ describe('jsdom axe-core', () => {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function (results) {
+        .then(results => {
           assert.strictEqual(results.passes.length, 1);
         });
     });
@@ -155,7 +156,7 @@ describe('jsdom axe-core', () => {
         .run(dom.window.document.documentElement, {
           runOnly: ['check-current-page-link']
         })
-        .then(function (results) {
+        .then(results => {
           assert.strictEqual(results.passes.length, 1);
         });
     });
@@ -166,7 +167,7 @@ describe('jsdom axe-core', () => {
       axe.teardown();
     });
 
-    it('sets up the tree', function () {
+    it('sets up the tree', () => {
       const { document } = new jsdom.JSDOM(domStr).window;
       const tree = axe.setup(document.body);
       assert.equal(tree, axe._tree[0]);

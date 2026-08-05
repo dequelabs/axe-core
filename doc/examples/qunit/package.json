@@ -9,13 +9,11 @@
     "url": "http://deque.com/"
   },
   "scripts": {
-    "test": "grunt qunit"
+    "test": "node-qunit-puppeteer test/test.html"
   },
   "devDependencies": {
     "axe-core": "^4.6.2",
-    "grunt": "^1.6.1",
-    "grunt-contrib-qunit": "^10.1.1",
-    "puppeteer": "^23.1.0",
+    "node-qunit-puppeteer": "^2.2.1",
     "qunit": "^2.22.0"
   }
 }

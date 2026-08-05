@@ -1,18 +1,19 @@
-describe('standards.getGlobalAriaAttrs', function () {
-  var getGlobalAriaAttrs = axe.commons.standards.getGlobalAriaAttrs;
+describe('standards.getGlobalAriaAttrs', () => {
+  const getGlobalAriaAttrs = axe.commons.standards.getGlobalAriaAttrs;
 
-  before(function () {
+  before(() => {
     axe._load({});
   });
 
-  after(function () {
+  after(() => {
     axe.reset();
   });
 
-  it('should return global attrs', function () {
-    // Source: https://www.w3.org/TR/wai-aria-1.1/#global_states
-    var globalAttrs = getGlobalAriaAttrs();
+  it('should return global attrs', () => {
+    // Source: https://www.w3.org/TR/wai-aria/#global_states
+    const globalAttrs = getGlobalAriaAttrs();
     assert.deepEqual(globalAttrs, [
+      'aria-actions',
       'aria-atomic',
       'aria-braillelabel',
       'aria-brailleroledescription',
@@ -40,7 +41,7 @@ describe('standards.getGlobalAriaAttrs', function () {
     ]);
   });
 
-  it('should return configured global attrs', function () {
+  it('should return configured global attrs', () => {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -51,11 +52,11 @@ describe('standards.getGlobalAriaAttrs', function () {
       }
     });
 
-    var globalAttrs = getGlobalAriaAttrs();
+    const globalAttrs = getGlobalAriaAttrs();
     assert.include(globalAttrs, 'myAttr');
   });
 
-  it('should not return global attr that is configured to not be global', function () {
+  it('should not return global attr that is configured to not be global', () => {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -66,7 +67,7 @@ describe('standards.getGlobalAriaAttrs', function () {
       }
     });
 
-    var globalAttrs = getGlobalAriaAttrs();
+    const globalAttrs = getGlobalAriaAttrs();
     assert.notInclude(globalAttrs, 'aria-atomic');
   });
 });

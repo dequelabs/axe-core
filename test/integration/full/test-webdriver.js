@@ -9,11 +9,17 @@ const args = process.argv.slice(2);
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
 let browserArg = 'chrome';
+const urlArgs = [];
 args.forEach(arg => {
-  // pattern: browsers=Chrome
   const parts = arg.split('=');
-  if (parts[0] === 'browser') {
-    browserArg = parts[1].toLowerCase();
+  const key = parts[0];
+  const value = parts.slice(1).join('=');
+  if (key === 'browser') {
+    browserArg = value.toLowerCase();
+    return;
+  }
+  if (key === 'url' && value) {
+    urlArgs.push(value.replace(/\\/g, '/'));
   }
 });
 
@@ -27,7 +33,7 @@ function collectTestResults(driver) {
       const callback = arguments[arguments.length - 1];
       setTimeout(() => {
         if (!window.mocha) {
-          callback('mocha-missing;' + window.location.href);
+          callback(`mocha-missing;${window.location.href}`);
         }
         // return the mocha results (or undefined if not finished)
         callback(window.mochaResults);
@@ -37,9 +43,8 @@ function collectTestResults(driver) {
       // If there are no results, listen a little longer
       if (typeof result === 'string' && result.includes('mocha-missing')) {
         throw new Error(
-          'Mocha does not exist in: ' +
-            result.split(';')[1] +
-            '\nIf using a frame, put the file in a subdirectory'
+          `Mocha does not exist in: ${result.split(';')[1]}
+If using a frame, put the file in a subdirectory`
         );
       }
       if (!result) {
@@ -76,7 +81,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
         const browserName =
           capabilities.get('browserName') +
           (capabilities.get('mobileEmulationEnabled') ? '-mobile' : '');
-        console.log(url + ' [' + browserName + ']');
+        console.log(`${url} [${browserName}]`);
 
         // Remember the errors
         (result.reports || []).forEach(err => {
@@ -87,17 +92,9 @@ function runTestUrls(driver, isMobile, urls, errors) {
         });
 
         // Log the result of the page tests
-        console[result.failures ? 'error' : 'log'](
-          'passes: ' +
-            result.passes +
-            ', ' +
-            'failures: ' +
-            result.failures +
-            ', ' +
-            'duration: ' +
-            result.duration / 1000 +
-            's'
-        );
+        console[result.failures ? 'error' : 'log'](`passes: ${result.passes}, 
+          failures: ${result.failures}, 
+          duration: ${result.duration / 1000}s`);
         console.log();
       })
       .then(() => {
@@ -163,10 +160,14 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
-    ignore: '**/frames/**/*.{html,xhtml}'
-  }).map(url => {
-    return 'http://localhost:9876/' + url;
+  const testUrls = (
+    urlArgs.length
+      ? urlArgs
+      : globSync(['test/integration/full/**/*.{html,xhtml}'], {
+          ignore: '**/frames/**/*.{html,xhtml}'
+        })
+  ).map(url => {
+    return `http://localhost:9876/${url.replace(/^\//, '')}`;
   });
 
   if (
@@ -178,7 +179,7 @@ function start(options) {
   ) {
     console.log();
     console.log(
-      'Skipped ' + options.browser + ' as it is not supported on this platform'
+      `Skipped ${options.browser} as it is not supported on this platform`
     );
     return process.exit();
   }
@@ -199,10 +200,10 @@ function start(options) {
       // log each error and abort
       testErrors.forEach(err => {
         console.log();
-        console.log('URL: ' + err.url);
-        console.log('Browser: ' + err.browser);
-        console.log('Describe: ' + err.titles.join(' > '));
-        console.log('it ' + err.name);
+        console.log(`URL: ${err.url}`);
+        console.log(`Browser: ${err.browser}`);
+        console.log(`Describe: ${err.titles.join(' > ')}`);
+        console.log(`it ${err.name}`);
         console.log(err.stack);
         console.log();
       });

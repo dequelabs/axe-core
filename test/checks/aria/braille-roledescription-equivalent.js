@@ -1,4 +1,5 @@
 describe('braille-roledescription-equivalent tests', () => {
+  const html = axe.testUtils.html;
   const { checkSetup, getCheckEvaluate } = axe.testUtils;
   const checkContext = axe.testUtils.MockCheckContext();
   const checkEvaluate = getCheckEvaluate('braille-roledescription-equivalent');
@@ -26,20 +27,29 @@ describe('braille-roledescription-equivalent tests', () => {
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
+  it('returns true when both braille and roledescription are set via elementInternals', () => {
+    const params = checkSetup(
+      html`<testutils-element
+        id="target"
+        no-role
+        with-aria-brailleroledescription="foo"
+        with-aria-roledescription="bar"
+      ></testutils-element>`
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
   describe('when aria-brailleroledescription has text', () => {
     it('returns false without aria-roledescription', () => {
-      const params = checkSetup(`
-        <div
-          id="target"
-          aria-brailleroledescription="foo"
-        ></div>
+      const params = checkSetup(html`
+        <div id="target" aria-brailleroledescription="foo"></div>
       `);
       assert.isFalse(checkEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, { messageKey: 'noRoleDescription' });
     });
 
     it('returns false when aria-roledescription is empty', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <div
           id="target"
           aria-roledescription=""
@@ -67,7 +77,7 @@ describe('braille-roledescription-equivalent tests', () => {
     });
 
     it('returns true when aria-roledescription is not empty', () => {
-      const params = checkSetup(`
+      const params = checkSetup(html`
         <div
           id="target"
           aria-roledescription="foo"

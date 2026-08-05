@@ -1,6 +1,8 @@
 describe('Audit', () => {
+  const html = axe.testUtils.html;
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+  const externalAPIs = axe.externalAPIs;
   const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
   const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
@@ -89,10 +91,10 @@ describe('Audit', () => {
   let origUtils;
   beforeEach(() => {
     audit = new Audit();
-    mockRules.forEach(function (r) {
+    mockRules.forEach(r => {
       audit.addRule(r);
     });
-    mockChecks.forEach(function (c) {
+    mockChecks.forEach(c => {
       audit.addCheck(c);
     });
     origAuditRun = audit.run;
@@ -101,6 +103,11 @@ describe('Audit', () => {
   });
 
   afterEach(() => {
+    // reset elementInternals
+    externalAPIs({
+      getElementInternals: null,
+      elementInternalsTimeout: null
+    });
     axe.teardown();
     audit.run = origAuditRun;
     axe.utils = origUtils;
@@ -134,10 +141,7 @@ describe('Audit', () => {
       assert.equal(audit.data.rules.target, undefined);
       audit._constructHelpUrls();
       assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/axe/' +
-          ver +
-          '/target?application=axeAPI'
+        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=axeAPI`
       });
     });
     it('should use changed branding', () => {
@@ -152,10 +156,7 @@ describe('Audit', () => {
       audit.brand = 'thing';
       audit._constructHelpUrls();
       assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/thing/' +
-          ver +
-          '/target?application=axeAPI'
+        helpUrl: `https://dequeuniversity.com/rules/thing/${ver}/target?application=axeAPI`
       });
     });
     it('should use changed application', () => {
@@ -170,10 +171,7 @@ describe('Audit', () => {
       audit.application = 'thing';
       audit._constructHelpUrls();
       assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/axe/' +
-          ver +
-          '/target?application=thing'
+        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=thing`
       });
     });
 
@@ -184,10 +182,7 @@ describe('Audit', () => {
         matches: 'function () {return "hello";}',
         selector: 'bob',
         metadata: {
-          helpUrl:
-            'https://dequeuniversity.com/rules/myproject/' +
-            ver +
-            '/target1?application=axeAPI'
+          helpUrl: `https://dequeuniversity.com/rules/myproject/${ver}/target1?application=axeAPI`
         }
       });
       audit.addRule({
@@ -198,9 +193,7 @@ describe('Audit', () => {
 
       assert.equal(
         audit.data.rules.target1.helpUrl,
-        'https://dequeuniversity.com/rules/myproject/' +
-          ver +
-          '/target1?application=axeAPI'
+        `https://dequeuniversity.com/rules/myproject/${ver}/target1?application=axeAPI`
       );
       assert.isUndefined(audit.data.rules.target2);
 
@@ -210,17 +203,14 @@ describe('Audit', () => {
 
       assert.equal(
         audit.data.rules.target1.helpUrl,
-        'https://dequeuniversity.com/rules/myproject/' +
-          ver +
-          '/target1?application=axeAPI'
+        `https://dequeuniversity.com/rules/myproject/${ver}/target1?application=axeAPI`
       );
       assert.equal(
         audit.data.rules.target2.helpUrl,
-        'https://dequeuniversity.com/rules/thing/' +
-          ver +
-          '/target2?application=axeAPI'
+        `https://dequeuniversity.com/rules/thing/${ver}/target2?application=axeAPI`
       );
     });
+
     it('understands prerelease type version numbers', () => {
       const tempVersion = axe.version;
       audit = new Audit();
@@ -272,10 +262,7 @@ describe('Audit', () => {
       assert.equal(audit.data.rules.target, undefined);
       audit._constructHelpUrls();
       assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/axe/' +
-          ver +
-          '/target?application=axeAPI&lang=de'
+        helpUrl: `https://dequeuniversity.com/rules/axe/${ver}/target?application=axeAPI&lang=de`
       });
     });
   });
@@ -309,42 +296,6 @@ describe('Audit', () => {
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
     });
-    it('should call _constructHelpUrls', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding({
-        application: 'thing'
-      });
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/axe/' +
-          ver +
-          '/target?application=thing'
-      });
-    });
-    it('should call _constructHelpUrls even when nothing changed', () => {
-      audit = new Audit();
-      audit.addRule({
-        id: 'target',
-        matches: 'function () {return "hello";}',
-        selector: 'bob'
-      });
-      assert.lengthOf(audit.rules, 1);
-      assert.equal(audit.data.rules.target, undefined);
-      audit.setBranding(undefined);
-      assert.deepEqual(audit.data.rules.target, {
-        helpUrl:
-          'https://dequeuniversity.com/rules/axe/' +
-          ver +
-          '/target?application=axeAPI'
-      });
-    });
     it('should not replace custom set branding', () => {
       audit = new Audit();
       audit.addRule({
@@ -352,10 +303,7 @@ describe('Audit', () => {
         matches: 'function () {return "hello";}',
         selector: 'bob',
         metadata: {
-          helpUrl:
-            'https://dequeuniversity.com/rules/customer-x/' +
-            ver +
-            '/target?application=axeAPI'
+          helpUrl: `https://dequeuniversity.com/rules/customer-x/${ver}/target?application=axeAPI`
         }
       });
       audit.setBranding({
@@ -364,9 +312,7 @@ describe('Audit', () => {
       });
       assert.equal(
         audit.data.rules.target.helpUrl,
-        'https://dequeuniversity.com/rules/customer-x/' +
-          ver +
-          '/target?application=axeAPI'
+        `https://dequeuniversity.com/rules/customer-x/${ver}/target?application=axeAPI`
       );
     });
   });
@@ -593,17 +539,17 @@ describe('Audit', () => {
 
   describe('Audit#run', () => {
     it('should run all the rules', done => {
-      fixtureSetup(
-        '<input aria-label="monkeys" type="text">' +
-          '<div id="monkeys">bananas</div>' +
-          '<input aria-labelledby="monkeys">' +
-          '<blink>FAIL ME</blink>'
-      );
+      fixtureSetup(html`
+        <input aria-label="monkeys" type="text" />
+        <div id="monkeys">bananas</div>
+        <input aria-labelledby="monkeys" />
+        <blink>FAIL ME</blink>
+      `);
 
       audit.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {},
-        function (results) {
+        results => {
           const expected = [
             {
               id: 'positive1',
@@ -636,7 +582,7 @@ describe('Audit', () => {
           ];
 
           const out = results[0].nodes[0].node.source;
-          results.forEach(function (res) {
+          results.forEach(res => {
             // attribute order is a pain in the lower back in IE, so we're not
             // comparing nodes. Check.run and Rule.run do this.
             res.nodes = '...other tests cover this...';
@@ -663,7 +609,7 @@ describe('Audit', () => {
             }
           }
         },
-        function (results) {
+        results => {
           assert.equal(results.length, 3);
           done();
         },
@@ -684,7 +630,7 @@ describe('Audit', () => {
         randomRule.run(
           context,
           options,
-          function (ruleResult) {
+          ruleResult => {
             ruleResult.OPTIONS_PASSED = options;
             resolve([ruleResult]);
           },
@@ -702,7 +648,7 @@ describe('Audit', () => {
         {
           preload: preloadOptions
         },
-        function (res) {
+        res => {
           assert.isDefined(res);
 
           assert.lengthOf(res, 1);
@@ -737,11 +683,11 @@ describe('Audit', () => {
       const preloadOverrideInvoked = false;
 
       // override preload method
-      axe.utils.preload = function (options) {
+      axe.utils.preload = options => {
         preloadInvokedTime = new Date();
         preloadOverrideInvoked = true;
 
-        return new Promise(function (res, rej) {
+        return new Promise((res, rej) => {
           setTimeout(() => {
             res(true);
           }, 2000);
@@ -788,7 +734,7 @@ describe('Audit', () => {
         {
           preload: preloadOptions
         },
-        function (results) {
+        results => {
           assert.isDefined(results);
           // assert that check was invoked for rule(s)
           assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
@@ -822,7 +768,7 @@ describe('Audit', () => {
         data: 'you got it!'
       };
       // override preload method
-      axe.utils.preload = function (options) {
+      axe.utils.preload = options => {
         preloadOverrideInvoked = true;
         return Promise.resolve({
           cssom: preloadData
@@ -862,7 +808,7 @@ describe('Audit', () => {
         {
           preload: preloadOptions
         },
-        function (results) {
+        results => {
           assert.isDefined(results);
           // assert that check was invoked for rule(s)
           assert.isTrue(yesPreloadRuleCheckEvaluateInvoked);
@@ -870,7 +816,7 @@ describe('Audit', () => {
           assert.isTrue(preloadOverrideInvoked);
 
           // assert preload data that was passed to check
-          const ruleResult = results.filter(function (r) {
+          const ruleResult = results.filter(r => {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           const checkResult = ruleResult.nodes[0].any[0];
@@ -895,7 +841,7 @@ describe('Audit', () => {
         'Boom! Things went terribly wrong! (But this was intended in this test)';
 
       // override preload method
-      axe.utils.preload = function (options) {
+      axe.utils.preload = options => {
         preloadOverrideInvoked = true;
         return Promise.reject(rejectionMsg);
       };
@@ -933,7 +879,7 @@ describe('Audit', () => {
         {
           preload: preloadOptions
         },
-        function (results) {
+        results => {
           assert.isDefined(results);
           // assert preload was invoked
           assert.isTrue(preloadOverrideInvoked);
@@ -944,7 +890,7 @@ describe('Audit', () => {
           // assert that because preload failed
           // cssom was not populated on context of repective check
           assert.isTrue(preloadNeededCheckInvoked);
-          const ruleResult = results.filter(function (r) {
+          const ruleResult = results.filter(r => {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           const checkResult = ruleResult.nodes[0].any[0];
@@ -999,7 +945,7 @@ describe('Audit', () => {
         {
           preload: preloadOptions
         },
-        function (results) {
+        results => {
           assert.isDefined(results);
           // assert that both rules ran, although preload failed
           assert.lengthOf(results, 2);
@@ -1007,7 +953,7 @@ describe('Audit', () => {
           // assert that because preload failed
           // cssom was not populated on context of repective check
           assert.isTrue(preloadNeededCheckInvoked);
-          const ruleResult = results.filter(function (r) {
+          const ruleResult = results.filter(r => {
             return (r.id = 'yes-preload' && r.nodes.length > 0);
           })[0];
           const checkResult = ruleResult.nodes[0].any[0];
@@ -1088,7 +1034,7 @@ describe('Audit', () => {
 
       fixture.innerHTML = '<a href="#">link</a>';
       orig = rule.run;
-      rule.run = function (node, options, callback) {
+      rule.run = (node, options, callback) => {
         called = true;
         callback({});
       };
@@ -1113,7 +1059,7 @@ describe('Audit', () => {
 
       fixture.innerHTML = '<a href="#">link</a>';
       orig = rule.run;
-      rule.run = function (node, o, callback) {
+      rule.run = (node, o, callback) => {
         assert.deepEqual(o, options);
         passed = true;
         callback({});
@@ -1151,7 +1097,7 @@ describe('Audit', () => {
           page: false
         },
         {},
-        function (results) {
+        results => {
           assert.deepEqual(results, []);
         },
         isNotCalled
@@ -1191,11 +1137,12 @@ describe('Audit', () => {
     });
 
     it('should run axe.utils.normalizeRunOptions to ensure valid input', () => {
-      fixture.innerHTML =
-        '<input type="text" aria-label="monkeys">' +
-        '<div id="monkeys">bananas</div>' +
-        '<input aria-labelledby="monkeys" type="text">' +
-        '<blink>FAIL ME</blink>';
+      fixture.innerHTML = html`
+        <input type="text" aria-label="monkeys" />
+        <div id="monkeys">bananas</div>
+        <input aria-labelledby="monkeys" type="text" />
+        <blink>FAIL ME</blink>
+      `;
       assert.throws(() => {
         audit.run(
           { include: [axe.utils.getFlattenedTree(fixture)[0]] },
@@ -1273,6 +1220,94 @@ describe('Audit', () => {
         );
       });
     });
+
+    describe('elementInternals', () => {
+      it('runs external getElementInternals', done => {
+        const stub = sinon.stub().returns(Promise.resolve([]));
+        externalAPIs({
+          getElementInternals: stub
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          results => {
+            assert.isTrue(stub.called);
+            done();
+          },
+          isNotCalled
+        );
+      });
+
+      it('runs getElementInternals before any rules', done => {
+        fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+
+        let elementInternalsStartTime;
+        let ruleStartTime;
+
+        externalAPIs({
+          getElementInternals: () => {
+            elementInternalsStartTime = performance.now();
+            return new Promise(res => {
+              setTimeout(() => res([]), 100);
+            });
+          }
+        });
+
+        audit = new Audit();
+        audit.addRule({
+          id: 'rule-start',
+          selector: '*',
+          any: ['check-start']
+        });
+        audit.addCheck({
+          id: 'check-start',
+          evaluate: function (node, options, vNode, context) {
+            ruleStartTime = performance.now();
+            return true;
+          }
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          results => {
+            assert.isNumber(elementInternalsStartTime);
+            assert.isNumber(ruleStartTime);
+
+            assert.isTrue(
+              elementInternalsStartTime < ruleStartTime,
+              `elementInternals (${elementInternalsStartTime}ms) started after rules (${ruleStartTime}ms)`
+            );
+            done();
+          },
+          isNotCalled
+        );
+      });
+
+      it('rejects if getElementInternals timeout occurs', done => {
+        const stub = sinon.stub().returns(Promise.resolve([]));
+        externalAPIs({
+          elementInternalsTimeout: 200,
+          getElementInternals() {
+            return new Promise(res => {
+              setTimeout(() => res([]), 500);
+            });
+          }
+        });
+
+        audit.run(
+          { include: [axe.utils.getFlattenedTree()[0]] },
+          {},
+          isNotCalled,
+          err => {
+            assert.isTrue(err.message.includes('Timeout'));
+            assert.isTrue(err.message.includes('elementInternals'));
+            done();
+          }
+        );
+      });
+    });
   });
 
   describe('Audit#after', () => {
@@ -1295,7 +1330,7 @@ describe('Audit', () => {
         })
       );
 
-      audit.rules[0].after = function (res, opts) {
+      audit.rules[0].after = (res, opts) => {
         assert.equal(res, results[0]);
         assert.deepEqual(opts, options);
         success = true;

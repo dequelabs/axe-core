@@ -25,7 +25,6 @@ const example = async url => {
     // This function is injected into the browser and is responsible for
     // running `axe-core`.
     const browserCode = () => {
-      /* eslint-env browser */
       return new Promise((resolve, reject) => {
         const axe = window.axe;
         if (!axe) {

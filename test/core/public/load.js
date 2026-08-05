@@ -1,17 +1,17 @@
-describe('axe._load', function () {
-  var fixture = document.querySelector('#fixture');
-  var captureError = axe.testUtils.captureError;
+describe('axe._load', () => {
+  const fixture = document.querySelector('#fixture');
+  const captureError = axe.testUtils.captureError;
 
-  afterEach(function () {
+  afterEach(() => {
     axe._audit = null;
   });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(axe._load);
   });
 
-  it('should push rules on the Audit', function () {
-    var mockAudit = {
+  it('should push rules on the Audit', () => {
+    const mockAudit = {
       rules: [{ id: 'monkeys' }, { id: 'bananas' }]
     };
 
@@ -23,29 +23,29 @@ describe('axe._load', function () {
     assert.equal(axe._audit.rules[1].id, 'bananas');
   });
 
-  it('should load with a lang', function () {
+  it('should load with a lang', () => {
     axe._load({
       lang: 'ja'
     });
     assert.equal(axe._audit.lang, 'ja');
   });
 
-  describe('respondable subscriber', function () {
-    it('should add a respondable subscriber for axe.ping', function (done) {
-      var winParent = window.parent;
-      var mockAudit = {
+  describe('respondable subscriber', () => {
+    it('should add a respondable subscriber for axe.ping', done => {
+      const winParent = window.parent;
+      const mockAudit = {
         rules: [{ id: 'monkeys' }, { id: 'bananas' }]
       };
 
       axe._load(mockAudit);
 
-      var frame = document.createElement('iframe');
+      const frame = document.createElement('iframe');
       frame.src = '../mock/frames/test.html';
-      frame.addEventListener('load', function () {
-        var win = frame.contentWindow;
+      frame.addEventListener('load', () => {
+        const win = frame.contentWindow;
         window.parent = win;
-        win.postMessage = captureError(function (message) {
-          var data = JSON.parse(message);
+        win.postMessage = captureError(message => {
+          const data = JSON.parse(message);
           assert.deepEqual(data.payload, { axe: true });
           window.parent = winParent;
           done();
@@ -56,25 +56,25 @@ describe('axe._load', function () {
       fixture.appendChild(frame);
     });
 
-    describe('given command rules', function () {
+    describe('given command rules', () => {
       // todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
-      it.skip('should call `runRules` and default context to empty object', function (done) {
-        var mockAudit = {
+      it.skip('should call `runRules` and default context to empty object', done => {
+        const mockAudit = {
           rules: []
         };
-        var origSub = window.utils.respondable.subscribe;
-        var orig = window.runRules;
-        window.runRules = function (context, options, callback) {
+        const origSub = window.utils.respondable.subscribe;
+        const orig = window.runRules;
+        window.runRules = (context, options, callback) => {
           assert.deepEqual(context, {});
           assert.isFunction(callback);
           done();
         };
 
-        axe.utils.respondable.subscribe = function (topic, callback) {
+        axe.utils.respondable.subscribe = (topic, callback) => {
           callback(
             { data: 'iscool', command: 'rules' },
             undefined,
-            function (response) {
+            response => {
               // ping callback will call this response function
               assert.ok(response);
             }
@@ -87,20 +87,20 @@ describe('axe._load', function () {
       });
 
       // todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
-      it.skip('should pass data.context to `runRules`', function (done) {
-        var origSub = window.utils.respondable.subscribe;
-        var orig = window.runRules;
-        window.runRules = function (context, options, callback) {
+      it.skip('should pass data.context to `runRules`', done => {
+        const origSub = window.utils.respondable.subscribe;
+        const orig = window.runRules;
+        window.runRules = (context, options, callback) => {
           assert.deepEqual(context, { include: ['monkeys'] });
           assert.isFunction(callback);
           done();
         };
 
-        axe.utils.respondable.subscribe = function (topic, callback) {
+        axe.utils.respondable.subscribe = (topic, callback) => {
           callback(
             { command: 'rules', context: { include: ['monkeys'] } },
             undefined,
-            function (response) {
+            response => {
               assert.ok(response);
             }
           );
@@ -114,20 +114,20 @@ describe('axe._load', function () {
       });
 
       // todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
-      it.skip('should default include to current document if none are found', function (done) {
-        var origSub = axe.utils.respondable.subscribe;
-        var orig = window.runRules;
-        var expected = { include: [document] };
-        window.runRules = function (context) {
+      it.skip('should default include to current document if none are found', done => {
+        const origSub = axe.utils.respondable.subscribe;
+        const orig = window.runRules;
+        const expected = { include: [document] };
+        window.runRules = context => {
           assert.deepEqual(context, expected);
           done();
         };
 
-        axe.utils.respondable.subscribe = function (topic, callback) {
+        axe.utils.respondable.subscribe = (topic, callback) => {
           callback(
             { command: 'rules', context: { include: [] } },
             undefined,
-            function () {}
+            () => {}
           );
         };
         axe._load({
@@ -138,26 +138,26 @@ describe('axe._load', function () {
       });
     });
 
-    describe('given command cleanup-plugins', function () {
+    describe('given command cleanup-plugins', () => {
       // todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
-      it.skip('should call `cleanup`', function (done) {
-        var mockAudit = {
+      it.skip('should call `cleanup`', done => {
+        const mockAudit = {
           rules: []
         };
-        var origSub = window.utils.respondable.subscribe;
-        var orig = window.cleanup;
-        window.cleanup = function (callback) {
+        const origSub = window.utils.respondable.subscribe;
+        const orig = window.cleanup;
+        window.cleanup = callback => {
           assert.isFunction(callback);
           done();
         };
 
-        axe.utils.respondable.subscribe = function (topic, callback) {
+        axe.utils.respondable.subscribe = (topic, callback) => {
           callback(
             {
               command: 'cleanup-plugin'
             },
             undefined,
-            function (response) {
+            response => {
               // ping callback will call this response function
               assert.ok(response);
             }

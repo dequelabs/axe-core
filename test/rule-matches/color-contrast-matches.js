@@ -1,79 +1,88 @@
-describe('color-contrast-matches', function () {
-  'use strict';
+describe('color-contrast-matches', () => {
+  const html = axe.testUtils.html;
 
   const fixture = document.getElementById('fixture');
   const shadowSupport =
     document.body && typeof document.body.attachShadow === 'function';
   let rule;
 
-  beforeEach(function () {
+  beforeEach(() => {
     rule = axe.utils.getRule('color-contrast');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe._tree = undefined;
   });
 
-  it('is a function', function () {
+  it('is a function', () => {
     assert.isFunction(rule.matches);
   });
 
-  it('should not match when there is no text', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; background-color: white;" id="target">' +
-      ' </div>';
+  it('should not match when there is no text', () => {
+    fixture.innerHTML = html`
+      <div style="color: yellow; background-color: white;" id="target"></div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match when there is text', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; background-color: white;" id="target">' +
-      'My text</div>';
+  it('should match when there is text', () => {
+    fixture.innerHTML = html`
+      <div style="color: yellow; background-color: white;" id="target">
+        My text
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match when text only contains emoji', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; background-color: white;" id="target">' +
-      '🌎</div>';
+  it('should not match when text only contains emoji', () => {
+    fixture.innerHTML = html`
+      <div style="color: yellow; background-color: white;" id="target">🌎</div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match when text only contains punctuation', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; background-color: white;" id="target">' +
-      '&rlm;</div>';
+  it('should not match when text only contains punctuation', () => {
+    fixture.innerHTML = html`
+      <div style="color: yellow; background-color: white;" id="target">
+        &rlm;
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match when text only contains nonBmp unicode', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; background-color: white;" id="target">' +
-      '◓</div>';
+  it('should match when text only contains nonBmp unicode', () => {
+    fixture.innerHTML = html`
+      <div style="color: yellow; background-color: white;" id="target">◓</div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match when there is text that is out of the container', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
-      'My text</div>';
+  it('should not match when there is text that is out of the container', () => {
+    fixture.innerHTML = html`
+      <div
+        style="color: yellow; text-indent: -9999px; background-color: white;"
+        id="target"
+      >
+        My text
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match input when there is text that is out of the container', function () {
+  it('should not match input when there is text that is out of the container', () => {
     fixture.innerHTML =
       '<input style="text-indent: -9999px" type="submit" value="Search" />';
     const target = fixture.querySelector('input');
@@ -81,17 +90,18 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match select when there is text that is out of the container', function () {
-    fixture.innerHTML =
-      '<select style="text-indent: -9999px">' +
-      '<option selected>My text</option>' +
-      '</select>';
+  it('should not match select when there is text that is out of the container', () => {
+    fixture.innerHTML = html`
+      <select style="text-indent: -9999px">
+        <option selected>My text</option>
+      </select>
+    `;
     const target = fixture.querySelector('select');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match textarea when there is text that is out of the container', function () {
+  it('should not match textarea when there is text that is out of the container', () => {
     fixture.innerHTML =
       '<textarea style="text-indent: -9999px">My text</textarea>';
     const target = fixture.querySelector('textarea');
@@ -99,62 +109,77 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match when there is text that is out of the container with overflow hidden', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;" id="target">' +
-      'text</div>';
+  it('should not match when there is text that is out of the container with overflow hidden', () => {
+    fixture.innerHTML = html`
+      <div
+        style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;"
+        id="target"
+      >
+        text
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match when there is text that is in the scroll reach of container', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; width: 100px; overflow: scroll; text-indent: 200px; background-color: white;" id="target">' +
-      'text</div>';
+  it('should match when there is text that is in the scroll reach of container', () => {
+    fixture.innerHTML = html`
+      <div
+        style="color: yellow; width: 100px; overflow: scroll; text-indent: 200px; background-color: white;"
+        id="target"
+      >
+        text
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match when there is text that is only partially out of the container', function () {
-    fixture.innerHTML =
-      '<div style="color: yellow; text-indent: -20px; background-color: white;" id="target">' +
-      'My text</div>';
+  it('should match when there is text that is only partially out of the container', () => {
+    fixture.innerHTML = html`
+      <div
+        style="color: yellow; text-indent: -20px; background-color: white;"
+        id="target"
+      >
+        My text
+      </div>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match <input type="text">', function () {
+  it('should match <input type="text">', () => {
     fixture.innerHTML = '<input type="text">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <input type="hidden">', function () {
+  it('should not match <input type="hidden">', () => {
     fixture.innerHTML = '<input type="hidden">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <input type="checkbox">', function () {
+  it('should not match <input type="checkbox">', () => {
     fixture.innerHTML = '<input type="checkbox">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <input type="radio">', function () {
+  it('should not match <input type="radio">', () => {
     fixture.innerHTML = '<input type="radio">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <input type="color">', function () {
+  it('should not match <input type="color">', () => {
     fixture.innerHTML = '<input type="color">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
@@ -164,7 +189,7 @@ describe('color-contrast-matches', function () {
     }
   });
 
-  it('should not match <input type="range">', function () {
+  it('should not match <input type="range">', () => {
     fixture.innerHTML = '<input type="range">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
@@ -174,83 +199,92 @@ describe('color-contrast-matches', function () {
     }
   });
 
-  it('should match <select> with options', function () {
+  it('should match <select> with options', () => {
     fixture.innerHTML = '<select><option>Hello</option></select>';
     const target = fixture.querySelector('select');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <select> with no options', function () {
+  it('should not match <select> with no options', () => {
     fixture.innerHTML = '<select></select>';
     const target = fixture.querySelector('select');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match <textarea>', function () {
+  it('should match <textarea>', () => {
     fixture.innerHTML = '<textarea></textarea>';
     const target = fixture.querySelector('textarea');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <option>', function () {
+  it('should not match <option>', () => {
     fixture.innerHTML = '<select><option>hi</option></select>';
     const target = fixture.querySelector('option');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match inputs that are disabled', function () {
+  it('should not match inputs that are disabled', () => {
     fixture.innerHTML = '<input type="text" disabled>';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a disabled implicit label child', function () {
-    fixture.innerHTML =
-      '<label>' +
-      '<input type="checkbox" style="position: absolute;display: inline-block;width: 1.5rem;height: 1.5rem;opacity: 0;" disabled checked>' +
-      '<span style="background-color:rgba(0, 0, 0, 0.26);display:inline-block;width: 1.5rem;height: 1.5rem;" aria-hidden="true"></span>' +
-      '<span style="color:rgba(0, 0, 0, 0.38);" id="target">Baseball</span>' +
-      '</label>';
+  it('should not match a disabled implicit label child', () => {
+    fixture.innerHTML = html`
+      <label>
+        <input
+          type="checkbox"
+          style="position: absolute;display: inline-block;width: 1.5rem;height: 1.5rem;opacity: 0;"
+          disabled
+          checked
+        />
+        <span
+          style="background-color:rgba(0, 0, 0, 0.26);display:inline-block;width: 1.5rem;height: 1.5rem;"
+          aria-hidden="true"
+        ></span>
+        <span style="color:rgba(0, 0, 0, 0.38);" id="target">Baseball</span>
+      </label>
+    `;
     const target = fixture.querySelector('#target');
     axe.testUtils.flatTreeSetup(fixture);
     const result = rule.matches(target, axe.utils.getNodeFromTree(target));
     assert.isFalse(result);
   });
 
-  it('should not match <textarea disabled>', function () {
+  it('should not match <textarea disabled>', () => {
     fixture.innerHTML = '<textarea disabled></textarea>';
     const target = fixture.querySelector('textarea');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <select> with options', function () {
+  it('should not match <select> with options', () => {
     fixture.innerHTML = '<select disabled><option>Hello</option></select>';
     const target = fixture.querySelector('select');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match <button>', function () {
+  it('should match <button>', () => {
     fixture.innerHTML = '<button>hi</button>';
     const target = fixture.querySelector('button');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <button disabled>', function () {
+  it('should not match <button disabled>', () => {
     fixture.innerHTML = '<button disabled>hi</button>';
     const target = fixture.querySelector('button');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match <button disabled><span></span></button>', function () {
+  it('should not match <button disabled><span></span></button>', () => {
     fixture.innerHTML = '<button disabled><span>Hi</span></button>';
     const target = fixture.querySelector('button');
     axe.testUtils.flatTreeSetup(fixture);
@@ -262,7 +296,7 @@ describe('color-contrast-matches', function () {
     );
   });
 
-  it('should not match <button disabled><span><i></i></span></button>', function () {
+  it('should not match <button disabled><span><i></i></span></button>', () => {
     fixture.innerHTML = '<button disabled><span><i>Hi</i></span></button>';
     const target = fixture.querySelector('button');
     axe.testUtils.flatTreeSetup(fixture);
@@ -274,14 +308,14 @@ describe('color-contrast-matches', function () {
     );
   });
 
-  it('should not match <input type=image>', function () {
+  it('should not match <input type=image>', () => {
     fixture.innerHTML = '<input type="image">';
     const target = fixture.querySelector('input');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a disabled input's label - explicit label", function () {
+  it("should not match a disabled input's label - explicit label", () => {
     fixture.innerHTML =
       '<label for="t1">Test</label><input type="text" id="t1" disabled>';
     const target = fixture.querySelector('label');
@@ -289,7 +323,7 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match an aria-disabled input's label - explicit label", function () {
+  it("should not match an aria-disabled input's label - explicit label", () => {
     fixture.innerHTML =
       '<label for="t1">Test</label><input type="text" id="t1" aria-disabled="true">';
     const target = fixture.querySelector('label');
@@ -297,7 +331,7 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a parent aria-disabled input's label - explicit label", function () {
+  it("should not match a parent aria-disabled input's label - explicit label", () => {
     fixture.innerHTML =
       '<label for="t1">Test</label><div aria-disabled="true"><input type="text" id="t1"></div>';
     const target = fixture.querySelector('label');
@@ -305,21 +339,21 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a disabled input's label - implicit label (input)", function () {
+  it("should not match a disabled input's label - implicit label (input)", () => {
     fixture.innerHTML = '<label>Test<input type="text" disabled></label>';
     const target = fixture.querySelector('label');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a disabled input's label - implicit label (textarea)", function () {
+  it("should not match a disabled input's label - implicit label (textarea)", () => {
     fixture.innerHTML = '<label>Test<textarea disabled>Hi</textarea></label>';
     const target = fixture.querySelector('label');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a disabled input's label - implicit label (select)", function () {
+  it("should not match a disabled input's label - implicit label (select)", () => {
     fixture.innerHTML =
       '<label>Test<select disabled><option>Test</option></select></label>';
     const target = fixture.querySelector('label');
@@ -327,7 +361,7 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match a disabled input's label - aria-labelledby", function () {
+  it("should not match a disabled input's label - aria-labelledby", () => {
     fixture.innerHTML =
       '<div id="t1">Test</div><input type="text" aria-labelledby="bob t1 fred" disabled>';
     const target = fixture.querySelector('div');
@@ -335,52 +369,59 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should match when at least one input is not disabled - aria-labelledby', function () {
-    fixture.innerHTML =
-      '<div id="t1">Test</div>' +
-      '<input type="text" aria-labelledby="t1" disabled />' +
-      '<input type="text" aria-labelledby="t1" />';
+  it('should match when at least one input is not disabled - aria-labelledby', () => {
+    fixture.innerHTML = html`
+      <div id="t1">Test</div>
+      <input type="text" aria-labelledby="t1" disabled />
+      <input type="text" aria-labelledby="t1" />
+    `;
     const target = fixture.querySelector('div');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match when inputs are disabled by an ancestor - aria-labelledby', function () {
-    fixture.innerHTML =
-      '<div id="t1">Test</div>' +
-      '<fieldset disabled>' +
-      '<input type="text" aria-labelledby="t1" />' +
-      '<input type="text" aria-labelledby="t1" />' +
-      '</fieldset>';
+  it('should not match when inputs are disabled by an ancestor - aria-labelledby', () => {
+    fixture.innerHTML = html`
+      <div id="t1">Test</div>
+      <fieldset disabled>
+        <input type="text" aria-labelledby="t1" />
+        <input type="text" aria-labelledby="t1" />
+      </fieldset>
+    `;
     const target = fixture.querySelector('div');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match aria-disabled=true', function () {
+  it('should not match aria-disabled=true', () => {
     fixture.innerHTML = '<div aria-disabled="true">hi</div>';
     const target = fixture.querySelector('div');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a descendant of aria-disabled=true', function () {
+  it('should not match a descendant of aria-disabled=true', () => {
     fixture.innerHTML = '<div aria-disabled="true"><span>hi</span></div>';
     const target = fixture.querySelector('span');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it("should not match an aria-disabled input's label - aria-labelledby", function () {
-    fixture.innerHTML =
-      '<div id="t1"><span>Test</span></div>' +
-      '<div role="textbox" aria-labelledby="bob t1 fred" aria-disabled="true"></div>';
+  it("should not match an aria-disabled input's label - aria-labelledby", () => {
+    fixture.innerHTML = html`
+      <div id="t1"><span>Test</span></div>
+      <div
+        role="textbox"
+        aria-labelledby="bob t1 fred"
+        aria-disabled="true"
+      ></div>
+    `;
     const target = fixture.querySelector('span');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a descendant of a disabled fieldset', function () {
+  it('should not match a descendant of a disabled fieldset', () => {
     fixture.innerHTML =
       '<fieldset disabled><label>hi <input type="checkbox"></label></fieldset>';
     const target = fixture.querySelector('label');
@@ -388,7 +429,7 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a descendant of an explicit label for a disabled input', function () {
+  it('should not match a descendant of an explicit label for a disabled input', () => {
     fixture.innerHTML =
       '<input id="input" type="checkbox" disabled><label for="input"><span>hi</span></label>';
     const target = fixture.querySelector('span');
@@ -396,7 +437,7 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a descendant of an implicit label for a disabled input', function () {
+  it('should not match a descendant of an implicit label for a disabled input', () => {
     fixture.innerHTML =
       '<label for="input"><span>hi</span><input id="input" type="checkbox" disabled></label>';
     const target = fixture.querySelector('span');
@@ -404,14 +445,14 @@ describe('color-contrast-matches', function () {
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match inert', function () {
+  it('should not match inert', () => {
     fixture.innerHTML = '<div inert>hi</div>';
     const target = fixture.querySelector('div');
     axe.testUtils.flatTreeSetup(fixture);
     assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
-  it('should not match a descendant of inert', function () {
+  it('should not match a descendant of inert', () => {
     fixture.innerHTML = '<div inert><span>hi</span></div>';
     const target = fixture.querySelector('span');
     axe.testUtils.flatTreeSetup(fixture);
@@ -419,7 +460,7 @@ describe('color-contrast-matches', function () {
   });
 
   it('should not match text outside overflow', () => {
-    fixture.innerHTML = `
+    fixture.innerHTML = html`
       <div style="overflow: hidden; width: 50px;">
         <div style="overflow: hidden; width: 25px">
           <div id="target" style="padding-left: 65px;">Hello World</div>
@@ -439,9 +480,10 @@ describe('color-contrast-matches', function () {
   });
 
   if (shadowSupport) {
-    it('should match a descendant of an element across a shadow boundary', function () {
-      fixture.innerHTML =
-        '<div id="parent" style="background-color: #000;">' + '</div>';
+    it('should match a descendant of an element across a shadow boundary', () => {
+      fixture.innerHTML = html`
+        <div id="parent" style="background-color: #000;"></div>
+      `;
 
       const shadowRoot = document
         .getElementById('parent')
@@ -450,73 +492,88 @@ describe('color-contrast-matches', function () {
         '<div id="shadowTarget" style="color: #333">Text</div>';
 
       const shadowTarget =
-        fixture.firstChild.shadowRoot.querySelector('#shadowTarget');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowTarget');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isTrue(
         rule.matches(shadowTarget, axe.utils.getNodeFromTree(shadowTarget))
       );
     });
 
-    it('should look at the correct root node when looking up an explicit label and disabled input', function () {
-      fixture.innerHTML = '<div id="parent">' + '<input id="input">' + '</div>';
+    it('should look at the correct root node when looking up an explicit label and disabled input', () => {
+      fixture.innerHTML = html`
+        <div id="parent">
+          <input id="input" />
+        </div>
+      `;
 
       const shadowRoot = document
         .getElementById('parent')
         .attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML =
-        '<div id="shadowParent">' +
-        '<label for="input" id="shadowLabel">Label</label>' +
-        '<input id="input" disabled>' +
-        '</div>';
+      shadowRoot.innerHTML = html`
+        <div id="shadowParent">
+          <label for="input" id="shadowLabel">Label</label>
+          <input id="input" disabled />
+        </div>
+      `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))
       );
     });
 
-    it('should look at the correct root node when looking up implicit label and disabled input', function () {
-      fixture.innerHTML = '<div id="parent">' + '<input>' + '</div>';
+    it('should look at the correct root node when looking up implicit label and disabled input', () => {
+      fixture.innerHTML = html`
+        <div id="parent">
+          <input />
+        </div>
+      `;
 
       const shadowRoot = document
         .getElementById('parent')
         .attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML =
-        '<div id="shadowParent">' +
-        '<label id="shadowLabel">Label <input disabled></label>' +
-        '</div>';
+      shadowRoot.innerHTML = html`
+        <div id="shadowParent">
+          <label id="shadowLabel">Label <input disabled /></label>
+        </div>
+      `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))
       );
     });
 
-    it("should look at the correct root node for a disabled control's label associated w/ aria-labelledby", function () {
-      fixture.innerHTML = '<div id="parent">' + '<input id="input">' + '</div>';
+    it("should look at the correct root node for a disabled control's label associated w/ aria-labelledby", () => {
+      fixture.innerHTML = html`
+        <div id="parent">
+          <input id="input" />
+        </div>
+      `;
 
       const shadowRoot = document
         .getElementById('parent')
         .attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML =
-        '<div id="shadowParent">' +
-        '<label id="shadowLabel">Label</label>' +
-        '<input aria-labelledby="shadowLabel" disabled>' +
-        '</div>';
+      shadowRoot.innerHTML = html`
+        <div id="shadowParent">
+          <label id="shadowLabel">Label</label>
+          <input aria-labelledby="shadowLabel" disabled />
+        </div>
+      `;
 
       const shadowLabel =
-        fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
+        fixture.firstElementChild.shadowRoot.querySelector('#shadowLabel');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(
         rule.matches(shadowLabel, axe.utils.getNodeFromTree(shadowLabel))
       );
     });
 
-    it('should handle input/label spread across the shadow boundary', function () {
+    it('should handle input/label spread across the shadow boundary', () => {
       fixture.innerHTML = '<label>Text <div id="firstChild"></div></label>';
 
       const container = document.getElementById('firstChild');
@@ -530,18 +587,23 @@ describe('color-contrast-matches', function () {
       );
     });
 
-    it('should look at the children of a virtual node for overlap', function () {
-      fixture.innerHTML =
-        '<div id="parent">' +
-        '<div id="firstChild" style="background-color: #ccc; color: #fff;"></div>' +
-        '</div>';
+    it('should look at the children of a virtual node for overlap', () => {
+      fixture.innerHTML = html`
+        <div id="parent">
+          <div
+            id="firstChild"
+            style="background-color: #ccc; color: #fff;"
+          ></div>
+        </div>
+      `;
 
       const shadowRoot = document
         .getElementById('firstChild')
         .attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML =
-        'Some text' +
-        '<p style="color: #fff;" id="shadowTarget">Other text</p>';
+      shadowRoot.innerHTML = html`
+        Some text
+        <p style="color: #fff;" id="shadowTarget">Other text</p>
+      `;
 
       const firstChild = fixture.querySelector('#firstChild');
       axe.testUtils.flatTreeSetup(fixture);
@@ -550,11 +612,14 @@ describe('color-contrast-matches', function () {
       );
     });
 
-    it('should handle an input added through slotted content', function () {
-      fixture.innerHTML =
-        '<label>Option 1 <span class="slotted">' +
-        '<input type="text" name="slottedLabel" />' +
-        '</span></label>';
+    it('should handle an input added through slotted content', () => {
+      fixture.innerHTML = html`
+        <label
+          >Option 1
+          <span class="slotted">
+            <input type="text" name="slottedLabel" /> </span
+        ></label>
+      `;
 
       function createContentSlotted() {
         const group = document.createElement('span');
@@ -591,9 +656,12 @@ describe('color-contrast-matches', function () {
     });
 
     it('is false for multiple icons', () => {
-      fixture.innerHTML = `<div id="target" style="font-family: \'Material Icons\'">
-          check star favorite
-        </div>`;
+      fixture.innerHTML = html`<div
+        id="target"
+        style="font-family: 'Material Icons'"
+      >
+        check star favorite
+      </div>`;
       const target = fixture.querySelector('#target');
       axe.testUtils.flatTreeSetup(fixture);
       assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));

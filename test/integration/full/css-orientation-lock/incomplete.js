@@ -1,7 +1,5 @@
-describe('css-orientation-lock incomplete test', function () {
-  'use strict';
-
-  it('returns INCOMPLETE if preload is set to FALSE', function (done) {
+describe('css-orientation-lock incomplete test', () => {
+  it('returns INCOMPLETE if preload is set to FALSE', done => {
     axe.run(
       {
         runOnly: {
@@ -10,7 +8,7 @@ describe('css-orientation-lock incomplete test', function () {
         },
         preload: false
       },
-      function (err, res) {
+      (err, res) => {
         assert.isNull(err);
         assert.isDefined(res);
 
@@ -21,7 +19,7 @@ describe('css-orientation-lock incomplete test', function () {
     );
   });
 
-  it('returns INCOMPLETE as page has no styles (not even mocha styles)', function (done) {
+  it('returns INCOMPLETE as page has no styles (not even mocha styles)', done => {
     axe.run(
       {
         runOnly: {
@@ -29,7 +27,7 @@ describe('css-orientation-lock incomplete test', function () {
           values: ['css-orientation-lock']
         }
       },
-      function (err, res) {
+      (err, res) => {
         assert.isNull(err);
         assert.isDefined(res);
 

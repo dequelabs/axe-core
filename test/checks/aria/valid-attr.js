@@ -1,15 +1,13 @@
-describe('aria-valid-attr', function () {
-  'use strict';
+describe('aria-valid-attr', () => {
+  const queryFixture = axe.testUtils.queryFixture;
+  const checkContext = axe.testUtils.MockCheckContext();
 
-  var queryFixture = axe.testUtils.queryFixture;
-  var checkContext = axe.testUtils.MockCheckContext();
-
-  afterEach(function () {
+  afterEach(() => {
     checkContext.reset();
   });
 
-  it('should return false if any invalid ARIA attributes are found', function () {
-    var vNode = queryFixture(
+  it('should return false if any invalid ARIA attributes are found', () => {
+    const vNode = queryFixture(
       '<div id="target" tabindex="1" aria-cats="true" aria-dogs="true"></div>'
     );
     assert.isFalse(
@@ -20,8 +18,8 @@ describe('aria-valid-attr', function () {
     assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
   });
 
-  it('should return true if no invalid ARIA attributes are found', function () {
-    var vNode = queryFixture(
+  it('should return true if no invalid ARIA attributes are found', () => {
+    const vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true"></div>'
     );
     assert.isTrue(
@@ -32,7 +30,7 @@ describe('aria-valid-attr', function () {
     assert.isNull(checkContext._data);
   });
 
-  it('should return true for unsupported ARIA attributes', function () {
+  it('should return true for unsupported ARIA attributes', () => {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -43,7 +41,7 @@ describe('aria-valid-attr', function () {
       }
     });
 
-    var vNode = queryFixture(
+    const vNode = queryFixture(
       '<div id="target" tabindex="1" aria-mccheddarton="true"></div>'
     );
     assert.isTrue(
@@ -54,9 +52,9 @@ describe('aria-valid-attr', function () {
     assert.isNull(checkContext._data);
   });
 
-  describe('options', function () {
-    it('should exclude provided attribute names', function () {
-      var vNode = queryFixture(
+  describe('options', () => {
+    it('should exclude provided attribute names', () => {
+      const vNode = queryFixture(
         '<div id="target" aria-bats="cat" aria-puppies="2"></div>'
       );
       assert.isTrue(

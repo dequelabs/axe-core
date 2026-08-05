@@ -1,15 +1,15 @@
-describe('help-same-as-label', function () {
-  'use strict';
+describe('help-same-as-label', () => {
+  const { checkSetup, html } = axe.testUtils;
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('help-same-as-label');
+  const fixture = document.getElementById('fixture');
 
-  var fixture = document.getElementById('fixture');
-
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
     axe._tree = undefined;
   });
 
-  it('should return true if an element has a label and a title with the same text', function () {
-    var node = document.createElement('input');
+  it('should return true if an element has a label and a title with the same text', () => {
+    const node = document.createElement('input');
     node.type = 'text';
     node.title = 'Duplicate';
     node.setAttribute('aria-label', 'Duplicate');
@@ -25,12 +25,12 @@ describe('help-same-as-label', function () {
     );
   });
 
-  it('should return true if an element has a label and aria-describedby with the same text', function () {
-    var node = document.createElement('input');
+  it('should return true if an element has a label and aria-describedby with the same text', () => {
+    const node = document.createElement('input');
     node.type = 'text';
     node.setAttribute('aria-label', 'Duplicate');
     node.setAttribute('aria-describedby', 'dby');
-    var dby = document.createElement('div');
+    const dby = document.createElement('div');
     dby.id = 'dby';
     dby.innerHTML = 'Duplicate';
 
@@ -47,8 +47,8 @@ describe('help-same-as-label', function () {
     );
   });
 
-  it('should return false if input only has a title', function () {
-    var node = document.createElement('input');
+  it('should return false if input only has a title', () => {
+    const node = document.createElement('input');
     node.type = 'text';
     node.title = 'Duplicate';
 
@@ -64,11 +64,11 @@ describe('help-same-as-label', function () {
     );
   });
 
-  it('should return true if an input only has aria-describedby', function () {
-    var node = document.createElement('input');
+  it('should return true if an input only has aria-describedby', () => {
+    const node = document.createElement('input');
     node.type = 'text';
     node.setAttribute('aria-describedby', 'dby');
-    var dby = document.createElement('div');
+    const dby = document.createElement('div');
     dby.id = 'dby';
     dby.innerHTML = 'Duplicate';
 
@@ -83,5 +83,19 @@ describe('help-same-as-label', function () {
         axe.utils.getNodeFromTree(node)
       )
     );
+  });
+
+  describe('ElementInternals', () => {
+    it('should return true if an element has a label and elementInternals aria-describedby with the same text', () => {
+      const params = checkSetup(html`
+        <div id="dby">Duplicate</div>
+        <testutils-element
+          id="target"
+          aria-label="Duplicate"
+          with-aria-describedby="dby"
+        ></testutils-element>
+      `);
+      assert.isTrue(checkEvaluate.apply(null, params));
+    });
   });
 });

@@ -1,5 +1,5 @@
 {
-  "lang": "zh_CN",
+  "lang": "zh-CN",
   "rules": {
     "accesskeys": {
       "description": "确保每个 accesskey 属性值都是唯一的",

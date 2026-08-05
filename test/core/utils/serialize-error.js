@@ -1,4 +1,4 @@
-describe('utils.serializeError', function () {
+describe('utils.serializeError', () => {
   const serializeError = axe.utils.serializeError;
 
   it('should serialize an error', () => {

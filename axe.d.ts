@@ -37,12 +37,7 @@ declare namespace axe {
     | 'sectionhead';
 
   type HtmlContentTypes =
-    | 'flow'
-    | 'sectioning'
-    | 'heading'
-    | 'phrasing'
-    | 'embedded'
-    | 'interactive';
+    'flow' | 'sectioning' | 'heading' | 'phrasing' | 'embedded' | 'interactive';
 
   // Array of length 2 or greater
   type MultiArray<T> = [T, T, ...T[]];
@@ -65,10 +60,7 @@ declare namespace axe {
 
   // Context options
   type Selector =
-    | Node
-    | BaseSelector
-    | LabelledShadowDomSelector
-    | LabelledFramesSelector;
+    Node | BaseSelector | LabelledShadowDomSelector | LabelledFramesSelector;
   type SelectorList = Array<Selector | FramesSelector> | NodeList;
   type ContextProp = Selector | SelectorList;
   type ContextObject =
@@ -85,9 +77,7 @@ declare namespace axe {
   type ElementContext = ContextSpec;
 
   type SerialSelector =
-    | BaseSelector
-    | LabelledShadowDomSelector
-    | LabelledFramesSelector;
+    BaseSelector | LabelledShadowDomSelector | LabelledFramesSelector;
   type SerialFrameSelector = SerialSelector | FramesSelector;
   type SerialSelectorList = Array<SerialFrameSelector>;
 
@@ -310,8 +300,7 @@ declare namespace axe {
           virtualNode: VirtualNode
         ) => boolean | undefined | void);
     after?:
-      | string
-      | ((results: AfterResult[], options: unknown) => AfterResult[]);
+      string | ((results: AfterResult[], options: unknown) => AfterResult[]);
     options?: any;
     matches?: string;
     enabled?: boolean;
@@ -334,7 +323,7 @@ declare namespace axe {
     matches?: string | ((node: Element, virtualNode: VirtualNode) => boolean);
     reviewOnFail?: boolean;
     actIds?: string[];
-    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds'>;
+    metadata?: Omit<RuleMetadata, 'ruleId' | 'tags' | 'actIds' | 'enabled'>;
   }
   interface AxePlugin {
     id: string;
@@ -352,6 +341,7 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
     actIds?: string[];
+    enabled?: boolean;
   }
   interface SerialDqElement {
     source: string;
@@ -622,12 +612,22 @@ declare namespace axe {
    * @param  {Array}  tags  Optional array of tags
    * @return {Array}  Array of rules
    */
-  function getRules(tags?: string[]): RuleMetadata[];
+  function getRules(
+    tags?: string[]
+  ): (Omit<RuleMetadata, 'enabled'> & { enabled: boolean })[];
 
   /**
    * Restores the default axe configuration
    */
   function reset(): void;
+
+  /**
+   * Restores the default locale that was active before any
+   * `axe.configure({ locale })` call. No-op if no non-default
+   * locale has ever been applied. Does not affect any other
+   * configuration.
+   */
+  function resetLocale(): void;
 
   /**
    * Function to register a plugin configuration in document and its subframes
@@ -673,6 +673,31 @@ declare namespace axe {
     reporter: AxeReporter<T>,
     isDefault?: boolean
   ): void;
+
+  /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function externalAPIs(params?: {
+    elementInternalsTimeout?: number;
+    getElementInternals?: () => Promise<ElementInternalsMap>;
+  }): void;
+
+  type ElementInternalsMap = Array<{
+    ancestry: CrossTreeSelector;
+    internals: Record<string, InternalsData>;
+  }>;
+  type InternalsData = string | InternalsDataIdref | InternalsDataIdrefs;
+  type InternalsDataIdref = {
+    type: 'HTMLElement';
+    value: CrossTreeSelector;
+  };
+  type InternalsDataIdrefs = {
+    type: 'NodeList';
+    value: CrossTreeSelector[];
+  };
 
   // axe.frameMessenger
   type FrameMessenger = {

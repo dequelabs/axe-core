@@ -3,7 +3,7 @@
   const testObj = {}; /*tests*/
 
   const ruleId = testObj.rule;
-  const testName = testObj.description || ruleId + ' test';
+  const testName = testObj.description || `${ruleId} test`;
 
   function flattenResult(results) {
     return {
@@ -56,9 +56,9 @@
           });
 
           test[collection].forEach(selector => {
-            it('should find ' + JSON.stringify(selector), () => {
+            it(`should find ${JSON.stringify(selector)}`, () => {
               if (!nodes) {
-                assert(false, 'there are no ' + collection);
+                assert(false, `there are no ${collection}`);
                 return;
               }
 
@@ -82,7 +82,7 @@
               } else {
                 assert(
                   false,
-                  'Found ' + matches.length + ' elements which match the target'
+                  `Found ${matches.length} elements which match the target`
                 );
               }
             });
@@ -99,7 +99,7 @@
               assert.lengthOf(
                 test[collection],
                 0,
-                'there are no ' + collection
+                `there are no ${collection}`
               );
             }
           });
@@ -128,7 +128,7 @@
               (err, r) => {
                 // assert that there are no errors - if error exists a stack trace is logged.
                 const errStack = err && err.stack ? err.stack : '';
-                assert.isNull(err, 'Error should be null. ' + errStack);
+                assert.isNull(err, `Error should be null. ${errStack}`);
                 // assert that result is defined
                 assert.isDefined(r, 'Results are defined.');
                 // assert that result has certain keys

@@ -1,4 +1,5 @@
 describe('dom.isInert', () => {
+  const html = axe.testUtils.html;
   const fixture = document.querySelector('#fixture');
   const isInert = axe.commons.dom.isInert;
   const { queryFixture, flatTreeSetup } = axe.testUtils;
@@ -30,7 +31,7 @@ describe('dom.isInert', () => {
   });
 
   it('returns false for closed dialog', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <dialog><span>Hello</span></dialog>
       <div id="target">World</div>
     `);
@@ -39,7 +40,7 @@ describe('dom.isInert', () => {
   });
 
   it('returns false for non-modal dialog', () => {
-    const vNode = queryFixture(`
+    const vNode = queryFixture(html`
       <dialog open><span>Hello</span></dialog>
       <div id="target">World</div>
     `);
@@ -48,7 +49,7 @@ describe('dom.isInert', () => {
   });
 
   it('returns true for modal dialog', () => {
-    fixture.innerHTML = `
+    fixture.innerHTML = html`
       <dialog id="modal"><span>Hello</span></dialog>
       <div id="target">World</div>
     `;
@@ -60,9 +61,7 @@ describe('dom.isInert', () => {
   });
 
   it('returns false for the modal dialog element', () => {
-    fixture.innerHTML = `
-      <dialog id="target"><span>Hello</span></dialog>
-    `;
+    fixture.innerHTML = html` <dialog id="target"><span>Hello</span></dialog> `;
     document.querySelector('#target').showModal();
     const tree = flatTreeSetup(fixture);
     const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
@@ -71,7 +70,7 @@ describe('dom.isInert', () => {
   });
 
   it('returns false for a descendant of the modal dialog', () => {
-    fixture.innerHTML = `
+    fixture.innerHTML = html`
       <dialog id="modal"><span id="target">Hello</span></dialog>
     `;
     document.querySelector('#modal').showModal();
@@ -93,7 +92,7 @@ describe('dom.isInert', () => {
 
   describe('options.isAncestor', () => {
     it('return false for modal dialog', () => {
-      fixture.innerHTML = `
+      fixture.innerHTML = html`
         <dialog id="modal"><span>Hello</span></dialog>
         <div id="target">World</div>
       `;

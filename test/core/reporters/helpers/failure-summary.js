@@ -1,6 +1,5 @@
-describe('helpers.failureSummary', function () {
-  'use strict';
-  beforeEach(function () {
+describe('helpers.failureSummary', () => {
+  beforeEach(() => {
     axe._load({
       messages: {},
       rules: [],
@@ -8,15 +7,16 @@ describe('helpers.failureSummary', function () {
         failureSummaries: {
           none: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix all of the following: \n';
-              var arr1 = it;
+              let out = 'Fix all of the following: \n';
+              const arr1 = it;
               if (arr1) {
                 var value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
                   value = arr1[(i1 += 1)];
-                  out += ' ' + value + '\n';
+                  out += ` ${value}
+`;
                 }
               }
               return out;
@@ -29,15 +29,16 @@ describe('helpers.failureSummary', function () {
           },
           any: {
             failureMessage: function anonymous(it) {
-              var out = 'Fix any of the following: \n';
-              var arr1 = it;
+              let out = 'Fix any of the following: \n';
+              const arr1 = it;
               if (arr1) {
                 var value,
                   i1 = -1,
                   l1 = arr1.length - 1;
                 while (i1 < l1) {
                   value = arr1[(i1 += 1)];
-                  out += ' ' + value + '\n';
+                  out += ` ${value}
+`;
                 }
               }
               return out;
@@ -48,8 +49,8 @@ describe('helpers.failureSummary', function () {
     });
   });
 
-  it('should concatenate none and all', function () {
-    var summary = helpers.failureSummary({
+  it('should concatenate none and all', () => {
+    const summary = helpers.failureSummary({
       result: 'failed',
       any: [],
       all: [
@@ -73,8 +74,8 @@ describe('helpers.failureSummary', function () {
     assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n');
   });
 
-  it('should return a list of ANYs if none return true', function () {
-    var summary = helpers.failureSummary({
+  it('should return a list of ANYs if none return true', () => {
+    const summary = helpers.failureSummary({
       result: 'failed',
       any: [
         {
@@ -97,8 +98,8 @@ describe('helpers.failureSummary', function () {
     assert.equal(summary, 'Fix any of the following: \n 1\n 2\n 3\n');
   });
 
-  it('should concatenate anys', function () {
-    var summary = helpers.failureSummary({
+  it('should concatenate anys', () => {
+    const summary = helpers.failureSummary({
       result: 'failed',
       any: [
         {

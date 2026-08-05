@@ -1,24 +1,22 @@
-describe('axe.utils.getStyleSheetFactory', function () {
-  'use strict';
-
-  var dynamicDoc = document.implementation.createHTMLDocument(
+describe('axe.utils.getStyleSheetFactory', () => {
+  const dynamicDoc = document.implementation.createHTMLDocument(
     'Dynamic document for testing axe.utils.getStyleSheetFactory'
   );
 
-  it('throws if there is no argument of dynamicDocument', function () {
-    assert.throws(function () {
+  it('throws if there is no argument of dynamicDocument', () => {
+    assert.throws(() => {
       axe.utils.getStyleSheetFactory();
     });
   });
 
-  it('returns a function when passed argument of dynamicDocument', function () {
-    var actual = axe.utils.getStyleSheetFactory(dynamicDoc);
+  it('returns a function when passed argument of dynamicDocument', () => {
+    const actual = axe.utils.getStyleSheetFactory(dynamicDoc);
     assert.isFunction(actual);
   });
 
-  it('returns a CSSOM stylesheet, when invoked with data (text)', function () {
-    var stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
-    var actual = stylesheetFactory({
+  it('returns a CSSOM stylesheet, when invoked with data (text)', () => {
+    const stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
+    const actual = stylesheetFactory({
       data: '.someStyle{background-color:red;}',
       root: document,
       priority: [1, 0]

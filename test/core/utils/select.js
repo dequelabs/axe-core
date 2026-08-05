@@ -1,4 +1,5 @@
 describe('axe.utils.select', () => {
+  const html = axe.testUtils.html;
   const $id = id => document.getElementById(id);
   const { Context } = axe._thisWillBeDeletedDoNotUse.base;
   const { fixtureSetup } = axe.testUtils;
@@ -47,14 +48,14 @@ describe('axe.utils.select', () => {
 
     it('should pick the deepest exclude/include - exclude winning', () => {
       fixtureSetup(
-        `<div id="include1">
-        	<div id="exclude1">
-        		<div id="include2">
-        			<div id="exclude2">
-        				<div class="bananas"></div>
-        			</div>
-        		</div>
-        	</div>
+        html`<div id="include1">
+          <div id="exclude1">
+            <div id="include2">
+              <div id="exclude2">
+                <div class="bananas"></div>
+              </div>
+            </div>
+          </div>
         </div>`
       );
       const context = new Context(
@@ -70,16 +71,16 @@ describe('axe.utils.select', () => {
 
     it('should pick the deepest exclude/include - include winning', () => {
       fixtureSetup(
-        `<div id="include1"> 
-        	<div id="exclude1"> 
-        		<div id="include2"> 
-        			<div id="exclude2"> 
-        				<div id="include3"> 
-        					<div id="bananas" class="bananas"></div> 
-        				</div> 
-        			</div> 
-        		</div> 
-        	</div> 
+        html`<div id="include1">
+          <div id="exclude1">
+            <div id="include2">
+              <div id="exclude2">
+                <div id="include3">
+                  <div id="bananas" class="bananas"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>`
       );
       const context = new Context(
@@ -111,10 +112,12 @@ describe('axe.utils.select', () => {
   });
 
   it('should not return duplicates on overlapping includes', () => {
-    fixtureSetup(
-      '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
-        '<div id="two"><div id="target2" class="bananas"></div></div></div>'
-    );
+    fixtureSetup(html`
+      <div id="zero">
+        <div id="one"><div id="target1" class="bananas"></div></div>
+        <div id="two"><div id="target2" class="bananas"></div></div>
+      </div>
+    `);
     const context = new Context(
       {
         include: [['#zero'], ['#one']]
@@ -131,10 +134,12 @@ describe('axe.utils.select', () => {
   });
 
   it('should return the cached result if one exists', () => {
-    fixtureSetup(
-      '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
-        '<div id="two"><div id="target2" class="bananas"></div></div></div>'
-    );
+    fixtureSetup(html`
+      <div id="zero">
+        <div id="one"><div id="target1" class="bananas"></div></div>
+        <div id="two"><div id="target2" class="bananas"></div></div>
+      </div>
+    `);
 
     axe._selectCache = [
       {

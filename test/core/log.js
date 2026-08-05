@@ -1,26 +1,24 @@
-describe('axe.log', function () {
-  'use strict';
+describe('axe.log', () => {
+  afterEach(() => {
+    sinon.restore();
+  });
 
-  it('should be a function', function () {
+  it('should be a function', () => {
     assert.isFunction(axe.log);
   });
-  it('should invoke console.log', function () {
-    var orig = window.console;
-    if (!window.console || window.console.log) {
-      window.console = { log: function () {} };
-    }
-    var expected = ['hi', 'hello'];
-    var success = false;
 
-    window.console.log = function () {
-      success = true;
-      assert.equal(arguments[0], expected[0]);
-      assert.equal(arguments[1], expected[1]);
-    };
+  it('should invoke console.log', () => {
+    let spy;
+    if (!window.console) {
+      spy = sinon.stub();
+      window.console = { log: spy };
+    } else {
+      spy = sinon.stub(console, 'log');
+    }
+    const expected = ['hi', 'hello'];
 
     axe.log.apply(axe.log, expected);
-    assert.isTrue(success);
-
-    window.console = orig;
+    assert.isTrue(spy.called);
+    assert.isTrue(spy.calledWith(expected[0], expected[1]));
   });
 });

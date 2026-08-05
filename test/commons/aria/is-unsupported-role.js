@@ -1,11 +1,9 @@
-describe('aria.isUnsupportedRole', function () {
-  'use strict';
-
-  after(function () {
+describe('aria.isUnsupportedRole', () => {
+  after(() => {
     axe.reset();
   });
 
-  it('should return true if the role is unsupported', function () {
+  it('should return true if the role is unsupported', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -18,7 +16,7 @@ describe('aria.isUnsupportedRole', function () {
     assert.isTrue(axe.commons.aria.isUnsupportedRole('cats'));
   });
 
-  it('should return false if the role is supported', function () {
+  it('should return false if the role is supported', () => {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -31,7 +29,7 @@ describe('aria.isUnsupportedRole', function () {
     assert.isFalse(axe.commons.aria.isUnsupportedRole('cats'));
   });
 
-  it('should return false if the role is invalid', function () {
+  it('should return false if the role is invalid', () => {
     assert.isFalse(axe.commons.aria.isUnsupportedRole('cats'));
   });
 });

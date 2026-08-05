@@ -1,6 +1,6 @@
-describe('aria-toggle-field-name virtual-rule', function () {
-  it('should pass for aria-label', function () {
-    var node = new axe.SerialVirtualNode({
+describe('aria-toggle-field-name virtual-rule', () => {
+  it('should pass for aria-label', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'menuitemcheckbox',
@@ -9,15 +9,15 @@ describe('aria-toggle-field-name virtual-rule', function () {
     });
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function () {
-    var results = axe.runVirtualRule('aria-toggle-field-name', {
+  it('should incomplete for aria-labelledby', () => {
+    const results = axe.runVirtualRule('aria-toggle-field-name', {
       nodeName: 'div',
       attributes: {
         role: 'menuitemradio',
@@ -30,8 +30,8 @@ describe('aria-toggle-field-name virtual-rule', function () {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should pass for title', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'checkbox',
@@ -43,21 +43,21 @@ describe('aria-toggle-field-name virtual-rule', function () {
     node.children = [];
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for visible text content', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should pass for visible text content', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'radio'
       }
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'foobar'
@@ -65,22 +65,22 @@ describe('aria-toggle-field-name virtual-rule', function () {
     node.children = [child];
     node.parent = null;
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for hidden text', function () {
-    var button = new axe.SerialVirtualNode({
+  it('should fail for hidden text', () => {
+    const button = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'radio'
       }
     });
 
-    var span = new axe.SerialVirtualNode({
+    const span = new axe.SerialVirtualNode({
       nodeName: 'span',
       attributes: {
         'aria-hidden': true
@@ -89,7 +89,7 @@ describe('aria-toggle-field-name virtual-rule', function () {
     span.parent = button;
     button.children = [span];
 
-    var text = new axe.SerialVirtualNode({
+    const text = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'foobar'
@@ -97,15 +97,15 @@ describe('aria-toggle-field-name virtual-rule', function () {
     text.parent = span;
     span.children = [text];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', button);
+    const results = axe.runVirtualRule('aria-toggle-field-name', button);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when children are missing', function () {
-    var results = axe.runVirtualRule('aria-toggle-field-name', {
+  it('should incomplete when children are missing', () => {
+    const results = axe.runVirtualRule('aria-toggle-field-name', {
       nodeName: 'div',
       attributes: {
         role: 'switch'
@@ -117,8 +117,8 @@ describe('aria-toggle-field-name virtual-rule', function () {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail children contain no visible text', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail children contain no visible text', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'option'
@@ -126,15 +126,15 @@ describe('aria-toggle-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label contains only whitespace', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when aria-label contains only whitespace', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'menuitemcheckbox',
@@ -143,15 +143,15 @@ describe('aria-toggle-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when aria-label is empty', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'menuitemcheckbox',
@@ -160,15 +160,15 @@ describe('aria-toggle-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should fail when title is empty', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'menuitemcheckbox',
@@ -177,25 +177,25 @@ describe('aria-toggle-field-name virtual-rule', function () {
     });
     node.children = [];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete if has explicit and implicit label', function () {
-    var node = new axe.SerialVirtualNode({
+  it('should incomplete if has explicit and implicit label', () => {
+    const node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
         role: 'menuitemcheckbox',
         'aria-label': 'name'
       }
     });
-    var parent = new axe.SerialVirtualNode({
+    const parent = new axe.SerialVirtualNode({
       nodeName: 'label'
     });
-    var child = new axe.SerialVirtualNode({
+    const child = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
       nodeValue: 'first name'
@@ -204,7 +204,7 @@ describe('aria-toggle-field-name virtual-rule', function () {
     node.children = [];
     parent.children = [child, node];
 
-    var results = axe.runVirtualRule('aria-toggle-field-name', node);
+    const results = axe.runVirtualRule('aria-toggle-field-name', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);

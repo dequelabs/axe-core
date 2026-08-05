@@ -1,12 +1,11 @@
 describe('dom.getModalDialog', () => {
+  const html = axe.testUtils.html;
   const fixture = document.querySelector('#fixture');
   const getModalDialog = axe.commons.dom.getModalDialog;
   const { flatTreeSetup } = axe.testUtils;
 
   it('returns a modal dialog', () => {
-    fixture.innerHTML = `
-      <dialog id="target"><span>Hello</span></dialog>
-    `;
+    fixture.innerHTML = html` <dialog id="target"><span>Hello</span></dialog> `;
     document.querySelector('#target').showModal();
     const tree = flatTreeSetup(fixture);
     const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
@@ -15,35 +14,33 @@ describe('dom.getModalDialog', () => {
   });
 
   it('returns null for an opened dialog', () => {
-    fixture.innerHTML = `
-      <dialog open><span>Hello</span></dialog>
-    `;
+    fixture.innerHTML = html` <dialog open><span>Hello</span></dialog> `;
     flatTreeSetup(fixture);
 
     assert.isNull(getModalDialog());
   });
 
   it('returns null for a closed dialog', () => {
-    fixture.innerHTML = `
-      <dialog><span>Hello</span></dialog>
-    `;
+    fixture.innerHTML = html` <dialog><span>Hello</span></dialog> `;
     flatTreeSetup(fixture);
 
     assert.isNull(getModalDialog());
   });
 
   it('returns null when there is no dialog', () => {
-    fixture.innerHTML = `
-      <div>World</div>
-    `;
+    fixture.innerHTML = html` <div>World</div> `;
     flatTreeSetup(fixture);
 
     assert.isNull(getModalDialog());
   });
 
   it('returns null if the modal dialog is not visible', () => {
-    fixture.innerHTML = `
-      <style>dialog[open] { display: none }</style>
+    fixture.innerHTML = html`
+      <style>
+        dialog[open] {
+          display: none;
+        }
+      </style>
       <dialog id="target"><span>Hello</span></dialog>
     `;
     document.querySelector('#target').showModal();
@@ -54,8 +51,12 @@ describe('dom.getModalDialog', () => {
 
   describe('fallback', () => {
     it('returns true for modal dialog when elementsFromPoint does not return the dialog', () => {
-      fixture.innerHTML = `
-        <style>dialog::backdrop { display: none; }</style>
+      fixture.innerHTML = html`
+        <style>
+          dialog::backdrop {
+            display: none;
+          }
+        </style>
         <dialog id="target"><span>Hello</span></dialog>
         <div>World</div>
       `;
@@ -67,8 +68,15 @@ describe('dom.getModalDialog', () => {
     });
 
     it('skips checking elements with pointer-events: none', () => {
-      fixture.innerHTML = `
-        <style>body { pointer-events: none; } dialog::backdrop { display: none; }</style>
+      fixture.innerHTML = html`
+        <style>
+          body {
+            pointer-events: none;
+          }
+          dialog::backdrop {
+            display: none;
+          }
+        </style>
         <dialog id="target"><span>Hello</span></dialog>
         <div>World</div>
       `;
@@ -79,10 +87,15 @@ describe('dom.getModalDialog', () => {
     });
 
     it('takes into account a scrolled page', () => {
-      fixture.innerHTML = `
+      fixture.innerHTML = html`
         <style>
-          dialog::backdrop { display: none; }
-          #large-scroll { height: 200vh; margin-bottom: 100px; }
+          dialog::backdrop {
+            display: none;
+          }
+          #large-scroll {
+            height: 200vh;
+            margin-bottom: 100px;
+          }
         </style>
         <div id="large-scroll"></div>
         <dialog id="target"><span>Hello</span></dialog>
@@ -97,8 +110,12 @@ describe('dom.getModalDialog', () => {
     });
 
     it('returns the modal dialog when two dialogs are open', () => {
-      fixture.innerHTML = `
-        <style>dialog::backdrop { display: none; }</style>
+      fixture.innerHTML = html`
+        <style>
+          dialog::backdrop {
+            display: none;
+          }
+        </style>
         <dialog id="not-modal" open><span>Hello</span></dialog>
         <dialog id="target"><span>Hello</span></dialog>
         <div>World</div>
@@ -111,8 +128,12 @@ describe('dom.getModalDialog', () => {
     });
 
     it('returns the outer modal when a dialog modal contains a non-dialog modal', () => {
-      fixture.innerHTML = `
-        <style>dialog::backdrop { display: none; }</style>
+      fixture.innerHTML = html`
+        <style>
+          dialog::backdrop {
+            display: none;
+          }
+        </style>
         <dialog id="target">
           <span>Hello</span>
           <dialog open>Open modal</dialog>

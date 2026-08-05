@@ -1,4 +1,5 @@
 describe('axe.utils.checkHelper', () => {
+  const html = axe.testUtils.html;
   const { queryFixture, fixtureSetup } = axe.testUtils;
   function noop() {}
 
@@ -128,7 +129,7 @@ describe('axe.utils.checkHelper', () => {
       });
 
       it('should accept an array of VirtualNodes', () => {
-        const vNode = queryFixture(`
+        const vNode = queryFixture(html`
           <div id="target"><a id="a"></a><b id="b"></b></div>
         `);
         const target = {};
@@ -139,7 +140,7 @@ describe('axe.utils.checkHelper', () => {
       });
 
       it('should filter out non-nodes', () => {
-        const vNode = queryFixture(`
+        const vNode = queryFixture(html`
           <div><a id="target"></a><b id="b"></b></div>
         `);
         const target = {};

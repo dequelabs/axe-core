@@ -1,15 +1,13 @@
 /*eslint indent: 0*/
-describe('unique-frame-title-after', function () {
-  'use strict';
+describe('unique-frame-title-after', () => {
+  const checkContext = axe.testUtils.MockCheckContext();
 
-  var checkContext = axe.testUtils.MockCheckContext();
-
-  afterEach(function () {
+  afterEach(() => {
     checkContext.reset();
   });
 
-  it('should remove any check whose data only appears once', function () {
-    var result = checks['unique-frame-title'].after([
+  it('should remove any check whose data only appears once', () => {
+    const result = checks['unique-frame-title'].after([
       {
         data: 'bananas'
       },

@@ -1,12 +1,11 @@
-describe('landmark-banner-is-top-level test pass', function () {
-  'use strict';
-  var results;
+describe('landmark-banner-is-top-level test pass', () => {
+  let results;
 
-  before(function (done) {
-    axe.testUtils.awaitNestedLoad(function () {
+  before(done => {
+    axe.testUtils.awaitNestedLoad(() => {
       axe.run(
         { runOnly: { type: 'rule', values: ['landmark-banner-is-top-level'] } },
-        function (err, r) {
+        (err, r) => {
           assert.isNull(err);
           results = r;
           done();
@@ -15,23 +14,23 @@ describe('landmark-banner-is-top-level test pass', function () {
     });
   });
 
-  describe('violations', function () {
-    it('should find 0', function () {
+  describe('violations', () => {
+    it('should find 0', () => {
       assert.lengthOf(results.violations, 0);
     });
   });
 
-  describe('passes', function () {
-    it('should find 3', function () {
+  describe('passes', () => {
+    it('should find 3', () => {
       assert.lengthOf(results.passes[0].nodes, 2);
     });
   });
 
-  it('should find 0 inapplicable', function () {
+  it('should find 0 inapplicable', () => {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  it('should find 0 incomplete', function () {
+  it('should find 0 incomplete', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 });

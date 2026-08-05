@@ -66,7 +66,7 @@ describe('plugins', () => {
       let called = false;
       axe.registerPlugin({
         id: 'my-plugin',
-        run: function (id, action, options) {
+        run: (id, action, options) => {
           called = {
             id: id,
             action: action,
@@ -109,7 +109,7 @@ describe('plugins', () => {
         commands: [
           {
             id: 'run-multi',
-            callback: function (data, callback) {
+            callback: (data, callback) => {
               return axe.plugins.multi.run(
                 data.parameter,
                 data.action,
@@ -125,15 +125,15 @@ describe('plugins', () => {
         cleanup: done => {
           done();
         },
-        run: function (options, callback) {
+        run: (options, callback) => {
           let frames;
           const q = axe.utils.queue();
 
           frames = axe.utils.toArray(
             document.querySelectorAll('iframe, frame')
           );
-          frames.forEach(function (frame) {
-            q.defer(function (resolve, reject) {
+          frames.forEach(frame => {
+            q.defer((resolve, reject) => {
               axe.utils.sendCommandToFrame(
                 frame,
                 {
@@ -152,10 +152,10 @@ describe('plugins', () => {
             // implementation
             done('ola!');
           });
-          q.then(function (data) {
+          q.then(data => {
             // done with all the frames
             let results = [];
-            data.forEach(function (datum) {
+            data.forEach(datum => {
               if (datum) {
                 results = results.concat(datum);
               }
@@ -166,7 +166,7 @@ describe('plugins', () => {
       });
     });
     it('should work without frames', done => {
-      axe.plugins.multi.run('hideall', 'run', {}, function (results) {
+      axe.plugins.multi.run('hideall', 'run', {}, results => {
         assert.deepEqual(results, ['ola!']);
         done();
       });
@@ -174,7 +174,7 @@ describe('plugins', () => {
     it('should work with frames', done => {
       createFrames(() => {
         setTimeout(() => {
-          axe.plugins.multi.run('hideall', 'run', {}, function (results) {
+          axe.plugins.multi.run('hideall', 'run', {}, results => {
             assert.deepEqual(results, ['ola!', 'ola!', 'ola!', 'ola!', 'ola!']);
             done();
           });

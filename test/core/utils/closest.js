@@ -1,49 +1,48 @@
-describe('utils.closest', function () {
-  var closest = axe.utils.closest;
-  var fixture = document.querySelector('#fixture');
-  var queryFixture = axe.testUtils.queryFixture;
-  var shadowSupported = axe.testUtils.shadowSupport.v1;
+describe('utils.closest', () => {
+  const closest = axe.utils.closest;
+  const fixture = document.querySelector('#fixture');
+  const queryFixture = axe.testUtils.queryFixture;
 
-  afterEach(function () {
+  afterEach(() => {
     fixture.innerHTML = '';
   });
 
-  it('should find the current node', function () {
-    var virtualNode = queryFixture(
+  it('should find the current node', () => {
+    const virtualNode = queryFixture(
       '<div id="parent"><div id="target">foo</div></div>'
     );
-    var closestNode = closest(virtualNode, 'div');
+    const closestNode = closest(virtualNode, 'div');
     assert.equal(closestNode, virtualNode);
   });
 
-  it('should find a parent node', function () {
-    var virtualNode = queryFixture(
+  it('should find a parent node', () => {
+    const virtualNode = queryFixture(
       '<div id="parent"><span id="target">foo</span></div>'
     );
-    var closestNode = closest(virtualNode, 'div');
-    var parent = fixture.querySelector('#parent');
+    const closestNode = closest(virtualNode, 'div');
+    const parent = fixture.querySelector('#parent');
     assert.equal(closestNode, axe.utils.getNodeFromTree(parent));
   });
 
-  it('should find an ancestor node', function () {
-    var virtualNode = queryFixture(
+  it('should find an ancestor node', () => {
+    const virtualNode = queryFixture(
       '<div id="parent"><span><span><span><span id="target">foo</span></span></span></div>'
     );
-    var closestNode = closest(virtualNode, 'div');
-    var parent = fixture.querySelector('#parent');
+    const closestNode = closest(virtualNode, 'div');
+    const parent = fixture.querySelector('#parent');
     assert.equal(closestNode, axe.utils.getNodeFromTree(parent));
   });
 
-  it('should return null if no ancestor is found', function () {
-    var virtualNode = queryFixture(
+  it('should return null if no ancestor is found', () => {
+    const virtualNode = queryFixture(
       '<div id="parent"><div id="target">foo</div></div>'
     );
-    var closestNode = closest(virtualNode, 'h1');
+    const closestNode = closest(virtualNode, 'h1');
     assert.isNull(closestNode);
   });
 
-  it('should error if tree is not complete', function () {
-    var virtualNode = queryFixture('<div id="target">foo</div>');
+  it('should error if tree is not complete', () => {
+    const virtualNode = queryFixture('<div id="target">foo</div>');
     virtualNode.parent = undefined;
 
     function fn() {
@@ -53,8 +52,8 @@ describe('utils.closest', function () {
     assert.throws(fn);
   });
 
-  it('should not error if tree is complete', function () {
-    var virtualNode = queryFixture('<div id="target">foo</div>');
+  it('should not error if tree is complete', () => {
+    const virtualNode = queryFixture('<div id="target">foo</div>');
     virtualNode.parent = null;
 
     function fn() {
@@ -64,18 +63,18 @@ describe('utils.closest', function () {
     assert.doesNotThrow(fn);
   });
 
-  (shadowSupported ? it : xit)('should support shadow dom', function () {
+  it('should support shadow dom', () => {
     fixture.innerHTML = '<div id="parent"></div>';
 
-    var root = fixture.firstChild.attachShadow({ mode: 'open' });
-    var slotted = document.createElement('span');
+    const root = fixture.firstChild.attachShadow({ mode: 'open' });
+    const slotted = document.createElement('span');
     slotted.innerHTML = '<span id="target">foo</span>';
     root.appendChild(slotted);
     axe.utils.getFlattenedTree(fixture.firstChild);
 
-    var virtualNode = axe.utils.getNodeFromTree(slotted.firstChild);
-    var parent = fixture.querySelector('#parent');
-    var closestNode = closest(virtualNode, 'div');
+    const virtualNode = axe.utils.getNodeFromTree(slotted.firstChild);
+    const parent = fixture.querySelector('#parent');
+    const closestNode = closest(virtualNode, 'div');
     assert.equal(closestNode, axe.utils.getNodeFromTree(parent));
   });
 });
