@@ -510,7 +510,10 @@
         "hasRoleSingular": "${data.prohibited} attribute is not well supported with role \"${data.role}\".",
         "hasRolePlural": "${data.prohibited} attributes are not well supported with role \"${data.role}\".",
         "noRoleSingular": "${data.prohibited} attribute is not well supported on a ${data.nodeName} with no valid role attribute.",
-        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute."
+        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute.",
+        "visibleLabelSingular": "${data.prohibited} attribute is not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the label is not necessary.",
+        "visibleLabelPlural": "${data.prohibited} attributes are not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the labels are not necessary.",
+        "unresolvedLabel": "${data.prohibited} attribute is not well supported, and does not reference an existing element. Verify the label is not necessary."
       }
     },
     "aria-required-attr": {

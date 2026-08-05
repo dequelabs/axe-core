@@ -307,7 +307,7 @@ describe('aria-prohibited-attr', () => {
       assert.deepEqual(checkContext._data, {
         nodeName: 'div',
         role: null,
-        messageKey: 'noRoleSingular',
+        messageKey: 'visibleLabelSingular',
         prohibited: ['aria-labelledby']
       });
     });
@@ -341,7 +341,7 @@ describe('aria-prohibited-attr', () => {
       assert.deepEqual(checkContext._data, {
         nodeName: 'code',
         role: null,
-        messageKey: 'noRolePlural',
+        messageKey: 'visibleLabelPlural',
         prohibited: ['aria-label', 'aria-labelledby']
       });
     });
@@ -355,7 +355,7 @@ describe('aria-prohibited-attr', () => {
       assert.deepEqual(checkContext._data, {
         nodeName: 'div',
         role: 'code',
-        messageKey: 'hasRoleSingular',
+        messageKey: 'visibleLabelSingular',
         prohibited: ['aria-labelledby']
       });
     });
@@ -386,11 +386,55 @@ describe('aria-prohibited-attr', () => {
       assert.isUndefined(checkEvaluate.apply(checkContext, params));
     });
 
+    it('should return true for a visible empty reference and aria-label', () => {
+      // The accessible name comes from the prohibited aria-label, because
+      // aria-labelledby resolves to an empty string
+      const params = checkSetup(html`
+        <code id="target" aria-labelledby="hd" aria-label="Hello world"></code>
+        <p id="hd"></p>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'code',
+        role: null,
+        messageKey: 'noRolePlural',
+        prohibited: ['aria-label', 'aria-labelledby']
+      });
+    });
+
+    it('should return true for a whitespace only reference and aria-label', () => {
+      const params = checkSetup(html`
+        <code id="target" aria-labelledby="hd" aria-label="Hello world"></code>
+        <p id="hd">&nbsp;</p>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+    });
+
+    it('should return undefined for a reference to itself', () => {
+      // The accessible name is empty, as the element has no content
+      const params = checkSetup(
+        '<div id="target" aria-labelledby="target"></div>'
+      );
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: null,
+        messageKey: 'visibleLabelSingular',
+        prohibited: ['aria-labelledby']
+      });
+    });
+
     it('should return undefined for a missing reference', () => {
       const params = checkSetup(
         '<div id="target" aria-labelledby="missing"></div>'
       );
       assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'div',
+        role: null,
+        messageKey: 'unresolvedLabel',
+        prohibited: ['aria-labelledby']
+      });
     });
 
     it('should return undefined when a reference is missing among visible ones', () => {
