@@ -17,7 +17,7 @@
     ["#violation-role-contentinfo"],
     ["#violation-role-main"],
     ["#violation-role-region"],
-    ["#violation-role-search"],
+    ["#violation-form-role-search"],
     ["#violation-nav"],
     ["#violation-section"]
   ]
