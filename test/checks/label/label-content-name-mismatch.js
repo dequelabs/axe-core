@@ -4,6 +4,8 @@ describe('label-content-name-mismatch tests', () => {
   const queryFixture = axe.testUtils.queryFixture;
   const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const check = checks['label-content-name-mismatch'];
+  const visuallyHiddenSpan =
+    '<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span>';
   const options = undefined;
 
   const fontApiSupport = !!document.fonts;
@@ -229,7 +231,9 @@ describe('label-content-name-mismatch tests', () => {
   it('returns true when a visually-hidden child is excluded from the visible text', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="deque are great">' +
-        'deque <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span> are great' +
+        'deque ' +
+        visuallyHiddenSpan +
+        ' are great' +
         '</a>'
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
@@ -239,7 +243,9 @@ describe('label-content-name-mismatch tests', () => {
   it('returns false when the visible text alone is not contained in the accessible name', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="deque are great">' +
-        'deque <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span> are truly great' +
+        'deque ' +
+        visuallyHiddenSpan +
+        ' are truly great' +
         '</a>'
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
@@ -250,7 +256,9 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryShadowFixture(
       '<div id="shadow"></div>',
       '<a id="target" href="#" aria-label="deque are great">' +
-        'deque <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span> are great' +
+        'deque ' +
+        visuallyHiddenSpan +
+        ' are great' +
         '</a>'
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
