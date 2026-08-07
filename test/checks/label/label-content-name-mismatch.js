@@ -224,4 +224,36 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     }
   );
+
+  it('returns false when a hyphen joins words that the accessible name keeps separate', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="non-standard">nonstandard</a>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when visible text is a single word not present as a whole word in the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="email">e-mail</a>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when the visible words are not a contiguous run within the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="the big red button">big button</button>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when the visible words are a contiguous run within the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="go to next page now">next page</button>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
 });

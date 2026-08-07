@@ -270,4 +270,12 @@ describe('text.removeUnicode', () => {
     });
     assert.equal(actual, 'Hello World');
   });
+
+  it('substitutes matched characters with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('non-standard', {
+      punctuations: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, 'non standard');
+  });
 });
