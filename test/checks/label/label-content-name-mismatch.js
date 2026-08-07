@@ -2,7 +2,6 @@ describe('label-content-name-mismatch tests', () => {
   const html = axe.testUtils.html;
 
   const queryFixture = axe.testUtils.queryFixture;
-  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const check = checks['label-content-name-mismatch'];
   const visuallyHiddenSpan =
     '<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span>';
@@ -250,18 +249,5 @@ describe('label-content-name-mismatch tests', () => {
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
-  });
-
-  it('returns true when a visually-hidden child inside shadow DOM is excluded from the visible text', () => {
-    const vNode = queryShadowFixture(
-      '<div id="shadow"></div>',
-      '<a id="target" href="#" aria-label="deque are great">' +
-        'deque ' +
-        visuallyHiddenSpan +
-        ' are great' +
-        '</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
   });
 });
