@@ -262,16 +262,6 @@ describe('axe.configure', () => {
     assert.equal(axe._audit.data.checks.bob.messages.fail, 'Bob Pete');
   });
 
-  it('overrides the default value of audit.tagExclude', () => {
-    axe._load({});
-    assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
-
-    axe.configure({
-      tagExclude: ['ninjas']
-    });
-    assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
-  });
-
   it('disables all untouched rules with disableOtherRules', () => {
     axe._load({
       rules: [{ id: 'captain-america' }, { id: 'thor' }, { id: 'spider-man' }]

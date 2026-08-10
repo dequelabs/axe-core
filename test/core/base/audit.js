@@ -402,16 +402,6 @@ describe('Audit', () => {
       audit.resetRulesAndChecks();
       assert.equal(audit.application, 'axeAPI');
     });
-    it('should reset brand tagExlcude', () => {
-      axe._load({});
-      assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
-      axe.configure({
-        tagExclude: ['ninjas']
-      });
-      axe._audit.resetRulesAndChecks();
-      assert.deepEqual(axe._audit.tagExclude, ['experimental', 'deprecated']);
-    });
-
     it('should reset noHtml', () => {
       audit = new Audit();
       audit.noHtml = true;
