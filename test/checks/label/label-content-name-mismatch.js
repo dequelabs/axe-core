@@ -187,6 +187,14 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('treats a lone newline in the visible text as a word separator', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="save changes">save\nchanges</button>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
   it('returns true when aria-label and visible text match even though there is an image with alt text', function () {
     var vNode = queryFixture(
       '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />button label</button>'
