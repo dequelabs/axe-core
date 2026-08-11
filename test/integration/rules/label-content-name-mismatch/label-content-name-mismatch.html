@@ -1,3 +1,13 @@
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+</style>
+
 <!-- Pass -->
 <div id="pass1" role="link" aria-label="next page ">next page</div>
 <div id="pass2" role="link" aria-label="Next Page">next page</div>
@@ -27,18 +37,7 @@
   Hello World
 </a>
 <a id="pass10" href="#" aria-label="deque are great">
-  deque
-  <span
-    style="
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0px, 0px, 0px, 0px);
-    "
-    >labs</span
-  >
-  are great
+  deque <span class="visually-hidden">labs</span> are great
 </a>
 
 <!-- Fail -->
@@ -59,6 +58,9 @@
     <circle cx="50" cy="50" r="50" />
   </svg>
   Hello Deque Systems
+</a>
+<a id="fail8" href="#" aria-label="deque labs are great">
+  deque <span class="visually-hidden">labs</span> are great
 </a>
 
 <!-- incomplete -->
