@@ -3,9 +3,14 @@ describe('label-content-name-mismatch tests', () => {
 
   const queryFixture = axe.testUtils.queryFixture;
   const check = checks['label-content-name-mismatch'];
+  const checkContext = new axe.testUtils.MockCheckContext();
   const options = undefined;
 
   const fontApiSupport = !!document.fonts;
+
+  afterEach(() => {
+    checkContext.reset();
+  });
 
   before(done => {
     if (!fontApiSupport) {
@@ -249,19 +254,39 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('ignores zero-width characters when tokenizing so they do not split a word', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="nonstandard">non\u00ADstandard</a>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
   it('returns undefined (needs review) when the only difference is hyphenation', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="non-standard">nonstandard</a>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      options,
+      vNode
+    );
     assert.isUndefined(actual);
+    assert.deepEqual(checkContext._data, { messageKey: 'hyphenation' });
   });
 
   it('returns undefined (needs review) when a hyphenated visible word matches the accessible name', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="email">e-mail</a>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      options,
+      vNode
+    );
     assert.isUndefined(actual);
+    assert.deepEqual(checkContext._data, { messageKey: 'hyphenation' });
   });
 });
