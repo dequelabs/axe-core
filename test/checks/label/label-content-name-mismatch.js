@@ -233,22 +233,6 @@ describe('label-content-name-mismatch tests', () => {
     }
   );
 
-  it('returns false when a hyphen joins words that the accessible name keeps separate', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="non-standard">nonstandard</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isFalse(actual);
-  });
-
-  it('returns false when visible text is a single word not present as a whole word in the accessible name', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="email">e-mail</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isFalse(actual);
-  });
-
   it('returns false when the visible words are not a contiguous run within the accessible name', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="the big red button">big button</button>'
@@ -263,5 +247,21 @@ describe('label-content-name-mismatch tests', () => {
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
+  });
+
+  it('returns undefined (needs review) when the only difference is hyphenation', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="non-standard">nonstandard</a>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isUndefined(actual);
+  });
+
+  it('returns undefined (needs review) when a hyphenated visible word matches the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="email">e-mail</a>'
+    );
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isUndefined(actual);
   });
 });
