@@ -294,4 +294,12 @@ describe('text.removeUnicode', () => {
     });
     assert.equal(actual, '20000 100');
   });
+
+  it('inserts replaceWith literally rather than as a replace pattern', () => {
+    const actual = axe.commons.text.removeUnicode('a😀b', {
+      emoji: true,
+      replaceWith: '$&'
+    });
+    assert.equal(actual, 'a$&b');
+  });
 });

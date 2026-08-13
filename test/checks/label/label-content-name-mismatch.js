@@ -2,6 +2,7 @@ describe('label-content-name-mismatch tests', () => {
   const html = axe.testUtils.html;
 
   const queryFixture = axe.testUtils.queryFixture;
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const check = checks['label-content-name-mismatch'];
   const checkContext = new axe.testUtils.MockCheckContext();
   const options = undefined;
@@ -262,31 +263,33 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
-  it('returns undefined (needs review) when the only difference is hyphenation', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="non-standard">nonstandard</a>'
-    );
-    const actual = check.evaluate.call(
-      checkContext,
-      vNode.actualNode,
-      options,
-      vNode
-    );
-    assert.isUndefined(actual);
-    assert.deepEqual(checkContext._data, { messageKey: 'hyphenation' });
+  [
+    ['a hyphen', 'non-standard', 'nonstandard'],
+    ['an apostrophe', 'its book', "it's"],
+    ['periods', 'usa', 'u.s.a'],
+    ['an en dash', 'email', 'e–mail']
+  ].forEach(([label, name, content]) => {
+    it(`returns undefined (needs review) when the only difference is ${label}`, () => {
+      const vNode = queryFixture(
+        `<a id="target" href="#" aria-label="${name}">${content}</a>`
+      );
+      const actual = check.evaluate.call(
+        checkContext,
+        vNode.actualNode,
+        options,
+        vNode
+      );
+      assert.isUndefined(actual);
+      assert.deepEqual(checkContext._data, { messageKey: 'punctuation' });
+    });
   });
 
-  it('returns undefined (needs review) when a hyphenated visible word matches the accessible name', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="email">e-mail</a>'
+  it('matches the visible label against the accessible name across an open shadow DOM boundary', () => {
+    const vNode = queryShadowFixture(
+      '<button id="target" aria-label="save changes"><span id="shadow"></span> changes</button>',
+      'save'
     );
-    const actual = check.evaluate.call(
-      checkContext,
-      vNode.actualNode,
-      options,
-      vNode
-    );
-    assert.isUndefined(actual);
-    assert.deepEqual(checkContext._data, { messageKey: 'hyphenation' });
+    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
   });
 });

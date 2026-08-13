@@ -457,6 +457,50 @@ describe('axe.utils.publishMetaData', () => {
     });
   });
 
+  it('should fall back to a default message when a check sets a messageKey but has no incomplete messages', () => {
+    // Localized bundles replace a check's messages with a locale entry that may
+    // omit `incomplete`; a messageKey lookup must not throw.
+    axe._load({
+      rules: [],
+      data: {
+        incompleteFallbackMessage: () => 'fallback message',
+        rules: {
+          cats: {
+            help: () => 'cats-rule'
+          }
+        },
+        checks: {
+          'cats-ANY': {
+            messages: {
+              fail: () => 'fail-ANY',
+              pass: () => 'pass-ANY'
+            }
+          }
+        }
+      }
+    });
+
+    const result = {
+      id: 'cats',
+      nodes: [
+        {
+          any: [
+            {
+              result: undefined,
+              id: 'cats-ANY',
+              data: { messageKey: 'punctuation' }
+            }
+          ],
+          none: [],
+          all: []
+        }
+      ]
+    };
+
+    assert.doesNotThrow(() => axe.utils.publishMetaData(result));
+    assert.equal(result.nodes[0].any[0].message, 'fallback message');
+  });
+
   it('should handle incomplete reasons', () => {
     axe._load({
       rules: [],

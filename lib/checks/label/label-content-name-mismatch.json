@@ -12,7 +12,7 @@
       "fail": "Text inside the element is not included in the accessible name",
       "incomplete": {
         "default": "Unable to determine if the visible text is part of the accessible name",
-        "hyphenation": "The visible text and the accessible name differ only in hyphenation"
+        "punctuation": "The visible text and the accessible name differ only in punctuation"
       }
     }
   }
