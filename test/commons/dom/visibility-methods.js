@@ -12,7 +12,8 @@ describe('dom.visibility-methods', () => {
     overflowHidden,
     clipHidden,
     areaHidden,
-    detailsHidden
+    detailsHidden,
+    selectButtonHidden
   } = axe._thisWillBeDeletedDoNotUse.commons.dom;
   const contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
@@ -631,6 +632,71 @@ describe('dom.visibility-methods', () => {
       `);
 
       assert.isFalse(detailsHidden(vNode));
+    });
+  });
+
+  describe('selectButtonHidden', () => {
+    it('should return true for a button that is a direct child of select', () => {
+      const vNode = queryFixture(
+        '<select><button id="target"></button><option>a</option></select>'
+      );
+
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return true for a button nested inside a select at any depth', () => {
+      const vNode = queryFixture(html`
+        <select>
+          <span><button id="target">bar</button></span>
+          <option>Hello</option>
+        </select>
+      `);
+
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return false for the select element itself', () => {
+      const vNode = queryFixture(
+        '<select id="target"><button></button><option>a</option></select>'
+      );
+
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for an option inside the select', () => {
+      const vNode = queryFixture(
+        '<select><button></button><option id="target">a</option></select>'
+      );
+
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a button that is not inside a select', () => {
+      const vNode = queryFixture('<button id="target">click</button>');
+
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a non-button descendant of a select', () => {
+      const vNode = queryFixture(
+        '<select><span id="target">bar</span><option>a</option></select>'
+      );
+
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return true for a button that is a descendant of an option inside a select', () => {
+      // use a SerialVirtualNode since HTML parsers disagree on whether a
+      // `button` survives as a child of `option`
+      const option = new axe.SerialVirtualNode({ nodeName: 'option' });
+      const select = new axe.SerialVirtualNode({ nodeName: 'select' });
+      const button = new axe.SerialVirtualNode({ nodeName: 'button' });
+      option.parent = select;
+      select.children = [option];
+      button.parent = option;
+      option.children = [button];
+
+      assert.isTrue(selectButtonHidden(button));
     });
   });
 });

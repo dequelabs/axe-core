@@ -3,7 +3,7 @@ describe('dom.isHiddenForEveryone', () => {
 
   const fixture = document.getElementById('fixture');
   const isHiddenForEveryone = axe.commons.dom.isHiddenForEveryone;
-  const queryFixture = axe.testUtils.queryFixture;
+  const { queryFixture, queryShadowFixture } = axe.testUtils;
   const contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
   function createContentSlotted(mainProps, targetProps) {
@@ -394,6 +394,82 @@ describe('dom.isHiddenForEveryone', () => {
 
       const actual = isHiddenForEveryone(vNode);
       assert.isFalse(actual);
+    });
+
+    it('should return true for a button inside a select', () => {
+      const vNode = new axe.SerialVirtualNode({
+        nodeName: 'button'
+      });
+      const selectVNode = new axe.SerialVirtualNode({
+        nodeName: 'select'
+      });
+      vNode.parent = selectVNode;
+      selectVNode.children = [vNode];
+
+      const actual = isHiddenForEveryone(vNode);
+      assert.isTrue(actual);
+    });
+  });
+
+  describe('select button', () => {
+    it('should return true for a button that is a direct child of select', () => {
+      const vNode = queryFixture(
+        '<select><button id="target"></button><option>a</option></select>'
+      );
+
+      assert.isTrue(isHiddenForEveryone(vNode));
+    });
+
+    it('should return true for a button nested at any depth inside a select', () => {
+      const vNode = queryFixture(html`
+        <select>
+          <button>foo</button>
+          <button>bar</button>
+          <option>Hello</option>
+          <span><button id="target">bar</button></span>
+        </select>
+      `);
+
+      assert.isTrue(isHiddenForEveryone(vNode));
+    });
+
+    it('should return true for selectedcontent inside the select button', () => {
+      const vNode = queryFixture(
+        '<select><button><selectedcontent id="target"></selectedcontent></button><option>a</option></select>'
+      );
+
+      assert.isTrue(isHiddenForEveryone(vNode));
+    });
+
+    it('should return false for the select element itself', () => {
+      const vNode = queryFixture(
+        '<select id="target"><button></button><option>a</option></select>'
+      );
+
+      assert.isFalse(isHiddenForEveryone(vNode));
+    });
+
+    it('should return false for an option inside the select', () => {
+      const vNode = queryFixture(
+        '<select><button></button><option id="target">a</option></select>'
+      );
+
+      assert.isFalse(isHiddenForEveryone(vNode));
+    });
+
+    it('should return false for a button that is not inside a select', () => {
+      const vNode = queryFixture('<button id="target">click</button>');
+
+      assert.isFalse(isHiddenForEveryone(vNode));
+    });
+
+    it('should return true for a select button inside an open shadow DOM', () => {
+      const vNode = queryShadowFixture(
+        '<div id="shadow"></div>',
+        '<select><button id="target"></button><option>a</option></select>'
+      );
+
+      assert.isTrue(isHiddenForEveryone(vNode));
     });
   });
 });

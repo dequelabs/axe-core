@@ -74,6 +74,14 @@ describe('dom.focus-disabled', () => {
     assert.isTrue(focusDisabled(vNode));
   });
 
+  it('returns true for a select button', () => {
+    const vNode = queryFixture(
+      '<select><button id="target"><selectedcontent></selectedcontent></button><option>a</option></select>'
+    );
+
+    assert.isTrue(focusDisabled(vNode));
+  });
+
   describe('SerialVirtualNode', () => {
     it('returns false if element is hidden for everyone', () => {
       const vNode = new axe.SerialVirtualNode({
