@@ -268,4 +268,23 @@ describe('button-name virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should be inapplicable for a select button', () => {
+    const select = new axe.SerialVirtualNode({
+      nodeName: 'select'
+    });
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'button'
+    });
+    node.parent = select;
+    node.children = [];
+    select.children = [node];
+    select.parent = null;
+
+    const results = axe.runVirtualRule('button-name', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });

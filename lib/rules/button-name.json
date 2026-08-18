@@ -2,7 +2,7 @@
   "id": "button-name",
   "impact": "critical",
   "selector": "button",
-  "matches": "no-explicit-name-required-matches",
+  "matches": "button-name-matches",
   "tags": [
     "cat.name-role-value",
     "wcag2a",

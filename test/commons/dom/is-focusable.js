@@ -26,6 +26,15 @@ describe('dom.isFocusable', () => {
     assert.isTrue(axe.commons.dom.isFocusable(el));
   });
 
+  it('should return false for a select button', () => {
+    fixture.innerHTML =
+      '<select><button id="target"><selectedcontent></selectedcontent></button><option>a</option></select>';
+    const el = document.getElementById('target');
+    flatTreeSetup(fixture);
+
+    assert.isFalse(axe.commons.dom.isFocusable(el));
+  });
+
   it('should return true for visible, enabled, non-hidden inputs', () => {
     fixture.innerHTML = '<input type="text" id="target">';
     const el = document.getElementById('target');
