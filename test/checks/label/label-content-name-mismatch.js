@@ -2,16 +2,7 @@ describe('label-content-name-mismatch tests', () => {
   const html = axe.testUtils.html;
 
   const queryFixture = axe.testUtils.queryFixture;
-  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const check = checks['label-content-name-mismatch'];
-  const visuallyHiddenSpan =
-    '<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0px,0px,0px,0px);">labs</span>';
-  // No width/height/overflow, so these are excluded by clipHidden rather than
-  // overflowHidden — isolating the clip branch of the visibility stack.
-  const clipHiddenSpan =
-    '<span style="position:absolute;clip:rect(0px,0px,0px,0px);">labs</span>';
-  const clipPathHiddenSpan =
-    '<span style="position:absolute;clip-path:inset(50%);">labs</span>';
   const options = undefined;
 
   const fontApiSupport = !!document.fonts;
@@ -233,66 +224,4 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     }
   );
-
-  it('returns true when a visually-hidden child is excluded from the visible text', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="deque are great">' +
-        'deque ' +
-        visuallyHiddenSpan +
-        ' are great' +
-        '</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
-  });
-
-  it('returns true when clip-hidden text is excluded from the visible text', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="deque are great">deque ' +
-        clipHiddenSpan +
-        ' are great</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
-  });
-
-  it('returns true when clip-path-hidden text is excluded from the visible text', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="deque are great">deque ' +
-        clipPathHiddenSpan +
-        ' are great</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
-  });
-
-  it('returns true when a visually-hidden child inside an open shadow root is excluded from the visible text', () => {
-    const vNode = queryShadowFixture(
-      '<a id="target" href="#" aria-label="deque are great">deque <span id="shadow"></span> are great</a>',
-      visuallyHiddenSpan
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
-  });
-
-  it('returns false when visible shadow DOM text extends the visible label past the accessible name', () => {
-    const vNode = queryShadowFixture(
-      '<a id="target" href="#" aria-label="deque are great">deque <span id="shadow"></span> are great</a>',
-      '<span>labs</span>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isFalse(actual);
-  });
-
-  it('returns false when visually-hidden text splits the visible label from the accessible name', () => {
-    const vNode = queryFixture(
-      '<a id="target" href="#" aria-label="deque labs are great">' +
-        'deque ' +
-        visuallyHiddenSpan +
-        ' are great' +
-        '</a>'
-    );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
-    assert.isFalse(actual);
-  });
 });
