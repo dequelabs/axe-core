@@ -138,7 +138,7 @@ Rules that check for conformance to WCAG AAA success criteria that can be fully 
 
 ## Experimental Rules
 
-Rules we are still testing and developing. They are disabled by default in axe-core, but are enabled for the axe browser extensions.
+Rules we are still testing and developing. They are disabled by default in axe-core and the axe browser extensions.
 
 | Rule ID                                                                                                                           | Description                                                                                                               | Impact   | Tags                                                                                                                             | Issue Type                 | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |
 | :-------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ | :------- | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------- | :------------------------------------------------------------------ |
