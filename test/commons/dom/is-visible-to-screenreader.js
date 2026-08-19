@@ -281,4 +281,46 @@ describe('dom.isVisibleToScreenReaders', () => {
       assert.isFalse(isVisibleToScreenReaders(vNode));
     });
   });
+
+  describe('select button/selectedcontent', () => {
+    it('should return false for the select button', () => {
+      const vNode = queryFixture(html`
+        <select>
+          <button id="target"><selectedcontent></selectedcontent></button>
+          <option>a</option>
+        </select>
+      `);
+      assert.isFalse(isVisibleToScreenReaders(vNode));
+    });
+
+    it('should return false for selectedcontent', () => {
+      const vNode = queryFixture(html`
+        <select>
+          <button><selectedcontent id="target"></selectedcontent></button>
+          <option>a</option>
+        </select>
+      `);
+      assert.isFalse(isVisibleToScreenReaders(vNode));
+    });
+
+    it('should return true for an option inside the select', () => {
+      const vNode = queryFixture(html`
+        <select>
+          <button><selectedcontent></selectedcontent></button>
+          <option id="target">a</option>
+        </select>
+      `);
+      assert.isTrue(isVisibleToScreenReaders(vNode));
+    });
+
+    it('should return true for the select itself', () => {
+      const vNode = queryFixture(html`
+        <select id="target">
+          <button><selectedcontent></selectedcontent></button>
+          <option>a</option>
+        </select>
+      `);
+      assert.isTrue(isVisibleToScreenReaders(vNode));
+    });
+  });
 });
