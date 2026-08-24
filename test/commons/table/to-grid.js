@@ -24,6 +24,8 @@ describe('table.toGrid', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
@@ -44,6 +46,8 @@ describe('table.toGrid', () => {
         </tr>
       </table>
     `;
+
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
 
     const target = fixture.querySelector('table');
 
@@ -68,6 +72,8 @@ describe('table.toGrid', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
@@ -88,6 +94,8 @@ describe('table.toGrid', () => {
         </tr>
       </table>
     `;
+
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
 
     const target = fixture.querySelector('table');
 
@@ -112,6 +120,8 @@ describe('table.toGrid', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const target = fixture.querySelector('table');
 
     assert.deepEqual(axe.commons.table.toGrid(target), [
@@ -129,6 +139,8 @@ describe('table.toGrid', () => {
         </tr>
       </table>
     `;
+
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
 
     const target = fixture.querySelector('table');
 
