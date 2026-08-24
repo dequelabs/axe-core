@@ -14,7 +14,13 @@ describe('title-only', () => {
     node.type = 'text';
     node.title = 'Duplicate';
 
+    const labelledNode = document.createElement('input');
+    labelledNode.type = 'text';
+    labelledNode.title = 'Duplicate';
+    labelledNode.setAttribute('aria-label', 'woop');
+
     fixture.appendChild(node);
+    fixture.appendChild(labelledNode);
 
     axe.testUtils.flatTreeSetup(fixture);
 
@@ -25,12 +31,11 @@ describe('title-only', () => {
         axe.utils.getNodeFromTree(node)
       )
     );
-    node.setAttribute('aria-label', 'woop');
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('title-only')(
-        node,
+        labelledNode,
         undefined,
-        axe.utils.getNodeFromTree(node)
+        axe.utils.getNodeFromTree(labelledNode)
       )
     );
   });
@@ -39,11 +44,18 @@ describe('title-only', () => {
     const node = document.createElement('input');
     node.type = 'text';
     node.setAttribute('aria-describedby', 'dby');
+
+    const labelledNode = document.createElement('input');
+    labelledNode.type = 'text';
+    labelledNode.setAttribute('aria-describedby', 'dby');
+    labelledNode.setAttribute('aria-label', 'woop');
+
     const dby = document.createElement('div');
     dby.id = 'dby';
     dby.innerHTML = 'woop';
 
     fixture.appendChild(node);
+    fixture.appendChild(labelledNode);
     fixture.appendChild(dby);
 
     axe.testUtils.flatTreeSetup(fixture);
@@ -55,12 +67,11 @@ describe('title-only', () => {
         axe.utils.getNodeFromTree(node)
       )
     );
-    node.setAttribute('aria-label', 'woop');
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('title-only')(
-        node,
+        labelledNode,
         undefined,
-        axe.utils.getNodeFromTree(node)
+        axe.utils.getNodeFromTree(labelledNode)
       )
     );
   });
