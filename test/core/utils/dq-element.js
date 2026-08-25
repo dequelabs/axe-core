@@ -50,8 +50,9 @@ describe('DqElement', () => {
   it('should not let a spec replace the shared DqElement', () => {
     const vNode = queryFixture('<div id="target"></div>');
     const shared = new DqElement(vNode);
-    new DqElement(vNode, null, { source: 'woot' });
+    const withSpec = new DqElement(vNode, null, { source: 'woot' });
 
+    assert.notEqual(withSpec, shared);
     assert.equal(new DqElement(vNode), shared);
   });
 
