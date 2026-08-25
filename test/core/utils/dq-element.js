@@ -31,6 +31,41 @@ describe('DqElement', () => {
     assert.equal(result, result2);
   });
 
+  it('should return the same DqElement when instantiated with the same node', () => {
+    const vNode = queryFixture('<div id="target"></div>');
+    const result = new DqElement(vNode.actualNode);
+    const result2 = new DqElement(vNode.actualNode);
+    assert.equal(result, result2);
+  });
+
+  it('should not share a DqElement when a spec is passed', () => {
+    const vNode = queryFixture('<div id="target"></div>');
+    const shared = new DqElement(vNode);
+    const withSpec = new DqElement(vNode, null, { source: 'woot' });
+
+    assert.notEqual(withSpec, shared);
+    assert.equal(withSpec.source, 'woot');
+  });
+
+  it('should not let a spec replace the shared DqElement', () => {
+    const vNode = queryFixture('<div id="target"></div>');
+    const shared = new DqElement(vNode);
+    new DqElement(vNode, null, { source: 'woot' });
+
+    assert.equal(new DqElement(vNode), shared);
+  });
+
+  it('should not cache a DqElement that failed to initialize', () => {
+    const vNode = queryFixture('<div id="target"></div>');
+    const audit = axe._audit;
+
+    axe._audit = undefined;
+    assert.throws(() => new DqElement(vNode));
+    axe._audit = audit;
+
+    assert.isString(new DqElement(vNode).source);
+  });
+
   describe('element', () => {
     it('should store reference to the element', () => {
       const vNode = queryFixture('<div id="target"></div>');
