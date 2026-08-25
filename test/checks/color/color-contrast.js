@@ -1278,6 +1278,46 @@ x
       );
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     });
+
+    it('should evaluate the same element separately per pseudoSizeThreshold', () => {
+      const params = checkSetup(
+        html`
+          <style>
+            .foo {
+              position: relative;
+              width: 100px;
+              height: 100px;
+            }
+            .foo:before {
+              content: '';
+              position: absolute;
+              width: 22%;
+              height: 100%;
+              background: red;
+            }
+          </style>
+          <p id="target" class="foo">Content</p>
+        `,
+        {
+          pseudoSizeThreshold: 0.2
+        }
+      );
+      const [node, options, vNode] = params;
+
+      // the pseudo element covers 22%, so it exceeds a 0.2 threshold
+      assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.messageKey, 'pseudoContent');
+
+      // ...and the same element does not exceed a 0.3 one. A cache that left
+      // the threshold out of its key would report pseudo content here too
+      checkContext.reset();
+      contrastEvaluate.apply(checkContext, [
+        node,
+        { ...options, pseudoSizeThreshold: 0.3 },
+        vNode
+      ]);
+      assert.notEqual(checkContext._data?.messageKey, 'pseudoContent');
+    });
   });
 
   it('returns colors across Shadow DOM boundaries', () => {
