@@ -46,4 +46,15 @@ describe('aria.getRoleType', () => {
     ).actualNode;
     assert.equal(getRoleType(domNode), 'stuff');
   });
+
+  it('does not confuse two elements with the same tag', () => {
+    const fixture = axe.testUtils.fixtureSetup(
+      '<span id="a" role="cats"></span><span id="b" role="dogs"></span>'
+    );
+    const a = axe.utils.querySelectorAll(fixture, '#a')[0];
+    const b = axe.utils.querySelectorAll(fixture, '#b')[0];
+
+    assert.equal(getRoleType(a.actualNode), 'stuff');
+    assert.isNull(getRoleType(b.actualNode));
+  });
 });
