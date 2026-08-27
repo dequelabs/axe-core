@@ -667,4 +667,183 @@ describe('axe.utils.getSelector', () => {
       axe.utils.getSelector(node);
     });
   });
+
+  it('returns an empty string for an element in a detached DocumentFragment', () => {
+    // Complements the doesNotThrow test above by pinning down the actual
+    // return value. If this ever changes to a non-empty string, callers
+    // consuming the result (e.g. reporters, teardown) may need to adjust.
+    const fragment = document.createDocumentFragment();
+    const node = document.createElement('div');
+    fragment.appendChild(node);
+    fixtureSetup();
+    assert.strictEqual(axe.utils.getSelector(node), '');
+  });
+
+  it('produces a valid selector for an element appended after axe processed the page', () => {
+    fixtureSetup(document.createElement('div'));
+    const late = document.createElement('button');
+    late.className = 'appended-later';
+    fixture.appendChild(late);
+    const sel = axe.utils.getSelector(late);
+    assert.isString(sel);
+    assert.isAbove(sel.length, 0);
+  });
+
+  it('produces a working selector for an appended element sharing an id with a tree element', () => {
+    // Documents the correctness invariant that the returned selector must
+    // uniquely match the actual target, even when a caller hands us a node
+    // whose id was already used by an element seen at tree-walk time.
+    const inTree = document.createElement('div');
+    inTree.id = 'shared';
+    fixtureSetup(inTree);
+    const appended = document.createElement('span');
+    appended.id = 'shared';
+    fixture.appendChild(appended);
+    const sel = axe.utils.getSelector(appended);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], appended);
+  });
+
+  it('does not throw when generating a selector for an element in a shadow root attached after axe processed the page', () => {
+    // Codifies the "root not in the walked map" edge case. A shadow root
+    // added post-run isn't in _rootMap, so no id lookup can succeed and the
+    // element isn't in _elmToIdx — we should still return SOMETHING valid.
+    const host = document.createElement('div');
+    fixtureSetup(host);
+    const shadow = host.attachShadow({ mode: 'open' });
+    const inner = document.createElement('span');
+    inner.className = 'late-shadow';
+    shadow.appendChild(inner);
+    let sel;
+    assert.doesNotThrow(() => {
+      sel = axe.utils.getSelector(inner);
+    });
+    // getShadowSelector returns an array (one selector per shadow layer)
+    // when the element lives in a shadow tree; every entry must be a
+    // non-empty string.
+    const parts = Array.isArray(sel) ? sel : [sel];
+    parts.forEach(part => {
+      assert.isString(part);
+      assert.isAbove(part.length, 0);
+    });
+  });
+
+  it('produces distinct working selectors for many siblings that share the same self-fragment', () => {
+    // Stress test: every leaf has identical tag/features. Uniqueness has to
+    // come from :nth-child at level 0, which means the chain-suffix cache
+    // sees the same key for every leaf. If cache reuse ever corrupts the
+    // per-target result, some of these queries will fail to round-trip.
+    const parent = document.createElement('ul');
+    for (let i = 0; i < 30; i++) {
+      const li = document.createElement('li');
+      li.textContent = 'item ' + i;
+      parent.appendChild(li);
+    }
+    fixtureSetup(parent);
+    const seen = new Set();
+    fixture.querySelectorAll('li').forEach(li => {
+      const sel = axe.utils.getSelector(li);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], li);
+      seen.add(sel);
+    });
+    assert.equal(seen.size, 30, 'every sibling should get a distinct selector');
+  });
+
+  it('produces distinct working selectors for identically-shaped subtrees', () => {
+    // Two subtrees with the same structural shape mean every intermediate
+    // chain string is shared between them. Leaves must still get distinct
+    // selectors — the walk has to reach a level where the outer parents
+    // differ. If the chain cache poisons across subtrees, this breaks.
+    fixture.innerHTML =
+      '<section>' +
+      '  <div><span class="leaf">a</span><span class="leaf">b</span></div>' +
+      '  <div><span class="leaf">c</span><span class="leaf">d</span></div>' +
+      '</section>' +
+      '<section>' +
+      '  <div><span class="leaf">e</span><span class="leaf">f</span></div>' +
+      '  <div><span class="leaf">g</span><span class="leaf">h</span></div>' +
+      '</section>';
+    fixtureSetup();
+    const leaves = fixture.querySelectorAll('.leaf');
+    leaves.forEach(leaf => {
+      const sel = axe.utils.getSelector(leaf);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], leaf);
+    });
+  });
+
+  it('produces a working selector at extreme nesting depth', () => {
+    // Long chains stress both the chain-cache-set path (many cache writes)
+    // and the ancestor walk. If eviction ever drops entries we're still
+    // depending on, or the walk terminates too early, this fails.
+    let current = fixture;
+    let deepest = null;
+    for (let i = 0; i < 50; i++) {
+      const child = document.createElement('div');
+      current.appendChild(child);
+      current = child;
+      if (i === 49) {
+        deepest = child;
+      }
+    }
+    fixtureSetup();
+    const sel = axe.utils.getSelector(deepest);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], deepest);
+  });
+
+  it('produces working selectors when many targets share their entire self-fragment', () => {
+    // Every target has the same tag+class+attr fragment. The chain cache
+    // sees the same level-0 result for every one of them, then must
+    // differentiate through the parent chain. If the shared-cache assumption
+    // is wrong — e.g. mutating a cached buffer between calls — the second,
+    // third, etc. selectors will be broken.
+    let markup = '';
+    for (let i = 0; i < 20; i++) {
+      markup +=
+        '<article><header><h2 class="title" data-idx="' +
+        i +
+        '">n</h2></header></article>';
+    }
+    fixture.innerHTML = markup;
+    fixtureSetup();
+    fixture.querySelectorAll('.title').forEach(h => {
+      const sel = axe.utils.getSelector(h);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], h);
+    });
+  });
+
+  it('produces working selectors when only one ancestor level distinguishes targets', () => {
+    // All leaves share tag/features. Their immediate parents share features.
+    // Their grandparents share features too. Only the great-grandparent
+    // varies by class. Uniqueness therefore only appears after multiple
+    // ancestor filter rounds — a good check that the chain walk actually
+    // shrinks the candidate set at every level and doesn't false-terminate.
+    fixture.innerHTML =
+      '<div class="branch-a"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-b"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-c"><div><div><span>x</span></div></div></div>';
+    fixtureSetup();
+    fixture.querySelectorAll('span').forEach(span => {
+      const sel = axe.utils.getSelector(span);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], span);
+    });
+  });
 });
