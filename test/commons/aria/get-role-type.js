@@ -46,4 +46,25 @@ describe('aria.getRoleType', () => {
     ).actualNode;
     assert.equal(getRoleType(domNode), 'stuff');
   });
+
+  it('resolves the role of a node only once', () => {
+    const vNode = queryFixture('<span id="target" role="cats"></span>');
+    assert.equal(getRoleType(vNode), 'stuff');
+
+    // a second lookup must not re-resolve the role
+    vNode.actualNode.setAttribute('role', 'dogs');
+    assert.equal(getRoleType(vNode), 'stuff');
+  });
+
+  it('caches the type on the virtual node, not the DOM node', () => {
+    const vNode = queryFixture('<span id="target" role="cats"></span>');
+    assert.equal(getRoleType(vNode.actualNode), 'stuff');
+    assert.equal(vNode._cache.getRoleType, 'stuff');
+  });
+
+  it('does not cache the type of a role passed as a string', () => {
+    const vNode = queryFixture('<span id="target" role="cats"></span>');
+    assert.equal(getRoleType('cats'), 'stuff');
+    assert.isFalse('getRoleType' in vNode._cache);
+  });
 });
