@@ -552,6 +552,38 @@ describe('aria.implicitRole', () => {
     assert.equal(implicitRole(node), 'columnheader');
   });
 
+  describe('caching', () => {
+    it('resolves the role of a node only once', () => {
+      const vNode = queryFixture('<a id="target" href="#"></a>');
+      assert.equal(implicitRole(vNode), 'link');
+
+      // a second lookup must not re-resolve the role
+      vNode.actualNode.removeAttribute('href');
+      assert.equal(implicitRole(vNode), 'link');
+    });
+
+    it('caches the role on the virtual node', () => {
+      const vNode = queryFixture('<a id="target" href="#"></a>');
+      assert.equal(implicitRole(vNode.actualNode), 'link');
+      assert.equal(vNode._cache.implicitRole, 'link');
+    });
+
+    it('caches chromium roles separately from implicit html roles', () => {
+      const vNode = queryFixture('<canvas id="target"></canvas>');
+      assert.isNull(implicitRole(vNode));
+      assert.equal(implicitRole(vNode, { chromium: true }), 'Canvas');
+    });
+
+    it('does not cache when the node has no cache to write to', () => {
+      const vNode = new axe.SerialVirtualNode({
+        nodeName: 'a',
+        attributes: { href: '#' }
+      });
+      assert.equal(implicitRole(vNode), 'link');
+      assert.equal(implicitRole(vNode), 'link');
+    });
+  });
+
   describe('ElementInternals', () => {
     it('returns element internals role', () => {
       const vNode = queryFixture(
