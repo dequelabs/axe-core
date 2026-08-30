@@ -225,6 +225,10 @@
       "description": "Ensure that links with the same accessible name serve a similar purpose",
       "help": "Links with the same name must have a similar purpose"
     },
+    "image-alt-file-name": {
+      "description": "Ensure image alternative is not the image file name",
+      "help": "Alternative text of images should not be a file name, path or URL"
+    },
     "image-alt": {
       "description": "Ensure <img> elements have alternative text or a role of none or presentation",
       "help": "Images must have alternative text"
@@ -787,6 +791,10 @@
     "tabindex": {
       "pass": "Element does not have a tabindex greater than 0",
       "fail": "Element has a tabindex greater than 0"
+    },
+    "alt-file-name": {
+      "pass": "Element's alternative text is not a file name, path or URL",
+      "fail": "Element's alternative text is a file name, path or URL"
     },
     "alt-space-value": {
       "pass": "Element has a valid alt attribute value",

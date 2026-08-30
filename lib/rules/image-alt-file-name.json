@@ -1,0 +1,14 @@
+{
+  "id": "image-alt-file-name",
+  "impact": "minor",
+  "selector": "img",
+  "tags": ["cat.text-alternatives", "best-practice"],
+  "metadata": {
+    "description": "Ensure image alternative is not the image file name",
+    "help": "Alternative text of images should not be a file name, path or URL"
+  },
+  "all": [],
+  "any": [],
+  "none": ["alt-file-name"],
+  "reviewOnFail": true
+}
