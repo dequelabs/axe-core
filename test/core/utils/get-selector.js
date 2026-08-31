@@ -846,4 +846,86 @@ describe('axe.utils.getSelector', () => {
       assert.strictEqual(matches[0], span);
     });
   });
+
+  it('produces a unique selector when an unslotted host sibling would collide', () => {
+    const hostB = document.createElement('div');
+    hostB.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot name="nope"></slot>';
+    hostB.innerHTML = '<p><img src="y.png"></p>';
+
+    const hostA = document.createElement('div');
+    hostA.attachShadow({ mode: 'open' }).innerHTML = '<slot></slot>';
+    hostA.innerHTML = '<p><img src="x.png"></p>';
+
+    fixture.appendChild(hostB);
+    fixture.appendChild(hostA);
+    fixtureSetup();
+
+    const slottedImg = hostA.querySelector('img');
+    const sel = axe.utils.getSelector(slottedImg);
+    const finalSel = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const matches = document.querySelectorAll(finalSel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], slottedImg);
+  });
+
+  it('does not stash bitmap state on Object.prototype for a fragment key that shadows an inherited property', () => {
+    const parent = document.createElement('div');
+    parent.innerHTML = '<constructor></constructor><constructor></constructor>';
+    fixtureSetup(parent);
+    delete Object.bits;
+    parent.querySelectorAll('constructor').forEach(el => {
+      axe.utils.getSelector(el);
+    });
+    assert.notProperty(Object, 'bits');
+    assert.notProperty(Object.prototype, 'bits');
+  });
+
+  it('produces a working selector for an attribute name ending in "$"', () => {
+    fixture.innerHTML =
+      '<div id="w">' +
+      '<span data-x$="q1"></span>' +
+      '<span data-x$="q2"></span>' +
+      '</div>';
+    fixtureSetup();
+    const first = fixture.querySelector('span');
+    const sel = axe.utils.getSelector(first);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], first);
+  });
+
+  it('does not index attribute values that can never be picked as a feature', () => {
+    const div = document.createElement('div');
+    div.id = 'my-unique-id';
+    div.className = 'my-unique-class';
+    div.setAttribute('style', 'color: red');
+    div.setAttribute('data-long', 'x'.repeat(50));
+    div.setAttribute('data-short', 'yes');
+    fixtureSetup(div);
+    const indexedKeys = Object.keys(axe._selectorData._attrBits);
+    assert.notInclude(indexedKeys, 'id="my-unique-id"');
+    assert.notInclude(indexedKeys, 'class="my-unique-class"');
+    assert.notInclude(indexedKeys, 'style="color: red"');
+    assert.isTrue(indexedKeys.every(k => !k.startsWith('data-long=')));
+    assert.isTrue(indexedKeys.some(k => k.startsWith('data-short=')));
+  });
+
+  it('assigns distinct nthChild values across many element siblings', () => {
+    const parent = document.createElement('div');
+    for (let i = 0; i < 500; i++) {
+      parent.appendChild(document.createElement('span'));
+    }
+    fixtureSetup(parent);
+    const perNode = axe._selectorData._perNode;
+    const nths = [];
+    perNode.forEach(rec => {
+      if (rec.elm.parentNode === parent) {
+        nths.push(rec.nthChild);
+      }
+    });
+    assert.equal(nths.length, 500);
+    nths.sort((a, b) => a - b);
+    nths.forEach((n, i) => assert.equal(n, i + 1));
+  });
 });
