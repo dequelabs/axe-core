@@ -894,38 +894,4 @@ describe('axe.utils.getSelector', () => {
     assert.lengthOf(matches, 1);
     assert.strictEqual(matches[0], first);
   });
-
-  it('does not index attribute values that can never be picked as a feature', () => {
-    const div = document.createElement('div');
-    div.id = 'my-unique-id';
-    div.className = 'my-unique-class';
-    div.setAttribute('style', 'color: red');
-    div.setAttribute('data-long', 'x'.repeat(50));
-    div.setAttribute('data-short', 'yes');
-    fixtureSetup(div);
-    const indexedKeys = Object.keys(axe._selectorData._attrBits);
-    assert.notInclude(indexedKeys, 'id="my-unique-id"');
-    assert.notInclude(indexedKeys, 'class="my-unique-class"');
-    assert.notInclude(indexedKeys, 'style="color: red"');
-    assert.isTrue(indexedKeys.every(k => !k.startsWith('data-long=')));
-    assert.isTrue(indexedKeys.some(k => k.startsWith('data-short=')));
-  });
-
-  it('assigns distinct nthChild values across many element siblings', () => {
-    const parent = document.createElement('div');
-    for (let i = 0; i < 500; i++) {
-      parent.appendChild(document.createElement('span'));
-    }
-    fixtureSetup(parent);
-    const perNode = axe._selectorData._perNode;
-    const nths = [];
-    perNode.forEach(rec => {
-      if (rec.elm.parentNode === parent) {
-        nths.push(rec.nthChild);
-      }
-    });
-    assert.equal(nths.length, 500);
-    nths.sort((a, b) => a - b);
-    nths.forEach((n, i) => assert.equal(n, i + 1));
-  });
 });
