@@ -669,9 +669,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('returns an empty string for an element in a detached DocumentFragment', () => {
-    // Complements the doesNotThrow test above by pinning down the actual
-    // return value. If this ever changes to a non-empty string, callers
-    // consuming the result (e.g. reporters, teardown) may need to adjust.
     const fragment = document.createDocumentFragment();
     const node = document.createElement('div');
     fragment.appendChild(node);
@@ -690,9 +687,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces a working selector for an appended element sharing an id with a tree element', () => {
-    // Documents the correctness invariant that the returned selector must
-    // uniquely match the actual target, even when a caller hands us a node
-    // whose id was already used by an element seen at tree-walk time.
     const inTree = document.createElement('div');
     inTree.id = 'shared';
     fixtureSetup(inTree);
@@ -706,9 +700,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('does not throw when generating a selector for an element in a shadow root attached after axe processed the page', () => {
-    // Codifies the "root not in the walked map" edge case. A shadow root
-    // added post-run isn't in _rootMap, so no id lookup can succeed and the
-    // element isn't in _elmToIdx — we should still return SOMETHING valid.
     const host = document.createElement('div');
     fixtureSetup(host);
     const shadow = host.attachShadow({ mode: 'open' });
@@ -719,9 +710,6 @@ describe('axe.utils.getSelector', () => {
     assert.doesNotThrow(() => {
       sel = axe.utils.getSelector(inner);
     });
-    // getShadowSelector returns an array (one selector per shadow layer)
-    // when the element lives in a shadow tree; every entry must be a
-    // non-empty string.
     const parts = Array.isArray(sel) ? sel : [sel];
     parts.forEach(part => {
       assert.isString(part);
@@ -730,10 +718,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces distinct working selectors for many siblings that share the same self-fragment', () => {
-    // Stress test: every leaf has identical tag/features. Uniqueness has to
-    // come from :nth-child at level 0, which means the chain-suffix cache
-    // sees the same key for every leaf. If cache reuse ever corrupts the
-    // per-target result, some of these queries will fail to round-trip.
     const parent = document.createElement('ul');
     for (let i = 0; i < 30; i++) {
       const li = document.createElement('li');
@@ -757,10 +741,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces distinct working selectors for identically-shaped subtrees', () => {
-    // Two subtrees with the same structural shape mean every intermediate
-    // chain string is shared between them. Leaves must still get distinct
-    // selectors — the walk has to reach a level where the outer parents
-    // differ. If the chain cache poisons across subtrees, this breaks.
     fixture.innerHTML =
       '<section>' +
       '  <div><span class="leaf">a</span><span class="leaf">b</span></div>' +
@@ -785,9 +765,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces a working selector at extreme nesting depth', () => {
-    // Long chains stress both the chain-cache-set path (many cache writes)
-    // and the ancestor walk. If eviction ever drops entries we're still
-    // depending on, or the walk terminates too early, this fails.
     let current = fixture;
     let deepest = null;
     for (let i = 0; i < 50; i++) {
@@ -806,11 +783,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces working selectors when many targets share their entire self-fragment', () => {
-    // Every target has the same tag+class+attr fragment. The chain cache
-    // sees the same level-0 result for every one of them, then must
-    // differentiate through the parent chain. If the shared-cache assumption
-    // is wrong — e.g. mutating a cached buffer between calls — the second,
-    // third, etc. selectors will be broken.
     let markup = '';
     for (let i = 0; i < 20; i++) {
       markup +=
@@ -829,11 +801,6 @@ describe('axe.utils.getSelector', () => {
   });
 
   it('produces working selectors when only one ancestor level distinguishes targets', () => {
-    // All leaves share tag/features. Their immediate parents share features.
-    // Their grandparents share features too. Only the great-grandparent
-    // varies by class. Uniqueness therefore only appears after multiple
-    // ancestor filter rounds — a good check that the chain walk actually
-    // shrinks the candidate set at every level and doesn't false-terminate.
     fixture.innerHTML =
       '<div class="branch-a"><div><div><span>x</span></div></div></div>' +
       '<div class="branch-b"><div><div><span>x</span></div></div></div>' +
@@ -869,16 +836,26 @@ describe('axe.utils.getSelector', () => {
     assert.strictEqual(matches[0], slottedImg);
   });
 
-  it('does not stash bitmap state on Object.prototype for a fragment key that shadows an inherited property', () => {
-    const parent = document.createElement('div');
-    parent.innerHTML = '<constructor></constructor><constructor></constructor>';
-    fixtureSetup(parent);
-    delete Object.bits;
-    parent.querySelectorAll('constructor').forEach(el => {
-      axe.utils.getSelector(el);
-    });
-    assert.notProperty(Object, 'bits');
-    assert.notProperty(Object.prototype, 'bits');
+  it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
+    fixture.innerHTML =
+      '<div><constructor></constructor></div>' +
+      '<section><constructor></constructor></section>';
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<constructor></constructor>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    fixture
+      .querySelectorAll('div > constructor, section > constructor')
+      .forEach(c => axe.utils.getSelector(c));
+
+    const shadowConstructor = host.shadowRoot.querySelector('constructor');
+    const sel = axe.utils.getSelector(shadowConstructor);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], shadowConstructor);
   });
 
   it('produces a working selector for an attribute name ending in "$"', () => {
