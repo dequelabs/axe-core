@@ -853,6 +853,26 @@ describe('axe.utils.getSelector', () => {
     assert.strictEqual(found[0], target);
   });
 
+  it('produces a unique selector when a slot has a distinguishing feature its parent lacks', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<main>' +
+      '<section><slot class="wrap"><span>fallback</span></slot></section>' +
+      '<div class="wrap"><span>target</span></div>' +
+      '<div></div><div></div><div></div>' +
+      '</main>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div.wrap > span');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+  });
+
   it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
     fixture.innerHTML =
       '<div><constructor></constructor></div>' +
