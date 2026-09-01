@@ -836,6 +836,23 @@ describe('axe.utils.getSelector', () => {
     assert.strictEqual(matches[0], slottedImg);
   });
 
+  it('produces a unique selector when a slot has assigned content that shadows fallback markup', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot><span class="zz">fallback</span></slot>' +
+      '<div><span class="zz">target</span></div>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div > span.zz');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+  });
+
   it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
     fixture.innerHTML =
       '<div><constructor></constructor></div>' +
