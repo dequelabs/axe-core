@@ -14,7 +14,9 @@ function percentile(sorted, p) {
   const rank = (sorted.length - 1) * p;
   const lo = Math.floor(rank);
   const hi = Math.ceil(rank);
-  if (lo === hi) {return sorted[lo];}
+  if (lo === hi) {
+    return sorted[lo];
+  }
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (rank - lo);
 }
 
@@ -84,7 +86,6 @@ function sleep(n) {
 
   try {
     for (const page of pages) {
-      if (page !== 'mdn') {continue;}
       console.info(`\nRunning performance on page sites/${page}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
