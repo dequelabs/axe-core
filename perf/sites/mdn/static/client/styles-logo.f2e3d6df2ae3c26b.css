@@ -1,0 +1,23 @@
+.logo {
+  padding: 0.5rem;
+}
+.logo,
+.logo__image {
+  display: block;
+}
+.logo__cursor,
+.logo__letter {
+  --csstools-light-dark-toggle-8017cf61-0: var(--csstools-color-scheme--light)
+    var(--color-blue-80);
+  fill: var(--csstools-light-dark-toggle-8017cf61-0, var(--color-blue-50));
+}
+@supports (color: light-dark(red, red)) {
+  .logo__cursor,
+  .logo__letter {
+    fill: light-dark(var(--color-blue-50), var(--color-blue-80));
+  }
+}
+.logo__text {
+  fill: var(--color-text-primary);
+}
+/*# sourceMappingURL=styles-logo.f2e3d6df2ae3c26b.css.map*/

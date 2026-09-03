@@ -1,0 +1,108 @@
+.navigation {
+  background-color: var(--color-background-page);
+}
+.navigation[data-scheme='dark'] {
+  color: var(--color-text-primary);
+  --csstools-color-scheme--light: ;
+  color-scheme: dark;
+}
+@media (width <= 1044px) {
+  :root {
+    --navigation-height: 2.9rem;
+  }
+  .navigation {
+    align-items: center;
+    column-gap: 0.25rem;
+    display: grid;
+    grid-template-columns: 1fr min-content min-content;
+    height: var(--navigation-height);
+    justify-items: start;
+  }
+  .navigation[data-open='true'] {
+    align-content: start;
+    height: auto;
+    inset: 0;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 2;
+  }
+  .navigation__popup {
+    display: none;
+    grid-column: 1/-1;
+    justify-self: stretch;
+  }
+  .navigation[data-open='true'] .navigation__popup {
+    display: block;
+  }
+  .navigation__logo {
+    padding: 0.2rem;
+  }
+  .navigation__button {
+    background-color: initial;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    outline-offset: -2px;
+    padding: 0.7rem;
+  }
+  .navigation__button:hover {
+    background-color: var(--color-background-secondary);
+  }
+  .navigation__button:before {
+    background-color: currentcolor;
+    content: '';
+    display: block;
+    height: 1.5rem;
+    mask-size: cover;
+    width: 1.5rem;
+  }
+  .navigation__button[aria-expanded='true']:before {
+    mask-image: url(cancel.7362f2cdf3515e0d.svg);
+  }
+  .navigation__button[aria-expanded='false']:before {
+    mask-image: url(menu.74ccd9bb64dbf543.svg);
+  }
+  .navigation__search[data-view='mobile'] {
+    display: block;
+  }
+  .navigation__search[data-view='desktop'] {
+    display: none;
+  }
+  mdn-user-menu {
+    border-top: 1px solid var(--color-border-primary);
+    display: block;
+  }
+}
+@media (width > 1044px) {
+  :root {
+    --navigation-height: 4.125rem;
+  }
+  .navigation {
+    align-items: center;
+    column-gap: 1rem;
+    display: grid;
+    grid-template-columns: min-content 1fr min-content min-content;
+    height: var(--navigation-height);
+    justify-items: center;
+    padding-block: 0.75rem;
+    padding-inline: var(--layout-side-padding);
+  }
+  .navigation__logo {
+    margin-inline-start: -6px;
+  }
+  .navigation__popup {
+    display: contents;
+  }
+  .navigation__button,
+  .navigation__search[data-view='mobile'] {
+    display: none;
+  }
+  .navigation__search[data-view='desktop'] {
+    display: block;
+  }
+  mdn-user-menu {
+    height: 2.125rem;
+    width: 2.125rem;
+  }
+}
+/*# sourceMappingURL=styles-navigation.c3ebf384e65df345.css.map*/

@@ -1,0 +1,2557 @@
+{
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.13.0"
+  },
+  "testEnvironment": {
+    "orientationAngle": 0,
+    "orientationType": "landscape-primary",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+    "windowHeight": 413,
+    "windowWidth": 756
+  },
+  "testRunner": {
+    "name": "axe"
+  },
+  "timestamp": "2026-09-01T20:02:42.770Z",
+  "numRuns": 25,
+  "machine": {
+    "cpu": "Apple M2 Pro",
+    "cpuCount": 12,
+    "totalMemGB": 16
+  },
+  "pages": [
+    {
+      "url": "/sites/mdn",
+      "metrics": [
+        {
+          "name": "axe",
+          "coldStart": 870.2,
+          "min": 760.6,
+          "p50": 778.5,
+          "p95": 820.48
+        },
+        {
+          "name": "audit_start_to_end",
+          "coldStart": 694.4,
+          "min": 595.7,
+          "p50": 610.2,
+          "p95": 651.14
+        },
+        {
+          "name": "rule_color-contrast",
+          "coldStart": 442.1,
+          "min": 390.1,
+          "p50": 398,
+          "p95": 419.16
+        },
+        {
+          "name": "runchecks_color-contrast",
+          "coldStart": 279.4,
+          "min": 252.4,
+          "p50": 258.4,
+          "p95": 272.54
+        },
+        {
+          "name": "rule_color-contrast#matches",
+          "coldStart": 162.5,
+          "min": 136.5,
+          "p50": 139.6,
+          "p95": 152.04
+        },
+        {
+          "name": "reporter",
+          "coldStart": 54.5,
+          "min": 42.7,
+          "p50": 44.7,
+          "p95": 62.44
+        },
+        {
+          "name": "rule_aria-allowed-attr",
+          "coldStart": 59.5,
+          "min": 41.5,
+          "p50": 44.6,
+          "p95": 48.48
+        },
+        {
+          "name": "rule_button-name",
+          "coldStart": 35.7,
+          "min": 33.6,
+          "p50": 36.1,
+          "p95": 37.94
+        },
+        {
+          "name": "rule_aria-allowed-attr#gather",
+          "coldStart": 48.7,
+          "min": 33.2,
+          "p50": 36,
+          "p95": 41.56
+        },
+        {
+          "name": "rule_aria-allowed-attr#gather_axe.utils.isVisibleToScreenReaders",
+          "coldStart": 47.3,
+          "min": 32.6,
+          "p50": 35.5,
+          "p95": 40.1
+        },
+        {
+          "name": "runchecks_button-name",
+          "coldStart": 35.2,
+          "min": 33.3,
+          "p50": 35.4,
+          "p95": 37.48
+        },
+        {
+          "name": "rule_region",
+          "coldStart": 40.3,
+          "min": 32.4,
+          "p50": 33.7,
+          "p95": 35.28
+        },
+        {
+          "name": "runchecks_region",
+          "coldStart": 32.4,
+          "min": 26.4,
+          "p50": 27.4,
+          "p95": 28.58
+        },
+        {
+          "name": "rule_scrollable-region-focusable",
+          "coldStart": 21.3,
+          "min": 20.2,
+          "p50": 21.5,
+          "p95": 23.68
+        },
+        {
+          "name": "rule_scrollable-region-focusable#matches",
+          "coldStart": 17,
+          "min": 16,
+          "p50": 17.3,
+          "p95": 19.24
+        },
+        {
+          "name": "rule_nested-interactive",
+          "coldStart": 16.1,
+          "min": 13.7,
+          "p50": 15.1,
+          "p95": 16.3
+        },
+        {
+          "name": "audit.after",
+          "coldStart": 8.6,
+          "min": 6.8,
+          "p50": 8.2,
+          "p95": 9.8
+        },
+        {
+          "name": "runchecks_aria-allowed-attr",
+          "coldStart": 10.1,
+          "min": 5.6,
+          "p50": 7.8,
+          "p95": 8.98
+        },
+        {
+          "name": "runchecks_nested-interactive",
+          "coldStart": 8.3,
+          "min": 6,
+          "p50": 7.2,
+          "p95": 8.16
+        },
+        {
+          "name": "rule_nested-interactive#matches",
+          "coldStart": 6.2,
+          "min": 5.5,
+          "p50": 6.1,
+          "p95": 7.1
+        },
+        {
+          "name": "rule_region#gather",
+          "coldStart": 7.7,
+          "min": 5.5,
+          "p50": 6.1,
+          "p95": 6.9
+        },
+        {
+          "name": "rule_link-name",
+          "coldStart": 7,
+          "min": 5,
+          "p50": 5.2,
+          "p95": 6.26
+        },
+        {
+          "name": "runchecks_link-name",
+          "coldStart": 6.8,
+          "min": 4.8,
+          "p50": 5.1,
+          "p95": 6.08
+        },
+        {
+          "name": "rule_bypass",
+          "coldStart": 4.9,
+          "min": 4.5,
+          "p50": 4.8,
+          "p95": 5.2
+        },
+        {
+          "name": "runchecks_bypass",
+          "coldStart": 4.7,
+          "min": 4.5,
+          "p50": 4.7,
+          "p95": 5.18
+        },
+        {
+          "name": "rule_link-in-text-block",
+          "coldStart": 6.6,
+          "min": 4.5,
+          "p50": 4.6,
+          "p95": 5.34
+        },
+        {
+          "name": "rule_aria-valid-attr-value",
+          "coldStart": 5.5,
+          "min": 3.9,
+          "p50": 4.5,
+          "p95": 5.58
+        },
+        {
+          "name": "rule_scrollable-region-focusable#gather",
+          "coldStart": 4.3,
+          "min": 3.9,
+          "p50": 4.3,
+          "p95": 4.86
+        },
+        {
+          "name": "rule_avoid-inline-spacing",
+          "coldStart": 5.1,
+          "min": 3.8,
+          "p50": 4,
+          "p95": 4.48
+        },
+        {
+          "name": "rule_aria-conditional-attr",
+          "coldStart": 3.8,
+          "min": 2.8,
+          "p50": 3.6,
+          "p95": 4.7
+        },
+        {
+          "name": "rule_aria-prohibited-attr",
+          "coldStart": 5.4,
+          "min": 3.2,
+          "p50": 3.6,
+          "p95": 5.08
+        },
+        {
+          "name": "runchecks_link-in-text-block",
+          "coldStart": 4.9,
+          "min": 3,
+          "p50": 3.2,
+          "p95": 3.5
+        },
+        {
+          "name": "rule_role-img-alt",
+          "coldStart": 3.6,
+          "min": 2.7,
+          "p50": 3,
+          "p95": 4.1
+        },
+        {
+          "name": "rule_duplicate-id-aria",
+          "coldStart": 4.3,
+          "min": 2.7,
+          "p50": 2.9,
+          "p95": 3.9
+        },
+        {
+          "name": "rule_role-img-alt#gather",
+          "coldStart": 3.5,
+          "min": 2.7,
+          "p50": 2.9,
+          "p95": 4
+        },
+        {
+          "name": "runchecks_aria-valid-attr-value",
+          "coldStart": 3.7,
+          "min": 2.5,
+          "p50": 2.8,
+          "p95": 3.84
+        },
+        {
+          "name": "runchecks_avoid-inline-spacing",
+          "coldStart": 2.9,
+          "min": 2.7,
+          "p50": 2.8,
+          "p95": 3.26
+        },
+        {
+          "name": "rule_svg-img-alt",
+          "coldStart": 3,
+          "min": 2.4,
+          "p50": 2.7,
+          "p95": 3.84
+        },
+        {
+          "name": "rule_svg-img-alt#gather",
+          "coldStart": 2.9,
+          "min": 2.3,
+          "p50": 2.6,
+          "p95": 3.84
+        },
+        {
+          "name": "runchecks_duplicate-id-aria",
+          "coldStart": 3.5,
+          "min": 2.2,
+          "p50": 2.4,
+          "p95": 3.3
+        },
+        {
+          "name": "rule_aria-valid-attr",
+          "coldStart": 2.7,
+          "min": 1.8,
+          "p50": 2.2,
+          "p95": 3.04
+        },
+        {
+          "name": "runchecks_aria-prohibited-attr",
+          "coldStart": 2.9,
+          "min": 1.6,
+          "p50": 2.1,
+          "p95": 3.58
+        },
+        {
+          "name": "rule_empty-table-header",
+          "coldStart": 3,
+          "min": 1.7,
+          "p50": 1.9,
+          "p95": 2.1
+        },
+        {
+          "name": "rule_nested-interactive#gather",
+          "coldStart": 1.6,
+          "min": 1.5,
+          "p50": 1.9,
+          "p95": 2.4
+        },
+        {
+          "name": "rule_aria-conditional-attr#gather",
+          "coldStart": 1.5,
+          "min": 1.5,
+          "p50": 1.8,
+          "p95": 2.3
+        },
+        {
+          "name": "runchecks_empty-table-header",
+          "coldStart": 2.7,
+          "min": 1.6,
+          "p50": 1.8,
+          "p95": 1.98
+        },
+        {
+          "name": "rule_autocomplete-valid",
+          "coldStart": 1.8,
+          "min": 1.5,
+          "p50": 1.7,
+          "p95": 1.9
+        },
+        {
+          "name": "rule_th-has-data-cells",
+          "coldStart": 2.4,
+          "min": 1.5,
+          "p50": 1.7,
+          "p95": 2.08
+        },
+        {
+          "name": "runchecks_th-has-data-cells",
+          "coldStart": 2.3,
+          "min": 1.5,
+          "p50": 1.7,
+          "p95": 1.98
+        },
+        {
+          "name": "rule_landmark-unique",
+          "coldStart": 1.8,
+          "min": 1.3,
+          "p50": 1.4,
+          "p95": 1.58
+        },
+        {
+          "name": "rule_link-in-text-block#matches",
+          "coldStart": 1.7,
+          "min": 1.2,
+          "p50": 1.3,
+          "p95": 1.6
+        },
+        {
+          "name": "rule_aria-prohibited-attr#gather",
+          "coldStart": 2.1,
+          "min": 1.1,
+          "p50": 1.2,
+          "p95": 1.38
+        },
+        {
+          "name": "rule_aria-valid-attr#gather",
+          "coldStart": 1.2,
+          "min": 1,
+          "p50": 1.2,
+          "p95": 1.38
+        },
+        {
+          "name": "rule_aria-valid-attr-value#gather",
+          "coldStart": 1.2,
+          "min": 1.1,
+          "p50": 1.2,
+          "p95": 1.68
+        },
+        {
+          "name": "rule_autocomplete-valid#gather",
+          "coldStart": 1.3,
+          "min": 1,
+          "p50": 1.2,
+          "p95": 1.4
+        },
+        {
+          "name": "runchecks_aria-conditional-attr",
+          "coldStart": 1.9,
+          "min": 0.9,
+          "p50": 1.2,
+          "p95": 1.48
+        },
+        {
+          "name": "runchecks_landmark-unique",
+          "coldStart": 1.4,
+          "min": 1,
+          "p50": 1.2,
+          "p95": 1.3
+        },
+        {
+          "name": "rule_avoid-inline-spacing#matches",
+          "coldStart": 2.1,
+          "min": 1,
+          "p50": 1.1,
+          "p95": 1.3
+        },
+        {
+          "name": "rule_landmark-one-main",
+          "coldStart": 1.3,
+          "min": 0.9,
+          "p50": 1,
+          "p95": 1.1
+        },
+        {
+          "name": "runchecks_landmark-one-main",
+          "coldStart": 1.3,
+          "min": 0.9,
+          "p50": 1,
+          "p95": 1.1
+        },
+        {
+          "name": "rule_page-has-heading-one",
+          "coldStart": 0.9,
+          "min": 0.7,
+          "p50": 0.9,
+          "p95": 1.08
+        },
+        {
+          "name": "runchecks_page-has-heading-one",
+          "coldStart": 0.9,
+          "min": 0.7,
+          "p50": 0.8,
+          "p95": 0.98
+        },
+        {
+          "name": "runchecks_aria-valid-attr",
+          "coldStart": 1,
+          "min": 0.4,
+          "p50": 0.6,
+          "p95": 0.8
+        },
+        {
+          "name": "rule_aria-allowed-attr#matches",
+          "coldStart": 0.7,
+          "min": 0.2,
+          "p50": 0.5,
+          "p95": 0.6
+        },
+        {
+          "name": "rule_autocomplete-valid#matches",
+          "coldStart": 0.4,
+          "min": 0.4,
+          "p50": 0.5,
+          "p95": 0.5
+        },
+        {
+          "name": "rule_definition-list",
+          "coldStart": 0.7,
+          "min": 0.4,
+          "p50": 0.5,
+          "p95": 0.6
+        },
+        {
+          "name": "rule_aria-conditional-attr#matches",
+          "coldStart": 0.4,
+          "min": 0.2,
+          "p50": 0.4,
+          "p95": 0.78
+        },
+        {
+          "name": "rule_aria-hidden-body",
+          "coldStart": 0.5,
+          "min": 0.3,
+          "p50": 0.4,
+          "p95": 0.5
+        },
+        {
+          "name": "rule_dlitem",
+          "coldStart": 0.5,
+          "min": 0.3,
+          "p50": 0.4,
+          "p95": 0.5
+        },
+        {
+          "name": "rule_duplicate-id-aria#matches",
+          "coldStart": 0.6,
+          "min": 0.2,
+          "p50": 0.4,
+          "p95": 0.5
+        },
+        {
+          "name": "runchecks_aria-hidden-body",
+          "coldStart": 0.5,
+          "min": 0.3,
+          "p50": 0.4,
+          "p95": 0.48
+        },
+        {
+          "name": "runchecks_definition-list",
+          "coldStart": 0.6,
+          "min": 0.3,
+          "p50": 0.4,
+          "p95": 0.5
+        },
+        {
+          "name": "rule_aria-prohibited-attr#matches",
+          "coldStart": 0.3,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_aria-valid-attr#matches",
+          "coldStart": 0.5,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_aria-valid-attr-value#matches",
+          "coldStart": 0.6,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.48
+        },
+        {
+          "name": "rule_skip-link",
+          "coldStart": 0.4,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_skip-link#gather",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_td-headers-attr",
+          "coldStart": 0.4,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "runchecks_dlitem",
+          "coldStart": 0.4,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "runchecks_td-headers-attr",
+          "coldStart": 0.4,
+          "min": 0.2,
+          "p50": 0.3,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_button-name#gather",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_button-name#matches",
+          "coldStart": 0.1,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_empty-heading",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_landmark-banner-is-top-level",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_landmark-main-is-top-level",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_landmark-unique#matches",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_list",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_listitem",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "rule_tabindex",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.4
+        },
+        {
+          "name": "rule_tabindex#gather",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.3
+        },
+        {
+          "name": "runchecks_landmark-banner-is-top-level",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.2
+        },
+        {
+          "name": "runchecks_landmark-main-is-top-level",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.2,
+          "p95": 0.28
+        },
+        {
+          "name": "runchecks_list",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.2,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_aria-allowed-role",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_dlitem#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_duplicate-id-aria#gather",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_empty-table-header#gather",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_heading-order",
+          "coldStart": 0.3,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_html-lang-valid",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_input-button-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_input-button-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_label",
+          "coldStart": 0.3,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-contentinfo-is-top-level",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_landmark-no-duplicate-contentinfo",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_link-in-text-block#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_link-name#gather",
+          "coldStart": 0.2,
+          "min": 0.1,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_listitem#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_object-alt",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_region#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_scope-attr-valid",
+          "coldStart": 0.3,
+          "min": 0.1,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_summary-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "rule_valid-lang",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_empty-heading",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "runchecks_heading-order",
+          "coldStart": 0.3,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_landmark-contentinfo-is-top-level",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "runchecks_listitem",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.2
+        },
+        {
+          "name": "runchecks_scope-attr-valid",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_summary-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0.1,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_accesskeys",
+          "coldStart": 0.3,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_accesskeys#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_accesskeys#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_area-alt",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_area-alt#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_area-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-allowed-role#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-allowed-role#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-braille-equivalent",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-braille-equivalent#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-braille-equivalent#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-command-name",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-command-name#gather",
+          "coldStart": 0.2,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-command-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-deprecated-role",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-deprecated-role#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-deprecated-role#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-dialog-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-dialog-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-dialog-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-hidden-body#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-hidden-body#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-hidden-focus",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-hidden-focus#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-hidden-focus#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-input-field-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-input-field-name#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-input-field-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-meter-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-meter-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-meter-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-progressbar-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-progressbar-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-progressbar-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-required-attr",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-required-attr#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-required-attr#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-required-children",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-required-children#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-required-children#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-required-parent",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-required-parent#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-required-parent#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-roles",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-roles#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-roles#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-tab-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-tab-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-tab-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-text",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-text#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-text#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-toggle-field-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-toggle-field-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-toggle-field-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-tooltip-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-tooltip-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_aria-tooltip-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-treeitem-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_aria-treeitem-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_aria-treeitem-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_avoid-inline-spacing#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_blink",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_blink#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_blink#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_bypass#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_bypass#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_color-contrast#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_definition-list#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_definition-list#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_dlitem#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_document-title",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_document-title#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_document-title#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_empty-heading#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_empty-heading#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_empty-table-header#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_form-field-multiple-labels",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_form-field-multiple-labels#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_form-field-multiple-labels#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_frame-focusable-content",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-focusable-content#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_frame-focusable-content#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_frame-tested",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-tested#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-tested#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_frame-title",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-title#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_frame-title#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_frame-title-unique",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-title-unique#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_frame-title-unique#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_heading-order#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_heading-order#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_html-has-lang",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_html-has-lang#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_html-has-lang#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_html-lang-valid#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_html-lang-valid#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_html-xml-lang-mismatch",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_html-xml-lang-mismatch#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_html-xml-lang-mismatch#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_image-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_image-alt#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_image-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_image-redundant-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_image-redundant-alt#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_image-redundant-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_input-button-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_input-image-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_input-image-alt#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_input-image-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_label#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_label#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_label-title-only",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_label-title-only#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_label-title-only#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_landmark-banner-is-top-level#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-banner-is-top-level#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-contentinfo-is-top-level#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-contentinfo-is-top-level#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-main-is-top-level#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-main-is-top-level#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-no-duplicate-banner",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-no-duplicate-banner#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-no-duplicate-banner#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-no-duplicate-contentinfo#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-no-duplicate-contentinfo#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-no-duplicate-main",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_landmark-no-duplicate-main#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-no-duplicate-main#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-one-main#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_landmark-one-main#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_landmark-unique#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_link-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_list#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.18
+        },
+        {
+          "name": "rule_list#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_listitem#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_marquee",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_marquee#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_marquee#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_meta-refresh",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_meta-refresh#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_meta-refresh#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_meta-viewport",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_meta-viewport#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_meta-viewport#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_meta-viewport-large",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_meta-viewport-large#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_meta-viewport-large#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_no-autoplay-audio",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_no-autoplay-audio#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_no-autoplay-audio#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_object-alt#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_object-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_page-has-heading-one#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_page-has-heading-one#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_presentation-role-conflict",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_presentation-role-conflict#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_presentation-role-conflict#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_role-img-alt#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_scope-attr-valid#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_scope-attr-valid#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_select-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_select-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_select-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_server-side-image-map",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_server-side-image-map#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_server-side-image-map#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_skip-link#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_summary-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_summary-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "rule_svg-img-alt#matches",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_tabindex#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_table-duplicate-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_table-duplicate-name#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_table-duplicate-name#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_td-headers-attr#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_td-headers-attr#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_th-has-data-cells#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_th-has-data-cells#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_valid-lang#gather",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_valid-lang#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_video-caption",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "rule_video-caption#gather",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "rule_video-caption#matches",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_accesskeys",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_area-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-allowed-role",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_aria-braille-equivalent",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-command-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-deprecated-role",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_aria-dialog-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-hidden-focus",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-input-field-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-meter-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-progressbar-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-required-attr",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-required-children",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-required-parent",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-roles",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_aria-tab-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-text",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-toggle-field-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_aria-tooltip-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "runchecks_aria-treeitem-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_autocomplete-valid",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_blink",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_document-title",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "runchecks_form-field-multiple-labels",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_frame-focusable-content",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_frame-tested",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "runchecks_frame-title",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_frame-title-unique",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_html-has-lang",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_html-lang-valid",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_html-xml-lang-mismatch",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_image-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "runchecks_image-redundant-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_input-button-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_input-image-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_label",
+          "coldStart": 0.3,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_label-title-only",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_landmark-no-duplicate-banner",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_landmark-no-duplicate-contentinfo",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_landmark-no-duplicate-main",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_marquee",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_meta-refresh",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_meta-viewport",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_meta-viewport-large",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_no-autoplay-audio",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_object-alt",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_presentation-role-conflict",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_role-img-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_scrollable-region-focusable",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_select-name",
+          "coldStart": 0.1,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_server-side-image-map",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_skip-link",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_svg-img-alt",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.1
+        },
+        {
+          "name": "runchecks_tabindex",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_table-duplicate-name",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0.08
+        },
+        {
+          "name": "runchecks_valid-lang",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        {
+          "name": "runchecks_video-caption",
+          "coldStart": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0
+        }
+      ]
+    }
+  ]
+}
