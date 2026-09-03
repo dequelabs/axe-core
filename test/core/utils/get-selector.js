@@ -814,6 +814,57 @@ describe('axe.utils.getSelector', () => {
     });
   });
 
+  it('produces a unique selector when a shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <span></span><slot class="cta"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+  });
+
+  it('produces a unique selector when a nested shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div>
+        <div><span class="cta"></span></div>
+        <slot class="cta"></slot>
+      </div>
+      <span></span>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+  });
+
+  it('produces a unique selector when a shadow slot shares an id with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span id="dup"></span></div>
+      <slot id="dup"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+
+    // Attributes always get the tag name, so no need for
+    // a separate slot[attr] test
+  });
+
   it('produces a unique selector when an unslotted host sibling would collide', () => {
     const hostB = document.createElement('div');
     hostB.attachShadow({ mode: 'open' }).innerHTML =
