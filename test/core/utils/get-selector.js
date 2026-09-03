@@ -667,4 +667,264 @@ describe('axe.utils.getSelector', () => {
       axe.utils.getSelector(node);
     });
   });
+
+  it('returns an empty string for an element in a detached DocumentFragment', () => {
+    const fragment = document.createDocumentFragment();
+    const node = document.createElement('div');
+    fragment.appendChild(node);
+    fixtureSetup();
+    assert.strictEqual(axe.utils.getSelector(node), '');
+  });
+
+  it('produces a valid selector for an element appended after axe processed the page', () => {
+    fixtureSetup(document.createElement('div'));
+    const late = document.createElement('button');
+    late.className = 'appended-later';
+    fixture.appendChild(late);
+    const sel = axe.utils.getSelector(late);
+    assert.isString(sel);
+    assert.isAbove(sel.length, 0);
+  });
+
+  it('produces a working selector for an appended element sharing an id with a tree element', () => {
+    const inTree = document.createElement('div');
+    inTree.id = 'shared';
+    fixtureSetup(inTree);
+    const appended = document.createElement('span');
+    appended.id = 'shared';
+    fixture.appendChild(appended);
+    const sel = axe.utils.getSelector(appended);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], appended);
+  });
+
+  it('does not throw when generating a selector for an element in a shadow root attached after axe processed the page', () => {
+    const host = document.createElement('div');
+    fixtureSetup(host);
+    const shadow = host.attachShadow({ mode: 'open' });
+    const inner = document.createElement('span');
+    inner.className = 'late-shadow';
+    shadow.appendChild(inner);
+    let sel;
+    assert.doesNotThrow(() => {
+      sel = axe.utils.getSelector(inner);
+    });
+    const parts = Array.isArray(sel) ? sel : [sel];
+    parts.forEach(part => {
+      assert.isString(part);
+      assert.isAbove(part.length, 0);
+    });
+  });
+
+  it('produces distinct working selectors for many siblings that share the same self-fragment', () => {
+    const parent = document.createElement('ul');
+    for (let i = 0; i < 30; i++) {
+      const li = document.createElement('li');
+      li.textContent = 'item ' + i;
+      parent.appendChild(li);
+    }
+    fixtureSetup(parent);
+    const seen = new Set();
+    fixture.querySelectorAll('li').forEach(li => {
+      const sel = axe.utils.getSelector(li);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], li);
+      seen.add(sel);
+    });
+    assert.equal(seen.size, 30, 'every sibling should get a distinct selector');
+  });
+
+  it('produces distinct working selectors for identically-shaped subtrees', () => {
+    fixture.innerHTML =
+      '<section>' +
+      '  <div><span class="leaf">a</span><span class="leaf">b</span></div>' +
+      '  <div><span class="leaf">c</span><span class="leaf">d</span></div>' +
+      '</section>' +
+      '<section>' +
+      '  <div><span class="leaf">e</span><span class="leaf">f</span></div>' +
+      '  <div><span class="leaf">g</span><span class="leaf">h</span></div>' +
+      '</section>';
+    fixtureSetup();
+    const leaves = fixture.querySelectorAll('.leaf');
+    leaves.forEach(leaf => {
+      const sel = axe.utils.getSelector(leaf);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], leaf);
+    });
+  });
+
+  it('produces a working selector at extreme nesting depth', () => {
+    let current = fixture;
+    let deepest = null;
+    for (let i = 0; i < 50; i++) {
+      const child = document.createElement('div');
+      current.appendChild(child);
+      current = child;
+      if (i === 49) {
+        deepest = child;
+      }
+    }
+    fixtureSetup();
+    const sel = axe.utils.getSelector(deepest);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], deepest);
+  });
+
+  it('produces working selectors when many targets share their entire self-fragment', () => {
+    let markup = '';
+    for (let i = 0; i < 20; i++) {
+      markup +=
+        '<article><header><h2 class="title" data-idx="' +
+        i +
+        '">n</h2></header></article>';
+    }
+    fixture.innerHTML = markup;
+    fixtureSetup();
+    fixture.querySelectorAll('.title').forEach(h => {
+      const sel = axe.utils.getSelector(h);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], h);
+    });
+  });
+
+  it('produces working selectors when only one ancestor level distinguishes targets', () => {
+    fixture.innerHTML =
+      '<div class="branch-a"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-b"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-c"><div><div><span>x</span></div></div></div>';
+    fixtureSetup();
+    fixture.querySelectorAll('span').forEach(span => {
+      const sel = axe.utils.getSelector(span);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], span);
+    });
+  });
+
+  it('produces a unique selector when an unslotted host sibling would collide', () => {
+    const hostB = document.createElement('div');
+    hostB.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot name="nope"></slot>';
+    hostB.innerHTML = '<p><img src="y.png"></p>';
+
+    const hostA = document.createElement('div');
+    hostA.attachShadow({ mode: 'open' }).innerHTML = '<slot></slot>';
+    hostA.innerHTML = '<p><img src="x.png"></p>';
+
+    fixture.appendChild(hostB);
+    fixture.appendChild(hostA);
+    fixtureSetup();
+
+    const slottedImg = hostA.querySelector('img');
+    const sel = axe.utils.getSelector(slottedImg);
+    const finalSel = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const matches = document.querySelectorAll(finalSel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], slottedImg);
+  });
+
+  it('produces a unique selector when a slot has assigned content that shadows fallback markup', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot><span class="zz">fallback</span></slot>' +
+      '<div><span class="zz">target</span></div>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div > span.zz');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+  });
+
+  it('produces a unique selector when a slot has a distinguishing feature its parent lacks', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<main>' +
+      '<section><slot class="wrap"><span>fallback</span></slot></section>' +
+      '<div class="wrap"><span>target</span></div>' +
+      '<div></div><div></div><div></div>' +
+      '</main>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div.wrap > span');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+  });
+
+  it('produces a unique selector when a slot is unfilled and its fallback shares features with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<main>' +
+      '<section><slot class="wrap"><span>fallback</span></slot></section>' +
+      '<div class="wrap"><span>target</span></div>' +
+      '<div></div><div></div><div></div>' +
+      '</main>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div.wrap > span');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+  });
+
+  it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
+    fixture.innerHTML =
+      '<div><constructor></constructor></div>' +
+      '<section><constructor></constructor></section>';
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<constructor></constructor>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    fixture
+      .querySelectorAll('div > constructor, section > constructor')
+      .forEach(c => axe.utils.getSelector(c));
+
+    const shadowConstructor = host.shadowRoot.querySelector('constructor');
+    const sel = axe.utils.getSelector(shadowConstructor);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], shadowConstructor);
+  });
+
+  it('produces a working selector for an attribute name ending in "$"', () => {
+    fixture.innerHTML =
+      '<div id="w">' +
+      '<span data-x$="q1"></span>' +
+      '<span data-x$="q2"></span>' +
+      '</div>';
+    fixtureSetup();
+    const first = fixture.querySelector('span');
+    const sel = axe.utils.getSelector(first);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], first);
+  });
 });
