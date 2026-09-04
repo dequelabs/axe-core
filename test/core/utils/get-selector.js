@@ -999,4 +999,87 @@ describe('axe.utils.getSelector', () => {
     assert.lengthOf(matches, 1);
     assert.strictEqual(matches[0], first);
   });
+
+  describe('feature count stability', () => {
+    it('does not count unslotted light DOM towards tag frequency', () => {
+      fixture.innerHTML = html` <div id="unslotted-host">
+          <img src="a.png" alt="a" /><img src="b.png" alt="b" />
+        </div>
+        <img class="logo" src="c.png" />`;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('img.logo');
+      assert.equal(axe.utils.getSelector(target), '#fixture > img');
+      assert.equal(axe._selectorData.tags.IMG, 1);
+    });
+
+    it('does not count unslotted light DOM towards class frequency', () => {
+      fixture.innerHTML = html`
+        <section id="unslotted-host">
+          <span class="cta"></span>
+        </section>
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+      `;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target), 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+        <slot class="cta"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards attribute frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div><span data-k="v"></span></div>
+        <span></span>
+        <slot data-k="v"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target)[1], 'span[data-k="v"]');
+      assert.equal(axe._selectorData.attributes['data-k="v"'], 1);
+    });
+
+    it('does not count assigned-slot fallback towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <slot><span class="cta"></span></slot>
+        <div><span class="cta"></span></div>
+        <span></span>
+      `;
+      host.innerHTML = '<em>assigned</em>';
+      fixture.appendChild(host);
+      fixtureSetup();
+
+      const target = host.shadowRoot.querySelector('div > span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+  });
 });
