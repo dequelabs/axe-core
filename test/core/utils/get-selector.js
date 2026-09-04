@@ -943,6 +943,27 @@ describe('axe.utils.getSelector', () => {
     assert.strictEqual(found[0], target);
   });
 
+  it('produces a unique selector for slot fallback content under a slot with a unique id', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <slot id="uniq"><span class="cta"></span></slot>
+    `;
+    fixtureSetup(host);
+    const target = host.shadowRoot.querySelector('#uniq span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(
+      matches,
+      1,
+      `selector "${sel[1]}" did not match the target`
+    );
+    assert.strictEqual(matches[0], target);
+    // The slot is dropped by flatten-tree, but querySelectorAll can still
+    // see it, so `#uniq` has to stay usable as a fragment.
+    assert.equal(sel[1], '#uniq > span');
+  });
+
   it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
     fixture.innerHTML =
       '<div><constructor></constructor></div>' +
