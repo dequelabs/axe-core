@@ -270,4 +270,36 @@ describe('text.removeUnicode', () => {
     });
     assert.equal(actual, 'Hello World');
   });
+
+  it('substitutes matched punctuation with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('non-standard', {
+      punctuations: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, 'non standard');
+  });
+
+  it('substitutes matched emoji with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('Sun🌎Earth', {
+      emoji: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, 'Sun Earth');
+  });
+
+  it('substitutes matched non BMP characters with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('20000₨100', {
+      nonBmp: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, '20000 100');
+  });
+
+  it('inserts replaceWith literally rather than as a replace pattern', () => {
+    const actual = axe.commons.text.removeUnicode('a😀b', {
+      emoji: true,
+      replaceWith: '$&'
+    });
+    assert.equal(actual, 'a$&b');
+  });
 });
