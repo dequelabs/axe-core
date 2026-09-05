@@ -2,6 +2,7 @@ version: 2
 
 updates:
   - package-ecosystem: 'github-actions'
+    rebase-strategy: disabled
     directory: '/'
     schedule:
       interval: 'monthly'
@@ -18,6 +19,7 @@ updates:
       default-days: 7
 
   - package-ecosystem: 'npm'
+    rebase-strategy: disabled
     directory: '/'
     schedule:
       interval: 'monthly'
