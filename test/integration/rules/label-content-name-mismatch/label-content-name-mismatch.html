@@ -1,3 +1,21 @@
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .clip-hidden {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+  }
+  .clip-path-hidden {
+    position: absolute;
+    clip-path: inset(50%);
+  }
+</style>
+
 <!-- Pass -->
 <div id="pass1" role="link" aria-label="next page ">next page</div>
 <div id="pass2" role="link" aria-label="Next Page">next page</div>
@@ -26,6 +44,15 @@
   </svg>
   Hello World
 </a>
+<a id="pass10" href="#" aria-label="deque are great">
+  deque <span class="visually-hidden">labs</span> are great
+</a>
+<a id="pass11" href="#" aria-label="deque are great">
+  deque <span class="clip-hidden">labs</span> are great
+</a>
+<a id="pass12" href="#" aria-label="deque are great">
+  deque <span class="clip-path-hidden">labs</span> are great
+</a>
 
 <!-- Fail -->
 <div id="fail1" role="link" aria-label="OK">Next</div>
@@ -45,6 +72,9 @@
     <circle cx="50" cy="50" r="50" />
   </svg>
   Hello Deque Systems
+</a>
+<a id="fail8" href="#" aria-label="deque labs are great">
+  deque <span class="visually-hidden">labs</span> are great
 </a>
 
 <!-- incomplete -->
