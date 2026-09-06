@@ -235,6 +235,20 @@ this should not effect their outcome -->
   </a>
 </p>
 
+<!-- https://github.com/dequelabs/axe-core/issues/4295
+An inline <span> wrapping across multiple lines must not be treated as a
+single merged obscuring rect that fully overlaps everything near it -->
+<div style="max-width: 290px">
+  <p>
+    <a href="#" id="pass-wrapped-span-1">lorem ipsum dolor</a>
+    <a href="#" id="pass-wrapped-span-2">amet</a>
+    <span>et dolore magna aliqua</span>
+  </p>
+  <a href="#" id="pass-wrapped-span-3" style="display: inline-block"
+    >Not obscured by the wrapped span above</a
+  >
+</div>
+
 <!-- Inapplicable -->
 <p>
   The quick <a href="#" id="inapplicable1">brown</a><br />
