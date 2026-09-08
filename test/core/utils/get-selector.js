@@ -814,6 +814,57 @@ describe('axe.utils.getSelector', () => {
     });
   });
 
+  it('produces a unique selector when a shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <span></span><slot class="cta"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+  });
+
+  it('produces a unique selector when a nested shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div>
+        <div><span class="cta"></span></div>
+        <slot class="cta"></slot>
+      </div>
+      <span></span>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+  });
+
+  it('produces a unique selector when a shadow slot shares an id with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span id="dup"></span></div>
+      <slot id="dup"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+
+    // Attributes always get the tag name, so no need for
+    // a separate slot[attr] test
+  });
+
   it('produces a unique selector when an unslotted host sibling would collide', () => {
     const hostB = document.createElement('div');
     hostB.attachShadow({ mode: 'open' }).innerHTML =
@@ -892,6 +943,27 @@ describe('axe.utils.getSelector', () => {
     assert.strictEqual(found[0], target);
   });
 
+  it('produces a unique selector for slot fallback content under a slot with a unique id', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <slot id="uniq"><span class="cta"></span></slot>
+    `;
+    fixtureSetup(host);
+    const target = host.shadowRoot.querySelector('#uniq span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(
+      matches,
+      1,
+      `selector "${sel[1]}" did not match the target`
+    );
+    assert.strictEqual(matches[0], target);
+    // The slot is dropped by flatten-tree, but querySelectorAll can still
+    // see it, so `#uniq` has to stay usable as a fragment.
+    assert.equal(sel[1], '#uniq > span');
+  });
+
   it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
     fixture.innerHTML =
       '<div><constructor></constructor></div>' +
@@ -926,5 +998,88 @@ describe('axe.utils.getSelector', () => {
     const matches = document.querySelectorAll(sel);
     assert.lengthOf(matches, 1);
     assert.strictEqual(matches[0], first);
+  });
+
+  describe('feature count stability', () => {
+    it('does not count unslotted light DOM towards tag frequency', () => {
+      fixture.innerHTML = html` <div id="unslotted-host">
+          <img src="a.png" alt="a" /><img src="b.png" alt="b" />
+        </div>
+        <img class="logo" src="c.png" />`;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('img.logo');
+      assert.equal(axe.utils.getSelector(target), '#fixture > img');
+      assert.equal(axe._selectorData.tags.IMG, 1);
+    });
+
+    it('does not count unslotted light DOM towards class frequency', () => {
+      fixture.innerHTML = html`
+        <section id="unslotted-host">
+          <span class="cta"></span>
+        </section>
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+      `;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target), 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+        <slot class="cta"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards attribute frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div><span data-k="v"></span></div>
+        <span></span>
+        <slot data-k="v"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target)[1], 'span[data-k="v"]');
+      assert.equal(axe._selectorData.attributes['data-k="v"'], 1);
+    });
+
+    it('does not count assigned-slot fallback towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <slot><span class="cta"></span></slot>
+        <div><span class="cta"></span></div>
+        <span></span>
+      `;
+      host.innerHTML = '<em>assigned</em>';
+      fixture.appendChild(host);
+      fixtureSetup();
+
+      const target = host.shadowRoot.querySelector('div > span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
   });
 });
