@@ -107,7 +107,6 @@ function sleep(n) {
 
   try {
     for (const page of pages) {
-      if (!['very-large-page', 'mdn'].includes(page)) {continue;}
       console.info(`\nRunning performance on page sites/${page}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
