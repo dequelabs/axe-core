@@ -64,6 +64,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, '#fixture > div');
   });
 
   it('should still work if an element has nothing but whitespace as a className', () => {
@@ -75,6 +76,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, '#fixture > div');
   });
 
   it('should handle special characters in IDs', () => {
@@ -82,9 +84,11 @@ describe('axe.utils.getSelector', () => {
     node.id = 'monkeys#are.animals\\ok';
     fixtureSetup(node);
 
-    const result = document.querySelectorAll(axe.utils.getSelector(node));
+    const sel = axe.utils.getSelector(node);
+    const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, '#monkeys\\#are\\.animals\\\\ok');
   });
 
   it('should handle special characters in classNames', () => {
@@ -92,9 +96,11 @@ describe('axe.utils.getSelector', () => {
     node.className = '.  bb-required';
     fixtureSetup(node);
 
-    const result = document.querySelectorAll(axe.utils.getSelector(node));
+    const sel = axe.utils.getSelector(node);
+    const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, '.\\.');
   });
 
   it('should be able to fall back to positional selectors', () => {
@@ -108,9 +114,11 @@ describe('axe.utils.getSelector', () => {
       }
     }
     fixtureSetup(nodes);
-    const result = document.querySelectorAll(axe.utils.getSelector(expected));
+    const sel = axe.utils.getSelector(expected);
+    const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], expected);
+    assert.equal(sel, 'div:nth-child(6)');
   });
 
   it('should use a unique ID', () => {
@@ -140,6 +148,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(sel, 'div:nth-child(2)');
   });
 
   it('should use classes if available and unique', () => {
@@ -188,6 +197,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(sel, 'p:nth-child(2)');
   });
 
   it('should use the most unique class', () => {
@@ -269,6 +279,10 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(
+      sel,
+      '.thing[data-axe="hello"][data-thing="hello"]:nth-child(2)'
+    );
   });
 
   it('should use only three uncommon but not unique features', () => {
@@ -300,6 +314,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(sel, '.thing.thang[data-axe="hello"]:nth-child(2)');
   });
 
   it('should use only three uncommon but not unique classes', () => {
@@ -324,6 +339,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(sel, '.thing.thang.thug:nth-child(2)');
   });
 
   it('should use only three uncommon but not unique attributes', () => {
@@ -355,6 +371,10 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node2);
+    assert.equal(
+      sel,
+      'div[data-axe="hello"][data-thing="hello"][data-thang="hello"]:nth-child(2)'
+    );
   });
 
   it('should not use long attributes', () => {
@@ -362,6 +382,7 @@ describe('axe.utils.getSelector', () => {
     fixtureSetup();
     const sel = axe.utils.getSelector(node, {});
     assert.isTrue(sel.indexOf('data-att') === -1);
+    assert.equal(sel, 'div:nth-child(4) > div > div');
   });
 
   it('should use :root when not unique html element', () => {
@@ -397,6 +418,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], document.documentElement);
+    assert.equal(sel, 'html');
   });
 
   it('should work on the documentElement with classes', () => {
@@ -408,6 +430,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], document.documentElement);
+    assert.equal(sel, 'html');
     document.documentElement.className = orig;
   });
 
@@ -418,6 +441,7 @@ describe('axe.utils.getSelector', () => {
 
     assert.lengthOf(result, 1);
     assert.equal(result[0], document.body);
+    assert.equal(sel, 'body');
   });
 
   it('should work on namespaced elements', () => {
@@ -428,6 +452,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, 'hx\\:include');
   });
 
   it('should work on complex namespaced elements', () => {
@@ -445,6 +470,7 @@ describe('axe.utils.getSelector', () => {
     const result = document.querySelectorAll(sel);
     assert.lengthOf(result, 1);
     assert.equal(result[0], node);
+    assert.equal(sel, 'm\\:ci');
   });
 
   it('should not use ignored attributes', () => {
@@ -472,7 +498,9 @@ describe('axe.utils.getSelector', () => {
     });
     fixtureSetup(node);
 
-    assert.isTrue(axe.utils.getSelector(node).indexOf('[') === -1);
+    const sel = axe.utils.getSelector(node);
+    assert.isTrue(sel.indexOf('[') === -1);
+    assert.equal(sel, '#fixture > div');
   });
 
   it('should use href and src attributes, shortened', () => {
@@ -605,6 +633,14 @@ describe('axe.utils.getSelector', () => {
 
     assert.include(axe.utils.getSelector(node1), 'mars2.html?a=be_bold');
     assert.include(axe.utils.getSelector(node2), 'mars2.html?a=be_italic');
+    assert.equal(
+      axe.utils.getSelector(node1),
+      'a[href="mars2.html?a=be_bold"]'
+    );
+    assert.equal(
+      axe.utils.getSelector(node2),
+      'a[href="mars2.html?a=be_italic"]'
+    );
   });
 
   // shadow DOM v1 - note: v0 is compatible with this code, so no need
@@ -645,6 +681,7 @@ describe('axe.utils.getSelector', () => {
     const sel = axe.utils.getSelector(node, {});
     const mine = document.querySelector(sel);
     assert.isTrue(mine === node);
+    assert.equal(sel, 'div:nth-child(4) > div > div');
   });
 
   it('should not traverse further up than required when no discernable features', () => {
@@ -656,6 +693,7 @@ describe('axe.utils.getSelector', () => {
     sel = sel.substring(0, sel.indexOf(' >'));
     const test = document.querySelector(sel);
     assert.isTrue(test === top);
+    assert.equal(sel, 'div:nth-child(4)');
   });
 
   it('should not error if fragment is no longer in the DOM', () => {
@@ -665,6 +703,454 @@ describe('axe.utils.getSelector', () => {
     fixtureSetup();
     assert.doesNotThrow(() => {
       axe.utils.getSelector(node);
+    });
+  });
+
+  it('returns an empty string for an element in a detached DocumentFragment', () => {
+    const fragment = document.createDocumentFragment();
+    const node = document.createElement('div');
+    fragment.appendChild(node);
+    fixtureSetup();
+    assert.strictEqual(axe.utils.getSelector(node), '');
+  });
+
+  it('produces a valid selector for an element appended after axe processed the page', () => {
+    fixtureSetup(document.createElement('div'));
+    const late = document.createElement('button');
+    late.className = 'appended-later';
+    fixture.appendChild(late);
+    const sel = axe.utils.getSelector(late);
+    assert.isString(sel);
+    assert.isAbove(sel.length, 0);
+    assert.equal(sel, 'button');
+  });
+
+  it('produces a working selector for an appended element sharing an id with a tree element', () => {
+    const inTree = document.createElement('div');
+    inTree.id = 'shared';
+    fixtureSetup(inTree);
+    const appended = document.createElement('span');
+    appended.id = 'shared';
+    fixture.appendChild(appended);
+    const sel = axe.utils.getSelector(appended);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], appended);
+    assert.equal(sel, 'span');
+  });
+
+  it('does not throw when generating a selector for an element in a shadow root attached after axe processed the page', () => {
+    const host = document.createElement('div');
+    fixtureSetup(host);
+    const shadow = host.attachShadow({ mode: 'open' });
+    const inner = document.createElement('span');
+    inner.className = 'late-shadow';
+    shadow.appendChild(inner);
+    let sel;
+    assert.doesNotThrow(() => {
+      sel = axe.utils.getSelector(inner);
+    });
+    const parts = Array.isArray(sel) ? sel : [sel];
+    parts.forEach(part => {
+      assert.isString(part);
+      assert.isAbove(part.length, 0);
+    });
+    assert.deepEqual(sel, ['#fixture > div', 'span']);
+  });
+
+  it('produces distinct working selectors for many siblings that share the same self-fragment', () => {
+    const parent = document.createElement('ul');
+    for (let i = 0; i < 30; i++) {
+      const li = document.createElement('li');
+      li.textContent = 'item ' + i;
+      parent.appendChild(li);
+    }
+    fixtureSetup(parent);
+    const seen = new Set();
+    fixture.querySelectorAll('li').forEach((li, i) => {
+      const sel = axe.utils.getSelector(li);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], li);
+      assert.equal(sel, 'li:nth-child(' + (i + 1) + ')');
+      seen.add(sel);
+    });
+    assert.equal(seen.size, 30, 'every sibling should get a distinct selector');
+  });
+
+  it('produces distinct working selectors for identically-shaped subtrees', () => {
+    fixture.innerHTML =
+      '<section>' +
+      '  <div><span class="leaf">a</span><span class="leaf">b</span></div>' +
+      '  <div><span class="leaf">c</span><span class="leaf">d</span></div>' +
+      '</section>' +
+      '<section>' +
+      '  <div><span class="leaf">e</span><span class="leaf">f</span></div>' +
+      '  <div><span class="leaf">g</span><span class="leaf">h</span></div>' +
+      '</section>';
+    fixtureSetup();
+    const expected = [
+      'section:nth-child(1) > div:nth-child(1) > span:nth-child(1)',
+      'section:nth-child(1) > div:nth-child(1) > span:nth-child(2)',
+      'section:nth-child(1) > div:nth-child(2) > span:nth-child(1)',
+      'section:nth-child(1) > div:nth-child(2) > span:nth-child(2)',
+      'section:nth-child(2) > div:nth-child(1) > span:nth-child(1)',
+      'section:nth-child(2) > div:nth-child(1) > span:nth-child(2)',
+      'section:nth-child(2) > div:nth-child(2) > span:nth-child(1)',
+      'section:nth-child(2) > div:nth-child(2) > span:nth-child(2)'
+    ];
+    const leaves = fixture.querySelectorAll('.leaf');
+    leaves.forEach((leaf, i) => {
+      const sel = axe.utils.getSelector(leaf);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(
+        matches,
+        1,
+        'selector "' + sel + '" did not uniquely match'
+      );
+      assert.strictEqual(matches[0], leaf);
+      assert.equal(sel, expected[i]);
+    });
+  });
+
+  it('produces a working selector at extreme nesting depth', () => {
+    let current = fixture;
+    let deepest = null;
+    for (let i = 0; i < 50; i++) {
+      const child = document.createElement('div');
+      current.appendChild(child);
+      current = child;
+      if (i === 49) {
+        deepest = child;
+      }
+    }
+    fixtureSetup();
+    const sel = axe.utils.getSelector(deepest);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], deepest);
+    assert.equal(sel, '#fixture' + ' > div'.repeat(50));
+  });
+
+  it('produces working selectors when many targets share their entire self-fragment', () => {
+    let markup = '';
+    for (let i = 0; i < 20; i++) {
+      markup +=
+        '<article><header><h2 class="title" data-idx="' +
+        i +
+        '">n</h2></header></article>';
+    }
+    fixture.innerHTML = markup;
+    fixtureSetup();
+    fixture.querySelectorAll('.title').forEach((h, i) => {
+      const sel = axe.utils.getSelector(h);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], h);
+      assert.equal(sel, 'h2[data-idx="' + i + '"]');
+    });
+  });
+
+  it('produces working selectors when only one ancestor level distinguishes targets', () => {
+    fixture.innerHTML =
+      '<div class="branch-a"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-b"><div><div><span>x</span></div></div></div>' +
+      '<div class="branch-c"><div><div><span>x</span></div></div></div>';
+    fixtureSetup();
+    const expected = [
+      '.branch-a > div > div > span',
+      '.branch-b > div > div > span',
+      '.branch-c > div > div > span'
+    ];
+    fixture.querySelectorAll('span').forEach((span, i) => {
+      const sel = axe.utils.getSelector(span);
+      const matches = document.querySelectorAll(sel);
+      assert.lengthOf(matches, 1);
+      assert.strictEqual(matches[0], span);
+      assert.equal(sel, expected[i]);
+    });
+  });
+
+  it('produces a unique selector when a shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <span></span><slot class="cta"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'div > .cta']);
+  });
+
+  it('produces a unique selector when a nested shadow slot shares a class with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div>
+        <div><span class="cta"></span></div>
+        <slot class="cta"></slot>
+      </div>
+      <span></span>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span.cta');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'div > div > .cta']);
+  });
+
+  it('produces a unique selector when a shadow slot shares an id with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span id="dup"></span></div>
+      <slot id="dup"></slot>
+    `;
+    fixtureSetup(host);
+
+    const target = host.shadowRoot.querySelector('span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(matches, 1, `selector "${sel[1]}" also matched the slot`);
+    assert.strictEqual(matches[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'span']);
+
+    // Attributes always get the tag name, so no need for
+    // a separate slot[attr] test
+  });
+
+  it('produces a unique selector when an unslotted host sibling would collide', () => {
+    const hostB = document.createElement('div');
+    hostB.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot name="nope"></slot>';
+    hostB.innerHTML = '<p><img src="y.png"></p>';
+
+    const hostA = document.createElement('div');
+    hostA.attachShadow({ mode: 'open' }).innerHTML = '<slot></slot>';
+    hostA.innerHTML = '<p><img src="x.png"></p>';
+
+    fixture.appendChild(hostB);
+    fixture.appendChild(hostA);
+    fixtureSetup();
+
+    const slottedImg = hostA.querySelector('img');
+    const sel = axe.utils.getSelector(slottedImg);
+    const finalSel = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const matches = document.querySelectorAll(finalSel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], slottedImg);
+    assert.equal(sel, 'div:nth-child(2) > p > img');
+  });
+
+  it('produces a unique selector when a slot has assigned content that shadows fallback markup', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<slot><span class="zz">fallback</span></slot>' +
+      '<div><span class="zz">target</span></div>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div > span.zz');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'div > span']);
+  });
+
+  it('produces a unique selector when a slot has a distinguishing feature its parent lacks', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<main>' +
+      '<section><slot class="wrap"><span>fallback</span></slot></section>' +
+      '<div class="wrap"><span>target</span></div>' +
+      '<div></div><div></div><div></div>' +
+      '</main>';
+    host.innerHTML = '<em>assigned</em>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div.wrap > span');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'main > .wrap > span']);
+  });
+
+  it('produces a unique selector when a slot is unfilled and its fallback shares features with the target', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<main>' +
+      '<section><slot class="wrap"><span>fallback</span></slot></section>' +
+      '<div class="wrap"><span>target</span></div>' +
+      '<div></div><div></div><div></div>' +
+      '</main>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    const target = host.shadowRoot.querySelector('div.wrap > span');
+    const sel = axe.utils.getSelector(target);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], target);
+    assert.deepEqual(sel, ['#fixture > div', 'main > .wrap > span']);
+  });
+
+  it('produces a unique selector for slot fallback content under a slot with a unique id', () => {
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML = html`
+      <div><span class="cta"></span></div>
+      <slot id="uniq"><span class="cta"></span></slot>
+    `;
+    fixtureSetup(host);
+    const target = host.shadowRoot.querySelector('#uniq span');
+    const sel = axe.utils.getSelector(target);
+    const matches = host.shadowRoot.querySelectorAll(sel[1]);
+    assert.lengthOf(
+      matches,
+      1,
+      `selector "${sel[1]}" did not match the target`
+    );
+    assert.strictEqual(matches[0], target);
+    // The slot is dropped by flatten-tree, but querySelectorAll can still
+    // see it, so `#uniq` has to stay usable as a fragment.
+    assert.equal(sel[1], '#uniq > span');
+    assert.deepEqual(sel, ['#fixture > div', '#uniq > span']);
+  });
+
+  it('produces working selectors for elements whose tag matches an inherited property name across shadow roots', () => {
+    fixture.innerHTML =
+      '<div><constructor></constructor></div>' +
+      '<section><constructor></constructor></section>';
+    const host = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).innerHTML =
+      '<constructor></constructor>';
+    fixture.appendChild(host);
+    fixtureSetup();
+
+    fixture
+      .querySelectorAll('div > constructor, section > constructor')
+      .forEach(c => axe.utils.getSelector(c));
+
+    const shadowConstructor = host.shadowRoot.querySelector('constructor');
+    const sel = axe.utils.getSelector(shadowConstructor);
+    const inner = Array.isArray(sel) ? sel[sel.length - 1] : sel;
+    const found = host.shadowRoot.querySelectorAll(inner);
+    assert.lengthOf(found, 1);
+    assert.strictEqual(found[0], shadowConstructor);
+    assert.deepEqual(sel, ['div:nth-child(3)', 'constructor']);
+  });
+
+  it('produces a working selector for an attribute name ending in "$"', () => {
+    fixture.innerHTML =
+      '<div id="w">' +
+      '<span data-x$="q1"></span>' +
+      '<span data-x$="q2"></span>' +
+      '</div>';
+    fixtureSetup();
+    const first = fixture.querySelector('span');
+    const sel = axe.utils.getSelector(first);
+    const matches = document.querySelectorAll(sel);
+    assert.lengthOf(matches, 1);
+    assert.strictEqual(matches[0], first);
+    assert.equal(sel, 'span[data-x\\$="q1"]');
+  });
+
+  describe('feature count stability', () => {
+    it('does not count unslotted light DOM towards tag frequency', () => {
+      fixture.innerHTML = html` <div id="unslotted-host">
+          <img src="a.png" alt="a" /><img src="b.png" alt="b" />
+        </div>
+        <img class="logo" src="c.png" />`;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('img.logo');
+      assert.equal(axe.utils.getSelector(target), '#fixture > img');
+      assert.equal(axe._selectorData.tags.IMG, 1);
+    });
+
+    it('does not count unslotted light DOM towards class frequency', () => {
+      fixture.innerHTML = html`
+        <section id="unslotted-host">
+          <span class="cta"></span>
+        </section>
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+      `;
+      fixture
+        .querySelector('#unslotted-host')
+        .attachShadow({ mode: 'open' }).innerHTML = '<slot name="nope"></slot>';
+      fixtureSetup();
+
+      const target = fixture.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target), 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div>
+          <span class="cta"></span>
+        </div>
+        <span></span>
+        <slot class="cta"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
+    });
+
+    it('does not count slot elements towards attribute frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <div><span data-k="v"></span></div>
+        <span></span>
+        <slot data-k="v"></slot>
+      `;
+      fixtureSetup(host);
+
+      const target = host.shadowRoot.querySelector('div > span');
+      assert.equal(axe.utils.getSelector(target)[1], 'span[data-k="v"]');
+      assert.equal(axe._selectorData.attributes['data-k="v"'], 1);
+    });
+
+    it('does not count assigned-slot fallback towards class frequency', () => {
+      const host = document.createElement('div');
+      host.attachShadow({ mode: 'open' }).innerHTML = html`
+        <slot><span class="cta"></span></slot>
+        <div><span class="cta"></span></div>
+        <span></span>
+      `;
+      host.innerHTML = '<em>assigned</em>';
+      fixture.appendChild(host);
+      fixtureSetup();
+
+      const target = host.shadowRoot.querySelector('div > span.cta');
+      assert.equal(axe.utils.getSelector(target)[1], 'div > .cta');
+      assert.equal(axe._selectorData.classes.cta, 1);
     });
   });
 });
