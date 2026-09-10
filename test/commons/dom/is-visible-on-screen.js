@@ -438,6 +438,14 @@ describe('dom.isVisibleOnScreen', () => {
     assert.isFalse(isVisibleOnScreen(vNode));
   });
 
+  it('should return true for element scrolled out of view in an intermediate "overflow:auto" container within "overflow:hidden"', () => {
+    const vNode = queryFixture(
+      '<div style="overflow: hidden; height: 100px;"><div style="overflow: auto; height: 100px;"><div id="target" style="margin-top: 200px;">Below the fold</div></div></div>'
+    );
+
+    assert.isTrue(isVisibleOnScreen(vNode));
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return true on statically-positioned, visible elements', () => {
       const vNode = new axe.SerialVirtualNode({
