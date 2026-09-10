@@ -5,8 +5,22 @@ describe('label-content-name-mismatch tests', () => {
   const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const check = checks['label-content-name-mismatch'];
   const options = undefined;
+  const checkContext = new axe.testUtils.MockCheckContext();
+  const valueTextOptions = {
+    valueTextRoles: [
+      'switch',
+      'checkbox',
+      'radio',
+      'menuitemcheckbox',
+      'menuitemradio'
+    ]
+  };
 
   const fontApiSupport = !!document.fonts;
+
+  afterEach(() => {
+    checkContext.reset();
+  });
 
   before(done => {
     if (!fontApiSupport) {
@@ -280,5 +294,64 @@ describe('label-content-name-mismatch tests', () => {
     );
     const actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
+  });
+  valueTextOptions.valueTextRoles.forEach(role => {
+    it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
+      const vNode = queryFixture(
+        `<div id="labelFor${role}">Notifications</div>` +
+          `<div id="target" role="${role}" aria-labelledby="labelFor${role}">` +
+          '<span>[On]</span><span>Off</span></div>'
+      );
+      const actual = check.evaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isUndefined(actual);
+      assert.deepEqual(checkContext._data, { messageKey: 'valueText' });
+    });
+  });
+
+  it('returns true when a switch has its visible text inside the accessible name', () => {
+    const vNode = queryFixture(
+      '<div id="target" role="switch" aria-label="notifications on">notifications</div>'
+    );
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      valueTextOptions,
+      vNode
+    );
+    assert.isTrue(actual);
+    assert.isNull(checkContext._data);
+  });
+
+  it('returns false for a role outside the configured list', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="notifications">[On] Off</button>'
+    );
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      valueTextOptions,
+      vNode
+    );
+    assert.isFalse(actual);
+  });
+
+  it('returns false for a switch when the roles option is empty', () => {
+    const vNode = queryFixture(
+      '<div id="labelForEmpty">Notifications</div>' +
+        '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
+        '<span>[On]</span><span>Off</span></div>'
+    );
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      { valueTextRoles: [] },
+      vNode
+    );
+    assert.isFalse(actual);
   });
 });
