@@ -39,7 +39,7 @@
     ["#pass25"],
     ["#pass-adjacent"],
     ["#pass-fixed"],
-    ["#pass-wrapped-span-3"]
+    ["#pass-adjacent-inline"]
   ],
   "incomplete": [
     ["#incomplete1"],
