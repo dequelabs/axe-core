@@ -65,6 +65,28 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
+  it('ignores script content', () => {
+    fixtureSetup(html`
+      <p>
+        <a href="" id="link">link</a>
+        <script>var someScriptText = 'not real text content';</script>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignores style content', () => {
+    fixtureSetup(html`
+      <p>
+        <a href="" id="link">link</a>
+        <style>.some-style-text { color: red; }</style>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
   it('ignores floated content', () => {
     fixtureSetup(html`
       <p>
