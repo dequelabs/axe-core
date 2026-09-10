@@ -344,12 +344,44 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
   });
-  valueTextOptions.valueTextRoles.forEach(role => {
-    it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
+  describe('options.valueTextRoles', () => {
+    valueTextOptions.valueTextRoles.forEach(role => {
+      it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
+        const vNode = queryFixture(
+          `<div id="labelFor${role}">Notifications</div>` +
+            `<div id="target" role="${role}" aria-labelledby="labelFor${role}">` +
+            '<span>[On]</span><span>Off</span></div>'
+        );
+        const actual = check.evaluate.call(
+          checkContext,
+          vNode.actualNode,
+          valueTextOptions,
+          vNode
+        );
+        assert.isUndefined(actual);
+        assert.deepEqual(checkContext._data, { messageKey: 'valueText' });
+      });
+    });
+
+    it('returns true when a switch has its visible text inside the accessible name', () => {
       const vNode = queryFixture(
-        `<div id="labelFor${role}">Notifications</div>` +
-          `<div id="target" role="${role}" aria-labelledby="labelFor${role}">` +
-          '<span>[On]</span><span>Off</span></div>'
+        '<div id="target" role="switch" aria-label="notifications on">notifications</div>'
+      );
+      const actual = check.evaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isTrue(actual);
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns undefined when a switch has shadow DOM text outside its accessible name', () => {
+      const vNode = queryShadowFixture(
+        '<div id="target" role="switch" aria-label="notifications">' +
+          '<span id="shadow"></span></div>',
+        '<span>[On]</span><span>Off</span>'
       );
       const actual = check.evaluate.call(
         checkContext,
@@ -360,47 +392,33 @@ describe('label-content-name-mismatch tests', () => {
       assert.isUndefined(actual);
       assert.deepEqual(checkContext._data, { messageKey: 'valueText' });
     });
-  });
 
-  it('returns true when a switch has its visible text inside the accessible name', () => {
-    const vNode = queryFixture(
-      '<div id="target" role="switch" aria-label="notifications on">notifications</div>'
-    );
-    const actual = check.evaluate.call(
-      checkContext,
-      vNode.actualNode,
-      valueTextOptions,
-      vNode
-    );
-    assert.isTrue(actual);
-    assert.isNull(checkContext._data);
-  });
+    it('returns false for a role outside the configured list', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="notifications">[On] Off</button>'
+      );
+      const actual = check.evaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isFalse(actual);
+    });
 
-  it('returns false for a role outside the configured list', () => {
-    const vNode = queryFixture(
-      '<button id="target" aria-label="notifications">[On] Off</button>'
-    );
-    const actual = check.evaluate.call(
-      checkContext,
-      vNode.actualNode,
-      valueTextOptions,
-      vNode
-    );
-    assert.isFalse(actual);
-  });
-
-  it('returns false for a switch when the roles option is empty', () => {
-    const vNode = queryFixture(
-      '<div id="labelForEmpty">Notifications</div>' +
-        '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
-        '<span>[On]</span><span>Off</span></div>'
-    );
-    const actual = check.evaluate.call(
-      checkContext,
-      vNode.actualNode,
-      { valueTextRoles: [] },
-      vNode
-    );
-    assert.isFalse(actual);
+    it('returns false for a switch when the roles option is empty', () => {
+      const vNode = queryFixture(
+        '<div id="labelForEmpty">Notifications</div>' +
+          '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
+          '<span>[On]</span><span>Off</span></div>'
+      );
+      const actual = check.evaluate.call(
+        checkContext,
+        vNode.actualNode,
+        { valueTextRoles: [] },
+        vNode
+      );
+      assert.isFalse(actual);
+    });
   });
 });
