@@ -7,7 +7,28 @@ const { getWebdriver } = require('../test/get-webdriver');
 
 const serverPort = 9898;
 const axePath = require.resolve('../axe.js');
-const numRuns = 25;
+const axeVersion = require('../axe.js').version;
+
+// Sample-count bounds. Actual sample count per page is chosen adaptively
+// after the warmup run: we aim to spend at most TIME_BUDGET_MS of
+// axe.run wall-clock per page, so tiny pages get many samples (better
+// statistics) and huge pages get few samples (finishes in reasonable
+// time). Clamped between MIN_RUNS and MAX_RUNS.
+const MAX_RUNS = 25;
+const MIN_RUNS = 3;
+const TIME_BUDGET_MS = 90_000;
+
+function computeNumRuns(coldStartAxeMs) {
+  // axe emits metric values as strings via the log-scraper (regex .groups
+  // always yields strings). Coerce before doing math — Number.isFinite
+  // does not accept strings.
+  const ms = +coldStartAxeMs;
+  if (!Number.isFinite(ms) || ms <= 0) {
+    return MAX_RUNS;
+  }
+  const budgetFit = Math.floor(TIME_BUDGET_MS / ms);
+  return Math.max(MIN_RUNS, Math.min(MAX_RUNS, budgetFit));
+}
 
 // linear-interpolated percentile — expects a numeric array sorted ascending
 function percentile(sorted, p) {
@@ -79,13 +100,14 @@ function sleep(n) {
   const axeSource = await fs.readFile(axePath, 'utf8');
 
   const driver = getWebdriver();
-  await driver.manage().setTimeouts({ script: 60000 });
+  await driver.manage().setTimeouts({ script: 600_000 });
 
   let result;
   let server;
 
   try {
     for (const page of pages) {
+      if (!['very-large-page', 'mdn'].includes(page)) {continue;}
       console.info(`\nRunning performance on page sites/${page}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
@@ -114,7 +136,9 @@ function sleep(n) {
           testEnvironment,
           testRunner,
           timestamp,
-          numRuns,
+          maxRuns: MAX_RUNS,
+          minRuns: MIN_RUNS,
+          timeBudgetMs: TIME_BUDGET_MS,
           machine: {
             cpu: os.cpus()[0].model,
             cpuCount: os.cpus().length,
@@ -160,6 +184,16 @@ function sleep(n) {
       const coldStart = await runSample();
       await sleep(1000);
 
+      // Adapt the sample count to the page's cold-start time. Cold-start is
+      // the SLOWEST expected sample (unwarmed JIT, empty caches), so
+      // dividing our time budget by it gives a conservative upper bound
+      // on how many samples we can afford. Tiny pages hit MAX_RUNS; huge
+      // pages fall back to MIN_RUNS.
+      const numRuns = computeNumRuns(coldStart.axe);
+      console.log(
+        `Using ${numRuns} samples (cold-start axe=${round(coldStart.axe)}ms, budget=${TIME_BUDGET_MS}ms)`
+      );
+
       const metrics = [];
       for (let i = 0; i < numRuns; i++) {
         console.log(`Sample ${i + 1} of ${numRuns}`);
@@ -169,6 +203,7 @@ function sleep(n) {
 
       const pageResult = {
         url: `/sites/${page}`,
+        numRuns,
         metrics: []
       };
 
@@ -188,10 +223,9 @@ function sleep(n) {
 
       await new Promise(r => server.close(r));
       server = null;
-      break;
     }
 
-    const filePath = path.join(__dirname, 'logs', `${result.timestamp}.json`);
+    const filePath = path.join(__dirname, 'logs', `v${axeVersion}.json`);
     await fs.writeFile(filePath, JSON.stringify(result, null, 2), 'utf8');
   } finally {
     await driver.quit();

@@ -1,0 +1,75 @@
+name: Create performance report
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The axe-core version to run against (e.g., latest, next, 4.11.0)
+        default: 'next'
+
+jobs:
+  run_perf:
+    name: Run performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      # Must precede setup-node so its `cache: pnpm` can resolve the store path.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+      - name: Install Deps
+        run: pnpm ci
+      - name: Download requested axe-core version
+        id: download
+        run: |
+          pnpm add axe-core@${{ github.event.inputs.version }} --no-lockfile
+
+          # move the file to the root of axe-core as that's where the tracking script
+          # looks for the file
+          cp ./node_modules/axe-core/axe.js ./axe.js
+
+          # add the correct version to the end of the axe-core source (especially needed
+          # if running @next where we need the file name saved in the track script to
+          # be the version run against)
+          AxeVersion=$(jq -r .version ./node_modules/axe-core/package.json)
+          echo "axe_version=$AxeVersion" >> "$GITHUB_OUTPUT"
+          sed -i "s|axe\.version = '[^']*'|axe.version = '$AxeVersion'|" ./axe.js
+      - name: Run tracking script
+        run: node ./perf/track.js
+      - name: Upload tracking JSON as artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: "perf-v${{ steps.download.outputs.axe_version }}"
+          path: ./perf/logs/v${{ steps.download.outputs.axe_version }}.json
+          retention-days: 90
+      - name: Open PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          AXE_VERSION: ${{ steps.download.outputs.axe_version }}
+        run: |
+          # disregard package changes
+          git checkout -- package.json pnpm-lock.yaml
+
+          git config user.name "API Team CI User"
+          git config user.email "aciattestteamci@deque.com"
+
+          Branch="perf-v${AXE_VERSION}"
+          echo "Branch: $Branch"
+          git checkout -b "$Branch"
+
+          git add perf/logs/v${AXE_VERSION}.json
+          git commit -m "perf: add tracking file for v${AXE_VERSION}"
+          git push origin "$Branch" --force
+
+          gh pr create \
+              --title "perf: add tracking file for v${AXE_VERSION}" \
+              --body "This PR was opened by a robot :robot: :tada:" \
+              --base develop
+
+
