@@ -1,0 +1,27 @@
+.a11y-menu {
+  --offset: 20em;
+  --outline: 2px;
+  left: var(--outline);
+  list-style: none;
+  margin: 0;
+  position: absolute;
+  right: var(--outline);
+  top: calc(var(--offset) * -1);
+  width: calc(100% - var(--outline) * 2);
+  z-index: 1000;
+}
+.a11y-menu a {
+  background-color: var(--color-background-primary);
+  font-weight: var(--font-weight-bold);
+  left: 0;
+  padding: 0.8em;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+:is(.a11y-menu a):focus-within {
+  top: calc(var(--offset) + var(--outline));
+}
+/*# sourceMappingURL=styles-a11y-menu.5796ee87cb69f93f.css.map*/

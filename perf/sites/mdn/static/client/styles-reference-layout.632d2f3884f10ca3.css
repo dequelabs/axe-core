@@ -1,0 +1,34 @@
+:is(.reference-layout .reference-layout__header) h1 {
+  font-size: var(--font-size-largest);
+  font-weight: 400;
+  line-height: var(--font-line-header);
+  margin: 1rem 0;
+}
+:is(:is(.reference-layout .reference-layout__header) h1) code {
+  font-family: inherit;
+}
+:is(:is(.reference-layout .reference-layout__header) h1) code:first-of-type {
+  background-color: var(--color-background-secondary);
+  border-radius: var(--radius-normal);
+  padding: 0.0625em 0.125em;
+}
+.reference-layout .reference-layout__body {
+  padding-bottom: 3rem;
+}
+.reference-layout .reference-layout__toc {
+  align-content: start;
+  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+@media (width < calc(1rem * 2 + 15rem + 2rem + 31rem)) {
+  .reference-layout .reference-layout__toc {
+    --toc-header-font-size: var(--font-size-larger);
+  }
+}
+.reference-layout mdn-survey {
+  margin-top: 0.5rem;
+}
+/*# sourceMappingURL=styles-reference-layout.632d2f3884f10ca3.css.map*/

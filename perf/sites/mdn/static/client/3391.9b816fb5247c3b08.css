@@ -1,0 +1,270 @@
+.button {
+  align-items: center;
+  background-color: initial;
+  border: 1px solid #0000;
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+  column-gap: 0.3125em;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-family-text);
+  font-size: 0.875em;
+  font-weight: 450;
+  justify-content: center;
+  line-height: var(--font-line-ui);
+  margin: 0;
+  padding: 0.5em;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.button[data-variant='primary'] {
+  --csstools-light-dark-toggle-4dae8a1e-0: var(--csstools-color-scheme--light)
+    var(--color-black);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-0, var(--color-white));
+  --csstools-light-dark-toggle-4dae8a1e-1: var(--csstools-color-scheme--light)
+    var(--color-white);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-1,
+    var(--color-black)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary'] {
+    background-color: light-dark(var(--color-black), var(--color-white));
+    color: light-dark(var(--color-white), var(--color-black));
+  }
+}
+.button[data-variant='primary']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-2: var(--csstools-color-scheme--light)
+    var(--color-gray-60);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-2,
+    var(--color-gray-40)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary']:hover {
+    background-color: light-dark(var(--color-gray-40), var(--color-gray-60));
+  }
+}
+.button[data-variant='primary'][data-action='positive'] {
+  color: var(--color-white);
+  --csstools-light-dark-toggle-4dae8a1e-3: var(--csstools-color-scheme--light)
+    var(--color-green-20);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-3,
+    var(--color-green-50)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary'][data-action='positive'] {
+    background-color: light-dark(var(--color-green-50), var(--color-green-20));
+  }
+}
+.button[data-variant='primary'][data-action='positive']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-4: var(--csstools-color-scheme--light)
+    var(--color-green-50);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-4,
+    var(--color-green-20)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary'][data-action='positive']:hover {
+    background-color: light-dark(var(--color-green-20), var(--color-green-50));
+  }
+}
+.button[data-variant='primary'][data-action='negative'] {
+  color: var(--color-white);
+  --csstools-light-dark-toggle-4dae8a1e-5: var(--csstools-color-scheme--light)
+    var(--color-red-20);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-5,
+    var(--color-red-50)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary'][data-action='negative'] {
+    background-color: light-dark(var(--color-red-50), var(--color-red-20));
+  }
+}
+.button[data-variant='primary'][data-action='negative']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-6: var(--csstools-color-scheme--light)
+    var(--color-red-50);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-6,
+    var(--color-red-20)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='primary'][data-action='negative']:hover {
+    background-color: light-dark(var(--color-red-20), var(--color-red-50));
+  }
+}
+.button[data-variant='secondary'] {
+  border-color: currentcolor;
+}
+.button[data-variant='secondary']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-7: var(--csstools-color-scheme--light)
+    var(--color-gray-40);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-7,
+    var(--color-gray-80)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='secondary']:hover {
+    background-color: light-dark(var(--color-gray-80), var(--color-gray-40));
+  }
+}
+.button[data-variant='secondary'][data-action='positive'] {
+  --csstools-light-dark-toggle-4dae8a1e-8: var(--csstools-color-scheme--light)
+    var(--color-green-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-8, var(--color-green-20));
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='secondary'][data-action='positive'] {
+    color: light-dark(var(--color-green-20), var(--color-green-80));
+  }
+}
+.button[data-variant='secondary'][data-action='positive']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-9: var(--csstools-color-scheme--light)
+    var(--color-green-20);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-9,
+    var(--color-green-90)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='secondary'][data-action='positive']:hover {
+    background-color: light-dark(var(--color-green-90), var(--color-green-20));
+  }
+}
+.button[data-variant='secondary'][data-action='negative'] {
+  --csstools-light-dark-toggle-4dae8a1e-10: var(--csstools-color-scheme--light)
+    var(--color-red-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-10, var(--color-red-50));
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='secondary'][data-action='negative'] {
+    color: light-dark(var(--color-red-50), var(--color-red-80));
+  }
+}
+.button[data-variant='secondary'][data-action='negative']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-11: var(--csstools-color-scheme--light)
+    var(--color-red-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-11, var(--color-red-20));
+  --csstools-light-dark-toggle-4dae8a1e-12: var(--csstools-color-scheme--light)
+    var(--color-red-10);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-12,
+    var(--color-red-90)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='secondary'][data-action='negative']:hover {
+    background-color: light-dark(var(--color-red-90), var(--color-red-10));
+    color: light-dark(var(--color-red-20), var(--color-red-80));
+  }
+}
+.button[data-variant='plain']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-13: var(--csstools-color-scheme--light)
+    var(--color-gray-40);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-13,
+    var(--color-gray-80)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='plain']:hover {
+    background-color: light-dark(var(--color-gray-80), var(--color-gray-40));
+  }
+}
+.button[data-variant='plain'][data-action='positive'] {
+  --csstools-light-dark-toggle-4dae8a1e-14: var(--csstools-color-scheme--light)
+    var(--color-green-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-14, var(--color-green-20));
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='plain'][data-action='positive'] {
+    color: light-dark(var(--color-green-20), var(--color-green-80));
+  }
+}
+.button[data-variant='plain'][data-action='positive']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-15: var(--csstools-color-scheme--light)
+    var(--color-green-20);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-15,
+    var(--color-green-90)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='plain'][data-action='positive']:hover {
+    background-color: light-dark(var(--color-green-90), var(--color-green-20));
+  }
+}
+.button[data-variant='plain'][data-action='negative'] {
+  --csstools-light-dark-toggle-4dae8a1e-16: var(--csstools-color-scheme--light)
+    var(--color-red-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-16, var(--color-red-50));
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='plain'][data-action='negative'] {
+    color: light-dark(var(--color-red-50), var(--color-red-80));
+  }
+}
+.button[data-variant='plain'][data-action='negative']:hover {
+  --csstools-light-dark-toggle-4dae8a1e-17: var(--csstools-color-scheme--light)
+    var(--color-red-80);
+  color: var(--csstools-light-dark-toggle-4dae8a1e-17, var(--color-red-20));
+  --csstools-light-dark-toggle-4dae8a1e-18: var(--csstools-color-scheme--light)
+    var(--color-red-10);
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-18,
+    var(--color-red-90)
+  );
+}
+@supports (color: light-dark(red, red)) {
+  .button[data-variant='plain'][data-action='negative']:hover {
+    background-color: light-dark(var(--color-red-90), var(--color-red-10));
+    color: light-dark(var(--color-red-20), var(--color-red-80));
+  }
+}
+.button[disabled] {
+  --csstools-light-dark-toggle-4dae8a1e-19: var(--csstools-color-scheme--light)
+    var(--color-gray-60) !important;
+  color: var(
+    --csstools-light-dark-toggle-4dae8a1e-19,
+    var(--color-gray-40)
+  ) !important;
+  cursor: default;
+  --csstools-light-dark-toggle-4dae8a1e-20: var(--csstools-color-scheme--light)
+    var(--color-gray-20) !important;
+  background-color: var(
+    --csstools-light-dark-toggle-4dae8a1e-20,
+    var(--color-gray-80)
+  ) !important;
+  border-color: #0000;
+}
+@supports (color: light-dark(red, red)) {
+  .button[disabled] {
+    background-color: light-dark(
+      var(--color-gray-80),
+      var(--color-gray-20)
+    ) !important;
+    color: light-dark(var(--color-gray-40), var(--color-gray-60)) !important;
+  }
+}
+.button .icon {
+  display: flex;
+}
+.button svg {
+  height: 1.25em;
+  width: 1.25em;
+}
+.button .label {
+  padding-block: 0.125em;
+  padding-inline: 0.0625em;
+}
+/*# sourceMappingURL=3391.9b816fb5247c3b08.css.map*/

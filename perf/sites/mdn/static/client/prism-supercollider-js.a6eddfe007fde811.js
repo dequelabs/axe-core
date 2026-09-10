@@ -1,0 +1,35 @@
+export const __rspack_esm_id = 7517;
+export const __rspack_esm_ids = [7517];
+export const __webpack_modules__ = {
+  95009() {
+    ((Prism.languages.supercollider = {
+      comment: {
+        pattern:
+          /\/\/.*|\/\*(?:[^*/]|\*(?!\/)|\/(?!\*)|\/\*(?:[^*]|\*(?!\/))*\*\/)*\*\//,
+        greedy: !0
+      },
+      string: {
+        pattern: /(^|[^\\])"(?:[^"\\]|\\[\s\S])*"/,
+        lookbehind: !0,
+        greedy: !0
+      },
+      char: { pattern: /\$(?:[^\\\r\n]|\\.)/, greedy: !0 },
+      symbol: {
+        pattern: /(^|[^\\])'(?:[^'\\]|\\[\s\S])*'|\\\w+/,
+        lookbehind: !0,
+        greedy: !0
+      },
+      keyword: /\b(?:_|arg|classvar|const|nil|var|while)\b/,
+      boolean: /\b(?:false|true)\b/,
+      label: { pattern: /\b[a-z_]\w*(?=\s*:)/, alias: 'property' },
+      number:
+        /\b(?:inf|pi|0x[0-9a-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(?:pi)?|\d+r[0-9a-zA-Z]+(?:\.[0-9a-zA-Z]+)?|\d+[sb]{1,4}\d*)\b/,
+      'class-name': /\b[A-Z]\w*\b/,
+      operator:
+        /\.{2,3}|#(?![[{])|&&|[!=]==?|\+>>|\+{1,3}|-[->]|=>|>>|\?\?|@\|?@|\|(?:@|[!=]=)?\||!\?|<[!=>]|\*{1,2}|<{2,3}\*?|[-!%&/<>?@|=`]/,
+      punctuation: /[{}()[\].:,;]|#[[{]/
+    }),
+      (Prism.languages.sclang = Prism.languages.supercollider));
+  }
+};
+//# sourceMappingURL=prism-supercollider-js.a6eddfe007fde811.js.map

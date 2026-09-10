@@ -422,7 +422,8 @@ module.exports = [
       'lib/core/utils/uuid.js',
       'axe.js',
       'axe.min.js',
-      'test/integration/full/patch/patch.mjs'
+      'test/integration/full/patch/patch.mjs',
+      'perf/sites/*'
     ]
   }
 ];
