@@ -946,6 +946,126 @@ x
     });
   });
 
+  describe('with empty text entry', () => {
+    it('should return undefined for an empty text input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty textarea with insufficient contrast', () => {
+      const params = checkSetup(
+        '<textarea id="target" style="background-color: #fff; color: #eee"></textarea>'
+      );
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty password input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="password"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty text input with a placeholder and insufficient contrast', () => {
+      const params = checkSetup(html`
+        <style>
+          .placeholder-000::placeholder {
+            color: #000;
+          }
+        </style>
+        <input
+          id="target"
+          type="text"
+          class="placeholder-000"
+          placeholder="Placeholder"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for a whitespace-only text input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          value="   "
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return true for an empty text input with sufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          style="background-color: #fff; color: #000"
+        />
+      `);
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+
+    it('should return false for a text input with a value and insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          value="hello"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('should return undefined for an empty text input in Shadow DOM with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <div>
+          <template shadowrootmode="open">
+            <input
+              id="target"
+              type="text"
+              style="background-color: #fff; color: #eee"
+            />
+          </template>
+        </div>
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+  });
+
   describe('options', () => {
     it('should support options.boldValue', () => {
       const params = checkSetup(
