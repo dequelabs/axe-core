@@ -50,6 +50,25 @@ describe('listitem', () => {
     assert.isFalse(result);
   });
 
+  it('should include a fix suggestion in the failureSummary', () => {
+    fixtureSetup('<div><li id="target">My list item</li></div>');
+    return axe.run('#fixture', { runOnly: ['listitem'] }).then(results => {
+      const summary = results.violations[0].nodes[0].failureSummary;
+      assert.include(
+        summary,
+        'Ensure the <li> is a direct child of a <ul> or <ol>'
+      );
+    });
+  });
+
+  it('should include a fix suggestion in the roleNotValid failureSummary', () => {
+    fixtureSetup('<ol role="menubar"><li id="target">My list item</li></ol>');
+    return axe.run('#fixture', { runOnly: ['listitem'] }).then(results => {
+      const summary = results.violations[0].nodes[0].failureSummary;
+      assert.include(summary, 'Ensure the parent element has role="list"');
+    });
+  });
+
   it('should fail if the listitem has a parent <ol> with changed role', () => {
     const params = checkSetup(
       '<ol role="menubar"><li id="target">My list item</li></ol>'
