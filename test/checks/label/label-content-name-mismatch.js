@@ -281,4 +281,45 @@ describe('label-content-name-mismatch tests', () => {
     const actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
+  describe('parenthesised content', () => {
+    it('returns true when the visible label adds a parenthesised suffix', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="search by date">Search by date (YYYY-MM-DD)</button>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true when the accessible name adds a parenthesised suffix', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download (pdf)">Download</button>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('removes nested parentheses', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="open report">Open report (latest (2026) draft)</button>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns false when the words outside the parentheses still differ', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="search by date">Filter by date (YYYY-MM-DD)</button>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('ignores an unmatched parenthesis', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="save changes">Save changes (</button>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+  });
 });
