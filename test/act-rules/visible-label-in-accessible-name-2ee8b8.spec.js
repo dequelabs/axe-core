@@ -12,7 +12,6 @@ require('./act-runner.js')({
     '4c8c38022d15c92158ecaaa647fe8ca2c330f485', // Inapplicable Example 5
     'e9bbdbec137223e2973c6d2896050770c84c26e5', // Inapplicable Example 6
     // See: https://github.com/dequelabs/axe-core/issues/5207
-    'fab659b02c1edb4f2c8f0bda524b1076abab7df6', // Passed Example 11
-    '94a7ce7aea9dbfaa375c459c26d3a5923de84e7a' // Passed Example 14
+    'fab659b02c1edb4f2c8f0bda524b1076abab7df6' // Passed Example 11
   ]
 });
