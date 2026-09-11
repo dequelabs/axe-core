@@ -306,6 +306,14 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
+    it('returns true when the visible label is entirely parenthesised', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="download (pdf)">(PDF)</a>'
+      );
+      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
     it('returns false when the words outside the parentheses still differ', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="search by date">Filter by date (YYYY-MM-DD)</button>'
