@@ -2,6 +2,7 @@ describe('utils.matches', () => {
   const matches = axe.utils.matches;
   const fixture = document.querySelector('#fixture');
   const queryFixture = axe.testUtils.queryFixture;
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
 
   afterEach(() => {
@@ -147,6 +148,46 @@ describe('utils.matches', () => {
         '<span id="target" foo bar="foo" baz="bar"></span>'
       );
       assert.isTrue(matches(virtualNode, '[foo]'));
+    });
+
+    it('is case insensitive for HTML input type values', () => {
+      const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+      assert.isTrue(matches(virtualNode, 'input[type="submit"]'));
+    });
+
+    it('is case insensitive for mixed-case HTML input types', () => {
+      ['buTTON', 'ResET', 'ImAGE'].forEach(type => {
+        const virtualNode = queryFixture(
+          `<input id="target" type="${type}" />`
+        );
+        assert.isTrue(
+          matches(virtualNode, `input[type="${type.toLowerCase()}"]`)
+        );
+      });
+    });
+
+    it('is case insensitive for HTML input type in open Shadow DOM', () => {
+      const virtualNode = queryShadowFixture(
+        '<div id="shadow"></div>',
+        '<input id="target" type="buTTON" />'
+      );
+      assert.isTrue(matches(virtualNode, 'input[type="button"]'));
+    });
+
+    it('is case sensitive for HTML input type in XHTML', () => {
+      const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+      virtualNode._isXHTML = true;
+      assert.isFalse(matches(virtualNode, 'input[type="submit"]'));
+    });
+
+    it('is case sensitive for type on non-input elements', () => {
+      const virtualNode = queryFixture('<ol id="target" type="A"></ol>');
+      assert.isFalse(matches(virtualNode, 'ol[type="a"]'));
+    });
+
+    it('is case sensitive for other attribute values', () => {
+      const virtualNode = queryFixture('<span id="target" foo="BAR"></span>');
+      assert.isFalse(matches(virtualNode, '[foo="bar"]'));
     });
   });
 
