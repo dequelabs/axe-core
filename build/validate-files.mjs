@@ -332,9 +332,8 @@ const standardsTags = [
   },
   {
     name: 'EN 301 549',
-    standardRegex: /^EN-301-549$/,
-    criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/,
-    wcagLevelRegex: /^wcag21?aa?$/
+    standardRegex: /^EN-301-549(v4)?$/,
+    criterionRegex: /^EN-9\.[1-4]\.[1-9]\.\d{1,2}$/
   },
   {
     name: 'RGAA',
@@ -427,6 +426,14 @@ function findTagIssues(tags) {
             ', '
           )} vs ${enCriteria.join(', ')}}`
         );
+      }
+      // EN 301 549 v3 is based on WCAG 2.1. Only rules tagged with the v4
+      // standard may sit on WCAG 2.2 success criteria.
+      const wcagLevel = standards.WCAG.standardTag;
+      const isV4 = standardTags[0] === 'EN-301-549v4';
+      const levelRegex = isV4 ? /^wcag2(1|2)?aa?$/ : /^wcag21?aa?$/;
+      if (!wcagLevel.match(levelRegex)) {
+        issues.push(`${name} rules not allowed on ${wcagLevel}`);
       }
     }
     tags = removeTags(tags, [...standardTags, ...criterionTags]);
