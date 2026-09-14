@@ -109,7 +109,8 @@ function sleep(n) {
 
   try {
     for (const page of pages) {
-      console.info(`\nRunning performance on page sites/${page}`);
+      if ('mdn' !== page) {continue;}
+      console.info(`\nRunning performance on page sites/${page} on ${addr}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
       server = await startServer(rootDir);
@@ -229,7 +230,7 @@ function sleep(n) {
       server = null;
     }
 
-    const filePath = path.join(__dirname, 'logs', `v${axeVersion}.json`);
+    const filePath = path.join(__dirname, 'reports', `v${axeVersion}.json`);
     await fs.writeFile(filePath, JSON.stringify(result, null, 2), 'utf8');
   } finally {
     await driver.quit();
