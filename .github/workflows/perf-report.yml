@@ -36,7 +36,7 @@ jobs:
           AxeVersion=$(jq -r .version ./node_modules/axe-core/package.json)
           echo "axe_version=$AxeVersion" >> "$GITHUB_OUTPUT"
       - name: Run tracking script
-        run: pnpm perf:track ${{ steps.download.outputs.axe_version }}
+        run: pnpm perf:report ${{ steps.download.outputs.axe_version }}
       - name: Upload tracking JSON
         if: always()
         uses: actions/upload-artifact@v7

@@ -115,7 +115,7 @@
     "sri-validate": "node build/sri-update.mjs --validate",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "perf:track": "node perf/track.js",
+    "perf:report": "node perf/report.js",
     "prepare": "husky",
     "prebuild": "node ./build/check-node-version.mjs",
     "pretest": "node ./build/check-node-version.mjs",
