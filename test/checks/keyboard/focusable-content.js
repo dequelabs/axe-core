@@ -3,8 +3,6 @@ describe('focusable-content tests', () => {
 
   let check;
   const fixture = document.getElementById('fixture');
-  const fixtureSetup = axe.testUtils.fixtureSetup;
-  const shadowSupported = axe.testUtils.shadowSupport.v1;
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
 
@@ -18,6 +16,10 @@ describe('focusable-content tests', () => {
     checkContext.reset();
   });
 
+  function relatedNodeIds() {
+    return checkContext._relatedNodes.map(vNode => vNode.props.id);
+  }
+
   it('returns false when there are no focusable content elements (content element `div` is not focusable)', () => {
     const params = checkSetup(html`
       <div id="target">
@@ -28,14 +30,15 @@ describe('focusable-content tests', () => {
     assert.isFalse(actual);
   });
 
-  it('returns false when content element is taken out of focusable order (tabindex = -1)', () => {
+  it('returns undefined when content has a tabindex but is not in the tab order', () => {
     const params = checkSetup(html`
       <div id="target">
-        <input type="text" tabindex="-1" />
+        <input id="related1" type="text" tabindex="-1" />
       </div>
     `);
     const actual = check.evaluate.apply(checkContext, params);
-    assert.isFalse(actual);
+    assert.isUndefined(actual);
+    assert.deepEqual(relatedNodeIds(), ['related1']);
   });
 
   it('returns false when element is focusable (only checks if contents are focusable)', () => {
@@ -48,16 +51,17 @@ describe('focusable-content tests', () => {
     assert.isFalse(actual);
   });
 
-  it('returns false when all content elements are not focusable', () => {
+  it('returns undefined when all content elements have a negative tabindex', () => {
     const params = checkSetup(html`
       <div id="target">
-        <input type="text" tabindex="-1" />
-        <select tabindex="-1"></select>
-        <textarea tabindex="-1"></textarea>
+        <input id="related1" type="text" tabindex="-1" />
+        <select id="related2" tabindex="-1"></select>
+        <textarea id="related3" tabindex="-1"></textarea>
       </div>
     `);
     const actual = check.evaluate.apply(checkContext, params);
-    assert.isFalse(actual);
+    assert.isUndefined(actual);
+    assert.deepEqual(relatedNodeIds(), ['related1', 'related2', 'related3']);
   });
 
   it('returns true when one deeply nested content element is focusable', () => {
@@ -98,35 +102,30 @@ describe('focusable-content tests', () => {
   });
 
   describe('shadowDOM - focusable content', () => {
-    before(function () {
-      if (!shadowSupported) {
-        this.skip();
-      }
-    });
-
     it('returns true when content element can be focused', () => {
-      fixtureSetup(html` <div id="target"></div> `);
-      const node = fixture.querySelector('#target');
-      const shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<input type="text">';
-      axe._tree = axe.utils.getFlattenedTree(fixture);
-      axe._selectorData = axe.utils.getSelectorData(axe._tree);
-      const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-      const actual = check.evaluate.call(checkContext, node, {}, virtualNode);
+      const params = checkSetup(html`
+        <div id="target">
+          <template shadowrootmode="open">
+            <input type="text" />
+          </template>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
       assert.isTrue(actual);
     });
 
-    it('returns false when no focusable content', () => {
-      fixtureSetup(html` <div id="target"></div> `);
-      const node = fixture.querySelector('#target');
-      const shadow = node.attachShadow({ mode: 'open' });
-      shadow.innerHTML =
-        '<input type="text" tabindex="-1"> <p>just some text</p>';
-      axe._tree = axe.utils.getFlattenedTree(fixture);
-      axe._selectorData = axe.utils.getSelectorData(axe._tree);
-      const virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-      const actual = check.evaluate.call(checkContext, node, {}, virtualNode);
-      assert.isFalse(actual);
+    it('returns undefined when content has a negative tabindex', () => {
+      const params = checkSetup(html`
+        <div id="target">
+          <template shadowrootmode="open">
+            <input id="related1" type="text" tabindex="-1" />
+            <p>just some text</p>
+          </template>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.deepEqual(relatedNodeIds(), ['related1']);
     });
   });
 });

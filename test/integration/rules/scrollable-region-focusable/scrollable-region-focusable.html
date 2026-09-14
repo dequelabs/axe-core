@@ -10,18 +10,25 @@
   <p style="height: 200px" tabindex="0"></p>
 </div>
 
-<!-- fail -->
-<div id="fail1" style="height: 5px; overflow: auto">
+<!-- incomplete -->
+<ul id="incomplete1" tabindex="-1" style="height: 20px; overflow-y: auto">
+  <li><button tabindex="-1">Keyboards</button></li>
+  <li><button tabindex="-1">Mice</button></li>
+  <li><button tabindex="-1">Monitors</button></li>
+</ul>
+
+<div id="incomplete2" style="height: 5px; overflow: auto">
   <input type="text" tabindex="-1" />
 </div>
 
-<div id="fail2" style="height: 5px; overflow: auto">
+<div id="incomplete3" style="height: 5px; overflow: auto">
   <input type="text" tabindex="-1" />
   <select tabindex="-1"></select>
   <textarea tabindex="-1"></textarea>
 </div>
 
-<div id="fail3" style="width: 300px; overflow-y: auto">
+<!-- fail -->
+<div id="fail1" style="width: 300px; overflow-y: auto">
   <p style="width: 600px">Contents</p>
   <p style="width: 600px">
     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
@@ -29,7 +36,7 @@
   </p>
 </div>
 
-<div id="fail4" style="width: 300px; overflow-y: auto">
+<div id="fail2" style="width: 300px; overflow-y: auto">
   <p width="600px">Contents</p>
   <img src="#" width="600" height="600" />
 </div>

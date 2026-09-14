@@ -5,6 +5,7 @@
     "impact": "serious",
     "messages": {
       "pass": "Element contains focusable elements",
+      "incomplete": "Check if elements with tabindex are keyboard accessible",
       "fail": "Element should have focusable content"
     }
   }
