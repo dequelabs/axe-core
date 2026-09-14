@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: 'perf-v${{ steps.download.outputs.axe_version }}'
-          path: ./perf/logs/v${{ steps.download.outputs.axe_version }}.json
+          path: ./perf/reports/v${{ steps.download.outputs.axe_version }}.json
           retention-days: 90
       - name: Open PR
         env:
@@ -59,7 +59,7 @@ jobs:
           echo "Branch: $Branch"
           git checkout -b "$Branch"
 
-          git add perf/logs/v${AXE_VERSION}.json
+          git add perf/reports/v${AXE_VERSION}.json
           git commit -m "perf: add tracking file for v${AXE_VERSION}"
           git push origin "$Branch" --force
 

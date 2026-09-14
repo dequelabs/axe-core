@@ -109,7 +109,7 @@ function sleep(n) {
 
   try {
     for (const page of pages) {
-      if ('mdn' !== page) {continue;}
+      if (!['mdn', 'very-large-page'].includes(page)) {continue;}
       console.info(`\nRunning performance on page sites/${page} on ${addr}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
@@ -218,12 +218,15 @@ function sleep(n) {
           name,
           coldStart: round(coldStart[name]),
           min: round(values[0]),
-          p50: round(percentile(values, 0.5)),
-          p95: round(percentile(values, 0.95))
+          median: round(percentile(values, 0.5)),
+          // IQR (p75-p25) — spread of the middle 50%, robust to a
+          // single GC pause or thermal spike that would blow up stddev
+          iqr: round(percentile(values, 0.75) - percentile(values, 0.25)),
+          max: round(values[values.length - 1])
         });
       }
 
-      pageResult.metrics.sort((a, b) => b.p50 - a.p50);
+      pageResult.metrics.sort((a, b) => b.median - a.median);
       result.pages.push(pageResult);
 
       await new Promise(r => server.close(r));
