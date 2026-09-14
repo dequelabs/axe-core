@@ -45,7 +45,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: "perf-v${{ steps.download.outputs.axe_version }}"
+          name: 'perf-v${{ steps.download.outputs.axe_version }}'
           path: ./perf/logs/v${{ steps.download.outputs.axe_version }}.json
           retention-days: 90
       - name: Open PR
@@ -71,5 +71,3 @@ jobs:
               --title "perf: add tracking file for v${AXE_VERSION}" \
               --body "This PR was opened by a robot :robot: :tada:" \
               --base develop
-
-
