@@ -51,10 +51,32 @@ describe('focusable-content tests', () => {
     assert.isFalse(actual);
   });
 
+  it('returns false when content with a tabindex is disabled', () => {
+    const params = checkSetup(html`
+      <div id="target">
+        <input type="text" tabindex="-1" disabled />
+      </div>
+    `);
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
   it('ignores hidden content with a tabindex', () => {
     const params = checkSetup(html`
       <div id="target">
         <input type="text" tabindex="-1" hidden />
+        <input id="related1" type="text" tabindex="-1" />
+      </div>
+    `);
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isUndefined(actual);
+    assert.deepEqual(relatedNodeIds(), ['related1']);
+  });
+
+  it('ignores disabled content with a tabindex', () => {
+    const params = checkSetup(html`
+      <div id="target">
+        <input type="text" tabindex="-1" disabled />
         <input id="related1" type="text" tabindex="-1" />
       </div>
     `);

@@ -722,7 +722,7 @@
     },
     "focusable-content": {
       "pass": "Element contains focusable elements",
-      "incomplete": "Check if content with tabindex is keyboard accessible",
+      "incomplete": "Check that elements with a negative tabindex can receive keyboard focus so the region can be scrolled",
       "fail": "Element should have focusable content"
     },
     "focusable-disabled": {

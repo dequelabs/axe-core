@@ -1,7 +1,7 @@
 {
   "description": "scrollable-region-focusable tests",
   "rule": "scrollable-region-focusable",
-  "violations": [["#fail1"], ["#fail2"], ["#fail3"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
   "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]],
   "passes": [["#pass1"], ["#pass2"]]
 }
