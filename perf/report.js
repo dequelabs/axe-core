@@ -109,7 +109,9 @@ function sleep(n) {
 
   try {
     for (const page of pages) {
-      if ('mdn' !== page) {continue;}
+      if ('mdn' !== page) {
+        continue;
+      }
       console.info(`\nRunning performance on page sites/${page} on ${addr}`);
 
       const rootDir = path.join(__dirname, 'sites', page);
