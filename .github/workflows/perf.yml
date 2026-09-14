@@ -33,15 +33,11 @@ jobs:
           # looks for the file
           cp ./node_modules/axe-core/axe.js ./axe.js
 
-          # add the correct version to the end of the axe-core source (especially needed
-          # if running @next where we need the file name saved in the track script to
-          # be the version run against)
           AxeVersion=$(jq -r .version ./node_modules/axe-core/package.json)
           echo "axe_version=$AxeVersion" >> "$GITHUB_OUTPUT"
-          sed -i "s|axe\.version = '[^']*'|axe.version = '$AxeVersion'|" ./axe.js
       - name: Run tracking script
-        run: node ./perf/track.js
-      - name: Upload tracking JSON as artifact
+        run: pnpm perf:track ${{ steps.download.outputs.axe_version }}
+      - name: Upload tracking JSON
         if: always()
         uses: actions/upload-artifact@v7
         with:

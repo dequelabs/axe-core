@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const path = require('path');
 const fs = require('fs/promises');
 const { createReadStream } = require('fs');
@@ -7,7 +9,7 @@ const { getWebdriver } = require('../test/get-webdriver');
 
 const serverPort = 9898;
 const axePath = require.resolve('../axe.js');
-const axeVersion = require('../axe.js').version;
+const axeVersion = process.argv[2] ?? require('../axe.js').version;
 
 // Sample-count bounds. Actual sample count per page is chosen adaptively
 // after the warmup run: we aim to spend at most TIME_BUDGET_MS of
