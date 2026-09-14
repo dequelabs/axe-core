@@ -41,6 +41,28 @@ describe('focusable-content tests', () => {
     assert.deepEqual(relatedNodeIds(), ['related1']);
   });
 
+  it('returns false when content with a tabindex is hidden', () => {
+    const params = checkSetup(html`
+      <div id="target">
+        <input type="text" tabindex="-1" hidden />
+      </div>
+    `);
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
+  it('ignores hidden content with a tabindex', () => {
+    const params = checkSetup(html`
+      <div id="target">
+        <input type="text" tabindex="-1" hidden />
+        <input id="related1" type="text" tabindex="-1" />
+      </div>
+    `);
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isUndefined(actual);
+    assert.deepEqual(relatedNodeIds(), ['related1']);
+  });
+
   it('returns false when element is focusable (only checks if contents are focusable)', () => {
     const params = checkSetup(html`
       <div id="target" tabindex="0">
