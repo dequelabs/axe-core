@@ -23,37 +23,32 @@ jobs:
         id: install-deps
         with:
           start-xvfb: ${{ env.DISPLAY }}
-      - name: Resolve requested axe-core version
-        id: resolve
-        run: |
-          Req='${{ github.event.inputs.version }}'
-          # If the input starts with a digit, treat as a pinned semver; otherwise
-          # resolve as a dist-tag by hitting the registry directly. pnpm's own
-          # tag resolution can serve stale results from its cached metadata (the
-          # actions/setup-node pnpm store cache round-trips this), so we resolve
-          # out-of-band and pass pnpm an exact version.
-          if [[ "$Req" =~ ^[0-9] ]]; then
-            Version="$Req"
-          else
-            Version=$(curl -sSf https://registry.npmjs.org/-/package/axe-core/dist-tags | jq -re ".\"$Req\"")
-          fi
-          echo "Resolved axe-core@$Req -> $Version"
-          echo "version=$Version" >> "$GITHUB_OUTPUT"
-      - name: Download requested axe-core version
+      - name: Fetch requested axe-core version
         id: download
         run: |
-          pnpm add axe-core@${{ steps.resolve.outputs.version }} --no-lockfile
+          Req='${{ github.event.inputs.version }}'
 
-          # move the file to the root of axe-core as that's where the tracking script
-          # looks for the file
-          cp ./node_modules/axe-core/axe.js ./axe.js
+          # If the input starts with a digit, treat as a pinned semver; otherwise
+          # resolve as a dist-tag by hitting the registry directly. Going through
+          # `pnpm add` can use a stale tag from pnpm's cache, so fetch the tarball
+          # straight from the registry instead of installing
+          if [[ "$Req" =~ ^[0-9] ]]; then
+            Requested="$Req"
+          else
+            Requested=$(curl -sSf https://registry.npmjs.org/-/package/axe-core/dist-tags | jq -re ".\"$Req\"")
+          fi
+          echo "Resolved axe-core@$Req -> $Requested"
 
-          AxeVersion=$(jq -r .version ./node_modules/axe-core/package.json)
+          # Pull axe.js and package.json out of the version's tarball
+          Tarball=$(curl -sSf "https://registry.npmjs.org/axe-core/$Requested" | jq -re .dist.tarball)
+          Tmp=$(mktemp -d)
+          curl -sSfL "$Tarball" | tar -xz -C "$Tmp" package/axe.js package/package.json
+          cp "$Tmp/package/axe.js" ./axe.js
+          AxeVersion=$(jq -r .version "$Tmp/package/package.json")
 
-          # abort loudly if pnpm resolved to a different version than we asked
-          # for, so a stale report can never be published as if it were fresh
-          if [ "$AxeVersion" != "${{ steps.resolve.outputs.version }}" ]; then
-            echo "::error::Requested ${{ steps.resolve.outputs.version }} but pnpm installed $AxeVersion"
+          # Ensure we pulled the right version
+          if [ "$AxeVersion" != "$Requested" ]; then
+            echo "::error::Requested $Requested but tarball contains $AxeVersion"
             exit 1
           fi
 
@@ -76,9 +71,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
           AXE_VERSION: ${{ steps.download.outputs.axe_version }}
         run: |
-          # disregard package changes
-          git checkout -- package.json pnpm-lock.yaml
-
           git config user.name "API Team CI User"
           git config user.email "aciattestteamci@deque.com"
 
