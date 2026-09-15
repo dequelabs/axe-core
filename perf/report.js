@@ -177,7 +177,7 @@ function sleep(n) {
         if ('_setLogger' in axe) {
           axe._setLogger(captureLogs);
         }
-        // axe-core versions prior to <=4.12.0
+        // axe-core versions <=4.12.0
         else {
           window.console.log = captureLogs
         }
