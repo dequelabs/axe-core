@@ -139,11 +139,12 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0]), 'Hello world');
     });
 
-    it('should sanitize the text of nested elements once, at the top', () => {
+    it('should collapse whitespace between elements', () => {
       fixture.innerHTML =
-        '<a><span>  Hello\u00a0 </span><span>\n\t world  </span></a>';
+        '<span>Hello   &nbsp;\u00A0</span><span>  &nbsp;\r\n   </span>' +
+        '<span>     \n \n &nbsp; \nHi</span>';
       const tree = axe.utils.getFlattenedTree(fixture);
-      assert.equal(visibleVirtual(tree[0]), 'Hello world');
+      assert.equal(visibleVirtual(tree[0]), 'Hello Hi');
     });
   });
 
@@ -178,6 +179,27 @@ describe('text.visible', () => {
     it('should trim the result', () => {
       fixture.innerHTML =
         '   &nbsp;\u00A0    Hello  &nbsp;\r\n   Hi     \n \n &nbsp; \n   ';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Hello Hi');
+    });
+
+    it('should keep a whitespace-only element as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span><span> </span><span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Download specification');
+    });
+
+    it('should keep whitespace at the edge of a child element', () => {
+      fixture.innerHTML = '<a><span>Hello </span><span>world</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Hello world');
+    });
+
+    it('should collapse whitespace between elements', () => {
+      fixture.innerHTML =
+        '<span>Hello   &nbsp;\u00A0</span><span>  &nbsp;\r\n   </span>' +
+        '<span>     \n \n &nbsp; \nHi</span>';
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0], true), 'Hello Hi');
     });
