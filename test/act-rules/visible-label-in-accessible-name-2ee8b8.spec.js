@@ -10,8 +10,6 @@ require('./act-runner.js')({
     // Both are load-bearing against the nightly, which installs
     // `wcag-act-rules#main`, not the pinned dependency.
     '4c8c38022d15c92158ecaaa647fe8ca2c330f485', // Inapplicable Example 5
-    'e9bbdbec137223e2973c6d2896050770c84c26e5', // Inapplicable Example 6
-    // See: https://github.com/dequelabs/axe-core/issues/5207
-    'fab659b02c1edb4f2c8f0bda524b1076abab7df6' // Passed Example 11
+    'e9bbdbec137223e2973c6d2896050770c84c26e5' // Inapplicable Example 6
   ]
 });

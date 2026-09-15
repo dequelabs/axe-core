@@ -125,6 +125,26 @@ describe('text.visible', () => {
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0]), 'button label');
     });
+
+    it('should keep a whitespace-only element as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span><span> </span><span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download specification');
+    });
+
+    it('should keep whitespace at the edge of a child element', () => {
+      fixture.innerHTML = '<a><span>Hello </span><span>world</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello world');
+    });
+
+    it('should sanitize the text of nested elements once, at the top', () => {
+      fixture.innerHTML =
+        '<a><span>  Hello\u00a0 </span><span>\n\t world  </span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello world');
+    });
   });
 
   describe('screen reader', () => {
