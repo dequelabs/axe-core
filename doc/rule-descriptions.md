@@ -88,9 +88,9 @@
 
 These rules are disabled by default, until WCAG 2.2 is more widely adopted and required.
 
-| Rule ID                                                                                           | Description                                         | Impact  | Tags                                           | Issue Type                 | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |
-| :------------------------------------------------------------------------------------------------ | :-------------------------------------------------- | :------ | :--------------------------------------------- | :------------------------- | :------------------------------------------------------------------ |
-| [target-size](https://dequeuniversity.com/rules/axe/4.13/target-size?application=RuleDescription) | Ensure touch targets have sufficient size and space | Serious | cat.sensory-and-visual-cues, wcag22aa, wcag258 | failure, needs&nbsp;review |                                                                     |
+| Rule ID                                                                                           | Description                                         | Impact  | Tags                                                                     | Issue Type                 | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |
+| :------------------------------------------------------------------------------------------------ | :-------------------------------------------------- | :------ | :----------------------------------------------------------------------- | :------------------------- | :------------------------------------------------------------------ |
+| [target-size](https://dequeuniversity.com/rules/axe/4.13/target-size?application=RuleDescription) | Ensure touch targets have sufficient size and space | Serious | cat.sensory-and-visual-cues, wcag22aa, wcag258, EN-301-549v4, EN-9.2.5.8 | failure, needs&nbsp;review |                                                                     |
 
 ## Best Practices Rules
 

@@ -1,0 +1,70 @@
+name: Create performance report
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The axe-core version to run against (e.g., latest, next, 4.11.0)
+        default: 'next'
+
+jobs:
+  run_perf:
+    name: Run performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DISPLAY: :99
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: Download requested axe-core version
+        id: download
+        run: |
+          pnpm add axe-core@${{ github.event.inputs.version }} --no-lockfile
+
+          # move the file to the root of axe-core as that's where the tracking script
+          # looks for the file
+          cp ./node_modules/axe-core/axe.js ./axe.js
+
+          AxeVersion=$(jq -r .version ./node_modules/axe-core/package.json)
+          echo "axe_version=$AxeVersion" >> "$GITHUB_OUTPUT"
+      - name: Run tracking script
+        env:
+          WTR_BROWSER: chrome
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: pnpm perf:report ${{ steps.download.outputs.axe_version }}
+      - name: Upload tracking JSON
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: 'perf-v${{ steps.download.outputs.axe_version }}'
+          path: ./perf/reports/v${{ steps.download.outputs.axe_version }}.json
+          retention-days: 90
+      - name: Open PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          AXE_VERSION: ${{ steps.download.outputs.axe_version }}
+        run: |
+          # disregard package changes
+          git checkout -- package.json pnpm-lock.yaml
+
+          git config user.name "API Team CI User"
+          git config user.email "aciattestteamci@deque.com"
+
+          Branch="perf-v${AXE_VERSION}"
+          echo "Branch: $Branch"
+          git checkout -b "$Branch"
+
+          git add perf/reports/v${AXE_VERSION}.json
+          git commit -m "perf: add tracking file for v${AXE_VERSION}"
+          git push origin "$Branch" --force
+
+          gh pr create \
+              --title "perf: add tracking file for v${AXE_VERSION}" \
+              --body "This PR was opened by a robot :robot: :tada:" \
+              --base develop
