@@ -1047,6 +1047,18 @@ x
       assert.isFalse(actual);
     });
 
+    it('should return false for a text input with a script-set value and insufficient contrast', () => {
+      const input = document.createElement('input');
+      input.id = 'target';
+      input.type = 'text';
+      input.setAttribute('style', 'background-color: #fff; color: #eee');
+      input.value = 'hello';
+      const params = checkSetup(input);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
     it('should return undefined for an empty text input in Shadow DOM with insufficient contrast', () => {
       const params = checkSetup(html`
         <div>
