@@ -23,7 +23,7 @@ const RED_THRESHOLD = 15;
 const MIN_MILLISECONDS_THRESHOLD = 100;
 
 function formatMilliseconds(milliseconds) {
-  if (milliseconds === null || !Number.isFinite(milliseconds)) {
+  if (!Number.isFinite(milliseconds)) {
     return '—';
   }
   return `${Math.round(milliseconds).toLocaleString()}ms`;
@@ -31,9 +31,8 @@ function formatMilliseconds(milliseconds) {
 
 function percentChange(baseValue, headValue) {
   if (
-    baseValue === null ||
-    headValue === null ||
     !Number.isFinite(baseValue) ||
+    !Number.isFinite(headValue) ||
     baseValue === 0
   ) {
     return null;
