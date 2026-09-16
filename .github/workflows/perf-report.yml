@@ -23,19 +23,19 @@ jobs:
           start-xvfb: ${{ env.DISPLAY }}
       - name: Fetch requested axe-core version
         id: download
+        env:
+          REQ: ${{ github.event.inputs.version }}
         run: |
-          Req='${{ github.event.inputs.version }}'
-
           # If the input starts with a digit, treat as a pinned semver; otherwise
           # resolve as a dist-tag by hitting the registry directly. Going through
           # `pnpm add` can use a stale tag from pnpm's cache, so fetch the tarball
           # straight from the registry instead of installing
-          if [[ "$Req" =~ ^[0-9] ]]; then
-            Requested="$Req"
+          if [[ "$REQ" =~ ^[0-9] ]]; then
+            Requested="$REQ"
           else
-            Requested=$(curl -sSf https://registry.npmjs.org/-/package/axe-core/dist-tags | jq -re ".\"$Req\"")
+            Requested=$(curl -sSf https://registry.npmjs.org/-/package/axe-core/dist-tags | jq -re --arg tag "$REQ" '.[$tag]')
           fi
-          echo "Resolved axe-core@$Req -> $Requested"
+          echo "Resolved axe-core@$REQ -> $Requested"
 
           # Pull axe.js and package.json out of the version's tarball
           Tarball=$(curl -sSf "https://registry.npmjs.org/axe-core/$Requested" | jq -re .dist.tarball)
