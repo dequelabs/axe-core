@@ -179,7 +179,7 @@ function sleep(n) {
         }
         // axe-core versions <=4.12.0
         else {
-          window.console.log = captureLogs
+          window.console.log = captureLogs;
         }
       `);
 
