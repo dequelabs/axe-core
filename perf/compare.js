@@ -2,10 +2,13 @@
 
 // Compare two perf/report.js outputs and print a markdown diff.
 //
-// usage: node perf/compare.js [--all | --axe-only] <base.json> <head.json>
+// usage: node perf/compare.js [--all | --axe-only | --history-line <sha>] <base.json> <head.json>
 //   --axe-only (default): only the top-level `axe` metric per site,
-//                          plus a red/yellow/green regression indicator.
+//                          plus a red/yellow/green regression indicator
+//                          and the top per-metric regressions.
 //   --all               : every metric (per rule, per check, etc.) per site.
+//   --history-line <sha>: one-line summary suitable for a rolling history
+//                          section in a PR comment.
 
 const fs = require('fs');
 
@@ -122,6 +125,39 @@ function computeStatus(baseReport, headReport, siteUrls) {
   };
 }
 
+// Cross-site cross-metric scan for the metrics that regressed most in
+// absolute ms terms. The `axe` metric can net to green when one rule sped
+// up and another slowed down by roughly the same amount, so we surface
+// the offending sub-metrics directly.
+function topRegressedMetrics(baseReport, headReport, siteUrls, limit = 5) {
+  const regressions = [];
+  for (const siteUrl of siteUrls) {
+    for (const metricName of metricNamesForSite(
+      baseReport,
+      headReport,
+      siteUrl
+    )) {
+      const baseMetric = findMetric(baseReport, siteUrl, metricName);
+      const headMetric = findMetric(headReport, siteUrl, metricName);
+      const percent = percentChange(baseMetric?.median, headMetric?.median);
+      if (percent === null || percent <= 0) {
+        continue;
+      }
+      const milliseconds = headMetric.median - baseMetric.median;
+      // Same floors as the overall status: below both, treat as noise
+      if (
+        milliseconds < MIN_MILLISECONDS_THRESHOLD ||
+        percent < YELLOW_THRESHOLD
+      ) {
+        continue;
+      }
+      regressions.push({ siteUrl, metricName, percent, milliseconds });
+    }
+  }
+  regressions.sort((a, b) => b.milliseconds - a.milliseconds);
+  return regressions.slice(0, limit);
+}
+
 function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
   const status = computeStatus(baseReport, headReport, siteUrls);
   const worstDescription =
@@ -145,7 +181,29 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
       `| \`${siteUrl}\` | ${formatDiffCell(baseMetric?.coldStart, headMetric?.coldStart)} | ${formatDiffCell(baseMetric?.median, headMetric?.median)} | ${formatDiffCell(baseMetric?.max, headMetric?.max)} |`
     );
   }
+  const regressions = topRegressedMetrics(baseReport, headReport, siteUrls);
+  if (regressions.length > 0) {
+    lines.push('');
+    lines.push('**Top per-metric regressions**');
+    lines.push('');
+    for (const regression of regressions) {
+      lines.push(
+        `- \`${regression.siteUrl}\` \`${regression.metricName}\`: +${Math.round(regression.milliseconds).toLocaleString()}ms (+${regression.percent.toFixed(1)}%)`
+      );
+    }
+  }
   return lines.join('\n');
+}
+
+function renderHistoryLine(baseReport, headReport, siteUrls, sha) {
+  const status = computeStatus(baseReport, headReport, siteUrls);
+  const shortSha = sha.substring(0, 7);
+  if (status.worstPercent === null) {
+    return `- \`${shortSha}\`: ${status.emoji} no comparable data`;
+  }
+  const percentSign = status.worstPercent >= 0 ? '+' : '';
+  const millisecondsSign = status.worstMilliseconds >= 0 ? '+' : '';
+  return `- \`${shortSha}\`: ${status.emoji} \`${status.worstSite}\` ${percentSign}${status.worstPercent.toFixed(1)}% / ${millisecondsSign}${Math.round(status.worstMilliseconds).toLocaleString()}ms`;
 }
 
 function renderFullReport(baseReport, headReport, siteUrls) {
@@ -178,12 +236,17 @@ function renderFullReport(baseReport, headReport, siteUrls) {
 
 const commandLineArguments = process.argv.slice(2);
 let mode = 'axe-only';
+let historyLineSha = null;
 const positionalArguments = [];
-for (const argument of commandLineArguments) {
+for (let index = 0; index < commandLineArguments.length; index++) {
+  const argument = commandLineArguments[index];
   if (argument === '--all') {
     mode = 'all';
   } else if (argument === '--axe-only') {
     mode = 'axe-only';
+  } else if (argument === '--history-line') {
+    mode = 'history-line';
+    historyLineSha = commandLineArguments[++index];
   } else {
     positionalArguments.push(argument);
   }
@@ -191,8 +254,12 @@ for (const argument of commandLineArguments) {
 const [baseFilePath, headFilePath] = positionalArguments;
 if (!baseFilePath || !headFilePath) {
   console.error(
-    'usage: compare.js [--all | --axe-only] <base-report.json> <head-report.json>'
+    'usage: compare.js [--all | --axe-only | --history-line <sha>] <base-report.json> <head-report.json>'
   );
+  process.exit(1);
+}
+if (mode === 'history-line' && !historyLineSha) {
+  console.error('--history-line requires a sha argument');
   process.exit(1);
 }
 
@@ -205,8 +272,12 @@ const siteUrls = [
   ])
 ].sort();
 
-console.log(
-  mode === 'all'
-    ? renderFullReport(baseReport, headReport, siteUrls)
-    : renderAxeOnlyReport(baseReport, headReport, siteUrls)
-);
+let output;
+if (mode === 'all') {
+  output = renderFullReport(baseReport, headReport, siteUrls);
+} else if (mode === 'history-line') {
+  output = renderHistoryLine(baseReport, headReport, siteUrls, historyLineSha);
+} else {
+  output = renderAxeOnlyReport(baseReport, headReport, siteUrls);
+}
+console.log(output);
