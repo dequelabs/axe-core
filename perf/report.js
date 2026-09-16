@@ -155,8 +155,7 @@ function sleep(n) {
       // capture axe-core performance logs
       await driver.executeScript(`
         const axeMetricRegex = /Measure (?<name>.*) took (?<duration>.*)ms/;
-
-        axe._setLogger(log => {
+        function captureLogs(log) {
           const match = log.match(axeMetricRegex);
           if (match) {
             const { name, duration } = match.groups;
@@ -172,7 +171,16 @@ function sleep(n) {
 
             window.axeMetrics[name] = duration;
           }
-        });
+        }
+
+        // axe-core versions >=4.12.1
+        if ('_setLogger' in axe) {
+          axe._setLogger(captureLogs);
+        }
+        // axe-core versions <=4.12.0
+        else {
+          window.console.log = captureLogs;
+        }
       `);
 
       const runSample = () =>
