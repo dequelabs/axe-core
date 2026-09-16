@@ -2,24 +2,21 @@
 
 // Compare two perf/report.js outputs and print a markdown diff.
 //
-// usage: node perf/compare.js [--all | --axe-only | --history-line <sha>] <base.json> <head.json>
+// usage: node perf/compare.js [--all | --axe-only] <base.json> <head.json>
 //   --axe-only (default): only the top-level `axe` metric per site,
 //                          plus a red/yellow/green regression indicator
 //                          and the top per-metric regressions.
 //   --all               : every metric (per rule, per check, etc.) per site.
-//   --history-line <sha>: one-line summary suitable for a rolling history
-//                          section in a PR comment.
 
 const fs = require('fs');
 
 // Regression thresholds — applied to the `axe` median, worst site wins.
-// A band trips only when BOTH the % change AND the absolute-ms change
+// A threshold trips only when BOTH the % change AND the absolute-ms change
 // exceed the thresholds, so a 20% jump on a sub-second metric (30ms of
 // wall time) stays green and doesn't false-positive on runner noise.
 //
-// - Runs of the same code typically vary 2-4% on GitHub runners, so 5%
-//   is the "clearly signal, not noise" line and 15% is the "definitely
-//   slower" line.
+// - Runs of the same code can vary on GitHub runners, so 5% is the "clearly signal,
+//   not noise" line and 15% is the "definitely slower" line.
 // - 100ms is the wall-time floor and is above typical inter-run jitter on ubuntu-latest.
 const YELLOW_THRESHOLD = 5;
 const RED_THRESHOLD = 15;
@@ -165,9 +162,11 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
       ? ''
       : ` (worst: \`${status.worstSite}\` at ${status.worstPercent >= 0 ? '+' : ''}${status.worstPercent.toFixed(1)}% median, ${status.worstMilliseconds >= 0 ? '+' : ''}${Math.round(status.worstMilliseconds).toLocaleString()}ms)`;
   const lines = [
-    '## Performance comparison — axe metric',
+    '## Performance comparison',
     '',
-    `${status.emoji} **${status.label}**${worstDescription}`,
+    // Scope the status label to `axe` so the "per-metric regressions"
+    // list below can disagree without contradicting the header
+    `**axe metric:** ${status.emoji} **${status.label}**${worstDescription}`,
     '',
     `Base \`${baseReport.testEngine.version}\` vs head \`${headReport.testEngine.version}\`.`,
     '',
@@ -184,7 +183,9 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
   const regressions = topRegressedMetrics(baseReport, headReport, siteUrls);
   if (regressions.length > 0) {
     lines.push('');
-    lines.push('**Top per-metric regressions**');
+    lines.push(
+      '**per-metric regressions:** (worst ms increases regardless of `axe` status)'
+    );
     lines.push('');
     for (const regression of regressions) {
       lines.push(
@@ -195,22 +196,11 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
   return lines.join('\n');
 }
 
-function renderHistoryLine(baseReport, headReport, siteUrls, sha) {
-  const status = computeStatus(baseReport, headReport, siteUrls);
-  const shortSha = sha.substring(0, 7);
-  if (status.worstPercent === null) {
-    return `- \`${shortSha}\`: ${status.emoji} no comparable data`;
-  }
-  const percentSign = status.worstPercent >= 0 ? '+' : '';
-  const millisecondsSign = status.worstMilliseconds >= 0 ? '+' : '';
-  return `- \`${shortSha}\`: ${status.emoji} \`${status.worstSite}\` ${percentSign}${status.worstPercent.toFixed(1)}% / ${millisecondsSign}${Math.round(status.worstMilliseconds).toLocaleString()}ms`;
-}
-
 function renderFullReport(baseReport, headReport, siteUrls) {
   const lines = [
-    '## Performance comparison — all metrics',
+    '## Performance comparison',
     '',
-    `Base \`${baseReport.testEngine.version}\` vs head \`${headReport.testEngine.version}\`.`,
+    `Base \`${baseReport.testEngine.version}\` vs head \`${headReport.testEngine.version}\`. All metrics per site.`,
     ''
   ];
   for (const siteUrl of siteUrls) {
@@ -236,17 +226,12 @@ function renderFullReport(baseReport, headReport, siteUrls) {
 
 const commandLineArguments = process.argv.slice(2);
 let mode = 'axe-only';
-let historyLineSha = null;
 const positionalArguments = [];
-for (let index = 0; index < commandLineArguments.length; index++) {
-  const argument = commandLineArguments[index];
+for (const argument of commandLineArguments) {
   if (argument === '--all') {
     mode = 'all';
   } else if (argument === '--axe-only') {
     mode = 'axe-only';
-  } else if (argument === '--history-line') {
-    mode = 'history-line';
-    historyLineSha = commandLineArguments[++index];
   } else {
     positionalArguments.push(argument);
   }
@@ -254,12 +239,8 @@ for (let index = 0; index < commandLineArguments.length; index++) {
 const [baseFilePath, headFilePath] = positionalArguments;
 if (!baseFilePath || !headFilePath) {
   console.error(
-    'usage: compare.js [--all | --axe-only | --history-line <sha>] <base-report.json> <head-report.json>'
+    'usage: compare.js [--all | --axe-only] <base-report.json> <head-report.json>'
   );
-  process.exit(1);
-}
-if (mode === 'history-line' && !historyLineSha) {
-  console.error('--history-line requires a sha argument');
   process.exit(1);
 }
 
@@ -272,12 +253,8 @@ const siteUrls = [
   ])
 ].sort();
 
-let output;
-if (mode === 'all') {
-  output = renderFullReport(baseReport, headReport, siteUrls);
-} else if (mode === 'history-line') {
-  output = renderHistoryLine(baseReport, headReport, siteUrls, historyLineSha);
-} else {
-  output = renderAxeOnlyReport(baseReport, headReport, siteUrls);
-}
-console.log(output);
+console.log(
+  mode === 'all'
+    ? renderFullReport(baseReport, headReport, siteUrls)
+    : renderAxeOnlyReport(baseReport, headReport, siteUrls)
+);

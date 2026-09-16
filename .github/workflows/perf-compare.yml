@@ -31,6 +31,31 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.base.sha }}
+      # Long-open PRs against a stale base may predate the perf infra.
+      # Exiting non-zero here makes every subsequent step auto-skip via
+      # the default `if: success()`, so we don't have to gate each one
+      # individually and future maintainers can add steps without
+      # remembering a guard. The stale-base notice step below is the
+      # only step that opts into running on failure.
+      - name: Check for perf infrastructure
+        id: check-perf
+        run: |
+          if [ ! -f perf/report.js ]; then
+            echo "::warning::Base branch predates the perf comparison — skipping"
+            exit 1
+          fi
+      # Gate on the actual file's absence rather than a step's conclusion
+      # so the notice survives future refactors of the check step. Edge
+      # case: if the checkout above fails, the workspace is empty and
+      # hashFiles matches too — accepted trade-off, checkout failures
+      # are rare.
+      - name: Post stale-base notice
+        if: hashFiles('perf/report.js') == '' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr comment "$PR" --repo "$REPO" --body "This branch is out-of-date with the base branch. Update this branch to enable the perf comparison."
       - name: Install Deps
         uses: ./.github/actions/install-deps
         id: install-deps
@@ -62,6 +87,14 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      # A PR that removes perf/report.js is a valid change, so no notice
+      # comment here — just bail out cleanly and let the compare job skip.
+      - name: Check for perf infrastructure
+        run: |
+          if [ ! -f perf/report.js ]; then
+            echo "::warning::Head branch does not contain the perf infrastructure — skipping"
+            exit 1
+          fi
       - name: Install Deps
         uses: ./.github/actions/install-deps
         id: install-deps
@@ -86,6 +119,7 @@ jobs:
     name: Compare and comment
     needs: [perf-base, perf-head]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     continue-on-error: true
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -105,60 +139,13 @@ jobs:
         run: node perf/compare.js --all perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-summary.md
       - name: Write to step summary
         run: cat /tmp/perf-compare-summary.md >> "$GITHUB_STEP_SUMMARY"
-      - name: Generate history line
-        run: node perf/compare.js --history-line "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-history-line.md
       # Fork PRs run this workflow with a read-only GITHUB_TOKEN, so the
       # comment API returns 403. Skip the step rather than fail loudly —
       # the step summary still shows the diff.
-      - name: Post or update PR comment
+      - name: Post PR comment
         if: github.event.pull_request.head.repo.full_name == github.repository
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
-        run: |
-          # Marker line lets us find the previous run's comment and update it
-          # in place instead of stacking a new comment per push. --paginate
-          # so we don't miss the comment on PRs with 30+ existing comments.
-          Marker='<!-- perf-compare-report -->'
-          HistoryStart='<!-- history-start -->'
-          HistoryEnd='<!-- history-end -->'
-          MaxHistoryEntries=10
-
-          CommentId=$(gh api --paginate "repos/$REPO/issues/$PR/comments" \
-            --jq "[.[] | select(.body | startswith(\"$Marker\"))][0].id")
-
-          # Carry forward the history section from the previous comment
-          # (bounded by HTML-comment markers), then append this run's entry
-          # and truncate to the last N so the comment doesn't grow forever.
-          ExistingHistory=""
-          if [ -n "$CommentId" ] && [ "$CommentId" != "null" ]; then
-            ExistingBody=$(gh api "repos/$REPO/issues/comments/$CommentId" --jq '.body')
-            ExistingHistory=$(printf '%s\n' "$ExistingBody" \
-              | sed -n "/$HistoryStart/,/$HistoryEnd/p" \
-              | sed "/$HistoryStart/d; /$HistoryEnd/d")
-          fi
-          UpdatedHistory=$(printf '%s\n%s\n' "$ExistingHistory" "$(cat /tmp/perf-compare-history-line.md)" \
-            | grep -v '^$' \
-            | tail -n "$MaxHistoryEntries")
-
-          {
-            echo "$Marker"
-            echo
-            cat /tmp/perf-compare-comment.md
-            echo
-            echo '<details><summary>Run history</summary>'
-            echo
-            echo "$HistoryStart"
-            echo "$UpdatedHistory"
-            echo "$HistoryEnd"
-            echo
-            echo '</details>'
-          } > /tmp/perf-compare-body.md
-
-          if [ -n "$CommentId" ] && [ "$CommentId" != "null" ]; then
-            gh api --method PATCH "repos/$REPO/issues/comments/$CommentId" \
-              -F body=@/tmp/perf-compare-body.md
-          else
-            gh pr comment "$PR" --repo "$REPO" --body-file /tmp/perf-compare-body.md
-          fi
+        run: gh pr comment "$PR" --repo "$REPO" --body-file /tmp/perf-compare-comment.md
