@@ -6,6 +6,8 @@ on:
       - master
       - develop
       - 'release-*'
+    paths:
+      - 'lib/**'
 
 permissions:
   contents: read
