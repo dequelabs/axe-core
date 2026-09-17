@@ -446,6 +446,30 @@ describe('dom.isVisibleOnScreen', () => {
     assert.isTrue(isVisibleOnScreen(vNode));
   });
 
+  it('should return false when the scrollable container is itself clipped by the "overflow:hidden" ancestor', () => {
+    const vNode = queryFixture(
+      '<div style="overflow: hidden; height: 100px;"><div style="overflow: auto; height: 100px; margin-top: 200px;"><div id="target">Below the fold</div></div></div>'
+    );
+
+    assert.isFalse(isVisibleOnScreen(vNode));
+  });
+
+  it('should return false when the scrollable container does not scroll on the clipped axis', () => {
+    const vNode = queryFixture(
+      '<div style="overflow: hidden; height: 100px;"><div style="overflow-x: auto; overflow-y: hidden; height: 100px;"><div id="target" style="margin-top: 200px;">Below the fold</div></div></div>'
+    );
+
+    assert.isFalse(isVisibleOnScreen(vNode));
+  });
+
+  it('should return false for an absolutely positioned element the scrollable container cannot move', () => {
+    const vNode = queryFixture(
+      '<div style="overflow: hidden; height: 100px; position: relative;"><div style="overflow: auto; height: 100px;"><div id="target" style="position: absolute; top: 200px;">Below the fold</div></div></div>'
+    );
+
+    assert.isFalse(isVisibleOnScreen(vNode));
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return true on statically-positioned, visible elements', () => {
       const vNode = new axe.SerialVirtualNode({
