@@ -17,6 +17,7 @@
   - [page-no-duplicate-banner](#page-no-duplicate-banner)
   - [page-no-duplicate-contentinfo](#page-no-duplicate-contentinfo)
   - [page-no-duplicate-main](#page-no-duplicate-main)
+  - [alt-file-name](#alt-file-name)
   - [duplicate-img-label](#duplicate-img-label)
   - [label-content-name-mismatch](#label-content-name-mismatch)
   - [has-lang](#has-lang)
@@ -349,6 +350,12 @@ h6:not([role])[aria-level=1],
 | Option     | Default                                             | Description                                                |
 | ---------- | :-------------------------------------------------- | :--------------------------------------------------------- |
 | `selector` | <pre lang=css>main:not([role]), [role='main']</pre> | Selector used to determine if a page has a `main` landmark |
+
+### alt-file-name
+
+| Option       | Default                                                                                                                                                             | Description                                                                                               |
+| ------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------- |
+| `extensions` | <pre lang=js>['apng', 'avif', 'bmp', 'gif', 'heic',<br>'heif', 'ico', 'jfif', 'jpe', 'jpeg',<br>'jpg', 'jxl', 'png', 'svg', 'svgz',<br>'tif', 'tiff', 'webp']</pre> | File extensions that, when the accessible name ends in one of them, mark the name as a possible file name |
 
 ### duplicate-img-label
 
