@@ -2,11 +2,15 @@
 
 // Compare two perf/report.js outputs and print a markdown diff.
 //
-// usage: node perf/compare.js [--all | --axe-only] <base.json> <head.json>
+// usage: node perf/compare.js [--all | --axe-only]
+//                             [--base-label <str>] [--head-label <str>]
+//                             <base.json> <head.json>
 //   --axe-only (default): only the top-level `axe` metric per site,
 //                          plus a red/yellow/green regression indicator
 //                          and the top per-metric regressions.
 //   --all               : every metric (per rule, per check, etc.) per site.
+//   --base-label / --head-label: label to display in the "Base X vs head Y"
+//                          intro line (falls back to testEngine.version).
 
 const fs = require('fs');
 
@@ -81,21 +85,49 @@ function metricNamesForSite(baseReport, headReport, siteUrl) {
   return orderedMetricNames;
 }
 
+// Map a (percent, ms) pair to a severity tier: 0 = noise, 1 = yellow, 2 = red.
+// A tier trips only when both the % change AND the absolute-ms change clear
+// the thresholds; either falling below the noise floor demotes to 0. This
+// lets the caller rank sites and pick the highest tier, so a big absolute
+// regression on one site can't be masked by a bigger % regression on another
+// that fails the ms floor.
+function severityRank(percent, milliseconds) {
+  if (milliseconds < MIN_MILLISECONDS_THRESHOLD || percent < YELLOW_THRESHOLD) {
+    return 0;
+  }
+  if (percent >= RED_THRESHOLD) {
+    return 2;
+  }
+  return 1;
+}
+
 function computeStatus(baseReport, headReport, siteUrls) {
+  let worstRank = -1;
   let worstPercent = -Infinity;
-  let worstMilliseconds = 0;
+  let worstMilliseconds = -Infinity;
   let worstSite = null;
   for (const siteUrl of siteUrls) {
     const baseMetric = findMetric(baseReport, siteUrl, 'axe');
     const headMetric = findMetric(headReport, siteUrl, 'axe');
     const percent = percentChange(baseMetric?.median, headMetric?.median);
-    if (percent !== null && percent > worstPercent) {
+    if (percent === null) {
+      continue;
+    }
+    const milliseconds = headMetric.median - baseMetric.median;
+    const rank = severityRank(percent, milliseconds);
+    // Prefer higher rank; break ties by absolute ms impact (a bigger
+    // slowdown at the same tier deserves the headline)
+    if (
+      rank > worstRank ||
+      (rank === worstRank && milliseconds > worstMilliseconds)
+    ) {
+      worstRank = rank;
       worstPercent = percent;
-      worstMilliseconds = headMetric.median - baseMetric.median;
+      worstMilliseconds = milliseconds;
       worstSite = siteUrl;
     }
   }
-  if (worstPercent === -Infinity) {
+  if (worstRank === -1) {
     return {
       emoji: ':white_circle:',
       label: 'No comparable data',
@@ -104,15 +136,11 @@ function computeStatus(baseReport, headReport, siteUrls) {
       worstSite: null
     };
   }
-  // Both % and ms floors must be exceeded to surpass the threshold — either alone
-  // is treated as noise
-  const surpassedThreshold = (percentFloor, millisecondsFloor) =>
-    worstPercent >= percentFloor && worstMilliseconds >= millisecondsFloor;
   const worstStats = { worstPercent, worstMilliseconds, worstSite };
-  if (surpassedThreshold(RED_THRESHOLD, MIN_MILLISECONDS_THRESHOLD)) {
+  if (worstRank === 2) {
     return { emoji: ':red_circle:', label: 'Regression', ...worstStats };
   }
-  if (surpassedThreshold(YELLOW_THRESHOLD, MIN_MILLISECONDS_THRESHOLD)) {
+  if (worstRank === 1) {
     return { emoji: ':yellow_circle:', label: 'Warning', ...worstStats };
   }
   return {
@@ -125,7 +153,8 @@ function computeStatus(baseReport, headReport, siteUrls) {
 // Cross-site cross-metric scan for the metrics that regressed most in
 // absolute ms terms. The `axe` metric can net to green when one rule sped
 // up and another slowed down by roughly the same amount, so we surface
-// the offending sub-metrics directly.
+// the offending sub-metrics directly. Skip `axe` here because the headline
+// section already covers it.
 function topRegressedMetrics(baseReport, headReport, siteUrls, limit = 5) {
   const regressions = [];
   for (const siteUrl of siteUrls) {
@@ -134,6 +163,9 @@ function topRegressedMetrics(baseReport, headReport, siteUrls, limit = 5) {
       headReport,
       siteUrl
     )) {
+      if (metricName === 'axe') {
+        continue;
+      }
       const baseMetric = findMetric(baseReport, siteUrl, metricName);
       const headMetric = findMetric(headReport, siteUrl, metricName);
       const percent = percentChange(baseMetric?.median, headMetric?.median);
@@ -141,7 +173,8 @@ function topRegressedMetrics(baseReport, headReport, siteUrls, limit = 5) {
         continue;
       }
       const milliseconds = headMetric.median - baseMetric.median;
-      // Same floors as the overall status: below both, treat as noise
+      // Same floors as the overall status: below either threshold, treat
+      // as noise (either alone can be runner jitter)
       if (
         milliseconds < MIN_MILLISECONDS_THRESHOLD ||
         percent < YELLOW_THRESHOLD
@@ -155,7 +188,22 @@ function topRegressedMetrics(baseReport, headReport, siteUrls, limit = 5) {
   return regressions.slice(0, limit);
 }
 
-function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
+// Show the first 7 chars of a full 40-char git SHA (like git's default
+// short-hash) so labels like SHAs stay readable in the intro line
+function displayLabel(label) {
+  if (/^[0-9a-f]{40}$/i.test(label)) {
+    return label.substring(0, 7);
+  }
+  return label;
+}
+
+function renderAxeOnlyReport(
+  baseReport,
+  headReport,
+  siteUrls,
+  baseLabel,
+  headLabel
+) {
   const status = computeStatus(baseReport, headReport, siteUrls);
   const worstDescription =
     status.worstPercent === null
@@ -168,7 +216,7 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
     // list below can disagree without contradicting the header
     `**axe metric:** ${status.emoji} **${status.label}**${worstDescription}`,
     '',
-    `Base \`${baseReport.testEngine.version}\` vs head \`${headReport.testEngine.version}\`.`,
+    `Base \`${displayLabel(baseLabel)}\` vs head \`${displayLabel(headLabel)}\`.`,
     '',
     '| Site | Cold start | Median | Max |',
     '|------|-----------:|-------:|----:|'
@@ -196,11 +244,17 @@ function renderAxeOnlyReport(baseReport, headReport, siteUrls) {
   return lines.join('\n');
 }
 
-function renderFullReport(baseReport, headReport, siteUrls) {
+function renderFullReport(
+  baseReport,
+  headReport,
+  siteUrls,
+  baseLabel,
+  headLabel
+) {
   const lines = [
     '## Performance comparison',
     '',
-    `Base \`${baseReport.testEngine.version}\` vs head \`${headReport.testEngine.version}\`. All metrics per site.`,
+    `Base \`${displayLabel(baseLabel)}\` vs head \`${displayLabel(headLabel)}\`. All metrics per site.`,
     ''
   ];
   for (const siteUrl of siteUrls) {
@@ -226,12 +280,19 @@ function renderFullReport(baseReport, headReport, siteUrls) {
 
 const commandLineArguments = process.argv.slice(2);
 let mode = 'axe-only';
+let baseLabelOverride = null;
+let headLabelOverride = null;
 const positionalArguments = [];
-for (const argument of commandLineArguments) {
+for (let index = 0; index < commandLineArguments.length; index++) {
+  const argument = commandLineArguments[index];
   if (argument === '--all') {
     mode = 'all';
   } else if (argument === '--axe-only') {
     mode = 'axe-only';
+  } else if (argument === '--base-label') {
+    baseLabelOverride = commandLineArguments[++index];
+  } else if (argument === '--head-label') {
+    headLabelOverride = commandLineArguments[++index];
   } else {
     positionalArguments.push(argument);
   }
@@ -239,7 +300,7 @@ for (const argument of commandLineArguments) {
 const [baseFilePath, headFilePath] = positionalArguments;
 if (!baseFilePath || !headFilePath) {
   console.error(
-    'usage: compare.js [--all | --axe-only] <base-report.json> <head-report.json>'
+    'usage: compare.js [--all | --axe-only] [--base-label <str>] [--head-label <str>] <base-report.json> <head-report.json>'
   );
   process.exit(1);
 }
@@ -252,9 +313,17 @@ const siteUrls = [
     ...headReport.pages.map(page => page.url)
   ])
 ].sort();
+const baseLabel = baseLabelOverride ?? baseReport.testEngine.version;
+const headLabel = headLabelOverride ?? headReport.testEngine.version;
 
 console.log(
   mode === 'all'
-    ? renderFullReport(baseReport, headReport, siteUrls)
-    : renderAxeOnlyReport(baseReport, headReport, siteUrls)
+    ? renderFullReport(baseReport, headReport, siteUrls, baseLabel, headLabel)
+    : renderAxeOnlyReport(
+        baseReport,
+        headReport,
+        siteUrls,
+        baseLabel,
+        headLabel
+      )
 );

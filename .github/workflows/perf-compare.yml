@@ -38,7 +38,6 @@ jobs:
       # remembering a guard. The stale-base notice step below is the
       # only step that opts into running on failure.
       - name: Check for perf infrastructure
-        id: check-perf
         run: |
           if [ ! -f perf/report.js ]; then
             echo "::warning::Base branch predates the perf comparison — skipping"
@@ -134,9 +133,9 @@ jobs:
           name: perf-head
           path: perf/reports
       - name: Generate comment markdown (axe only)
-        run: node perf/compare.js --axe-only perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-comment.md
+        run: node perf/compare.js --axe-only --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-comment.md
       - name: Generate summary markdown (all metrics)
-        run: node perf/compare.js --all perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-summary.md
+        run: node perf/compare.js --all --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-summary.md
       - name: Write to step summary
         run: cat /tmp/perf-compare-summary.md >> "$GITHUB_STEP_SUMMARY"
       # Fork PRs run this workflow with a read-only GITHUB_TOKEN, so the
