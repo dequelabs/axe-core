@@ -227,7 +227,7 @@
     },
     "image-alt-file-name": {
       "description": "Ensure image alternative is not the image file name",
-      "help": "Alternative text of images should not be a file name, path or URL"
+      "help": "Alternative text of images must not be a file name, path or URL"
     },
     "image-alt": {
       "description": "Ensure <img> elements have alternative text or a role of none or presentation",
