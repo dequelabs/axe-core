@@ -1,0 +1,150 @@
+name: Compare performance
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+      - 'release-*'
+    paths:
+      - 'lib/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: perf-compare-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  perf-base:
+    name: Perf (base)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # This workflow is advisory — infra flakes (build, artifact upload,
+    # runner failure) shouldn't red-X the PR's check status
+    continue-on-error: true
+    env:
+      DISPLAY: :99
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      # Long-open PRs against a stale base may predate the perf infra.
+      # Exiting non-zero here makes every subsequent step auto-skip via
+      # the default `if: success()`, so we don't have to gate each one
+      # individually and future maintainers can add steps without
+      # remembering a guard. The stale-base notice step below is the
+      # only step that opts into running on failure.
+      - name: Check for perf infrastructure
+        run: |
+          if [ ! -f perf/report.js ]; then
+            echo "::warning::Base branch predates the perf comparison — skipping"
+            exit 1
+          fi
+      # Gate on the actual file's absence rather than a step's conclusion
+      # so the notice survives future refactors of the check step. Edge
+      # case: if the checkout above fails, the workspace is empty and
+      # hashFiles matches too — accepted trade-off, checkout failures
+      # are rare.
+      - name: Post stale-base notice
+        if: hashFiles('perf/report.js') == '' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr comment "$PR" --repo "$REPO" --body "This branch is out-of-date with the base branch. Update this branch to enable the perf comparison."
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: Build axe.js
+        run: pnpm run build
+      - name: Run perf report
+        env:
+          WTR_BROWSER: chrome
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: pnpm perf:report base
+      - name: Upload report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: perf-base
+          path: perf/reports/base.json
+          retention-days: 14
+
+  perf-head:
+    name: Perf (head)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    continue-on-error: true
+    env:
+      DISPLAY: :99
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      # A PR that removes perf/report.js is a valid change, so no notice
+      # comment here — just bail out cleanly and let the compare job skip.
+      - name: Check for perf infrastructure
+        run: |
+          if [ ! -f perf/report.js ]; then
+            echo "::warning::Head branch does not contain the perf infrastructure — skipping"
+            exit 1
+          fi
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: Build axe.js
+        run: pnpm run build
+      - name: Run perf report
+        env:
+          WTR_BROWSER: chrome
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: pnpm perf:report head
+      - name: Upload report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: perf-head
+          path: perf/reports/head.json
+          retention-days: 14
+
+  compare:
+    name: Compare and comment
+    needs: [perf-base, perf-head]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Download base report
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: perf-base
+          path: perf/reports
+      - name: Download head report
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: perf-head
+          path: perf/reports
+      - name: Generate comment markdown (axe only)
+        run: node perf/compare.js --axe-only --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-comment.md
+      - name: Generate summary markdown (all metrics)
+        run: node perf/compare.js --all --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-summary.md
+      - name: Write to step summary
+        run: cat /tmp/perf-compare-summary.md >> "$GITHUB_STEP_SUMMARY"
+      # Fork PRs run this workflow with a read-only GITHUB_TOKEN, so the
+      # comment API returns 403. Skip the step rather than fail loudly —
+      # the step summary still shows the diff.
+      - name: Post PR comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr comment "$PR" --repo "$REPO" --body-file /tmp/perf-compare-comment.md

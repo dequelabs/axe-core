@@ -240,7 +240,14 @@ function sleep(n) {
       server = null;
     }
 
-    const filePath = path.join(__dirname, 'reports', `v${axeVersion}.json`);
+    // Prefix with `v` only when the label looks like a semver, so arbitrary
+    // labels like "base" or "head" (used by perf-compare) don't end up as
+    // "vbase.json" / "vhead.json"
+    const isVersionLike = /^\d/.test(axeVersion);
+    const fileName = isVersionLike
+      ? `v${axeVersion}.json`
+      : `${axeVersion}.json`;
+    const filePath = path.join(__dirname, 'reports', fileName);
     await fs.writeFile(filePath, JSON.stringify(result, null, 2), 'utf8');
   } finally {
     await driver.quit();
