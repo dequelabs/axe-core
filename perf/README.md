@@ -9,12 +9,14 @@ Scripts and tools for reporting and tracking axe-core performance.
 
 ## `perf-compare` workflow behavior
 
-The `.github/workflows/perf-compare.yml` workflow is advisory — it never blocks merging. `continue-on-error` keeps the **workflow's overall status** green even when individual jobs fail, but note that **failed jobs still appear as red on the PR's checks list** — that's a GHA UI limitation, not an indication that something is broken.
+The `.github/workflows/perf-compare.yml` workflow is advisory — it never blocks merging. `continue-on-error` keeps the **workflow's overall status** green even when the job fails, but note that **a failed job still appears as red on the PR's checks list** — that's a GHA UI limitation, not an indication that something is broken.
 
-A few situations produce no PR comment (or a different one):
+The workflow runs base and head **sequentially on one runner** so both measurements come from the same physical CPU. GitHub Actions uses a heterogeneous runner fleet (EPYC 7763, EPYC 9V74, Xeon 8573C are all in play) and a single measurement can vary by 30%+ between CPU generations, so running each side on a separate runner produces nonsense comparisons. The trade-off is ~2× wall clock per PR.
 
-- **Either perf job fails** (build error, runner flake, artifact upload failure): the compare job is skipped because its `needs:` are unsatisfied. Individual perf job shows red on the checks list; no comment is posted.
-- **Base branch predates the perf comparison**: the workflow detects the missing `perf/report.js` on base and posts a "rebase to get it" comment instead of the diff. The base job shows red on the checks list.
-- **Fork PRs**: `GITHUB_TOKEN` is read-only for fork-authored PRs, so the comment step is skipped. The step summary still shows the diff.
+A few situations produce no PR comment:
+
+- **Head does not contain the perf infrastructure** (a PR that removes `perf/report.js`): the workflow exits early with a `::warning::`. No comment is posted.
+- **Base ref is unreachable or its `lib/` can't be built**: the `Swap to base lib` or `Build axe.js (base)` step fails and comparison can't happen. Job shows red; no comment is posted.
+- **Fork PRs**: `GITHUB_TOKEN` is read-only for fork-authored PRs, so the comment step is skipped. The step summary still shows the diff, and both `base.json` / `head.json` are uploaded as an artifact.
 
 If a comment doesn't appear on a `lib/**` PR, check the workflow's run log for the reason before assuming it's broken.
