@@ -690,13 +690,13 @@
         "default": "Check if the link needs styling to distinguish it from nearby text",
         "pseudoContent": "Check if the link's pseudo style is sufficient to distinguish it from the surrounding text"
       },
-      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text. The rule applies because the link is surrounded by ${data.parentTextLength} characters of text, which is more than the link's own ${data.widgetTextLength} characters."
     },
     "link-in-text-block": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
       "fail": {
-        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
-        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor}) The rule applies because the link is surrounded by ${data.parentTextLength} characters of text, which is more than the link's own ${data.widgetTextLength} characters.",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor}) The rule applies because the link is surrounded by ${data.parentTextLength} characters of text, which is more than the link's own ${data.widgetTextLength} characters."
       },
       "incomplete": {
         "default": "Element's foreground contrast ratio could not be determined",

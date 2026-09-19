@@ -410,4 +410,51 @@ describe('dom.isInTextBlock', () => {
       assert.isFalse(isInTextBlock(target, { includeInlineBlock: true }));
     });
   });
+
+  describe('options.returnLengths', () => {
+    it('returns the text lengths instead of a boolean', () => {
+      fixtureSetup('<p>Some text <a href="" id="link">link</a></p>');
+      const link = document.getElementById('link');
+      assert.deepEqual(isInTextBlock(link, { returnLengths: true }), {
+        parentTextLength: 9,
+        widgetTextLength: 4
+      });
+    });
+
+    it('returns the text lengths when the widget text is longer', () => {
+      fixtureSetup(
+        '<p>Some text <a href="" id="link">longer link text</a></p>'
+      );
+      const link = document.getElementById('link');
+      assert.deepEqual(isInTextBlock(link, { returnLengths: true }), {
+        parentTextLength: 9,
+        widgetTextLength: 16
+      });
+    });
+
+    it('returns zero lengths if the element is a block', () => {
+      fixtureSetup(
+        '<p>Some text <a href="" id="link" style="display:block">link</a></p>'
+      );
+      const link = document.getElementById('link');
+      assert.deepEqual(isInTextBlock(link, { returnLengths: true }), {
+        parentTextLength: 0,
+        widgetTextLength: 0
+      });
+    });
+
+    it('returns the text lengths when noLengthCompare is also set', () => {
+      fixtureSetup(
+        '<p>Some text <a href="" id="link">longer link text</a></p>'
+      );
+      const link = document.getElementById('link');
+      assert.deepEqual(
+        isInTextBlock(link, { noLengthCompare: true, returnLengths: true }),
+        {
+          parentTextLength: 9,
+          widgetTextLength: 16
+        }
+      );
+    });
+  });
 });

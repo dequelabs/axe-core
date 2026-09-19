@@ -144,7 +144,10 @@ ${cssLines}
       const linkElm = getLinkElm({});
       assert.isFalse(linkInBlockStyleCheck.call(checkContext, linkElm));
       assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
-      assert.isNull(checkContext._data);
+      assert.deepEqual(checkContext._data, {
+        parentTextLength: 4,
+        widgetTextLength: 4
+      });
     });
 
     it('returns true if link has underline', () => {
