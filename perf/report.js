@@ -155,8 +155,7 @@ function sleep(n) {
       // capture axe-core performance logs
       await driver.executeScript(`
         const axeMetricRegex = /Measure (?<name>.*) took (?<duration>.*)ms/;
-
-        axe._setLogger(log => {
+        function captureLogs(log) {
           const match = log.match(axeMetricRegex);
           if (match) {
             const { name, duration } = match.groups;
@@ -172,7 +171,16 @@ function sleep(n) {
 
             window.axeMetrics[name] = duration;
           }
-        });
+        }
+
+        // axe-core versions >=4.12.1
+        if ('_setLogger' in axe) {
+          axe._setLogger(captureLogs);
+        }
+        // axe-core versions <=4.12.0
+        else {
+          window.console.log = captureLogs;
+        }
       `);
 
       const runSample = () =>
@@ -232,7 +240,14 @@ function sleep(n) {
       server = null;
     }
 
-    const filePath = path.join(__dirname, 'reports', `v${axeVersion}.json`);
+    // Prefix with `v` only when the label looks like a semver, so arbitrary
+    // labels like "base" or "head" (used by perf-compare) don't end up as
+    // "vbase.json" / "vhead.json"
+    const isVersionLike = /^\d/.test(axeVersion);
+    const fileName = isVersionLike
+      ? `v${axeVersion}.json`
+      : `${axeVersion}.json`;
+    const filePath = path.join(__dirname, 'reports', fileName);
     await fs.writeFile(filePath, JSON.stringify(result, null, 2), 'utf8');
   } finally {
     await driver.quit();

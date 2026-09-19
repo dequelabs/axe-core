@@ -1,0 +1,106 @@
+name: Compare performance
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+      - 'release-*'
+    paths:
+      - 'lib/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: perf-compare-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  perf:
+    name: Perf comparison
+    runs-on: ubuntu-latest
+    # Doubled from 60 (previous parallel-job limit) since we now measure
+    # base and head sequentially on one runner
+    timeout-minutes: 120
+    # This workflow is advisory — infra flakes (build, artifact upload,
+    # runner failure) shouldn't red-X the PR's check status
+    continue-on-error: true
+    env:
+      DISPLAY: :99
+    steps:
+      # Start on head so we always have head's perf/report.js and
+      # perf/sites/. If head doesn't have the perf infra (a PR that removed
+      # it), we can't do the comparison at all.
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          # Need base's history so we can swap in its lib/ after the head run
+          fetch-depth: 0
+      - name: Check for perf infrastructure
+        run: |
+          if [ ! -f perf/report.js ]; then
+            echo "::warning::Head does not contain the perf infrastructure — skipping"
+            exit 1
+          fi
+      - name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+
+      # --- Head measurement ---
+      - name: Build axe.js (head)
+        run: pnpm run build
+      - name: Run perf report (head)
+        env:
+          WTR_BROWSER: chrome
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: pnpm perf:report head
+
+      # --- Base measurement ---
+      # Swap only lib/ to base — perf/report.js, perf/sites/, and
+      # perf/compare.js all stay at head so both measurements use the same
+      # measurement code. This means base is really "base's lib built with
+      # head's build tooling," which is what we want to measure axe changes.
+      - name: Swap to base lib
+        run: git checkout ${{ github.event.pull_request.base.sha }} -- lib/
+      - name: Build axe.js (base)
+        run: pnpm run build
+      - name: Run perf report (base)
+        env:
+          WTR_BROWSER: chrome
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: pnpm perf:report base
+
+      # --- Comparison ---
+      - name: Generate comment markdown (axe only)
+        run: node perf/compare.js --axe-only --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-comment.md
+      - name: Generate summary markdown (all metrics)
+        run: node perf/compare.js --all --base-label "${{ github.event.pull_request.base.sha }}" --head-label "${{ github.event.pull_request.head.sha }}" perf/reports/base.json perf/reports/head.json > /tmp/perf-compare-summary.md
+      - name: Write to step summary
+        run: cat /tmp/perf-compare-summary.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: perf-reports
+          # actions/upload-artifact uses glob patterns, not shell brace expansion
+          path: |
+            perf/reports/base.json
+            perf/reports/head.json
+          retention-days: 14
+
+      # Fork PRs run this workflow with a read-only GITHUB_TOKEN, so the
+      # comment API returns 403. Skip the step rather than fail loudly —
+      # the step summary still shows the diff.
+      - name: Post PR comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr comment "$PR" --repo "$REPO" --body-file /tmp/perf-compare-comment.md

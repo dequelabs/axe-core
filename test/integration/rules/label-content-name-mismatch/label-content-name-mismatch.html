@@ -1,3 +1,21 @@
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .clip-hidden {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+  }
+  .clip-path-hidden {
+    position: absolute;
+    clip-path: inset(50%);
+  }
+</style>
+
 <!-- Pass -->
 <div id="pass1" role="link" aria-label="next page ">next page</div>
 <div id="pass2" role="link" aria-label="Next Page">next page</div>
@@ -26,6 +44,15 @@
   </svg>
   Hello World
 </a>
+<a id="pass10" href="#" aria-label="deque are great">
+  deque <span class="visually-hidden">labs</span> are great
+</a>
+<a id="pass11" href="#" aria-label="deque are great">
+  deque <span class="clip-hidden">labs</span> are great
+</a>
+<a id="pass12" href="#" aria-label="deque are great">
+  deque <span class="clip-path-hidden">labs</span> are great
+</a>
 <button id="pass13" aria-label="search by date">
   Search by date (YYYY-MM-DD)
 </button>
@@ -52,6 +79,9 @@
   Hello Deque Systems
 </a>
 <a id="fail8" href="#" aria-label="non-standard">nonstandard</a>
+<a id="fail9" href="#" aria-label="deque labs are great">
+  deque <span class="visually-hidden">labs</span> are great
+</a>
 
 <!-- incomplete -->
 <button id="incomplete1" aria-label="comet">☄️</button>
@@ -71,6 +101,18 @@
 <button id="incomplete15" aria-label="alphabetical sort">ABC</button>
 <button id="incomplete16" aria-label="toggle capitalization">aA</button>
 <button id="incomplete17" aria-label="CJK character"></button>
+
+<label id="labelForIncomplete18">Notifications</label>
+<div
+  id="incomplete18"
+  role="switch"
+  aria-labelledby="labelForIncomplete18"
+  aria-checked="true"
+  tabindex="0"
+>
+  <span>[On]</span>
+  <span>Off</span>
+</div>
 
 <!-- inapplicable -->
 <a id="inapplicable1" aria-label="OK">Next</a>
