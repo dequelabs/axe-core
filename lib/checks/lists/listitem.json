@@ -6,8 +6,8 @@
     "messages": {
       "pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
       "fail": {
-        "default": "List item does not have a <ul>, <ol> parent element",
-        "roleNotValid": "List item parent element has a role that is not role=\"list\""
+        "default": "List item does not have a <ul> or <ol> parent element. Ensure the <li> is a direct child of a <ul> or <ol>, or that the parent has role=\"list\".",
+        "roleNotValid": "List item parent element has a role that is not role=\"list\". Ensure the parent element has role=\"list\", or move the <li> inside a <ul> or <ol>."
       }
     }
   }
