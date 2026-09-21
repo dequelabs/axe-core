@@ -465,4 +465,13 @@ describe('aria.getRole', () => {
       });
     });
   });
+
+  it('does not share a cached role between different options', () => {
+    const node = document.createElement('div');
+    node.setAttribute('role', 'doc-chapter');
+    flatTreeSetup(node);
+
+    assert.isNull(aria.getRole(node));
+    assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
+  });
 });
