@@ -13,7 +13,8 @@
     ["#fail11"],
     ["#fail12"],
     ["#fail13"],
-    ["#fail14"]
+    ["#fail14"],
+    ["#fail15"]
   ],
   "passes": [
     ["#pass1"],
@@ -69,6 +70,9 @@
     ["#canttell20"],
     ["#canttell21"],
     ["#canttell22"],
-    ["#canttell23"]
+    ["#canttell23"],
+    ["#canttell24"],
+    ["#canttell25"],
+    ["#canttell26"]
   ]
 }
