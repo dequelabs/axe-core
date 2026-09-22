@@ -474,4 +474,13 @@ describe('aria.getRole', () => {
     assert.isNull(aria.getRole(node));
     assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
   });
+
+  it('throws for an element that is not in the tree', () => {
+    flatTreeSetup(document.createElement('div'));
+
+    const detached = document.createElement('span');
+    detached.setAttribute('role', 'button');
+
+    assert.throws(() => aria.getRole(detached));
+  });
 });
