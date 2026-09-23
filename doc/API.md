@@ -719,18 +719,7 @@ Each object returned in these arrays have the following properties:
       - `html` - HTML source of the related node
   - `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
   - `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
-  - `failureSummary` - Text string that tells how to fix the element. Only nodes in the `violations` and `incomplete` arrays have it, and only with the `v1` reporter (the default). It joins the `message` of the checks in `all`, `none` and `any`: the `all` and `none` messages are listed under "Fix all of the following:", the `any` messages under "Fix any of the following:". For example, for `<a href="#"></a>` the `link-name` rule gives:
-
-    ```
-    Fix all of the following:
-      Element is in tab order and does not have accessible text
-
-    Fix any of the following:
-      Element does not have text that is visible to screen readers
-      aria-label attribute does not exist or is empty
-      aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty
-      Element has no title attribute
-    ```
+  - `failureSummary` - How to fix the violation. Only nodes in the `violations` and `incomplete` arrays have this property.
 
 #### Example 2
 
