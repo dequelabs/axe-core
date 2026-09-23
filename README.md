@@ -139,6 +139,7 @@ axe.configure({
 
 Axe-core supports the following locales. Do note that since locales are contributed by our community, they are not guaranteed to include all translations needed in a release.
 
+- Azerbaijani
 - Basque
 - Chinese (Simplified)
 - Chinese (Traditional)
