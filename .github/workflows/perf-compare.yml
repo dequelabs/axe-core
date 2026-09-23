@@ -18,11 +18,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Cheap ~5s pre-check so we can *skip* (not fail) the expensive perf job
-  # when head doesn't have the perf infra. `continue-on-error` on the perf
-  # job only affects workflow-level status — a failed job still shows red on
-  # the PR checks list. A skipped job shows grey and doesn't count against
-  # the PR, which is what we actually want here.
+  # Ensure we have the perf infrastructure before trying to run perf so we can
+  # post a skipped status instead of an error status
   preflight:
     name: Check perf infrastructure
     runs-on: ubuntu-latest
