@@ -263,4 +263,11 @@ describe('only-listitems', () => {
       });
     });
   });
+
+  describe('SerialVirtualNode', () => {
+    it('returns undefined if the list has no children', () => {
+      const vNode = new axe.SerialVirtualNode({ nodeName: 'ul' });
+      assert.isUndefined(checkEvaluate.call(checkContext, null, {}, vNode));
+    });
+  });
 });

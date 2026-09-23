@@ -9,7 +9,8 @@
     "impact": "serious",
     "messages": {
       "pass": "List element only has direct children that are allowed inside <li> elements",
-      "fail": "List element has direct children that are not allowed: ${data.values}"
+      "fail": "List element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if list element only has allowed direct children"
     }
   }
 }
