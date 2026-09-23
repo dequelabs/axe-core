@@ -18,32 +18,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Cheap ~5s pre-check so we can *skip* (not fail) the expensive perf job
+  # when head doesn't have the perf infra. `continue-on-error` on the perf
+  # job only affects workflow-level status — a failed job still shows red on
+  # the PR checks list. A skipped job shows grey and doesn't count against
+  # the PR, which is what we actually want here.
+  preflight:
+    name: Check perf infrastructure
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      has-perf: ${{ steps.check.outputs.has-perf }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Query the file via the API instead of doing a full checkout —
+          # takes ~1s and avoids paying for a runner slot on skipped PRs
+          if gh api "repos/$REPO/contents/perf/report.js?ref=$HEAD_SHA" --silent 2>/dev/null; then
+            echo "has-perf=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Head does not contain the perf infrastructure — skipping perf comparison"
+            echo "has-perf=false" >> "$GITHUB_OUTPUT"
+          fi
+
   perf:
     name: Perf comparison
+    needs: preflight
+    if: needs.preflight.outputs.has-perf == 'true'
     runs-on: ubuntu-latest
     # Doubled from 60 (previous parallel-job limit) since we now measure
     # base and head sequentially on one runner
     timeout-minutes: 120
-    # This workflow is advisory — infra flakes (build, artifact upload,
-    # runner failure) shouldn't red-X the PR's check status
+    # Keeps the workflow-level status green when the perf steps hit an
+    # infra flake (build, artifact upload, runner failure). The head-lacks-
+    # perf-infra case is now handled by the preflight `if:` above so it
+    # skips cleanly instead of showing a failed job.
     continue-on-error: true
     env:
       DISPLAY: :99
     steps:
-      # Start on head so we always have head's perf/report.js and
-      # perf/sites/. If head doesn't have the perf infra (a PR that removed
-      # it), we can't do the comparison at all.
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           # Need base's history so we can swap in its lib/ after the head run
           fetch-depth: 0
-      - name: Check for perf infrastructure
-        run: |
-          if [ ! -f perf/report.js ]; then
-            echo "::warning::Head does not contain the perf infrastructure — skipping"
-            exit 1
-          fi
       - name: Install Deps
         uses: ./.github/actions/install-deps
         id: install-deps
