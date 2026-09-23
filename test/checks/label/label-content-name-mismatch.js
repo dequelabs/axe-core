@@ -2,10 +2,27 @@ describe('label-content-name-mismatch tests', () => {
   const html = axe.testUtils.html;
 
   const queryFixture = axe.testUtils.queryFixture;
-  const check = checks['label-content-name-mismatch'];
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
+  const checkEvaluate = axe.testUtils.getCheckEvaluate(
+    'label-content-name-mismatch'
+  );
   const options = undefined;
+  const checkContext = new axe.testUtils.MockCheckContext();
+  const valueTextOptions = {
+    valueTextRoles: [
+      'switch',
+      'checkbox',
+      'radio',
+      'menuitemcheckbox',
+      'menuitemradio'
+    ]
+  };
 
   const fontApiSupport = !!document.fonts;
+
+  afterEach(() => {
+    checkContext.reset();
+  });
 
   before(done => {
     if (!fontApiSupport) {
@@ -26,7 +43,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="next page &nbsp ">next page</div>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -34,7 +51,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="Next Page">next pAge</div>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -43,7 +60,7 @@ describe('label-content-name-mismatch tests', () => {
       <div id="target" aria-labelledby="yourLabel">UNTIL THE VeRy EnD</div>
       <div id="yourLabel">uNtIl the very end &nbsp</div>
     `);
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -51,7 +68,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" name="link" aria-label="Next Page in the list">Next Page</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -59,7 +76,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="OK">Next</div>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
 
@@ -67,7 +84,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" name="link" aria-label="the full">The full label</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
 
@@ -76,7 +93,7 @@ describe('label-content-name-mismatch tests', () => {
       <div role="button" id="target" aria-labelledby="foo">some content</div>
       <div id="foo">123</div>
     `);
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
 
@@ -84,7 +101,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="I would like a burger">I would like a 🍔 </button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -92,7 +109,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="next page">next page &gt;&gt;</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -102,7 +119,7 @@ describe('label-content-name-mismatch tests', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="next page">next page <span style="font-family: \'Material Icons\'">delete</span></button>'
       );
-      const actual = check.evaluate(vNode.actualNode, options, vNode);
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
       assert.isTrue(actual);
     }
   );
@@ -111,7 +128,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="Favorites"> Favorites</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -119,7 +136,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="comet">☄️</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -127,7 +144,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="☄️">shooting star</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -135,7 +152,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="help">?</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -143,7 +160,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="&#x1F354">&#x1F354</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -151,7 +168,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="close">&#10060;</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -159,7 +176,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="wink">;)</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isUndefined(actual);
   });
 
@@ -167,7 +184,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="I like football but I prefer cycling more">I like football, but I prefer cycling more.</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -175,7 +192,7 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="I like football">I like cycling more!!!</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
 
@@ -183,7 +200,15 @@ describe('label-content-name-mismatch tests', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="button label">button<br>label</button>'
     );
-    const actual = check.evaluate(vNode.actualNode, options, vNode);
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('treats a lone newline in the visible text as a word separator', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="save changes">save\nchanges</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -191,7 +216,7 @@ describe('label-content-name-mismatch tests', () => {
     var vNode = queryFixture(
       '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />button label</button>'
     );
-    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    var actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);
   });
 
@@ -199,7 +224,7 @@ describe('label-content-name-mismatch tests', () => {
     var vNode = queryFixture(
       '<button id="target" aria-label="button label"><img alt="button icon" src="button.png" />this is a button label</button>'
     );
-    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    var actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
 
@@ -209,7 +234,7 @@ describe('label-content-name-mismatch tests', () => {
       var vNode = queryFixture(
         '<button id="target" aria-label="button label"><span style="font-family: \'Material Icons\'">delete</span>button label</button>'
       );
-      var actual = check.evaluate(vNode.actualNode, options, vNode);
+      var actual = checkEvaluate(vNode.actualNode, options, vNode);
       assert.isTrue(actual);
     }
   );
@@ -220,8 +245,182 @@ describe('label-content-name-mismatch tests', () => {
       var vNode = queryFixture(
         '<button id="target" aria-label="button label"><span style="font-family: \'Material Icons\'">delete</span>this is a button label</button>'
       );
-      var actual = check.evaluate(vNode.actualNode, options, vNode);
+      var actual = checkEvaluate(vNode.actualNode, options, vNode);
       assert.isFalse(actual);
     }
   );
+
+  it('returns false when the visible words are not a contiguous run within the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="the big red button">big button</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when the visible words are a contiguous run within the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="go to next page now">next page</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('ignores zero-width characters when tokenizing so they do not split a word', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="nonstandard">non\u00ADstandard</a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  [
+    ['a hyphen', 'non-standard', 'nonstandard'],
+    ['an apostrophe', 'its book', "it's"],
+    ['periods', 'usa', 'u.s.a'],
+    ['an en dash', 'email', 'e–mail']
+  ].forEach(([label, name, content]) => {
+    it(`returns false when the words differ by ${label}`, () => {
+      const vNode = queryFixture(
+        `<a id="target" href="#" aria-label="${name}">${content}</a>`
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+  });
+
+  it('matches the visible label against the accessible name across an open shadow DOM boundary', () => {
+    const vNode = queryShadowFixture(
+      '<button id="target" aria-label="save changes"><span id="shadow"></span> changes</button>',
+      'save'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+  describe('parenthesised content', () => {
+    it('returns true when the visible label adds a parenthesised suffix', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="search by date">Search by date (YYYY-MM-DD)</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true when the accessible name adds a parenthesised suffix', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download (pdf)">Download</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('removes nested parentheses', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="open report">Open report (latest (2026) draft)</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true when the visible label is entirely parenthesised', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="download (pdf)">(PDF)</a>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns false when the words outside the parentheses still differ', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="search by date">Filter by date (YYYY-MM-DD)</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('ignores an unmatched parenthesis', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="save changes">Save changes (</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+  });
+  describe('options.valueTextRoles', () => {
+    valueTextOptions.valueTextRoles.forEach(role => {
+      it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
+        const vNode = queryFixture(
+          `<div id="labelFor${role}">Notifications</div>` +
+            `<div id="target" role="${role}" aria-labelledby="labelFor${role}">` +
+            '<span>[On]</span><span>Off</span></div>'
+        );
+        const actual = checkEvaluate.call(
+          checkContext,
+          vNode.actualNode,
+          valueTextOptions,
+          vNode
+        );
+        assert.isUndefined(actual);
+        assert.deepEqual(checkContext._data, { messageKey: 'valueText' });
+      });
+    });
+
+    it('returns true when a switch has its visible text inside the accessible name', () => {
+      const vNode = queryFixture(
+        '<div id="target" role="switch" aria-label="notifications on">notifications</div>'
+      );
+      const actual = checkEvaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isTrue(actual);
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns undefined when a switch has shadow DOM text outside its accessible name', () => {
+      const vNode = queryShadowFixture(
+        '<div id="target" role="switch" aria-label="notifications">' +
+          '<span id="shadow"></span></div>',
+        '<span>[On]</span><span>Off</span>'
+      );
+      const actual = checkEvaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isUndefined(actual);
+      assert.deepEqual(checkContext._data, { messageKey: 'valueText' });
+    });
+
+    it('returns false for a role outside the configured list', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="notifications">[On] Off</button>'
+      );
+      const actual = checkEvaluate.call(
+        checkContext,
+        vNode.actualNode,
+        valueTextOptions,
+        vNode
+      );
+      assert.isFalse(actual);
+    });
+
+    it('returns false for a switch when the roles option is empty', () => {
+      const vNode = queryFixture(
+        '<div id="labelForEmpty">Notifications</div>' +
+          '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
+          '<span>[On]</span><span>Off</span></div>'
+      );
+      const actual = checkEvaluate.call(
+        checkContext,
+        vNode.actualNode,
+        { valueTextRoles: [] },
+        vNode
+      );
+      assert.isFalse(actual);
+    });
+  });
 });

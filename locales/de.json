@@ -394,7 +394,7 @@
       "help": "Daten- oder Kopfzellen sollten nicht verwendet werden, um einer Datentabelle eine Überschrift zu geben."
     },
     "target-size": {
-      "description": "Stellt sicher, dass Berührungsobjekte (touch targets) ausreichend groß sind und genügend Platz bieteen.",
+      "description": "Stellt sicher, dass Berührungsobjekte (touch targets) ausreichend groß sind und genügend Platz bieten.",
       "help": "Alle Berührungsobjekte (touch targets) müssen 24 Pixel groß sein oder ausreichend Platz lassen."
     },
     "td-has-header": {

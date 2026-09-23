@@ -1238,4 +1238,92 @@ describe('axe.utils.publishMetaData', () => {
       }
     ]);
   });
+
+  it('should fall back to a generic message when the check has no incomplete message', () => {
+    axe._load({
+      rules: [],
+      data: {
+        incompleteFallbackMessage: 'Dogs are the best',
+        rules: {
+          cats: {
+            help: () => {
+              return 'cats-rule';
+            }
+          }
+        },
+        checks: {
+          'cats-NONE': {
+            messages: {
+              fail: 'fail-NONE',
+              pass: 'pass-NONE'
+            }
+          },
+          'cats-ANY': {
+            messages: {
+              fail: 'fail-ANY',
+              pass: 'pass-ANY'
+            }
+          },
+          'cats-ALL': {
+            messages: {
+              fail: 'fail-ALL',
+              pass: 'pass-ALL'
+            }
+          }
+        }
+      }
+    });
+
+    const result = {
+      id: 'cats',
+      nodes: [
+        {
+          any: [
+            {
+              result: undefined,
+              id: 'cats-ANY'
+            }
+          ],
+          none: [
+            {
+              result: undefined,
+              id: 'cats-NONE'
+            }
+          ],
+          all: [
+            {
+              result: undefined,
+              id: 'cats-ALL'
+            }
+          ]
+        }
+      ]
+    };
+    axe.utils.publishMetaData(result);
+    assert.deepEqual(result.nodes, [
+      {
+        any: [
+          {
+            result: undefined,
+            id: 'cats-ANY',
+            message: 'Dogs are the best'
+          }
+        ],
+        none: [
+          {
+            result: undefined,
+            id: 'cats-NONE',
+            message: 'Dogs are the best'
+          }
+        ],
+        all: [
+          {
+            result: undefined,
+            id: 'cats-ALL',
+            message: 'Dogs are the best'
+          }
+        ]
+      }
+    ]);
+  });
 });

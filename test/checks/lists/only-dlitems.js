@@ -224,4 +224,19 @@ describe('only-dlitems', () => {
       assert.deepEqual(checkContext._data, { values: 'p' });
     });
   });
+
+  describe('SerialVirtualNode', () => {
+    it('returns undefined if the list has no children', () => {
+      const vNode = new axe.SerialVirtualNode({ nodeName: 'dl' });
+      assert.isUndefined(checkEvaluate.call(checkContext, null, {}, vNode));
+    });
+
+    it('returns undefined if a div group has no children', () => {
+      const dl = new axe.SerialVirtualNode({ nodeName: 'dl' });
+      const div = new axe.SerialVirtualNode({ nodeName: 'div' });
+      dl.children = [div];
+      div.parent = dl;
+      assert.isUndefined(checkEvaluate.call(checkContext, null, {}, dl));
+    });
+  });
 });
