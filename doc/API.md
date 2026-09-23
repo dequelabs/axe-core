@@ -719,6 +719,7 @@ Each object returned in these arrays have the following properties:
       - `html` - HTML source of the related node
   - `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
   - `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
+  - `failureSummary` - How to fix the violation. Only nodes in the `violations` and `incomplete` arrays have this property.
 
 #### Example 2
 
