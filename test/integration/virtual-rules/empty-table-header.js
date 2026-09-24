@@ -181,6 +181,36 @@ describe('empty-table-header virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should be inapplicable when the table has role none', () => {
+    const table = new axe.SerialVirtualNode({
+      nodeName: 'table',
+      attributes: {
+        role: 'none'
+      }
+    });
+
+    const tr = new axe.SerialVirtualNode({
+      nodeName: 'tr'
+    });
+
+    const th = new axe.SerialVirtualNode({
+      nodeName: 'th'
+    });
+
+    tr.children = [th];
+    tr.parent = table;
+    th.parent = tr;
+    th.children = [];
+    table.children = [tr];
+
+    const results = axe.runVirtualRule('empty-table-header', table);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+    assert.lengthOf(results.inapplicable, 1);
+  });
+
   it('should be inapplicable when the th has role of cell', () => {
     const table = new axe.SerialVirtualNode({
       nodeName: 'table'
