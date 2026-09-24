@@ -519,8 +519,44 @@ declare namespace axe {
     ) => string;
   }
 
+  interface Color {
+    red: number;
+    green: number;
+    blue: number;
+    alpha: number;
+    r: number;
+    g: number;
+    b: number;
+    toHexString: () => string;
+    toJSON: () => { red: number; green: number; blue: number; alpha: number };
+    parseString: (colorString: string) => Color;
+    getRelativeLuminance: () => number;
+  }
+
+  interface ColorConstructor {
+    new (red?: number, green?: number, blue?: number, alpha?: number): Color;
+    new (color: Color): Color;
+  }
+
+  interface ColorCommons {
+    Color: ColorConstructor;
+    getBackgroundColor: (
+      element: Element,
+      bgElms?: Element[],
+      shadowOutlineEmMax?: number
+    ) => Color | null;
+    getForegroundColor: (
+      element: Element,
+      noScroll?: boolean,
+      bgColor?: Color | null,
+      options?: { textStrokeEmMin?: number }
+    ) => Color | null;
+    getContrast: (bgColor: Color, fgColor: Color) => number;
+  }
+
   interface Commons {
     aria: Aria;
+    color: ColorCommons;
     dom: Dom;
     text: Text;
   }
