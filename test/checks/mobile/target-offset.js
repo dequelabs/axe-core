@@ -171,6 +171,72 @@ describe('target-offset tests', () => {
     });
   });
 
+  describe('neighbor distance', () => {
+    function tinyTargets(neighborLeft, neighborTop) {
+      return `
+        <div style="position: relative">
+          <a href="#" id="target" style="position: absolute; left: 0; top: 0; width: 2px; height: 2px"></a>
+          <a href="#" style="position: absolute; left: ${neighborLeft}px; top: ${neighborTop}px; width: 2px; height: 2px"></a>
+        </div>
+      `;
+    }
+
+    it('returns false for an undersized neighbor less than minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(23, 0));
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+    });
+
+    it('returns false for an undersized neighbor diagonally less than minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(16, 16));
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 21.2, 0.2);
+    });
+
+    it('uses the minOffset option to find neighbors', () => {
+      const checkArgs = checkSetup(tinyTargets(32, 0), { minOffset: 40 });
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 40);
+      assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+    });
+
+    it('returns true for an undersized neighbor minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(26, 0));
+
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+    });
+
+    it('ignores neighbors at least minOffset away, even with too many rects', () => {
+      let rows = '';
+      for (let i = 0; i < 100; i++) {
+        rows += `
+          <tr>
+            <td><a href="#">A</a></td>
+            <td><button>B</button></td>
+            <td><button>C</button></td>
+            <td><button>D</button></td>
+          </tr>
+        `;
+      }
+      const checkArgs = checkSetup(
+        `<div><a href="#" id="target" style="display: inline-block; width:16px; height:16px;">x</a></div>` +
+          `<div role="button" tabindex="0" style="display: inline-block; margin-top: 24px">` +
+          `<table>${rows}</table>` +
+          `</div>`
+      );
+
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        closestOffset: 24,
+        minOffset: 24
+      });
+    });
+  });
+
   describe('when neighbors are focusable but not tabbable', () => {
     it('returns undefined if all neighbors are not tabbable', () => {
       const checkArgs = checkSetup(
