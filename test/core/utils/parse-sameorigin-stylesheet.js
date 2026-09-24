@@ -204,14 +204,18 @@ describe('axe.utils.parseSameOriginStylesheet', () => {
     const importedUrls = [];
     // the url is resolved while `parseSameOriginStylesheet` runs, so `URL` can
     // be put back as soon as the call returns
-    const promise = axe.utils.parseSameOriginStylesheet(
-      sheet,
-      options,
-      [1, 0],
-      importedUrls,
-      false
-    );
-    window.URL = nativeUrl;
+    let promise;
+    try {
+      promise = axe.utils.parseSameOriginStylesheet(
+        sheet,
+        options,
+        [1, 0],
+        importedUrls,
+        false
+      );
+    } finally {
+      window.URL = nativeUrl;
+    }
 
     promise
       .then(data => {
