@@ -1073,7 +1073,8 @@
       "pass": "Element has a placeholder attribute",
       "fail": {
         "noAttr": "Element has no placeholder attribute",
-        "emptyAttr": "Element has an empty placeholder attribute"
+        "emptyAttr": "Element has an empty placeholder attribute",
+        "unsupportedType": "Element's input type does not use the placeholder attribute as its accessible name"
       }
     },
     "non-empty-title": {

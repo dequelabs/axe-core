@@ -1224,6 +1224,45 @@ describe('text.accessibleTextVirtual', () => {
       });
     });
 
+    it('should find a placeholder attribute on type=number', () => {
+      fixture.innerHTML = html`<input
+        type="number"
+        placeholder="Hello World"
+      />`;
+      axe.testUtils.flatTreeSetup(fixture);
+
+      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      assert.equal(
+        axe.commons.text.accessibleTextVirtual(target),
+        'Hello World'
+      );
+    });
+
+    it('should ignore the placeholder attribute on types that do not use it', () => {
+      const otherTypes = [
+        'checkbox',
+        'radio',
+        'range',
+        'color',
+        'date',
+        'datetime-local',
+        'month',
+        'week',
+        'time',
+        'file'
+      ];
+      otherTypes.forEach(type => {
+        fixture.innerHTML = html`<input
+          type="${type}"
+          placeholder="Hello World"
+        />`;
+        axe.testUtils.flatTreeSetup(fixture);
+
+        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        assert.equal(axe.commons.text.accessibleTextVirtual(target), '', type);
+      });
+    });
+
     it('should find a title attribute', () => {
       types.forEach(type => {
         const t = type ? ` type="${type}"` : '';
