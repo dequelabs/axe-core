@@ -512,6 +512,18 @@ axe.commons.dom.isFocusable(document.body);
 axe.commons.dom.isNativelyFocusable(document.body);
 axe.commons.dom.getNodeGrid(document.body);
 axe.commons.text.accessibleText(document.body);
+const bgColor: axe.Color | null = axe.commons.color.getBackgroundColor(
+  document.body
+);
+const fgColor: axe.Color | null = axe.commons.color.getForegroundColor(
+  document.body,
+  false,
+  bgColor
+);
+const white = new axe.commons.color.Color(255, 255, 255, 1);
+const black = new axe.commons.color.Color().parseString('#000');
+const contrast: number = axe.commons.color.getContrast(white, black);
+const hex: string = new axe.commons.color.Color(white).toHexString();
 
 // Types
 /**
