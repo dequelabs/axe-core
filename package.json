@@ -178,7 +178,7 @@
     "typedarray": "^0.0.7",
     "typescript": "^6.0.3",
     "uglify-js": "^3.17.4",
-    "wcag-act-rules": "github:w3c/wcag-act-rules#5adb55d19eb2cd7fb23213b2d1acedf9004dc063",
+    "wcag-act-rules": "github:w3c/wcag-act-rules#222082a54d52874b3e73d470b9b58e83902afe3b",
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {

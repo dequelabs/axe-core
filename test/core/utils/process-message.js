@@ -43,6 +43,17 @@ describe('axe.utils.processMessage', () => {
     assert.equal(output, 'Hello World!');
   });
 
+  it('should separate the values of an array ${data.prop} with a comma and a space', () => {
+    const message = '${data.prohibited} attributes are not allowed';
+    const output = axe.utils.processMessage(message, {
+      prohibited: ['aria-label', 'aria-labelledby']
+    });
+    assert.equal(
+      output,
+      'aria-label, aria-labelledby attributes are not allowed'
+    );
+  });
+
   describe('data is array', () => {
     it('should replace ${data.values} with comma separated list of values', () => {
       const message = 'Output: ${data.values}';

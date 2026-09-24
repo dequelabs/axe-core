@@ -5,6 +5,7 @@ describe('inline-style-property tests', () => {
 
   afterEach(() => {
     fixture.innerHTML = '';
+    sinon.restore();
   });
 
   describe('important-letter-spacing check', () => {
@@ -178,6 +179,21 @@ describe('inline-style-property tests', () => {
         });
       });
     });
+
+    it('is undefined when the computed letter-spacing is not a number', () => {
+      const params = checkSetup(
+        '<p style="letter-spacing: 0.1em !important" id="target">Hello world</p>'
+      );
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
+        minValue: 0.12
+      });
+    });
   });
 
   describe('important-word-spacing check', () => {
@@ -227,6 +243,21 @@ describe('inline-style-property tests', () => {
       assert.isTrue(result);
       assert.deepEqual(checkContext._data, {
         value: 0.16,
+        minValue: 0.16
+      });
+    });
+
+    it('is undefined when the computed word-spacing is not a number', () => {
+      const params = checkSetup(
+        '<p style="word-spacing: 0.1em !important" id="target">Hello world</p>'
+      );
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
         minValue: 0.16
       });
     });
@@ -315,6 +346,23 @@ describe('inline-style-property tests', () => {
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);
+    });
+
+    it('is undefined when the computed line-height is not a number', () => {
+      const params = checkSetup(html`
+        <p style="line-height: 1.2em !important; max-width: 200px;" id="target">
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
+        minValue: 1.5
+      });
     });
   });
 
