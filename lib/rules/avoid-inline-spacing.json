@@ -2,7 +2,7 @@
   "id": "avoid-inline-spacing",
   "impact": "serious",
   "selector": "[style]",
-  "matches": "is-visible-on-screen-matches",
+  "matches": "avoid-inline-spacing-matches",
   "tags": [
     "cat.structure",
     "wcag21aa",
