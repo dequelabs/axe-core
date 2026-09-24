@@ -203,6 +203,65 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
 
+  it('should explain why a presentational child with tabindex is not allowed', () => {
+    const params = checkSetup(html`
+      <div id="target" role="grid">
+        <div role="presentation" tabindex="-1">
+          <div role="row"><div role="columnheader">foo</div></div>
+        </div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    const unallowed = axe.utils.querySelectorAll(
+      axe._tree,
+      '[role="presentation"]'
+    )[0];
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowedPresentational',
+      values: '[tabindex]'
+    });
+    assert.deepEqual(checkContext._relatedNodes, [unallowed]);
+  });
+
+  it('should explain why a presentational child with a global ARIA attribute is not allowed', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><div role="none" aria-live="polite"><div role="listitem">List item 1</div></div></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowedPresentational',
+      values: '[aria-live]'
+    });
+  });
+
+  it('should list presentational children with their attribute when other children are not allowed', () => {
+    const params = checkSetup(html`
+      <div id="target" role="list">
+        <div role="presentation" tabindex="-1">
+          <div role="listitem">List item 1</div>
+        </div>
+        <div role="tabpanel"></div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation][tabindex], [role=tabpanel]'
+    });
+  });
+
+  it('should not blame an attribute for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="presentation">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation]'
+    });
+  });
+
   it('should remove duplicate unallowed selectors', () => {
     const params = checkSetup(html`
       <div id="target" role="list">
