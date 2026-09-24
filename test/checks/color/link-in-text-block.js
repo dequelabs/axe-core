@@ -303,7 +303,9 @@ ${cssLines}
         contrastRatio: 2.18,
         requiredContrastRatio: 3,
         nodeColor: '#0000ee',
-        parentColor: '#110000'
+        parentColor: '#110000',
+        parentTextLength: 25,
+        widgetTextLength: 9
       });
     });
 
@@ -329,7 +331,9 @@ ${cssLines}
         contrastRatio: 1.13,
         requiredContrastRatio: 3,
         nodeBackgroundColor: '#ffffff',
-        parentBackgroundColor: '#f0f0f0'
+        parentBackgroundColor: '#f0f0f0',
+        parentTextLength: 4,
+        widgetTextLength: 4
       });
     });
 
@@ -368,6 +372,27 @@ ${cssLines}
         assert.equal(checkContext._data.messageKey, 'fgContrast');
         assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
       });
+    });
+  });
+
+  describe('failureSummary', () => {
+    it('explains the length comparison that made the rule apply', () => {
+      axe.testUtils.fixtureSetup(html`
+        <p style="color: black">
+          paragraph of text
+          <a style="text-decoration: none; color: blue" href="" id="target">
+            Link text
+          </a>
+        </p>
+      `);
+
+      return axe
+        .run('#fixture', { runOnly: ['link-in-text-block'] })
+        .then(results => {
+          const summary = results.violations[0].nodes[0].failureSummary;
+          assert.include(summary, 'surrounded by 17 characters of text');
+          assert.include(summary, 'more than the link');
+        });
     });
   });
 });
