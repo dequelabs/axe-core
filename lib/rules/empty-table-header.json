@@ -2,6 +2,7 @@
   "id": "empty-table-header",
   "impact": "minor",
   "selector": "th:not([role]), [role=\"rowheader\"], [role=\"columnheader\"]",
+  "matches": "empty-table-header-matches",
   "tags": ["cat.name-role-value", "best-practice"],
   "metadata": {
     "description": "Ensure table headers have discernible text",
