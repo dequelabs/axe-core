@@ -944,6 +944,21 @@ x
       const actual = contrastEvaluate.apply(checkContext, params);
       assert.isFalse(actual);
     });
+
+    it('should return undefined with bgOverlap for a single character text with insufficient contrast under an overlay', () => {
+      const params = checkSetup(html`
+        <div style="background-color: #FFF; position: relative;">
+          <div style="color:#DDD;" id="target">X</div>
+          <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
+          ></div>
+        </div>
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'bgOverlap');
+    });
   });
 
   describe('with empty text entry', () => {
@@ -1057,6 +1072,25 @@ x
 
       const actual = contrastEvaluate.apply(checkContext, params);
       assert.isFalse(actual);
+    });
+
+    it('should return undefined with bgOverlap for an empty text input with insufficient contrast under an overlay', () => {
+      const params = checkSetup(html`
+        <div style="position: relative;">
+          <input
+            id="target"
+            type="text"
+            style="background-color: #fff; color: #eee"
+          />
+          <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
+          ></div>
+        </div>
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'bgOverlap');
     });
 
     it('should return undefined for an empty text input in Shadow DOM with insufficient contrast', () => {
