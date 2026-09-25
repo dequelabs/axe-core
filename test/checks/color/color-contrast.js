@@ -21,7 +21,7 @@ describe('color-contrast', () => {
     const params = checkSetup(html`
       <div
         id="divundertest"
-        style="color: oklch(0.961073 0.000047911 none / 0.2); background-color: black; font-size: 14pt; font-weight: 900;"
+        style="color: color(display-p3-linear 0.9 0.9 0.9 / 0.2); background-color: black; font-size: 14pt; font-weight: 900;"
       >
         <span id="target" style="font-weight:lighter;">My text</span>
       </div>
@@ -33,14 +33,14 @@ describe('color-contrast', () => {
     assert.deepEqual(checkContext._data.messageKey, 'colorParse');
     assert.equal(
       checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
+      'color(display-p3-linear 0.9 0.9 0.9 / 0.2)'
     );
   });
 
   it('should return undefined if cannot handle backgroundcolor', () => {
     const params = checkSetup(html`
       <div
-        style="color: gray; background-color: oklch(0.961073 0.000047911 none / 0.2); font-size: 14pt; font-weight: 900;"
+        style="color: gray; background-color: color(display-p3-linear 0.9 0.9 0.9 / 0.2); font-size: 14pt; font-weight: 900;"
       >
         <span id="target" style="font-weight:lighter;">My text</span>
       </div>
@@ -50,13 +50,13 @@ describe('color-contrast', () => {
     assert.deepEqual(checkContext._data.messageKey, 'colorParse');
     assert.equal(
       checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
+      'color(display-p3-linear 0.9 0.9 0.9 / 0.2)'
     );
   });
 
   it('should return undefined if cannot handle text-shadow', () => {
     const params = checkSetup(
-      '<div id="target" style="background-color: #fff; color:#000; text-shadow: 1px 1px oklch(0.961073 0.000047911 none / 0.2);">My text</div>'
+      '<div id="target" style="background-color: #fff; color:#000; text-shadow: 1px 1px color(display-p3-linear 0.9 0.9 0.9 / 0.2);">My text</div>'
     );
 
     assert.isUndefined(contrastEvaluate.apply(checkContext, params));
