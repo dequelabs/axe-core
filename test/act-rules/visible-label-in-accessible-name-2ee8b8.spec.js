@@ -7,8 +7,6 @@ require('./act-runner.js')({
     // cannot detect either reliably and reports a violation instead. This
     // divergence is accepted; see
     // https://github.com/act-rules/act-rules.github.io/pull/2443
-    // Both are load-bearing against the nightly, which installs
-    // `wcag-act-rules#main`, not the pinned dependency.
     '4c8c38022d15c92158ecaaa647fe8ca2c330f485', // Inapplicable Example 5
     'e9bbdbec137223e2973c6d2896050770c84c26e5' // Inapplicable Example 6
   ]

@@ -7,6 +7,6 @@ allowBuilds:
   core-js-pure: false
   es5-ext: false
   esbuild: true # fetches the platform-specific binary
-  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063: true
+  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b: true
 patchedDependencies:
   colorjs.io@0.4.3: patches/colorjs.io@0.4.3.patch

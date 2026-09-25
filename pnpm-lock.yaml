@@ -171,8 +171,8 @@ importers:
         specifier: ^3.17.4
         version: 3.19.3
       wcag-act-rules:
-        specifier: github:w3c/wcag-act-rules#5adb55d19eb2cd7fb23213b2d1acedf9004dc063
-        version: https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063
+        specifier: github:w3c/wcag-act-rules#222082a54d52874b3e73d470b9b58e83902afe3b
+        version: https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b
       weakmap-polyfill:
         specifier: ^2.0.4
         version: 2.0.4
@@ -4071,8 +4071,8 @@ packages:
     resolution: {integrity: sha512-3hu+tD8YzSLGuFYtPRb48vdhKMi0KQV5sn+uWr8+7dMEq/2G/dtLrdDinkLjqq5TIbIBjYJ4Ax/n3YiaW7QM8A==}
     engines: {node: 20 || >=22}
 
-  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063:
-    resolution: {gitHosted: true, integrity: sha512-yZZC6BBu3Gf4zdC5/V0svprM2lvXPNiFhGbWTYDIAtr1M3tUIhR+uoSdn6MXMOMpR8T7XbwMMrfBkvH8GsAnPA==, tarball: https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063}
+  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b:
+    resolution: {gitHosted: true, integrity: sha512-bOhYCk6z9aAWwu0GwpHXF8dVsHG2kDsYNR0r9Ck+X0hEmdwP445Qk9xNOaubTZs48rdamhH+lFILubJf+UHm4A==, tarball: https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b}
     version: 0.0.0
 
   wcwidth@1.0.1:
@@ -8717,7 +8717,7 @@ snapshots:
 
   walk-up-path@4.0.0: {}
 
-  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/5adb55d19eb2cd7fb23213b2d1acedf9004dc063: {}
+  wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b: {}
 
   wcwidth@1.0.1:
     dependencies:

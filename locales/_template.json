@@ -761,7 +761,7 @@
     "no-focusable-content": {
       "pass": "Element does not have focusable descendants",
       "fail": {
-        "default": "Element has focusable descendants",
+        "default": "Element has focusable descendants. Move them outside of the element, or remove them.",
         "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with aria-hidden=\"true\")"
       },
       "incomplete": "Could not determine if element has descendants"
@@ -861,15 +861,18 @@
       "fail": {
         "default": "List item does not have a <ul> or <ol> parent element. Ensure the <li> is a direct child of a <ul> or <ol>, or that the parent has role=\"list\".",
         "roleNotValid": "List item parent element has a role that is not role=\"list\". Ensure the parent element has role=\"list\", or move the <li> inside a <ul> or <ol>."
-      }
+      },
+      "incomplete": "Unable to determine if list item has a <ul>, <ol> or role=\"list\" parent element"
     },
     "only-dlitems": {
       "pass": "dl element only has direct children that are allowed inside; <dt>, <dd>, or <div> elements",
-      "fail": "dl element has direct children that are not allowed: ${data.values}"
+      "fail": "dl element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if dl element only has allowed direct children"
     },
     "only-listitems": {
       "pass": "List element only has direct children that are allowed inside <li> elements",
-      "fail": "List element has direct children that are not allowed: ${data.values}"
+      "fail": "List element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if list element only has allowed direct children"
     },
     "structured-dlitems": {
       "pass": "When not empty, element has both <dt> and <dd> elements",
@@ -1035,15 +1038,18 @@
     },
     "important-letter-spacing": {
       "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "incomplete": "Unable to determine if letter-spacing in the style attribute meets the minimum"
     },
     "important-line-height": {
       "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
-      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "incomplete": "Unable to determine if line-height in the style attribute meets the minimum"
     },
     "important-word-spacing": {
       "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "incomplete": "Unable to determine if word-spacing in the style attribute meets the minimum"
     },
     "is-on-screen": {
       "pass": "Element is not visible",
@@ -1142,7 +1148,6 @@
     },
     "th-has-data-cells": {
       "pass": "All table header cells refer to data cells",
-      "fail": "Not all table header cells refer to data cells",
       "incomplete": "Table data cells are missing or empty"
     },
     "hidden-content": {
