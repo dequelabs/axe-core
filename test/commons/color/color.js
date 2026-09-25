@@ -429,6 +429,86 @@ describe('color.Color', () => {
       assert.equal(c.blue, 144);
       assert.equal(c.alpha, 0.5);
     });
+
+    describe('with the none keyword', () => {
+      // browsers keep `none` in computed colors, e.g. the powerless hue of
+      // `color-mix(in oklch, #888 50%, white)`
+      it('treats a none hue in oklch as 0', () => {
+        const c = new Color();
+        c.parseString('oklch(0.813372 0.0000404846 none)');
+        assert.equal(c.red, 194);
+        assert.equal(c.green, 194);
+        assert.equal(c.blue, 194);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('treats a none hue in lch as 0', () => {
+        const c = new Color();
+        c.parseString('lch(81.6103 0.0158527 none)');
+        assert.equal(c.red, 203);
+        assert.equal(c.green, 203);
+        assert.equal(c.blue, 203);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('treats a none lightness in lab as 0, in any case', () => {
+        const c = new Color();
+        c.parseString('lab(NONE 20 30)');
+        assert.equal(c.red, 42);
+        assert.equal(c.green, 0);
+        assert.equal(c.blue, 0);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('treats a none channel in color() as 0', () => {
+        const c = new Color();
+        c.parseString('color(srgb none 0.5 0.5)');
+        assert.equal(c.red, 0);
+        assert.equal(c.green, 128);
+        assert.equal(c.blue, 128);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('treats a none alpha as 0', () => {
+        const c = new Color();
+        c.parseString('oklch(0.6967 0.109 167.711 / none)');
+        assert.equal(c.red, 77);
+        assert.equal(c.green, 179);
+        assert.equal(c.blue, 144);
+        assert.equal(c.alpha, 0);
+      });
+    });
+
+    describe('with numbers in scientific notation', () => {
+      // Firefox serializes tiny values this way, e.g. the chroma of
+      // `color-mix(in oklch, #888 50%, white)`
+      it('parses a component in scientific notation', () => {
+        const c = new Color();
+        c.parseString('oklch(0.813377 5.96046e-8 none)');
+        assert.equal(c.red, 194);
+        assert.equal(c.green, 194);
+        assert.equal(c.blue, 194);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('parses signed exponents and a capital E', () => {
+        const c = new Color();
+        c.parseString('lab(5E1 1e1 -2e+1)');
+        assert.equal(c.red, 123);
+        assert.equal(c.green, 114);
+        assert.equal(c.blue, 153);
+        assert.equal(c.alpha, 1);
+      });
+
+      it('does not change hex colors', () => {
+        const c = new Color();
+        c.parseString('#1e3');
+        assert.equal(c.red, 17);
+        assert.equal(c.green, 238);
+        assert.equal(c.blue, 51);
+        assert.equal(c.alpha, 1);
+      });
+    });
   });
 
   describe('toHexString', () => {

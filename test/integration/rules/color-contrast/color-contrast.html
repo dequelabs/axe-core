@@ -284,7 +284,7 @@
 
 <div
   style="
-    color: oklch(0.961073 0.000047911 none / 0.2);
+    color: color(display-p3-linear 0.9 0.9 0.9 / 0.2);
     background-color: black;
     font-size: 14pt;
     font-weight: 900;
@@ -298,7 +298,7 @@
 <div
   style="
     color: gray;
-    background-color: oklch(0.961073 0.000047911 none / 0.2);
+    background-color: color(display-p3-linear 0.9 0.9 0.9 / 0.2);
     font-size: 14pt;
     font-weight: 900;
   "
@@ -312,12 +312,28 @@
   style="
     background-color: #fff;
     color: #000;
-    text-shadow: 1px 1px oklch(0.961073 0.000047911 none / 0.2);
+    text-shadow: 1px 1px color(display-p3-linear 0.9 0.9 0.9 / 0.2);
   "
 >
   <span id="canttell23" style="font-weight: lighter"
     >This is a text-shadow colorParse fail!</span
   >
+</div>
+
+<!-- browsers keep `none` in computed colors, e.g. the hue of a gray mixed in oklch -->
+<div style="background-color: #fff">
+  <span id="fail16" style="color: oklch(0.813372 0.0000404846 none)"
+    >Light gray with a none hue</span
+  >
+  <span id="fail17" style="color: color-mix(in oklch, #888 50%, white)"
+    >Light gray mixed in oklch</span
+  >
+  <span id="pass29" style="color: oklch(0.2 0 none)"
+    >Dark gray with a none hue</span
+  >
+</div>
+<div style="color: #000; background-color: oklch(0.95 0 none)">
+  <span id="pass30">Black on a light gray background with a none hue</span>
 </div>
 
 <p
