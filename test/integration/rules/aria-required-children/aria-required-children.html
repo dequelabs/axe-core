@@ -126,6 +126,11 @@
   <testutils-element with-role="alert">unallowed role</testutils-element>
 </div>
 
+<div role="list" id="fail16">
+  <div role="caption">caption is not allowed in a list</div>
+  <div role="listitem">Item</div>
+</div>
+
 <div role="doc-bibliography" id="inapplicable1"></div>
 <div role="doc-endnotes" id="inapplicable2"></div>
 <div role="radiogroup" id="inapplicable3">
@@ -178,3 +183,18 @@
   with-aria-busy="true"
   id="pass21"
 ></testutils-element>
+
+<div role="table" id="pass22">
+  <div role="caption">Contest Entrants</div>
+  <div role="rowgroup" id="pass23">
+    <div role="row" id="pass24">
+      <span role="columnheader">Contestant</span>
+      <span role="cell">Fred</span>
+    </div>
+  </div>
+</div>
+
+<div role="grid" id="pass25">
+  <div role="caption">Caption</div>
+  <div role="row" id="pass26"><span role="gridcell">Cell</span></div>
+</div>
