@@ -1,0 +1,33 @@
+{
+  "id": "alt-file-name",
+  "evaluate": "alt-file-name-evaluate",
+  "options": {
+    "extensions": [
+      "apng",
+      "avif",
+      "bmp",
+      "gif",
+      "heic",
+      "heif",
+      "ico",
+      "jfif",
+      "jpe",
+      "jpeg",
+      "jpg",
+      "jxl",
+      "png",
+      "svg",
+      "svgz",
+      "tif",
+      "tiff",
+      "webp"
+    ]
+  },
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "Element's alternative text is not a file name, path or URL",
+      "fail": "Element's alternative text is a file name, path or URL"
+    }
+  }
+}
