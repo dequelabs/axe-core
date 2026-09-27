@@ -523,10 +523,10 @@ describe('aria-required-children', () => {
   describe('caption role (issue #5412)', () => {
     it('should pass when table has caption, rowgroups and rows', () => {
       const params = checkSetup(
-        '<table role="table" id="target">' +
-        '<div role="caption">Table Caption</div>' +
-        '<div role="rowgroup"><div role="row"><div role="cell">Cell 1</div></div></div>' +
-        '</table>'
+        '<div role="table" id="target">' +
+          '<div role="caption">Table Caption</div>' +
+          '<div role="rowgroup"><div role="row"><div role="cell">Cell 1</div></div></div>' +
+          '</div>'
       );
       assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
     });
@@ -534,9 +534,9 @@ describe('aria-required-children', () => {
     it('should pass when grid has caption and a row', () => {
       const params = checkSetup(
         '<div role="grid" id="target">' +
-        '<div role="caption">Grid Caption</div>' +
-        '<div role="row"><div role="gridcell">Cell 1</div></div>' +
-        '</div>'
+          '<div role="caption">Grid Caption</div>' +
+          '<div role="row"><div role="gridcell">Cell 1</div></div>' +
+          '</div>'
       );
       assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
     });
@@ -544,18 +544,18 @@ describe('aria-required-children', () => {
     it('should pass when treegrid has caption and a row', () => {
       const params = checkSetup(
         '<div role="treegrid" id="target">' +
-        '<div role="caption">Treegrid Caption</div>' +
-        '<div role="row"><div role="gridcell">Cell 1</div></div>' +
-        '</div>'
+          '<div role="caption">Treegrid Caption</div>' +
+          '<div role="row"><div role="gridcell">Cell 1</div></div>' +
+          '</div>'
       );
       assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
     });
 
     it('should still fail when table has only a caption (missing rowgroup and row)', () => {
       const params = checkSetup(
-        '<table role="table" id="target">' +
-        '<div role="caption">Table Caption</div>' +
-        '</table>'
+        '<div role="table" id="target">' +
+          '<div role="caption">Table Caption</div>' +
+          '</div>'
       );
       assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
       assert.includeMembers(checkContext._data, ['rowgroup', 'row']);
@@ -564,9 +564,9 @@ describe('aria-required-children', () => {
     it('should still fail when list has a caption (list does not allow caption)', () => {
       const params = checkSetup(
         '<div role="list" id="target">' +
-        '<div role="caption">List Caption</div>' +
-        '<div role="listitem">Item</div>' +
-        '</div>'
+          '<div role="caption">List Caption</div>' +
+          '<div role="listitem">Item</div>' +
+          '</div>'
       );
       assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
@@ -578,9 +578,9 @@ describe('aria-required-children', () => {
     it('should still fail when tablist has a caption (tablist does not allow caption)', () => {
       const params = checkSetup(
         '<div role="tablist" id="target">' +
-        '<div role="caption">Tabs Caption</div>' +
-        '<div role="tab">Tab 1</div>' +
-        '</div>'
+          '<div role="caption">Tabs Caption</div>' +
+          '<div role="tab">Tab 1</div>' +
+          '</div>'
       );
       assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
@@ -590,33 +590,55 @@ describe('aria-required-children', () => {
     });
 
     it('should flag caption inside a rowgroup but not the table itself', () => {
-      const params = checkSetup(
-        '<table role="table" id="target">' +
+      const tableHtml =
+        '<div role="table" id="target">' +
+        '<div role="rowgroup"><div role="row"><div role="cell">Cell 1</div></div></div>' +
         '<div role="rowgroup" id="rg">' +
-        '  <div role="caption">Caption in rowgroup</div>' +
+        '  <div role="caption" id="rg-caption">Caption in rowgroup</div>' +
         '</div>' +
-        '</table>'
-      );
-      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
-      // The table should pass (caption is allowed in table context via requiredContext)
-      // but the rowgroup should be flagged as having unallowed child
+        '</div>';
+
+      // the table itself passes because it has a valid rowgroup/row, and the
+      // caption is allowed directly on the table via requiredContext
+      const tableParams = checkSetup(tableHtml, '#target');
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, tableParams));
+
+      // the nested rowgroup fails on its own because caption's
+      // requiredContext does not include rowgroup
+      const rowgroupParams = checkSetup(tableHtml, '#rg');
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, rowgroupParams));
       assert.deepEqual(checkContext._data, {
         messageKey: 'unallowed',
         values: '[role=caption]'
       });
       assert.deepEqual(checkContext._relatedNodes, [
-        axe.utils.querySelectorAll(axe._tree, '#rg')[0]
+        axe.utils.querySelectorAll(axe._tree, '#rg-caption')[0]
       ]);
     });
 
     it('should pass when caption is aria-owned by table', () => {
       const params = checkSetup(
-        '<table role="table" id="target" aria-owns="cap">' +
-        '<div role="rowgroup"><div role="row"><div role="cell">Cell</div></div></div>' +
-        '</table>' +
-        '<div id="cap" role="caption">Owned caption</div>'
+        '<div role="table" id="target" aria-owns="cap">' +
+          '<div role="rowgroup"><div role="row"><div role="cell">Cell</div></div></div>' +
+          '</div>' +
+          '<div id="cap" role="caption">Owned caption</div>'
       );
       assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should pass when table has a caption across an open shadow DOM boundary', () => {
+      const vNode = axe.testUtils.queryShadowFixture(
+        '<div role="table" id="target"></div>',
+        '<div role="caption">Table Caption</div>' +
+          '<div role="rowgroup"><div role="row"><div role="cell">Cell 1</div></div></div>'
+      );
+      const actual = requiredChildrenCheck.call(
+        checkContext,
+        vNode.actualNode,
+        undefined,
+        vNode
+      );
+      assert.isTrue(actual);
     });
   });
 
