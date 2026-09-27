@@ -520,6 +520,106 @@ describe('aria-required-children', () => {
     });
   });
 
+  describe('caption role (issue #5412)', () => {
+    it('should pass when table has caption, rowgroups and rows', () => {
+      const params = checkSetup(
+        '<table role="table" id="target">' +
+        '<div role="caption">Table Caption</div>' +
+        '<div role="rowgroup"><div role="row"><div role="cell">Cell 1</div></div></div>' +
+        '</table>'
+      );
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should pass when grid has caption and a row', () => {
+      const params = checkSetup(
+        '<div role="grid" id="target">' +
+        '<div role="caption">Grid Caption</div>' +
+        '<div role="row"><div role="gridcell">Cell 1</div></div>' +
+        '</div>'
+      );
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should pass when treegrid has caption and a row', () => {
+      const params = checkSetup(
+        '<div role="treegrid" id="target">' +
+        '<div role="caption">Treegrid Caption</div>' +
+        '<div role="row"><div role="gridcell">Cell 1</div></div>' +
+        '</div>'
+      );
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+
+    it('should still fail when table has only a caption (missing rowgroup and row)', () => {
+      const params = checkSetup(
+        '<table role="table" id="target">' +
+        '<div role="caption">Table Caption</div>' +
+        '</table>'
+      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      assert.includeMembers(checkContext._data, ['rowgroup', 'row']);
+    });
+
+    it('should still fail when list has a caption (list does not allow caption)', () => {
+      const params = checkSetup(
+        '<div role="list" id="target">' +
+        '<div role="caption">List Caption</div>' +
+        '<div role="listitem">Item</div>' +
+        '</div>'
+      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'unallowed',
+        values: '[role=caption]'
+      });
+    });
+
+    it('should still fail when tablist has a caption (tablist does not allow caption)', () => {
+      const params = checkSetup(
+        '<div role="tablist" id="target">' +
+        '<div role="caption">Tabs Caption</div>' +
+        '<div role="tab">Tab 1</div>' +
+        '</div>'
+      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'unallowed',
+        values: '[role=caption]'
+      });
+    });
+
+    it('should flag caption inside a rowgroup but not the table itself', () => {
+      const params = checkSetup(
+        '<table role="table" id="target">' +
+        '<div role="rowgroup" id="rg">' +
+        '  <div role="caption">Caption in rowgroup</div>' +
+        '</div>' +
+        '</table>'
+      );
+      assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+      // The table should pass (caption is allowed in table context via requiredContext)
+      // but the rowgroup should be flagged as having unallowed child
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'unallowed',
+        values: '[role=caption]'
+      });
+      assert.deepEqual(checkContext._relatedNodes, [
+        axe.utils.querySelectorAll(axe._tree, '#rg')[0]
+      ]);
+    });
+
+    it('should pass when caption is aria-owned by table', () => {
+      const params = checkSetup(
+        '<table role="table" id="target" aria-owns="cap">' +
+        '<div role="rowgroup"><div role="row"><div role="cell">Cell</div></div></div>' +
+        '</table>' +
+        '<div id="cap" role="caption">Owned caption</div>'
+      );
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+    });
+  });
+
   describe('ElementInternals', () => {
     it('should detect missing sole required child', () => {
       const params = checkSetup(
