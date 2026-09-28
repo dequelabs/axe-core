@@ -443,7 +443,10 @@
         "singular": "ARIA attribute is not allowed: ${data.values}",
         "plural": "ARIA attributes are not allowed: ${data.values}"
       },
-      "incomplete": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}"
+      "incomplete": {
+        "default": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that might not be handled correctly by assistive technologies: ${data.values}"
+      }
     },
     "aria-allowed-role": {
       "pass": "ARIA role is allowed for given element",

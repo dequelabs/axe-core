@@ -279,5 +279,99 @@ describe('aria-allowed-attr', () => {
           .call(checkContext, null, options, vNode)
       );
     });
+
+    it('should report case-sensitive aria attributes with non-lowercase values', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="TRUE" aria-busy="FALSE" aria-pressed="TRUE"></div>'
+      );
+
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(
+        checkContext._data,
+        {
+          messageKey: 'caseSensitive',
+          values: [
+            'aria-checked="TRUE"',
+            'aria-busy="FALSE"',
+            'aria-pressed="TRUE"'
+          ]
+        }
+      );
+    });
+
+    it('should not report on case-insensitive aria attributes with non-lowercase values', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-expanded="TRUE" aria-haspopup="TRUE" aria-invalid="TRUE"></div>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.isNull(checkContext._data);
+    });
+
+    it('should report case-sensitive aria attribute value when allowed for the role', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="TRUE"></div>'
+      );
+
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(
+        checkContext._data,
+        {
+          messageKey: 'caseSensitive',
+          values: ['aria-checked="TRUE"']
+        }
+      );
+    });
+
+    it('should not report on lowercase case-sensitive aria attribute values', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="true" aria-busy="true"></div>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.isNull(checkContext._data);
+    });
+
+    it('should not report on case-sensitive aria attributes with empty values', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="" aria-busy="" aria-pressed=""></div>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.isNull(checkContext._data);
+    });
+
+    it('should report case-sensitive aria attributes when other unallowed attributes are present', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="TRUE" aria-cat="meow"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, ['aria-cat="meow"']);
+    });
   });
 });
