@@ -346,6 +346,72 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
   });
+  describe('language-independent normalization', () => {
+    it('ignores CJK and full-width punctuation', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="範例公司官網，另開新視窗">範例公司官網（另開新視窗）</a>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('ignores an ideographic full stop', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="新しいウィンドウで開きます">新しいウィンドウで開きます。</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('matches full-width letters and digits to their ASCII forms', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="model abc123">Ｍｏｄｅｌ ＡＢＣ１２３</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('matches precomposed and decomposed accented letters', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="cafe\u0301 menu">Café</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('folds case beyond lower-casing', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="strasse">Straße</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('does not treat a combining mark as a word separator', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="naïve">ve</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('keeps CJK letters and numbers from the CJK punctuation block', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="人 の声">人々の声</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('does not remove characters that only decompose to parentheses', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="deque">㈱ Deque</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+  });
+
   describe('options.valueTextRoles', () => {
     valueTextOptions.valueTextRoles.forEach(role => {
       it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
@@ -408,7 +474,7 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     });
 
-    it('returns false for a switch when the roles option is empty', () => {
+    it('returns false for a switch when the option is empty', () => {
       const vNode = queryFixture(
         '<div id="labelForEmpty">Notifications</div>' +
           '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
