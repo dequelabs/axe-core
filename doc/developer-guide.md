@@ -122,7 +122,7 @@ Rules are defined by JSON files in the [lib/rules directory](../lib/rules). The 
 - `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements. Defaults to `true`.
 - `enabled` - **optional** `Boolean` Whether the rule is enabled by default. Defaults to `true`.
 - `pageLevel` - **optional** `Boolean` Whether the rule is page level. Page level rules will only run if given an entire `document` as context.
-- `matches` - **optional** `String` The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+- `matches` - **optional** `String` The ID of the filtering function that will exclude elements that match the `selector` property. Each `-matches.js` file in `lib/rules` defines one ID: the file name without `.js` (e.g. `aria-allowed-attr-matches`). The map of all IDs, `lib/core/base/metadata-function-map.js`, is generated at build time.
 - `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
 - `metadata` - `Object` Consisting of:
   - `description` - `String` Text string that describes what the rule does.
@@ -153,7 +153,7 @@ The matches function must return either `true` or `false`. Common functions are 
 Similar to Rules, Checks are defined by JSON files in the [lib/checks directory](../lib/checks). The JSON object is used to seed the [Check object](../lib/core/base/check.js). A valid Check JSON consists of the following:
 
 - `id` - `String` A unique name of the Check
-- `evaluate` - `String` The ID of the function that implements the check's functionality. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+- `evaluate` - `String` The ID of the function that implements the check's functionality. Each `-evaluate.js` file in `lib/checks` defines one ID: the file name without `.js` (e.g. `aria-prohibited-attr-evaluate`). The map of all IDs, `lib/core/base/metadata-function-map.js`, is generated at build time.
 - `after` - **optional** `String` The ID of the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
 - `options` - **optional** `Object` Any information the Check needs that you might need to customize and/or is locale specific. Options can be overridden at runtime (with the options parameter) or config-time. For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid. Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 - `metadata` - `Object` Consisting of:
