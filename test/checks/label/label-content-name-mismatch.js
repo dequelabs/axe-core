@@ -387,6 +387,14 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
+    it('folds a final sigma regardless of the text around it', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="ας β">ΑΣ.Β</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
     it('keeps a dotless i distinct from i', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="ilik">ılık</button>'

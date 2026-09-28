@@ -25,6 +25,11 @@ describe('text.isHumanInterpretable', () => {
     assert.equal(actual, 0);
   });
 
+  it('returns 0 when given string is only CJK punctuation', () => {
+    const actual = axe.commons.text.isHumanInterpretable('、。「」（）');
+    assert.equal(actual, 0);
+  });
+
   it('returns 1 when given string that has a number', () => {
     const actual = axe.commons.text.isHumanInterpretable('7');
     assert.equal(actual, 1);
