@@ -503,14 +503,14 @@
       "fail": {
         "hasRolePlural": "${data.prohibited} attributes cannot be used with role \"${data.role}\".",
         "hasRoleSingular": "${data.prohibited} attribute cannot be used with role \"${data.role}\".",
-        "noRolePlural": "${data.prohibited} attributes cannot be used on a ${data.nodeName} with no valid role attribute.",
-        "noRoleSingular": "${data.prohibited} attribute cannot be used on a ${data.nodeName} with no valid role attribute."
+        "noRolePlural": "${data.prohibited} attributes cannot be used on \"${data.nodeName}\" elements with no valid role attribute.",
+        "noRoleSingular": "${data.prohibited} attribute cannot be used on \"${data.nodeName}\" elements with no valid role attribute."
       },
       "incomplete": {
         "hasRoleSingular": "${data.prohibited} attribute is not well supported with role \"${data.role}\".",
         "hasRolePlural": "${data.prohibited} attributes are not well supported with role \"${data.role}\".",
-        "noRoleSingular": "${data.prohibited} attribute is not well supported on a ${data.nodeName} with no valid role attribute.",
-        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute.",
+        "noRoleSingular": "${data.prohibited} attribute is not well supported on \"${data.nodeName}\" elements with no valid role attribute.",
+        "noRolePlural": "${data.prohibited} attributes are not well supported on \"${data.nodeName}\" elements with no valid role attribute.",
         "visibleLabelSingular": "${data.prohibited} attribute is not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the label is not necessary.",
         "visibleLabelPlural": "${data.prohibited} attributes are not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the labels are not necessary.",
         "unresolvedLabel": "${data.prohibited} attribute is not well supported, and does not reference an existing element. Verify the label is not necessary."
