@@ -266,12 +266,12 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
-  it('ignores zero-width characters when tokenizing so they do not split a word', () => {
+  it('treats a soft hyphen as a word separator', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="nonstandard">non\u00ADstandard</a>'
     );
     const actual = checkEvaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
+    assert.isFalse(actual);
   });
 
   [
@@ -387,12 +387,46 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
-    it('does not treat a combining mark as a word separator', () => {
+    it('keeps a dotless i distinct from i', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="ilik">ılık</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    ['¿Hola?', '¡Hola!', '«Hola»', 'Hola°', 'Hola×'].forEach(content => {
+      it(`treats ${content.replace(/Hola/, '')} as a word separator`, () => {
+        const vNode = queryFixture(
+          `<button id="target" aria-label="hola">${content}</button>`
+        );
+        const actual = checkEvaluate(vNode.actualNode, options, vNode);
+        assert.isTrue(actual);
+      });
+    });
+
+    it('keeps numbers that are outside the basic digits', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="items">⓫ items</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('treats a keycap emoji as non-text content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="next">1\uFE0F\u20E3 next</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('treats a combining mark as a word separator', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="naïve">ve</button>'
       );
       const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isFalse(actual);
+      assert.isTrue(actual);
     });
 
     it('keeps CJK letters and numbers from the CJK punctuation block', () => {
