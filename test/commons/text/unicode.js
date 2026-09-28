@@ -293,6 +293,14 @@ describe('text.removeUnicode', () => {
     assert.equal(actual, 'The  is orange the  is white');
   });
 
+  it('returns string removing variation selectors', () => {
+    const actual = axe.commons.text.removeUnicode(
+      'a\u180B b\uFE0E c\uDB40\uDDEF',
+      { nonBmp: true }
+    );
+    assert.equal(actual, 'a b c');
+  });
+
   it('returns string removing format unicode', () => {
     // zero-width spacer character U+200B
     const actual = axe.commons.text.removeUnicode('\u200BHello World', {

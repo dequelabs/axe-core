@@ -25,6 +25,11 @@ describe('text.isHumanInterpretable', () => {
     assert.equal(actual, 0);
   });
 
+  it('returns 0 when given string is a symbol with a text presentation selector', () => {
+    const actual = axe.commons.text.isHumanInterpretable('\u21A9\uFE0E');
+    assert.equal(actual, 0);
+  });
+
   it('returns 0 when given string is only CJK punctuation', () => {
     const actual = axe.commons.text.isHumanInterpretable('、。「」（）');
     assert.equal(actual, 0);

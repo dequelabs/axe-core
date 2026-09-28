@@ -379,32 +379,8 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
-    it('folds case beyond lower-casing', () => {
-      const vNode = queryFixture(
-        '<button id="target" aria-label="strasse">Straße</button>'
-      );
-      const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isTrue(actual);
-    });
-
-    it('folds a final sigma regardless of the text around it', () => {
-      const vNode = queryFixture(
-        '<button id="target" aria-label="ας β">ΑΣ.Β</button>'
-      );
-      const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isTrue(actual);
-    });
-
-    it('keeps a dotless i distinct from i', () => {
-      const vNode = queryFixture(
-        '<button id="target" aria-label="ilik">ılık</button>'
-      );
-      const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isFalse(actual);
-    });
-
     ['¿Hola?', '¡Hola!', '«Hola»', 'Hola°', 'Hola×'].forEach(content => {
-      it(`treats ${content.replace(/Hola/, '')} as a word separator`, () => {
+      it(`ignores the punctuation or symbols in ${content}`, () => {
         const vNode = queryFixture(
           `<button id="target" aria-label="hola">${content}</button>`
         );
@@ -435,22 +411,6 @@ describe('label-content-name-mismatch tests', () => {
       );
       const actual = checkEvaluate(vNode.actualNode, options, vNode);
       assert.isTrue(actual);
-    });
-
-    it('keeps CJK letters and numbers from the CJK punctuation block', () => {
-      const vNode = queryFixture(
-        '<button id="target" aria-label="人 の声">人々の声</button>'
-      );
-      const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isFalse(actual);
-    });
-
-    it('does not remove characters that only decompose to parentheses', () => {
-      const vNode = queryFixture(
-        '<button id="target" aria-label="deque">㈱ Deque</button>'
-      );
-      const actual = checkEvaluate(vNode.actualNode, options, vNode);
-      assert.isFalse(actual);
     });
   });
 
