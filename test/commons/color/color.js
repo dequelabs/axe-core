@@ -91,7 +91,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 0.5);
       });
 
-      it.skip('allows exponent numbers', () => {
+      it('allows exponent numbers', () => {
         const c = new Color();
         c.parseColorFnString('rgb(2e0, 2e1, 2e2)');
         assert.equal(c.red, 2);

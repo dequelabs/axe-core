@@ -17,7 +17,7 @@ describe('color-contrast', () => {
     axe._tree = undefined;
   });
 
-  it('should return undefined if cannot handle color', () => {
+  it('should return handle "none" in color', () => {
     const params = checkSetup(html`
       <div
         id="divundertest"
@@ -28,16 +28,11 @@ describe('color-contrast', () => {
     `);
 
     const expectedRelatedNodes = fixture.querySelector('#divundertest');
-    assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
-    assert.deepEqual(checkContext._data.messageKey, 'colorParse');
-    assert.equal(
-      checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
-    );
   });
 
-  it('should return undefined if cannot handle backgroundcolor', () => {
+  it('should handle "none" in backgroundcolor', () => {
     const params = checkSetup(html`
       <div
         style="color: gray; background-color: oklch(0.961073 0.000047911 none / 0.2); font-size: 14pt; font-weight: 900;"
@@ -45,13 +40,8 @@ describe('color-contrast', () => {
         <span id="target" style="font-weight:lighter;">My text</span>
       </div>
     `);
-    assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, []);
-    assert.deepEqual(checkContext._data.messageKey, 'colorParse');
-    assert.equal(
-      checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
-    );
   });
 
   it('should return undefined if cannot handle text-shadow', () => {

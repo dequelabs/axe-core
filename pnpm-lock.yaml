@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  colorjs.io@0.4.3: 2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7
+  colorjs.io@0.7.1: 4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e
 
 importers:
 
@@ -49,7 +49,7 @@ importers:
         version: 4.0.3
       chromedriver:
         specifier: latest
-        version: 152.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       clean-jsdoc-theme:
         specifier: ^4.2.17
         version: 4.3.2(jsdoc@4.0.5)
@@ -57,8 +57,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       colorjs.io:
-        specifier: 0.4.3
-        version: 0.4.3(patch_hash=2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7)
+        specifier: 0.7.1
+        version: 0.7.1(patch_hash=4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e)
       commit-and-tag-version:
         specifier: ^13.1.0
         version: 13.1.2(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0)
@@ -1638,8 +1638,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@152.0.1:
-    resolution: {integrity: sha512-8zet2yPAFOSlYxUIcQ/1yOOC1xP4ooPZiKFRdlJhFawBKvlZIHDU6qv4LDOfPEw1yXbyu+tQTzbL0Vfb+vHdQQ==}
+  chromedriver@154.0.0:
+    resolution: {integrity: sha512-kn+ENZ2lEPAmeDTNNBbVw6Xt4KAr6M4EFcgeV4lUREgJWHVZBu4fFc+OFivtuf5Q9jM/qSmAcQ3MdWtdOE6mVA==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -1702,8 +1702,8 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colorjs.io@0.4.3:
-    resolution: {integrity: sha512-Jr6NiWFZCuSECl23Bhe4jvDldQsE0ErnWrdl3xIUFy+Bkp0l8r5qt/iZlNH47/xxGP5izcyC8InjoUoI4Po+Pg==}
+  colorjs.io@0.7.1:
+    resolution: {integrity: sha512-LY7OHnJZxHwT5UlzNa9bbhHHDbzB6yE5+3MIPwJEQKRvSCt/T4G7epsj+9j2BExUIIfXFIJGsIXUKdfrK9Q5tA==}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -5954,7 +5954,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@152.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  chromedriver@154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@testim/chrome-version': 1.1.4
       adm-zip: 0.6.0
@@ -6028,7 +6028,7 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colorjs.io@0.4.3(patch_hash=2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7): {}
+  colorjs.io@0.7.1(patch_hash=4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e): {}
 
   combined-stream@1.0.8:
     dependencies:
