@@ -29,7 +29,7 @@ const MIN_MILLISECONDS_THRESHOLD = 100;
 // Appended to both the axe-only comment and the full step summary. Sets
 // expectations that this is a gut check, not a definitive measurement.
 const DISCLAIMER =
-  '_The performance comparison bot is just a rough check for spotting problems and is not authoritative. Just because something shows as being faster or slower than the current `head` does not mean it is true. All performance problems should be investigated manually._';
+  '_The performance comparison bot is just a rough check for spotting problems and is not authoritative. Just because something shows as being faster or slower than the current `base` does not mean it is true. All performance problems should be investigated manually._';
 
 function formatMilliseconds(milliseconds) {
   if (!Number.isFinite(milliseconds)) {
