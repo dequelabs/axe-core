@@ -314,6 +314,22 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
+    it('removes full-width parentheses and their content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download">Download（PDF）</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('removes characters that decompose to parenthesised content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download">⑴ Download</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
     it('removes nested parentheses', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="open report">Open report (latest (2026) draft)</button>'
