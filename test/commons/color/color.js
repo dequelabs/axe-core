@@ -313,6 +313,15 @@ describe('color.Color', () => {
         assert.equal(c.green, Math.round(c.g * 255));
         assert.equal(c.blue, Math.round(c.b * 255));
       });
+
+      it('parses oklch color with "none"', () => {
+        const c = new Color();
+        c.parseColorFnString('oklch(0.992 0 none)');
+        assert.isNumber(c.red);
+        assert.isNumber(c.green);
+        assert.isNumber(c.blue);
+        assert.equal(c.alpha, 1);
+      });
     });
   });
 
