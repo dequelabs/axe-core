@@ -146,6 +146,72 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
+  describe('with neighbors that link to the same destination', () => {
+    const card = (targetAttrs, coverHref = '/foo') =>
+      `<div style="position: relative; width: 100px; height: 60px;">` +
+      `<a href="${coverHref}" id="cover" style="position: absolute; inset: 0;"></a>` +
+      `<a ${targetAttrs} id="target" style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;">x</a>` +
+      `</div>`;
+
+    it('returns true when the close neighbor is a large link to the same destination', () => {
+      const checkArgs = checkSetup(card('href="/foo"'));
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+    });
+
+    it('returns true when the same destination is written as an absolute URL', () => {
+      const checkArgs = checkSetup(card(`href="${location.origin}/foo"`));
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('returns false when the large neighbor links to a different destination', () => {
+      const checkArgs = checkSetup(card('href="/bar"'));
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(
+        checkContext._relatedNodes.map(node => `#${node.id}`),
+        ['#cover']
+      );
+    });
+
+    it('returns false when the same-destination neighbor is also undersized', () => {
+      const checkArgs = checkSetup(
+        `<a href="/foo" id="target" style="display: inline-block; width:16px; height:16px; margin-right: 7px">x</a>` +
+          `<a href="/foo" style="display: inline-block; width:16px; height:16px;">x</a>`
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+    });
+
+    it('still reports a different-destination neighbor next to a same-destination one', () => {
+      const checkArgs = checkSetup(
+        `<div style="position: relative; width: 100px; height: 60px;">` +
+          `<a href="/foo" id="cover" style="position: absolute; inset: 0;"></a>` +
+          `<a href="/foo" id="target" style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px; margin-right: 4px;">x</a>` +
+          `<a href="/bar" id="other" style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;">x</a>` +
+          `</div>`
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(
+        checkContext._relatedNodes.map(node => `#${node.id}`),
+        ['#other']
+      );
+    });
+
+    it('works when the same-destination neighbor is in shadow DOM', () => {
+      const checkArgs = checkSetup(
+        `<div style="position: relative; width: 100px; height: 60px;">` +
+          `<div style="position: absolute; inset: 0;">` +
+          `<template shadowrootmode="open">` +
+          `<a href="/foo" style="display: block; width: 100px; height: 60px;"></a>` +
+          `</template>` +
+          `</div>` +
+          `<a href="/foo" id="target" style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;">x</a>` +
+          `</div>`
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+  });
+
   it('returns undefined if there are too many focusable widgets', () => {
     let rows = '';
     for (let i = 0; i < 100; i++) {
