@@ -439,7 +439,7 @@ describe('color.Color', () => {
       assert.equal(c.alpha, 0.5);
     });
 
-    it('understands alpha of none', () => {
+    it('sets alpha to 0 when passed as "none"', () => {
       const c = new Color();
       c.parseString('rgb(10 20 30 / none)');
       assert.equal(c.red, 10);
