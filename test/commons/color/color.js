@@ -317,9 +317,9 @@ describe('color.Color', () => {
       it('parses oklch color with "none"', () => {
         const c = new Color();
         c.parseColorFnString('oklch(0.992 0 none)');
-        assert.isNumber(c.red);
-        assert.isNumber(c.green);
-        assert.isNumber(c.blue);
+        assert.equal(c.red, 252);
+        assert.equal(c.green, 252);
+        assert.equal(c.blue, 252);
         assert.equal(c.alpha, 1);
       });
     });
@@ -437,6 +437,15 @@ describe('color.Color', () => {
       assert.equal(c.green, 179);
       assert.equal(c.blue, 144);
       assert.equal(c.alpha, 0.5);
+    });
+
+    it('understands alpha of none', () => {
+      const c = new Color();
+      c.parseString('rgb(10 20 30 / none)');
+      assert.equal(c.red, 10);
+      assert.equal(c.green, 20);
+      assert.equal(c.blue, 30);
+      assert.equal(c.alpha, 0);
     });
   });
 

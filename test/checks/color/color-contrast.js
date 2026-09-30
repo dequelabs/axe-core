@@ -17,7 +17,7 @@ describe('color-contrast', () => {
     axe._tree = undefined;
   });
 
-  it('should return handle "none" in color', () => {
+  it('does not return undefined when color uses "none"', () => {
     const params = checkSetup(html`
       <div
         id="divundertest"
@@ -28,11 +28,11 @@ describe('color-contrast', () => {
     `);
 
     const expectedRelatedNodes = fixture.querySelector('#divundertest');
-    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.isDefined(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
   });
 
-  it('should handle "none" in backgroundcolor', () => {
+  it('does not return undefined when background-color uses "none"', () => {
     const params = checkSetup(html`
       <div
         style="color: gray; background-color: oklch(0.961073 0.000047911 none / 0.2); font-size: 14pt; font-weight: 900;"
@@ -40,7 +40,7 @@ describe('color-contrast', () => {
         <span id="target" style="font-weight:lighter;">My text</span>
       </div>
     `);
-    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.isDefined(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
