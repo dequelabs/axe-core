@@ -64,7 +64,7 @@
 - **Bundles (`axe.js`, `axe.min.js`)** are auto-generated for releases/publishing and are not committed to the repo (they are gitignored).
 - **Locales template (`locales/_template.json`)** is auto-generated. When message strings change, regenerate this file and commit it in the same commit as the source changes — never in a separate commit.
 - **One change per PR.** Do not mix refactoring with feature work.
-- **Commit format:** `<type>(<scope>): <subject>` — imperative, lowercase, no period, ≤100 chars total. Body explains motivation. Footer: `Closes issue #123` or full URL. See `doc/code-submission-guidelines.md` for the full type list.
+- **Commit format:** `<type>(<scope>): <subject>` — imperative, lowercase, no period, ≤100 chars total. Body explains motivation. Footer: `Closes: #123` or full URL; use a separate `Closes:` line for each issue. See `doc/code-submission-guidelines.md` for the full type list.
 
 **Example:**
 
@@ -74,7 +74,7 @@ fix(aria-valid-attr-value): handle multiple aria-errormessage IDs
 When aria-errormessage contains multiple space-separated IDs, verify
 all IDs exist in aria-describedby instead of matching the full string.
 
-Closes issue #4957
+Closes: #4957
 ```
 
 ## 4. Documentation & API Changes
