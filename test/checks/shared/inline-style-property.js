@@ -345,6 +345,75 @@ describe('inline-style-property tests', () => {
         ]);
       });
 
+      it('does not skip text below an element that unsets the property', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: unset">
+              <span id="child">Hello world</span>
+            </p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('skips text that a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .tight {
+              word-spacing: 0.05em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.5em !important">
+            <p class="tight">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.isNull(checkContext._data);
+        assert.lengthOf(checkContext._relatedNodes, 0);
+      });
+
+      it('skips the text below an element a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .tight {
+              word-spacing: 0.05em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.5em !important">
+            <div class="tight"><p>Hello world</p></div>
+            <p id="child" style="font-size: 10px">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        // 8px inherited, on the 10px font-size of the text that is measured
+        assert.deepEqual(checkContext._data, { value: 0.8, minValue: 0.16 });
+      });
+
+      it('fails for text next to text a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .loose {
+              word-spacing: 0.5em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p class="loose">Hello world</p>
+            <p id="child">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
       it('fails for text that inherits the property next to text that does not', () => {
         const params = checkSetup(html`
           <div id="target" style="word-spacing: 0.1em !important">
@@ -409,6 +478,25 @@ describe('inline-style-property tests', () => {
         assert.deepEqual(checkContext._data, { value: 0.1, minValue: 0.16 });
       });
 
+      it('stops looking after the failure that sets the messageKey', () => {
+        const paragraphs = '<p>Hello world</p>'.repeat(10);
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            ${paragraphs}
+          </div>
+        `);
+        const getComputedStyle = sinon.spy(window, 'getComputedStyle');
+        const result = checkEvaluate.apply(checkContext, params);
+        const styled = getComputedStyle.args.map(([element]) => element);
+        const paragraphNodes = Array.from(fixture.querySelectorAll('p'));
+        assert.isFalse(result);
+        assert.equal(checkContext._data.messageKey, 'omitted');
+        assert.isTrue(
+          paragraphNodes.slice(0, 6).every(p => styled.includes(p))
+        );
+        assert.isFalse(paragraphNodes.slice(6).some(p => styled.includes(p)));
+      });
+
       it('sets the messageKey when related nodes are left out', () => {
         const paragraphs = '<p>Hello world</p>'.repeat(6);
         const params = checkSetup(html`
@@ -464,6 +552,40 @@ describe('inline-style-property tests', () => {
       assert.deepEqual(checkContext._relatedNodes, [
         fixture.querySelector('#multiline')
       ]);
+    });
+
+    it('measures a descendant with another font-size against the line-height it inherits', () => {
+      const params = checkSetup(html`
+        <div id="target" style="line-height: 1.2 !important; max-width: 200px;">
+          <p id="multiline" style="font-size: 10px">
+            The toy brought back fond memories of being lost in the rain forest.
+          </p>
+        </div>
+      `);
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, { value: 1.2, minValue: 1.5 });
+      assert.deepEqual(checkContext._relatedNodes, [
+        fixture.querySelector('#multiline')
+      ]);
+    });
+
+    it('skips a descendant that a stylesheet gives a line-height of its own', () => {
+      const params = checkSetup(html`
+        <style>
+          .tight {
+            line-height: 1.1;
+          }
+        </style>
+        <div id="target" style="line-height: 1.6 !important; max-width: 200px;">
+          <p class="tight" style="font-size: 10px">
+            The toy brought back fond memories of being lost in the rain forest.
+          </p>
+        </div>
+      `);
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+      assert.isNull(checkContext._data);
     });
 
     it('is true when no descendant with text is on more than one line', () => {
