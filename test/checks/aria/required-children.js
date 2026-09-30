@@ -262,6 +262,28 @@ describe('aria-required-children', () => {
     });
   });
 
+  it('should not blame tabindex for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="presentation" tabindex="-1">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation]'
+    });
+  });
+
+  it('should not blame a global ARIA attribute for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="none" aria-label="x">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=none]'
+    });
+  });
+
   it('should remove duplicate unallowed selectors', () => {
     const params = checkSetup(html`
       <div id="target" role="list">
