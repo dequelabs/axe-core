@@ -15,7 +15,8 @@
       "pass": "ARIA attributes are used correctly for the defined role",
       "fail": {
         "singular": "ARIA attribute is not allowed: ${data.values}",
-        "plural": "ARIA attributes are not allowed: ${data.values}"
+        "plural": "ARIA attributes are not allowed: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that must be lowercase: ${data.values}"
       },
       "incomplete": {
         "default": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}",
