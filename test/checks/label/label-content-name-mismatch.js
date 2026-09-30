@@ -72,6 +72,60 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('returns true when a Japanese label is a word inside the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" lang="ja" aria-label="サイト内を検索">検索</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when a Traditional Chinese label is words inside the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" lang="zh-Hant" href="/b" aria-label="範例公司官網另開新視窗">另開新視窗</a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when a Japanese label is its own word inside a longer word', () => {
+    const vNode = queryFixture(
+      '<button id="target" lang="ja" aria-label="送信者">送信</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when a Chinese label is only part of one word', () => {
+    const vNode = queryFixture(
+      '<button id="target" lang="zh" aria-label="大学生">大学</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('falls back to whitespace words when Intl.Segmenter is missing', () => {
+    const original = Object.getOwnPropertyDescriptor(Intl, 'Segmenter');
+    Object.defineProperty(Intl, 'Segmenter', {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    try {
+      const contained = queryFixture(
+        '<button id="target" aria-label="Next Page in the list">Next Page</button>'
+      );
+      assert.isTrue(checkEvaluate(contained.actualNode, options, contained));
+
+      const cjk = queryFixture(
+        '<button id="target" lang="ja" aria-label="サイト内を検索">検索</button>'
+      );
+      assert.isFalse(checkEvaluate(cjk.actualNode, options, cjk));
+    } finally {
+      Object.defineProperty(Intl, 'Segmenter', original);
+    }
+  });
+
   it('returns false when visible text doesn’t match accessible name', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="OK">Next</div>'
