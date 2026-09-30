@@ -41,6 +41,18 @@ describe('focusable-content tests', () => {
     assert.deepEqual(relatedNodeIds(), ['related1']);
   });
 
+  it('returns true when there is both a tabbable element and a negative tabindex element', () => {
+    const params = checkSetup(html`
+      <div id="target">
+        <input id="related1" type="text" tabindex="-1" />
+        <button>Tabbable</button>
+      </div>
+    `);
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isTrue(actual);
+    assert.deepEqual(relatedNodeIds(), []);
+  });
+
   it('returns false when content with a tabindex is hidden', () => {
     const params = checkSetup(html`
       <div id="target">
