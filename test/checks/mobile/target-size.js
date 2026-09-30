@@ -161,7 +161,7 @@ describe('target-size tests', () => {
           `<div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">` +
             `<a id="not-obscurer" href="/foo" class="A"> Hello hello</a>` +
             `<a id="target" href="/bar" class="B"> Hello hello hello</a>` +
-            `<a id="obscurer" href="/bar" class="C"> Hello hello hello</a>` +
+            `<a id="obscurer" href="/baz" class="C"> Hello hello hello</a>` +
             `</div>`
         );
         assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -249,6 +249,41 @@ describe('target-size tests', () => {
             '#obscurer1',
             '#obscurer2'
           ]);
+        });
+      });
+
+      describe('that links to the same destination', () => {
+        const bar = obscurerHref =>
+          `<div style="position: relative; width: 100px;">` +
+          `<a href="/w" id="target" style="display: block; height: 30px;">x</a>` +
+          `<a href="${obscurerHref}" id="obscurer" style="position: absolute; top: 6px; left: 0; right: 0; height: 18px;">x</a>` +
+          `</div>`;
+
+        it('is partially obscured when the obscurer links elsewhere', () => {
+          const checkArgs = checkSetup(bar('/other'));
+          assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+          assert.equal(checkContext._data.messageKey, 'partiallyObscured');
+        });
+
+        it('returns true and measures the full target', () => {
+          const checkArgs = checkSetup(bar('/w'));
+          assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            minSize: 24,
+            width: 100,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), []);
+        });
+
+        it('still returns false for an undersized target', () => {
+          const checkArgs = checkSetup(
+            `<div style="position: relative;">` +
+              `<a href="/o" id="target" style="display: inline-block; width: 16px; height: 16px;">a</a>` +
+              `<a href="/o" style="position: absolute; left: 8px; top: 0; display: inline-block; width: 16px; height: 16px;">b</a>` +
+              `</div>`
+          );
+          assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
         });
       });
 
