@@ -1,6 +1,7 @@
 describe('p-as-heading-matches', () => {
   let rule;
   const fixture = document.getElementById('fixture');
+  const queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(() => {
     rule = axe.utils.getRule('p-as-heading');
@@ -19,6 +20,14 @@ describe('p-as-heading-matches', () => {
     const target = fixture.querySelector('#target');
 
     assert.isTrue(rule.matches(target));
+  });
+
+  it('ignores p elements with a heading role', () => {
+    const virtualNode = queryFixture(
+      '<p id="target" role="heading" aria-level="1">some text</p><p>some other text</p>'
+    );
+
+    assert.isFalse(rule.matches(virtualNode.actualNode, virtualNode));
   });
 
   it('ignores the last p element in a list of children', () => {

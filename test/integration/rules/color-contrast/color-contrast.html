@@ -555,3 +555,34 @@ Hello world</textarea>
     </div>
   </div>
 </div>
+
+<!-- empty text inputs: filled-state contrast cannot be known yet -->
+<input id="canttell24" type="text" style="background: #fff; color: #eee" />
+<style>
+  .placeholder-000::placeholder {
+    color: #000;
+  }
+  .placeholder-ddd::placeholder {
+    color: #ddd;
+  }
+</style>
+<input
+  id="canttell25"
+  type="text"
+  placeholder="Placeholder"
+  style="background: #fff; color: #eee"
+  class="placeholder-000"
+/>
+<input
+  id="canttell26"
+  type="text"
+  placeholder="Placeholder"
+  style="background: #fff; color: #eee"
+  class="placeholder-ddd"
+/>
+<input
+  id="fail15"
+  type="text"
+  value="hello"
+  style="background: #fff; color: #eee"
+/>

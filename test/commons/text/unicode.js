@@ -156,6 +156,36 @@ describe('text.hasUnicode', () => {
         assert.isTrue(actual);
       });
     });
+
+    it('returns true for CJK and full-width punctuation', () => {
+      [
+        '、',
+        '。',
+        '「',
+        '」',
+        '・',
+        '，',
+        '（',
+        '）',
+        '！',
+        '︑',
+        '﹐'
+      ].forEach(str => {
+        const actual = axe.commons.text.hasUnicode(str, {
+          punctuations: true
+        });
+        assert.isTrue(actual, str);
+      });
+    });
+
+    it('returns false for CJK and full-width letters and numbers', () => {
+      ['々', '〆', '〇', 'Ａ', 'ｚ', '１'].forEach(str => {
+        const actual = axe.commons.text.hasUnicode(str, {
+          punctuations: true
+        });
+        assert.isFalse(actual, str);
+      });
+    });
   });
 
   describe('text.hasUnicode, has combination of unicode', () => {
@@ -261,6 +291,14 @@ describe('text.removeUnicode', () => {
       }
     );
     assert.equal(actual, 'The  is orange the  is white');
+  });
+
+  it('returns string removing variation selectors', () => {
+    const actual = axe.commons.text.removeUnicode(
+      'a\u180B b\uFE0E c\uDB40\uDDEF',
+      { nonBmp: true }
+    );
+    assert.equal(actual, 'a b c');
   });
 
   it('returns string removing format unicode', () => {
