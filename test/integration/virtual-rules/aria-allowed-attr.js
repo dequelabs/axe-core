@@ -28,6 +28,34 @@ describe('aria-allowed-attr virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should fail for non-default case-sensitive values', () => {
+    const results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'checkbox',
+        'aria-checked': 'TRUE'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should be incomplete for default case-sensitive values', () => {
+    const results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        role: 'checkbox',
+        'aria-busy': 'FALSE'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
   it('should pass for invalid attributes', () => {
     const results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',

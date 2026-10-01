@@ -182,7 +182,17 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.isNotNull(checkContext._data);
+    assert.deepEqual(checkContext._data, {
+      values: ['aria-expanded="true"']
+    });
+    assert.equal(
+      axe.utils.getCheckMessage(
+        'aria-allowed-attr',
+        'incomplete',
+        checkContext._data
+      ),
+      'Check that there is no problem if the ARIA attribute is ignored on this element: aria-expanded="true"'
+    );
   });
 
   it("should return false for custom element that has a role which doesn't allow the attribute", () => {
@@ -280,9 +290,25 @@ describe('aria-allowed-attr', () => {
       );
     });
 
-    it('should review case-sensitive aria attributes set to their default value', () => {
+    it('should fail on aria-checked="FALSE" and report only non-default values', () => {
       const vNode = queryFixture(
         '<div role="checkbox" id="target" aria-checked="FALSE" aria-busy="FALSE"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'caseSensitive',
+        values: ['aria-checked="FALSE"']
+      });
+    });
+
+    it('should review case-sensitive aria-busy when set to its default value', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-busy="FALSE"></div>'
       );
 
       assert.isUndefined(
@@ -292,7 +318,7 @@ describe('aria-allowed-attr', () => {
       );
       assert.deepEqual(checkContext._data, {
         messageKey: 'caseSensitive',
-        values: ['aria-checked="FALSE"', 'aria-busy="FALSE"']
+        values: ['aria-busy="FALSE"']
       });
     });
 
@@ -309,12 +335,12 @@ describe('aria-allowed-attr', () => {
       assert.isNull(checkContext._data);
     });
 
-    it('should review case-sensitive aria-pressed when it is set to its default value', () => {
+    it('should fail on case-sensitive aria-pressed="FALSE"', () => {
       const vNode = queryFixture(
         '<div role="button" id="target" aria-pressed="FALSE"></div>'
       );
 
-      assert.isUndefined(
+      assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, null, vNode)
@@ -325,12 +351,12 @@ describe('aria-allowed-attr', () => {
       });
     });
 
-    it('should review case-sensitive aria attribute value when it is the default for the role', () => {
+    it('should fail on aria-checked="FALSE" even for a checkbox', () => {
       const vNode = queryFixture(
         '<div role="checkbox" id="target" aria-checked="FALSE"></div>'
       );
 
-      assert.isUndefined(
+      assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, null, vNode)
@@ -338,6 +364,38 @@ describe('aria-allowed-attr', () => {
       assert.deepEqual(checkContext._data, {
         messageKey: 'caseSensitive',
         values: ['aria-checked="FALSE"']
+      });
+    });
+
+    it('should fail on aria-current="FALSE" despite its missing-attribute default', () => {
+      const vNode = queryFixture(
+        '<a href="#" id="target" aria-current="FALSE">Current page</a>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'caseSensitive',
+        values: ['aria-current="FALSE"']
+      });
+    });
+
+    it('should report only non-default case-sensitive values when both occur', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="TRUE" aria-busy="FALSE"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'caseSensitive',
+        values: ['aria-checked="TRUE"']
       });
     });
 
