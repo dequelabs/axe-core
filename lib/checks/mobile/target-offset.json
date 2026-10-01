@@ -9,7 +9,8 @@
     "messages": {
       "pass": {
         "default": "Target has sufficient space from its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px which is at least ${data.minOffset}px.",
-        "large": "Target far exceeds the minimum size of ${data.minOffset}px."
+        "large": "Target far exceeds the minimum size of ${data.minOffset}px.",
+        "equivalent": "Target has a nearby equivalent link to the same destination that meets the minimum size of ${data.minOffset}px."
       },
       "fail": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of ${data.closestOffset}px instead of at least ${data.minOffset}px.",
       "incomplete": {
