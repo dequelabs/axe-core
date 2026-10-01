@@ -53,7 +53,17 @@ describe('dom.hasSameDestination', () => {
     assert.isFalse(hasSameDestination(a, b));
   });
 
-  ['', '#', '#foo', '/#', 'javascript:void(0)'].forEach(href => {
+  [
+    '',
+    '  ',
+    '#',
+    '#foo',
+    ' #foo',
+    '/#',
+    'javascript:void(0)',
+    'JAVASCRIPT:void(0)',
+    'java&#9;script:void(0)'
+  ].forEach(href => {
     it(`returns false when both links use href="${href}"`, () => {
       const [a, b] = getPair(
         `<a id="a" href="${href}">a</a><a id="b" href="${href}">b</a>`
@@ -78,6 +88,13 @@ describe('dom.hasSameDestination', () => {
   it('returns false for non-link elements', () => {
     const [a, b] = getPair(
       '<button id="a">a</button><span id="b" role="link" tabindex="0">b</span>'
+    );
+    assert.isFalse(hasSameDestination(a, b));
+  });
+
+  it('returns false for non-link elements with an href', () => {
+    const [a, b] = getPair(
+      '<link id="a" href="/x" /><link id="b" href="/x" />'
     );
     assert.isFalse(hasSameDestination(a, b));
   });

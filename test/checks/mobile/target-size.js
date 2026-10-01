@@ -284,6 +284,41 @@ describe('target-size tests', () => {
               `</div>`
           );
           assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            minSize: 24,
+            width: 16,
+            height: 16
+          });
+        });
+
+        it('reports only the obscurer that links elsewhere', () => {
+          const checkArgs = checkSetup(
+            `<div style="position: relative; width: 100px;">` +
+              `<a href="/w" id="target" style="display: block; height: 30px;">x</a>` +
+              `<a href="/w" style="position: absolute; top: 6px; left: 0; right: 0; height: 18px;">x</a>` +
+              `<a href="/other" id="other" style="position: absolute; top: 0; left: 0; width: 20px; height: 30px;">x</a>` +
+              `</div>`
+          );
+          assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            minSize: 24,
+            width: 80,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), ['#other']);
+        });
+
+        it('measures adjacent multiline inline links as one target', () => {
+          const checkArgs = checkSetup(
+            `<div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">` +
+              `<a id="not-obscurer" href="/foo" class="A"> Hello hello</a>` +
+              `<a id="target" href="/bar" class="B"> Hello hello hello</a>` +
+              `<a href="/bar" class="C"> Hello hello hello</a>` +
+              `</div>`
+          );
+          assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+          assert.closeTo(checkContext._data.width, 80.5, 10);
+          assert.deepEqual(elmIds(checkContext._relatedNodes), []);
         });
       });
 

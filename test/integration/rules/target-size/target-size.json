@@ -46,7 +46,9 @@
     ["#pass-same-dest-card"],
     ["#pass-same-dest-spelling-cover"],
     ["#pass-same-dest-spelling"],
-    ["#pass-diff-dest-cover"]
+    ["#pass-diff-dest-cover"],
+    ["#pass-same-dest-bar"],
+    ["#pass-same-dest-bar-overlay"]
   ],
   "incomplete": [
     ["#incomplete1"],
