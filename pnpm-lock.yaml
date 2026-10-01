@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  colorjs.io@0.4.3: 2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7
+  colorjs.io@0.7.1: 4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e
 
 importers:
 
@@ -57,8 +57,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       colorjs.io:
-        specifier: 0.4.3
-        version: 0.4.3(patch_hash=2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7)
+        specifier: 0.7.1
+        version: 0.7.1(patch_hash=4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e)
       commit-and-tag-version:
         specifier: ^13.1.0
         version: 13.1.2(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0)
@@ -1702,8 +1702,8 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colorjs.io@0.4.3:
-    resolution: {integrity: sha512-Jr6NiWFZCuSECl23Bhe4jvDldQsE0ErnWrdl3xIUFy+Bkp0l8r5qt/iZlNH47/xxGP5izcyC8InjoUoI4Po+Pg==}
+  colorjs.io@0.7.1:
+    resolution: {integrity: sha512-LY7OHnJZxHwT5UlzNa9bbhHHDbzB6yE5+3MIPwJEQKRvSCt/T4G7epsj+9j2BExUIIfXFIJGsIXUKdfrK9Q5tA==}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -6028,7 +6028,7 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colorjs.io@0.4.3(patch_hash=2d90d03e9e9f56c1f022a7f0e771fff7771bd1d6c143cb49242dfa41575428e7): {}
+  colorjs.io@0.7.1(patch_hash=4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e): {}
 
   combined-stream@1.0.8:
     dependencies:

@@ -7,7 +7,7 @@ describe('color-contrast prototype.js test', () => {
         runOnly: ['color-contrast'],
         elementRef: true
       };
-      results = await axe.run('#fixture', options);
+      results = await axe.run('#target', options);
       done();
     });
   });
