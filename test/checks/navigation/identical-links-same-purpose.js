@@ -109,4 +109,18 @@ describe('identical-links-same-purpose tests', () => {
     );
     assert.equal(checkContext._data.urlProps.filename, 'foo.html');
   });
+
+  it('removes CJK punctuation from the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="/b">範例公司，另開新視窗。</a>'
+    );
+    const actual = check.evaluate.call(
+      checkContext,
+      vNode.actualNode,
+      options,
+      vNode
+    );
+    assert.isTrue(actual);
+    assert.equal(checkContext._data.name, '範例公司另開新視窗');
+  });
 });

@@ -266,12 +266,12 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
-  it('ignores zero-width characters when tokenizing so they do not split a word', () => {
+  it('treats a soft hyphen as a word separator', () => {
     const vNode = queryFixture(
       '<a id="target" href="#" aria-label="nonstandard">non\u00ADstandard</a>'
     );
     const actual = checkEvaluate(vNode.actualNode, options, vNode);
-    assert.isTrue(actual);
+    assert.isFalse(actual);
   });
 
   [
@@ -314,6 +314,22 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
+    it('removes full-width parentheses and their content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download">Download（PDF）</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('removes characters that decompose to parenthesised content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="download">⑴ Download</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
     it('removes nested parentheses', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="open report">Open report (latest (2026) draft)</button>'
@@ -346,6 +362,74 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
   });
+  describe('language-independent normalization', () => {
+    it('ignores CJK and full-width punctuation', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="範例公司官網，另開新視窗">範例公司官網（另開新視窗）</a>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('ignores an ideographic full stop', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="新しいウィンドウで開きます">新しいウィンドウで開きます。</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('matches full-width letters and digits to their ASCII forms', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="model abc123">Ｍｏｄｅｌ ＡＢＣ１２３</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('matches precomposed and decomposed accented letters', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="cafe\u0301 menu">Café</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    ['¿Hola?', '¡Hola!', '«Hola»', 'Hola°', 'Hola×'].forEach(content => {
+      it(`ignores the punctuation or symbols in ${content}`, () => {
+        const vNode = queryFixture(
+          `<button id="target" aria-label="hola">${content}</button>`
+        );
+        const actual = checkEvaluate(vNode.actualNode, options, vNode);
+        assert.isTrue(actual);
+      });
+    });
+
+    it('keeps numbers that are outside the basic digits', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="items">⓫ items</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('treats a keycap emoji as non-text content', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="next">1\uFE0F\u20E3 next</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('treats a combining mark as a word separator', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="naïve">ve</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+  });
+
   describe('options.valueTextRoles', () => {
     valueTextOptions.valueTextRoles.forEach(role => {
       it(`returns undefined when a ${role} has visible text outside its accessible name`, () => {
@@ -408,7 +492,7 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     });
 
-    it('returns false for a switch when the roles option is empty', () => {
+    it('returns false for a switch when the option is empty', () => {
       const vNode = queryFixture(
         '<div id="labelForEmpty">Notifications</div>' +
           '<div id="target" role="switch" aria-labelledby="labelForEmpty">' +
