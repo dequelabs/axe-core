@@ -56,6 +56,18 @@ describe('avoid-inline-spacing-matches', () => {
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
+  it('returns true when a visibility:hidden element has a visible descendant', () => {
+    const vNode = queryFixture(html`
+      <div
+        id="target"
+        style="visibility: hidden; letter-spacing: 0.1em !important"
+      >
+        <p style="visibility: visible">Hello</p>
+      </div>
+    `);
+    assert.isTrue(rule.matches(vNode.actualNode, vNode));
+  });
+
   it('returns false for a hidden element with text', () => {
     const vNode = queryFixture(
       '<p id="target" style="display: none; letter-spacing: 0.1em !important">Hello</p>'
