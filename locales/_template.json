@@ -1039,17 +1039,26 @@
     },
     "important-letter-spacing": {
       "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "fail": {
+        "default": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
       "incomplete": "Unable to determine if letter-spacing in the style attribute meets the minimum"
     },
     "important-line-height": {
       "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
-      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "fail": {
+        "default": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
       "incomplete": "Unable to determine if line-height in the style attribute meets the minimum"
     },
     "important-word-spacing": {
       "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "fail": {
+        "default": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
       "incomplete": "Unable to determine if word-spacing in the style attribute meets the minimum"
     },
     "is-on-screen": {
