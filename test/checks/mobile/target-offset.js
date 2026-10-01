@@ -197,7 +197,7 @@ describe('target-offset tests', () => {
       );
     });
 
-    it('works when the same-destination neighbor is in shadow DOM', () => {
+    it('returns true when the same-destination neighbor is in shadow DOM', () => {
       const checkArgs = checkSetup(
         `<div style="position: relative; width: 100px; height: 60px;">` +
           `<div style="position: absolute; inset: 0;">` +

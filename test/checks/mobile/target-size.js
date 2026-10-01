@@ -259,7 +259,7 @@ describe('target-size tests', () => {
           `<a href="${obscurerHref}" id="obscurer" style="position: absolute; top: 6px; left: 0; right: 0; height: 18px;">x</a>` +
           `</div>`;
 
-        it('is partially obscured when the obscurer links elsewhere', () => {
+        it('returns false when the obscurer links to a different destination', () => {
           const checkArgs = checkSetup(bar('/other'));
           assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
           assert.equal(checkContext._data.messageKey, 'partiallyObscured');
@@ -308,7 +308,7 @@ describe('target-size tests', () => {
           assert.deepEqual(elmIds(checkContext._relatedNodes), ['#other']);
         });
 
-        it('measures adjacent multiline inline links as one target', () => {
+        it('ignores a same-destination link sharing a wrapped line', () => {
           const checkArgs = checkSetup(
             `<div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">` +
               `<a id="not-obscurer" href="/foo" class="A"> Hello hello</a>` +
@@ -316,8 +316,12 @@ describe('target-size tests', () => {
               `<a href="/bar" class="C"> Hello hello hello</a>` +
               `</div>`
           );
+          const targetRect = fixture
+            .querySelector('#target')
+            .getBoundingClientRect();
           assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
-          assert.closeTo(checkContext._data.width, 80.5, 10);
+          assert.closeTo(checkContext._data.width, targetRect.width, 1);
+          assert.closeTo(checkContext._data.height, targetRect.height, 1);
           assert.deepEqual(elmIds(checkContext._relatedNodes), []);
         });
       });

@@ -48,7 +48,10 @@
     ["#pass-same-dest-spelling"],
     ["#pass-diff-dest-cover"],
     ["#pass-same-dest-bar"],
-    ["#pass-same-dest-bar-overlay"]
+    ["#pass-same-dest-bar-overlay"],
+    ["#pass-inline-diff-dest-1"],
+    ["#pass-inline-diff-dest-2"],
+    ["#pass-inline-diff-dest-3"]
   ],
   "incomplete": [
     ["#incomplete1"],
