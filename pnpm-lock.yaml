@@ -49,7 +49,7 @@ importers:
         version: 4.0.3
       chromedriver:
         specifier: latest
-        version: 152.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       clean-jsdoc-theme:
         specifier: ^4.2.17
         version: 4.3.2(jsdoc@4.0.5)
@@ -75,8 +75,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       emoji-regex:
-        specifier: ^10.2.1
-        version: 10.6.0
+        specifier: ^11.0.0
+        version: 11.0.0
       es6-promise:
         specifier: ^4.2.8
         version: 4.2.8
@@ -1638,8 +1638,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@152.0.1:
-    resolution: {integrity: sha512-8zet2yPAFOSlYxUIcQ/1yOOC1xP4ooPZiKFRdlJhFawBKvlZIHDU6qv4LDOfPEw1yXbyu+tQTzbL0Vfb+vHdQQ==}
+  chromedriver@154.0.0:
+    resolution: {integrity: sha512-kn+ENZ2lEPAmeDTNNBbVw6Xt4KAr6M4EFcgeV4lUREgJWHVZBu4fFc+OFivtuf5Q9jM/qSmAcQ3MdWtdOE6mVA==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2041,8 +2041,8 @@ packages:
   electron-to-chromium@1.5.371:
     resolution: {integrity: sha512-e9htk9mAYL6AzmkEhSvVVw7IWGSBJ/Bqdn2eRyRLrj1g6sncN4WbFt5qnILYoCktktr45pyjIrOiRvBThQ808w==}
 
-  emoji-regex@10.6.0:
-    resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
+  emoji-regex@11.0.0:
+    resolution: {integrity: sha512-2qQtc7syPcJmvF7BfKxBvwgvhzDth6u3q23+Jr4JOQUcmMGgmj7B4/ePZ2DmOhrrb77S8kMNHq2kilVASysfqA==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -5954,7 +5954,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@152.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  chromedriver@154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@testim/chrome-version': 1.1.4
       adm-zip: 0.6.0
@@ -6369,7 +6369,7 @@ snapshots:
 
   electron-to-chromium@1.5.371: {}
 
-  emoji-regex@10.6.0: {}
+  emoji-regex@11.0.0: {}
 
   emoji-regex@8.0.0: {}
 
