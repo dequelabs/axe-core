@@ -388,6 +388,73 @@ describe('aria-required-children', () => {
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
   });
 
+  it('should pass when a child role requires the parent role as its context', () => {
+    for (const role of ['table', 'grid', 'treegrid']) {
+      const params = checkSetup(html`
+        <div role="${role}" id="target">
+          <div role="caption">Caption</div>
+          <div role="row"><span role="cell">Cell</span></div>
+        </div>
+      `);
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params), role);
+    }
+  });
+
+  it('should pass when a child role requires the parent role as its context in shadow tree', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target">
+        <template shadowrootmode="open">
+          <div role="caption">Caption</div>
+          <div role="row"><span role="cell">Cell</span></div>
+        </template>
+      </div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should pass when a caption outside the table is owned with aria-owns', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption">
+        <div role="row"><span role="cell">Cell</span></div>
+      </div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should fail when the only owned child is a caption', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption"></div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
+  });
+
+  it('should fail when a child role does not require the parent role as its context', () => {
+    const params = checkSetup(html`
+      <div role="list" id="target">
+        <div role="caption">Caption</div>
+        <div role="listitem">Item</div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=caption]'
+    });
+  });
+
+  it('should fail when the only child is allowed by context but not required', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target"><div role="caption">Caption</div></div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
+  });
+
   describe('options', () => {
     it('should not throw when options is incorrect', () => {
       const params = checkSetup('<div role="row" id="target"></div>');
