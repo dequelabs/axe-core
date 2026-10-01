@@ -401,20 +401,34 @@ describe('aria-required-children', () => {
   });
 
   it('should pass when a child role requires the parent role as its context in shadow tree', () => {
-    fixture.innerHTML = '<div role="table" id="target"></div>';
-
-    const target = document.querySelector('#target');
-    const shadowRoot = target.attachShadow({ mode: 'open' });
-    shadowRoot.innerHTML = html`
-      <div role="caption">Caption</div>
-      <div role="row"><span role="cell">Cell</span></div>
-    `;
-
-    axe.testUtils.flatTreeSetup(fixture);
-    const virtualTarget = axe.utils.getNodeFromTree(target);
-
-    const params = [target, undefined, virtualTarget];
+    const params = checkSetup(html`
+      <div role="table" id="target">
+        <template shadowrootmode="open">
+          <div role="caption">Caption</div>
+          <div role="row"><span role="cell">Cell</span></div>
+        </template>
+      </div>
+    `);
     assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should pass when a caption outside the table is owned with aria-owns', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption">
+        <div role="row"><span role="cell">Cell</span></div>
+      </div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should fail when the only owned child is a caption', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption"></div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
   });
 
   it('should fail when a child role does not require the parent role as its context', () => {
