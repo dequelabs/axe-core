@@ -37,6 +37,7 @@ describe('axe.runVirtualRule', () => {
       {
         id: 'aria-roles',
         excludeHidden: true,
+        after: result => result,
         runSync: function () {
           assert.isFalse(this.excludeHidden);
 
@@ -56,6 +57,7 @@ describe('axe.runVirtualRule', () => {
       {
         id: 'aria-roles',
         excludeHidden: true,
+        after: result => result,
         runSync: function () {
           assert.notEqual(this, axe._audit.rules[0]);
 
@@ -75,6 +77,7 @@ describe('axe.runVirtualRule', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
+        after: result => result,
         runSync: () => {
           called = true;
           return {
@@ -89,6 +92,28 @@ describe('axe.runVirtualRule', () => {
     assert.isTrue(called);
   });
 
+  it('should run the after methods of the checks', () => {
+    axe._load({
+      rules: [{ id: 'after-test', selector: '*', any: ['after-check'] }],
+      checks: [
+        {
+          id: 'after-check',
+          evaluate: () => false,
+          after: results => {
+            results.forEach(checkResult => {
+              checkResult.result = true;
+            });
+            return results;
+          }
+        }
+      ]
+    });
+
+    const results = axe.runVirtualRule('after-test', { nodeName: 'div' });
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.passes, 1);
+  });
+
   describe('context', () => {
     const { Context } = axe._thisWillBeDeletedDoNotUse.base;
     it('passes context with vNode included to rule.runSync', () => {
@@ -96,6 +121,7 @@ describe('axe.runVirtualRule', () => {
       axe._audit.rules = [
         {
           id: 'aria-roles',
+          after: result => result,
           runSync: context => {
             assert.equal(typeof context, 'object');
             assert.isTrue(Array.isArray(context.include));
@@ -122,6 +148,7 @@ describe('axe.runVirtualRule', () => {
       axe._audit.rules = [
         {
           id: 'aria-roles',
+          after: result => result,
           runSync: context => {
             const virtualContextProps = Object.keys(context).sort();
             assert.deepEqual(virtualContextProps, contextProps);
@@ -140,6 +167,7 @@ describe('axe.runVirtualRule', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
+        after: result => result,
         runSync: (context, options) => {
           assert.equal(options.foo, 'bar');
 
@@ -165,6 +193,7 @@ describe('axe.runVirtualRule', () => {
     axe._audit.rules = [
       {
         id: 'aria-roles',
+        after: result => result,
         runSync: context => {
           const node = context.include[0];
           assert.instanceOf(node, axe.AbstractVirtualNode);
