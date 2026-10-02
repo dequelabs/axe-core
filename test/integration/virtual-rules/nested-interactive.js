@@ -74,7 +74,7 @@ describe('nested-interactive virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with non-widget content', () => {
+  it('should fail for element with non-widget content in the tab order', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -89,8 +89,8 @@ describe('nested-interactive virtual-rule', () => {
 
     const results = axe.runVirtualRule('nested-interactive', node);
 
-    assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 
