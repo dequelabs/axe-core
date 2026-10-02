@@ -209,6 +209,21 @@ describe('target-offset tests', () => {
       });
     });
 
+    it('returns false when the large same-destination link is not a close neighbor', () => {
+      const checkArgs = checkSetup(
+        `<div style="position: relative; width: 200px; height: 100px;">` +
+          `<a href="/foo" id="target" style="position: absolute; left: 0; top: 0; width: 16px; height: 16px;">x</a>` +
+          `<a href="/bar" id="other" style="position: absolute; left: 20px; top: 0; width: 16px; height: 16px;">x</a>` +
+          `<a href="/foo" id="far" style="position: absolute; left: 0; top: 56px; width: 100px; height: 40px;">x</a>` +
+          `</div>`
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(
+        checkContext._relatedNodes.map(node => `#${node.id}`),
+        ['#other']
+      );
+    });
+
     it('returns true when the same-destination neighbor is in shadow DOM', () => {
       const checkArgs = checkSetup(
         `<div style="position: relative; width: 100px; height: 60px;">` +
