@@ -146,7 +146,7 @@
     "core-js": "^3.27.1",
     "core-js-pure": "^3.27.1",
     "css-selector-parser": "^1.4.1",
-    "emoji-regex": "^10.2.1",
+    "emoji-regex": "^11.0.0",
     "es6-promise": "^4.2.8",
     "esbuild": "^0.10.x",
     "eslint": "^10.6.0",
