@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>frameset test</title>
+    <meta charset="utf8" />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+    <!-- a frameset document has no body for the mocha UI -->
+    <script src="/test/integration/no-ui-reporter.js"></script>
+    <script src="frameset.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </head>
+  <frameset cols="50%,50%">
+    <frame id="frame1" title="Nested frameset" src="frames/nested.html" />
+    <frame id="frame2" src="frames/level1.html" />
+  </frameset>
+</html>
