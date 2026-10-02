@@ -730,7 +730,7 @@
     "focusable-disabled": {
       "pass": "No focusable elements contained within element",
       "incomplete": "Check if the focusable elements immediately move the focus indicator",
-      "fail": "Focusable content should be disabled or be removed from the DOM"
+      "fail": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
     },
     "focusable-element": {
       "pass": "Element is focusable",
@@ -748,7 +748,7 @@
     "focusable-not-tabbable": {
       "pass": "No focusable elements contained within element",
       "incomplete": "Check if the focusable elements immediately move the focus indicator",
-      "fail": "Focusable content should have tabindex=\"-1\" or be removed from the DOM"
+      "fail": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
     },
     "frame-focusable-content": {
       "pass": "Element does not have focusable descendants",
