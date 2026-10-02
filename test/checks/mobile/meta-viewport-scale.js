@@ -166,6 +166,54 @@ describe('meta-viewport', () => {
     });
   });
 
+  describe('invalid values and keywords', () => {
+    /**
+     * Run a meta-viewport check on a viewport meta element
+     * @param {String} checkId
+     * @param {String} content Value of the content attribute
+     * @return {Boolean}
+     */
+    function evaluate(checkId, content) {
+      const vNode = queryFixture(
+        `<meta id="target" name="viewport" content="${content}">`
+      );
+      return axe.testUtils
+        .getCheckEvaluate(checkId)
+        .call(checkContext, null, null, vNode);
+    }
+
+    it('should return false on an invalid user-scalable value (translates to 0)', () => {
+      assert.isFalse(evaluate('meta-viewport', 'user-scalable=invalid'));
+      assert.deepEqual(checkContext._data, 'user-scalable');
+    });
+
+    it('should return true on user-scalable=device-width or device-height', () => {
+      assert.isTrue(evaluate('meta-viewport', 'user-scalable=device-width'));
+      assert.isTrue(evaluate('meta-viewport', 'user-scalable=device-height'));
+    });
+
+    it('should return false on an invalid maximum-scale value (translates to 0)', () => {
+      assert.isFalse(evaluate('meta-viewport', 'maximum-scale=invalid'));
+      assert.deepEqual(checkContext._data, 'maximum-scale');
+    });
+
+    it('should return false on maximum-scale=no', () => {
+      assert.isFalse(evaluate('meta-viewport', 'maximum-scale=no'));
+    });
+
+    it('should return true on maximum-scale=device-width or device-height (translates to 10)', () => {
+      assert.isTrue(evaluate('meta-viewport', 'maximum-scale=device-width'));
+      assert.isTrue(evaluate('meta-viewport', 'maximum-scale=device-height'));
+      assert.isTrue(
+        evaluate('meta-viewport-large', 'maximum-scale=device-width')
+      );
+    });
+
+    it('should leave an invalid maximum-scale to meta-viewport in meta-viewport-large', () => {
+      assert.isTrue(evaluate('meta-viewport-large', 'maximum-scale=invalid'));
+    });
+  });
+
   describe(', separator', () => {
     it('should return false on user-scalable=no', () => {
       const vNode = queryFixture(
