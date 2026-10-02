@@ -303,4 +303,73 @@ describe('aria-required-parent', () => {
         .apply(checkContext, params)
     );
   });
+
+  it('should pass for native option with role="option" inside select', () => {
+    const params = checkSetup(
+      '<select><option role="option" id="target">Option 1</option></select>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should pass for native option with role="option" inside optgroup in select', () => {
+    const params = checkSetup(
+      '<select><optgroup label="Group"><option role="option" id="target">Option 1</option></optgroup></select>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should pass for native option with role="option" owned by select via aria-owns', () => {
+    const params = checkSetup(
+      '<select aria-owns="target"></select><option role="option" id="target">Option 1</option>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail for custom role="option" element inside select', () => {
+    const params = checkSetup(
+      '<select><div role="option" id="target">Option 1</div></select>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, ['group', 'listbox']);
+  });
+
+  it('should fail for custom role="option" element without required parent', () => {
+    const params = checkSetup(
+      '<div><div role="option" id="target">Option 1</div></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, ['group', 'listbox']);
+  });
+
+  it('should fail for native option with role="option" not inside select', () => {
+    const params = checkSetup(
+      '<div><option role="option" id="target">Option 1</option></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, ['group', 'listbox']);
+  });
 });
