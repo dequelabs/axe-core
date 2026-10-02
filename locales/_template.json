@@ -532,6 +532,7 @@
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
         "unallowed": "Element has children which are not allowed: ${data.values}",
+        "unallowedPresentational": "Element has presentational children which cannot be ignored because of ${data.values}",
         "aria-busy-fail": "Element has children which are not allowed: ${data.values}; Having aria-busy=\"true\" does not allow children with roles that are not allowed"
       },
       "incomplete": {
