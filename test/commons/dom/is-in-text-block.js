@@ -132,6 +132,66 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
+  it('ignore text in the block coming before a br inside the element', () => {
+    fixtureSetup(html`
+      <p>
+        Some paragraph with text
+        <a href="" id="link"><br />link</a>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignore text in the block coming before a nested br inside the element', () => {
+    fixtureSetup(html`
+      <p>
+        Some paragraph with text
+        <a href="" id="link"
+          ><span> <br /></span>link</a
+        >
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignore text in the block coming before an hr inside the element', () => {
+    fixtureSetup(html`
+      <div>
+        Some paragraph with text
+        <a href="" id="link"
+          ><hr />
+          link</a
+        >
+      </div>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignore text in the block coming after a br at the end of the element', () => {
+    fixtureSetup(html`
+      <p>
+        <a href="" id="link">link<br /></a>
+        Some paragraph with text
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('returns true if the br inside the element is between its text', () => {
+    fixtureSetup(html`
+      <p>
+        Some paragraph with text
+        <a href="" id="link">link<br />text</a>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isTrue(isInTextBlock(link));
+  });
+
   it('ignores text inside inline widgets and components', () => {
     fixtureSetup(html`
       <p>
@@ -203,6 +263,22 @@ describe('dom.isInTextBlock', () => {
     shadow.innerHTML = html`
       <p>
         Some paragraph with text <slot></slot> <a href="" id="link">link</a>
+      </p>
+    `;
+    fixtureSetup(div);
+
+    const link = shadow.querySelector('#link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('treats a slotted br at the start of the element as a line break', () => {
+    const div = document.createElement('div');
+    div.innerHTML = '<br>link';
+    const shadow = div.attachShadow({ mode: 'open' });
+    shadow.innerHTML = html`
+      <p>
+        Some paragraph with text
+        <a href="" id="link"><slot></slot></a>
       </p>
     `;
     fixtureSetup(div);
