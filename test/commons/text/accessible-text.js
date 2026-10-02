@@ -1680,6 +1680,57 @@ describe('text.accessibleTextVirtual', () => {
     });
   });
 
+  describe('details', () => {
+    it('should not use text directly inside a closed details', () => {
+      fixture.innerHTML = html`
+        <div id="t1" role="button">
+          Go
+          <details>
+            <summary>Summary</summary>
+            hidden text
+          </details>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+      assert.equal(
+        axe.commons.text.accessibleTextVirtual(target),
+        'Go Summary'
+      );
+    });
+
+    it('should use text directly inside an open details', () => {
+      fixture.innerHTML = html`
+        <div id="t1" role="button">
+          Go
+          <details open>
+            <summary>Summary</summary>
+            shown text
+          </details>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+      assert.equal(
+        axe.commons.text.accessibleTextVirtual(target),
+        'Go Summary shown text'
+      );
+    });
+
+    it('should only use the summary of a closed details referenced by aria-labelledby', () => {
+      fixture.innerHTML = html`
+        <div id="t1" aria-labelledby="mars"></div>
+        <details id="mars">
+          <summary>Hello</summary>
+          planet <span>Mars</span>
+        </details>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+      assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
+    });
+  });
+
   describe('text.accessibleText acceptance tests', () => {
     // Tests borrowed from the AccName 1.1 testing docs
     // https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539
