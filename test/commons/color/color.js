@@ -376,6 +376,65 @@ describe('color.Color', () => {
   });
 
   describe('parseString', () => {
+    it('reuses parsed colors without sharing mutable channel state', () => {
+      const first = new Color().parseString('rgba(10, 20, 30, 0.4)');
+      first.r = 1;
+      first.g = 1;
+      first.b = 1;
+      first.alpha = 1;
+
+      const second = new Color().parseString('rgba(10, 20, 30, 0.4)');
+      assert.deepEqual(second.toJSON(), {
+        red: 10,
+        green: 20,
+        blue: 30,
+        alpha: 0.4
+      });
+    });
+
+    ['__proto__', 'constructor', 'toString'].forEach(colorString => {
+      it(`rejects invalid colors named ${colorString} on repeated calls`, () => {
+        const color = new Color(10, 20, 30, 0.4);
+        for (let i = 0; i < 2; i++) {
+          assert.throws(
+            () => color.parseString(colorString),
+            /Unable to parse color/
+          );
+          assert.deepEqual(color.toJSON(), {
+            red: 10,
+            green: 20,
+            blue: 30,
+            alpha: 0.4
+          });
+        }
+      });
+    });
+
+    it('reparses colors after the run cache is cleared', () => {
+      new Color().parseString('rgba(10, 20, 30, 0.4)');
+      const previousCache = axe._cache.get('parsedColors');
+      axe._cache.clear();
+      const color = new Color().parseString('rgba(10, 20, 30, 0.4)');
+      assert.notStrictEqual(axe._cache.get('parsedColors'), previousCache);
+      assert.deepEqual(color.toJSON(), {
+        red: 10,
+        green: 20,
+        blue: 30,
+        alpha: 0.4
+      });
+    });
+
+    it('preserves zero alpha on repeated parses of none', () => {
+      new Color().parseString('rgb(10 20 30 / none)');
+      const color = new Color().parseString('rgb(10 20 30 / none)');
+      assert.deepEqual(color.toJSON(), {
+        red: 10,
+        green: 20,
+        blue: 30,
+        alpha: 0
+      });
+    });
+
     it('sets the value of a named color', () => {
       const color = new Color();
       color.parseString('chocolate');
