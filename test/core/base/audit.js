@@ -617,6 +617,91 @@ describe('Audit', () => {
       );
     });
 
+    describe('target-aware asset preloading', () => {
+      [
+        { name: 'no candidates', markup: '<div></div>', reads: false },
+        { name: 'a candidate', markup: '<input>', reads: true },
+        {
+          name: 'an excluded candidate',
+          markup: '<input>',
+          exclude: true,
+          reads: false
+        },
+        {
+          name: 'a candidate in shadow DOM',
+          markup: '<div id="host"></div>',
+          shadow: true,
+          reads: true
+        },
+        {
+          name: 'an invalid selector',
+          markup: '<div></div>',
+          invalid: true,
+          reads: true
+        }
+      ].forEach(testCase => {
+        it(`should ${testCase.reads ? 'preload' : 'skip'} assets with ${testCase.name}`, done => {
+          const markup = `<style>input { color: black; }</style>${testCase.markup}`;
+          if (testCase.shadow) {
+            axe.testUtils.queryShadowFixture(markup, '<input id="target">', {
+              shadow: '#host',
+              target: '#target'
+            });
+          } else {
+            fixture.innerHTML = markup;
+          }
+          const sheet = fixture.querySelector('style').sheet;
+          const rules = sheet.cssRules;
+          let reads = 0;
+          Object.defineProperty(sheet, 'cssRules', {
+            configurable: true,
+            get() {
+              reads++;
+              return rules;
+            }
+          });
+          audit = new Audit();
+          audit.addRule({
+            id: 'needs-assets',
+            selector: testCase.invalid ? '[' : 'input',
+            preload: true,
+            any: ['needs-assets-check']
+          });
+          audit.addCheck({
+            id: 'needs-assets-check',
+            evaluate(node, options, vNode, context) {
+              assert.isArray(context.cssom);
+              return true;
+            }
+          });
+          axe._tree = axe.utils.getFlattenedTree(fixture);
+          const Context = axe._thisWillBeDeletedDoNotUse.base.Context;
+          const context = new Context(
+            {
+              include: [fixture],
+              exclude: testCase.exclude ? [fixture.querySelector('input')] : []
+            },
+            axe._tree
+          );
+          audit.run(
+            context,
+            { preload: { assets: ['cssom'] } },
+            results => {
+              assert.lengthOf(results, 1);
+              if (testCase.invalid) {
+                assert.isDefined(results[0].error);
+              } else {
+                assert.lengthOf(results[0].nodes, testCase.reads ? 1 : 0);
+              }
+              assert.equal(reads > 0, testCase.reads);
+              done();
+            },
+            done
+          );
+        });
+      });
+    });
+
     it('should ensure audit.run recieves preload options', done => {
       fixture.innerHTML = '<input aria-label="yo" type="text">';
 
