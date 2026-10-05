@@ -216,7 +216,8 @@ jobs:
   test_rule_help_version:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    if: ${{ github.ref_name == 'master' }}
+    # Run on pushes to master and on PRs targeting master.
+    if: ${{ github.ref_name == 'master' || github.event.pull_request.base.ref == 'master' }}
     steps:
       - *checkout
       - *install-deps
