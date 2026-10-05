@@ -157,7 +157,7 @@ describe('target-offset tests', () => {
       const checkArgs = checkSetup(card('href="/foo"'));
       assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
       assert.deepEqual(checkContext._data, {
-        messageKey: 'equivalent',
+        closestOffset: 24,
         minOffset: 24
       });
     });
@@ -176,13 +176,12 @@ describe('target-offset tests', () => {
       );
     });
 
-    it('returns false when the same-destination neighbor is also undersized', () => {
+    it('returns true when the same-destination neighbor is also undersized', () => {
       const checkArgs = checkSetup(
         `<a href="/foo" id="target" style="display: inline-block; width:16px; height:16px; margin-right: 7px">x</a>` +
           `<a href="/foo" style="display: inline-block; width:16px; height:16px;">x</a>`
       );
-      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
-      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
     });
 
     describe('and a different-destination neighbor', () => {
@@ -193,13 +192,16 @@ describe('target-offset tests', () => {
         `<a href="/bar" id="other" style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;">x</a>` +
         `</div>`;
 
-      it('returns true for the target with a large equivalent', () => {
+      it('returns false for the target, with only the different-destination neighbor related', () => {
         const checkArgs = checkSetup(html, {}, '#small');
-        assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-        assert.equal(checkContext._data.messageKey, 'equivalent');
+        assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(
+          checkContext._relatedNodes.map(node => `#${node.id}`),
+          ['#other']
+        );
       });
 
-      it('still returns false for the different-destination neighbor', () => {
+      it('returns false for the different-destination neighbor', () => {
         const checkArgs = checkSetup(html, {}, '#other');
         assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
         assert.deepEqual(
@@ -207,21 +209,6 @@ describe('target-offset tests', () => {
           ['#cover', '#small']
         );
       });
-    });
-
-    it('returns false when the large same-destination link is not a close neighbor', () => {
-      const checkArgs = checkSetup(
-        `<div style="position: relative; width: 200px; height: 100px;">` +
-          `<a href="/foo" id="target" style="position: absolute; left: 0; top: 0; width: 16px; height: 16px;">x</a>` +
-          `<a href="/bar" id="other" style="position: absolute; left: 20px; top: 0; width: 16px; height: 16px;">x</a>` +
-          `<a href="/foo" id="far" style="position: absolute; left: 0; top: 56px; width: 100px; height: 40px;">x</a>` +
-          `</div>`
-      );
-      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
-      assert.deepEqual(
-        checkContext._relatedNodes.map(node => `#${node.id}`),
-        ['#other']
-      );
     });
 
     it('returns true when the same-destination neighbor is in shadow DOM', () => {

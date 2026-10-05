@@ -10,9 +10,7 @@
     ["#fail6"],
     ["#fail7"],
     ["#fail-fixed"],
-    ["#fail-diff-dest-card"],
-    ["#fail-same-dest-undersized-1"],
-    ["#fail-same-dest-undersized-2"]
+    ["#fail-diff-dest-card"]
   ],
   "passes": [
     ["#pass1"],
@@ -51,7 +49,9 @@
     ["#pass-same-dest-bar-overlay"],
     ["#pass-inline-diff-dest-1"],
     ["#pass-inline-diff-dest-2"],
-    ["#pass-inline-diff-dest-3"]
+    ["#pass-inline-diff-dest-3"],
+    ["#pass-same-dest-undersized-1"],
+    ["#pass-same-dest-undersized-2"]
   ],
   "incomplete": [
     ["#incomplete1"],

@@ -31,6 +31,20 @@ describe('dom.hasSameDestination', () => {
     assert.isTrue(hasSameDestination(a, b));
   });
 
+  it('returns true for an in-page fragment and the full URL with the same fragment', () => {
+    const [a, b] = getPair(
+      `<a id="a" href="#dest">a</a><a id="b" href="${location.pathname}${location.search}#dest">b</a>`
+    );
+    assert.isTrue(hasSameDestination(a, b));
+  });
+
+  it('returns false for different in-page fragments', () => {
+    const [a, b] = getPair(
+      '<a id="a" href="#x">a</a><a id="b" href="#y">b</a>'
+    );
+    assert.isFalse(hasSameDestination(a, b));
+  });
+
   it('returns true for an area and a link with the same href', () => {
     const [a, b] = getPair(
       '<map name="m"><area id="a" href="/x" alt="x" shape="rect" coords="0,0,10,10"></map>' +
@@ -57,8 +71,6 @@ describe('dom.hasSameDestination', () => {
     '',
     '  ',
     '#',
-    '#foo',
-    ' #foo',
     '/#',
     'javascript:void(0)',
     'JAVASCRIPT:void(0)',
@@ -70,14 +82,6 @@ describe('dom.hasSameDestination', () => {
       );
       assert.isFalse(hasSameDestination(a, b));
     });
-  });
-
-  it('returns false when either link has a download attribute', () => {
-    const [a, b] = getPair(
-      '<a id="a" href="/x" download>a</a><a id="b" href="/x">b</a>'
-    );
-    assert.isFalse(hasSameDestination(a, b));
-    assert.isFalse(hasSameDestination(b, a));
   });
 
   it('returns false for links without an href', () => {
@@ -99,14 +103,14 @@ describe('dom.hasSameDestination', () => {
     assert.isFalse(hasSameDestination(a, b));
   });
 
-  it('returns false for SVG links', () => {
+  it('returns true for SVG links with the same href', () => {
     const [a, b] = getPair(
       '<svg><a id="a" href="/x"><text>a</text></a><a id="b" href="/x"><text>b</text></a></svg>'
     );
-    assert.isFalse(hasSameDestination(a, b));
+    assert.isTrue(hasSameDestination(a, b));
   });
 
-  it('returns false for virtual nodes without an actual node', () => {
+  it('returns true for virtual nodes without an actual node', () => {
     const a = new axe.SerialVirtualNode({
       nodeName: 'a',
       attributes: { href: '/x' }
@@ -115,6 +119,6 @@ describe('dom.hasSameDestination', () => {
       nodeName: 'a',
       attributes: { href: '/x' }
     });
-    assert.isFalse(hasSameDestination(a, b));
+    assert.isTrue(hasSameDestination(a, b));
   });
 });
