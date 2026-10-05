@@ -91,7 +91,7 @@ describe('color.Color', () => {
         assert.equal(c.alpha, 0.5);
       });
 
-      it.skip('allows exponent numbers', () => {
+      it('allows exponent numbers', () => {
         const c = new Color();
         c.parseColorFnString('rgb(2e0, 2e1, 2e2)');
         assert.equal(c.red, 2);
@@ -313,6 +313,15 @@ describe('color.Color', () => {
         assert.equal(c.green, Math.round(c.g * 255));
         assert.equal(c.blue, Math.round(c.b * 255));
       });
+
+      it('parses oklch color with "none"', () => {
+        const c = new Color();
+        c.parseColorFnString('oklch(0.992 0 none)');
+        assert.equal(c.red, 252);
+        assert.equal(c.green, 252);
+        assert.equal(c.blue, 252);
+        assert.equal(c.alpha, 1);
+      });
     });
   });
 
@@ -428,6 +437,15 @@ describe('color.Color', () => {
       assert.equal(c.green, 179);
       assert.equal(c.blue, 144);
       assert.equal(c.alpha, 0.5);
+    });
+
+    it('sets alpha to 0 when passed as "none"', () => {
+      const c = new Color();
+      c.parseString('rgb(10 20 30 / none)');
+      assert.equal(c.red, 10);
+      assert.equal(c.green, 20);
+      assert.equal(c.blue, 30);
+      assert.equal(c.alpha, 0);
     });
   });
 

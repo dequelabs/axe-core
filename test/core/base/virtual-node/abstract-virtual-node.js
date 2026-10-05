@@ -3,6 +3,19 @@ describe('AbstractVirtualNode', () => {
     assert.isFunction(axe.AbstractVirtualNode);
   });
 
+  it('should stringify to a unique value per instance', () => {
+    const nodeA = new axe.AbstractVirtualNode();
+    const nodeB = new axe.AbstractVirtualNode();
+
+    assert.notEqual(String(nodeA), String(nodeB));
+  });
+
+  it('should return a stable string across calls', () => {
+    const node = new axe.AbstractVirtualNode();
+
+    assert.equal(String(node), String(node));
+  });
+
   it('should throw an error when accessing props', () => {
     function fn() {
       const abstractNode = new axe.AbstractVirtualNode();

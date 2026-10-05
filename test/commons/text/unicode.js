@@ -156,6 +156,36 @@ describe('text.hasUnicode', () => {
         assert.isTrue(actual);
       });
     });
+
+    it('returns true for CJK and full-width punctuation', () => {
+      [
+        '、',
+        '。',
+        '「',
+        '」',
+        '・',
+        '，',
+        '（',
+        '）',
+        '！',
+        '︑',
+        '﹐'
+      ].forEach(str => {
+        const actual = axe.commons.text.hasUnicode(str, {
+          punctuations: true
+        });
+        assert.isTrue(actual, str);
+      });
+    });
+
+    it('returns false for CJK and full-width letters and numbers', () => {
+      ['々', '〆', '〇', 'Ａ', 'ｚ', '１'].forEach(str => {
+        const actual = axe.commons.text.hasUnicode(str, {
+          punctuations: true
+        });
+        assert.isFalse(actual, str);
+      });
+    });
   });
 
   describe('text.hasUnicode, has combination of unicode', () => {
@@ -263,11 +293,51 @@ describe('text.removeUnicode', () => {
     assert.equal(actual, 'The  is orange the  is white');
   });
 
+  it('returns string removing variation selectors', () => {
+    const actual = axe.commons.text.removeUnicode(
+      'a\u180B b\uFE0E c\uDB40\uDDEF',
+      { nonBmp: true }
+    );
+    assert.equal(actual, 'a b c');
+  });
+
   it('returns string removing format unicode', () => {
     // zero-width spacer character U+200B
     const actual = axe.commons.text.removeUnicode('\u200BHello World', {
       nonBmp: true
     });
     assert.equal(actual, 'Hello World');
+  });
+
+  it('substitutes matched punctuation with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('non-standard', {
+      punctuations: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, 'non standard');
+  });
+
+  it('substitutes matched emoji with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('Sun🌎Earth', {
+      emoji: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, 'Sun Earth');
+  });
+
+  it('substitutes matched non BMP characters with replaceWith when provided', () => {
+    const actual = axe.commons.text.removeUnicode('20000₨100', {
+      nonBmp: true,
+      replaceWith: ' '
+    });
+    assert.equal(actual, '20000 100');
+  });
+
+  it('inserts replaceWith literally rather than as a replace pattern', () => {
+    const actual = axe.commons.text.removeUnicode('a😀b', {
+      emoji: true,
+      replaceWith: '$&'
+    });
+    assert.equal(actual, 'a$&b');
   });
 });

@@ -124,4 +124,12 @@ describe('listitem', () => {
       assert.isFalse(result);
     });
   });
+
+  describe('SerialVirtualNode', () => {
+    it('returns undefined if the listitem has no parent', () => {
+      const vNode = new axe.SerialVirtualNode({ nodeName: 'li' });
+      const result = checkEvaluate.call(checkContext, null, {}, vNode);
+      assert.isUndefined(result);
+    });
+  });
 });

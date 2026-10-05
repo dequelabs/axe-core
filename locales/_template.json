@@ -441,9 +441,13 @@
       "pass": "ARIA attributes are used correctly for the defined role",
       "fail": {
         "singular": "ARIA attribute is not allowed: ${data.values}",
-        "plural": "ARIA attributes are not allowed: ${data.values}"
+        "plural": "ARIA attributes are not allowed: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that must be lowercase: ${data.values}"
       },
-      "incomplete": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}"
+      "incomplete": {
+        "default": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that might not be handled correctly by assistive technologies: ${data.values}"
+      }
     },
     "aria-allowed-role": {
       "pass": "ARIA role is allowed for given element",
@@ -503,14 +507,14 @@
       "fail": {
         "hasRolePlural": "${data.prohibited} attributes cannot be used with role \"${data.role}\".",
         "hasRoleSingular": "${data.prohibited} attribute cannot be used with role \"${data.role}\".",
-        "noRolePlural": "${data.prohibited} attributes cannot be used on a ${data.nodeName} with no valid role attribute.",
-        "noRoleSingular": "${data.prohibited} attribute cannot be used on a ${data.nodeName} with no valid role attribute."
+        "noRolePlural": "${data.prohibited} attributes cannot be used on \"${data.nodeName}\" elements with no valid role attribute.",
+        "noRoleSingular": "${data.prohibited} attribute cannot be used on \"${data.nodeName}\" elements with no valid role attribute."
       },
       "incomplete": {
         "hasRoleSingular": "${data.prohibited} attribute is not well supported with role \"${data.role}\".",
         "hasRolePlural": "${data.prohibited} attributes are not well supported with role \"${data.role}\".",
-        "noRoleSingular": "${data.prohibited} attribute is not well supported on a ${data.nodeName} with no valid role attribute.",
-        "noRolePlural": "${data.prohibited} attributes are not well supported on a ${data.nodeName} with no valid role attribute.",
+        "noRoleSingular": "${data.prohibited} attribute is not well supported on \"${data.nodeName}\" elements with no valid role attribute.",
+        "noRolePlural": "${data.prohibited} attributes are not well supported on \"${data.nodeName}\" elements with no valid role attribute.",
         "visibleLabelSingular": "${data.prohibited} attribute is not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the label is not necessary.",
         "visibleLabelPlural": "${data.prohibited} attributes are not well supported, but the elements referenced by aria-labelledby are visible in the page. Verify the labels are not necessary.",
         "unresolvedLabel": "${data.prohibited} attribute is not well supported, and does not reference an existing element. Verify the label is not necessary."
@@ -532,6 +536,7 @@
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
         "unallowed": "Element has children which are not allowed: ${data.values}",
+        "unallowedPresentational": "Element has presentational children which cannot be ignored because of ${data.values}",
         "aria-busy-fail": "Element has children which are not allowed: ${data.values}; Having aria-busy=\"true\" does not allow children with roles that are not allowed"
       },
       "incomplete": {
@@ -651,6 +656,7 @@
         "outsideViewport": "Element's background color could not be determined because it's outside the viewport",
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "shortTextContent": "Element content is too short to determine if it is actual text content",
+        "emptyValue": "Element has no value; test color contrast with a value entered",
         "nonBmp": "Element content contains only non-text characters",
         "pseudoContent": "Element's background color could not be determined due to a pseudo element",
         "colorParse": "Could not parse color string ${data.colorParse}"
@@ -679,6 +685,7 @@
         "outsideViewport": "Element's background color could not be determined because it's outside the viewport",
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "shortTextContent": "Element content is too short to determine if it is actual text content",
+        "emptyValue": "Element has no value; test color contrast with a value entered",
         "nonBmp": "Element content contains only non-text characters",
         "pseudoContent": "Element's background color could not be determined due to a pseudo element",
         "colorParse": "Could not parse color string ${data.colorParse}"
@@ -722,12 +729,13 @@
     },
     "focusable-content": {
       "pass": "Element contains focusable elements",
+      "incomplete": "Check that elements with a negative tabindex can receive keyboard focus so the region can be scrolled",
       "fail": "Element should have focusable content"
     },
     "focusable-disabled": {
       "pass": "No focusable elements contained within element",
       "incomplete": "Check if the focusable elements immediately move the focus indicator",
-      "fail": "Focusable content should be disabled or be removed from the DOM"
+      "fail": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
     },
     "focusable-element": {
       "pass": "Element is focusable",
@@ -745,7 +753,7 @@
     "focusable-not-tabbable": {
       "pass": "No focusable elements contained within element",
       "incomplete": "Check if the focusable elements immediately move the focus indicator",
-      "fail": "Focusable content should have tabindex=\"-1\" or be removed from the DOM"
+      "fail": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
     },
     "frame-focusable-content": {
       "pass": "Element does not have focusable descendants",
@@ -759,7 +767,7 @@
     "no-focusable-content": {
       "pass": "Element does not have focusable descendants",
       "fail": {
-        "default": "Element has focusable descendants",
+        "default": "Element has focusable descendants. Move them outside of the element, or remove them.",
         "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with aria-hidden=\"true\")"
       },
       "incomplete": "Could not determine if element has descendants"
@@ -816,8 +824,12 @@
       "incomplete": "Unable to determine if form element has an implicit (wrapped) <label>"
     },
     "label-content-name-mismatch": {
-      "pass": "Element contains visible text as part of it's accessible name",
-      "fail": "Text inside the element is not included in the accessible name"
+      "pass": "Element contains visible text as part of its accessible name",
+      "fail": "Text inside the element is not included in the accessible name",
+      "incomplete": {
+        "default": "Unable to determine if the visible text is part of the accessible name",
+        "valueText": "Text inside the element may be value text rather than a label"
+      }
     },
     "multiple-label": {
       "pass": "Form field does not have multiple label elements",
@@ -853,17 +865,20 @@
     "listitem": {
       "pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
       "fail": {
-        "default": "List item does not have a <ul>, <ol> parent element",
-        "roleNotValid": "List item parent element has a role that is not role=\"list\""
-      }
+        "default": "List item does not have a <ul> or <ol> parent element. Ensure the <li> is a direct child of a <ul> or <ol>, or that the parent has role=\"list\".",
+        "roleNotValid": "List item parent element has a role that is not role=\"list\". Ensure the parent element has role=\"list\", or move the <li> inside a <ul> or <ol>."
+      },
+      "incomplete": "Unable to determine if list item has a <ul>, <ol> or role=\"list\" parent element"
     },
     "only-dlitems": {
       "pass": "dl element only has direct children that are allowed inside; <dt>, <dd>, or <div> elements",
-      "fail": "dl element has direct children that are not allowed: ${data.values}"
+      "fail": "dl element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if dl element only has allowed direct children"
     },
     "only-listitems": {
       "pass": "List element only has direct children that are allowed inside <li> elements",
-      "fail": "List element has direct children that are not allowed: ${data.values}"
+      "fail": "List element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if list element only has allowed direct children"
     },
     "structured-dlitems": {
       "pass": "When not empty, element has both <dt> and <dd> elements",
@@ -1029,15 +1044,27 @@
     },
     "important-letter-spacing": {
       "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": {
+        "default": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
+      "incomplete": "Unable to determine if letter-spacing in the style attribute meets the minimum"
     },
     "important-line-height": {
       "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
-      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": {
+        "default": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
+      "incomplete": "Unable to determine if line-height in the style attribute meets the minimum"
     },
     "important-word-spacing": {
       "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+      "fail": {
+        "default": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
+      "incomplete": "Unable to determine if word-spacing in the style attribute meets the minimum"
     },
     "is-on-screen": {
       "pass": "Element is not visible",
@@ -1136,7 +1163,6 @@
     },
     "th-has-data-cells": {
       "pass": "All table header cells refer to data cells",
-      "fail": "Not all table header cells refer to data cells",
       "incomplete": "Table data cells are missing or empty"
     },
     "hidden-content": {

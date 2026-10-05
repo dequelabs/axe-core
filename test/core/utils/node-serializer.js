@@ -185,6 +185,7 @@ describe('nodeSerializer', () => {
     });
 
     it('converts DqElements relatedNodes to specs', () => {
+      fixture.innerHTML = '<p>related</p>';
       const dqElm = new DqElement(fixture);
       const related = new DqElement(fixture.querySelector('p'));
       const rawNodeResults = [

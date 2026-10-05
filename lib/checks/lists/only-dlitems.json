@@ -10,7 +10,8 @@
     "impact": "serious",
     "messages": {
       "pass": "dl element only has direct children that are allowed inside; <dt>, <dd>, or <div> elements",
-      "fail": "dl element has direct children that are not allowed: ${data.values}"
+      "fail": "dl element has direct children that are not allowed: ${data.values}",
+      "incomplete": "Unable to determine if dl element only has allowed direct children"
     }
   }
 }

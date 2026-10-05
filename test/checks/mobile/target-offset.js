@@ -1,6 +1,6 @@
 describe('target-offset tests', () => {
   const checkContext = axe.testUtils.MockCheckContext();
-  const { checkSetup, getCheckEvaluate } = axe.testUtils;
+  const { checkSetup, getCheckEvaluate, html } = axe.testUtils;
   const checkEvaluate = getCheckEvaluate('target-offset');
 
   afterEach(() => {
@@ -115,6 +115,23 @@ describe('target-offset tests', () => {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
+  it('ignores same-destination anchors as neighbors', () => {
+    const checkArgs = checkSetup(html`
+      <a
+        href="/foo"
+        id="target"
+        style="display: inline-block; width:16px; height:16px; margin-right: 7px"
+        >x</a
+      ><a href="/foo" style="display: inline-block; width:16px; height:16px;"
+        >x</a
+      >
+    `);
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+  });
+
   it('ignores obscured widget elements as neighbors', () => {
     const checkArgs = checkSetup(`
       <div style="position: fixed; bottom: 0">
@@ -146,6 +163,106 @@ describe('target-offset tests', () => {
     assert.deepEqual(relatedIds, ['#left', '#right']);
   });
 
+  describe('with neighbors that link to the same destination', () => {
+    const card = (targetHref, coverHref = '/foo') => html`
+      <div style="position: relative; width: 100px; height: 60px;">
+        <a
+          href="${coverHref}"
+          id="cover"
+          style="position: absolute; inset: 0;"
+        ></a>
+        <a
+          href="${targetHref}"
+          id="target"
+          style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;"
+          >x</a
+        >
+      </div>
+    `;
+
+    it('returns true when the close neighbor is a large anchor to the same destination', () => {
+      const checkArgs = checkSetup(card('/foo'));
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        closestOffset: 24,
+        minOffset: 24
+      });
+    });
+
+    it('returns true when the same destination is written as an absolute URL', () => {
+      const checkArgs = checkSetup(card(`${location.origin}/foo`));
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+
+    it('returns false when the large neighbor links to a different destination', () => {
+      const checkArgs = checkSetup(card('/bar'));
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(
+        checkContext._relatedNodes.map(node => `#${node.id}`),
+        ['#cover']
+      );
+    });
+
+    describe('and a different-destination neighbor', () => {
+      const markup = html`
+        <div style="position: relative; width: 100px; height: 60px;">
+          <a href="/foo" id="cover" style="position: absolute; inset: 0;"></a>
+          <a
+            href="/foo"
+            id="small"
+            style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px; margin-right: 4px;"
+            >x</a
+          ><a
+            href="/bar"
+            id="other"
+            style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;"
+            >x</a
+          >
+        </div>
+      `;
+
+      it('returns false for the target, with only the different-destination neighbor related', () => {
+        const checkArgs = checkSetup(markup, {}, '#small');
+        assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(
+          checkContext._relatedNodes.map(node => `#${node.id}`),
+          ['#other']
+        );
+      });
+
+      it('returns false for the different-destination neighbor', () => {
+        const checkArgs = checkSetup(markup, {}, '#other');
+        assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(
+          checkContext._relatedNodes.map(node => `#${node.id}`),
+          ['#cover', '#small']
+        );
+      });
+    });
+
+    it('returns true when the same-destination neighbor is in shadow DOM', () => {
+      const checkArgs = checkSetup(html`
+        <div style="position: relative; width: 100px; height: 60px;">
+          <div style="position: absolute; inset: 0;">
+            <template shadowrootmode="open">
+              <a
+                href="/foo"
+                style="display: block; width: 100px; height: 60px;"
+              ></a>
+            </template>
+          </div>
+          <a
+            href="/foo"
+            id="target"
+            style="position: relative; z-index: 1; display: inline-block; width: 16px; height: 16px;"
+            >x</a
+          >
+        </div>
+      `);
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+    });
+  });
+
   it('returns undefined if there are too many focusable widgets', () => {
     let rows = '';
     for (let i = 0; i < 100; i++) {
@@ -168,6 +285,72 @@ describe('target-offset tests', () => {
       messageKey: 'tooManyRects',
       closestOffset: 0,
       minOffset: 24
+    });
+  });
+
+  describe('neighbor distance', () => {
+    function tinyTargets(neighborLeft, neighborTop) {
+      return `
+        <div style="position: relative">
+          <a href="#" id="target" style="position: absolute; left: 0; top: 0; width: 2px; height: 2px"></a>
+          <a href="#" style="position: absolute; left: ${neighborLeft}px; top: ${neighborTop}px; width: 2px; height: 2px"></a>
+        </div>
+      `;
+    }
+
+    it('returns false for an undersized neighbor less than minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(23, 0));
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+    });
+
+    it('returns false for an undersized neighbor diagonally less than minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(16, 16));
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 21.2, 0.2);
+    });
+
+    it('uses the minOffset option to find neighbors', () => {
+      const checkArgs = checkSetup(tinyTargets(32, 0), { minOffset: 40 });
+
+      assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+      assert.equal(checkContext._data.minOffset, 40);
+      assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+    });
+
+    it('returns true for an undersized neighbor minOffset away', () => {
+      const checkArgs = checkSetup(tinyTargets(26, 0));
+
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+    });
+
+    it('ignores neighbors at least minOffset away, even with too many rects', () => {
+      let rows = '';
+      for (let i = 0; i < 100; i++) {
+        rows += `
+          <tr>
+            <td><a href="#">A</a></td>
+            <td><button>B</button></td>
+            <td><button>C</button></td>
+            <td><button>D</button></td>
+          </tr>
+        `;
+      }
+      const checkArgs = checkSetup(
+        `<div><a href="#" id="target" style="display: inline-block; width:16px; height:16px;">x</a></div>` +
+          `<div role="button" tabindex="0" style="display: inline-block; margin-top: 24px">` +
+          `<table>${rows}</table>` +
+          `</div>`
+      );
+
+      assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        closestOffset: 24,
+        minOffset: 24
+      });
     });
   });
 

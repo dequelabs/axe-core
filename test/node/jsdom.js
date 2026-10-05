@@ -162,6 +162,35 @@ describe('jsdom axe-core', () => {
     });
   });
 
+  describe('open dialog element', () => {
+    // https://github.com/dequelabs/axe-core/issues/4997
+    it('reports violations without skipping rules', () => {
+      const dom = new jsdom.JSDOM(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head><meta charset="UTF-8"><title>Document</title></head>
+        <body>
+        <dialog open><button></button></dialog>
+        </body>
+        </html>
+      `);
+
+      return axe
+        .run(dom.window.document.documentElement, {
+          runOnly: ['button-name']
+        })
+        .then(results => {
+          const skippedRules = results.incomplete.filter(
+            result => result.error
+          );
+          assert.strictEqual(skippedRules.length, 0);
+          assert.strictEqual(results.violations.length, 1);
+          assert.strictEqual(results.violations[0].id, 'button-name');
+          assert.strictEqual(results.violations[0].nodes.length, 1);
+        });
+    });
+  });
+
   describe('axe.setup()', () => {
     afterEach(() => {
       axe.teardown();

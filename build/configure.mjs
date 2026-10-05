@@ -72,7 +72,7 @@ function buildRules(ctx, options, callback) {
       experimental: {
         title: 'Experimental Rules',
         intro:
-          'Rules we are still testing and developing. They are disabled by default in axe-core, but are enabled for the axe browser extensions.',
+          'Rules we are still testing and developing. They are disabled by default in axe-core and the axe browser extensions.',
         rules: []
       },
       deprecated: {

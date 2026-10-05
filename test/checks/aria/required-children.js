@@ -203,6 +203,87 @@ describe('aria-required-children', () => {
     assert.deepEqual(checkContext._relatedNodes, [unallowed]);
   });
 
+  it('should explain why a presentational child with tabindex is not allowed', () => {
+    const params = checkSetup(html`
+      <div id="target" role="grid">
+        <div role="presentation" tabindex="-1">
+          <div role="row"><div role="columnheader">foo</div></div>
+        </div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    const unallowed = axe.utils.querySelectorAll(
+      axe._tree,
+      '[role="presentation"]'
+    )[0];
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowedPresentational',
+      values: '[tabindex]'
+    });
+    assert.deepEqual(checkContext._relatedNodes, [unallowed]);
+  });
+
+  it('should explain why a presentational child with a global ARIA attribute is not allowed', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><div role="none" aria-live="polite"><div role="listitem">List item 1</div></div></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowedPresentational',
+      values: '[aria-live]'
+    });
+  });
+
+  it('should list presentational children with their attribute when other children are not allowed', () => {
+    const params = checkSetup(html`
+      <div id="target" role="list">
+        <div role="presentation" tabindex="-1">
+          <div role="listitem">List item 1</div>
+        </div>
+        <div role="tabpanel"></div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation][tabindex], [role=tabpanel]'
+    });
+  });
+
+  it('should not blame an attribute for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="presentation">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation]'
+    });
+  });
+
+  it('should not blame tabindex for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="presentation" tabindex="-1">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=presentation]'
+    });
+  });
+
+  it('should not blame a global ARIA attribute for a natively focusable presentational child', () => {
+    const params = checkSetup(
+      '<div id="target" role="list"><button role="none" aria-label="x">Hello</button></div>'
+    );
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=none]'
+    });
+  });
+
   it('should remove duplicate unallowed selectors', () => {
     const params = checkSetup(html`
       <div id="target" role="list">
@@ -386,6 +467,73 @@ describe('aria-required-children', () => {
       '<div role="listbox" id="target"><ul role="rowgroup"><li role="option">Option</li></ul></div>'
     );
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should pass when a child role requires the parent role as its context', () => {
+    for (const role of ['table', 'grid', 'treegrid']) {
+      const params = checkSetup(html`
+        <div role="${role}" id="target">
+          <div role="caption">Caption</div>
+          <div role="row"><span role="cell">Cell</span></div>
+        </div>
+      `);
+      assert.isTrue(requiredChildrenCheck.apply(checkContext, params), role);
+    }
+  });
+
+  it('should pass when a child role requires the parent role as its context in shadow tree', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target">
+        <template shadowrootmode="open">
+          <div role="caption">Caption</div>
+          <div role="row"><span role="cell">Cell</span></div>
+        </template>
+      </div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should pass when a caption outside the table is owned with aria-owns', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption">
+        <div role="row"><span role="cell">Cell</span></div>
+      </div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isTrue(requiredChildrenCheck.apply(checkContext, params));
+  });
+
+  it('should fail when the only owned child is a caption', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target" aria-owns="caption"></div>
+      <div role="caption" id="caption">Caption</div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
+  });
+
+  it('should fail when a child role does not require the parent role as its context', () => {
+    const params = checkSetup(html`
+      <div role="list" id="target">
+        <div role="caption">Caption</div>
+        <div role="listitem">Item</div>
+      </div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'unallowed',
+      values: '[role=caption]'
+    });
+  });
+
+  it('should fail when the only child is allowed by context but not required', () => {
+    const params = checkSetup(html`
+      <div role="table" id="target"><div role="caption">Caption</div></div>
+    `);
+    assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
+
+    assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
   });
 
   describe('options', () => {

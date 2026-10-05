@@ -78,28 +78,29 @@ Each rule in axe-core has a number of tags. These provide metadata about the rul
 
 The `experimental`, `ACT`, `TT`, and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
-| Tag Name          | Accessibility Standard / Purpose                                                                                              |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `wcag2a`          | WCAG 2.0 Level A                                                                                                              |
-| `wcag2aa`         | WCAG 2.0 Level AA                                                                                                             |
-| `wcag2aaa`        | WCAG 2.0 Level AAA                                                                                                            |
-| `wcag21a`         | WCAG 2.1 Level A                                                                                                              |
-| `wcag21aa`        | WCAG 2.1 Level AA                                                                                                             |
-| `wcag22aa`        | WCAG 2.2 Level AA                                                                                                             |
-| `best-practice`   | Common accessibility best practices                                                                                           |
-| `wcag2a-obsolete` | WCAG 2.0 Level A, no longer required for conformance                                                                          |
-| `wcag***`         | WCAG success criterion e.g. wcag111 maps to SC 1.1.1                                                                          |
-| `ACT`             | W3C approved Accessibility Conformance Testing rules                                                                          |
-| `section508`      | Old Section 508 rules                                                                                                         |
-| `section508.*.*`  | Requirement in old Section 508                                                                                                |
-| `TTv5`            | Trusted Tester v5 rules                                                                                                       |
-| `TT*.*`           | Test ID in Trusted Tester                                                                                                     |
-| `EN-301-549`      | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf) |
-| `EN-9.*`          | Section in EN 301 549 listing the requirement                                                                                 |
-| `RGAAv4`          | Rule required under [RGAA](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/)                                |
-| `RGAA-*.*.*`      | Section in RGAA listing the requirement                                                                                       |
-| `experimental`    | Cutting-edge rules, disabled by default                                                                                       |
-| `cat.*`           | Category mappings used by Deque (see below)                                                                                   |
+| Tag Name          | Accessibility Standard / Purpose                                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `wcag2a`          | WCAG 2.0 Level A                                                                                                                     |
+| `wcag2aa`         | WCAG 2.0 Level AA                                                                                                                    |
+| `wcag2aaa`        | WCAG 2.0 Level AAA                                                                                                                   |
+| `wcag21a`         | WCAG 2.1 Level A                                                                                                                     |
+| `wcag21aa`        | WCAG 2.1 Level AA                                                                                                                    |
+| `wcag22aa`        | WCAG 2.2 Level AA                                                                                                                    |
+| `best-practice`   | Common accessibility best practices                                                                                                  |
+| `wcag2a-obsolete` | WCAG 2.0 Level A, no longer required for conformance                                                                                 |
+| `wcag***`         | WCAG success criterion e.g. wcag111 maps to SC 1.1.1                                                                                 |
+| `ACT`             | W3C approved Accessibility Conformance Testing rules                                                                                 |
+| `section508`      | Old Section 508 rules                                                                                                                |
+| `section508.*.*`  | Requirement in old Section 508                                                                                                       |
+| `TTv5`            | Trusted Tester v5 rules                                                                                                              |
+| `TT*.*`           | Test ID in Trusted Tester                                                                                                            |
+| `EN-301-549`      | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf)        |
+| `EN-301-549v4`    | Rule required under [EN 301 549](https://www.etsi.org/deliver/etsi_en/301500_301599/301549/04.01.01_60/en_301549v040101p.pdf) v4.1.1 |
+| `EN-9.*`          | Section in EN 301 549 listing the requirement                                                                                        |
+| `RGAAv4`          | Rule required under [RGAA](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/)                                       |
+| `RGAA-*.*.*`      | Section in RGAA listing the requirement                                                                                              |
+| `experimental`    | Cutting-edge rules, disabled by default                                                                                              |
+| `cat.*`           | Category mappings used by Deque (see below)                                                                                          |
 
 All rules have a `cat.*` tag, which indicates what type of content it is part of. The following `cat.*` tags exist in axe-core:
 
@@ -226,7 +227,7 @@ axe.configure({
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes
       - `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
-      - `evaluate` - string(required for new). The ID of the function that implements the check's functionality. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+      - `evaluate` - string(required for new). The ID of the function that implements the check's functionality. Each `-evaluate.js` file in `lib/checks` defines one ID: the file name without `.js` (e.g. `aria-prohibited-attr-evaluate`). The map of all IDs, `lib/core/base/metadata-function-map.js`, is generated at build time.
       - `after` - string(optional). The ID of the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
       - `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
       - `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
@@ -244,7 +245,7 @@ axe.configure({
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. See [axe-core tags](#axe-core-tags).
-      - `matches` - string(optional). The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+      - `matches` - string(optional). The ID of the filtering function that will exclude elements that match the `selector` property. Each `-matches.js` file in `lib/rules` defines one ID: the file name without `.js` (e.g. `aria-allowed-attr-matches`). The map of all IDs, `lib/core/base/metadata-function-map.js`, is generated at build time.
   - `standards` - object(optional). Used to configure the standards object. See the [Standards Object docs](./standards-object.md) for the structure of each standards object.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
@@ -718,6 +719,7 @@ Each object returned in these arrays have the following properties:
       - `html` - HTML source of the related node
   - `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
   - `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
+  - `failureSummary` - How to fix the violation. Only nodes in the `violations` and `incomplete` arrays have this property.
 
 #### Example 2
 

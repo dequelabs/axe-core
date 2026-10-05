@@ -17,7 +17,7 @@ describe('color-contrast', () => {
     axe._tree = undefined;
   });
 
-  it('should return undefined if cannot handle color', () => {
+  it('does not return undefined when color uses "none"', () => {
     const params = checkSetup(html`
       <div
         id="divundertest"
@@ -28,16 +28,11 @@ describe('color-contrast', () => {
     `);
 
     const expectedRelatedNodes = fixture.querySelector('#divundertest');
-    assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+    assert.isDefined(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
-    assert.deepEqual(checkContext._data.messageKey, 'colorParse');
-    assert.equal(
-      checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
-    );
   });
 
-  it('should return undefined if cannot handle backgroundcolor', () => {
+  it('does not return undefined when background-color uses "none"', () => {
     const params = checkSetup(html`
       <div
         style="color: gray; background-color: oklch(0.961073 0.000047911 none / 0.2); font-size: 14pt; font-weight: 900;"
@@ -45,13 +40,8 @@ describe('color-contrast', () => {
         <span id="target" style="font-weight:lighter;">My text</span>
       </div>
     `);
-    assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+    assert.isDefined(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, []);
-    assert.deepEqual(checkContext._data.messageKey, 'colorParse');
-    assert.equal(
-      checkContext._data.colorParse,
-      'oklch(0.961073 0.000047911 none / 0.2)'
-    );
   });
 
   it('should return undefined if cannot handle text-shadow', () => {
@@ -943,6 +933,138 @@ x
 
       const actual = contrastEvaluate.apply(checkContext, params);
       assert.isFalse(actual);
+    });
+  });
+
+  describe('with empty text entry', () => {
+    it('should return undefined for an empty text input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty textarea with insufficient contrast', () => {
+      const params = checkSetup(
+        '<textarea id="target" style="background-color: #fff; color: #eee"></textarea>'
+      );
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty password input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="password"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for an empty text input with a placeholder and insufficient contrast', () => {
+      const params = checkSetup(html`
+        <style>
+          .placeholder-000::placeholder {
+            color: #000;
+          }
+        </style>
+        <input
+          id="target"
+          type="text"
+          class="placeholder-000"
+          placeholder="Placeholder"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return undefined for a whitespace-only text input with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          value="   "
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
+    });
+
+    it('should return true for an empty text input with sufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          style="background-color: #fff; color: #000"
+        />
+      `);
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+
+    it('should return false for a text input with a value and insufficient contrast', () => {
+      const params = checkSetup(html`
+        <input
+          id="target"
+          type="text"
+          value="hello"
+          style="background-color: #fff; color: #eee"
+        />
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('should return false for a text input with a script-set value and insufficient contrast', () => {
+      const input = document.createElement('input');
+      input.id = 'target';
+      input.type = 'text';
+      input.setAttribute('style', 'background-color: #fff; color: #eee');
+      input.value = 'hello';
+      const params = checkSetup(input);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('should return undefined for an empty text input in Shadow DOM with insufficient contrast', () => {
+      const params = checkSetup(html`
+        <div>
+          <template shadowrootmode="open">
+            <input
+              id="target"
+              type="text"
+              style="background-color: #fff; color: #eee"
+            />
+          </template>
+        </div>
+      `);
+
+      const actual = contrastEvaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.equal(checkContext._data.messageKey, 'emptyValue');
     });
   });
 

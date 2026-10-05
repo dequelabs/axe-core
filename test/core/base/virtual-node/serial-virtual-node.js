@@ -1,6 +1,14 @@
 describe('SerialVirtualNode', () => {
   const SerialVirtualNode = axe.SerialVirtualNode;
 
+  it('should stringify uniquely against a DOM-backed VirtualNode', () => {
+    const fixture = document.querySelector('#fixture') || document.body;
+    const domNode = new axe.VirtualNode(fixture);
+    const serialNode = new axe.SerialVirtualNode({ nodeName: 'div' });
+
+    assert.notEqual(String(domNode), String(serialNode));
+  });
+
   it('extends AbstractVirtualNode', () => {
     const vNode = new SerialVirtualNode({
       nodeName: 'div'

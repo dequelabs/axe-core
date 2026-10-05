@@ -3,13 +3,24 @@
   "evaluate": "label-content-name-mismatch-evaluate",
   "options": {
     "pixelThreshold": 0.1,
-    "occurrenceThreshold": 3
+    "occurrenceThreshold": 3,
+    "valueTextRoles": [
+      "switch",
+      "checkbox",
+      "radio",
+      "menuitemcheckbox",
+      "menuitemradio"
+    ]
   },
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Element contains visible text as part of it's accessible name",
-      "fail": "Text inside the element is not included in the accessible name"
+      "pass": "Element contains visible text as part of its accessible name",
+      "fail": "Text inside the element is not included in the accessible name",
+      "incomplete": {
+        "default": "Unable to determine if the visible text is part of the accessible name",
+        "valueText": "Text inside the element may be value text rather than a label"
+      }
     }
   }
 }

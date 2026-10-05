@@ -5,6 +5,7 @@ describe('inline-style-property tests', () => {
 
   afterEach(() => {
     fixture.innerHTML = '';
+    sinon.restore();
   });
 
   describe('important-letter-spacing check', () => {
@@ -178,6 +179,21 @@ describe('inline-style-property tests', () => {
         });
       });
     });
+
+    it('is undefined when the computed letter-spacing is not a number', () => {
+      const params = checkSetup(
+        '<p style="letter-spacing: 0.1em !important" id="target">Hello world</p>'
+      );
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
+        minValue: 0.12
+      });
+    });
   });
 
   describe('important-word-spacing check', () => {
@@ -230,6 +246,274 @@ describe('inline-style-property tests', () => {
         minValue: 0.16
       });
     });
+
+    it('is undefined when the computed word-spacing is not a number', () => {
+      const params = checkSetup(
+        '<p style="word-spacing: 0.1em !important" id="target">Hello world</p>'
+      );
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
+        minValue: 0.16
+      });
+    });
+
+    describe('with text in descendants', () => {
+      it('is false when a descendant inherits a spacing below the minimum', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p id="child">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._data, { value: 0.1, minValue: 0.16 });
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('measures the spacing against the font-size of the text', () => {
+        const params = checkSetup(html`
+          <div
+            id="target"
+            style="font-size: 16px; word-spacing: 2px !important"
+          >
+            <p style="font-size: 10px">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.deepEqual(checkContext._data, { value: 0.2, minValue: 0.16 });
+      });
+
+      it('fails when the text has a font-size the spacing is too small for', () => {
+        const params = checkSetup(html`
+          <div
+            id="target"
+            style="font-size: 10px; word-spacing: 2px !important"
+          >
+            <p style="font-size: 16px">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._data, { value: 0.13, minValue: 0.16 });
+      });
+
+      it('is true when every text sets the property itself', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: 0.2em !important">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.isNull(checkContext._data);
+        assert.lengthOf(checkContext._relatedNodes, 0);
+      });
+
+      it('skips text below an element that sets the property itself', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: 0.2em">
+              <span>Hello world</span>
+            </p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.isNull(checkContext._data);
+      });
+
+      it('does not skip text below an element that inherits the property', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: inherit">
+              <span id="child">Hello world</span>
+            </p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('does not skip text below an element that unsets the property', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: unset">
+              <span id="child">Hello world</span>
+            </p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('skips text that a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .tight {
+              word-spacing: 0.05em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.5em !important">
+            <p class="tight">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.isNull(checkContext._data);
+        assert.lengthOf(checkContext._relatedNodes, 0);
+      });
+
+      it('skips the text below an element a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .tight {
+              word-spacing: 0.05em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.5em !important">
+            <div class="tight"><p>Hello world</p></div>
+            <p id="child" style="font-size: 10px">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        // 8px inherited, on the 10px font-size of the text that is measured
+        assert.deepEqual(checkContext._data, { value: 0.8, minValue: 0.16 });
+      });
+
+      it('fails for text next to text a stylesheet gives a spacing of its own', () => {
+        const params = checkSetup(html`
+          <style>
+            .loose {
+              word-spacing: 0.5em;
+            }
+          </style>
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p class="loose">Hello world</p>
+            <p id="child">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('fails for text that inherits the property next to text that does not', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="word-spacing: 0.2em !important">Hello world</p>
+            <p id="child">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('ignores text that is not visible', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            <p style="display: none">Hello world</p>
+            <p style="opacity: 0">Hello world</p>
+            <p></p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isTrue(result);
+        assert.isNull(checkContext._data);
+      });
+
+      it('does not list the element itself as a related node', () => {
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            Hello world
+            <p id="child">Hello world</p>
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.deepEqual(checkContext._relatedNodes, [
+          fixture.querySelector('#child')
+        ]);
+      });
+
+      it('finds text in the shadow DOM', () => {
+        const params = axe.testUtils.shadowCheckSetup(
+          '<div id="target" style="word-spacing: 0.1em !important"><div id="shadow"></div></div>',
+          '<p>Hello world</p>'
+        );
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.lengthOf(checkContext._relatedNodes, 1);
+      });
+
+      it('lists at most five related nodes', () => {
+        const paragraphs = '<p>Hello world</p>'.repeat(5);
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            ${paragraphs}
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.lengthOf(checkContext._relatedNodes, 5);
+        assert.deepEqual(checkContext._data, { value: 0.1, minValue: 0.16 });
+      });
+
+      it('stops looking after the failure that sets the messageKey', () => {
+        const paragraphs = '<p>Hello world</p>'.repeat(10);
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            ${paragraphs}
+          </div>
+        `);
+        const getComputedStyle = sinon.spy(window, 'getComputedStyle');
+        const result = checkEvaluate.apply(checkContext, params);
+        const styled = getComputedStyle.args.map(([element]) => element);
+        const paragraphNodes = Array.from(fixture.querySelectorAll('p'));
+        assert.isFalse(result);
+        assert.equal(checkContext._data.messageKey, 'omitted');
+        assert.isTrue(
+          paragraphNodes.slice(0, 6).every(p => styled.includes(p))
+        );
+        assert.isFalse(paragraphNodes.slice(6).some(p => styled.includes(p)));
+      });
+
+      it('sets the messageKey when related nodes are left out', () => {
+        const paragraphs = '<p>Hello world</p>'.repeat(6);
+        const params = checkSetup(html`
+          <div id="target" style="word-spacing: 0.1em !important">
+            ${paragraphs}
+          </div>
+        `);
+        const result = checkEvaluate.apply(checkContext, params);
+        assert.isFalse(result);
+        assert.lengthOf(checkContext._relatedNodes, 5);
+        assert.deepEqual(checkContext._data, {
+          value: 0.1,
+          minValue: 0.16,
+          messageKey: 'omitted'
+        });
+      });
+    });
   });
 
   describe('important-line-height check', () => {
@@ -245,6 +529,72 @@ describe('inline-style-property tests', () => {
       const params = checkSetup(
         '<p style="width: 60%" id="target">Hello world</p>'
       );
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+      assert.isNull(checkContext._data);
+    });
+
+    it('only measures the descendants with text on more than one line', () => {
+      const params = checkSetup(html`
+        <div
+          id="target"
+          style="line-height: 1.2em !important; max-width: 200px;"
+        >
+          <p>Banana</p>
+          <p id="multiline">
+            The toy brought back fond memories of being lost in the rain forest.
+          </p>
+        </div>
+      `);
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, { value: 1.2, minValue: 1.5 });
+      assert.deepEqual(checkContext._relatedNodes, [
+        fixture.querySelector('#multiline')
+      ]);
+    });
+
+    it('measures a descendant with another font-size against the line-height it inherits', () => {
+      const params = checkSetup(html`
+        <div id="target" style="line-height: 1.2 !important; max-width: 200px;">
+          <p id="multiline" style="font-size: 10px">
+            The toy brought back fond memories of being lost in the rain forest.
+          </p>
+        </div>
+      `);
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, { value: 1.2, minValue: 1.5 });
+      assert.deepEqual(checkContext._relatedNodes, [
+        fixture.querySelector('#multiline')
+      ]);
+    });
+
+    it('skips a descendant that a stylesheet gives a line-height of its own', () => {
+      const params = checkSetup(html`
+        <style>
+          .tight {
+            line-height: 1.1;
+          }
+        </style>
+        <div id="target" style="line-height: 1.6 !important; max-width: 200px;">
+          <p class="tight" style="font-size: 10px">
+            The toy brought back fond memories of being lost in the rain forest.
+          </p>
+        </div>
+      `);
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+      assert.isNull(checkContext._data);
+    });
+
+    it('is true when no descendant with text is on more than one line', () => {
+      const params = checkSetup(html`
+        <div id="target" style="line-height: 1.2em !important;">
+          <p>Banana</p>
+          <p>Apple</p>
+        </div>
+      `);
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);
@@ -315,6 +665,23 @@ describe('inline-style-property tests', () => {
       const result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);
+    });
+
+    it('is undefined when the computed line-height is not a number', () => {
+      const params = checkSetup(html`
+        <p style="line-height: 1.2em !important; max-width: 200px;" id="target">
+          The toy brought back fond memories of being lost in the rain forest.
+        </p>
+      `);
+      sinon
+        .stub(window, 'getComputedStyle')
+        .returns({ getPropertyValue: () => 'invalid' });
+      const result = checkEvaluate.apply(checkContext, params);
+      assert.isUndefined(result);
+      assert.deepEqual(checkContext._data, {
+        value: 'invalid',
+        minValue: 1.5
+      });
     });
   });
 

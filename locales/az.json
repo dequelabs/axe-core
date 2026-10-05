@@ -1,0 +1,1161 @@
+{
+  "lang": "az",
+  "rules": {
+    "accesskeys": {
+      "description": "Hər accesskey atributunun dəyərinin unikal olmasını təmin edin",
+      "help": "accesskey atributunun dəyəri unikal olmalıdır"
+    },
+    "area-alt": {
+      "description": "Təsvir xəritələrinin <area> elementlərinin alternativ mətnə malik olmasını təmin edin",
+      "help": "Aktiv <area> elementlərinin alternativ mətni olmalıdır"
+    },
+    "aria-allowed-attr": {
+      "description": "Elementin rolunun onun ARIA atributlarını dəstəkləməsini təmin edin",
+      "help": "Elementlər yalnız dəstəklənən ARIA atributlarından istifadə etməlidir"
+    },
+    "aria-allowed-role": {
+      "description": "role atributunun elementə uyğun dəyərə malik olmasını təmin edin",
+      "help": "ARIA rolu elementə uyğun olmalıdır"
+    },
+    "aria-braille-equivalent": {
+      "description": "aria-braillelabel və aria-brailleroledescription atributlarının Brayl yazısında olmayan qarşılığının olmasını təmin edin",
+      "help": "aria-braille atributlarının Brayl yazısında olmayan qarşılığı olmalıdır"
+    },
+    "aria-command-name": {
+      "description": "Hər ARIA button, link və menuitem elementinin əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA əmrlərinin əlçatan adı olmalıdır"
+    },
+    "aria-conditional-attr": {
+      "description": "ARIA atributlarının elementin rolunun spesifikasiyasında təsvir edildiyi kimi istifadə olunmasını təmin edin",
+      "help": "ARIA atributları elementin rolu üçün müəyyən edildiyi kimi istifadə olunmalıdır"
+    },
+    "aria-deprecated-role": {
+      "description": "Elementlərin köhnəlmiş rollardan istifadə etməməsini təmin edin",
+      "help": "Köhnəlmiş ARIA rollarından istifadə olunmamalıdır"
+    },
+    "aria-dialog-name": {
+      "description": "Hər ARIA dialog və alertdialog düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA dialog və alertdialog düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-hidden-body": {
+      "description": "Sənədin body elementində aria-hidden=\"true\" olmamasını təmin edin.",
+      "help": "Sənədin body elementində aria-hidden=\"true\" olmamalıdır"
+    },
+    "aria-hidden-focus": {
+      "description": "aria-hidden elementlərinin fokuslana bilən olmamasını və fokuslana bilən elementlər ehtiva etməməsini təmin edin",
+      "help": "ARIA ilə gizlədilmiş element fokuslana bilən olmamalı və fokuslana bilən elementlər ehtiva etməməlidir"
+    },
+    "aria-input-field-name": {
+      "description": "Hər ARIA giriş sahəsinin əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA giriş sahələrinin əlçatan adı olmalıdır"
+    },
+    "aria-meter-name": {
+      "description": "Hər ARIA meter düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA meter düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-progressbar-name": {
+      "description": "Hər ARIA progressbar düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA progressbar düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-prohibited-attr": {
+      "description": "ARIA atributlarının elementin rolu üçün qadağan edilmədiyini təmin edin",
+      "help": "Elementlər yalnız icazə verilən ARIA atributlarından istifadə etməlidir"
+    },
+    "aria-required-attr": {
+      "description": "ARIA rolları olan elementlərin bütün tələb olunan ARIA atributlarına malik olmasını təmin edin",
+      "help": "Tələb olunan ARIA atributları göstərilməlidir"
+    },
+    "aria-required-children": {
+      "description": "Övlad rollar tələb edən ARIA roluna malik elementlərin həmin rolları ehtiva etməsini təmin edin",
+      "help": "Müəyyən ARIA rolları konkret övlad elementləri ehtiva etməlidir"
+    },
+    "aria-required-parent": {
+      "description": "Valideyn rollar tələb edən ARIA roluna malik elementlərin həmin rolların daxilində olmasını təmin edin",
+      "help": "Müəyyən ARIA rolları konkret valideyn elementlərin daxilində olmalıdır"
+    },
+    "aria-roledescription": {
+      "description": "aria-roledescription atributunun yalnız dolayı və ya açıq şəkildə təyin edilmiş rolu olan elementlərdə istifadə olunmasını təmin edin",
+      "help": "aria-roledescription semantik rolu olan elementlərdə olmalıdır"
+    },
+    "aria-roles": {
+      "description": "role atributu olan bütün elementlərin etibarlı dəyərdən istifadə etməsini təmin edin",
+      "help": "İstifadə olunan ARIA rolları etibarlı dəyərlərə uyğun olmalıdır"
+    },
+    "aria-tab-name": {
+      "description": "Hər ARIA tab düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA tab düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-text": {
+      "description": "role=\"text\" atributunun fokuslana bilən törəmə elementləri olmayan elementlərdə istifadə olunmasını təmin edin",
+      "help": "\"role=text\" atributu olan elementin fokuslana bilən törəmə elementləri olmamalıdır"
+    },
+    "aria-toggle-field-name": {
+      "description": "Hər ARIA keçid vəziyyətli sahəsinin əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA keçid vəziyyətli sahələrinin əlçatan adı olmalıdır"
+    },
+    "aria-tooltip-name": {
+      "description": "Hər ARIA tooltip düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA tooltip düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-treeitem-name": {
+      "description": "Hər ARIA treeitem düyününün əlçatan ada malik olmasını təmin edin",
+      "help": "ARIA treeitem düyünlərinin əlçatan adı olmalıdır"
+    },
+    "aria-valid-attr-value": {
+      "description": "Bütün ARIA atributlarının etibarlı dəyərlərə malik olmasını təmin edin",
+      "help": "ARIA atributları etibarlı dəyərlərə uyğun olmalıdır"
+    },
+    "aria-valid-attr": {
+      "description": "aria- ilə başlayan atributların etibarlı ARIA atributları olmasını təmin edin",
+      "help": "ARIA atributları etibarlı adlara uyğun olmalıdır"
+    },
+    "audio-caption": {
+      "description": "<audio> elementlərinin subtitrlərə malik olmasını təmin edin",
+      "help": "<audio> elementlərinin subtitr cığırı olmalıdır"
+    },
+    "autocomplete-valid": {
+      "description": "autocomplete atributunun düzgün və forma sahəsinə uyğun olmasını təmin edin",
+      "help": "autocomplete atributu düzgün istifadə olunmalıdır"
+    },
+    "avoid-inline-spacing": {
+      "description": "style atributları vasitəsilə təyin edilmiş mətn aralıqlarının fərdi üslub cədvəlləri ilə tənzimlənə bilməsini təmin edin",
+      "help": "Sətirdaxili mətn aralıqları fərdi üslub cədvəlləri ilə tənzimlənə bilməlidir"
+    },
+    "blink": {
+      "description": "<blink> elementlərindən istifadə olunmamasını təmin edin",
+      "help": "<blink> elementləri köhnəlmişdir və istifadə olunmamalıdır"
+    },
+    "button-name": {
+      "description": "Düymələrin ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "Düymələrin ayırd edilə bilən mətni olmalıdır"
+    },
+    "bypass": {
+      "description": "Hər səhifədə istifadəçinin naviqasiyanı ötürərək birbaşa məzmuna keçməsi üçün ən azı bir mexanizmin olmasını təmin edin",
+      "help": "Səhifədə təkrarlanan blokları ötürmək üçün vasitələr olmalıdır"
+    },
+    "color-contrast-enhanced": {
+      "description": "Ön plan və fon rəngləri arasındakı kontrastın WCAG 2 AAA səviyyəsinin artırılmış kontrast nisbəti hədlərinə uyğun olmasını təmin edin",
+      "help": "Elementlər artırılmış rəng kontrastı nisbəti hədlərinə uyğun olmalıdır"
+    },
+    "color-contrast": {
+      "description": "Ön plan və fon rəngləri arasındakı kontrastın WCAG 2 AA səviyyəsinin minimum kontrast nisbəti hədlərinə uyğun olmasını təmin edin",
+      "help": "Elementlər minimum rəng kontrastı nisbəti hədlərinə uyğun olmalıdır"
+    },
+    "css-orientation-lock": {
+      "description": "Məzmunun konkret ekran istiqamətinə kilidlənməməsini və bütün ekran istiqamətlərində işlək olmasını təmin edin",
+      "help": "CSS media sorğuları ekran istiqamətini kilidləməməlidir"
+    },
+    "definition-list": {
+      "description": "<dl> elementlərinin düzgün qurulmasını təmin edin",
+      "help": "<dl> elementləri birbaşa yalnız düzgün sıralanmış <dt> və <dd> qruplarını, <script>, <template> və ya <div> elementlərini ehtiva etməlidir"
+    },
+    "dlitem": {
+      "description": "<dt> və <dd> elementlərinin <dl> daxilində olmasını təmin edin",
+      "help": "<dt> və <dd> elementləri <dl> daxilində olmalıdır"
+    },
+    "document-title": {
+      "description": "Hər HTML sənədinin boş olmayan <title> elementini ehtiva etməsini təmin edin",
+      "help": "Naviqasiyaya kömək etmək üçün sənədlərin <title> elementi olmalıdır"
+    },
+    "duplicate-id-active": {
+      "description": "Aktiv elementlərin hər id atributunun dəyərinin unikal olmasını təmin edin",
+      "help": "Aktiv elementlərin ID-ləri unikal olmalıdır"
+    },
+    "duplicate-id-aria": {
+      "description": "ARIA və etiketlərdə istifadə olunan hər id atributunun dəyərinin unikal olmasını təmin edin",
+      "help": "ARIA və etiketlərdə istifadə olunan ID-lər unikal olmalıdır"
+    },
+    "duplicate-id": {
+      "description": "Hər id atributunun dəyərinin unikal olmasını təmin edin",
+      "help": "id atributunun dəyəri unikal olmalıdır"
+    },
+    "empty-heading": {
+      "description": "Başlıqların ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "Başlıqlar boş olmamalıdır"
+    },
+    "empty-table-header": {
+      "description": "Cədvəl başlıqlarının ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "Cədvəl başlığının mətni boş olmamalıdır"
+    },
+    "focus-order-semantics": {
+      "description": "Fokus ardıcıllığındakı elementlərin interaktiv məzmuna uyğun rola malik olmasını təmin edin",
+      "help": "Fokus ardıcıllığındakı elementlərin uyğun rolu olmalıdır"
+    },
+    "form-field-multiple-labels": {
+      "description": "Forma sahəsinin birdən çox label elementinə malik olmamasını təmin edin",
+      "help": "Forma sahəsinin birdən çox label elementi olmamalıdır"
+    },
+    "frame-focusable-content": {
+      "description": "Fokuslana bilən məzmunu olan <frame> və <iframe> elementlərində tabindex=-1 olmamasını təmin edin",
+      "help": "Fokuslana bilən məzmunu olan çərçivələrdə tabindex=-1 olmamalıdır"
+    },
+    "frame-tested": {
+      "description": "<iframe> və <frame> elementlərinin axe-core skriptini ehtiva etməsini təmin edin",
+      "help": "Çərçivələr axe-core ilə yoxlanılmalıdır"
+    },
+    "frame-title-unique": {
+      "description": "<iframe> və <frame> elementlərinin unikal title atributuna malik olmasını təmin edin",
+      "help": "Çərçivələrin unikal title atributu olmalıdır"
+    },
+    "frame-title": {
+      "description": "<iframe> və <frame> elementlərinin əlçatan ada malik olmasını təmin edin",
+      "help": "Çərçivələrin əlçatan adı olmalıdır"
+    },
+    "heading-order": {
+      "description": "Başlıqların ardıcıllığının semantik baxımdan düzgün olmasını təmin edin",
+      "help": "Başlıq səviyyələri yalnız bir pillə artmalıdır"
+    },
+    "hidden-content": {
+      "description": "İstifadəçilərə gizli məzmun barədə məlumat verin.",
+      "help": "Səhifədəki gizli məzmun təhlil edilməlidir"
+    },
+    "html-has-lang": {
+      "description": "Hər HTML sənədinin lang atributuna malik olmasını təmin edin",
+      "help": "<html> elementinin lang atributu olmalıdır"
+    },
+    "html-lang-valid": {
+      "description": "<html> elementinin lang atributunun etibarlı dəyərə malik olmasını təmin edin",
+      "help": "<html> elementinin lang atributunun dəyəri etibarlı olmalıdır"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Həm etibarlı lang, həm də xml:lang atributu olan HTML elementlərində səhifənin əsas dilinin uyğun gəlməsini təmin edin",
+      "help": "lang və xml:lang atributları olan HTML elementlərində əsas dil eyni olmalıdır"
+    },
+    "identical-links-same-purpose": {
+      "description": "Eyni əlçatan ada malik keçidlərin oxşar məqsədə xidmət etməsini təmin edin",
+      "help": "Eyni ada malik keçidlərin məqsədi oxşar olmalıdır"
+    },
+    "image-alt": {
+      "description": "<img> elementlərinin alternativ mətnə və ya none yaxud presentation roluna malik olmasını təmin edin",
+      "help": "Təsvirlərin alternativ mətni olmalıdır"
+    },
+    "image-redundant-alt": {
+      "description": "Təsvirin alternativ mətninin adi mətn kimi təkrarlanmamasını təmin edin",
+      "help": "Təsvirlərin alternativ mətni adi mətn kimi təkrarlanmamalıdır"
+    },
+    "input-button-name": {
+      "description": "input düymələrinin ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "input düymələrinin ayırd edilə bilən mətni olmalıdır"
+    },
+    "input-image-alt": {
+      "description": "<input type=\"image\"> elementlərinin alternativ mətnə malik olmasını təmin edin",
+      "help": "Təsvir düymələrinin alternativ mətni olmalıdır"
+    },
+    "label-content-name-mismatch": {
+      "description": "Məzmunu vasitəsilə etiketlənən elementlərin görünən mətninin əlçatan adlarına daxil olmasını təmin edin",
+      "help": "Elementlərin görünən mətni əlçatan adlarına daxil olmalıdır"
+    },
+    "label-title-only": {
+      "description": "Hər forma elementinin görünən etiketə malik olmasını və yalnız gizli etiketlər, title və ya aria-describedby atributları ilə etiketlənməməsini təmin edin",
+      "help": "Forma elementlərinin görünən etiketi olmalıdır"
+    },
+    "label": {
+      "description": "Hər forma elementinin etiketə malik olmasını təmin edin",
+      "help": "Forma elementlərinin etiketləri olmalıdır"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "banner oriyentirinin ən yuxarı səviyyədə olmasını təmin edin",
+      "help": "banner oriyentiri başqa oriyentirin daxilində olmamalıdır"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "complementary oriyentirinin və ya aside elementinin ən yuxarı səviyyədə olmasını təmin edin",
+      "help": "aside elementi başqa oriyentirin daxilində olmamalıdır"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "contentinfo oriyentirinin ən yuxarı səviyyədə olmasını təmin edin",
+      "help": "contentinfo oriyentiri başqa oriyentirin daxilində olmamalıdır"
+    },
+    "landmark-main-is-top-level": {
+      "description": "main oriyentirinin ən yuxarı səviyyədə olmasını təmin edin",
+      "help": "main oriyentiri başqa oriyentirin daxilində olmamalıdır"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Sənəddə ən çox bir banner oriyentirinin olmasını təmin edin",
+      "help": "Sənəddə birdən çox banner oriyentiri olmamalıdır"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Sənəddə ən çox bir contentinfo oriyentirinin olmasını təmin edin",
+      "help": "Sənəddə birdən çox contentinfo oriyentiri olmamalıdır"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Sənəddə ən çox bir main oriyentirinin olmasını təmin edin",
+      "help": "Sənəddə birdən çox main oriyentiri olmamalıdır"
+    },
+    "landmark-one-main": {
+      "description": "Sənədin main oriyentirinə malik olmasını təmin edin",
+      "help": "Sənəddə bir main oriyentiri olmalıdır"
+    },
+    "landmark-unique": {
+      "description": "Oriyentirlərin unikal olmasını təmin edin",
+      "help": "Oriyentirlərin unikal rolu və ya rol/etiket/başlıq (yəni əlçatan ad) birləşməsi olmalıdır"
+    },
+    "link-in-text-block": {
+      "description": "Keçidlərin ətrafdakı mətndən rəngdən asılı olmayan üsulla fərqləndirilməsini təmin edin",
+      "help": "Keçidlər rəngdən asılı olmadan fərqləndirilə bilməlidir"
+    },
+    "link-name": {
+      "description": "Keçidlərin ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "Keçidlərin ayırd edilə bilən mətni olmalıdır"
+    },
+    "list": {
+      "description": "Siyahıların düzgün qurulmasını təmin edin",
+      "help": "<ul> və <ol> birbaşa yalnız <li>, <script> və ya <template> elementlərini ehtiva etməlidir"
+    },
+    "listitem": {
+      "description": "<li> elementlərinin semantik baxımdan düzgün istifadə olunmasını təmin edin",
+      "help": "<li> elementləri <ul> və ya <ol> daxilində olmalıdır"
+    },
+    "marquee": {
+      "description": "<marquee> elementlərindən istifadə olunmamasını təmin edin",
+      "help": "<marquee> elementləri köhnəlmişdir və istifadə olunmamalıdır"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "<meta http-equiv=\"refresh\"> elementinin gecikdirilmiş yeniləmə üçün istifadə olunmamasını təmin edin",
+      "help": "Gecikdirilmiş yeniləmədən istifadə olunmamalıdır"
+    },
+    "meta-refresh": {
+      "description": "<meta http-equiv=\"refresh\"> elementinin gecikdirilmiş yeniləmə üçün istifadə olunmamasını təmin edin",
+      "help": "20 saatdan az gecikmə ilə yeniləmədən istifadə olunmamalıdır"
+    },
+    "meta-viewport-large": {
+      "description": "<meta name=\"viewport\"> elementinin miqyasın əhəmiyyətli dərəcədə artırılmasına imkan verməsini təmin edin",
+      "help": "İstifadəçilər mətni 500%-ə qədər böyüdə və miqyaslandıra bilməlidir"
+    },
+    "meta-viewport": {
+      "description": "<meta name=\"viewport\"> elementinin mətnin miqyaslandırılmasını və böyüdülməsini deaktiv etməməsini təmin edin",
+      "help": "Böyütmə və miqyaslandırma deaktiv edilməməlidir"
+    },
+    "nested-interactive": {
+      "description": "İnteraktiv idarəetmə elementlərinin iç-içə yerləşdirilməməsini təmin edin, çünki ekran oxuyucuları onları hər zaman elan etmir və ya onlar köməkçi texnologiyalar üçün fokus problemləri yarada bilər",
+      "help": "İnteraktiv idarəetmə elementləri iç-içə yerləşdirilməməlidir"
+    },
+    "no-autoplay-audio": {
+      "description": "<video> və ya <audio> elementlərinin səsi dayandırmaq və ya susdurmaq üçün idarəetmə mexanizmi olmadan səsi 3 saniyədən çox avtomatik səsləndirməməsini təmin edin",
+      "help": "<video> və ya <audio> elementləri avtomatik səsləndirilməməlidir"
+    },
+    "object-alt": {
+      "description": "<object> elementlərinin alternativ mətnə malik olmasını təmin edin",
+      "help": "<object> elementlərinin alternativ mətni olmalıdır"
+    },
+    "p-as-heading": {
+      "description": "<p> elementlərini başlıq kimi göstərmək üçün qalın, kursiv mətn və font-size istifadə olunmamasını təmin edin",
+      "help": "Üslub verilmiş <p> elementləri başlıq kimi istifadə olunmamalıdır"
+    },
+    "page-has-heading-one": {
+      "description": "Səhifənin və ya onun çərçivələrindən ən azı birinin birinci səviyyəli başlıq ehtiva etməsini təmin edin",
+      "help": "Səhifədə birinci səviyyəli başlıq olmalıdır"
+    },
+    "presentation-role-conflict": {
+      "description": "Təqdimat xarakterli kimi işarələnmiş elementlərin bütün ekran oxuyucuları tərəfindən nəzərə alınmaması üçün qlobal ARIA atributlarına və ya tabindex atributuna malik olmamasını təmin edin",
+      "help": "Təqdimat xarakterli kimi işarələnmiş elementlər hər yerdə nəzərə alınmamalıdır"
+    },
+    "region": {
+      "description": "Səhifənin bütün məzmununun oriyentirlər daxilində olmasını təmin edin",
+      "help": "Səhifənin bütün məzmunu oriyentirlər daxilində olmalıdır"
+    },
+    "role-img-alt": {
+      "description": "[role=\"img\"] və [role=\"image\"] elementlərinin alternativ mətnə malik olmasını təmin edin",
+      "help": "[role=\"img\"] və [role=\"image\"] elementlərinin alternativ mətni olmalıdır"
+    },
+    "scope-attr-valid": {
+      "description": "Cədvəllərdə scope atributunun düzgün istifadə olunmasını təmin edin",
+      "help": "scope atributu düzgün istifadə olunmalıdır"
+    },
+    "scrollable-region-focusable": {
+      "description": "Sürüşdürülə bilən məzmunu olan elementlərin Safari brauzerində klaviatura ilə əlçatan olmasını təmin edin",
+      "help": "Sürüşdürülə bilən bölgəyə klaviatura ilə daxil olmaq mümkün olmalıdır"
+    },
+    "select-name": {
+      "description": "select elementinin əlçatan ada malik olmasını təmin edin",
+      "help": "select elementinin əlçatan adı olmalıdır"
+    },
+    "server-side-image-map": {
+      "description": "Server tərəfindəki təsvir xəritələrindən istifadə olunmamasını təmin edin",
+      "help": "Server tərəfindəki təsvir xəritələrindən istifadə olunmamalıdır"
+    },
+    "skip-link": {
+      "description": "Bütün ötürmə keçidlərinin fokuslana bilən hədəfə malik olmasını təmin edin",
+      "help": "Ötürmə keçidinin hədəfi mövcud və fokuslana bilən olmalıdır"
+    },
+    "summary-name": {
+      "description": "summary elementlərinin ayırd edilə bilən mətnə malik olmasını təmin edin",
+      "help": "summary elementlərinin ayırd edilə bilən mətni olmalıdır"
+    },
+    "svg-img-alt": {
+      "description": "img, image, graphics-document və ya graphics-symbol roluna malik <svg> elementlərinin əlçatan mətnə malik olmasını təmin edin",
+      "help": "img və ya image roluna malik <svg> elementlərinin alternativ mətni olmalıdır"
+    },
+    "tabindex": {
+      "description": "tabindex atributunun dəyərlərinin 0-dan böyük olmamasını təmin edin",
+      "help": "Elementlərin tabindex dəyəri sıfırdan böyük olmamalıdır"
+    },
+    "table-duplicate-name": {
+      "description": "<caption> elementinin summary atributu ilə eyni mətni ehtiva etməməsini təmin edin",
+      "help": "Cədvəlin xülasəsi və sərlövhəsi eyni olmamalıdır"
+    },
+    "table-fake-caption": {
+      "description": "Sərlövhəsi olan cədvəllərin <caption> elementindən istifadə etməsini təmin edin.",
+      "help": "Verilənlər cədvəlinə sərlövhə vermək üçün verilənlər və ya başlıq xanalarından istifadə olunmamalıdır."
+    },
+    "target-size": {
+      "description": "Toxunma hədəflərinin kifayət qədər ölçüyə və aralığa malik olmasını təmin edin",
+      "help": "Bütün toxunma hədəflərinin ölçüsü 24px olmalı və ya aralarında kifayət qədər boşluq olmalıdır"
+    },
+    "td-has-header": {
+      "description": "Ölçüsü 3 x 3-dən böyük olan <table> daxilindəki hər boş olmayan verilənlər xanasının bir və ya daha çox cədvəl başlığına malik olmasını təmin edin",
+      "help": "Böyük <table> daxilindəki boş olmayan <td> elementlərinin əlaqəli cədvəl başlığı olmalıdır"
+    },
+    "td-headers-attr": {
+      "description": "Cədvəldə headers atributundan istifadə edən hər xananın yalnız həmin cədvəldəki digər <th> elementlərinə istinad etməsini təmin edin",
+      "help": "Cədvəl xanalarının headers atributları eyni cədvəldəki digər <th> elementlərinə istinad etməlidir"
+    },
+    "th-has-data-cells": {
+      "description": "<th> elementlərinin və role=columnheader/rowheader olan elementlərin təsvir etdikləri verilənlər xanalarına malik olmasını təmin edin",
+      "help": "Verilənlər cədvəlindəki cədvəl başlıqları verilənlər xanalarına istinad etməlidir"
+    },
+    "valid-lang": {
+      "description": "lang atributlarının etibarlı dəyərlərə malik olmasını təmin edin",
+      "help": "lang atributunun dəyəri etibarlı olmalıdır"
+    },
+    "video-caption": {
+      "description": "<video> elementlərinin subtitrlərə malik olmasını təmin edin",
+      "help": "<video> elementlərinin subtitrləri olmalıdır"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstrakt rollardan istifadə olunmur",
+      "fail": {
+        "singular": "Abstrakt rol birbaşa istifadə oluna bilməz: ${data.values}",
+        "plural": "Abstrakt rollar birbaşa istifadə oluna bilməz: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "Bu element üçün ARIA atributlarına icazə verilir",
+      "fail": {
+        "singular": "${data.nodeName} elementlərində bu ARIA atributuna icazə verilmir: ${data.values}",
+        "plural": "${data.nodeName} elementlərində bu ARIA atributlarına icazə verilmir: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "Təyin edilmiş rol üçün ARIA atributları düzgün istifadə olunur",
+      "fail": {
+        "singular": "ARIA atributuna icazə verilmir: ${data.values}",
+        "plural": "ARIA atributlarına icazə verilmir: ${data.values}"
+      },
+      "incomplete": "Bu elementdə ARIA atributu nəzərə alınmadıqda problem yaranmadığını yoxlayın: ${data.values}"
+    },
+    "aria-allowed-role": {
+      "pass": "Verilmiş element üçün ARIA roluna icazə verilir",
+      "fail": {
+        "singular": "${data.values} ARIA roluna verilmiş element üçün icazə verilmir",
+        "plural": "${data.values} ARIA rollarına verilmiş element üçün icazə verilmir"
+      },
+      "incomplete": {
+        "singular": "${data.values} ARIA rolu element görünən edildikdə silinməlidir, çünki element üçün bu rola icazə verilmir",
+        "plural": "${data.values} ARIA rolları element görünən edildikdə silinməlidir, çünki element üçün bu rollara icazə verilmir"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elementin aria-busy atributu var",
+      "fail": "Element yüklənmə göstəricisini göstərərkən aria-busy=\"true\" istifadə edir"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA atributuna icazə verilir",
+      "fail": {
+        "checkbox": "aria-checked atributunu silin və ya checkbox elementinin həqiqi vəziyyətinə uyğun olması üçün \"${data.checkState}\" dəyərinə təyin edin",
+        "radio": "aria-checked atributunu silin və ya radio elementinin həqiqi vəziyyətinə uyğun olması üçün \"${data.checkState}\" dəyərinə təyin edin",
+        "rowSingular": "Bu atribut treegrid sətirlərində dəstəklənir, lakin ${data.ownerRole} üçün dəstəklənmir: ${data.invalidAttrs}",
+        "rowPlural": "Bu atributlar treegrid sətirlərində dəstəklənir, lakin ${data.ownerRole} üçün dəstəklənmir: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage mövcuddur və dəstəklənən aria-errormessage üsulundan istifadə edən, ekran oxuyucularına görünən elementlərə istinad edir",
+      "fail": {
+        "singular": "aria-errormessage atributunun `${data.values}` dəyəri mesajı elan etmək üçün bir üsuldan (məsələn, aria-live, aria-describedby, role=alert və s.) istifadə etməlidir",
+        "plural": "aria-errormessage atributunun `${data.values}` dəyərləri mesajı elan etmək üçün bir üsuldan (məsələn, aria-live, aria-describedby, role=alert və s.) istifadə etməlidir",
+        "unsupported": "aria-errormessage daxilində birdən çox ID köməkçi texnologiyalarda geniş dəstəklənmir",
+        "hidden": "aria-errormessage atributunun `${data.values}` dəyəri gizli elementə istinad edə bilməz"
+      },
+      "incomplete": {
+        "singular": "aria-errormessage atributunun `${data.values}` dəyərinin mövcud elementə istinad etməsini təmin edin",
+        "plural": "aria-errormessage atributunun `${data.values}` dəyərlərinin mövcud elementlərə istinad etməsini təmin edin",
+        "idrefs": "aria-errormessage elementinin səhifədə mövcud olub-olmadığını müəyyən etmək mümkün olmadı: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Sənədin body elementində aria-hidden atributu yoxdur",
+      "fail": "Sənədin body elementində aria-hidden=true olmamalıdır"
+    },
+    "aria-level": {
+      "pass": "aria-level dəyərləri etibarlıdır",
+      "incomplete": "6-dan böyük aria-level dəyərləri bütün ekran oxuyucusu və brauzer birləşmələrində dəstəklənmir"
+    },
+    "aria-no-deprecated-attr": {
+      "pass": "Köhnəlmiş ARIA atributlarından istifadə olunmur",
+      "incomplete": {
+        "singular": "Atribut köhnəlmişdir və istifadə olunmamalıdır: ${data.values}",
+        "plural": "Atributlar köhnəlmişdir və istifadə olunmamalıdır: ${data.values}"
+      }
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA atributuna icazə verilir",
+      "fail": {
+        "hasRolePlural": "${data.prohibited} atributları \"${data.role}\" rolu ilə istifadə oluna bilməz.",
+        "hasRoleSingular": "${data.prohibited} atributu \"${data.role}\" rolu ilə istifadə oluna bilməz.",
+        "noRolePlural": "${data.prohibited} atributları etibarlı role atributu olmayan ${data.nodeName} elementində istifadə oluna bilməz.",
+        "noRoleSingular": "${data.prohibited} atributu etibarlı role atributu olmayan ${data.nodeName} elementində istifadə oluna bilməz."
+      },
+      "incomplete": {
+        "hasRoleSingular": "${data.prohibited} atributu \"${data.role}\" rolu ilə yaxşı dəstəklənmir.",
+        "hasRolePlural": "${data.prohibited} atributları \"${data.role}\" rolu ilə yaxşı dəstəklənmir.",
+        "noRoleSingular": "${data.prohibited} atributu etibarlı role atributu olmayan ${data.nodeName} elementində yaxşı dəstəklənmir.",
+        "noRolePlural": "${data.prohibited} atributları etibarlı role atributu olmayan ${data.nodeName} elementində yaxşı dəstəklənmir.",
+        "visibleLabelSingular": "${data.prohibited} atributu yaxşı dəstəklənmir, lakin aria-labelledby atributunun istinad etdiyi elementlər səhifədə görünür. Etiketin zəruri olmadığını yoxlayın.",
+        "visibleLabelPlural": "${data.prohibited} atributları yaxşı dəstəklənmir, lakin aria-labelledby atributunun istinad etdiyi elementlər səhifədə görünür. Etiketlərin zəruri olmadığını yoxlayın.",
+        "unresolvedLabel": "${data.prohibited} atributu yaxşı dəstəklənmir və mövcud elementə istinad etmir. Etiketin zəruri olmadığını yoxlayın."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Bütün tələb olunan ARIA atributları mövcuddur",
+      "fail": {
+        "singular": "Tələb olunan ARIA atributu yoxdur: ${data.values}",
+        "plural": "Tələb olunan ARIA atributları yoxdur: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Tələb olunan ARIA övlad elementləri mövcuddur",
+        "aria-busy": "Elementin aria-busy atributu var, buna görə tələb olunan övlad elementlərin olmamasına icazə verilir"
+      },
+      "fail": {
+        "singular": "Tələb olunan ARIA övlad rolu yoxdur: ${data.values}",
+        "plural": "Tələb olunan ARIA övlad rolları yoxdur: ${data.values}",
+        "unallowed": "Elementin icazə verilməyən övlad elementləri var: ${data.values}",
+        "aria-busy-fail": "Elementin icazə verilməyən övlad elementləri var: ${data.values}; aria-busy=\"true\" olması icazə verilməyən rollara malik övlad elementlərə icazə vermir"
+      },
+      "incomplete": {
+        "singular": "ARIA övlad rolunun əlavə edilməsi gözlənilir: ${data.values}",
+        "plural": "ARIA övlad rollarının əlavə edilməsi gözlənilir: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Tələb olunan ARIA valideyn rolu mövcuddur",
+      "fail": {
+        "singular": "Tələb olunan ARIA valideyn rolu yoxdur: ${data.values}",
+        "plural": "Tələb olunan ARIA valideyn rolları yoxdur: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription dəstəklənən semantik rolda istifadə olunur",
+      "incomplete": "aria-roledescription atributunun dəstəklənən ekran oxuyucuları tərəfindən elan edildiyini yoxlayın",
+      "fail": "Elementə aria-roledescription atributunu dəstəkləyən rol verin"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA atributu dəstəklənir",
+      "fail": "ARIA atributu ekran oxuyucularında və köməkçi texnologiyalarda geniş dəstəklənmir: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA atributlarının dəyərləri etibarlıdır",
+      "fail": {
+        "singular": "Etibarsız ARIA atributu dəyəri: ${data.values}",
+        "plural": "Etibarsız ARIA atributu dəyərləri: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA atributundakı element ID-si səhifədə mövcud deyil: ${data.needsReview}",
+        "noIdShadow": "ARIA atributundakı element ID-si səhifədə mövcud deyil və ya başqa kölgə DOM ağacının törəməsidir: ${data.needsReview}",
+        "ariaCurrent": "ARIA atributunun dəyəri etibarsızdır və \"aria-current=true\" kimi qəbul ediləcək: ${data.needsReview}",
+        "idrefs": "ARIA atributundakı element ID-sinin səhifədə mövcud olub-olmadığını müəyyən etmək mümkün olmadı: ${data.needsReview}",
+        "empty": "ARIA atributunun dəyəri boş olduqda nəzərə alınmır: ${data.needsReview}",
+        "controlsWithinPopup": "aria-haspopup istifadə edilərkən aria-controls atributunun istinad etdiyi ID-nin səhifədə mövcud olub-olmadığını müəyyən etmək mümkün olmadı: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA atributunun adı etibarlıdır",
+      "fail": {
+        "singular": "Etibarsız ARIA atributu adı: ${data.values}",
+        "plural": "Etibarsız ARIA atributu adları: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel əlçatan mətni olan elementdə istifadə olunur",
+      "fail": "aria-braillelabel əlçatan mətni olmayan elementdə istifadə olunur",
+      "incomplete": "Əlçatan mətni hesablamaq mümkün olmadı"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription aria-roledescription atributu olan elementdə istifadə olunur",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription aria-roledescription atributu olmayan elementdə istifadə olunur",
+        "emptyRoleDescription": "aria-brailleroledescription aria-roledescription atributu boş olan elementdə istifadə olunur"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA rolu köhnəlmiş deyil",
+      "fail": "İstifadə olunan rol köhnəlmişdir: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Yalnız bir rol dəyərindən istifadə olunur",
+      "fail": "Yalnız bir rol dəyərindən istifadə edin, çünki ehtiyat rollar köhnə brauzerlərdə dəstəklənmir",
+      "incomplete": "Yalnız 'presentation' və ya 'none' rolundan istifadə edin, çünki onlar eyni mənalıdır."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elementin qlobal ARIA atributu var: ${data.values}",
+        "plural": "Elementin qlobal ARIA atributları var: ${data.values}"
+      },
+      "fail": "Elementin qlobal ARIA atributu yoxdur"
+    },
+    "has-widget-role": {
+      "pass": "Elementin vidcet rolu var.",
+      "fail": "Elementin vidcet rolu yoxdur."
+    },
+    "invalidrole": {
+      "pass": "ARIA rolu etibarlıdır",
+      "fail": {
+        "singular": "Rol etibarlı ARIA rollarından biri olmalıdır: ${data.values}",
+        "plural": "Rollar etibarlı ARIA rollarından biri olmalıdır: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Element fokuslana biləndir.",
+      "fail": "Element fokuslana bilən deyil."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "<label> ilə əlçatan ad arasında uyğunsuzluq yoxdur",
+      "incomplete": "<label> mətninin ARIA ${data} sahəsinin adına daxil edilməsinə ehtiyac olmadığını yoxlayın"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA rolu dəstəklənir",
+      "fail": "İstifadə olunan rol ekran oxuyucularında və köməkçi texnologiyalarda geniş dəstəklənmir: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Element fokus ardıcıllığındakı element üçün etibarlı semantikaya malikdir.",
+      "fail": "Element fokus ardıcıllığındakı element üçün etibarsız semantikaya malikdir."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elementin ${data.contrastRatio} rəng kontrastı kifayətdir",
+      "fail": {
+        "default": "Elementin ${data.contrastRatio} rəng kontrastı kifayət deyil (ön plan rəngi: ${data.fgColor}, fon rəngi: ${data.bgColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementin ön plan və kölgə rəngi arasındakı ${data.contrastRatio} rəng kontrastı kifayət deyil (ön plan rəngi: ${data.fgColor}, text-shadow rəngi: ${data.shadowColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementin kölgə rəngi ilə fon rəngi arasındakı ${data.contrastRatio} rəng kontrastı kifayət deyil (text-shadow rəngi: ${data.shadowColor}, fon rəngi: ${data.bgColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgImage": "Fon təsvirinə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "bgGradient": "Fon qradiyentinə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "imgNode": "Element təsvir düyünü ehtiva etdiyi üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "bgOverlap": "Başqa element onun üzərini örtdüyü üçün elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "fgAlpha": "Alfa şəffaflığına görə elementin ön plan rəngini müəyyən etmək mümkün olmadı",
+        "elmPartiallyObscured": "Başqa element onun üzərini qismən örtdüyü üçün elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "elmPartiallyObscuring": "Element digər elementlərin üzərini qismən örtdüyü üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "outsideViewport": "Element görünüş sahəsindən kənarda olduğu üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "equalRatio": "Elementin fonla kontrast nisbəti 1:1-dir",
+        "shortTextContent": "Elementin məzmunu o qədər qısadır ki, onun həqiqi mətn olub-olmadığını müəyyən etmək mümkün deyil",
+        "nonBmp": "Elementin məzmununda yalnız mətn olmayan simvollar var",
+        "pseudoContent": "Psevdoelementə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "colorParse": "${data.colorParse} rəng sətrini təhlil etmək mümkün olmadı"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elementin ${data.contrastRatio} rəng kontrastı kifayətdir",
+        "hidden": "Element gizlidir"
+      },
+      "fail": {
+        "default": "Elementin ${data.contrastRatio} rəng kontrastı kifayət deyil (ön plan rəngi: ${data.fgColor}, fon rəngi: ${data.bgColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementin ön plan və kölgə rəngi arasındakı ${data.contrastRatio} rəng kontrastı kifayət deyil (ön plan rəngi: ${data.fgColor}, text-shadow rəngi: ${data.shadowColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementin kölgə rəngi ilə fon rəngi arasındakı ${data.contrastRatio} rəng kontrastı kifayət deyil (text-shadow rəngi: ${data.shadowColor}, fon rəngi: ${data.bgColor}, şrift ölçüsü: ${data.fontSize}, şrift qalınlığı: ${data.fontWeight}). Gözlənilən kontrast nisbəti: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgImage": "Fon təsvirinə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "bgGradient": "Fon qradiyentinə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "imgNode": "Element təsvir düyünü ehtiva etdiyi üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "bgOverlap": "Başqa element onun üzərini örtdüyü üçün elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "complexTextShadows": "Element mürəkkəb mətn kölgələrindən istifadə etdiyi üçün onun kontrastını müəyyən etmək mümkün olmadı",
+        "fgAlpha": "Alfa şəffaflığına görə elementin ön plan rəngini müəyyən etmək mümkün olmadı",
+        "elmPartiallyObscured": "Başqa element onun üzərini qismən örtdüyü üçün elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "elmPartiallyObscuring": "Element digər elementlərin üzərini qismən örtdüyü üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "outsideViewport": "Element görünüş sahəsindən kənarda olduğu üçün onun fon rəngini müəyyən etmək mümkün olmadı",
+        "equalRatio": "Elementin fonla kontrast nisbəti 1:1-dir",
+        "shortTextContent": "Elementin məzmunu o qədər qısadır ki, onun həqiqi mətn olub-olmadığını müəyyən etmək mümkün deyil",
+        "nonBmp": "Elementin məzmununda yalnız mətn olmayan simvollar var",
+        "pseudoContent": "Psevdoelementə görə elementin fon rəngini müəyyən etmək mümkün olmadı",
+        "colorParse": "${data.colorParse} rəng sətrini təhlil etmək mümkün olmadı"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Keçidləri vizual üslub vasitəsilə ətrafdakı mətndən fərqləndirmək mümkündür",
+      "incomplete": {
+        "default": "Keçidi yaxınlıqdakı mətndən fərqləndirmək üçün üslub verilməsinə ehtiyac olub-olmadığını yoxlayın",
+        "pseudoContent": "Keçidin psevdoüslubunun onu ətrafdakı mətndən fərqləndirmək üçün kifayət edib-etmədiyini yoxlayın"
+      },
+      "fail": "Keçidin onu ətrafdakı mətndən fərqləndirən üslubu (məsələn, alt xətti) yoxdur"
+    },
+    "link-in-text-block": {
+      "pass": "Keçidləri rəngdən başqa bir üsulla ətrafdakı mətndən fərqləndirmək mümkündür",
+      "fail": {
+        "fgContrast": "Keçidin ətrafdakı mətnlə ${data.contrastRatio}:1 rəng kontrastı kifayət deyil. (Minimum kontrast ${data.requiredContrastRatio}:1-dir, keçidin mətni: ${data.nodeColor}, ətrafdakı mətn: ${data.parentColor})",
+        "bgContrast": "Keçidin fonunun ${data.contrastRatio} rəng kontrastı kifayət deyil (minimum kontrast ${data.requiredContrastRatio}:1-dir, keçidin fon rəngi: ${data.nodeBackgroundColor}, ətrafdakı fon rəngi: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elementin ön plan kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgContrast": "Elementin fon kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgImage": "Fon təsvirinə görə elementin kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgGradient": "Fon qradiyentinə görə elementin kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "imgNode": "Element təsvir düyünü ehtiva etdiyi üçün onun kontrast nisbətini müəyyən etmək mümkün olmadı",
+        "bgOverlap": "Elementlər üst-üstə düşdüyü üçün elementin kontrast nisbətini müəyyən etmək mümkün olmadı"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "autocomplete dəyəri uyğun elementdədir",
+      "fail": "autocomplete dəyəri bu giriş növünə uyğun deyil"
+    },
+    "autocomplete-valid": {
+      "pass": "autocomplete atributu düzgün formatlanıb",
+      "fail": "autocomplete atributu səhv formatlanıb",
+      "incomplete": "autocomplete atributunun dəyəri qeyri-standartdır. Onun əvəzinə standart dəyərdən istifadə etməyin mümkün olub-olmadığını yoxlayın."
+    },
+    "accesskeys": {
+      "pass": "accesskey atributunun dəyəri unikaldır",
+      "fail": "Sənəddə eyni accesskey dəyərinə malik birdən çox element var"
+    },
+    "focusable-content": {
+      "pass": "Element fokuslana bilən elementlər ehtiva edir",
+      "fail": "Elementin fokuslana bilən məzmunu olmalıdır"
+    },
+    "focusable-disabled": {
+      "pass": "Elementin daxilində fokuslana bilən elementlər yoxdur",
+      "incomplete": "Fokuslana bilən elementlərin fokus göstəricisini dərhal dəyişib-dəyişmədiyini yoxlayın",
+      "fail": "Fokuslana bilən məzmun deaktiv edilməli və ya DOM-dan çıxarılmalıdır"
+    },
+    "focusable-element": {
+      "pass": "Element fokuslana biləndir",
+      "fail": "Element fokuslana bilən olmalıdır"
+    },
+    "focusable-modal-open": {
+      "pass": "Modal pəncərə açıq olduqda fokuslana bilən elementlər yoxdur",
+      "incomplete": "Cari vəziyyətdə fokuslana bilən elementlərə Tab düyməsi ilə keçməyin mümkün olmadığını yoxlayın"
+    },
+    "focusable-no-name": {
+      "pass": "Element Tab ardıcıllığında deyil və ya əlçatan mətni var",
+      "fail": "Element Tab ardıcıllığındadır və əlçatan mətni yoxdur",
+      "incomplete": "Elementin əlçatan ada malik olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Elementin daxilində fokuslana bilən elementlər yoxdur",
+      "incomplete": "Fokuslana bilən elementlərin fokus göstəricisini dərhal dəyişib-dəyişmədiyini yoxlayın",
+      "fail": "Fokuslana bilən məzmunun tabindex=\"-1\" atributu olmalı və ya məzmun DOM-dan çıxarılmalıdır"
+    },
+    "frame-focusable-content": {
+      "pass": "Elementin fokuslana bilən törəmə elementləri yoxdur",
+      "fail": "Elementin fokuslana bilən törəmə elementləri var",
+      "incomplete": "Elementin törəmə elementlərinin olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "landmark-is-top-level": {
+      "pass": "${data.role} oriyentiri ən yuxarı səviyyədədir.",
+      "fail": "${data.role} oriyentiri başqa oriyentirin daxilindədir."
+    },
+    "no-focusable-content": {
+      "pass": "Elementin fokuslana bilən törəmə elementləri yoxdur",
+      "fail": {
+        "default": "Elementin fokuslana bilən törəmə elementləri var",
+        "notHidden": "İnteraktiv idarəetmə elementinin daxilindəki elementdə mənfi tabindex istifadə etmək köməkçi texnologiyaların həmin elementi fokuslamasına mane olmur (hətta aria-hidden=\"true\" olduqda belə)"
+      },
+      "incomplete": "Elementin törəmə elementlərinin olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "page-has-heading-one": {
+      "pass": "Səhifədə ən azı bir birinci səviyyəli başlıq var",
+      "fail": "Səhifədə birinci səviyyəli başlıq olmalıdır"
+    },
+    "page-has-main": {
+      "pass": "Sənəddə ən azı bir main oriyentiri var",
+      "fail": "Sənəddə main oriyentiri yoxdur"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Sənəddə birdən çox banner oriyentiri yoxdur",
+      "fail": "Sənəddə birdən çox banner oriyentiri var"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Sənəddə birdən çox contentinfo oriyentiri yoxdur",
+      "fail": "Sənəddə birdən çox contentinfo oriyentiri var"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Sənəddə birdən çox main oriyentiri yoxdur",
+      "fail": "Sənəddə birdən çox main oriyentiri var"
+    },
+    "tabindex": {
+      "pass": "Elementin tabindex dəyəri 0-dan böyük deyil",
+      "fail": "Elementin tabindex dəyəri 0-dan böyükdür"
+    },
+    "alt-space-value": {
+      "pass": "Elementin alt atributunun dəyəri etibarlıdır",
+      "fail": "Elementin alt atributunda yalnız boşluq simvolu var və bəzi ekran oxuyucuları onu nəzərə alır"
+    },
+    "duplicate-img-label": {
+      "pass": "Element <img> alternativ mətnində mövcud mətni təkrarlamır",
+      "fail": "Element mövcud mətni təkrarlayan alternativ mətnə malik <img> elementi ehtiva edir"
+    },
+    "explicit-label": {
+      "pass": "Elementin açıq şəkildə əlaqələndirilmiş <label> elementi var",
+      "fail": "Elementin açıq şəkildə əlaqələndirilmiş <label> elementi yoxdur",
+      "incomplete": "Forma elementinin açıq şəkildə əlaqələndirilmiş <label> elementinə malik olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "help-same-as-label": {
+      "pass": "Kömək mətni (title və ya aria-describedby) etiket mətnini təkrarlamır",
+      "fail": "Kömək mətni (title və ya aria-describedby) etiket mətni ilə eynidir"
+    },
+    "hidden-explicit-label": {
+      "pass": "Forma elementinin görünən, açıq şəkildə əlaqələndirilmiş <label> elementi var",
+      "fail": "Forma elementinin gizli, açıq şəkildə əlaqələndirilmiş <label> elementi var",
+      "incomplete": "Forma elementinin gizli, açıq şəkildə əlaqələndirilmiş <label> elementinə malik olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "implicit-label": {
+      "pass": "Elementin dolayı əlaqələndirilmiş (onu əhatə edən) <label> elementi var",
+      "fail": "Elementin dolayı əlaqələndirilmiş (onu əhatə edən) <label> elementi yoxdur",
+      "incomplete": "Forma elementinin dolayı əlaqələndirilmiş (onu əhatə edən) <label> elementinə malik olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elementin əlçatan adına onun görünən mətni daxildir",
+      "fail": "Elementin daxilindəki mətn əlçatan ada daxil deyil",
+      "incomplete": {
+        "default": "Görünən mətnin əlçatan ada daxil olub-olmadığını müəyyən etmək mümkün olmadı",
+        "valueText": "Elementin daxilindəki mətn etiket deyil, dəyər mətni ola bilər"
+      }
+    },
+    "multiple-label": {
+      "pass": "Forma sahəsinin birdən çox label elementi yoxdur",
+      "incomplete": "Birdən çox label elementi köməkçi texnologiyalarda geniş dəstəklənmir. İlk etiketin bütün zəruri məlumatları ehtiva etməsini təmin edin."
+    },
+    "title-only": {
+      "pass": "Forma elementi etiketi üçün yalnız title atributundan istifadə etmir",
+      "fail": "Forma elementinin etiketini yaratmaq üçün yalnız title istifadə olunur"
+    },
+    "landmark-is-unique": {
+      "pass": "Oriyentirlərin unikal rolu və ya rol/etiket/başlıq (yəni əlçatan ad) birləşməsi olmalıdır",
+      "fail": "Oriyentirləri fərqləndirmək üçün oriyentirin unikal aria-label, aria-labelledby və ya title atributu olmalıdır"
+    },
+    "has-lang": {
+      "pass": "<html> elementinin lang atributu var",
+      "fail": {
+        "noXHTML": "xml:lang atributu HTML səhifələrində etibarlı deyil, lang atributundan istifadə edin.",
+        "noLang": "<html> elementinin lang atributu yoxdur"
+      }
+    },
+    "valid-lang": {
+      "pass": "lang atributunun dəyəri etibarlı dillər siyahısına daxildir",
+      "fail": "lang atributunun dəyəri etibarlı dillər siyahısına daxil deyil"
+    },
+    "xml-lang-mismatch": {
+      "pass": "lang və xml:lang atributlarında əsas dil eynidir",
+      "fail": "lang və xml:lang atributlarında əsas dil eyni deyil"
+    },
+    "dlitem": {
+      "pass": "Təsvir siyahısı bəndinin <dl> valideyn elementi var",
+      "fail": "Təsvir siyahısı bəndinin <dl> valideyn elementi yoxdur"
+    },
+    "listitem": {
+      "pass": "Siyahı bəndinin <ul>, <ol> və ya role=\"list\" olan valideyn elementi var",
+      "fail": {
+        "default": "Siyahı bəndinin <ul>, <ol> valideyn elementi yoxdur",
+        "roleNotValid": "Siyahı bəndinin valideyn elementinin rolu role=\"list\" deyil"
+      }
+    },
+    "only-dlitems": {
+      "pass": "dl elementinin yalnız daxilində icazə verilən birbaşa övlad elementləri var: <dt>, <dd> və ya <div> elementləri",
+      "fail": "dl elementinin icazə verilməyən birbaşa övlad elementləri var: ${data.values}"
+    },
+    "only-listitems": {
+      "pass": "Siyahı elementinin yalnız <li> elementlərinin daxilində icazə verilən birbaşa övlad elementləri var",
+      "fail": "Siyahı elementinin icazə verilməyən birbaşa övlad elementləri var: ${data.values}"
+    },
+    "structured-dlitems": {
+      "pass": "Boş olmadıqda elementin həm <dt>, həm də <dd> elementləri var",
+      "fail": "Boş olmadıqda elementin ən azı bir <dt> elementi və ondan sonra ən azı bir <dd> elementi yoxdur"
+    },
+    "caption": {
+      "pass": "Multimedia elementinin subtitr cığırı var",
+      "incomplete": "Element üçün subtitrlərin mövcud olduğunu yoxlayın"
+    },
+    "frame-tested": {
+      "pass": "iframe axe-core ilə yoxlanılıb",
+      "fail": "iframe elementini axe-core ilə yoxlamaq mümkün olmadı",
+      "incomplete": "iframe hələ də axe-core ilə yoxlanılmalıdır"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> və ya <audio> icazə verilən müddətdən artıq səs səsləndirmir və ya idarəetmə mexanizminə malikdir",
+      "fail": "<video> və ya <audio> icazə verilən müddətdən artıq səs səsləndirir və idarəetmə mexanizminə malik deyil",
+      "incomplete": "<video> və ya <audio> elementinin icazə verilən müddətdən artıq səs səsləndirmədiyini və ya idarəetmə mexanizmi təqdim etdiyini yoxlayın"
+    },
+    "css-orientation-lock": {
+      "pass": "Ekran işləkdir və istiqamət kilidi yoxdur",
+      "fail": "CSS istiqamət kilidi tətbiq olunub və ekranı işləməz vəziyyətə gətirir",
+      "incomplete": "CSS istiqamət kilidini müəyyən etmək mümkün olmadı"
+    },
+    "meta-viewport-large": {
+      "pass": "<meta> teqi mobil cihazlarda əhəmiyyətli dərəcədə böyütməyə mane olmur",
+      "fail": "<meta> teqi mobil cihazlarda böyütməni məhdudlaşdırır"
+    },
+    "meta-viewport": {
+      "pass": "<meta> teqi mobil cihazlarda böyütməni deaktiv etmir",
+      "fail": "<meta> teqindəki ${data} mobil cihazlarda böyütməni deaktiv edir"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Hədəflə ən yaxın qonşuları arasında kifayət qədər boşluq var. Təhlükəsiz klikləmə sahəsinin diametri ${data.closestOffset}px-dir və bu, ən azı ${data.minOffset}px təşkil edir.",
+        "large": "Hədəfin ölçüsü minimum ${data.minOffset}px ölçüsündən xeyli böyükdür."
+      },
+      "fail": "Hədəflə ən yaxın qonşuları arasında kifayət qədər boşluq yoxdur. Təhlükəsiz klikləmə sahəsinin diametri ${data.closestOffset}px-dir, halbuki ən azı ${data.minOffset}px olmalıdır.",
+      "incomplete": {
+        "default": "Mənfi tabindex dəyəri olan elementlə ən yaxın qonşuları arasında kifayət qədər boşluq yoxdur. Təhlükəsiz klikləmə sahəsinin diametri ${data.closestOffset}px-dir, halbuki ən azı ${data.minOffset}px olmalıdır. Bu element hədəfdirmi?",
+        "nonTabbableNeighbor": "Hədəflə ən yaxın qonşuları arasında kifayət qədər boşluq yoxdur. Təhlükəsiz klikləmə sahəsinin diametri ${data.closestOffset}px-dir, halbuki ən azı ${data.minOffset}px olmalıdır. Qonşu element hədəfdirmi?",
+        "tooManyRects": "Üst-üstə düşən elementlər çox olduğu üçün hədəfin ölçüsünü əldə etmək mümkün olmadı"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "İdarəetmə elementinin ölçüsü kifayətdir (${data.width}px x ${data.height}px, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır)",
+        "obscured": "İdarəetmə elementi tam örtüldüyü və buna görə kliklənə bilmədiyi üçün nəzərə alınmır",
+        "large": "Hədəfin ölçüsü minimum ${data.minSize}px ölçüsündən xeyli böyükdür."
+      },
+      "fail": {
+        "default": "Hədəfin ölçüsü kifayət deyil (${data.width}px x ${data.height}px, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır)",
+        "partiallyObscured": "Hədəf qismən örtüldüyü üçün ölçüsü kifayət deyil (ən kiçik sahə ${data.width}px x ${data.height}px-dir, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır)"
+      },
+      "incomplete": {
+        "default": "Mənfi tabindex dəyəri olan elementin ölçüsü kifayət deyil (${data.width}px x ${data.height}px, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır). Bu element hədəfdirmi?",
+        "contentOverflow": "Daşan məzmuna görə elementin ölçüsünü dəqiq müəyyən etmək mümkün olmadı",
+        "partiallyObscured": "Mənfi tabindex dəyəri olan element qismən örtüldüyü üçün ölçüsü kifayət deyil (ən kiçik sahə ${data.width}px x ${data.height}px-dir, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır). Bu element hədəfdirmi?",
+        "partiallyObscuredNonTabbable": "Hədəf mənfi tabindex dəyəri olan qonşu element tərəfindən qismən örtüldüyü üçün ölçüsü kifayət deyil (ən kiçik sahə ${data.width}px x ${data.height}px-dir, ən azı ${data.minSize}px x ${data.minSize}px olmalıdır). Qonşu element hədəfdirmi?",
+        "tooManyRects": "Üst-üstə düşən elementlər çox olduğu üçün hədəfin ölçüsünü əldə etmək mümkün olmadı"
+      }
+    },
+    "header-present": {
+      "pass": "Səhifənin başlığı var",
+      "fail": "Səhifənin başlığı yoxdur"
+    },
+    "heading-order": {
+      "pass": "Başlıq ardıcıllığı etibarlıdır",
+      "fail": "Başlıq ardıcıllığı etibarsızdır",
+      "incomplete": "Əvvəlki başlığı müəyyən etmək mümkün olmadı"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Eyni ada malik olub fərqli URL ünvanına aparan başqa keçidlər yoxdur",
+      "incomplete": "Keçidlərin eyni məqsədə xidmət etdiyini və ya qəsdən qeyri-müəyyən olduğunu yoxlayın."
+    },
+    "internal-link-present": {
+      "pass": "Etibarlı ötürmə keçidi tapıldı",
+      "fail": "Etibarlı ötürmə keçidi tapılmadı"
+    },
+    "landmark": {
+      "pass": "Səhifədə oriyentir bölgəsi var",
+      "fail": "Səhifədə oriyentir bölgəsi yoxdur"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta> teqi səhifəni dərhal yeniləmir",
+      "fail": "<meta> teqi səhifəni müəyyən vaxtdan sonra məcburi yeniləyir"
+    },
+    "meta-refresh": {
+      "pass": "<meta> teqi səhifəni dərhal yeniləmir",
+      "fail": "<meta> teqi səhifəni müəyyən vaxtdan sonra məcburi yeniləyir (20 saatdan az)"
+    },
+    "p-as-heading": {
+      "pass": "<p> elementlərinə başlıq üslubu verilməyib",
+      "fail": "Üslub verilmiş <p> elementlərinin əvəzinə başlıq elementlərindən istifadə olunmalıdır",
+      "incomplete": "<p> elementlərinə başlıq üslubu verilib-verilmədiyini müəyyən etmək mümkün olmadı"
+    },
+    "region": {
+      "pass": "Səhifənin bütün məzmunu oriyentirlər daxilindədir",
+      "fail": "Səhifənin məzmununun bir hissəsi oriyentirlər daxilində deyil"
+    },
+    "skip-link": {
+      "pass": "Ötürmə keçidinin hədəfi mövcuddur",
+      "incomplete": "Ötürmə keçidinin hədəfi aktivləşdirildikdə görünən olmalıdır",
+      "fail": "Ötürmə keçidinin hədəfi yoxdur"
+    },
+    "unique-frame-title": {
+      "pass": "Elementin title atributu unikaldır",
+      "fail": "Elementin title atributu unikal deyil"
+    },
+    "duplicate-id-active": {
+      "pass": "Sənəddə eyni id atributuna malik aktiv elementlər yoxdur",
+      "fail": "Sənəddə eyni id atributuna malik aktiv elementlər var: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Sənəddə ARIA və ya etiketlərlə istinad edilən, eyni id atributuna malik elementlər yoxdur",
+      "fail": "Sənəddə ARIA ilə istinad edilən, eyni id atributuna malik birdən çox element var: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Sənəddə eyni id atributuna malik statik elementlər yoxdur",
+      "fail": "Sənəddə eyni id atributuna malik birdən çox statik element var: ${data}"
+    },
+    "aria-label": {
+      "pass": "aria-label atributu mövcuddur və boş deyil",
+      "fail": "aria-label atributu mövcud deyil və ya boşdur"
+    },
+    "aria-labelledby": {
+      "pass": "aria-labelledby atributu mövcuddur və ekran oxuyucularına görünən elementlərə istinad edir",
+      "fail": "aria-labelledby atributu mövcud deyil, mövcud olmayan elementlərə və ya boş elementlərə istinad edir",
+      "incomplete": "aria-labelledby atributunun mövcud elementə istinad etməsini təmin edin"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Mətn aralıqlarına təsir edən '!important' ilə sətirdaxili üslublar təyin edilməyib",
+      "fail": {
+        "singular": "'!important' işarəsini ${data.values} sətirdaxili üslubundan silin, çünki əksər brauzerlər onun əvəzlənməsini dəstəkləmir",
+        "plural": "'!important' işarəsini ${data.values} sətirdaxili üslublarından silin, çünki əksər brauzerlər onların əvəzlənməsini dəstəkləmir"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elementin ekran oxuyucularına görünən daxili mətni var",
+      "fail": "Elementin ekran oxuyucularına görünən daxili mətni yoxdur",
+      "incomplete": "Elementin övlad elementlərinin olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "doc-has-title": {
+      "pass": "Sənədin boş olmayan <title> elementi var",
+      "fail": "Sənədin boş olmayan <title> elementi yoxdur"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "Axe xəta ilə qarşılaşdı; səhifədə bu növ problemi əl ilə yoxlayın"
+    },
+    "exists": {
+      "pass": "Element mövcud deyil",
+      "incomplete": "Element mövcuddur"
+    },
+    "has-alt": {
+      "pass": "Elementin alt atributu var",
+      "fail": "Elementin alt atributu yoxdur"
+    },
+    "has-visible-text": {
+      "pass": "Elementin ekran oxuyucularına görünən mətni var",
+      "fail": "Elementin ekran oxuyucularına görünən mətni yoxdur",
+      "incomplete": "Elementin övlad elementlərinin olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "important-letter-spacing": {
+      "pass": "style atributunda letter-spacing üçün !important təyin edilməyib və ya minimum tələb ödənilir",
+      "fail": "style atributunda letter-spacing üçün !important istifadə olunmamalı və ya dəyər ${data.minValue}em olmalıdır (cari dəyər ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "style atributunda line-height üçün !important təyin edilməyib və ya minimum tələb ödənilir",
+      "fail": "style atributunda line-height üçün !important istifadə olunmamalı və ya dəyər ${data.minValue}em olmalıdır (cari dəyər ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "style atributunda word-spacing üçün !important təyin edilməyib və ya minimum tələb ödənilir",
+      "fail": "style atributunda word-spacing üçün !important istifadə olunmamalı və ya dəyər ${data.minValue}em olmalıdır (cari dəyər ${data.value}em)"
+    },
+    "is-on-screen": {
+      "pass": "Element görünmür",
+      "fail": "Element görünür"
+    },
+    "non-empty-alt": {
+      "pass": "Elementin boş olmayan alt atributu var",
+      "fail": {
+        "noAttr": "Elementin alt atributu yoxdur",
+        "emptyAttr": "Elementin alt atributu boşdur"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elementin value atributu yoxdur",
+        "has-label": "Elementin boş olmayan value atributu var"
+      },
+      "fail": "Elementin value atributu var və bu atribut boşdur"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elementin placeholder atributu var",
+      "fail": {
+        "noAttr": "Elementin placeholder atributu yoxdur",
+        "emptyAttr": "Elementin placeholder atributu boşdur"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elementin title atributu var",
+      "fail": {
+        "noAttr": "Elementin title atributu yoxdur",
+        "emptyAttr": "Elementin title atributu boşdur"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elementin boş olmayan value atributu var",
+      "fail": {
+        "noAttr": "Elementin value atributu yoxdur",
+        "emptyAttr": "Elementin value atributu boşdur"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elementin standart semantikası role=\"${data.role}\" ilə əvəzlənib",
+      "fail": {
+        "default": "Elementin standart semantikası role=\"none\" və ya role=\"presentation\" ilə əvəzlənməyib",
+        "globalAria": "Elementin qlobal ARIA atributu olduğu üçün onun rolu təqdimat xarakterli deyil",
+        "focusable": "Element fokuslana bilən olduğu üçün onun rolu təqdimat xarakterli deyil",
+        "both": "Elementin qlobal ARIA atributu olduğu və element fokuslana bilən olduğu üçün onun rolu təqdimat xarakterli deyil",
+        "iframe": "Təqdimat xarakterli rola malik ${data.nodeName} elementində \"title\" atributundan istifadə ekran oxuyucularında fərqli davranışlara səbəb olur"
+      }
+    },
+    "role-none": {
+      "pass": "Elementin standart semantikası role=\"none\" ilə əvəzlənib",
+      "fail": "Elementin standart semantikası role=\"none\" ilə əvəzlənməyib"
+    },
+    "role-presentation": {
+      "pass": "Elementin standart semantikası role=\"presentation\" ilə əvəzlənib",
+      "fail": "Elementin standart semantikası role=\"presentation\" ilə əvəzlənməyib"
+    },
+    "svg-non-empty-title": {
+      "pass": "Elementin title övlad elementi var",
+      "fail": {
+        "noTitle": "Elementin title övlad elementi yoxdur",
+        "emptyTitle": "Elementin title övlad elementi boşdur"
+      },
+      "incomplete": "Elementin title övlad elementinin olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "caption-faked": {
+      "pass": "Cədvəlin ilk sətri sərlövhə kimi istifadə olunmur",
+      "fail": "Cədvəlin ilk övlad elementi cədvəl xanası əvəzinə sərlövhə olmalıdır"
+    },
+    "html5-scope": {
+      "pass": "scope atributu yalnız cədvəl başlığı elementlərində (<th>) istifadə olunur",
+      "fail": "HTML 5-də scope atributları yalnız cədvəl başlığı elementlərində (<th>) istifadə oluna bilər"
+    },
+    "same-caption-summary": {
+      "pass": "summary atributunun və <caption> elementinin məzmunu təkrarlanmır",
+      "fail": "summary atributunun və <caption> elementinin məzmunu eynidir",
+      "incomplete": "<table> elementinin sərlövhəyə malik olub-olmadığını müəyyən etmək mümkün olmadı"
+    },
+    "scope-value": {
+      "pass": "scope atributu düzgün istifadə olunur",
+      "fail": "scope atributunun dəyəri yalnız 'row' və ya 'col' ola bilər"
+    },
+    "td-has-header": {
+      "pass": "Bütün boş olmayan verilənlər xanalarının cədvəl başlıqları var",
+      "fail": "Bəzi boş olmayan verilənlər xanalarının cədvəl başlıqları yoxdur"
+    },
+    "td-headers-attr": {
+      "pass": "headers atributu yalnız cədvəldəki digər başlıq xanalarına istinad etmək üçün istifadə olunur",
+      "incomplete": "headers atributu boşdur",
+      "fail": {
+        "cell-header-not-in-table": "headers atributu yalnız cədvəldəki digər başlıq xanalarına istinad etmək üçün istifadə olunmur",
+        "cell-header-not-th": "headers atributu verilənlər xanalarına deyil, başlıq xanalarına istinad etməlidir",
+        "header-refs-self": "headers atributu olan element özünə istinad edir"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Bütün cədvəl başlığı xanaları verilənlər xanalarına istinad edir",
+      "fail": "Bəzi cədvəl başlığı xanaları verilənlər xanalarına istinad etmir",
+      "incomplete": "Cədvəlin verilənlər xanaları yoxdur və ya boşdur"
+    },
+    "hidden-content": {
+      "pass": "Səhifədəki bütün məzmun təhlil edilib.",
+      "fail": "Bu səhifədəki məzmunun təhlili zamanı problemlər yarandı.",
+      "incomplete": "Səhifədə təhlil edilməmiş gizli məzmun var. Onu təhlil etmək üçün bu məzmunun göstərilməsini aktivləşdirməlisiniz."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Aşağıdakılardan hər hansı birini düzəldin:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Aşağıdakıların hamısını düzəldin:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe səbəbi müəyyən edə bilmədi. Element yoxlama alətindən istifadə edin!"
+}

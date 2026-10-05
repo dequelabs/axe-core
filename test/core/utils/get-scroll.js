@@ -13,6 +13,21 @@ describe('axe.utils.getScroll', () => {
     assert.isFunction(axe.utils.getScroll);
   });
 
+  it('caches separately for each buffer value', () => {
+    const target = queryFixture(html`
+      <div id="target" style="height: 200px; width: 200px; overflow: auto">
+        <div style="height: 10px; width: 2000px; background-color: red;">
+          <p>Content</p>
+        </div>
+      </div>
+    `);
+
+    // A buffer wider than the overflow means "not scrollable"; the default
+    // buffer of 0 means "scrollable". Each must get its own cache entry.
+    assert.isUndefined(axe.utils.getScroll(target.actualNode, 5000));
+    assert.isDefined(axe.utils.getScroll(target.actualNode));
+  });
+
   it('returns undefined when element is not scrollable', () => {
     const target = queryFixture(
       '<section id="target">This element is not scrollable</section>'

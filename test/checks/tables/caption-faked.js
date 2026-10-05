@@ -26,6 +26,8 @@ describe('caption-faked', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
@@ -42,6 +44,8 @@ describe('caption-faked', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
@@ -54,6 +58,8 @@ describe('caption-faked', () => {
         </tr>
       </table>
     `;
+
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
 
     const node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
@@ -72,6 +78,8 @@ describe('caption-faked', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const node = fixture.querySelector('table');
     assert.isTrue(captionFaked.evaluate(node));
   });
@@ -89,6 +97,8 @@ describe('caption-faked', () => {
       </table>
     `;
 
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
+
     const node = fixture.querySelector('table');
     assert.isFalse(captionFaked.evaluate(node));
   });
@@ -105,6 +115,8 @@ describe('caption-faked', () => {
         </tr>
       </table>
     `;
+
+    axe.testUtils.flatTreeSetup(fixture.firstElementChild);
 
     const node = fixture.querySelector('table');
     assert.isFalse(captionFaked.evaluate(node));
