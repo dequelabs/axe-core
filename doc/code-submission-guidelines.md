@@ -196,10 +196,10 @@ perf(rule): improve speed of color contrast rules
 
 Use async process to compare elements without UI lockup
 
-Closes issue #1
+Closes: #1
 ```
 
-**Note:** We do not link issues to be closed as we have our QA team verify the issue is resolved before closing. Instead use `Closes issue #` to link to the issue the pr resolves but won't close it once merged.
+**Note:** Use `Closes: #123` (or the full issue URL) so GitHub links the issue to the pull request. Use a separate `Closes:` line for each issue; in `Closes: #1, #2` only `#1` is linked. Wording such as `Closes issue #123` is not recognized by GitHub and leaves the issue unlinked.
 
 > Commit messages should be 100 characters or less to make them easy to read on GitHub and
 > various git tools.

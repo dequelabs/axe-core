@@ -42,7 +42,24 @@ describe('aria-practices', function () {
     // not yet the authoring pattern: action controls associated via aria-actions
     // still trip these structural rules. Tracked in dequelabs/axe-core#5215.
     'tabs/examples/tabs-actions.html': ['aria-required-children'],
-    'listbox/examples/listbox-actions.html': ['nested-interactive']
+    'listbox/examples/listbox-actions.html': ['nested-interactive'],
+    // all landmark pages have a sidebar link that uses the visible text label of
+    // "Asst. Tech." with an aria-label of "Assistive Technology" which fails
+    // the label-content-name-mismatch rule
+    'landmarks/examples/search.html': ['label-content-name-mismatch'],
+    'landmarks/examples/resources.html': ['label-content-name-mismatch'],
+    'landmarks/examples/region.html': ['label-content-name-mismatch'],
+    'landmarks/examples/navigation.html': ['label-content-name-mismatch'],
+    'landmarks/examples/main.html': ['label-content-name-mismatch'],
+    'landmarks/examples/general-principles.html': [
+      'label-content-name-mismatch'
+    ],
+    'landmarks/examples/form.html': ['label-content-name-mismatch'],
+    'landmarks/examples/contentinfo.html': ['label-content-name-mismatch'],
+    'landmarks/examples/complementary.html': ['label-content-name-mismatch'],
+    'landmarks/examples/banner.html': ['label-content-name-mismatch'],
+    'landmarks/examples/at.html': ['label-content-name-mismatch'],
+    'landmarks/examples/HTML5.html': ['label-content-name-mismatch']
   };
 
   const skippedPages = [

@@ -14,7 +14,8 @@
     ["#fail12"],
     ["#fail13"],
     ["#fail14"],
-    ["#fail15"]
+    ["#fail15"],
+    ["#fail16"]
   ],
   "passes": [
     ["#pass1"],
@@ -45,7 +46,9 @@
     ["#pass25"],
     ["#pass26"],
     ["#pass27"],
-    ["#pass28"]
+    ["#pass28"],
+    ["#pass29"],
+    ["#pass30"]
   ],
   "incomplete": [
     ["#canttell1"],
@@ -68,9 +71,6 @@
     ["#canttell18"],
     ["#canttell19"],
     ["#canttell20"],
-    ["#canttell21"],
-    ["#canttell22"],
-    ["#canttell23"],
     ["#canttell24"],
     ["#canttell25"],
     ["#canttell26"]

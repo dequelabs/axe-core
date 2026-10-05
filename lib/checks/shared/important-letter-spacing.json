@@ -9,7 +9,10 @@
     "impact": "serious",
     "messages": {
       "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
-      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+      "fail": {
+        "default": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)",
+        "omitted": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em). More elements with text are affected than are listed as related nodes"
+      },
       "incomplete": "Unable to determine if letter-spacing in the style attribute meets the minimum"
     }
   }

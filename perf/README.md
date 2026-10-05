@@ -15,7 +15,7 @@ The workflow runs base and head **sequentially on one runner** so both measureme
 
 A few situations produce no PR comment:
 
-- **Head does not contain the perf infrastructure** (a PR that removes `perf/report.js`): the workflow exits early with a `::warning::`. No comment is posted.
+- **Head does not contain the perf infrastructure** (a PR that removes `perf/report.js`, or a PR based on a branch that predates it): a preflight job detects the missing file and the perf job is **skipped** — grey icon in the PR checks list, not red. Look for the `::notice::` line in the preflight job's log.
 - **Base ref is unreachable or its `lib/` can't be built**: the `Swap to base lib` or `Build axe.js (base)` step fails and comparison can't happen. Job shows red; no comment is posted.
 - **Fork PRs**: `GITHUB_TOKEN` is read-only for fork-authored PRs, so the comment step is skipped. The step summary still shows the diff, and both `base.json` / `head.json` are uploaded as an artifact.
 
