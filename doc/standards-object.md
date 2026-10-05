@@ -32,6 +32,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 
 - `aria-valid-attr` - Checks if the attribute name exists in the object.
 - `aria-valid-attr-value` - Checks if the attribute value is valid for its type.
+- `aria-allowed-attr` - Checks case-sensitive values against the attribute's default value.
 - `aria-unsupported-attr` - Checks if the attribute has the `unsupported` property.
 
 ### Structure
@@ -52,6 +53,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
 - `unsupported` - boolean(optional, default `false`). If the attribute is unsupported. Use this property to disable an attribute.
 - `caseInsensitive` - boolean(optional, default `false`). If the value of the attribute is case insensitive.
+- `defaultValue` - string(optional). The value used when the attribute is missing. `aria-allowed-attr` uses it to report incorrectly cased values as incomplete when they match the default, or as failures otherwise. Unrecognized `aria-current` values are treated as `true`, so incorrectly cased values of `aria-current` fail even when they match its missing-attribute default.
 
 ## Aria Roles
 
