@@ -9,7 +9,9 @@
       "aria-level"
     ],
     "ariaFallbackValues": {
-      "aria-current": "true"
+      "aria-current": "true",
+      "aria-required": "true",
+      "aria-readonly": "true"
     }
   },
   "metadata": {
