@@ -289,6 +289,14 @@ describe('label-content-name-mismatch tests', () => {
     });
   });
 
+  it('slits words in different languages if available', () => {
+    const vNode = queryFixture(
+      `<a id="target" href="#" aria-label="サイト内を検索">検索</a>`
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
   it('matches the visible label against the accessible name across an open shadow DOM boundary', () => {
     const vNode = queryShadowFixture(
       '<button id="target" aria-label="save changes"><span id="shadow"></span> changes</button>',
