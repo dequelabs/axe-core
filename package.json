@@ -125,7 +125,7 @@
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
-    "@axe-core/webdriverjs": "^4.10.2",
+    "@axe-core/webdriverjs": "^4.13.0",
     "@babel/core": "^7.20.12",
     "@babel/plugin-transform-object-rest-spread": "^7.29.7",
     "@babel/preset-env": "^7.20.2",
