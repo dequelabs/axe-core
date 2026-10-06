@@ -29,6 +29,10 @@
       "description": "Ensure ARIA attributes are used as described in the specification of the element's role",
       "help": "ARIA attributes must be used as specified for the element's role"
     },
+    "aria-current-page": {
+      "description": "Ensure only the link to the page being viewed is marked aria-current=\"page\"",
+      "help": "Links marked aria-current=\"page\" should lead to the current page"
+    },
     "aria-deprecated-role": {
       "description": "Ensure elements do not use deprecated roles",
       "help": "Deprecated ARIA roles must not be used"
@@ -472,6 +476,10 @@
         "rowSingular": "This attribute is supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}",
         "rowPlural": "These attributes are supported with treegrid rows, but not ${data.ownerRole}: ${data.invalidAttrs}"
       }
+    },
+    "aria-current-page-unique": {
+      "pass": "No other link marked aria-current=\"page\" leads to a different page",
+      "fail": "Links marked aria-current=\"page\" lead to different pages; only the link to the page being viewed should be marked"
     },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",

@@ -1,0 +1,14 @@
+{
+  "id": "aria-current-page",
+  "impact": "moderate",
+  "selector": "a[href][aria-current], area[href][aria-current]",
+  "matches": "aria-current-page-matches",
+  "tags": ["cat.aria", "best-practice", "experimental"],
+  "metadata": {
+    "description": "Ensure only the link to the page being viewed is marked aria-current=\"page\"",
+    "help": "Links marked aria-current=\"page\" should lead to the current page"
+  },
+  "all": [],
+  "any": [],
+  "none": ["aria-current-page-unique"]
+}

@@ -1,0 +1,7 @@
+{
+  "description": "aria-current-page passes",
+  "rule": "aria-current-page",
+  "passes": [["#pass1"], ["#pass2"]],
+  "violations": [],
+  "incomplete": []
+}

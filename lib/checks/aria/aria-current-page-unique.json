@@ -1,0 +1,11 @@
+{
+  "id": "aria-current-page-unique",
+  "evaluate": "aria-current-page-unique-evaluate",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "No other link marked aria-current=\"page\" leads to a different page",
+      "fail": "Links marked aria-current=\"page\" lead to different pages; only the link to the page being viewed should be marked"
+    }
+  }
+}

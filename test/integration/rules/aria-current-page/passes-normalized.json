@@ -1,0 +1,6 @@
+{
+  "description": "aria-current-page passes for links to the same normalized URL",
+  "rule": "aria-current-page",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+  "violations": []
+}
