@@ -2,13 +2,12 @@
   "id": "empty-table-header",
   "impact": "minor",
   "selector": "th:not([role]), [role=\"rowheader\"], [role=\"columnheader\"]",
-  "matches": "empty-table-header-matches",
   "tags": ["cat.name-role-value", "best-practice"],
   "metadata": {
     "description": "Ensure table headers have discernible text",
     "help": "Table header text should not be empty"
   },
   "all": [],
-  "any": ["has-visible-text"],
+  "any": ["has-visible-text", "presentational-role"],
   "none": []
 }
