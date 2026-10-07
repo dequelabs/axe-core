@@ -49,10 +49,13 @@ Only add a Shadow DOM test when the result depends on something across the shado
 
 ```javascript
 it('should treat shadow content as hidden when its host is hidden', function () {
-  const vNode = queryShadowFixture(
-    '<div id="shadow" style="display:none"></div>',
-    '<p id="target">Hidden</p>'
-  );
+  const vNode = queryFixture(html`
+    <div id="shadow" style="display:none">
+      <template shadowrootmode="open">
+        <p id="target">Hidden</p>
+      </template>
+    </div>
+  `);
   assert.isTrue(axe.commons.dom.isHiddenForEveryone(vNode));
 });
 ```
