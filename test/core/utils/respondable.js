@@ -110,6 +110,21 @@ describe('axe.utils.respondable', () => {
     );
   });
 
+  it('should pass the channelId to the setChannelId callback', () => {
+    const post = sinon.spy();
+    let channelId;
+
+    respondable.updateMessenger({
+      open: noop,
+      post: post
+    });
+
+    respondable(frameWin, 'greeting', 'hello', true, noop, id => {
+      channelId = id;
+    });
+    assert.equal(post.firstCall.args[1].channelId, channelId);
+  });
+
   it('should work as a full integration', () => {
     const listeners = {};
     const listener = sinon.spy();
