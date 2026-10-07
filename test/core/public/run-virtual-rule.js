@@ -114,6 +114,41 @@ describe('axe.runVirtualRule', () => {
     assert.lengthOf(results.passes, 1);
   });
 
+  describe('when an after method throws', () => {
+    beforeEach(() => {
+      axe._load({
+        rules: [{ id: 'after-test', selector: '*', any: ['after-check'] }],
+        checks: [
+          {
+            id: 'after-check',
+            evaluate: () => false,
+            after: () => {
+              throw new Error('after failed');
+            }
+          }
+        ]
+      });
+    });
+
+    it('should return an incomplete result with the error', () => {
+      const results = axe.runVirtualRule('after-test', { nodeName: 'div' });
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 1);
+
+      const ruleResult = results.incomplete[0];
+      assert.include(ruleResult.error.message, 'after failed');
+      assert.lengthOf(ruleResult.nodes, 1);
+      assert.isNull(ruleResult.nodes[0].node);
+      assert.equal(ruleResult.nodes[0].none[0].id, 'error-occurred');
+    });
+
+    it('should throw the error when debug is set', () => {
+      assert.throws(() => {
+        axe.runVirtualRule('after-test', { nodeName: 'div' }, { debug: true });
+      }, 'after failed');
+    });
+  });
+
   describe('context', () => {
     const { Context } = axe._thisWillBeDeletedDoNotUse.base;
     it('passes context with vNode included to rule.runSync', () => {
