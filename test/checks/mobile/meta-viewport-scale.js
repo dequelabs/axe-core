@@ -72,6 +72,23 @@ describe('meta-viewport', () => {
     );
   });
 
+  it('should return true on maximum-scale=yes if lowerBound is passed', () => {
+    const vNode = queryFixture(
+      '<meta id="target" name="viewport" content="foo=bar, cats=dogs, maximum-scale=yes, more-stuff=ok">'
+    );
+
+    assert.isTrue(
+      axe.testUtils.getCheckEvaluate('meta-viewport').call(
+        checkContext,
+        null,
+        {
+          lowerBound: 2
+        },
+        vNode
+      )
+    );
+  });
+
   it('should return true on user-scalable=device-width', () => {
     const vNode = queryFixture(
       '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=device-width, more-stuff=ok">'
