@@ -12,7 +12,7 @@ importers:
   .:
     devDependencies:
       '@axe-core/webdriverjs':
-        specifier: ^4.10.2
+        specifier: ^4.13.0
         version: 4.13.0(selenium-webdriver@4.49.0)
       '@babel/core':
         specifier: ^7.20.12
@@ -49,7 +49,7 @@ importers:
         version: 4.0.3
       chromedriver:
         specifier: latest
-        version: 154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 154.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       clean-jsdoc-theme:
         specifier: ^4.2.17
         version: 4.3.2(jsdoc@4.0.5)
@@ -1645,8 +1645,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@154.0.0:
-    resolution: {integrity: sha512-kn+ENZ2lEPAmeDTNNBbVw6Xt4KAr6M4EFcgeV4lUREgJWHVZBu4fFc+OFivtuf5Q9jM/qSmAcQ3MdWtdOE6mVA==}
+  chromedriver@154.0.1:
+    resolution: {integrity: sha512-QtK+E8xDBt6+dBOALfbILJX2VoRngV6elAh47uZCGWKVKf7n3DyO/IpBo/x5PafLgpZ0LZKTWQQtB+DYq0ixHA==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5923,7 +5923,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@154.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  chromedriver@154.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@testim/chrome-version': 1.1.4
       adm-zip: 0.6.0

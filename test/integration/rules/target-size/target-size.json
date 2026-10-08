@@ -9,7 +9,8 @@
     ["#fail5"],
     ["#fail6"],
     ["#fail7"],
-    ["#fail-fixed"]
+    ["#fail-fixed"],
+    ["#fail-diff-dest-card"]
   ],
   "passes": [
     ["#pass1"],
@@ -38,7 +39,19 @@
     ["#pass24"],
     ["#pass25"],
     ["#pass-adjacent"],
-    ["#pass-fixed"]
+    ["#pass-fixed"],
+    ["#pass-same-dest-cover"],
+    ["#pass-same-dest-card"],
+    ["#pass-same-dest-spelling-cover"],
+    ["#pass-same-dest-spelling"],
+    ["#pass-diff-dest-cover"],
+    ["#pass-same-dest-bar"],
+    ["#pass-same-dest-bar-overlay"],
+    ["#pass-inline-diff-dest-1"],
+    ["#pass-inline-diff-dest-2"],
+    ["#pass-inline-diff-dest-3"],
+    ["#pass-same-dest-undersized-1"],
+    ["#pass-same-dest-undersized-2"]
   ],
   "incomplete": [
     ["#incomplete1"],

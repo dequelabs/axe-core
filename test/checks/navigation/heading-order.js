@@ -223,6 +223,37 @@ describe('heading-order', () => {
       assert.isFalse(checks['heading-order'].after(results)[1].result);
     });
 
+    it('should add the previous heading to the related nodes when failing', () => {
+      const results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path1'],
+                level: 1
+              },
+              {
+                ancestry: ['path2'],
+                level: 3
+              }
+            ]
+          },
+          node: { ancestry: ['path1'] },
+          result: true,
+          relatedNodes: []
+        },
+        {
+          node: { ancestry: ['path2'] },
+          result: true,
+          relatedNodes: []
+        }
+      ];
+      const afterResults = checks['heading-order'].after(results);
+      assert.deepEqual(afterResults[0].relatedNodes, []);
+      assert.lengthOf(afterResults[1].relatedNodes, 1);
+      assert.equal(afterResults[1].relatedNodes[0], results[0].node);
+    });
+
     it('should return true when header level decreases by 1', () => {
       const results = [
         {
@@ -421,6 +452,8 @@ describe('heading-order', () => {
       const afterResults = checks['heading-order'].after(results);
       assert.isFalse(afterResults[1].result);
       assert.isTrue(afterResults[2].result);
+      assert.lengthOf(afterResults[1].relatedNodes, 1);
+      assert.equal(afterResults[1].relatedNodes[0], results[0].node);
     });
 
     it('should handle nested iframes', () => {
@@ -801,6 +834,7 @@ describe('heading-order', () => {
       ];
       const afterResults = checks['heading-order'].after(results);
       assert.isFalse(afterResults[0].result);
+      assert.isUndefined(afterResults[0].relatedNodes);
     });
   });
 

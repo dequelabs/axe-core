@@ -16,7 +16,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-selected="true"']
+    });
   });
 
   it('should not report on required attributes', () => {
@@ -41,7 +44,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-selected="true"']
+    });
   });
 
   it('should return true for global attributes if there is no role', () => {
@@ -67,7 +73,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-selected="true"']
+    });
   });
 
   it('should not report on invalid attributes', () => {
@@ -119,7 +128,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-required="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-required="true"']
+    });
   });
 
   it('should not report on aria-multiline=false with contenteditable', () => {
@@ -145,7 +157,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-multiline="true"']
+    });
   });
 
   it('should return false for unallowed aria-multiline=false', () => {
@@ -158,7 +173,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-multiline="false"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-multiline="false"']
+    });
   });
 
   it('should return false for unallowed aria-multiline=true', () => {
@@ -169,7 +187,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['aria-multiline="true"']);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-multiline="true"']
+    });
   });
 
   it('should return undefined for custom element that has no role and is not focusable', () => {
@@ -182,7 +203,17 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.isNotNull(checkContext._data);
+    assert.deepEqual(checkContext._data, {
+      values: ['aria-expanded="true"']
+    });
+    assert.equal(
+      axe.utils.getCheckMessage(
+        'aria-allowed-attr',
+        'incomplete',
+        checkContext._data
+      ),
+      'Check that there is no problem if the ARIA attribute is ignored on this element: aria-expanded="true"'
+    );
   });
 
   it("should return false for custom element that has a role which doesn't allow the attribute", () => {
@@ -195,7 +226,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.isNotNull(checkContext._data);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-expanded="true"']
+    });
   });
 
   it('should return false for custom element that is focusable', () => {
@@ -208,7 +242,10 @@ describe('aria-allowed-attr', () => {
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
-    assert.isNotNull(checkContext._data);
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'singular',
+      values: ['aria-expanded="true"']
+    });
   });
 
   describe('options', () => {
@@ -233,6 +270,7 @@ describe('aria-allowed-attr', () => {
           .call(checkContext, null, null, vNode)
       );
 
+      checkContext.reset();
       assert.isTrue(
         axe.testUtils.getCheckEvaluate('aria-allowed-attr').call(
           checkContext,
@@ -273,11 +311,28 @@ describe('aria-allowed-attr', () => {
           .call(checkContext, null, null, vNode)
       );
 
+      checkContext.reset();
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, options, vNode)
       );
+    });
+
+    it('should report case-sensitive aria attributes when other unallowed attributes are present', () => {
+      const vNode = queryFixture(
+        '<div role="checkbox" id="target" aria-checked="TRUE" aria-selected="true"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'singular',
+        values: ['aria-selected="true"']
+      });
     });
   });
 });

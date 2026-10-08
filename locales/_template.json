@@ -441,9 +441,13 @@
       "pass": "ARIA attributes are used correctly for the defined role",
       "fail": {
         "singular": "ARIA attribute is not allowed: ${data.values}",
-        "plural": "ARIA attributes are not allowed: ${data.values}"
+        "plural": "ARIA attributes are not allowed: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that must be lowercase: ${data.values}"
       },
-      "incomplete": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}"
+      "incomplete": {
+        "default": "Check that there is no problem if the ARIA attribute is ignored on this element: ${data.values}",
+        "caseSensitive": "The following ARIA attributes have case-sensitive values that might not be handled correctly by assistive technologies: ${data.values}"
+      }
     },
     "aria-allowed-role": {
       "pass": "ARIA role is allowed for given element",
@@ -532,6 +536,7 @@
         "singular": "Required ARIA child role not present: ${data.values}",
         "plural": "Required ARIA children role not present: ${data.values}",
         "unallowed": "Element has children which are not allowed: ${data.values}",
+        "unallowedPresentational": "Element has presentational children which cannot be ignored because of ${data.values}",
         "aria-busy-fail": "Element has children which are not allowed: ${data.values}; Having aria-busy=\"true\" does not allow children with roles that are not allowed"
       },
       "incomplete": {

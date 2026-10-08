@@ -2,6 +2,7 @@ describe('target-size tests', () => {
   const checkContext = axe.testUtils.MockCheckContext();
   const checkSetup = axe.testUtils.checkSetup;
   const shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  const html = axe.testUtils.html;
   const check = checks['target-size'];
   const fixture = document.querySelector('#fixture');
 
@@ -125,6 +126,33 @@ describe('target-size tests', () => {
       assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
+    it('returns true for same-destination anchors', () => {
+      const checkArgs = checkSetup(html`
+        <a
+          href="/x"
+          id="target"
+          style="display: inline-block; width:40px; height:30px; margin-left:30px;"
+          >x</a
+        ><button
+          id="obscurer"
+          style="display: inline-block; width:40px; height:30px; margin-left: -10px;"
+        >
+          x</button
+        ><a
+          href="/x"
+          style="display: inline-block; width:40px; height:30px; margin-left: -100px;"
+          >x</a
+        >
+      `);
+      assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        minSize: 24,
+        width: 30,
+        height: 30
+      });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
+    });
+
     describe('by a focusable widget', () => {
       it('returns true for obscured targets with sufficient space', () => {
         const checkArgs = checkSetup(
@@ -161,7 +189,7 @@ describe('target-size tests', () => {
           `<div style="font-size: 18px; margin: 1em auto; width: 6em; line-height: 1.3;">` +
             `<a id="not-obscurer" href="/foo" class="A"> Hello hello</a>` +
             `<a id="target" href="/bar" class="B"> Hello hello hello</a>` +
-            `<a id="obscurer" href="/bar" class="C"> Hello hello hello</a>` +
+            `<a id="obscurer" href="/baz" class="C"> Hello hello hello</a>` +
             `</div>`
         );
         assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -249,6 +277,77 @@ describe('target-size tests', () => {
             '#obscurer1',
             '#obscurer2'
           ]);
+        });
+      });
+
+      describe('that links to the same destination', () => {
+        it('returns false when the obscurer links to a different destination', () => {
+          const checkArgs = checkSetup(html`
+            <div style="position: relative; width: 100px;">
+              <a href="/w" id="target" style="display: block; height: 30px;"
+                >x</a
+              >
+              <a
+                href="/other"
+                style="position: absolute; top: 6px; left: 0; right: 0; height: 18px;"
+                >x</a
+              >
+            </div>
+          `);
+          assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+          assert.equal(checkContext._data.messageKey, 'partiallyObscured');
+        });
+
+        it('still returns false for an undersized target', () => {
+          const checkArgs = checkSetup(html`
+            <div style="position: relative;">
+              <a
+                href="/o"
+                id="target"
+                style="display: inline-block; width: 16px; height: 16px;"
+                >a</a
+              >
+              <a
+                href="/o"
+                style="position: absolute; left: 8px; top: 0; display: inline-block; width: 16px; height: 16px;"
+                >b</a
+              >
+            </div>
+          `);
+          assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            minSize: 24,
+            width: 16,
+            height: 16
+          });
+        });
+
+        it('reports only the obscurer that links elsewhere', () => {
+          const checkArgs = checkSetup(html`
+            <div style="position: relative; width: 100px;">
+              <a href="/w" id="target" style="display: block; height: 30px;"
+                >x</a
+              >
+              <a
+                href="/w"
+                style="position: absolute; top: 6px; left: 0; right: 0; height: 18px;"
+                >x</a
+              >
+              <a
+                href="/other"
+                id="other"
+                style="position: absolute; top: 0; left: 0; width: 20px; height: 30px;"
+                >x</a
+              >
+            </div>
+          `);
+          assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            minSize: 24,
+            width: 80,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), ['#other']);
         });
       });
 
