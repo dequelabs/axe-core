@@ -98,7 +98,7 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
-  it('ignore text in the block coming before a br', () => {
+  it('ignores text in the block coming before a br', () => {
     fixtureSetup(html`
       <p>
         Some paragraph with text <br />
@@ -109,7 +109,7 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
-  it('ignore text in the block coming after a br', () => {
+  it('ignores text in the block coming after a br', () => {
     fixtureSetup(html`
       <p>
         <a href="" id="link">link</a> <br />
@@ -120,7 +120,7 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
-  it('ignore text in the block coming before and after a br', () => {
+  it('ignores text in the block coming before and after a br', () => {
     fixtureSetup(html`
       <p>
         Some paragraph with text <br />
@@ -163,11 +163,39 @@ describe('dom.isInTextBlock', () => {
     assert.isFalse(isInTextBlock(link));
   });
 
-  it('ignore comments', () => {
+  it('ignores comments', () => {
     fixtureSetup(html`
       <p>
         <!-- Some paragraph with text -->
         <a href="" id="link">link</a>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignores script tags', () => {
+    fixtureSetup(html`
+      <p>
+        <a href="" id="link">link</a>
+        <script>
+          const foo = 'bar';
+        </script>
+      </p>
+    `);
+    const link = document.getElementById('link');
+    assert.isFalse(isInTextBlock(link));
+  });
+
+  it('ignores style tags', () => {
+    fixtureSetup(html`
+      <p>
+        <a href="" id="link">link</a>
+        <style>
+          a {
+            color: 'red';
+          }
+        </style>
       </p>
     `);
     const link = document.getElementById('link');
