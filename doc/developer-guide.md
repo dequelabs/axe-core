@@ -104,9 +104,9 @@ Axe supports the following CSS selectors:
 - Descendant and Child combinators. E.g. `table td`, `ul > li`
 - Attribute selectors `=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
 
-Attribute values are compared exactly, with one exception: `[role=value]` compares the `role` attribute trimmed and case-insensitively, the same way axe resolves explicit roles. For example, `[role=img]` matches `role="IMG"` and `role=" img "`, but not `role="img button"`. Other operators on `role` still compare exactly. This differs from `document.querySelectorAll`, which is also what `axe.run` uses for context `include` and `exclude` selectors.
+Attribute values are compared exactly, with one exception: `[role=value]` compares the `role` attribute trimmed and case-insensitively, the same way axe resolves explicit roles. For example, `[role=img]` matches `role="IMG"` and `role=" img "`, but not `role="img button"`. Other operators on `role` (`~=`, `^=`, `$=`, `*=`) are not normalized and work as they do for any other attribute. This differs from `document.querySelectorAll`, which is also what `axe.run` uses for context `include` and `exclude` selectors.
 
-To get closer to axe's matching with `document.querySelectorAll` or a context selector, add the `i` flag so the value is compared case-insensitively: `[role="img" i]`. The flag does not trim whitespace, and Internet Explorer 11 does not support it. To match exactly what axe matches, select every element with a `role` attribute and filter on the trimmed, lowercased value:
+To get closer to axe's matching with `document.querySelectorAll` or a context selector, add the `i` flag so the value is compared case-insensitively: `[role="img" i]`. The flag does not trim whitespace, and Internet Explorer 11 does not support it. Only use it with the browser's selector APIs: axe's own selector engine, used for rule `selector`s and `axe.utils.querySelectorAll`, does not support the `i` flag and already ignores case for `[role=value]`. To match exactly what axe matches, select every element with a `role` attribute and filter on the trimmed, lowercased value:
 
 ```js
 const images = Array.from(document.querySelectorAll('[role]')).filter(

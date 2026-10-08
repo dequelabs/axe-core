@@ -221,6 +221,12 @@ describe('utils.matches', () => {
           '<header id="target" role="BANNER"></header>'
         );
         assert.isFalse(matches(virtualNode, 'header:not([role])'));
+      });
+
+      it('matches a native element with a redundant role that differs in case through the role half of the selector', () => {
+        const virtualNode = queryFixture(
+          '<header id="target" role="BANNER"></header>'
+        );
         assert.isTrue(
           matches(virtualNode, 'header:not([role]), [role=banner]')
         );
@@ -240,6 +246,32 @@ describe('utils.matches', () => {
         assert.isFalse(matches(virtualNode, '[role~=img]'));
         assert.isFalse(matches(virtualNode, '[role^=img]'));
         assert.isFalse(matches(virtualNode, '[role$=img]'));
+        assert.isFalse(matches(virtualNode, '[role*=img]'));
+        assert.isTrue(matches(virtualNode, '[role~=IMG]'));
+        assert.isTrue(matches(virtualNode, '[role^=IM]'));
+        assert.isTrue(matches(virtualNode, '[role$=MG]'));
+        assert.isTrue(matches(virtualNode, '[role*=MG]'));
+      });
+
+      it('matches an empty role selector against a whitespace-only role', () => {
+        assert.isTrue(
+          matches(
+            queryFixture('<span id="target" role=""></span>'),
+            '[role=""]'
+          )
+        );
+        assert.isTrue(
+          matches(
+            queryFixture('<span id="target" role="   "></span>'),
+            '[role=""]'
+          )
+        );
+        assert.isFalse(
+          matches(
+            queryFixture('<span id="target" role="img"></span>'),
+            '[role=""]'
+          )
+        );
       });
 
       describe('parity with getExplicitRole', () => {
