@@ -148,6 +148,84 @@ describe('utils.matches', () => {
       );
       assert.isTrue(matches(virtualNode, '[foo]'));
     });
+
+    it('is case sensitive for attributes other than role', () => {
+      const virtualNode = queryFixture('<span id="target" foo="BAZ"></span>');
+      assert.isFalse(matches(virtualNode, '[foo=baz]'));
+    });
+
+    it('does not trim attributes other than role', () => {
+      const virtualNode = queryFixture('<span id="target" foo=" baz "></span>');
+      assert.isFalse(matches(virtualNode, '[foo=baz]'));
+    });
+
+    describe('role', () => {
+      it('matches a role value regardless of case', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="IMG"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role=img]'));
+      });
+
+      it('matches a mixed case role value', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="Button"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role="button"]'));
+      });
+
+      it('matches a role value with surrounding whitespace', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role=" img "></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role=img]'));
+      });
+
+      it('matches a role value with whitespace and different case', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="  Dialog\t"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role=dialog]'));
+      });
+
+      it('matches a role selector value regardless of case', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="img"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role=IMG]'));
+      });
+
+      it('does not match when the role is a later token', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="button img"></span>'
+        );
+        assert.isFalse(matches(virtualNode, '[role=img]'));
+      });
+
+      it('does not match when the role is the first of multiple tokens', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="IMG button"></span>'
+        );
+        assert.isFalse(matches(virtualNode, '[role=img]'));
+      });
+
+      it('does not match a different role', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="IMAGE"></span>'
+        );
+        assert.isFalse(matches(virtualNode, '[role=img]'));
+      });
+
+      it('does not match a native element with a redundant role in :not([role])', () => {
+        const virtualNode = queryFixture(
+          '<header id="target" role="BANNER"></header>'
+        );
+        assert.isFalse(matches(virtualNode, 'header:not([role])'));
+        assert.isTrue(
+          matches(virtualNode, 'header:not([role]), [role=banner]')
+        );
+      });
+    });
   });
 
   describe('id', () => {

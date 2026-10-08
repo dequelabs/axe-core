@@ -244,6 +244,19 @@ describe('aria.implicitRole', () => {
     }
   });
 
+  it('should return null for header with a sectioning or main parent role that differs in case or whitespace', () => {
+    const roles = ['MAIN', ' Article '];
+
+    for (const role of roles) {
+      fixture.innerHTML = html`<div role="${role}">
+        <header id="target"></header>
+      </div>`;
+      const node = fixture.querySelector('#target');
+      flatTreeSetup(fixture);
+      assert.isNull(implicitRole(node), `[${role}] not null`);
+    }
+  });
+
   it('should return img for "img[alt]"', () => {
     fixture.innerHTML = '<img id="target" alt="value"></img>';
     const node = fixture.querySelector('#target');

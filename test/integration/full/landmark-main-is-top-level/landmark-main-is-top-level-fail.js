@@ -18,8 +18,8 @@ describe('landmark-main-is-top-level test fail', () => {
       assert.lengthOf(results.violations, 1);
     });
 
-    it('should find 4 nodes', () => {
-      assert.lengthOf(results.violations[0].nodes, 4);
+    it('should find 5 nodes', () => {
+      assert.lengthOf(results.violations[0].nodes, 5);
     });
   });
 
