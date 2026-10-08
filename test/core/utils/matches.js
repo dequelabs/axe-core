@@ -225,6 +225,57 @@ describe('utils.matches', () => {
           matches(virtualNode, 'header:not([role]), [role=banner]')
         );
       });
+
+      it('matches a role selector value with surrounding whitespace', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="img"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[role=" img "]'));
+      });
+
+      it('matches a role attribute name regardless of case', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="IMG"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[ROLE=img]'));
+      });
+
+      it('compares other operators on role exactly', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" role="IMG"></span>'
+        );
+        assert.isFalse(matches(virtualNode, '[role~=img]'));
+        assert.isFalse(matches(virtualNode, '[role^=img]'));
+        assert.isFalse(matches(virtualNode, '[role$=img]'));
+      });
+
+      describe('parity with getExplicitRole', () => {
+        const getExplicitRole = axe.commons.aria.getExplicitRole;
+        const roleValues = [
+          'img',
+          'IMG',
+          ' img ',
+          '&#9;Img&#10;',
+          'img button',
+          'IMG BUTTON',
+          'button img',
+          'IMAGE',
+          ' ',
+          ''
+        ];
+
+        for (const roleValue of roleValues) {
+          it(`agrees for role="${roleValue}"`, () => {
+            const virtualNode = queryFixture(
+              `<span id="target" role="${roleValue}"></span>`
+            );
+            assert.equal(
+              matches(virtualNode, '[role=img]'),
+              getExplicitRole(virtualNode) === 'img'
+            );
+          });
+        }
+      });
     });
   });
 

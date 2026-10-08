@@ -133,4 +133,20 @@ describe('role-img-alt virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should fail for a role that differs in case or whitespace', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: ' IMG '
+      }
+    });
+    node.children = [];
+
+    const results = axe.runVirtualRule('role-img-alt', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });

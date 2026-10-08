@@ -152,6 +152,15 @@ describe('page-has-*', () => {
       assert.isTrue(mainIsFound);
     });
 
+    it('should return true if a div has role main that differs in case or whitespace', () => {
+      const params = checkSetup(
+        '<div id="target" role=" MAIN ">Div with role main</div>',
+        check.options
+      );
+      const mainIsFound = check.evaluate.apply(checkContext, params);
+      assert.isTrue(mainIsFound);
+    });
+
     it('should return true if main is inside of shadow dom', () => {
       const params = shadowCheckSetup(
         '<div id="target"></div>',
@@ -196,6 +205,15 @@ describe('page-has-*', () => {
     it('should return true if a div has role=heading and aria-level=1', () => {
       const params = checkSetup(
         '<div id="target" role="heading" aria-level="1">Diversity heading</div>',
+        check.options
+      );
+      const h1IsFound = check.evaluate.apply(checkContext, params);
+      assert.isTrue(h1IsFound);
+    });
+
+    it('should return true if a div has role heading that differs in case or whitespace and aria-level=1', () => {
+      const params = checkSetup(
+        '<div id="target" role=" HEADING " aria-level="1">Diversity heading</div>',
         check.options
       );
       const h1IsFound = check.evaluate.apply(checkContext, params);

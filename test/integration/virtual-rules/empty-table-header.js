@@ -210,4 +210,20 @@ describe('empty-table-header virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
     assert.lengthOf(results.inapplicable, 1);
   });
+
+  it('should fail for a role that differs in case or whitespace', () => {
+    const vNode = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: ' COLUMNHEADER '
+      }
+    });
+    vNode.children = [];
+
+    const results = axe.runVirtualRule('empty-table-header', vNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
