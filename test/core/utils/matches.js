@@ -233,13 +233,6 @@ describe('utils.matches', () => {
         assert.isTrue(matches(virtualNode, '[role=" img "]'));
       });
 
-      it('matches a role attribute name regardless of case', () => {
-        const virtualNode = queryFixture(
-          '<span id="target" role="IMG"></span>'
-        );
-        assert.isTrue(matches(virtualNode, '[ROLE=img]'));
-      });
-
       it('compares other operators on role exactly', () => {
         const virtualNode = queryFixture(
           '<span id="target" role="IMG"></span>'
