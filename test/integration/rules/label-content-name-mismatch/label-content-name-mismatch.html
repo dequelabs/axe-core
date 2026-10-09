@@ -14,6 +14,9 @@
     position: absolute;
     clip-path: inset(50%);
   }
+  .block {
+    display: block;
+  }
 </style>
 
 <!-- Pass -->
@@ -66,6 +69,16 @@
 >
 <button id="pass19" aria-label="hola">¿Hola?</button>
 <button id="pass17" aria-label="model ABC123">Ｍｏｄｅｌ ＡＢＣ１２３</button>
+<a id="pass20" href="#" aria-labelledby="labelForPass20"
+  ><card-content id="labelForPass20"
+    ><card-title class="block">Product</card-title
+    ><card-text class="block">Details</card-text></card-content
+  ></a
+>
+<a id="pass21" href="#" aria-label="Product details"
+  ><card-title class="block">Product</card-title
+  ><card-text class="block">Details</card-text></a
+>
 
 <!-- Fail -->
 <div id="fail1" role="link" aria-label="OK">Next</div>
@@ -90,6 +103,10 @@
 <a id="fail9" href="#" aria-label="deque labs are great">
   deque <span class="visually-hidden">labs</span> are great
 </a>
+<a id="fail10" href="#" aria-label="ProductDetails"
+  ><card-title class="block">Product</card-title
+  ><card-text class="block">Details</card-text></a
+>
 
 <!-- incomplete -->
 <button id="incomplete1" aria-label="comet">☄️</button>
