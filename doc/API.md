@@ -891,7 +891,7 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Parameters
 
 - `virtualNode` – object, the flattened DOM tree to query against. `axe._tree` is available for this purpose during an audit; see below.
-- `selector` – string, the [CSS selector](./developer-guide.md#supported-css-selectors) to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
+- `selector` – string, the [CSS selector](./developer-guide.md#supported-css-selectors) to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`. One exception: `[role=value]` compares the `role` attribute trimmed and case-insensitively, the same way axe resolves explicit roles, so `[role=img]` also matches `role="IMG"` and `role=" img "`. `document.querySelectorAll` does not.
 
 ##### Returns
 
