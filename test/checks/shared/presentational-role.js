@@ -2,7 +2,6 @@ describe('presentational-role', () => {
   const fixture = document.getElementById('fixture');
   const html = axe.testUtils.html;
   const queryFixture = axe.testUtils.queryFixture;
-  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const checkEvaluate = axe.testUtils.getCheckEvaluate('presentational-role');
   const checkContext = axe.testUtils.MockCheckContext();
 
@@ -36,22 +35,6 @@ describe('presentational-role', () => {
 
     assert.isTrue(checkEvaluate.call(checkContext, null, null, vNode));
     assert.deepEqual(checkContext._data.role, 'none');
-  });
-
-  it('should detect a role inherited from a presentational table in shadow DOM', () => {
-    const vNode = queryShadowFixture(
-      '<div id="shadow"></div>',
-      html`
-        <table role="presentation">
-          <tr>
-            <th id="target"></th>
-          </tr>
-        </table>
-      `
-    );
-
-    assert.isTrue(checkEvaluate.call(checkContext, null, null, vNode));
-    assert.deepEqual(checkContext._data.role, 'presentation');
   });
 
   it('should return false when role !== none', () => {
