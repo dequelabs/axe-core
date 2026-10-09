@@ -60,6 +60,86 @@ describe('standards.getElementSpec', () => {
     assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
   });
 
+  describe('list item parent semantics', () => {
+    ['ul', 'ol', 'menu'].forEach(nodeName => {
+      it(`should keep list item role restrictions under a native ${nodeName}`, () => {
+        const vNode = queryFixture(
+          `<${nodeName}><li id="target" role="tabpanel"></li></${nodeName}>`
+        );
+        const allowedRoles = getElementSpec(vNode).allowedRoles;
+        assert.isArray(allowedRoles);
+        assert.include(allowedRoles, 'option');
+        assert.notInclude(allowedRoles, 'tabpanel');
+      });
+    });
+
+    it('should keep list item role restrictions under an explicit list', () => {
+      const vNode = queryFixture(
+        '<div role="list"><li id="target" role="tabpanel"></li></div>'
+      );
+      assert.notInclude(getElementSpec(vNode).allowedRoles, 'tabpanel');
+    });
+
+    ['none', 'presentation'].forEach(role => {
+      it(`should allow any list item role under a ${role} parent`, () => {
+        const vNode = queryFixture(
+          `<ul role="${role}"><li id="target" role="tabpanel"></li></ul>`
+        );
+        assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+      });
+    });
+
+    it('should allow any list item role when the parent has no list semantics', () => {
+      const vNode = queryFixture(
+        '<div><li id="target" role="tabpanel"></li></div>'
+      );
+      assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+    });
+
+    it('should allow any list item role when the parent has a different explicit role', () => {
+      const vNode = queryFixture(
+        '<ul role="group"><li id="target" role="tabpanel"></li></ul>'
+      );
+      assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+    });
+
+    it('should preserve restrictions when a presentation conflict restores the list role', () => {
+      const vNode = queryFixture(
+        '<ul role="none" tabindex="0"><li id="target" role="tabpanel"></li></ul>'
+      );
+      assert.notInclude(getElementSpec(vNode).allowedRoles, 'tabpanel');
+    });
+
+    it('should preserve restrictions when a global ARIA attribute restores the list role', () => {
+      const vNode = queryFixture(
+        '<ul role="presentation" aria-label="Items"><li id="target" role="tabpanel"></li></ul>'
+      );
+      assert.notInclude(getElementSpec(vNode).allowedRoles, 'tabpanel');
+    });
+
+    it('should resolve a parent name that references its list item without recursion', () => {
+      const vNode = queryFixture(
+        '<section aria-labelledby="target"><li id="target" role="tabpanel">Section name</li></section>'
+      );
+      assert.strictEqual(getElementSpec(vNode).allowedRoles, true);
+      assert.equal(axe.commons.aria.getRole(vNode.parent), 'region');
+    });
+
+    [undefined, null].forEach(parent => {
+      it(`should keep role restrictions when parent context is ${parent}`, () => {
+        const vNode = new axe.SerialVirtualNode({
+          nodeName: 'li',
+          attributes: { role: 'tabpanel' }
+        });
+        vNode.parent = parent;
+        const allowedRoles = getElementSpec(vNode).allowedRoles;
+        assert.isArray(allowedRoles);
+        assert.include(allowedRoles, 'option');
+        assert.notInclude(allowedRoles, 'tabpanel');
+      });
+    });
+  });
+
   describe('variants', () => {
     before(() => {
       axe.configure({
