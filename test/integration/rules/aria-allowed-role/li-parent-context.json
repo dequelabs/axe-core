@@ -1,0 +1,25 @@
+{
+  "description": "aria-allowed-role list item parent context",
+  "rule": "aria-allowed-role",
+  "passes": [
+    ["#pass-li-presentation-tabpanel"],
+    ["#pass-li-none-group"],
+    ["#pass-li-menu-tabpanel"],
+    ["#pass-li-non-list-tabpanel"],
+    ["#pass-li-parent-label"],
+    ["#pass-li-native-list-menuitem"],
+    ["#pass-parent-presentation"],
+    ["#pass-parent-none"],
+    ["#pass-parent-menu"],
+    ["#pass-parent-list"],
+    ["#pass-parent-focusable"],
+    ["#pass-parent-labelled"]
+  ],
+  "violations": [
+    ["#fail-li-native-list-tabpanel"],
+    ["#fail-li-explicit-list-tabpanel"],
+    ["#fail-li-focusable-list-tabpanel"],
+    ["#fail-li-labelled-list-tabpanel"]
+  ],
+  "incomplete": []
+}
