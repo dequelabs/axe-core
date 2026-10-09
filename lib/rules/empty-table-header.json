@@ -8,6 +8,6 @@
     "help": "Table header text should not be empty"
   },
   "all": [],
-  "any": ["has-visible-text"],
+  "any": ["has-visible-text", "presentational-role"],
   "none": []
 }
