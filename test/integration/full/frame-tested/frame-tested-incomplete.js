@@ -14,11 +14,14 @@ describe('frame-tested-incomplete test', () => {
   });
 
   describe('incomplete', () => {
-    it('should find 1', () => {
-      assert.lengthOf(results.incomplete[0].nodes, 1);
+    it('should find 2', () => {
+      assert.lengthOf(results.incomplete[0].nodes, 2);
     });
-    it('should find first iframe', () => {
-      assert.deepEqual(results.incomplete[0].nodes[0].target, ['#incomplete']);
+    it('should find the iframe and the frame', () => {
+      assert.deepEqual(
+        results.incomplete[0].nodes.map(node => node.target),
+        [['#incomplete'], ['#frameset', '#incomplete']]
+      );
     });
   });
 
@@ -29,8 +32,12 @@ describe('frame-tested-incomplete test', () => {
   });
 
   describe('passes', () => {
-    it('should find 0', () => {
-      assert.lengthOf(results.passes, 0);
+    it('should find the iframe of the frameset', () => {
+      assert.lengthOf(results.passes, 1);
+      assert.deepEqual(
+        results.passes[0].nodes.map(node => node.target),
+        [['#frameset']]
+      );
     });
   });
 });
