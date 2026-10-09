@@ -42,4 +42,32 @@ describe('table.isRowHeader', () => {
     const cell = document.querySelector('#rh2');
     assert.isTrue(table.isRowHeader(cell));
   });
+
+  describe('with a group scope', () => {
+    // neither the row nor the column of #target is all th, so without the
+    // scope attribute getScope would return 'auto'
+    function setup(scope) {
+      fixtureSetup(html`
+        <table>
+          <tr>
+            <td>cell</td>
+            <th id="target" scope="${scope}">header</th>
+          </tr>
+          <tr>
+            <th>header</th>
+            <td>cell</td>
+          </tr>
+        </table>
+      `);
+      return document.querySelector('#target');
+    }
+
+    it('returns true if scope="rowgroup"', () => {
+      assert.isTrue(table.isRowHeader(setup('rowgroup')));
+    });
+
+    it('returns false if scope="colgroup"', () => {
+      assert.isFalse(table.isRowHeader(setup('colgroup')));
+    });
+  });
 });
