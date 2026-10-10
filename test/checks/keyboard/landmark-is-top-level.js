@@ -36,6 +36,33 @@ describe('landmark-is-top-level', () => {
     assert.deepEqual(checkContext._data, { role: 'complementary' });
   });
 
+  it('should return true if the complementary landmark is in role=application', () => {
+    const params = checkSetup(
+      '<div role="application"><div role="complementary" id="target"></div></div>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isTrue(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { role: 'complementary' });
+  });
+
+  it('should return true if the main landmark is in role=application', () => {
+    const params = checkSetup(
+      '<div role="application"><main id="target"></main></div>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isTrue(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { role: 'main' });
+  });
+
+  it('should return false if role=application is in another landmark', () => {
+    const params = checkSetup(
+      '<nav><div role="application"><div role="complementary" id="target"></div></div></nav>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { role: 'complementary' });
+  });
+
   it('should return false if div with role set to main is in another landmark', () => {
     const params = checkSetup(
       '<div role="navigation"><div role="main" id="target"></div></div>'
