@@ -954,5 +954,53 @@ describe('dom.getElementStack', () => {
       const stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
+
+    it('should look beneath the scroll region at the target, not its centre', () => {
+      fixture.innerHTML = html`
+        <div id="1" style="position: relative">
+          <div
+            id="under-target"
+            style="position: absolute; top: 0; left: 0; width: 50px; height: 20px"
+          ></div>
+          <div
+            id="under-centre"
+            style="position: absolute; top: 40px; left: 100px; width: 100px; height: 20px"
+          ></div>
+          <div id="2" style="overflow: auto; width: 300px; height: 100px">
+            <span id="target">Hi</span>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.include(stack, 'under-target');
+      assert.notInclude(stack, 'under-centre');
+    });
+
+    it('should look beneath the scroll region when the target is scrolled outside it', () => {
+      fixture.innerHTML = html`
+        <div id="1" style="position: relative">
+          <div
+            id="under-edge"
+            style="position: absolute; top: 44px; left: 0; width: 50px; height: 10px"
+          ></div>
+          <div id="2" style="overflow: auto; width: 300px; height: 50px">
+            <div
+              id="target"
+              style="margin-top: 40px; width: 20px; height: 40px"
+            >
+              Hi
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.includeMembers(stack, ['target', '2', 'under-edge', '1']);
+    });
   });
 });
