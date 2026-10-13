@@ -342,3 +342,31 @@ this should not effect their outcome -->
 <map name="imagemap">
   <area id="inapplicable6" shape="circle" coords="75 75 75" href="#" />
 </map>
+
+<section style="display: flex">
+  <button id="fail-abs-scroll-a" style="padding: 0">A</button>
+  <div
+    style="
+      width: 1px;
+      height: 1px;
+      margin-right: 1em;
+      display: inline-block;
+      overflow: auto;
+      scrollbar-width: none;
+    "
+  >
+    <span style="opacity: 0">hidden</span>
+    <button
+      id="fail-abs-scroll-b"
+      style="
+        padding: 0;
+        position: absolute;
+        margin-top: -1.4em;
+        margin-left: 0.2em;
+      "
+    >
+      B
+    </button>
+  </div>
+  <button id="fail-abs-scroll-c" style="padding: 0">C</button>
+</section>

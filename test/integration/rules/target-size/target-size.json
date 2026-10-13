@@ -10,7 +10,10 @@
     ["#fail6"],
     ["#fail7"],
     ["#fail-fixed"],
-    ["#fail-diff-dest-card"]
+    ["#fail-diff-dest-card"],
+    ["#fail-abs-scroll-a"],
+    ["#fail-abs-scroll-b"],
+    ["#fail-abs-scroll-c"]
   ],
   "passes": [
     ["#pass1"],
