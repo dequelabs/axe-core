@@ -243,6 +243,25 @@ describe('create-grid', () => {
   });
 
   describe('subGrids', () => {
+    const absoluteInScrollMarkup = html`
+      <section style="display: flex">
+        <button id="a" style="padding: 0">A</button>
+        <div
+          id="wrap"
+          style="width: 1px; height: 1px; margin-right: 1em; display: inline-block; overflow: auto; scrollbar-width: none"
+        >
+          <span style="opacity: 0">hidden</span>
+          <button
+            id="b"
+            style="padding: 0; position: absolute; margin-top: -1.4em; margin-left: 0.2em"
+          >
+            B
+          </button>
+        </div>
+        <button id="c" style="padding: 0">C</button>
+      </section>
+    `;
+
     it('sets the .subGrid property', () => {
       fixture = fixtureSetup(html`
         <div style="overflow: scroll; height: 100px;">
@@ -297,28 +316,51 @@ describe('create-grid', () => {
     });
 
     it('adds absolute elements to the grid of their containing block', () => {
-      fixtureSetup(html`
-        <section style="display: flex">
-          <button id="a" style="padding: 0">A</button>
-          <div
-            id="wrap"
-            style="width: 1px; height: 1px; margin-right: 1em; display: inline-block; overflow: auto; scrollbar-width: none"
-          >
-            <span style="opacity: 0">hidden</span>
-            <button
-              id="b"
-              style="padding: 0; position: absolute; margin-top: -1.4em; margin-left: 0.2em"
-            >
-              B
-            </button>
-          </div>
-          <button id="c" style="padding: 0">C</button>
-        </section>
-      `);
+      fixtureSetup(absoluteInScrollMarkup);
       createGrid();
       assert.isDefined(getVNode('#wrap')._subGrid);
       assert.isTrue(getVNode('#b')._grid !== getVNode('#wrap')._subGrid);
       assert.isTrue(getVNode('#b')._grid === getVNode('#a')._grid);
+    });
+
+    describe('absolute elements on a scrolling page', () => {
+      let htmlStyle, bodyStyle;
+      beforeEach(() => {
+        htmlStyle = document.documentElement.style.cssText;
+        bodyStyle = document.body.style.cssText;
+      });
+      afterEach(() => {
+        document.documentElement.style.cssText = htmlStyle;
+        document.body.style.cssText = bodyStyle;
+      });
+
+      it('uses the html subGrid when the document scrolls', () => {
+        document.documentElement.style.height = '5000px';
+        document.documentElement.style.overflowY = 'scroll';
+        fixtureSetup(absoluteInScrollMarkup);
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        assert.isDefined(vHtml._subGrid);
+        assert.isTrue(getVNode('#a')._grid === vHtml._subGrid);
+        assert.isTrue(getVNode('#b')._grid === vHtml._subGrid);
+      });
+
+      it('uses the body subGrid when body is the scroll container', () => {
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overflowX = 'hidden';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
+        assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
+      });
     });
   });
 });
