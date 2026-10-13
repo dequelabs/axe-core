@@ -418,5 +418,34 @@ describe('create-grid', () => {
         assert.isTrue(getVNode('#abs')._grid === getVNode('#outer')._grid);
       });
     });
+
+    describe('absolute elements with a non-positioned containing block', () => {
+      [
+        'transform: translateX(0)',
+        'filter: blur(0)',
+        'perspective: 100px',
+        'contain: paint',
+        'will-change: transform'
+      ].forEach(style => {
+        it(`stays in the subGrid when an ancestor has ${style}`, () => {
+          fixtureSetup(html`
+            <div style="position: relative">
+              <div id="track" style="overflow-x: auto; width: 100px">
+                <div id="slide" style="width: 300px; height: 50px; ${style}">
+                  <span id="badge" style="position: absolute; top: 0; left: 0"
+                    >New</span
+                  >
+                </div>
+              </div>
+            </div>
+          `);
+          createGrid();
+          assert.isDefined(getVNode('#track')._subGrid);
+          assert.isTrue(
+            getVNode('#badge')._grid === getVNode('#track')._subGrid
+          );
+        });
+      });
+    });
   });
 });
