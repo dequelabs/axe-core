@@ -7,6 +7,8 @@ describe('create-grid', () => {
   const fixtureSetup = axe.testUtils.fixtureSetup;
   const queryFixture = axe.testUtils.queryFixture;
   const gridSize = axe.constants.gridSize;
+  const getVNode = selector =>
+    axe.utils.getNodeFromTree(document.querySelector(selector));
 
   function findPositions(grid, vNode) {
     const positions = [];
@@ -292,6 +294,31 @@ describe('create-grid', () => {
         { col: 0, row: 0 },
         { col: 0, row: 1 }
       ]);
+    });
+
+    it('adds absolute elements to the grid of their containing block', () => {
+      fixtureSetup(html`
+        <section style="display: flex">
+          <button id="a" style="padding: 0">A</button>
+          <div
+            id="wrap"
+            style="width: 1px; height: 1px; margin-right: 1em; display: inline-block; overflow: auto; scrollbar-width: none"
+          >
+            <span style="opacity: 0">hidden</span>
+            <button
+              id="b"
+              style="padding: 0; position: absolute; margin-top: -1.4em; margin-left: 0.2em"
+            >
+              B
+            </button>
+          </div>
+          <button id="c" style="padding: 0">C</button>
+        </section>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#wrap')._subGrid);
+      assert.isTrue(getVNode('#b')._grid !== getVNode('#wrap')._subGrid);
+      assert.isTrue(getVNode('#b')._grid === getVNode('#a')._grid);
     });
   });
 });
