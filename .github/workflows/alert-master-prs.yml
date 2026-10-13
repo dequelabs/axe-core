@@ -1,0 +1,24 @@
+name: Alert Master PRs
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment on PR
+        env:
+          COMMENT_BODY: |
+            # Master Branch Alert
+
+            ⚠️ This PR is targeting the `master` branch. ⚠️
+            Please ensure that this is intentional, as changes to the master branch will go directly to production upon merge.
+
+            Pull requests should be targeting `develop` to add new work.
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "${{ env.COMMENT_BODY }}"
