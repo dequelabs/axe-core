@@ -362,5 +362,61 @@ describe('create-grid', () => {
         assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
       });
     });
+
+    describe('absolute elements with a positioned ancestor', () => {
+      it('stays in the subGrid when the scroll container is positioned', () => {
+        fixtureSetup(html`
+          <div
+            id="wrap"
+            style="overflow: auto; height: 50px; position: relative"
+          >
+            <span id="abs" style="position: absolute; top: 0">abs</span>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+      });
+
+      it('stays in the subGrid when the positioned ancestor is inside the scroll container', () => {
+        fixtureSetup(html`
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="position: relative">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+      });
+
+      it('stays in the subGrid when the positioned ancestor has no size', () => {
+        fixtureSetup(html`
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="position: relative; height: 0">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+      });
+
+      it('leaves the subGrid when the positioned ancestor is outside the scroll container', () => {
+        fixtureSetup(html`
+          <div id="outer" style="position: relative">
+            <div id="wrap" style="overflow: auto; height: 50px">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+              <div style="height: 300px"></div>
+            </div>
+          </div>
+        `);
+        createGrid();
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isTrue(getVNode('#abs')._grid === getVNode('#outer')._grid);
+      });
+    });
   });
 });
