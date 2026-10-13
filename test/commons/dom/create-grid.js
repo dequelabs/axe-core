@@ -447,5 +447,33 @@ describe('create-grid', () => {
         });
       });
     });
+
+    it('adds descendants of slotted content to the subGrid of a scroll container in the shadow tree', () => {
+      fixtureSetup(
+        html`
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="scroller" style="overflow: auto; height: 50px">
+                <slot></slot>
+              </div>
+            </template>
+            <div id="slotted">
+              <span id="inner" style="display: block; height: 300px"
+                >inner</span
+              >
+            </div>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const shadowRoot = document.querySelector('#host').shadowRoot;
+      const vScroller = axe.utils.getNodeFromTree(
+        shadowRoot.querySelector('#scroller')
+      );
+      assert.isDefined(vScroller._subGrid);
+      assert.isTrue(getVNode('#slotted')._grid === vScroller._subGrid);
+      assert.isTrue(getVNode('#inner')._grid === vScroller._subGrid);
+    });
   });
 });
