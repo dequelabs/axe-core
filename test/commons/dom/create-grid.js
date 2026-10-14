@@ -9,6 +9,15 @@ describe('create-grid', () => {
   const gridSize = axe.constants.gridSize;
   const getVNode = selector =>
     axe.utils.getNodeFromTree(document.querySelector(selector));
+  const gridName = grid => {
+    if (!grid) {
+      return 'no grid';
+    }
+    const container = grid.container;
+    return container
+      ? `subGrid(${container.props.id || container.props.nodeName})`
+      : 'root grid';
+  };
 
   function findPositions(grid, vNode) {
     const positions = [];
@@ -32,7 +41,10 @@ describe('create-grid', () => {
 
     createGrid();
     assert.isDefined(fixture._grid);
-    assert.isTrue(fixture._grid === fixture.children[0]._grid);
+    assert.isTrue(
+      fixture._grid === fixture.children[0]._grid,
+      `expected ${gridName(fixture._grid)} === ${gridName(fixture.children[0]._grid)}`
+    );
   });
 
   it('adds elements to the correct cell in the grid', () => {
@@ -315,12 +327,18 @@ describe('create-grid', () => {
       ]);
     });
 
-    it('adds absolute elements to the grid of their containing block', () => {
+    it("moves absolute elements without a containing block out of the scroll container's subGrid", () => {
       fixtureSetup(absoluteInScrollMarkup);
       createGrid();
       assert.isDefined(getVNode('#wrap')._subGrid);
-      assert.isTrue(getVNode('#b')._grid !== getVNode('#wrap')._subGrid);
-      assert.isTrue(getVNode('#b')._grid === getVNode('#a')._grid);
+      assert.isTrue(
+        getVNode('#b')._grid !== getVNode('#wrap')._subGrid,
+        `expected ${gridName(getVNode('#b')._grid)} !== ${gridName(getVNode('#wrap')._subGrid)}`
+      );
+      assert.isTrue(
+        getVNode('#b')._grid === getVNode('#a')._grid,
+        `expected ${gridName(getVNode('#b')._grid)} === ${gridName(getVNode('#a')._grid)}`
+      );
     });
 
     describe('absolute elements on a scrolling page', () => {
@@ -341,8 +359,14 @@ describe('create-grid', () => {
         createGrid();
         const vHtml = axe.utils.getNodeFromTree(document.documentElement);
         assert.isDefined(vHtml._subGrid);
-        assert.isTrue(getVNode('#a')._grid === vHtml._subGrid);
-        assert.isTrue(getVNode('#b')._grid === vHtml._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
       });
 
       it('uses the body subGrid when body is the scroll container', () => {
@@ -358,8 +382,14 @@ describe('create-grid', () => {
         const vBody = axe.utils.getNodeFromTree(document.body);
         assert.isUndefined(vHtml._subGrid);
         assert.isDefined(vBody._subGrid);
-        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
-        assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vBody._subGrid)}`
+        );
       });
 
       it('uses the body subGrid when body is the scroll container and html is positioned', () => {
@@ -376,8 +406,14 @@ describe('create-grid', () => {
         const vBody = axe.utils.getNodeFromTree(document.body);
         assert.isUndefined(vHtml._subGrid);
         assert.isDefined(vBody._subGrid);
-        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
-        assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vBody._subGrid)}`
+        );
       });
 
       it('does not use the body subGrid when body scrolls independently of the document', () => {
@@ -394,8 +430,14 @@ describe('create-grid', () => {
         const vBody = axe.utils.getNodeFromTree(document.body);
         assert.isUndefined(vHtml._subGrid);
         assert.isDefined(vBody._subGrid);
-        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
-        assert.isTrue(getVNode('#b')._grid === vHtml._grid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._grid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._grid)}`
+        );
       });
 
       it('uses the html subGrid when both html and body scroll', () => {
@@ -412,8 +454,14 @@ describe('create-grid', () => {
         const vBody = axe.utils.getNodeFromTree(document.body);
         assert.isDefined(vHtml._subGrid);
         assert.isDefined(vBody._subGrid);
-        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
-        assert.isTrue(getVNode('#b')._grid === vHtml._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
       });
     });
 
@@ -429,7 +477,12 @@ describe('create-grid', () => {
           </div>
         `);
         createGrid();
-        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
       });
 
       it('stays in the subGrid when the positioned ancestor is inside the scroll container', () => {
@@ -442,7 +495,12 @@ describe('create-grid', () => {
           </div>
         `);
         createGrid();
-        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
       });
 
       it('stays in the subGrid when the positioned ancestor has no size', () => {
@@ -455,7 +513,12 @@ describe('create-grid', () => {
           </div>
         `);
         createGrid();
-        assert.isTrue(getVNode('#abs')._grid === getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
       });
 
       it('leaves the subGrid when the positioned ancestor is outside the scroll container', () => {
@@ -469,7 +532,10 @@ describe('create-grid', () => {
         `);
         createGrid();
         assert.isDefined(getVNode('#wrap')._subGrid);
-        assert.isTrue(getVNode('#abs')._grid === getVNode('#outer')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#outer')._grid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#outer')._grid)}`
+        );
       });
     });
 
@@ -486,7 +552,27 @@ describe('create-grid', () => {
       `);
       createGrid();
       assert.isDefined(getVNode('#wrap')._subGrid);
-      assert.isTrue(getVNode('#abs')._grid === getVNode('#outer')._grid);
+      assert.isTrue(
+        getVNode('#abs')._grid === getVNode('#outer')._grid,
+        `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#outer')._grid)}`
+      );
+    });
+
+    it('adds absolute elements inside a fixed element to the grid of the fixed element', () => {
+      fixtureSetup(html`
+        <div
+          id="fixed"
+          style="position: fixed; top: 0; left: 0; width: 100px; height: 50px"
+        >
+          <span id="abs" style="position: absolute; top: 0; left: 0">abs</span>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#fixed')._grid);
+      assert.isTrue(
+        getVNode('#abs')._grid === getVNode('#fixed')._grid,
+        `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#fixed')._grid)}`
+      );
     });
 
     describe('absolute elements with a non-positioned containing block', () => {
@@ -518,7 +604,8 @@ describe('create-grid', () => {
           createGrid();
           assert.isDefined(getVNode('#track')._subGrid);
           assert.isTrue(
-            getVNode('#badge')._grid === getVNode('#track')._subGrid
+            getVNode('#badge')._grid === getVNode('#track')._subGrid,
+            `expected ${gridName(getVNode('#badge')._grid)} === ${gridName(getVNode('#track')._subGrid)}`
           );
         });
       });
@@ -548,8 +635,14 @@ describe('create-grid', () => {
         shadowRoot.querySelector('#scroller')
       );
       assert.isDefined(vScroller._subGrid);
-      assert.isTrue(getVNode('#slotted')._grid === vScroller._subGrid);
-      assert.isTrue(getVNode('#inner')._grid === vScroller._subGrid);
+      assert.isTrue(
+        getVNode('#slotted')._grid === vScroller._subGrid,
+        `expected ${gridName(getVNode('#slotted')._grid)} === ${gridName(vScroller._subGrid)}`
+      );
+      assert.isTrue(
+        getVNode('#inner')._grid === vScroller._subGrid,
+        `expected ${gridName(getVNode('#inner')._grid)} === ${gridName(vScroller._subGrid)}`
+      );
     });
   });
 });

@@ -570,6 +570,38 @@ x
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
+  describe('absolute background escaping a scroll container', () => {
+    it('uses an escaped background that covers the text but not the scroll container centre', () => {
+      const params = checkSetup(html`
+        <div style="position: relative">
+          <div style="overflow: auto; width: 300px; height: 100px">
+            <div
+              style="position: absolute; top: 0; left: 0; width: 120px; height: 30px; background: #000"
+            ></div>
+            <span id="target" style="position: relative; color: #fff">Hi</span>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+
+    it('ignores an escaped background that covers the scroll container centre but not the text', () => {
+      const params = checkSetup(html`
+        <div style="position: relative">
+          <div style="overflow: auto; width: 300px; height: 100px">
+            <div
+              style="position: absolute; top: 40px; left: 100px; width: 100px; height: 30px; background: #000"
+            ></div>
+            <span id="target" style="position: relative; color: #000">Hi</span>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+  });
+
   describe('with pseudo elements', () => {
     it('should return undefined if :before pseudo element has a background color', () => {
       const params = checkSetup(html`
@@ -1573,38 +1605,6 @@ x
       assert.deepEqual(checkContext._data, {
         messageKey: 'complexTextShadows'
       });
-    });
-  });
-
-  describe('absolute background escaping a scroll container', () => {
-    it('uses an escaped background that covers the text but not the scroll container centre', () => {
-      const params = checkSetup(html`
-        <div style="position: relative">
-          <div style="overflow: auto; width: 300px; height: 100px">
-            <div
-              style="position: absolute; top: 0; left: 0; width: 120px; height: 30px; background: #000"
-            ></div>
-            <span id="target" style="position: relative; color: #fff">Hi</span>
-            <div style="height: 300px"></div>
-          </div>
-        </div>
-      `);
-      assert.isTrue(contrastEvaluate.apply(checkContext, params));
-    });
-
-    it('ignores an escaped background that covers the scroll container centre but not the text', () => {
-      const params = checkSetup(html`
-        <div style="position: relative">
-          <div style="overflow: auto; width: 300px; height: 100px">
-            <div
-              style="position: absolute; top: 40px; left: 100px; width: 100px; height: 30px; background: #000"
-            ></div>
-            <span id="target" style="position: relative; color: #000">Hi</span>
-            <div style="height: 300px"></div>
-          </div>
-        </div>
-      `);
-      assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
   });
 });

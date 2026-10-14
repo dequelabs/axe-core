@@ -955,7 +955,7 @@ describe('dom.getElementStack', () => {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
 
-    it('should look beneath the scroll region at the target, not its centre', () => {
+    it('should find elements outside the scroll region at the target, not at its centre', () => {
       fixture.innerHTML = html`
         <div id="1" style="position: relative">
           <div
@@ -979,7 +979,7 @@ describe('dom.getElementStack', () => {
       assert.notInclude(stack, 'under-centre');
     });
 
-    it('should look beneath the scroll region when the target is scrolled outside it', () => {
+    it('should find elements outside the scroll region when the target is scrolled outside it', () => {
       fixture.innerHTML = html`
         <div id="1" style="position: relative">
           <div
