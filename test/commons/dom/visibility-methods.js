@@ -422,6 +422,89 @@ describe('dom.visibility-methods', () => {
       `);
       assert.isFalse(overflowHidden(vNode));
     });
+
+    it('should return false for the in-flow content of an absolute element that escapes the "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="position: relative">
+          <div style="overflow: hidden; width: 50px;">
+            <div style="margin-left: 100px; position: absolute">
+              <span id="target">Hello world</span>
+            </div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(overflowHidden(vNode));
+    });
+
+    it('should return true for the in-flow content of an absolute element contained by the "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; position: relative">
+          <div style="margin-left: 100px; position: absolute">
+            <span id="target">Hello world</span>
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return true for ancestor with "overflow:hidden" that is the containing block through a transform', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; transform: translateX(0)">
+          <div id="target" style="margin-left: 100px; position: absolute">
+            Hello world
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return false for an absolute element inside a fixed element inside a positioned "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; position: relative">
+          <div style="position: fixed">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(overflowHidden(vNode));
+    });
+
+    it('should return true for an absolute element inside a fixed element trapped by the "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; transform: translateX(0)">
+          <div style="position: fixed">
+            <div id="target" style="margin-left: 100px; position: absolute">
+              Hello world
+            </div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return false for the in-flow content of a fixed element inside an "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px;">
+          <div style="position: fixed">
+            <div id="target" style="margin-left: 100px">Hello world</div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(overflowHidden(vNode));
+    });
+
+    it('should return true for a fixed element trapped by the "overflow:hidden" ancestor', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; transform: translateX(0)">
+          <div id="target" style="margin-left: 100px; position: fixed">
+            Hello world
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
   });
 
   describe('clipHidden', () => {
