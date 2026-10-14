@@ -189,6 +189,108 @@ describe('create-grid', () => {
     });
   });
 
+  describe('absolute elements escaping an overflow hidden ancestor', () => {
+    it('does not clip an absolute element to an ancestor below its containing block', () => {
+      fixtureSetup(html`
+        <div id="wrapper" style="position: relative">
+          <div style="overflow: hidden; height: 20px">
+            <div
+              id="dropdown"
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vDropdown = getVNode('#dropdown');
+      assert.isTrue(
+        vDropdown._grid === getVNode('#wrapper')._grid,
+        `expected ${gridName(vDropdown._grid)} === ${gridName(getVNode('#wrapper')._grid)}`
+      );
+      assert.isNotEmpty(findPositions(vDropdown._grid, vDropdown));
+    });
+
+    it('clips an absolute element to its containing block', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div
+            id="card"
+            style="overflow: hidden; height: 20px; position: relative"
+          >
+            <div
+              id="dropdown"
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#card')._grid);
+      assert.isUndefined(getVNode('#dropdown')._grid);
+    });
+
+    it('does not clip the in-flow content of an escaped absolute element', () => {
+      fixtureSetup(html`
+        <div id="wrapper" style="position: relative">
+          <div style="overflow: hidden; height: 20px">
+            <div
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            >
+              <button id="item" style="width: 80px; height: 30px">item</button>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vItem = getVNode('#item');
+      assert.isTrue(axe.commons.dom.isVisibleOnScreen(vItem));
+      assert.isTrue(
+        vItem._grid === getVNode('#wrapper')._grid,
+        `expected ${gridName(vItem._grid)} === ${gridName(getVNode('#wrapper')._grid)}`
+      );
+      assert.isNotEmpty(findPositions(vItem._grid, vItem));
+    });
+
+    it('does not clip fixed content to an overflow hidden ancestor', () => {
+      fixtureSetup(html`
+        <div style="overflow: hidden; height: 20px">
+          <div
+            id="fixed"
+            style="position: fixed; top: 100px; left: 0; width: 100px; height: 40px"
+          >
+            <button id="item" style="width: 80px; height: 30px">item</button>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vFixed = getVNode('#fixed');
+      const vItem = getVNode('#item');
+      assert.isDefined(vFixed._grid);
+      assert.isDefined(vItem._grid);
+      assert.isNotEmpty(findPositions(vFixed._grid, vFixed));
+      assert.isNotEmpty(findPositions(vItem._grid, vItem));
+    });
+
+    it('clips a fixed element to an overflow hidden ancestor that is its containing block', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div
+            id="card"
+            style="overflow: hidden; height: 20px; transform: translateX(0)"
+          >
+            <div
+              id="fixed"
+              style="position: fixed; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#card')._grid);
+      assert.isUndefined(getVNode('#fixed')._grid);
+    });
+  });
+
   describe('when scrolled', () => {
     before(() => {
       document.body.setAttribute('style', 'margin: 0');

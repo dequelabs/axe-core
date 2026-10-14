@@ -449,6 +449,37 @@ describe('target-size tests', () => {
     });
   });
 
+  it('returns false for a target obscured by an absolute dropdown escaping an overflow hidden ancestor', () => {
+    const checkArgs = checkSetup(html`
+      <div style="position: relative">
+        <div style="overflow: hidden; height: 20px">
+          <div style="position: absolute; top: 40px; left: 0">
+            <button
+              id="item"
+              style="width: 30px; height: 30px; padding: 0; border: 0"
+            >
+              y
+            </button>
+          </div>
+        </div>
+        <button
+          id="target"
+          style="margin-top: 20px; width: 40px; height: 30px; padding: 0; border: 0"
+        >
+          x
+        </button>
+      </div>
+    `);
+    assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'partiallyObscured',
+      minSize: 24,
+      width: 10,
+      height: 30
+    });
+    assert.deepEqual(elmIds(checkContext._relatedNodes), ['#item']);
+  });
+
   describe('with overflowing content', () => {
     it('returns undefined target is too small', () => {
       const checkArgs = checkSetup(
