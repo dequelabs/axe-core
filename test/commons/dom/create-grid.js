@@ -361,6 +361,60 @@ describe('create-grid', () => {
         assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
         assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
       });
+
+      it('uses the body subGrid when body is the scroll container and html is positioned', () => {
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.position = 'relative';
+        document.body.style.height = '100%';
+        document.body.style.overflowX = 'hidden';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
+        assert.isTrue(getVNode('#b')._grid === vBody._subGrid);
+      });
+
+      it('does not use the body subGrid when body scrolls independently of the document', () => {
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.height = '100%';
+        document.body.style.overflow = 'auto';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
+        assert.isTrue(getVNode('#b')._grid === vHtml._grid);
+      });
+
+      it('uses the html subGrid when both html and body scroll', () => {
+        document.documentElement.style.height = '5000px';
+        document.documentElement.style.overflowY = 'scroll';
+        document.body.style.height = '100px';
+        document.body.style.overflow = 'auto';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 300px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isDefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(getVNode('#a')._grid === vBody._subGrid);
+        assert.isTrue(getVNode('#b')._grid === vHtml._subGrid);
+      });
     });
 
     describe('absolute elements with a positioned ancestor', () => {
