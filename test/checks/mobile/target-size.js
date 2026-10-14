@@ -397,6 +397,58 @@ describe('target-size tests', () => {
     });
   });
 
+  it('returns false for a target obscured by an absolute widget escaping its scroll container', () => {
+    const checkArgs = checkSetup(html`
+      <div style="position: relative">
+        <div style="overflow: auto; width: 200px; height: 100px">
+          <button id="target" style="width: 40px; height: 30px">x</button>
+          <button
+            id="popover"
+            style="position: absolute; top: 0; left: 0; width: 30px; height: 30px"
+          >
+            x
+          </button>
+          <div style="height: 300px"></div>
+        </div>
+      </div>
+    `);
+    assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'partiallyObscured',
+      minSize: 24,
+      width: 10,
+      height: 30
+    });
+    assert.deepEqual(elmIds(checkContext._relatedNodes), ['#popover']);
+  });
+
+  it('ignores page widgets where a target is scrolled out of its scroll container', () => {
+    const checkArgs = checkSetup(html`
+      <div style="position: relative">
+        <div style="display: flex; overflow-x: auto; width: 100px">
+          <span style="flex-shrink: 0; width: 150px"></span>
+          <button
+            id="target"
+            style="flex-shrink: 0; width: 40px; height: 30px; padding: 0"
+          >
+            x
+          </button>
+        </div>
+        <button
+          style="position: absolute; top: 0; left: 150px; width: 30px; height: 30px; padding: 0"
+        >
+          x
+        </button>
+      </div>
+    `);
+    assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      minSize: 24,
+      width: 40,
+      height: 30
+    });
+  });
+
   describe('with overflowing content', () => {
     it('returns undefined target is too small', () => {
       const checkArgs = checkSetup(

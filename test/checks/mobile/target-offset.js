@@ -93,6 +93,35 @@ describe('target-offset tests', () => {
     });
   });
 
+  it('returns false for a neighbor escaping the scroll container of the target', () => {
+    const checkArgs = checkSetup(html`
+      <div style="position: relative">
+        <div style="overflow: auto; width: 200px; height: 100px">
+          <a
+            href="#"
+            id="target"
+            style="display: inline-block; width: 16px; height: 16px"
+            >x</a
+          >
+          <a
+            href="#"
+            id="popover"
+            style="position: absolute; top: 0; left: 23px; width: 16px; height: 16px"
+            >x</a
+          >
+          <div style="height: 300px"></div>
+        </div>
+      </div>
+    `);
+
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+    assert.closeTo(checkContext._data.closestOffset, 22, 0.2);
+    assert.deepEqual(
+      checkContext._relatedNodes.map(node => node.id),
+      ['popover']
+    );
+  });
+
   it('ignores non-widget elements as neighbors', () => {
     const checkArgs = checkSetup(
       `<a href="#" id="target" style="display: inline-block; width:16px; height:16px; margin-right: 7px">x</a>` +
