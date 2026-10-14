@@ -419,13 +419,35 @@ describe('create-grid', () => {
       });
     });
 
+    it('ignores display: contents ancestors when finding the containing block', () => {
+      fixtureSetup(html`
+        <div id="outer" style="position: relative">
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="display: contents; position: relative">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#wrap')._subGrid);
+      assert.isTrue(getVNode('#abs')._grid === getVNode('#outer')._grid);
+    });
+
     describe('absolute elements with a non-positioned containing block', () => {
       [
         'transform: translateX(0)',
         'filter: blur(0)',
         'perspective: 100px',
         'contain: paint',
-        'will-change: transform'
+        'will-change: transform',
+        'translate: 1px',
+        'rotate: 1deg',
+        'scale: 1.01',
+        'backdrop-filter: blur(1px)',
+        'content-visibility: auto',
+        'will-change: translate'
       ].forEach(style => {
         it(`stays in the subGrid when an ancestor has ${style}`, () => {
           fixtureSetup(html`
