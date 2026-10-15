@@ -18,6 +18,27 @@ describe('dom.isFixedContainingBlock', () => {
     assert.isTrue(isFixedContainingBlock(vNode));
   });
 
+  ['will-change: contain', 'will-change: scroll-position, contain'].forEach(
+    style => {
+      it(`returns true for ${style}`, () => {
+        const vNode = queryFixture(`<div id="target" style="${style}"></div>`);
+        assert.isTrue(isFixedContainingBlock(vNode));
+      });
+    }
+  );
+
+  [
+    'will-change: contain-intrinsic-size',
+    'will-change: filter-x',
+    'container-type: size',
+    'container-type: inline-size'
+  ].forEach(style => {
+    it(`returns false for ${style}`, () => {
+      const vNode = queryFixture(`<div id="target" style="${style}"></div>`);
+      assert.isFalse(isFixedContainingBlock(vNode));
+    });
+  });
+
   it('returns false for display: contents', () => {
     const vNode = queryFixture(
       '<div id="target" style="display: contents; transform: translateX(0)"></div>'

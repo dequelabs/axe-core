@@ -689,7 +689,8 @@ describe('create-grid', () => {
         'scale: 1.01',
         'backdrop-filter: blur(1px)',
         'content-visibility: auto',
-        'will-change: translate'
+        'will-change: translate',
+        'will-change: contain'
       ].forEach(style => {
         it(`stays in the subGrid when an ancestor has ${style}`, () => {
           fixtureSetup(html`
