@@ -23,8 +23,8 @@ describe('target-size shadow dom test', () => {
   });
 
   describe('passes', () => {
-    it('should find 2', () => {
-      assert.lengthOf(results.passes[0].nodes, 2);
+    it('should find 4', () => {
+      assert.lengthOf(results.passes[0].nodes, 4);
     });
   });
 

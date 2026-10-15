@@ -476,6 +476,82 @@ describe('target-size tests', () => {
     ]);
   });
 
+  describe('with content slotted into a scroll region', () => {
+    const scrollRegion = html`
+      <template shadowrootmode="open">
+        <div style="height: 100px; overflow: auto"><slot></slot></div>
+        <button
+          id="target"
+          style="display: block; width: 40px; height: 30px; margin: 0"
+        >
+          x
+        </button>
+      </template>
+    `;
+    const widget =
+      'display: block; width: 40px; height: 30px; margin: 0; padding: 0';
+
+    it('returns true when a descendant of the slotted element is scrolled out of view', () => {
+      const checkArgs = checkSetup(html`
+        <div>
+          ${scrollRegion}
+          <div style="padding-top: 90px">
+            <button style="${widget}">x</button>
+          </div>
+        </div>
+      `);
+      assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        minSize: 24,
+        width: 40,
+        height: 30
+      });
+    });
+
+    it('returns true when the slotted element is scrolled out of view', () => {
+      const checkArgs = checkSetup(html`
+        <div>
+          ${scrollRegion}
+          <button style="${widget}; margin-top: 90px">x</button>
+        </div>
+      `);
+      assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        minSize: 24,
+        width: 40,
+        height: 30
+      });
+    });
+
+    it('returns false when obscured by a descendant of another slotted element', () => {
+      const checkArgs = checkSetup(html`
+        <div>
+          <template shadowrootmode="open">
+            <div style="height: 100px; overflow: auto"><slot></slot></div>
+          </template>
+          <button id="target" style="${widget}">x</button>
+          <div>
+            <button
+              id="obscurer"
+              style="${widget}; position: relative; top: -30px; left: 20px"
+            >
+              x
+            </button>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'partiallyObscured',
+        minSize: 24,
+        width: 20,
+        height: 30
+      });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
+    });
+  });
+
   it('ignores descendants of the target that are in shadow dom', () => {
     fixture.innerHTML =
       `<button id="target" style="width: 30px; height: 40px; position: absolute; left: 10px; top: 5px">` +

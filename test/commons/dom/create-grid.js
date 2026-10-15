@@ -293,5 +293,41 @@ describe('create-grid', () => {
         { col: 0, row: 1 }
       ]);
     });
+
+    it('sets the ._grid of descendants of slotted elements as the subGrid of a scroll region in the shadow tree', () => {
+      const vNode = queryFixture(html`
+        <div>
+          <template shadowrootmode="open">
+            <div id="overflow" style="overflow: scroll; height: 100px;">
+              <slot></slot>
+            </div>
+          </template>
+          <div>
+            <span id="target" style="display: inline-block; height: 300px">
+              x
+            </span>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.equal(vNode._grid.container?.props.id, 'overflow');
+    });
+
+    it('sets the ._grid of slotted elements as the subGrid of a scroll region outside the shadow tree', () => {
+      const vNode = queryFixture(html`
+        <div id="overflow" style="overflow: scroll; height: 100px;">
+          <div>
+            <template shadowrootmode="open">
+              <div><slot></slot></div>
+            </template>
+            <span id="target" style="display: inline-block; height: 300px">
+              x
+            </span>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.equal(vNode._grid.container?.props.id, 'overflow');
+    });
   });
 });
