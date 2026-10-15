@@ -294,4 +294,158 @@ describe('create-grid', () => {
       ]);
     });
   });
+
+  describe('absolutely positioned elements', () => {
+    const scrollerStyle = 'overflow: auto; height: 50px; width: 100px;';
+    const absStyle =
+      'position: absolute; top: 0; left: 0; width: 20px; height: 20px;';
+
+    function getVNode(id) {
+      return axe.utils.getNodeFromTree(document.getElementById(id));
+    }
+
+    // grids are too large for chai to print in a failure message
+    function assertGrid(actual, expected, message) {
+      assert.isTrue(actual === expected, message);
+    }
+
+    it('adds an absolute element to the grid of its nearest positioned ancestor outside a scroll region', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const scroller = getVNode('scroller');
+      const target = getVNode('target');
+      assert.isDefined(scroller._subGrid);
+      assertGrid(target._grid, getVNode('positioned')._grid);
+      assert.isFalse(target._grid === scroller._subGrid);
+      assert.isEmpty(findPositions(scroller._subGrid, target));
+    });
+
+    it('adds descendants of an escaped absolute element to the same grid', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="target" style="${absStyle}">
+                <div><span id="child">x</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('child')._grid, getVNode('positioned')._grid);
+    });
+
+    it('adds an absolute element with no positioned ancestor to the root grid', () => {
+      fixture = fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="target" style="${absStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, fixture._grid);
+      assert.isNull(getVNode('target')._grid.container);
+    });
+
+    it('keeps an absolute element in the subgrid when the scroll region is its nearest positioned ancestor', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div id="scroller" style="position: relative; ${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, getVNode('scroller')._subGrid);
+    });
+
+    it('keeps an absolute element in the subgrid when its nearest positioned ancestor is inside the scroll region', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="position: relative; height: 200px">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, getVNode('scroller')._subGrid);
+    });
+
+    it('adds the content of a scroll region inside an escaped absolute element to that scroll region subgrid', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div
+                style="position: absolute; top: 0; left: 0; width: 60px; height: 40px"
+              >
+                <div
+                  id="inner-scroller"
+                  style="overflow: auto; height: 30px; width: 50px"
+                >
+                  <div id="inner-content" style="height: 100px">x</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const innerScroller = getVNode('inner-scroller');
+      assert.isDefined(innerScroller._subGrid);
+      assertGrid(innerScroller._grid, getVNode('positioned')._grid);
+      assertGrid(getVNode('inner-content')._grid, innerScroller._subGrid);
+    });
+
+    it('adds an absolute element inside an escaped absolute element to the same grid', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div
+                style="position: absolute; top: 0; left: 0; width: 60px; height: 40px"
+              >
+                <div>
+                  <div id="target" style="${absStyle}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, getVNode('positioned')._grid);
+    });
+
+    it('keeps position: relative and position: sticky elements in the subgrid', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="relative" style="position: relative">x</div>
+              <div id="sticky" style="position: sticky; top: 0">y</div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      assertGrid(getVNode('relative')._grid, subGrid);
+      assertGrid(getVNode('sticky')._grid, subGrid);
+    });
+  });
 });
