@@ -204,6 +204,53 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('returns true when adjacent block elements are the accessible name (`aria-labelledby`)', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-labelledby="content">' +
+        '<div id="content"><p>Product</p><p>Details</p></div></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when adjacent block elements are the accessible name (`aria-label`)', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="Product details">' +
+        '<h3>Product</h3><p>Details</p></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when adjacent block elements are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="ProductDetails">' +
+        '<p>Product</p><p>Details</p></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when block elements displayed inline are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="ACT">' +
+        '<div style="display: inline">A</div>' +
+        '<div style="display: inline">C</div>' +
+        '<div style="display: inline">T</div></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when adjacent block elements in shadow DOM are the accessible name', () => {
+    const vNode = queryShadowFixture(
+      '<a id="target" href="#" aria-label="Product details"><span id="shadow"></span></a>',
+      '<p>Product</p><p>Details</p>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
   it('treats a lone newline in the visible text as a word separator', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="save changes">save\nchanges</button>'
