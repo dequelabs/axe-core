@@ -7,6 +7,17 @@ describe('create-grid', () => {
   const fixtureSetup = axe.testUtils.fixtureSetup;
   const queryFixture = axe.testUtils.queryFixture;
   const gridSize = axe.constants.gridSize;
+  const getVNode = selector =>
+    axe.utils.getNodeFromTree(document.querySelector(selector));
+  const gridName = grid => {
+    if (!grid) {
+      return 'no grid';
+    }
+    const container = grid.container;
+    return container
+      ? `subGrid(${container.props.id || container.props.nodeName})`
+      : 'root grid';
+  };
 
   function findPositions(grid, vNode) {
     const positions = [];
@@ -30,7 +41,10 @@ describe('create-grid', () => {
 
     createGrid();
     assert.isDefined(fixture._grid);
-    assert.isTrue(fixture._grid === fixture.children[0]._grid);
+    assert.isTrue(
+      fixture._grid === fixture.children[0]._grid,
+      `expected ${gridName(fixture._grid)} === ${gridName(fixture.children[0]._grid)}`
+    );
   });
 
   it('adds elements to the correct cell in the grid', () => {
@@ -175,6 +189,108 @@ describe('create-grid', () => {
     });
   });
 
+  describe('absolute elements escaping an overflow hidden ancestor', () => {
+    it('does not clip an absolute element to an ancestor below its containing block', () => {
+      fixtureSetup(html`
+        <div id="wrapper" style="position: relative">
+          <div style="overflow: hidden; height: 20px">
+            <div
+              id="dropdown"
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vDropdown = getVNode('#dropdown');
+      assert.isTrue(
+        vDropdown._grid === getVNode('#wrapper')._grid,
+        `expected ${gridName(vDropdown._grid)} === ${gridName(getVNode('#wrapper')._grid)}`
+      );
+      assert.isNotEmpty(findPositions(vDropdown._grid, vDropdown));
+    });
+
+    it('clips an absolute element to its containing block', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div
+            id="card"
+            style="overflow: hidden; height: 20px; position: relative"
+          >
+            <div
+              id="dropdown"
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#card')._grid);
+      assert.isUndefined(getVNode('#dropdown')._grid);
+    });
+
+    it('does not clip the in-flow content of an escaped absolute element', () => {
+      fixtureSetup(html`
+        <div id="wrapper" style="position: relative">
+          <div style="overflow: hidden; height: 20px">
+            <div
+              style="position: absolute; top: 30px; left: 0; width: 100px; height: 40px"
+            >
+              <button id="item" style="width: 80px; height: 30px">item</button>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vItem = getVNode('#item');
+      assert.isTrue(axe.commons.dom.isVisibleOnScreen(vItem));
+      assert.isTrue(
+        vItem._grid === getVNode('#wrapper')._grid,
+        `expected ${gridName(vItem._grid)} === ${gridName(getVNode('#wrapper')._grid)}`
+      );
+      assert.isNotEmpty(findPositions(vItem._grid, vItem));
+    });
+
+    it('does not clip fixed content to an overflow hidden ancestor', () => {
+      fixtureSetup(html`
+        <div style="overflow: hidden; height: 20px">
+          <div
+            id="fixed"
+            style="position: fixed; top: 100px; left: 0; width: 100px; height: 40px"
+          >
+            <button id="item" style="width: 80px; height: 30px">item</button>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const vFixed = getVNode('#fixed');
+      const vItem = getVNode('#item');
+      assert.isDefined(vFixed._grid);
+      assert.isDefined(vItem._grid);
+      assert.isNotEmpty(findPositions(vFixed._grid, vFixed));
+      assert.isNotEmpty(findPositions(vItem._grid, vItem));
+    });
+
+    it('clips a fixed element to an overflow hidden ancestor that is its containing block', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div
+            id="card"
+            style="overflow: hidden; height: 20px; transform: translateX(0)"
+          >
+            <div
+              id="fixed"
+              style="position: fixed; top: 30px; left: 0; width: 100px; height: 40px"
+            ></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#card')._grid);
+      assert.isUndefined(getVNode('#fixed')._grid);
+    });
+  });
+
   describe('when scrolled', () => {
     before(() => {
       document.body.setAttribute('style', 'margin: 0');
@@ -241,6 +357,25 @@ describe('create-grid', () => {
   });
 
   describe('subGrids', () => {
+    const absoluteInScrollMarkup = html`
+      <section style="display: flex">
+        <button id="a" style="padding: 0">A</button>
+        <div
+          id="wrap"
+          style="width: 1px; height: 1px; margin-right: 1em; display: inline-block; overflow: auto; scrollbar-width: none"
+        >
+          <span style="opacity: 0">hidden</span>
+          <button
+            id="b"
+            style="padding: 0; position: absolute; margin-top: -1.4em; margin-left: 0.2em"
+          >
+            B
+          </button>
+        </div>
+        <button id="c" style="padding: 0">C</button>
+      </section>
+    `;
+
     it('sets the .subGrid property', () => {
       fixture = fixtureSetup(html`
         <div style="overflow: scroll; height: 100px;">
@@ -292,6 +427,325 @@ describe('create-grid', () => {
         { col: 0, row: 0 },
         { col: 0, row: 1 }
       ]);
+    });
+
+    it("moves absolute elements without a containing block out of the scroll container's subGrid", () => {
+      fixtureSetup(absoluteInScrollMarkup);
+      createGrid();
+      assert.isDefined(getVNode('#wrap')._subGrid);
+      assert.isTrue(
+        getVNode('#b')._grid !== getVNode('#wrap')._subGrid,
+        `expected ${gridName(getVNode('#b')._grid)} !== ${gridName(getVNode('#wrap')._subGrid)}`
+      );
+      assert.isTrue(
+        getVNode('#b')._grid === getVNode('#a')._grid,
+        `expected ${gridName(getVNode('#b')._grid)} === ${gridName(getVNode('#a')._grid)}`
+      );
+    });
+
+    describe('absolute elements on a scrolling page', () => {
+      let htmlStyle, bodyStyle;
+      beforeEach(() => {
+        htmlStyle = document.documentElement.style.cssText;
+        bodyStyle = document.body.style.cssText;
+      });
+      afterEach(() => {
+        document.documentElement.style.cssText = htmlStyle;
+        document.body.style.cssText = bodyStyle;
+      });
+
+      it('uses the html subGrid when the document scrolls', () => {
+        document.documentElement.style.height = '5000px';
+        document.documentElement.style.overflowY = 'scroll';
+        fixtureSetup(absoluteInScrollMarkup);
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        assert.isDefined(vHtml._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
+      });
+
+      it('uses the body subGrid when body is the scroll container', () => {
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overflowX = 'hidden';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+      });
+
+      it('uses the body subGrid when body is the scroll container and html is positioned', () => {
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.position = 'relative';
+        document.body.style.height = '100%';
+        document.body.style.overflowX = 'hidden';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+      });
+
+      it('does not use the body subGrid when body scrolls independently of the document', () => {
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.height = '100%';
+        document.body.style.overflow = 'auto';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 5000px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isUndefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._grid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._grid)}`
+        );
+      });
+
+      it('uses the html subGrid when both html and body scroll', () => {
+        document.documentElement.style.height = '5000px';
+        document.documentElement.style.overflowY = 'scroll';
+        document.body.style.height = '100px';
+        document.body.style.overflow = 'auto';
+        fixtureSetup(
+          html`${absoluteInScrollMarkup}
+            <div style="height: 300px"></div>`
+        );
+        createGrid();
+        const vHtml = axe.utils.getNodeFromTree(document.documentElement);
+        const vBody = axe.utils.getNodeFromTree(document.body);
+        assert.isDefined(vHtml._subGrid);
+        assert.isDefined(vBody._subGrid);
+        assert.isTrue(
+          getVNode('#a')._grid === vBody._subGrid,
+          `expected ${gridName(getVNode('#a')._grid)} === ${gridName(vBody._subGrid)}`
+        );
+        assert.isTrue(
+          getVNode('#b')._grid === vHtml._subGrid,
+          `expected ${gridName(getVNode('#b')._grid)} === ${gridName(vHtml._subGrid)}`
+        );
+      });
+    });
+
+    describe('absolute elements with a positioned ancestor', () => {
+      it('stays in the subGrid when the scroll container is positioned', () => {
+        fixtureSetup(html`
+          <div
+            id="wrap"
+            style="overflow: auto; height: 50px; position: relative"
+          >
+            <span id="abs" style="position: absolute; top: 0">abs</span>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
+      });
+
+      it('stays in the subGrid when the positioned ancestor is inside the scroll container', () => {
+        fixtureSetup(html`
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="position: relative">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
+      });
+
+      it('stays in the subGrid when the positioned ancestor has no size', () => {
+        fixtureSetup(html`
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="position: relative; height: 0">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        `);
+        createGrid();
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isDefined(getVNode('#abs')._grid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#wrap')._subGrid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#wrap')._subGrid)}`
+        );
+      });
+
+      it('leaves the subGrid when the positioned ancestor is outside the scroll container', () => {
+        fixtureSetup(html`
+          <div id="outer" style="position: relative">
+            <div id="wrap" style="overflow: auto; height: 50px">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+              <div style="height: 300px"></div>
+            </div>
+          </div>
+        `);
+        createGrid();
+        assert.isDefined(getVNode('#wrap')._subGrid);
+        assert.isTrue(
+          getVNode('#abs')._grid === getVNode('#outer')._grid,
+          `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#outer')._grid)}`
+        );
+      });
+    });
+
+    it('ignores display: contents ancestors when finding the containing block', () => {
+      fixtureSetup(html`
+        <div id="outer" style="position: relative">
+          <div id="wrap" style="overflow: auto; height: 50px">
+            <div style="display: contents; position: relative">
+              <span id="abs" style="position: absolute; top: 0">abs</span>
+            </div>
+            <div style="height: 300px"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#wrap')._subGrid);
+      assert.isTrue(
+        getVNode('#abs')._grid === getVNode('#outer')._grid,
+        `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#outer')._grid)}`
+      );
+    });
+
+    it('adds absolute elements inside a fixed element to the grid of the fixed element', () => {
+      fixtureSetup(html`
+        <div
+          id="fixed"
+          style="position: fixed; top: 0; left: 0; width: 100px; height: 50px"
+        >
+          <span id="abs" style="position: absolute; top: 0; left: 0">abs</span>
+        </div>
+      `);
+      createGrid();
+      assert.isDefined(getVNode('#fixed')._grid);
+      assert.isTrue(
+        getVNode('#abs')._grid === getVNode('#fixed')._grid,
+        `expected ${gridName(getVNode('#abs')._grid)} === ${gridName(getVNode('#fixed')._grid)}`
+      );
+    });
+
+    describe('absolute elements with a non-positioned containing block', () => {
+      [
+        'transform: translateX(0)',
+        'filter: blur(0)',
+        'perspective: 100px',
+        'contain: paint',
+        'will-change: transform',
+        'translate: 1px',
+        'rotate: 1deg',
+        'scale: 1.01',
+        'backdrop-filter: blur(1px)',
+        'content-visibility: auto',
+        'will-change: translate',
+        'will-change: contain'
+      ].forEach(style => {
+        it(`stays in the subGrid when an ancestor has ${style}`, () => {
+          fixtureSetup(html`
+            <div style="position: relative">
+              <div id="track" style="overflow-x: auto; width: 100px">
+                <div id="slide" style="width: 300px; height: 50px; ${style}">
+                  <span id="badge" style="position: absolute; top: 0; left: 0"
+                    >New</span
+                  >
+                </div>
+              </div>
+            </div>
+          `);
+          createGrid();
+          assert.isDefined(getVNode('#track')._subGrid);
+          assert.isTrue(
+            getVNode('#badge')._grid === getVNode('#track')._subGrid,
+            `expected ${gridName(getVNode('#badge')._grid)} === ${gridName(getVNode('#track')._subGrid)}`
+          );
+        });
+      });
+    });
+
+    it('adds descendants of slotted content to the subGrid of a scroll container in the shadow tree', () => {
+      fixtureSetup(
+        html`
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="scroller" style="overflow: auto; height: 50px">
+                <slot></slot>
+              </div>
+            </template>
+            <div id="slotted">
+              <span id="inner" style="display: block; height: 300px"
+                >inner</span
+              >
+            </div>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const shadowRoot = document.querySelector('#host').shadowRoot;
+      const vScroller = axe.utils.getNodeFromTree(
+        shadowRoot.querySelector('#scroller')
+      );
+      assert.isDefined(vScroller._subGrid);
+      assert.isTrue(
+        getVNode('#slotted')._grid === vScroller._subGrid,
+        `expected ${gridName(getVNode('#slotted')._grid)} === ${gridName(vScroller._subGrid)}`
+      );
+      assert.isTrue(
+        getVNode('#inner')._grid === vScroller._subGrid,
+        `expected ${gridName(getVNode('#inner')._grid)} === ${gridName(vScroller._subGrid)}`
+      );
     });
   });
 });

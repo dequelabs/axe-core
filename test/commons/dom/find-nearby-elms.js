@@ -162,4 +162,83 @@ describe('findNearbyElms', () => {
       assert.deepEqual(getIds(nearbyElms), ['diagonal']);
     });
   });
+
+  describe('with an absolute element escaping a scroll container', () => {
+    it('returns the escaped element as a neighbor of nodes in the scroll container', () => {
+      fixtureSetup(
+        `<div style="position: relative">` +
+          `<div id="scroller" style="overflow: auto; width: 200px; height: 100px">` +
+          `<button id="inner" style="width: 40px; height: 30px">x</button>` +
+          `<div id="popover" style="position: absolute; top: 0; left: 0; width: 100px; height: 20px">pop</div>` +
+          `<div style="height: 300px"></div>` +
+          `</div>` +
+          `</div>`
+      );
+      axe.commons.dom.createGrid();
+      const getVNode = id =>
+        axe.utils.getNodeFromTree(document.getElementById(id));
+      const vScroller = getVNode('scroller');
+      assert.isDefined(vScroller._subGrid);
+      assert.isTrue(getVNode('inner')._grid === vScroller._subGrid);
+      assert.isTrue(getVNode('popover')._grid !== vScroller._subGrid);
+
+      const nearbyElms = findNearbyElms(getVNode('inner'));
+      assert.include(getIds(nearbyElms), 'popover');
+    });
+
+    it('ignores outer neighbors of the part of a node scrolled out of its container', () => {
+      fixtureSetup(
+        `<div style="position: relative">` +
+          `<div id="track" style="display: flex; overflow-x: auto; width: 100px">` +
+          `<span style="flex-shrink: 0; width: 150px"></span>` +
+          `<button id="hidden" style="flex-shrink: 0; width: 40px; height: 30px; padding: 0">h</button>` +
+          `</div>` +
+          `<button id="page" style="position: absolute; top: 0; left: 150px; width: 30px; height: 30px; padding: 0">p</button>` +
+          `</div>`
+      );
+      axe.commons.dom.createGrid();
+      const getVNode = id =>
+        axe.utils.getNodeFromTree(document.getElementById(id));
+      const vHidden = getVNode('hidden');
+      assert.isDefined(getVNode('track')._subGrid);
+      assert.isTrue(vHidden._grid === getVNode('track')._subGrid);
+      assert.isNull(
+        axe.commons.math.getIntersectionRect(
+          vHidden.boundingClientRect,
+          getVNode('track').boundingClientRect
+        )
+      );
+      assert.isNotNull(
+        axe.commons.math.getIntersectionRect(
+          vHidden.boundingClientRect,
+          getVNode('page').boundingClientRect
+        )
+      );
+
+      const nearbyElms = findNearbyElms(vHidden);
+      assert.notInclude(getIds(nearbyElms), 'page');
+    });
+
+    it('searches outer grids for nodes scrolled outside their boundaries', () => {
+      fixtureSetup(
+        `<div id="scroller" style="overflow: auto; width: 200px; height: 50px">` +
+          `<div style="height: 3000px"></div>` +
+          `<button id="inner" style="width: 40px; height: 30px">x</button>` +
+          `<button id="sibling" style="width: 40px; height: 30px">y</button>` +
+          `</div>`
+      );
+      axe.commons.dom.createGrid();
+      const getVNode = id =>
+        axe.utils.getNodeFromTree(document.getElementById(id));
+      const outerGrid = getVNode('scroller')._grid;
+      const innerRect = getVNode('inner').boundingClientRect;
+      assert.isAbove(
+        outerGrid.toGridIndex(innerRect.top),
+        outerGrid.boundaries.bottom
+      );
+
+      const nearbyElms = findNearbyElms(getVNode('inner'));
+      assert.deepEqual(getIds(nearbyElms), ['sibling']);
+    });
+  });
 });
