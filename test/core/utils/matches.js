@@ -2,6 +2,7 @@ describe('utils.matches', () => {
   const matches = axe.utils.matches;
   const fixture = document.querySelector('#fixture');
   const queryFixture = axe.testUtils.queryFixture;
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
 
   afterEach(() => {
@@ -147,6 +148,124 @@ describe('utils.matches', () => {
         '<span id="target" foo bar="foo" baz="bar"></span>'
       );
       assert.isTrue(matches(virtualNode, '[foo]'));
+    });
+
+    it('returns true if attribute equals value or starts with it followed by a hyphen', () => {
+      const virtualNode = queryFixture(
+        '<span id="target" lang="en-US"></span>'
+      );
+      assert.isTrue(matches(virtualNode, '[lang|="en"]'));
+    });
+
+    it('returns true if attribute exactly equals a `|=` value', () => {
+      const virtualNode = queryFixture('<span id="target" lang="en"></span>');
+      assert.isTrue(matches(virtualNode, '[lang|="en"]'));
+    });
+
+    it('returns false if attribute only starts with a `|=` value', () => {
+      const virtualNode = queryFixture(
+        '<span id="target" lang="english"></span>'
+      );
+      assert.isFalse(matches(virtualNode, '[lang|="en"]'));
+    });
+
+    describe('case sensitivity modifier', () => {
+      it('matches mixed-case values when the `i` flag is present', () => {
+        const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+        assert.isTrue(matches(virtualNode, 'input[type="submit" i]'));
+      });
+
+      it('matches mixed-case values when the `I` flag is present', () => {
+        const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+        assert.isTrue(matches(virtualNode, 'input[type="submit" I]'));
+      });
+
+      it('is case insensitive for mixed-case HTML input types', () => {
+        ['buTTON', 'ResET', 'ImAGE'].forEach(type => {
+          const virtualNode = queryFixture(
+            `<input id="target" type="${type}" />`
+          );
+          assert.isTrue(
+            matches(virtualNode, `input[type="${type.toLowerCase()}" i]`)
+          );
+        });
+      });
+
+      it('is case insensitive for HTML input type in open Shadow DOM', () => {
+        const virtualNode = queryShadowFixture(
+          '<div id="shadow"></div>',
+          '<input id="target" type="buTTON" />'
+        );
+        assert.isTrue(matches(virtualNode, 'input[type="button" i]'));
+      });
+
+      it('applies the `i` flag to other operators', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" foo="ONE two THREE"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[foo~="two" i]'));
+        assert.isTrue(matches(virtualNode, '[foo^="one" i]'));
+        assert.isTrue(matches(virtualNode, '[foo$="three" i]'));
+        assert.isTrue(matches(virtualNode, '[foo*="ne tw" i]'));
+      });
+
+      it('applies the `i` flag to the `|=` operator', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" lang="EN-us"></span>'
+        );
+        assert.isTrue(matches(virtualNode, '[lang|="en" i]'));
+      });
+
+      it('uses ASCII case-insensitivity, not Unicode case folding', () => {
+        const virtualNode = queryFixture(
+          '<span id="target" foo="CAFÉ"></span>'
+        );
+        assert.isFalse(matches(virtualNode, '[foo="café" i]'));
+        assert.isFalse(matches(virtualNode, '[foo^="café" i]'));
+        assert.isFalse(matches(virtualNode, '[foo*="café" i]'));
+        assert.isFalse(matches(virtualNode, '[foo$="café" i]'));
+        assert.isFalse(matches(virtualNode, '[foo~="café" i]'));
+
+        const ascii = queryFixture('<span id="target" foo="CAFE"></span>');
+        assert.isTrue(matches(ascii, '[foo="cafe" i]'));
+        assert.isTrue(matches(ascii, '[foo^="ca" i]'));
+        assert.isTrue(matches(ascii, '[foo*="af" i]'));
+        assert.isTrue(matches(ascii, '[foo$="fe" i]'));
+        assert.isTrue(matches(ascii, '[foo~="cafe" i]'));
+      });
+
+      it('applies the `i` flag to `type` on non-input elements', () => {
+        const virtualNode = queryFixture('<ol id="target" type="A"></ol>');
+        assert.isTrue(matches(virtualNode, 'ol[type="a" i]'));
+      });
+
+      it('matches case-insensitively in XHTML when the `i` flag is present', () => {
+        // the `i` flag forces case-insensitive matching even where the
+        // document language makes attribute values case-sensitive
+        const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+        virtualNode._isXHTML = true;
+        assert.isTrue(matches(virtualNode, 'input[type="submit" i]'));
+      });
+
+      it('is case sensitive when no flag is present', () => {
+        const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+        assert.isFalse(matches(virtualNode, 'input[type="submit"]'));
+      });
+
+      it('is case sensitive when the `s` flag is present', () => {
+        const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+        assert.isFalse(matches(virtualNode, 'input[type="submit" s]'));
+      });
+
+      it('is case sensitive for type on non-input elements', () => {
+        const virtualNode = queryFixture('<ol id="target" type="A"></ol>');
+        assert.isFalse(matches(virtualNode, 'ol[type="a"]'));
+      });
+
+      it('is case sensitive for other attribute values', () => {
+        const virtualNode = queryFixture('<span id="target" foo="BAR"></span>');
+        assert.isFalse(matches(virtualNode, '[foo="bar"]'));
+      });
     });
   });
 
