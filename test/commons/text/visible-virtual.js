@@ -146,6 +146,47 @@ describe('text.visible', () => {
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0]), 'Hello Hi');
     });
+
+    it('should keep a visually hidden element as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span>' +
+        '<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">, </span>' +
+        '<span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download specification');
+    });
+
+    it('should keep an element with visibility: hidden as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span><span style="visibility: hidden;">the</span>' +
+        '<span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download specification');
+    });
+
+    it('should not separate words with an element that is not rendered', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span><span style="display: none;">the</span>' +
+        '<span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
+
+    it('should not separate words with an element that has no width', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span>' +
+        '<span style="display: inline-block; width: 0; overflow: hidden;">the</span>' +
+        '<span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
+
+    it('should not separate words with an element that is visible', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span><span></span><span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
   });
 
   describe('screen reader', () => {
