@@ -80,6 +80,17 @@ describe('dom.isHiddenForEveryone', () => {
     assert.isTrue(actual);
   });
 
+  it('should return false for a connected virtual button without a parent', () => {
+    fixture.innerHTML = '<button></button>';
+    const vNode = new axe.VirtualNode(fixture.firstChild);
+    assert.isFalse(isHiddenForEveryone(vNode));
+  });
+
+  it('should return true for a detached virtual button without a parent', () => {
+    const vNode = new axe.VirtualNode(document.createElement('button'));
+    assert.isTrue(isHiddenForEveryone(vNode));
+  });
+
   it('should return false on body', () => {
     axe.testUtils.flatTreeSetup(document.body);
     const actual = isHiddenForEveryone(document.body);
@@ -372,6 +383,63 @@ describe('dom.isHiddenForEveryone', () => {
       assert.isFalse(isHiddenForEveryone(vNode));
     }
   );
+
+  describe('select buttons', () => {
+    let select;
+    let firstButton;
+    let secondButton;
+
+    beforeEach(() => {
+      select = document.createElement('select');
+      firstButton = document.createElement('button');
+      secondButton = document.createElement('button');
+      firstButton.appendChild(document.createElement('selectedcontent'));
+      secondButton.appendChild(document.createElement('span'));
+      select.append(firstButton, secondButton);
+      fixture.appendChild(select);
+      axe.setup(fixture);
+    });
+
+    it('should hide buttons in a native select', () => {
+      assert.isTrue(isHiddenForEveryone(firstButton));
+      assert.isTrue(isHiddenForEveryone(secondButton));
+    });
+
+    it('should hide descendants of buttons in a native select', () => {
+      assert.isTrue(isHiddenForEveryone(firstButton.firstChild));
+      assert.isTrue(isHiddenForEveryone(secondButton.firstChild));
+    });
+
+    it('should hide only the first direct button in a base-select', () => {
+      const selectVNode = axe.utils.getNodeFromTree(select);
+      const appearanceStub = sinon
+        .stub(selectVNode, 'getComputedStylePropertyValue')
+        .callThrough();
+      appearanceStub.withArgs('appearance').returns('base-select');
+
+      try {
+        assert.isTrue(isHiddenForEveryone(firstButton));
+        assert.isFalse(isHiddenForEveryone(secondButton));
+      } finally {
+        appearanceStub.restore();
+      }
+    });
+
+    it('should hide descendants only of the first direct button in a base-select', () => {
+      const selectVNode = axe.utils.getNodeFromTree(select);
+      const appearanceStub = sinon
+        .stub(selectVNode, 'getComputedStylePropertyValue')
+        .callThrough();
+      appearanceStub.withArgs('appearance').returns('base-select');
+
+      try {
+        assert.isTrue(isHiddenForEveryone(firstButton.firstChild));
+        assert.isFalse(isHiddenForEveryone(secondButton.firstChild));
+      } finally {
+        appearanceStub.restore();
+      }
+    });
+  });
 
   describe('SerialVirtualNode', () => {
     it('should return false on detached virtual nodes', () => {
