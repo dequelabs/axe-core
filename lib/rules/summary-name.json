@@ -3,6 +3,7 @@
   "impact": "serious",
   "selector": "summary",
   "matches": "summary-interactive-matches",
+  "actIds": ["2t702h"],
   "tags": [
     "cat.name-role-value",
     "wcag2a",
