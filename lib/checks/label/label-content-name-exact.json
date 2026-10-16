@@ -1,0 +1,17 @@
+{
+  "id": "label-content-name-exact",
+  "evaluate": "label-content-name-mismatch-evaluate",
+  "options": {
+    "pixelThreshold": 0.1,
+    "occurrenceThreshold": 3,
+    "exactMatch": true
+  },
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Element's accessible name matches its visible text",
+      "fail": "Accessible name contains more than the visible text of the element",
+      "incomplete": "Unable to determine if the accessible name matches the visible text"
+    }
+  }
+}

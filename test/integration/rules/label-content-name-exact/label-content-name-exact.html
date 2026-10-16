@@ -1,0 +1,25 @@
+<!-- Pass -->
+<button id="pass1" aria-label="Next Page">next page</button>
+<a id="pass2" href="#" aria-label="Next page (opens in a new tab)">
+  Next page
+</a>
+<button id="pass3" aria-label="next, PAGE!">Next page</button>
+<div id="labelForPass4">Until the very end</div>
+<div id="pass4" role="button" aria-labelledby="labelForPass4">
+  until the very end
+</div>
+<!-- Reported by label-content-name-mismatch instead -->
+<button id="pass5" aria-label="OK">Next</button>
+
+<!-- Fail -->
+<button id="fail1" aria-label="Next Page in the list">Next Page</button>
+<button id="fail2" aria-label="Go to next page">Next Page</button>
+<div id="labelForFail3">Download the annual report</div>
+<div id="fail3" role="link" aria-labelledby="labelForFail3">Annual report</div>
+
+<!-- Incomplete -->
+<button id="incomplete1" aria-label="Favorite">⭐</button>
+
+<!-- Inapplicable -->
+<button id="inapplicable1">Next page</button>
+<div id="inapplicable2" aria-label="Next page">Next page</div>
