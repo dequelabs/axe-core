@@ -175,6 +175,39 @@ describe('label virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should pass for placeholder', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'input',
+      attributes: {
+        placeholder: 'foobar'
+      }
+    });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('label', node);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for placeholder on a type that does not use it', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'input',
+      attributes: {
+        type: 'checkbox',
+        placeholder: 'foobar'
+      }
+    });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('label', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail when title is empty and no implicit label', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'input',
