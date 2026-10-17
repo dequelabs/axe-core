@@ -112,11 +112,81 @@ describe('aria-required-parent', () => {
         .getCheckEvaluate('aria-required-parent')
         .apply(checkContext, params)
     );
+    assert.deepEqual(checkContext._data, ['list']);
   });
 
   it('should pass when intermediate node is role=presentation', () => {
     const params = checkSetup(
       '<div role="list"><div role="presentation"><p role="listitem" id="target">Nothing here.</p></div></div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should explain when the presentational role of an ancestor is ignored because of a global ARIA attribute', () => {
+    const params = checkSetup(html`
+      <ul role="tablist">
+        <li role="presentation" aria-hidden="false">
+          <div role="tab" id="target" tabindex="0">Tab 1</div>
+        </li>
+      </ul>
+    `);
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'presentationalConflict',
+      values: 'tablist',
+      attr: 'aria-hidden'
+    });
+    const presentationalLi = axe.utils.querySelectorAll(axe._tree, 'li')[0];
+    assert.deepEqual(checkContext._relatedNodes, [presentationalLi]);
+  });
+
+  it('should explain when the presentational role of an ancestor is ignored because of tabindex', () => {
+    const params = checkSetup(html`
+      <ul role="tablist">
+        <li role="none" tabindex="-1">
+          <div role="tab" id="target" tabindex="0">Tab 1</div>
+        </li>
+      </ul>
+    `);
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'presentationalConflict',
+      values: 'tablist',
+      attr: 'tabindex'
+    });
+  });
+
+  it('should not blame an attribute for a natively focusable presentational ancestor', () => {
+    const params = checkSetup(html`
+      <div role="list">
+        <button role="presentation" aria-label="x">
+          <span role="listitem" id="target">Nothing here.</span>
+        </button>
+      </div>
+    `);
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+    assert.deepEqual(checkContext._data, ['list']);
+  });
+
+  it('should pass when intermediate node with no implicit role is role=presentation with a global ARIA attribute', () => {
+    const params = checkSetup(
+      '<div role="list"><div role="presentation" aria-label="x"><p role="listitem" id="target">Nothing here.</p></div></div>'
     );
     assert.isTrue(
       axe.testUtils
