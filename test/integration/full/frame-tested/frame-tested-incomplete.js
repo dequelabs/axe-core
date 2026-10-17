@@ -20,7 +20,7 @@ describe('frame-tested-incomplete test', () => {
     it('should find the iframe and the frame', () => {
       assert.deepEqual(
         results.incomplete[0].nodes.map(node => node.target),
-        [['#incomplete'], ['#frameset', '#incomplete']]
+        [['#incomplete'], ['#incomplete2', '#no-axe-frame']]
       );
     });
   });
@@ -32,11 +32,11 @@ describe('frame-tested-incomplete test', () => {
   });
 
   describe('passes', () => {
-    it('should find the iframe of the frameset', () => {
+    it('should only find the iframe of the frameset', () => {
       assert.lengthOf(results.passes, 1);
       assert.deepEqual(
         results.passes[0].nodes.map(node => node.target),
-        [['#frameset']]
+        [['#incomplete2']]
       );
     });
   });
