@@ -61,6 +61,10 @@
       "description": "Ensure ARIA attributes are not prohibited for an element's role",
       "help": "Elements must only use permitted ARIA attributes"
     },
+    "aria-radiogroup-name": {
+      "description": "Ensure every ARIA radiogroup node has an accessible name",
+      "help": "ARIA radiogroup nodes should have an accessible name"
+    },
     "aria-required-attr": {
       "description": "Ensure elements with ARIA roles have all required ARIA attributes",
       "help": "Required ARIA attributes must be provided"
