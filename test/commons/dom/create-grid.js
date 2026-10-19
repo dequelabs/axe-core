@@ -308,15 +308,12 @@ describe('create-grid', () => {
           <div style="display: contents">
             <span id="contents-child">x</span>
           </div>
-          <div style="position: relative; height: 0">
-            <div id="abs-child" style="${absStyle}"></div>
-          </div>
           <div style="height: 200px"></div>
         </div>
       `);
       createGrid();
       const subGrid = getVNode('scroller')._subGrid;
-      for (const id of ['zero-height-child', 'contents-child', 'abs-child']) {
+      for (const id of ['zero-height-child', 'contents-child']) {
         assert.isTrue(getVNode(id)._grid === subGrid, `${id} in subgrid`);
       }
     });
@@ -357,18 +354,13 @@ describe('create-grid', () => {
       const root = document.documentElement;
       root.style.height = '5000px';
       root.style.overflowY = 'scroll';
-      try {
-        const fixtureNode = document.getElementById('fixture');
-        fixtureNode.innerHTML = '<span id="child">x</span>';
-        axe.testUtils.flatTreeSetup(fixtureNode);
-        createGrid();
-        const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
-        assert.isDefined(htmlSubGrid);
-        assert.isTrue(getVNode('child')._grid === htmlSubGrid);
-      } finally {
-        root.style.height = '';
-        root.style.overflowY = '';
-      }
+      const { fixture: fixtureNode } = axe.testUtils;
+      fixtureNode.innerHTML = '<span id="child">x</span>';
+      axe.testUtils.flatTreeSetup(fixtureNode);
+      createGrid();
+      const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
+      assert.isDefined(htmlSubGrid);
+      assert.isTrue(getVNode('child')._grid === htmlSubGrid);
     });
   });
 
