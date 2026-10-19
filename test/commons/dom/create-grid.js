@@ -295,20 +295,84 @@ describe('create-grid', () => {
     });
   });
 
+  const scrollerStyle = 'overflow: auto; height: 50px; width: 100px;';
+  const absStyle =
+    'position: absolute; top: 0; left: 0; width: 20px; height: 20px;';
+
+  // also finds nodes inside shadow trees
+  function getVNode(id) {
+    const stack = [axe._tree[0]];
+    while (stack.length) {
+      const vNode = stack.pop();
+      if (vNode.props.id === id) {
+        return vNode;
+      }
+      stack.push(...vNode.children);
+    }
+  }
+
+  // grids are too large for chai to print in a failure message
+  function assertGrid(actual, expected, message) {
+    assert.isTrue(actual === expected, message);
+  }
+
+  describe('inherited grids', () => {
+    it('adds children of a parent that is not in the grid to the subgrid', () => {
+      fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 0"><span id="zero-height-child">x</span></div>
+          <div style="display: contents">
+            <span id="contents-child">x</span>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      assertGrid(getVNode('zero-height-child')._grid, subGrid);
+      assertGrid(getVNode('contents-child')._grid, subGrid);
+    });
+
+    it('adds every shadow descendant of a scrolling host to its subgrid', () => {
+      fixtureSetup(
+        html`
+          <div id="host" style="${scrollerStyle}">
+            <template shadowrootmode="open">
+              <div id="shadow-child"><p id="shadow-grandchild">x</p></div>
+              <div style="height: 200px"></div>
+            </template>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const subGrid = getVNode('host')._subGrid;
+      assert.isDefined(subGrid);
+      assertGrid(getVNode('shadow-child')._grid, subGrid);
+      assertGrid(getVNode('shadow-grandchild')._grid, subGrid);
+    });
+
+    it('adds slotted content to the grid of the element it is slotted into', () => {
+      fixtureSetup(
+        html`
+          <div id="scroller" style="${scrollerStyle}">
+            <div id="host">
+              <template shadowrootmode="open">
+                <div><slot></slot></div>
+              </template>
+              <span id="slotted">x</span>
+            </div>
+            <div style="height: 200px"></div>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      assertGrid(getVNode('slotted')._grid, getVNode('scroller')._subGrid);
+    });
+  });
+
   describe('absolutely positioned elements', () => {
-    const scrollerStyle = 'overflow: auto; height: 50px; width: 100px;';
-    const absStyle =
-      'position: absolute; top: 0; left: 0; width: 20px; height: 20px;';
-
-    function getVNode(id) {
-      return axe.utils.getNodeFromTree(document.getElementById(id));
-    }
-
-    // grids are too large for chai to print in a failure message
-    function assertGrid(actual, expected, message) {
-      assert.isTrue(actual === expected, message);
-    }
-
     it('adds an absolute element to the grid of its nearest positioned ancestor outside a scroll region', () => {
       fixtureSetup(html`
         <div id="positioned" style="position: relative">
@@ -427,6 +491,40 @@ describe('create-grid', () => {
           </div>
         </div>
       `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, getVNode('positioned')._grid);
+    });
+
+    it('uses the grid of a positioned ancestor that is not itself in the grid', () => {
+      fixture = fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 200px">
+            <div style="position: relative; height: 0">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assertGrid(getVNode('target')._grid, getVNode('scroller')._subGrid);
+    });
+
+    it('finds the positioned ancestor of an absolute element across a shadow boundary', () => {
+      fixtureSetup(
+        html`
+          <div id="positioned" style="position: relative">
+            <div id="scroller" style="${scrollerStyle}">
+              <div id="host">
+                <template shadowrootmode="open">
+                  <div id="target" style="${absStyle}"></div>
+                </template>
+              </div>
+              <div style="height: 200px"></div>
+            </div>
+          </div>
+        `,
+        { shadow: true }
+      );
       createGrid();
       assertGrid(getVNode('target')._grid, getVNode('positioned')._grid);
     });
