@@ -352,6 +352,24 @@ describe('create-grid', () => {
         'slotted in subgrid'
       );
     });
+
+    it('uses the grid of the DOM parent when the tree is rooted below html', () => {
+      const root = document.documentElement;
+      root.style.height = '5000px';
+      root.style.overflowY = 'scroll';
+      try {
+        const fixtureNode = document.getElementById('fixture');
+        fixtureNode.innerHTML = '<span id="child">x</span>';
+        axe.testUtils.flatTreeSetup(fixtureNode);
+        createGrid();
+        const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
+        assert.isDefined(htmlSubGrid);
+        assert.isTrue(getVNode('child')._grid === htmlSubGrid);
+      } finally {
+        root.style.height = '';
+        root.style.overflowY = '';
+      }
+    });
   });
 
   describe('absolutely positioned elements', () => {
