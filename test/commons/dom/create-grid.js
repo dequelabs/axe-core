@@ -553,6 +553,23 @@ describe('create-grid', () => {
       assert.isTrue(getVNode('child')._grid === fixture._grid, 'child');
     });
 
+    it('adds a fixed element to the subgrid of a scrolling html element', () => {
+      const root = document.documentElement;
+      root.style.overflowY = 'scroll';
+      fixtureSetup(html`
+        <div style="${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="target" style="${fixedStyle}"></div>
+          </div>
+        </div>
+        <div style="height: 5000px"></div>
+      `);
+      createGrid();
+      const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
+      assert.isDefined(htmlSubGrid);
+      assert.isTrue(getVNode('target')._grid === htmlSubGrid);
+    });
+
     it('adds a fixed element to the grid of an ancestor that is its containing block', () => {
       fixtureSetup(html`
         <div id="scroller" style="${scrollerStyle}">
