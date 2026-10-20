@@ -2,7 +2,7 @@
   "id": "list",
   "impact": "serious",
   "selector": "ul, ol",
-  "matches": "no-role-matches",
+  "matches": "list-matches",
   "tags": [
     "cat.structure",
     "wcag2a",

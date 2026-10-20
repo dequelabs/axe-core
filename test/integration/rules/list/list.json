@@ -11,7 +11,12 @@
     ["#ulrolledli"],
     ["#olrolledli"],
     ["#ulrolledinternal"],
-    ["#olrolledinternal"]
+    ["#olrolledinternal"],
+    ["#explicit-list-invalid"],
+    ["#explicit-list-text"],
+    ["#invalid-role-list"],
+    ["#fallback-list-invalid"],
+    ["#presentational-focusable-list"]
   ],
   "passes": [
     ["#emptyul"],
@@ -23,6 +28,8 @@
     ["#scriptemptyol"],
     ["#properol"],
     ["#scriptproperol"],
-    ["#internalol"]
+    ["#internalol"],
+    ["#explicit-list-valid"],
+    ["#fallback-list-valid"]
   ]
 }

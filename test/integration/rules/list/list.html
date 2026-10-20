@@ -74,3 +74,43 @@
   <li>One.</li>
   <testutils-element>Two</testutils-element>
 </ol>
+<ul id="explicit-list-invalid" role="list">
+  <p>Choose one:</p>
+  <li>Economy</li>
+</ul>
+<ol id="explicit-list-text" role="list">
+  Choose one:
+  <li>Economy</li>
+  <li>Business</li>
+</ol>
+<ul id="invalid-role-list" role="invalid-role">
+  <p>Choose one:</p>
+  <li>Economy</li>
+</ul>
+<ol id="fallback-list-invalid" role="invalid-role list">
+  <p>Choose one:</p>
+  <li>Economy</li>
+</ol>
+<ul id="explicit-list-valid" role="list">
+  <li>Economy</li>
+  <li>Business</li>
+</ul>
+<ol id="fallback-list-valid" role="invalid-role list">
+  <li>Economy</li>
+</ol>
+<ul id="presentational-list" role="presentation">
+  <p>This is not exposed as a list.</p>
+</ul>
+<ol id="none-list" role="none">
+  <p>This is not exposed as a list.</p>
+</ol>
+<ul id="menu-list" role="menu">
+  <li role="menuitem">Economy</li>
+</ul>
+<ul id="fallback-menu-list" role="invalid-role menu">
+  <li role="menuitem">Economy</li>
+</ul>
+<ol id="presentational-focusable-list" role="presentation" tabindex="0">
+  <p>Choose one:</p>
+  <li>Economy</li>
+</ol>
