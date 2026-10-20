@@ -298,6 +298,8 @@ describe('create-grid', () => {
   const scrollerStyle = 'overflow: auto; height: 50px; width: 100px;';
   const absStyle =
     'position: absolute; top: 0; left: 0; width: 20px; height: 20px;';
+  const fixedStyle =
+    'position: fixed; top: 0; left: 0; width: 20px; height: 20px;';
   const getVNode = id => axe.utils.getNodeFromTree(document.getElementById(id));
 
   describe('inherited grids', () => {
@@ -533,6 +535,40 @@ describe('create-grid', () => {
       assert.isTrue(
         target._grid === getVNode('positioned')._grid,
         'in containing block grid'
+      );
+    });
+
+    it('adds a fixed element and its descendants to the root grid', () => {
+      fixture = fixtureSetup(html`
+        <div style="position: relative; ${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="target" style="${fixedStyle}">
+              <span id="child">x</span>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('target')._grid === fixture._grid, 'target');
+      assert.isTrue(getVNode('child')._grid === fixture._grid, 'child');
+    });
+
+    it('adds a fixed element to the grid of an ancestor that is its containing block', () => {
+      fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 200px; transform: translateZ(0)">
+            <div style="${scrollerStyle}">
+              <div style="height: 200px">
+                <div id="target" style="${fixedStyle}"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(
+        getVNode('target')._grid === getVNode('scroller')._subGrid,
+        'subgrid'
       );
     });
 
