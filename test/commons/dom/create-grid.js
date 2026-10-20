@@ -301,7 +301,7 @@ describe('create-grid', () => {
   const getVNode = id => axe.utils.getNodeFromTree(document.getElementById(id));
 
   describe('inherited grids', () => {
-    it('uses the grid of an ancestor that is not in the grid', () => {
+    it('uses the grid of an ancestor when the parent is not in the grid', () => {
       fixtureSetup(html`
         <div id="scroller" style="${scrollerStyle}">
           <div style="height: 0"><span id="zero-height-child">x</span></div>
@@ -384,7 +384,7 @@ describe('create-grid', () => {
       assert.isEmpty(findPositions(getVNode('scroller')._subGrid, target));
     });
 
-    it('adds the descendants of an absolute element to its grid, even when it is not in the grid', () => {
+    it('adds the descendants of an absolute element to its containing block, even when the absolute element is not in the grid', () => {
       fixtureSetup(html`
         <div id="positioned" style="position: relative">
           <div style="${scrollerStyle}">
@@ -401,6 +401,22 @@ describe('create-grid', () => {
       const grid = getVNode('positioned')._grid;
       assert.isTrue(getVNode('child')._grid === grid, 'child');
       assert.isTrue(getVNode('nested-abs')._grid === grid, 'nested absolute');
+    });
+
+    it('adds an absolute element to the grid of an ancestor when its containing block is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="position: relative; height: 0">
+            <div id="target" style="${absStyle}"></div>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(
+        getVNode('target')._grid === getVNode('scroller')._subGrid,
+        'subgrid'
+      );
     });
 
     it('adds an absolute element without a containing block ancestor to the root grid', () => {
