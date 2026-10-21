@@ -10,7 +10,8 @@
     ["#fail6"],
     ["#fail7"],
     ["#fail8"],
-    ["#fail9"]
+    ["#fail9"],
+    ["#fail10"]
   ],
   "passes": [
     ["#pass1"],
@@ -31,7 +32,9 @@
     ["#pass16"],
     ["#pass17"],
     ["#pass18"],
-    ["#pass19"]
+    ["#pass19"],
+    ["#pass20"],
+    ["#pass21"]
   ],
   "incomplete": [
     ["#incomplete1"],
