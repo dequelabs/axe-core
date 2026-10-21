@@ -330,6 +330,22 @@ this should not effect their outcome -->
   >
 </p>
 
+<!-- The absolute target is positioned against the paragraph, not the scroll region -->
+<p style="position: relative">
+  <button id="fail-abs-neighbour" style="padding: 0">A</button>
+  <span
+    style="display: inline-block; width: 40px; height: 20px; overflow: auto"
+  >
+    <span style="display: inline-block; width: 10px; height: 100px"></span>
+    <button
+      id="fail-abs-escaped"
+      style="position: absolute; top: 0; left: 18px; padding: 0"
+    >
+      B
+    </button>
+  </span>
+</p>
+
 <p>
   <a id="fail8" href="#" style="padding: 0.2em 0.5em">
     x

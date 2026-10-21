@@ -14,7 +14,9 @@
     ["#fail-not-only-widget-child"],
     ["#fail-nested-not-only-widget-child"],
     ["#fail-fixed"],
-    ["#fail-diff-dest-card"]
+    ["#fail-diff-dest-card"],
+    ["#fail-abs-neighbour"],
+    ["#fail-abs-escaped"]
   ],
   "passes": [
     ["#pass1"],
