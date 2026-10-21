@@ -128,6 +128,16 @@ this should not effect their outcome -->
   </a>
 </p>
 
+<p>
+  <a id="pass27" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        <button id="pass-nested-only-widget-child">Click me</button>
+      </span>
+    </span>
+  </a>
+</p>
+
 <!-- Failed examples -->
 <p>
   <button id="fail1">x</button>
@@ -324,6 +334,17 @@ this should not effect their outcome -->
   <a id="fail8" href="#" style="padding: 0.2em 0.5em">
     x
     <button id="fail-not-only-widget-child">Click me</button>
+  </a>
+</p>
+
+<p>
+  <a id="fail9" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        x
+        <button id="fail-nested-not-only-widget-child">Click me</button>
+      </span>
+    </span>
   </a>
 </p>
 

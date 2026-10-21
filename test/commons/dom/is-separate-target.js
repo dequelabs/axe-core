@@ -46,6 +46,20 @@ describe('dom.isSeparateTarget', () => {
     assert.isTrue(isSeparateTarget(target, other));
   });
 
+  it('returns true for a widget with wrapping elements, text, and another widget', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x">
+        <span>
+          <span>
+            <button id="other">b</button>
+          </span>
+          x
+        </span>
+      </a>
+    `);
+    assert.isTrue(isSeparateTarget(target, other));
+  });
+
   it('returns false for a non-widget', () => {
     const [target, other] = getNodes(html`
       <a id="target" href="/x">a</a>
@@ -81,6 +95,19 @@ describe('dom.isSeparateTarget', () => {
     const [target, other] = getNodes(html`
       <a id="target" href="/x">
         <button id="other">b</button>
+      </a>
+    `);
+    assert.isFalse(isSeparateTarget(target, other));
+  });
+
+  it('returns false for a widget with wrapping elements and another widget', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x">
+        <span>
+          <span>
+            <button id="other">b</button>
+          </span>
+        </span>
       </a>
     `);
     assert.isFalse(isSeparateTarget(target, other));
