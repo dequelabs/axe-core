@@ -571,8 +571,27 @@ describe('create-grid', () => {
       const grid = getVNode('target')._grid;
       assert.isDefined(grid);
       assert.isTrue(grid !== getRootGrid(), 'not the root grid');
-      assert.isNull(grid.container);
+      assert.isTrue(grid.container._grid === getRootGrid(), 'container');
       assert.isTrue(getVNode('child')._grid === grid, 'child');
+    });
+
+    it('adds fixed elements inside and outside a shadow tree to the same grid', () => {
+      fixtureSetup(
+        html`
+          <div id="outside" style="${fixedStyle}"></div>
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="inside" style="${fixedStyle}"></div>
+            </template>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const inside = axe.utils.getNodeFromTree(
+        document.getElementById('host').shadowRoot.getElementById('inside')
+      );
+      assert.isTrue(inside._grid === getVNode('outside')._grid);
     });
 
     it('adds fixed elements inside and outside a scroll region to the same grid', () => {
