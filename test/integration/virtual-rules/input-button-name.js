@@ -243,6 +243,35 @@ describe('input-button-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should fail for mixed-case type=button without a name', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'input',
+      attributes: {
+        type: 'buTTON'
+      }
+    });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('input-button-name', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass for mixed-case type=submit without value', () => {
+    const results = axe.runVirtualRule('input-button-name', {
+      nodeName: 'input',
+      attributes: {
+        type: 'SUBMIT'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail for role=none', () => {
     const node = new axe.SerialVirtualNode({
       nodeName: 'input',
