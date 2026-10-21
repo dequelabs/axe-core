@@ -860,6 +860,20 @@ describe('dom.getElementStack', () => {
     });
   });
 
+  it('should return elements beneath a fixed element', () => {
+    fixture.innerHTML = html`
+      <main id="1" style="height: 100px">
+        <div id="2" style="position: fixed; top: 0; left: 0">
+          <p id="target">Hello World</p>
+        </div>
+      </main>
+    `;
+    axe.testUtils.flatTreeSetup(document.documentElement);
+    const target = fixture.querySelector('#target');
+    const stack = getElementStack(target).map(node => node.id || node.nodeName);
+    assert.deepEqual(stack, ['target', '2', '1', 'fixture', 'BODY', 'HTML']);
+  });
+
   describe('scroll regions', () => {
     const origHeight = document.documentElement.style.height;
     const origOverflow = document.documentElement.style.overflowY;

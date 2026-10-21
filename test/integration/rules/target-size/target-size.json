@@ -12,7 +12,9 @@
     ["#fail-fixed"],
     ["#fail-diff-dest-card"],
     ["#fail-abs-neighbour"],
-    ["#fail-abs-escaped"]
+    ["#fail-abs-escaped"],
+    ["#fail-fixed-outside"],
+    ["#fail-fixed-inside"]
   ],
   "passes": [
     ["#pass1"],
