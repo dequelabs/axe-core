@@ -19,14 +19,17 @@ describe('frame-tested-fail test', () => {
   });
 
   describe('violations', () => {
-    it('should find 1', () => {
-      assert.lengthOf(results.violations[0].nodes, 1);
+    it('should find 2', () => {
+      assert.lengthOf(results.violations[0].nodes, 2);
     });
-    it('should find the failing iframe', () => {
-      assert.deepEqual(results.violations[0].nodes[0].target, [
-        '#frame',
-        '#fail'
-      ]);
+    it('should find the failing iframe and frame', () => {
+      assert.deepEqual(
+        results.violations[0].nodes.map(node => node.target),
+        [
+          ['#frame', '#fail'],
+          ['#frameset', '#fail']
+        ]
+      );
     });
   });
 
@@ -37,12 +40,12 @@ describe('frame-tested-fail test', () => {
   });
 
   describe('passes', () => {
-    it('should find 2', () => {
+    it('should find 4', () => {
       assert.lengthOf(results.passes, 1);
-      assert.lengthOf(results.passes[0].nodes, 2);
-
-      assert.deepEqual(results.passes[0].nodes[0].target, ['#frame']);
-      assert.deepEqual(results.passes[0].nodes[1].target, ['#frame', '#pass']);
+      assert.deepEqual(
+        results.passes[0].nodes.map(node => node.target),
+        [['#frame'], ['#frame', '#pass'], ['#frameset'], ['#frameset', '#pass']]
+      );
     });
   });
 });
