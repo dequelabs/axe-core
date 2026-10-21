@@ -464,7 +464,7 @@ describe('create-grid', () => {
       return getVNode('target')._grid;
     }
 
-    [
+    const fixedContainingBlockStyles = [
       'transform: translateZ(0)',
       'translate: 1px',
       'perspective: 100px',
@@ -474,9 +474,10 @@ describe('create-grid', () => {
       'contain: paint',
       'contain: layout style',
       'content-visibility: auto',
-      'will-change: opacity, transform',
-      'will-change: position'
-    ].forEach(style => {
+      'will-change: opacity, transform'
+    ];
+
+    [...fixedContainingBlockStyles, 'will-change: position'].forEach(style => {
       it(`treats an element with ${style} as a containing block`, () => {
         const grid = setupContainingBlock(style);
         assert.isTrue(grid === getVNode('scroller')._subGrid, 'subgrid');
@@ -570,23 +571,25 @@ describe('create-grid', () => {
       assert.isTrue(getVNode('target')._grid === htmlSubGrid);
     });
 
-    it('adds a fixed element to the grid of an ancestor that is its containing block', () => {
-      fixtureSetup(html`
-        <div id="scroller" style="${scrollerStyle}">
-          <div style="height: 200px; transform: translateZ(0)">
-            <div style="${scrollerStyle}">
-              <div style="height: 200px">
-                <div id="target" style="${fixedStyle}"></div>
+    fixedContainingBlockStyles.forEach(style => {
+      it(`adds a fixed element to the grid of an ancestor with ${style}`, () => {
+        fixtureSetup(html`
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px; ${style}">
+              <div style="${scrollerStyle}">
+                <div style="height: 200px">
+                  <div id="target" style="${fixedStyle}"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      `);
-      createGrid();
-      assert.isTrue(
-        getVNode('target')._grid === getVNode('scroller')._subGrid,
-        'subgrid'
-      );
+        `);
+        createGrid();
+        assert.isTrue(
+          getVNode('target')._grid === getVNode('scroller')._subGrid,
+          'subgrid'
+        );
+      });
     });
 
     it('keeps position: relative elements in the subgrid', () => {
