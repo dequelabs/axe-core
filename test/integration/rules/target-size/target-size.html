@@ -330,7 +330,8 @@ this should not effect their outcome -->
   </span>
 </p>
 
-<!-- Fixed targets are positioned against the viewport, not the scroll region -->
+<!-- Fixed targets are positioned against the viewport, not the scroll region.
+An absolute target would stay inside the positioned scroll region -->
 <p>
   <button
     id="fail-fixed-outside"
@@ -346,7 +347,13 @@ this should not effect their outcome -->
     A
   </button>
   <span
-    style="display: inline-block; width: 40px; height: 20px; overflow: auto"
+    style="
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      overflow: auto;
+    "
   >
     <span style="display: inline-block; width: 10px; height: 100px"></span>
     <button
