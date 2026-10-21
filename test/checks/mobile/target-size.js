@@ -355,28 +355,7 @@ describe('target-size tests', () => {
         it('returns false if the widget is tabbable', () => {
           const checkArgs = checkSetup(
             `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">` +
-              `<button style="margin:1px; line-height:20px">Play</button>` +
-              `</a>`
-          );
-          const out = check.evaluate.apply(checkContext, checkArgs);
-          assert.isFalse(out);
-        });
-
-        it('returns true if the widget is not tabbable', () => {
-          const checkArgs = checkSetup(
-            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">` +
-              `<button tabindex="-1" style="margin:1px; line-height:20px">Play</button>` +
-              `</a>`
-          );
-          const out = check.evaluate.apply(checkContext, checkArgs);
-          assert.isTrue(out);
-        });
-      });
-
-      describe('that is a descendant', () => {
-        it('returns false if the widget is tabbable', () => {
-          const checkArgs = checkSetup(
-            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">` +
+              `<span>▶</span>` +
               `<button style="margin:1px; line-height:20px">Play</button>` +
               `</a>`
           );
