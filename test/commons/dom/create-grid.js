@@ -167,7 +167,8 @@ describe('create-grid', () => {
         '<div style="position: fixed; top: -1em; min-height: 2em">off screen</div>'
       );
       createGrid();
-      const position = findPositions(fixture._grid, fixture.children[0]);
+      const vNode = fixture.children[0];
+      const position = findPositions(vNode._grid, vNode);
       assert.deepEqual(position, [
         { col: 0, row: -1 },
         { col: 0, row: 0 }
@@ -464,7 +465,7 @@ describe('create-grid', () => {
       return getVNode('target')._grid;
     }
 
-    const fixedContainingBlockStyles = [
+    [
       'transform: translateZ(0)',
       'translate: 1px',
       'perspective: 100px',
@@ -474,10 +475,9 @@ describe('create-grid', () => {
       'contain: paint',
       'contain: layout style',
       'content-visibility: auto',
-      'will-change: opacity, transform'
-    ];
-
-    [...fixedContainingBlockStyles, 'will-change: position'].forEach(style => {
+      'will-change: opacity, transform',
+      'will-change: position'
+    ].forEach(style => {
       it(`treats an element with ${style} as a containing block`, () => {
         const grid = setupContainingBlock(style);
         assert.isTrue(grid === getVNode('scroller')._subGrid, 'subgrid');
@@ -539,59 +539,6 @@ describe('create-grid', () => {
       );
     });
 
-    it('adds a fixed element and its descendants to the root grid', () => {
-      fixture = fixtureSetup(html`
-        <div style="position: relative; ${scrollerStyle}">
-          <div style="height: 200px">
-            <div id="target" style="${fixedStyle}">
-              <span id="child">x</span>
-            </div>
-          </div>
-        </div>
-      `);
-      createGrid();
-      assert.isTrue(getVNode('target')._grid === fixture._grid, 'target');
-      assert.isTrue(getVNode('child')._grid === fixture._grid, 'child');
-    });
-
-    it('adds a fixed element to the subgrid of a scrolling html element', () => {
-      const root = document.documentElement;
-      root.style.overflowY = 'scroll';
-      fixtureSetup(html`
-        <div style="${scrollerStyle}">
-          <div style="height: 200px">
-            <div id="target" style="${fixedStyle}"></div>
-          </div>
-        </div>
-        <div style="height: 5000px"></div>
-      `);
-      createGrid();
-      const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
-      assert.isDefined(htmlSubGrid);
-      assert.isTrue(getVNode('target')._grid === htmlSubGrid);
-    });
-
-    fixedContainingBlockStyles.forEach(style => {
-      it(`adds a fixed element to the grid of an ancestor with ${style}`, () => {
-        fixtureSetup(html`
-          <div id="scroller" style="${scrollerStyle}">
-            <div style="height: 200px; ${style}">
-              <div style="${scrollerStyle}">
-                <div style="height: 200px">
-                  <div id="target" style="${fixedStyle}"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `);
-        createGrid();
-        assert.isTrue(
-          getVNode('target')._grid === getVNode('scroller')._subGrid,
-          'subgrid'
-        );
-      });
-    });
-
     it('keeps position: relative elements in the subgrid', () => {
       fixtureSetup(html`
         <div style="position: relative">
@@ -606,6 +553,87 @@ describe('create-grid', () => {
       assert.isTrue(
         getVNode('relative')._grid === getVNode('scroller')._subGrid,
         'subgrid'
+      );
+    });
+  });
+
+  describe('fixed position elements', () => {
+    const getRootGrid = () =>
+      axe.utils.getNodeFromTree(document.documentElement)._grid;
+
+    it('adds a fixed element and its descendants to a grid separate from the root grid', () => {
+      fixtureSetup(html`
+        <div id="target" style="${fixedStyle}">
+          <span id="child">x</span>
+        </div>
+      `);
+      createGrid();
+      const grid = getVNode('target')._grid;
+      assert.isDefined(grid);
+      assert.isTrue(grid !== getRootGrid(), 'not the root grid');
+      assert.isNull(grid.container);
+      assert.isTrue(getVNode('child')._grid === grid, 'child');
+    });
+
+    it('adds fixed elements inside and outside a scroll region to the same grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div style="position: relative; ${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="inside" style="${fixedStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('inside')._grid === getVNode('outside')._grid);
+    });
+
+    it('adds a fixed element under a transformed ancestor to the fixed grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 200px; transform: translateZ(0)">
+            <div id="inside" style="${fixedStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('inside')._grid === getVNode('outside')._grid);
+    });
+
+    it('adds the descendants of a fixed element to the fixed grid, even when the fixed element is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div style="${scrollerStyle}">
+          <div style="position: fixed; top: 0; width: 0; height: 0">
+            <span id="child">x</span>
+            <div><div id="nested-abs" style="${absStyle}"></div></div>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      const grid = getVNode('outside')._grid;
+      assert.isTrue(getVNode('child')._grid === grid, 'child');
+      assert.isTrue(getVNode('nested-abs')._grid === grid, 'nested absolute');
+    });
+
+    it('adds a scroll region inside a fixed element to the fixed grid', () => {
+      fixtureSetup(html`
+        <div id="target" style="position: fixed; top: 0">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px"><span id="child">x</span></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      assert.isTrue(getVNode('child')._grid === subGrid, 'child in subgrid');
+      const grid = getVNode('target')._grid;
+      assert.isTrue(grid !== getRootGrid(), 'not the root grid');
+      assert.isTrue(
+        subGrid.container._grid === grid,
+        'container in fixed grid'
       );
     });
   });
