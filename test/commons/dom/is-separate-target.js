@@ -26,6 +26,26 @@ describe('dom.isSeparateTarget', () => {
     assert.isTrue(isSeparateTarget(target, other));
   });
 
+  it('returns true for a widget with multiple children and another widget', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x">
+        <span>child</span>
+        <button id="other">b</button>
+      </a>
+    `);
+    assert.isTrue(isSeparateTarget(target, other));
+  });
+
+  it('returns true for a widget with non-empty text children and another widget', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x">
+        child
+        <button id="other">b</button>
+      </a>
+    `);
+    assert.isTrue(isSeparateTarget(target, other));
+  });
+
   it('returns false for a non-widget', () => {
     const [target, other] = getNodes(html`
       <a id="target" href="/x">a</a>
@@ -46,6 +66,22 @@ describe('dom.isSeparateTarget', () => {
     const [target, other] = getNodes(html`
       <a id="target" href="/x">a</a>
       <a id="other" href="/x">b</a>
+    `);
+    assert.isFalse(isSeparateTarget(target, other));
+  });
+
+  it('returns false for a widget with another widget as its only child', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x"><button id="other">b</button></a>
+    `);
+    assert.isFalse(isSeparateTarget(target, other));
+  });
+
+  it('returns false for a widget with empty text and another widget as its children', () => {
+    const [target, other] = getNodes(html`
+      <a id="target" href="/x">
+        <button id="other">b</button>
+      </a>
     `);
     assert.isFalse(isSeparateTarget(target, other));
   });

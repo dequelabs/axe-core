@@ -9,6 +9,8 @@
     ["#fail5"],
     ["#fail6"],
     ["#fail7"],
+    ["#fail8"],
+    ["#fail-not-only-widget-child"],
     ["#fail-fixed"],
     ["#fail-diff-dest-card"]
   ],
@@ -38,6 +40,8 @@
     ["#pass23"],
     ["#pass24"],
     ["#pass25"],
+    ["#pass26"],
+    ["#pass-only-widget-child"],
     ["#pass-adjacent"],
     ["#pass-fixed"],
     ["#pass-same-dest-cover"],
