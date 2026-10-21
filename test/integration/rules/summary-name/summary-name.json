@@ -8,17 +8,27 @@
     ["#aria-labelledby-empty-fail"],
     ["#presentation-role-fail"],
     ["#none-role-fail"],
-    ["#heading-role-fail"],
+    ["#invalid-role-fail"],
+    ["#abstract-role-fail"],
+    ["#empty-role-fail"],
+    ["#fallback-none-role-fail"],
+    ["#marker-only-fail"],
+    ["#whitespace-title-fail"],
     ["#value-attr-fail"],
     ["#alt-attr-fail"],
-    ["#label-elm-fail"],
-    ["#button-role-fail"]
+    ["#label-elm-fail"]
   ],
   "passes": [
     ["#text-pass"],
     ["#aria-label-pass"],
     ["#aria-labelledby-pass"],
     ["#combo-pass"],
-    ["#title-pass"]
-  ]
+    ["#title-pass"],
+    ["#presentation-role-pass"],
+    ["#none-role-pass"],
+    ["#marker-text-pass"],
+    ["#title-no-marker-pass"],
+    ["#first-summary-pass"]
+  ],
+  "incomplete": []
 }
