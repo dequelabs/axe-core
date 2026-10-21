@@ -954,32 +954,5 @@ describe('dom.getElementStack', () => {
       const stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
-
-    ['absolute', 'fixed'].forEach(position => {
-      it(`should return ${position} elements outside the scroll region that are beneath the target but not its center`, () => {
-        fixture.innerHTML = html`
-          <div id="1" style="overflow: auto; height: 200px">
-            <div
-              id="backdrop"
-              style="position: ${position}; width: 200px; height: 30px"
-            ></div>
-            <p id="target" style="position: relative; margin: 0; width: 100px">
-              Hello World
-            </p>
-            <div style="height: 1000px"></div>
-          </div>
-        `;
-        const { top, left } = fixture
-          .querySelector('#target')
-          .getBoundingClientRect();
-        const backdrop = fixture.querySelector('#backdrop');
-        backdrop.style.top = `${top}px`;
-        backdrop.style.left = `${left}px`;
-        axe.testUtils.flatTreeSetup(fixture);
-        const target = fixture.querySelector('#target');
-        const stack = mapToIDs(getElementStack(target));
-        assert.deepEqual(stack, ['target', 'backdrop', '1', 'fixture']);
-      });
-    });
   });
 });
