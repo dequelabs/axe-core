@@ -43,6 +43,42 @@ describe('aria-allowed-attr', function () {
 });
 ```
 
+## Check Options
+
+Give each option its own `describe` block, with a case that fails without the option and passes with it, so the test goes red if the option is ignored:
+
+```javascript
+describe('options.ignoredTags', function () {
+  const { html, queryFixture, getCheckEvaluate, MockCheckContext } =
+    axe.testUtils;
+  const checkContext = MockCheckContext();
+  const evaluate = getCheckEvaluate('aria-allowed-role');
+
+  afterEach(function () {
+    checkContext.reset();
+  });
+
+  it('fails an unallowed role without the option', function () {
+    const vNode = queryFixture(
+      html`<article id="target" role="button"></article>`
+    );
+    assert.isFalse(evaluate.call(checkContext, null, {}, vNode));
+    assert.deepEqual(checkContext._data, ['button']);
+  });
+
+  it('passes an ignored tag', function () {
+    const vNode = queryFixture(
+      html`<article id="target" role="button"></article>`
+    );
+    const options = { ignoredTags: ['article'] };
+    assert.isTrue(evaluate.call(checkContext, null, options, vNode));
+    assert.isNull(checkContext._data);
+  });
+});
+```
+
+Assert the result and `checkContext._data`, not the message text.
+
 ## Shadow DOM Test
 
 Only add a Shadow DOM test when the result depends on something across the shadow boundary — here, the host's style decides whether content inside its shadow tree is hidden:
@@ -64,7 +100,7 @@ If the target and everything that decides the result are in the same shadow root
 
 ## Integration Test — Rule
 
-Each rule change requires an HTML + JSON pair in `test/integration/rules/<rule-name>/` (mocha-hosted) or `test/integration/full/<rule-name>/` (full HTML page). Virtual-rules tests in `test/virtual-rules/` should also be updated or created for appropriate rules. See sections below for details.
+Each rule change requires an HTML + JSON pair in `test/integration/rules/<rule-name>/` (mocha-hosted), or an HTML page and `.js` test in `test/integration/full/<rule-name>/` (full HTML page). Virtual-rules tests in `test/integration/virtual-rules/` should also be updated or created for appropriate rules. See sections below for details.
 
 ### HTML file (`aria-allowed-attr.html`)
 
@@ -98,4 +134,4 @@ For rules that need a complete HTML page (e.g., landmark rules, page-level rules
 
 ### Virtual rules tests
 
-Rules that can run without a DOM (using only virtual nodes) should have tests in `test/virtual-rules/`. These tests verify that rules work correctly with `axe.run()` on serialized node data.
+Rules that can run without a DOM (using only virtual nodes) should have tests in `test/integration/virtual-rules/`. These tests verify that rules work correctly with `axe.runVirtualRule()` on `SerialVirtualNode` data.

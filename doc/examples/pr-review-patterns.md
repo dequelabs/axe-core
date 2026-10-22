@@ -1,69 +1,64 @@
 # PR Review Patterns
 
-Common feedback and anti-patterns observed in axe-core code reviews.
+What maintainers ask for most often in axe-core reviews, with examples. The rules behind each theme are in `AGENTS.md` and the docs it points to.
+
+## Why PRs Get Closed
+
+- **Duplicates in-flight work or is superseded by a general fix.** Search open PRs and issues first, and fix the layer that owns the behavior. A fix that special-cases one element is often replaced by a general fix. Other closed PRs repeated work already open, or patched parsing that a dependency upgrade had already fixed.
+- **No shown need or benefit.** Say who needs the change and back every claim with numbers or a repro. Closed examples include a 7ms saving for a lot of extra code, a change whose only reason was an open issue, and an intentional error removed with no repro.
+- **New rule without agreement.** A new rule proposed before a maintainer agreed to it on an issue.
 
 ## What Gets Called Out
 
-### 1. Missing Tests
+### Accessibility Semantics
 
-- Every behavior-changing code change needs unit tests
-- Rule changes need integration tests (HTML + JSON pair)
-- Shadow DOM test coverage required for relevant checks/rules
+Spec values, browser and AT behavior, and what should pass, fail or be incomplete. Common mistakes are wrong WAI-ARIA default values and guessed AT behavior. See [Accessibility Decisions](./accessibility-decisions.md).
 
-### 2. Commit Message Format
+### Root Cause
 
-- Wrong type/scope
-- Not imperative present tense
-- Subject too long or capitalized
-- Missing issue reference in footer
+The fix patches a symptom in one rule when the behavior belongs in `standards/`, a commons function, a shared util or a dependency.
 
-### 3. Import Violations
+### Edge Cases
 
-- `core/utils` importing from `commons` (forbidden)
-- Using index imports where direct file paths are required
-- Importing node modules outside `core/imports`
+Counter-example markup the code gets wrong: descendant text, a stylesheet overriding an inline style, and `unset`. Run the edge-case list in the [PR checklist](../pull-request-checklist.md).
 
-### 4. Code Style Issues
+### Tests
 
-- Not using return early pattern
-- Default export not at top of file
-- Nested conditionals when early return would work
-- Missing JSDoc comments
+Missing cases, such as no integration fixture for a rule's new fail and incomplete outcomes. Unneeded tests, such as a shadow DOM test that crosses no boundary, or tests of internal caching rather than inputs and outputs. See [test patterns](./test-patterns.md).
 
-### 5. Performance Concerns
+### Unproven Benefit
 
-- Unnecessary DOM queries in loops
-- Not caching Virtual Node properties
-- Computing same value repeatedly instead of storing it
+A perf or robustness claim that isn't shown (see [Why PRs Get Closed](#why-prs-get-closed) and the [PR checklist](../pull-request-checklist.md#pull-request)). Measure the built bundle with `perf/report.js` and `perf/compare.js`.
 
-### 6. Incomplete Results
+### Code Structure and Performance
 
-- Not returning `undefined` when a check can't determine the result
-- Missing `incomplete` message variants in check JSON
-- Not setting appropriate `this.data()` for incomplete cases
+Nesting where an early return or `continue` works, invariant work inside loops, oversized files.
 
-### 7. Accessibility Edge Cases
+### Imports
 
-- Not considering all ARIA states
-- Missing edge cases for hidden elements
-- Not handling Shadow DOM properly
+`core/utils` importing from `commons`, index imports where `core/utils` or `commons` needs direct file paths, and node modules imported outside `core/imports`. See [Import Restrictions](../../AGENTS.md#import-restrictions-hard-rules) in `AGENTS.md`, which `eslint.config.js` enforces in part.
 
-## What Reviewers Love
+### Reuse
 
-1. Comprehensive test coverage including edge cases
-2. Clear, detailed commit messages with motivation
-3. JSDoc comments that explain "why" not just "what"
-4. Performance-conscious code that caches appropriately
-5. Following existing patterns in similar files
-6. Integration tests that cover both pass and fail cases
+Reimplementing a helper the codebase already has, such as copying a rule's selection logic instead of calling `rule.gather()`. See the [reuse map](./reuse-map.md).
+
+### Public API and Runtime
+
+Wrong types, back-compat, ES5 and IE11 output (a bare `Intl`, which throws in IE11), and extension isolated worlds. See [Back-Compat and Output Stability](./output-stability.md).
+
+### Docs and Messages
+
+JSDoc that doesn't match the signature, a new public field missing from the docs, and remediation text that is too long.
+
+### Scope
+
+A PR that mixes changes, or fixes a related bug outside its issue, gets asked to split.
 
 ## Common PR Mistakes
 
-1. Not running `npm test` locally before pushing
+1. Not running `pnpm test` locally before pushing
 2. Not committing auto-generated `locales/_template.json` in the same commit as message source changes
-3. Changing multiple unrelated things in one PR — split refactoring from feature work
-4. Not updating integration tests when changing rule behavior
-5. `console.log` statements should not be committed
-6. Not handling `null` or `undefined` gracefully
-7. Hardcoding strings that should come from `standards/` data
-8. Changing public APIs without `BREAKING CHANGE` in commit footer
+3. Not updating integration tests when changing rule behavior
+4. Committing `console.log` statements
+5. Hardcoding lists that should come from `standards/` data
+6. Breaking a public function instead of keeping a deprecated wrapper (see [output stability](./output-stability.md))
