@@ -37,7 +37,7 @@ Read this before writing or changing a check or rule.
 | `any`       | At least one check must pass                                                                                                                                                                                  |
 | `none`      | All checks must fail (for the rule to pass)                                                                                                                                                                   |
 | `impact`    | `"minor"`, `"moderate"`, `"serious"`, `"critical"`                                                                                                                                                            |
-| `enabled`   | Defaults to `true`; set `false` for disabled, deprecated or WCAG 2.2-only rules. Experimental rules keep the default and carry the `experimental` tag instead (see [output stability](./output-stability.md)) |
+| `enabled`   | Defaults to `true`; set `false` for deprecated, WCAG AAA or WCAG 2.2-only rules. Experimental rules keep the default and carry the `experimental` tag instead (see [output stability](./output-stability.md)) |
 | `tags`      | Grouping: `wcag2a`, `wcag2aa`, `best-practice`, `cat.*`, etc.                                                                                                                                                 |
 | `pageLevel` | `true` if rule should only run on the top-level window                                                                                                                                                        |
 
@@ -114,5 +114,5 @@ export default function myCheckEvaluate(node, options, virtualNode) {
 **`this.data()` usage:**
 
 - Sets an arbitrary data object that gets passed to message templates via `${data.propertyName}`
-- `messageKey` — selects a named variant of an object message, falling back to `default`. `singular`/`plural` is chosen by length when `this.data()` gets an array
+- `messageKey` — selects a named variant of an object message, such as `caseSensitive`, or `singular`/`plural` as `aria-allowed-attr` does. Without a match it uses `default` when the object has one. When `this.data()` gets an array, `singular`/`plural` is chosen by its length
 - Any other keys are available in templates as `${data.keyName}` — arrays are automatically joined

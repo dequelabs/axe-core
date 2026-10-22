@@ -31,7 +31,7 @@
 
 - **Return Early:** Keep the happy path left-aligned. Handle errors and edge cases first with early returns, and use `continue` in loops.
 - **Reuse:** Search `lib/` for an existing helper before writing one. See `doc/examples/reuse-map.md`.
-- **Standards data:** Never hardcode ARIA/HTML lists. Query `standards/` through `commons/standards`.
+- **Standards data:** Never hardcode ARIA/HTML lists. Read them from the `lib/standards` index or through the `commons/aria` and `commons/standards` helpers.
 - **Exports:** Default export at the top of the file, right after imports.
 - **JSDoc:** Document exported APIs and complex logic, with `@param` and `@return` names and types matching the signature. See `doc/code-submission-guidelines.md`.
 - **Comments:** Explain why non-obvious code exists, such as a cached getter.
@@ -47,14 +47,16 @@
 
 ### Import Restrictions (Hard Rules)
 
-ESLint enforces these rules:
+`eslint.config.js` enforces most of these rules:
 
-- `standards/` imports nothing (pure data).
-- `core/utils/` never imports `commons`, `core/public`, `checks`, `rules`, or reporter files outside `reporters/helpers`.
+- `standards/` data files import nothing (pure data). Only `standards/index.js` imports, to merge them.
+- `core/utils/` never imports `commons`, `core/public`, `checks` or `rules`. Importing `commons` from `core/utils` is the most commonly rejected violation.
+- `core/utils/` imports reporter code only from `reporters/helpers`. ESLint doesn't catch this one.
+- `core/public/` never imports `commons`, `checks` or `rules`.
+- `core/reporters/` never imports `commons`, `core/base`, `core/public`, `checks` or `rules`.
 - `commons/` never imports `checks` or `rules`.
-- Only `core/imports/` imports node modules.
+- `core/imports/` imports only node modules, and no other directory imports them.
 - `checks/` and `rules/` can import from any directory.
-- **Never** import `commons` from `core/utils`. This is the most commonly rejected violation. Details: `eslint.config.js`.
 
 Prefer direct file paths for imports within `core/utils` and `commons`; the `core/utils` index is fine from `commons`.
 
@@ -76,7 +78,7 @@ Before patching a rule, find the layer that owns the behavior: `standards/` data
 ### High-Risk Areas (Extra Scrutiny Required)
 
 - **Color contrast:** Handles all CSS color formats, opacity, blend modes, stacking contexts and text-shadow. Return `undefined` when the background can't be determined. See `doc/developer-guide.md`.
-- **ARIA validation:** Must stay current with the spec. Query roles and attributes through `commons/standards` (data in `lib/standards/aria-roles.js` and `lib/standards/aria-attrs.js`), and handle implicit vs. explicit roles. See `doc/rule-development.md`.
+- **ARIA validation:** Must stay current with the spec. Read roles and attributes from the `lib/standards` index (`standards.ariaRoles`, `standards.ariaAttrs`), which applies `axe.configure({ standards })`, or through `commons/aria` helpers such as `isValidRole()`. Don't import `aria-roles.js` or `aria-attrs.js` directly, since that skips configured standards. Handle implicit vs. explicit roles. See `doc/rule-development.md`.
 - **Hidden elements:** Use `isVisibleToScreenReaders()`, not CSS visibility alone. Account for `aria-hidden="true"` and Shadow DOM boundaries.
 - **i18n:** Update `locales/_template.json` on every message change (`pnpm run build` regenerates it) and commit it in the same commit as the source, never separately.
 

@@ -38,7 +38,7 @@ For each changed check or matcher, add a counter-example test for every case tha
 - [ ] PR template filled in and short; closely related problems reported in one issue, not several; no internal product detail
 - [ ] Perf claims have before and after numbers from `perf/report.js` and `perf/compare.js` run on the built bundle, in the PR body (the perf-compare workflow doesn't comment on fork PRs)
 - [ ] A perf change leaves the output identical, and the PR shows that
-- [ ] Before optimizing code, its result was confirmed to be used; code whose result nothing reads is removed instead
+- [ ] Before optimizing code, its result was confirmed to be used; internal code whose result nothing reads is removed instead (public functions follow `doc/examples/output-stability.md`)
 - [ ] Bug claims have a failing test or a repro page; a false positive is reproduced on the current release before the fix. Suspected vulnerabilities go through `SECURITY.md`, not a public PR
 - [ ] An intentional error or guard is removed only after reproducing the failure it causes
 
