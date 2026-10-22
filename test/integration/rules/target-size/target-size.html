@@ -330,6 +330,48 @@ this should not effect their outcome -->
   </span>
 </p>
 
+<!-- Fixed targets are positioned against the viewport, not the scroll region.
+An absolute target would stay inside the positioned scroll region -->
+<p>
+  <button
+    id="fail-fixed-outside"
+    style="
+      position: fixed;
+      top: 0;
+      right: 40px;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+    "
+  >
+    A
+  </button>
+  <span
+    style="
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      overflow: auto;
+    "
+  >
+    <span style="display: inline-block; width: 10px; height: 100px"></span>
+    <button
+      id="fail-fixed-inside"
+      style="
+        position: fixed;
+        top: 0;
+        right: 18px;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+      "
+    >
+      B
+    </button>
+  </span>
+</p>
+
 <!-- Inapplicable -->
 <p>
   The quick <a href="#" id="inapplicable1">brown</a><br />
