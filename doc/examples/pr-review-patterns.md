@@ -36,7 +36,7 @@ Nesting where an early return or `continue` works, invariant work inside loops, 
 
 ### Imports
 
-`core/utils` importing from `commons`, index imports where `core/utils` or `commons` needs direct file paths, and node modules imported outside `core/imports`. See [Import Restrictions](../../AGENTS.md#import-restrictions-hard-rules) in `AGENTS.md`, which `eslint.config.js` enforces in part.
+`core/utils` importing from `commons`, and node modules imported outside `core/imports`. See [Import Restrictions](../../AGENTS.md#import-restrictions-hard-rules) in `AGENTS.md`, which `eslint.config.js` enforces in part.
 
 ### Reuse
 
@@ -44,7 +44,7 @@ Reimplementing a helper the codebase already has, such as copying a rule's selec
 
 ### Public API and Runtime
 
-Wrong types, back-compat, ES5 and IE11 output (a bare `Intl`, which throws in IE11), and extension isolated worlds. See [Back-Compat and Output Stability](./output-stability.md).
+Wrong types and back-compat (see [Back-Compat and Output Stability](./output-stability.md)). ES5 and IE11 output, such as an unguarded `Intl.Segmenter`, which IE11 lacks, and extension isolated worlds (see Runtime Rules in `AGENTS.md`).
 
 ### Docs and Messages
 

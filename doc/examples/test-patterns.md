@@ -22,7 +22,7 @@ describe('text.sanitize', function () {
 
 ```javascript
 describe('aria-allowed-attr', function () {
-  const fixture = document.getElementById('fixture');
+  const { queryFixture } = axe.testUtils;
   const checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
@@ -45,7 +45,7 @@ describe('aria-allowed-attr', function () {
 
 ## Check Options
 
-Give each option its own `describe` block, with a case that fails without the option and passes with it, so the test goes red if the option is ignored:
+Give each option its own `describe` block, with a pair of cases whose result differs with and without the option, so the test goes red if the option is ignored:
 
 ```javascript
 describe('options.ignoredTags', function () {
@@ -100,7 +100,7 @@ If the target and everything that decides the result are in the same shadow root
 
 ## Integration Test — Rule
 
-Each rule change requires an HTML + JSON pair in `test/integration/rules/<rule-name>/` (mocha-hosted), or an HTML page and `.js` test in `test/integration/full/<rule-name>/` (full HTML page). Virtual-rules tests in `test/integration/virtual-rules/` should also be updated or created for appropriate rules. See sections below for details.
+Each change to a rule's behavior requires an HTML + JSON pair in `test/integration/rules/<rule-name>/` (mocha-hosted), or an HTML page and `.js` test in `test/integration/full/<rule-name>/` (full HTML page). Virtual-rules tests in `test/integration/virtual-rules/` should also be updated or created for appropriate rules. See sections below for details.
 
 ### HTML file (`aria-allowed-attr.html`)
 

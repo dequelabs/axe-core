@@ -14,7 +14,7 @@ Complete all applicable items before opening a PR. For items that do not apply t
 ## Tests
 
 - [ ] Unit tests cover all code paths (`null`/`undefined` input handling only needed for public API functions)
-- [ ] Integration test added/updated for any rule changes — an HTML + JSON pair in `integration/rules` for mocha-hosted tests, or an HTML page and `.js` test in `integration/full` when the rule requires a full HTML page
+- [ ] Integration test added/updated for any change to a rule's behavior — an HTML + JSON pair in `test/integration/rules/<rule-name>/` for mocha-hosted tests, or an HTML page and `.js` test in `test/integration/full/<rule-name>/` when the rule requires a full HTML page
 - [ ] Virtual-rules tests updated or created for appropriate rules
 - [ ] Code built with `pnpm run build` before testing
 - [ ] All applicable tests pass locally: `pnpm test` (unit), `test:integration`, `test:virtual-rules`, `test:act`, `test:apg`, `test:examples`, `test:node`, `test:jsdom`
@@ -36,8 +36,10 @@ For each changed check or matcher, add a counter-example test for every case tha
 ## Pull Request
 
 - [ ] PR template filled in and short; closely related problems reported in one issue, not several; no internal product detail
-- [ ] Perf claims have before and after numbers from `perf/report.js` and `perf/compare.js` run on the built bundle, in the PR body (the perf-compare workflow doesn't comment on fork PRs); the output stays identical and the PR shows that; work whose result nobody reads was checked first
-- [ ] Bug claims have a failing test or a repro page; a false positive is reproduced on the current release before the fix
+- [ ] Perf claims have before and after numbers from `perf/report.js` and `perf/compare.js` run on the built bundle, in the PR body (the perf-compare workflow doesn't comment on fork PRs)
+- [ ] A perf change leaves the output identical, and the PR shows that
+- [ ] Before optimizing code, its result was confirmed to be used; code whose result nothing reads is removed instead
+- [ ] Bug claims have a failing test or a repro page; a false positive is reproduced on the current release before the fix. Suspected vulnerabilities go through `SECURITY.md`, not a public PR
 - [ ] An intentional error or guard is removed only after reproducing the failure it causes
 
 ## Formatting & Build

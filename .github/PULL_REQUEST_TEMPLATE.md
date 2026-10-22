@@ -1,6 +1,6 @@
 << Describe the changes >>
 
-<!-- Delete sections that don't apply, and keep each to one or two lines. -->
+<!-- Delete sections that don't apply, and keep each to one or two lines. Work through doc/pull-request-checklist.md before opening. -->
 
 ## Why
 
