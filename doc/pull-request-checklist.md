@@ -8,7 +8,7 @@ Complete all applicable items before opening a PR. For items that do not apply t
 - [ ] Return early pattern used — no nested conditionals where an early return works
 - [ ] DocBlock comments where appropriate (especially for public/exported APIs), per `doc/code-submission-guidelines.md`
 - [ ] No `console.log` statements committed
-- [ ] No hardcoded ARIA/HTML lists — queried from `standards/` via `commons/standards`
+- [ ] No hardcoded ARIA/HTML lists. They're read from the `lib/standards` index or the `commons/aria` and `commons/standards` helpers
 - [ ] Imports follow directory restrictions — especially no `commons` from `core/utils`
 
 ## Tests
