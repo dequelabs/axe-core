@@ -883,6 +883,117 @@ describe('dom.getElementStack', () => {
       document.documentElement.style.overflowY = origOverflow;
     });
 
+    ['vertical', 'horizontal'].forEach(direction => {
+      it(`should find escaped backgrounds at the target's ${direction} position`, () => {
+        const backdropSize =
+          direction === 'vertical'
+            ? 'width: 100%; height: 60px'
+            : 'width: 60px; height: 100%';
+        fixture.innerHTML = html`
+          <div style="position: relative; width: 300px; height: 300px">
+            <div
+              id="backdrop"
+              style="position: absolute; top: 0; left: 0; ${backdropSize}"
+            ></div>
+            <div style="overflow: auto; width: 300px; height: 300px">
+              <div style="width: 600px; height: 600px">
+                <p
+                  id="target"
+                  style="position: relative; margin: 10px; width: 40px"
+                >
+                  Text
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = fixture.querySelector('#target');
+        const stack = mapToIDs(getElementStack(target));
+
+        assert.include(stack, 'backdrop');
+        assert.isBelow(stack.indexOf('target'), stack.indexOf('backdrop'));
+      });
+    });
+
+    it('should find escaped backgrounds through nested scroll regions', () => {
+      fixture.innerHTML = html`
+        <div style="position: relative; width: 300px; height: 300px">
+          <div
+            id="backdrop"
+            style="position: absolute; top: 0; left: 0; width: 30px; height: 30px"
+          ></div>
+          <div style="overflow: auto; width: 300px; height: 300px">
+            <div style="width: 600px; height: 600px">
+              <div style="overflow: auto; width: 100px; height: 100px">
+                <div style="width: 300px; height: 300px">
+                  <p
+                    id="target"
+                    style="position: relative; margin: 5px; width: 40px; line-height: 20px"
+                  >
+                    Text
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+
+      assert.include(mapToIDs(getElementStack(target)), 'backdrop');
+    });
+
+    it('should find the page background beneath fixed text at its own position', () => {
+      fixture.innerHTML = html`
+        <div id="backdrop" style="width: 300px; height: 60px"></div>
+        <div style="height: 3000px"></div>
+        <p
+          id="target"
+          style="position: fixed; top: 10px; left: 10px; margin: 0"
+        >
+          Text
+        </p>
+      `;
+      axe.testUtils.flatTreeSetup(document.documentElement);
+      const target = fixture.querySelector('#target');
+
+      assert.include(mapToIDs(getElementStack(target)), 'backdrop');
+    });
+
+    [0, -20.5].forEach(offset => {
+      it(`should retain clipping ancestors at horizontal offset ${offset}`, () => {
+        fixture.innerHTML = html`
+          <div
+            id="clip"
+            style="overflow: hidden; width: 120px; height: 120px; margin-left: ${offset}px"
+          >
+            <div
+              id="scroller"
+              style="overflow: auto; width: 200px; height: 100px"
+            >
+              <div style="width: 300px; height: 300px">
+                <div
+                  id="target"
+                  style="position: relative; left: 110px; width: 80px; height: 20px"
+                >
+                  Text
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        axe.testUtils.flatTreeSetup(fixture);
+        const target = fixture.querySelector('#target');
+        const stack = mapToIDs(getElementStack(target));
+
+        assert.include(stack, 'target');
+        assert.include(stack, 'scroller');
+        assert.include(stack, 'clip');
+      });
+    });
+
     it('should return stack of scroll regions', () => {
       fixture.innerHTML = html`
         <main id="1">
