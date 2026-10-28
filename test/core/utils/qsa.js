@@ -1,7 +1,12 @@
-function setShadowId(vNode, shadowId) {
+function setShadowId(
+  vNode,
+  shadowId,
+  root = document.createDocumentFragment()
+) {
   vNode.shadowId = shadowId;
+  sinon.stub(vNode.actualNode, 'getRootNode').returns(root);
   for (var i = 0; i < vNode.children.length; i++) {
-    setShadowId(vNode.children[i], shadowId);
+    setShadowId(vNode.children[i], shadowId, root);
   }
 }
 
@@ -45,8 +50,11 @@ function getTestDom() {
   const second = axe.utils.getNodeFromTree(html.querySelector('.second'));
   setShadowId(first, 'a');
   setShadowId(second, 'b');
-  axe.utils.getNodeFromTree(html.querySelector('[role="button"]')).shadowId =
-    'c';
+  const button = axe.utils.getNodeFromTree(
+    html.querySelector('[role="button"]')
+  );
+  button.shadowId = 'c';
+  button.actualNode.getRootNode.returns(document.createDocumentFragment());
 
   return tree;
 }
@@ -66,11 +74,11 @@ describe('axe.utils.querySelectorAllFilter', () => {
           dom = getTestDom();
 
           // prove we're using the DOM by deleting the cache
-          delete dom[0]._selectorCache;
+          delete dom[0]._selectorMap;
         });
 
         it('should not have a primed cache', () => {
-          assert.isUndefined(dom[0]._selectorCache);
+          assert.isUndefined(dom[0]._selectorMap);
         });
       } else {
         beforeEach(() => {
@@ -308,5 +316,126 @@ describe('axe.utils.querySelectorAll', () => {
   it('should find nodes using just the tag', () => {
     const result = axe.utils.querySelectorAll(dom, 'li');
     assert.equal(result.length, 4);
+  });
+
+  it('should find nodes by ID without an actual DOM node', () => {
+    const node = new axe.SerialVirtualNode({ nodeName: 'div', id: 'target' });
+    const result = axe.utils.querySelectorAll(node, '#target');
+    assert.deepEqual(result, [node]);
+  });
+
+  for (const useCache of [true, false]) {
+    it(`should handle a clobbered getRootNode ${useCache ? 'with' : 'without'} cache`, () => {
+      const form = document.createElement('form');
+      form.innerHTML = '<input name="getRootNode" id="target">';
+      const tree = axe.utils.getFlattenedTree(form);
+      if (!useCache) {
+        delete tree[0]._selectorMap;
+      }
+
+      for (const selector of ['#target', 'input']) {
+        const result = axe.utils.querySelectorAll(tree, selector);
+        assert.deepEqual(
+          result.map(node => node.actualNode),
+          [form.firstElementChild]
+        );
+      }
+    });
+  }
+});
+
+describe('axe.utils.querySelectorAll with slotted content', () => {
+  const fixture = document.getElementById('fixture');
+  const html = axe.testUtils.html;
+  let tree;
+  let target;
+
+  beforeEach(() => {
+    fixture.setHTMLUnsafe(html`
+      <div id="host">
+        <template shadowrootmode="open">
+          <section id="shadow-ancestor">
+            <slot></slot>
+            <p id="target">Shadow content</p>
+          </section>
+        </template>
+        <div id="target"><span id="descendant">Light content</span></div>
+      </div>
+    `);
+    target = fixture.querySelector('#target');
+    tree = axe.utils.getFlattenedTree(fixture);
+  });
+
+  for (const useCache of [true, false]) {
+    describe(useCache ? 'with cache' : 'without cache', () => {
+      beforeEach(() => {
+        if (!useCache) {
+          delete tree[0]._selectorMap;
+        }
+      });
+
+      it('finds a slotted light DOM node by ID', () => {
+        const result = axe.utils.querySelectorAll(tree, '#target');
+        assert.deepEqual(
+          result.map(node => node.actualNode),
+          [target]
+        );
+      });
+
+      it('finds descendants of slotted light DOM nodes by ID', () => {
+        const result = axe.utils.querySelectorAll(tree, '#descendant');
+        assert.deepEqual(
+          result.map(node => node.actualNode),
+          [target.firstElementChild]
+        );
+      });
+
+      it('finds slotted nodes using a compound ID selector', () => {
+        const result = axe.utils.querySelectorAll(tree, 'div#target');
+        assert.deepEqual(
+          result.map(node => node.actualNode),
+          [target]
+        );
+      });
+
+      it('finds slotted nodes below a matching ancestor', () => {
+        const result = axe.utils.querySelectorAll(tree, '#host #target');
+        assert.deepEqual(
+          result.map(node => node.actualNode),
+          [target]
+        );
+      });
+
+      it('does not match ancestor IDs from another DOM root', () => {
+        for (const selector of [
+          '#shadow-ancestor #target',
+          '#shadow-ancestor > #target',
+          '#shadow-ancestor span'
+        ]) {
+          assert.deepEqual(axe.utils.querySelectorAll(tree, selector), []);
+        }
+      });
+
+      it('applies the filter to slotted nodes', () => {
+        const result = axe.utils.querySelectorAllFilter(
+          tree,
+          '#target',
+          () => false
+        );
+        assert.deepEqual(result, []);
+      });
+    });
+  }
+
+  it('keeps ID lookups in the DOM root of a shadow query context', () => {
+    const shadowRoot = fixture.querySelector('#host').shadowRoot;
+    const context = axe.utils.getNodeFromTree(
+      shadowRoot.querySelector('section')
+    );
+    const result = axe.utils.querySelectorAll(context, '#target');
+    assert.deepEqual(
+      result.map(node => node.actualNode),
+      [shadowRoot.querySelector('#target')]
+    );
   });
 });
