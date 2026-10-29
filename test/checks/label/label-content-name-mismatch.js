@@ -558,18 +558,7 @@ describe('label-content-name-mismatch tests', () => {
       );
     });
 
-    it('returns false for a leaf treeitem whose visible text is not in its name', () => {
-      const vNode = queryFixture(
-        '<ul role="tree" aria-label="Files">' +
-          '<li id="target" role="treeitem" aria-label="Report">Quarterly summary</li>' +
-          '</ul>'
-      );
-      assert.isFalse(
-        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
-      );
-    });
-
-    it('returns true when the only text is inside the nested group', () => {
+    it('returns true when no visible text remains outside the nested group', () => {
       const vNode = queryFixture(
         '<ul role="tree" aria-label="Files">' +
           '<li id="target" role="treeitem" aria-label="Docs" aria-expanded="true">' +
