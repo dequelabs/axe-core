@@ -275,4 +275,79 @@ describe('text.visible', () => {
       }
     );
   });
+
+  describe('options.excludeRoles', () => {
+    const queryFixture = axe.testUtils.queryFixture;
+
+    it('omits the text of descendants whose role is in excludeRoles', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Documents</span>' +
+          '<ul role="group"><li role="treeitem">Report</li></ul></div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Documents'
+      );
+    });
+
+    it('keeps descendant text when excludeRoles is not set', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Documents</span> ' +
+          '<ul role="group"><li role="treeitem">Report</li></ul></div>'
+      );
+      assert.equal(visibleVirtual(vNode), 'Documents Report');
+    });
+
+    it('omits excluded descendants nested below other elements', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Documents</span>' +
+          '<div><ul role="group"><li role="treeitem">Report</li></ul></div></div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Documents'
+      );
+    });
+
+    it('does not exclude the element itself when its role is in excludeRoles', () => {
+      const vNode = queryFixture('<div id="target" role="group">Grouped</div>');
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Grouped'
+      );
+    });
+
+    it('omits descendants whose fallback role list resolves to an excluded role', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Docs</span>' +
+          '<div role="foo group">First</div>' +
+          '<div role="group foo">Second</div></div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Docs'
+      );
+    });
+
+    it('omits the text of a fieldset, whose implicit role is group', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Docs</span><fieldset>Set</fieldset></div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Docs'
+      );
+    });
+
+    it('keeps the text of a details element even though its role is group', () => {
+      const vNode = queryFixture(
+        '<div id="target"><span>Docs</span> ' +
+          '<details open><summary>Sum</summary> Body</details></div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Docs Sum Body'
+      );
+    });
+  });
 });
