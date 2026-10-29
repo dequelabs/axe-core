@@ -515,4 +515,105 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     });
   });
+
+  describe('nested group content', () => {
+    const treeHtml =
+      '<ul role="tree" aria-label="Files">' +
+      '<li id="target" role="treeitem" aria-label="Documents" aria-expanded="true" aria-selected="false">' +
+      '<span>Documents</span>' +
+      '<ul role="group">' +
+      '<li role="treeitem" aria-label="Report" aria-selected="false"><span>Report</span></li>' +
+      '<li role="treeitem" aria-label="Notes" aria-selected="false"><span>Notes</span></li>' +
+      '</ul></li></ul>';
+
+    it('returns true for a treeitem whose nested group holds child treeitems', () => {
+      const vNode = queryFixture(treeHtml);
+      assert.isTrue(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('returns false for the same treeitem when excludeRoles is empty', () => {
+      const vNode = queryFixture(treeHtml);
+      assert.isFalse(
+        checkEvaluate.call(
+          checkContext,
+          vNode.actualNode,
+          { excludeRoles: [] },
+          vNode
+        )
+      );
+    });
+
+    it("returns false when an expanded treeitem's own text is not in its name", () => {
+      const vNode = queryFixture(
+        '<ul role="tree" aria-label="Files">' +
+          '<li id="target" role="treeitem" aria-label="Folders" aria-expanded="true">' +
+          '<span>Documents</span>' +
+          '<ul role="group"><li role="treeitem">Report</li></ul>' +
+          '</li></ul>'
+      );
+      assert.isFalse(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('returns false for a leaf treeitem whose visible text is not in its name', () => {
+      const vNode = queryFixture(
+        '<ul role="tree" aria-label="Files">' +
+          '<li id="target" role="treeitem" aria-label="Report">Quarterly summary</li>' +
+          '</ul>'
+      );
+      assert.isFalse(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('returns true when the only text is inside the nested group', () => {
+      const vNode = queryFixture(
+        '<ul role="tree" aria-label="Files">' +
+          '<li id="target" role="treeitem" aria-label="Docs" aria-expanded="true">' +
+          '<ul role="group"><li role="treeitem">Report</li></ul>' +
+          '</li></ul>'
+      );
+      assert.isTrue(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('still counts the text of a button inside a gridcell', () => {
+      const vNode = queryFixture(
+        '<div role="grid"><div role="row">' +
+          '<div id="target" role="gridcell" aria-label="Row 1">Row 1 <button>Edit</button></div>' +
+          '</div></div>'
+      );
+      assert.isFalse(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('still counts the text of a nested list in a treeitem', () => {
+      const vNode = queryFixture(
+        '<ul role="tree" aria-label="Files">' +
+          '<li id="target" role="treeitem" aria-label="Documents">Documents ' +
+          '<div role="list"><div role="listitem">Extra</div></div>' +
+          '</li></ul>'
+      );
+      assert.isFalse(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('still counts the text of an unnamed region in a treeitem', () => {
+      const vNode = queryFixture(
+        '<ul role="tree" aria-label="Files">' +
+          '<li id="target" role="treeitem" aria-label="Documents">Documents ' +
+          '<div role="region">Extra</div>' +
+          '</li></ul>'
+      );
+      assert.isFalse(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+  });
 });
