@@ -66,6 +66,19 @@
 >
 <button id="pass19" aria-label="hola">¿Hola?</button>
 <button id="pass17" aria-label="model ABC123">Ｍｏｄｅｌ ＡＢＣ１２３</button>
+<div lang="tr">
+  <button id="pass-turkish-dotted-i" aria-label="Verilerimi indir">
+    İndir
+  </button>
+  <button id="pass-turkish-dotless-i" aria-label="ışık ayarları">IŞIK</button>
+</div>
+<button
+  id="pass-azerbaijani-dotted-i"
+  lang="az-Latn-AZ"
+  aria-label="Verilerimi indir"
+>
+  İndir
+</button>
 
 <!-- Fail -->
 <div id="fail1" role="link" aria-label="OK">Next</div>
@@ -90,6 +103,13 @@
 <a id="fail9" href="#" aria-label="deque labs are great">
   deque <span class="visually-hidden">labs</span> are great
 </a>
+<button id="fail-turkish-different-i" lang="tr" aria-label="ışık">işik</button>
+<div lang="tr">
+  <button id="fail-language-override" lang="en" aria-label="Verilerimi indir">
+    İndir
+  </button>
+</div>
+<button id="fail-french-accent" lang="fr" aria-label="resume">résumé</button>
 
 <!-- incomplete -->
 <button id="incomplete1" aria-label="comet">☄️</button>
