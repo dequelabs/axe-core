@@ -604,5 +604,14 @@ describe('label-content-name-mismatch tests', () => {
         checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
       );
     });
+
+    it('returns true when a group holding only whitespace separates the words of the name', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="Save report">Save<span role="group"> </span>report</a>'
+      );
+      assert.isTrue(
+        checkEvaluate.call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
   });
 });

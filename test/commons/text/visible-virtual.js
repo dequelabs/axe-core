@@ -349,5 +349,35 @@ describe('text.visible', () => {
         'Docs Sum Body'
       );
     });
+
+    it('keeps the word break made by whitespace inside an excluded descendant', () => {
+      const vNode = queryFixture(
+        '<div id="target">Save<span role="group"> </span>report</div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Save report'
+      );
+    });
+
+    it('adds no word break for an empty excluded descendant', () => {
+      const vNode = queryFixture(
+        '<div id="target">Save<span role="group"></span>report</div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Savereport'
+      );
+    });
+
+    it('adds no word break for a hidden excluded descendant', () => {
+      const vNode = queryFixture(
+        '<div id="target">Save<span role="group" style="display:none"> </span>report</div>'
+      );
+      assert.equal(
+        visibleVirtual(vNode, false, false, { excludeRoles: ['group'] }),
+        'Savereport'
+      );
+    });
   });
 });
