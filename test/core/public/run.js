@@ -3,6 +3,7 @@ describe('axe.run', () => {
   const noop = () => {};
   const origRunRules = axe._runRules;
   const captureError = axe.testUtils.captureError;
+  let clock;
 
   beforeEach(() => {
     axe._load({
@@ -30,6 +31,8 @@ describe('axe.run', () => {
     axe._audit = null;
     axe._runRules = origRunRules;
     axe._running = false;
+    clock?.restore();
+    clock = null;
   });
 
   it('takes context, options and callback as parameters', done => {
@@ -70,6 +73,12 @@ describe('axe.run', () => {
       assert.deepEqual(options, {});
       done();
     });
+  });
+
+  it('resolves when fake timers are installed', async () => {
+    clock = sinon.useFakeTimers();
+    const results = await axe.run(document);
+    assert.isObject(results);
   });
 
   it('works with performance logging enabled', done => {
