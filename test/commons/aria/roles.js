@@ -23,4 +23,25 @@ describe('aria.implicitNodes', () => {
 
     assert.isNull(result);
   });
+
+  describe('implicit selectors', () => {
+    const queryFixture = axe.testUtils.queryFixture;
+    const matches = axe.utils.matches;
+
+    it('should match enumerated input types case-insensitively', () => {
+      const selectors = axe.commons.aria.implicitNodes('button');
+      const virtualNode = queryFixture('<input id="target" type="SUBMIT" />');
+
+      assert.isTrue(selectors.some(selector => matches(virtualNode, selector)));
+    });
+
+    it('should match enumerated menu types case-insensitively', () => {
+      const selectors = axe.commons.aria.implicitNodes('toolbar');
+      const virtualNode = queryFixture(
+        '<menu id="target" type="TOOLBAR"></menu>'
+      );
+
+      assert.isTrue(selectors.some(selector => matches(virtualNode, selector)));
+    });
+  });
 });
