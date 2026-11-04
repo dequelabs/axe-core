@@ -122,6 +122,22 @@ this should not effect their outcome -->
   <button id="pass17">x</button>
 </div>
 
+<p>
+  <a id="pass26" href="#" style="padding: 0.2em 0.5em">
+    <button id="pass-only-widget-child">Click me</button>
+  </a>
+</p>
+
+<p>
+  <a id="pass27" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        <button id="pass-nested-only-widget-child">Click me</button>
+      </span>
+    </span>
+  </a>
+</p>
+
 <!-- Failed examples -->
 <p>
   <button id="fail1">x</button>
@@ -328,6 +344,35 @@ this should not effect their outcome -->
       B
     </button>
   </span>
+</p>
+
+<p>
+  <a id="fail8" href="#" style="padding: 0.2em 0.5em">
+    x
+    <button id="fail-not-only-widget-child">Click me</button>
+  </a>
+</p>
+
+<p>
+  <a id="fail9" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        x
+        <button id="fail-nested-not-only-widget-child">Click me</button>
+      </span>
+    </span>
+  </a>
+</p>
+
+<p>
+  <a id="fail10" href="#">
+    <button id="fail-size-widget-child" style="width: 10px; height: 10px">
+      x
+    </button>
+  </a>
+  <button id="pass-widget-child-neighbor" style="margin-left: -6px">
+    hello
+  </button>
 </p>
 
 <!-- Fixed targets are positioned against the viewport, not the scroll region.
