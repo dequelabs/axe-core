@@ -34,6 +34,59 @@ describe('dom.getModalDialog', () => {
     assert.isNull(getModalDialog());
   });
 
+  it('returns null for a nonmodal dialog overlapping a shadow host outside a partial tree', () => {
+    const container = document.createElement('div');
+    container.setHTMLUnsafe(html`
+      <div
+        style="position: fixed; left: 0; top: 0; width: 200px; height: 200px"
+      >
+        <template shadowrootmode="open">
+          <span style="display: block; width: 200px; height: 200px">
+            Outside tree
+          </span>
+        </template>
+      </div>
+    `);
+    const host = container.firstElementChild;
+    fixture.before(host);
+
+    try {
+      assert.exists(host.shadowRoot);
+      fixture.innerHTML = html`
+        <style>
+          #target {
+            margin: 0;
+            position: fixed;
+            left: 110px;
+            top: 10px;
+            width: 80px;
+            height: 50px;
+            z-index: 2;
+          }
+        </style>
+        <iframe tabindex="-1"></iframe>
+        <dialog id="target"><button>Close</button></dialog>
+        <div>World</div>
+      `;
+      fixture.querySelector('#target').show();
+      axe.setup(fixture);
+
+      assert.isNull(getModalDialog());
+    } finally {
+      host.remove();
+    }
+  });
+
+  it('returns null for a nonmodal dialog in a detached document fragment', () => {
+    const fragment = document.createDocumentFragment();
+    const root = document.createElement('div');
+    root.innerHTML = '<dialog open>Detached</dialog>';
+    fragment.appendChild(root);
+    axe.setup(root);
+
+    assert.isNull(getModalDialog());
+  });
+
   it('returns null if the modal dialog is not visible', () => {
     fixture.innerHTML = html`
       <style>
