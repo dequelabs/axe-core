@@ -29,6 +29,31 @@ describe('non-empty-placeholder', () => {
     assert.equal(checkContext._data.messageKey, 'emptyAttr');
   });
 
+  it('should return true for a placeholder on type=number', () => {
+    const params = checkSetup(
+      '<input id="target" type="number" placeholder="woohoo" />'
+    );
+
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return true for a placeholder on a textarea', () => {
+    const params = checkSetup(
+      '<textarea id="target" placeholder="woohoo"></textarea>'
+    );
+
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return false for a placeholder on a type that does not use it', () => {
+    const params = checkSetup(
+      '<input id="target" type="radio" placeholder="woohoo" />'
+    );
+
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, 'unsupportedType');
+  });
+
   it('should collapse whitespace', () => {
     const params = checkSetup(
       '<input id="target" placeholder=" \t \n \r \t  \t\r\n " />'
