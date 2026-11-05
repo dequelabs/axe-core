@@ -241,6 +241,10 @@
       "description": "Ensure <input type=\"image\"> elements have alternative text",
       "help": "Image buttons must have alternative text"
     },
+    "label-content-name-exact": {
+      "description": "Ensure that elements labelled through their content have an accessible name that matches their visible text",
+      "help": "Accessible name should match the visible text of the element"
+    },
     "label-content-name-mismatch": {
       "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
       "help": "Elements must have their visible text as part of their accessible name"
@@ -822,6 +826,11 @@
       "pass": "Element has an implicit (wrapped) <label>",
       "fail": "Element does not have an implicit (wrapped) <label>",
       "incomplete": "Unable to determine if form element has an implicit (wrapped) <label>"
+    },
+    "label-content-name-exact": {
+      "pass": "Element's accessible name matches its visible text",
+      "fail": "Accessible name contains more than the visible text of the element",
+      "incomplete": "Unable to determine if the accessible name matches the visible text"
     },
     "label-content-name-mismatch": {
       "pass": "Element contains visible text as part of its accessible name",
