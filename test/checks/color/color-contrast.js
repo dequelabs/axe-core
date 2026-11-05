@@ -17,6 +17,31 @@ describe('color-contrast', () => {
     axe._tree = undefined;
   });
 
+  it('should use an escaped background at the text position in a scroll region', () => {
+    const params = checkSetup(html`
+      <div style="position: relative; width: 300px; height: 300px">
+        <div
+          id="backdrop"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 60px; background: #000"
+        ></div>
+        <div style="overflow: auto; height: 300px">
+          <div style="height: 600px">
+            <p
+              id="target"
+              style="position: relative; margin: 10px; color: #fff"
+            >
+              White text on a black background
+            </p>
+          </div>
+        </div>
+      </div>
+    `);
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.contrastRatio, '21.00');
+    assert.equal(checkContext._data.bgColor, '#000000');
+  });
+
   it('does not return undefined when color uses "none"', () => {
     const params = checkSetup(html`
       <div
