@@ -164,4 +164,20 @@ describe('input-image-alt virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should fail for mixed-case type=image without a name', () => {
+    const node = new axe.SerialVirtualNode({
+      nodeName: 'input',
+      attributes: {
+        type: 'ImAGE'
+      }
+    });
+    node.parent = null;
+
+    const results = axe.runVirtualRule('input-image-alt', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
