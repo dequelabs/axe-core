@@ -62,6 +62,28 @@ describe('text.isIconLigature', () => {
     assert.isFalse(isIconLigature(target.children[0]));
   });
 
+  it('should return false for arabic text', () => {
+    const target = queryFixture(
+      '<div id="target" lang="ar" dir="rtl">سطر ثالث منخفض التباين</div>'
+    );
+    assert.isFalse(isIconLigature(target.children[0]));
+  });
+
+  it('should return false for arabic text mixed with latin text', () => {
+    ['رقم الطلب ORD-2026', 'Order رقم الطلب'].forEach(text => {
+      const target = queryFixture(`<div id="target">${text}</div>`);
+      assert.isFalse(isIconLigature(target.children[0]), text);
+    });
+  });
+
+  it('should return false for text in other joining scripts', () => {
+    // syriac, nko, mongolian
+    ['ܫܠܡܐ', 'ߒߞߏ', 'ᠮᠣᠩᠭᠣᠯ'].forEach(text => {
+      const target = queryFixture(`<div id="target">${text}</div>`);
+      assert.isFalse(isIconLigature(target.children[0]), text);
+    });
+  });
+
   (fontApiSupport ? it : it.skip)(
     'should return false for common ligatures (fi)',
     () => {
@@ -199,6 +221,23 @@ describe('text.isIconLigature', () => {
 
       // change text to icon
       target.children[0].actualNode.textContent = 'delete';
+      assert.isFalse(isIconLigature(target.children[0]));
+    }
+  );
+
+  (fontApiSupport ? it : it.skip)(
+    'should return false for arabic text after the 3rd time the font is an icon',
+    () => {
+      const target = queryFixture(
+        '<div id="target" style="font-family: \'LigatureSymbols\'">delete</div>'
+      );
+
+      isIconLigature(target.children[0]);
+      isIconLigature(target.children[0]);
+      isIconLigature(target.children[0]);
+
+      // change text to arabic
+      target.children[0].actualNode.textContent = 'سطر ثالث منخفض التباين';
       assert.isFalse(isIconLigature(target.children[0]));
     }
   );
