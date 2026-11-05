@@ -438,6 +438,14 @@ describe('dom.isVisibleOnScreen', () => {
     assert.isFalse(isVisibleOnScreen(vNode));
   });
 
+  it('should return true for element in a "position:absolute" container outside "overflow:hidden"', () => {
+    const vNode = queryFixture(
+      '<div style="overflow: hidden;"><div style="position: absolute; top: 200px;"><div id="target">Hello world</div></div></div>'
+    );
+
+    assert.isTrue(isVisibleOnScreen(vNode));
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return true on statically-positioned, visible elements', () => {
       const vNode = new axe.SerialVirtualNode({
