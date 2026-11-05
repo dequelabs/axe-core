@@ -31,6 +31,93 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0]), 'Hello');
     });
 
+    ['transparent', 'rgba(0, 0, 0, 0)', 'rgb(0 0 0 / 0%)'].forEach(color => {
+      it(`should exclude text with color: ${color}`, () => {
+        fixture.innerHTML = `Hello<span style="color: ${color}">Hi</span>`;
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(visibleVirtual(tree[0]), 'Hello');
+      });
+    });
+
+    it('should include descendants that override transparent color', () => {
+      fixture.innerHTML = html`
+        <span style="color: transparent"
+          >Hidden<span>Inherited</span
+          ><span style="color: black">Visible</span></span
+        >
+      `;
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Visible');
+    });
+
+    it('should include partially transparent text', () => {
+      fixture.innerHTML =
+        '<span style="color: rgba(0, 0, 0, 0.5)">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should include transparent text painted by a shadow', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; text-shadow: 0 0 0 black">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should include transparent text with a visible fill', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; -webkit-text-fill-color: black">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should include transparent text painted by a stroke', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; -webkit-text-stroke: 1px black">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should exclude text with a transparent fill', () => {
+      fixture.innerHTML =
+        '<span style="color: black; -webkit-text-fill-color: transparent">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), '');
+    });
+
+    it('should exclude text with transparent shadows and stroke', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; text-shadow: 0 0 0 transparent; -webkit-text-stroke: 1px transparent">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), '');
+    });
+
+    it('should include transparent text with an offset shadow', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; text-shadow: 2px 2px 0 black">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should include text painted by a clipped background', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; background: linear-gradient(black, blue); background-clip: text">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    it('should include SVG text painted by its fill', () => {
+      fixture.innerHTML = html`
+        <svg width="200" height="40">
+          <text x="0" y="20" style="color: transparent; fill: black">
+            Hello
+          </text>
+        </svg>
+      `;
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
     it('should handle implicitly recursive calls', () => {
       fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
       const tree = axe.utils.getFlattenedTree(fixture);
@@ -149,6 +236,14 @@ describe('text.visible', () => {
   });
 
   describe('screen reader', () => {
+    it('should include transparent text for screen readers and accessible names', () => {
+      fixture.innerHTML = '<button style="color: transparent">Hello</button>';
+      const tree = axe.testUtils.flatTreeSetup(fixture);
+      const button = fixture.querySelector('button');
+      assert.equal(visibleVirtual(tree[0], true), 'Hello');
+      assert.equal(axe.commons.text.accessibleText(button), 'Hello');
+    });
+
     it('should not return elements with visibility: hidden', () => {
       fixture.innerHTML = 'Hello<span style="visibility: hidden;">Hi</span>';
 

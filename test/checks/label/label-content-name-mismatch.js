@@ -39,6 +39,63 @@ describe('label-content-name-mismatch tests', () => {
     });
   });
 
+  it('ignores a transparent sizer behind an overlaid label', () => {
+    const vNode = queryFixture(html`
+      <style>
+        #target {
+          display: flex;
+          position: relative;
+          height: 56px;
+          padding: 0 44px;
+          background: #101010;
+          color: #fff;
+        }
+        #target .sizer {
+          display: block;
+          line-height: 54px;
+          color: transparent;
+        }
+        #target .copy {
+          position: absolute;
+          left: 44px;
+          top: 54px;
+          color: #fff;
+        }
+        #target .waiting {
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-81px);
+        }
+        #target .shown {
+          transform: translateY(-54px);
+        }
+      </style>
+      <div style="height: 400px"></div>
+      <a
+        id="target"
+        aria-label="Termin vereinbaren - Öffnet einen Dialog"
+        href="#"
+        ><span
+          ><span class="sizer" aria-hidden="true"
+            >Termin vereinbaren<span class="copy waiting" aria-hidden="true"
+              >Termin vereinbaren</span
+            ><span class="copy shown" aria-hidden="true"
+              >Termin vereinbaren</span
+            ></span
+          ></span
+        ></a
+      >
+    `);
+    vNode.actualNode.scrollIntoView({ block: 'center' });
+    const copy = vNode.actualNode
+      .querySelector('.shown')
+      .getBoundingClientRect();
+    assert.isAtLeast(copy.top, 0);
+    assert.isAtMost(copy.bottom, window.innerHeight);
+    assert.equal(axe.commons.text.visibleVirtual(vNode), 'Termin vereinbaren');
+    assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+  });
+
   it('returns true when visible text and accessible name (`aria-label`) matches (text sanitized)', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="next page &nbsp ">next page</div>'
