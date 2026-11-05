@@ -12,7 +12,8 @@ describe('dom.visibility-methods', () => {
     overflowHidden,
     clipHidden,
     areaHidden,
-    detailsHidden
+    detailsHidden,
+    selectButtonHidden
   } = axe._thisWillBeDeletedDoNotUse.commons.dom;
   const contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
@@ -631,6 +632,115 @@ describe('dom.visibility-methods', () => {
       `);
 
       assert.isFalse(detailsHidden(vNode));
+    });
+  });
+
+  describe('selectButtonHidden', () => {
+    let select;
+    let button;
+    let appearanceStub;
+
+    beforeEach(() => {
+      // Construct the tree directly so browsers do not discard select children
+      // that their HTML parser does not support yet.
+      select = document.createElement('select');
+      button = document.createElement('button');
+      button.id = 'target';
+      select.appendChild(button);
+      appearanceStub = undefined;
+    });
+
+    afterEach(() => {
+      appearanceStub?.restore();
+    });
+
+    function setup(appearance) {
+      const vNode = queryFixture(select);
+      const selectVNode = axe.utils.getNodeFromTree(select);
+      appearanceStub = sinon.stub(selectVNode, 'getComputedStylePropertyValue');
+      appearanceStub.withArgs('appearance').returns(appearance);
+      return vNode;
+    }
+
+    it('should return false for a button outside a select', () => {
+      const vNode = queryFixture('<button id="target"></button>');
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a button without a virtual parent', () => {
+      const vNode = new axe.VirtualNode(button);
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for the select itself', () => {
+      select.id = 'target';
+      button.removeAttribute('id');
+      const vNode = setup('auto');
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a non-button child of a select', () => {
+      button.removeAttribute('id');
+      const span = document.createElement('span');
+      span.id = 'target';
+      select.appendChild(span);
+      const vNode = setup('auto');
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    ['auto', 'none', ''].forEach(appearance => {
+      it(`should return true for a button in a select with appearance "${appearance}"`, () => {
+        const vNode = setup(appearance);
+        assert.isTrue(selectButtonHidden(vNode));
+      });
+    });
+
+    it('should return true for a later button in a native select', () => {
+      select.insertBefore(document.createElement('button'), button);
+      const vNode = setup('auto');
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return true for a wrapped button in a native select', () => {
+      const span = document.createElement('span');
+      span.appendChild(button);
+      select.appendChild(span);
+      const vNode = setup('auto');
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return true for the first direct button in a base-select', () => {
+      const vNode = setup('base-select');
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a later direct button in a base-select', () => {
+      select.insertBefore(document.createElement('button'), button);
+      const vNode = setup('base-select');
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return false for a wrapped button in a base-select', () => {
+      const span = document.createElement('span');
+      span.appendChild(button);
+      select.appendChild(span);
+      const vNode = setup('base-select');
+      assert.isFalse(selectButtonHidden(vNode));
+    });
+
+    it('should return true for the first direct button after text and another element', () => {
+      select.insertBefore(document.createTextNode('Select a value'), button);
+      select.insertBefore(document.createElement('option'), button);
+      const vNode = setup('base-select');
+      assert.isTrue(selectButtonHidden(vNode));
+    });
+
+    it('should return true for the first direct button after a wrapped button', () => {
+      const span = document.createElement('span');
+      span.appendChild(document.createElement('button'));
+      select.insertBefore(span, button);
+      const vNode = setup('base-select');
+      assert.isTrue(selectButtonHidden(vNode));
     });
   });
 });
