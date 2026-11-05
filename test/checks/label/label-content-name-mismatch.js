@@ -362,6 +362,49 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     });
 
+    it('returns true when the visible label appears inside parentheses in the accessible name', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Notifications (3)">3</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    (fontApiSupport ? it : it.skip)(
+      'returns true when a badge beside a ligature icon appears inside parentheses in the accessible name',
+      () => {
+        const vNode = queryFixture(html`
+          <button id="target" aria-label="Notifications (3)">
+            <span aria-hidden="true" style="font-family: 'Material Icons'"
+              >notifications<span
+                aria-hidden="true"
+                style="font-family: sans-serif"
+                >3</span
+              ></span
+            >
+          </button>
+        `);
+        const actual = checkEvaluate(vNode.actualNode, options, vNode);
+        assert.isTrue(actual);
+      }
+    );
+
+    it('returns false when the visible label is not inside parentheses in the accessible name', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Notifications (3)">4</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the visible words appear inside parentheses but out of order', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Inbox (3 unread)">unread 3</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
     it('ignores an unmatched parenthesis', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="save changes">Save changes (</button>'
