@@ -1,0 +1,1183 @@
+{
+  "lang": "vi",
+  "rules": {
+    "accesskeys": {
+      "description": "Đảm bảo mọi giá trị thuộc tính accesskey là duy nhất",
+      "help": "Giá trị thuộc tính accesskey nên là duy nhất"
+    },
+    "area-alt": {
+      "description": "Đảm bảo các phần tử <area> của bản đồ ảnh có văn bản thay thế",
+      "help": "Các phần tử <area> đang hoạt động phải có văn bản thay thế"
+    },
+    "aria-allowed-attr": {
+      "description": "Đảm bảo vai trò của phần tử hỗ trợ các thuộc tính ARIA của nó",
+      "help": "Phần tử chỉ được dùng các thuộc tính ARIA được hỗ trợ"
+    },
+    "aria-allowed-role": {
+      "description": "Đảm bảo thuộc tính role có giá trị phù hợp với phần tử",
+      "help": "Vai trò ARIA nên phù hợp với phần tử"
+    },
+    "aria-braille-equivalent": {
+      "description": "Đảm bảo aria-braillelabel và aria-brailleroledescription có giá trị tương đương không phải chữ nổi",
+      "help": "Các thuộc tính aria-braille phải có giá trị tương đương không phải chữ nổi"
+    },
+    "aria-command-name": {
+      "description": "Đảm bảo mọi nút, liên kết và menuitem ARIA đều có tên truy cập được",
+      "help": "Các lệnh ARIA phải có tên truy cập được"
+    },
+    "aria-conditional-attr": {
+      "description": "Đảm bảo các thuộc tính ARIA được dùng như mô tả trong đặc tả của vai trò phần tử",
+      "help": "Các thuộc tính ARIA phải được dùng đúng như quy định cho vai trò của phần tử"
+    },
+    "aria-deprecated-role": {
+      "description": "Đảm bảo phần tử không dùng các vai trò đã lỗi thời",
+      "help": "Không được dùng các vai trò ARIA đã lỗi thời"
+    },
+    "aria-dialog-name": {
+      "description": "Đảm bảo mọi phần tử dialog và alertdialog ARIA đều có tên truy cập được",
+      "help": "Các phần tử dialog và alertdialog ARIA nên có tên truy cập được"
+    },
+    "aria-hidden-body": {
+      "description": "Đảm bảo aria-hidden=\"true\" không xuất hiện trên phần thân tài liệu.",
+      "help": "aria-hidden=\"true\" không được có trên phần thân tài liệu"
+    },
+    "aria-hidden-focus": {
+      "description": "Đảm bảo các phần tử aria-hidden không thể nhận tiêu điểm và không chứa phần tử có thể nhận tiêu điểm",
+      "help": "Phần tử bị ẩn bằng ARIA không được nhận tiêu điểm hoặc chứa phần tử có thể nhận tiêu điểm"
+    },
+    "aria-input-field-name": {
+      "description": "Đảm bảo mọi trường nhập liệu ARIA đều có tên truy cập được",
+      "help": "Các trường nhập liệu ARIA phải có tên truy cập được"
+    },
+    "aria-meter-name": {
+      "description": "Đảm bảo mọi phần tử meter ARIA đều có tên truy cập được",
+      "help": "Các phần tử meter ARIA phải có tên truy cập được"
+    },
+    "aria-progressbar-name": {
+      "description": "Đảm bảo mọi phần tử progressbar ARIA đều có tên truy cập được",
+      "help": "Các phần tử progressbar ARIA phải có tên truy cập được"
+    },
+    "aria-prohibited-attr": {
+      "description": "Đảm bảo các thuộc tính ARIA không bị cấm đối với vai trò của phần tử",
+      "help": "Phần tử chỉ được dùng các thuộc tính ARIA được phép"
+    },
+    "aria-required-attr": {
+      "description": "Đảm bảo các phần tử có vai trò ARIA có đủ mọi thuộc tính ARIA bắt buộc",
+      "help": "Phải cung cấp các thuộc tính ARIA bắt buộc"
+    },
+    "aria-required-children": {
+      "description": "Đảm bảo các phần tử có vai trò ARIA yêu cầu vai trò con thì có chứa các vai trò con đó",
+      "help": "Một số vai trò ARIA phải chứa các phần tử con nhất định"
+    },
+    "aria-required-parent": {
+      "description": "Đảm bảo các phần tử có vai trò ARIA yêu cầu vai trò cha thì nằm trong các vai trò cha đó",
+      "help": "Một số vai trò ARIA phải nằm trong các phần tử cha nhất định"
+    },
+    "aria-roledescription": {
+      "description": "Đảm bảo aria-roledescription chỉ được dùng trên các phần tử có vai trò ngầm định hoặc tường minh",
+      "help": "aria-roledescription phải nằm trên phần tử có vai trò ngữ nghĩa"
+    },
+    "aria-roles": {
+      "description": "Đảm bảo mọi phần tử có thuộc tính role đều dùng giá trị hợp lệ",
+      "help": "Các vai trò ARIA được dùng phải có giá trị hợp lệ"
+    },
+    "aria-tab-name": {
+      "description": "Đảm bảo mọi phần tử tab ARIA đều có tên truy cập được",
+      "help": "Các phần tử tab ARIA phải có tên truy cập được"
+    },
+    "aria-text": {
+      "description": "Đảm bảo role=\"text\" được dùng trên phần tử không có phần tử con cháu nào có thể nhận tiêu điểm",
+      "help": "\"role=text\" không nên có phần tử con cháu có thể nhận tiêu điểm"
+    },
+    "aria-toggle-field-name": {
+      "description": "Đảm bảo mọi trường bật/tắt ARIA đều có tên truy cập được",
+      "help": "Các trường bật/tắt ARIA phải có tên truy cập được"
+    },
+    "aria-tooltip-name": {
+      "description": "Đảm bảo mọi phần tử tooltip ARIA đều có tên truy cập được",
+      "help": "Các phần tử tooltip ARIA phải có tên truy cập được"
+    },
+    "aria-treeitem-name": {
+      "description": "Đảm bảo mọi phần tử treeitem ARIA đều có tên truy cập được",
+      "help": "Các phần tử treeitem ARIA nên có tên truy cập được"
+    },
+    "aria-valid-attr-value": {
+      "description": "Đảm bảo mọi thuộc tính ARIA đều có giá trị hợp lệ",
+      "help": "Các thuộc tính ARIA phải có giá trị hợp lệ"
+    },
+    "aria-valid-attr": {
+      "description": "Đảm bảo các thuộc tính bắt đầu bằng aria- là thuộc tính ARIA hợp lệ",
+      "help": "Các thuộc tính ARIA phải có tên hợp lệ"
+    },
+    "audio-caption": {
+      "description": "Đảm bảo các phần tử <audio> có phụ đề",
+      "help": "Các phần tử <audio> phải có track phụ đề"
+    },
+    "autocomplete-valid": {
+      "description": "Đảm bảo thuộc tính autocomplete đúng và phù hợp với trường biểu mẫu",
+      "help": "Thuộc tính autocomplete phải được dùng đúng cách"
+    },
+    "avoid-inline-spacing": {
+      "description": "Đảm bảo khoảng cách văn bản đặt qua thuộc tính style có thể điều chỉnh bằng biểu định kiểu tùy chỉnh",
+      "help": "Khoảng cách văn bản nội tuyến phải điều chỉnh được bằng biểu định kiểu tùy chỉnh"
+    },
+    "blink": {
+      "description": "Đảm bảo không dùng các phần tử <blink>",
+      "help": "Các phần tử <blink> đã lỗi thời và không được dùng"
+    },
+    "button-name": {
+      "description": "Đảm bảo các nút có văn bản có thể nhận biết",
+      "help": "Các nút phải có văn bản có thể nhận biết"
+    },
+    "bypass": {
+      "description": "Đảm bảo mỗi trang có ít nhất một cơ chế để người dùng bỏ qua phần điều hướng và chuyển thẳng đến nội dung",
+      "help": "Trang phải có cách bỏ qua các khối lặp lại"
+    },
+    "color-contrast-enhanced": {
+      "description": "Đảm bảo độ tương phản giữa màu tiền cảnh và màu nền đạt ngưỡng tỷ lệ tương phản nâng cao WCAG 2 AAA",
+      "help": "Phần tử phải đạt ngưỡng tỷ lệ tương phản màu nâng cao"
+    },
+    "color-contrast": {
+      "description": "Đảm bảo độ tương phản giữa màu tiền cảnh và màu nền đạt ngưỡng tỷ lệ tương phản tối thiểu WCAG 2 AA",
+      "help": "Phần tử phải đạt ngưỡng tỷ lệ tương phản màu tối thiểu"
+    },
+    "css-orientation-lock": {
+      "description": "Đảm bảo nội dung không bị khóa ở một hướng hiển thị cụ thể và có thể thao tác ở mọi hướng hiển thị",
+      "help": "Truy vấn media CSS không được khóa hướng hiển thị"
+    },
+    "definition-list": {
+      "description": "Đảm bảo các phần tử <dl> có cấu trúc đúng",
+      "help": "Các phần tử <dl> chỉ được chứa trực tiếp các nhóm <dt> và <dd> theo đúng thứ tự, hoặc các phần tử <script>, <template> hay <div>"
+    },
+    "dlitem": {
+      "description": "Đảm bảo các phần tử <dt> và <dd> nằm trong một <dl>",
+      "help": "Các phần tử <dt> và <dd> phải nằm trong một <dl>"
+    },
+    "document-title": {
+      "description": "Đảm bảo mỗi tài liệu HTML có một phần tử <title> không rỗng",
+      "help": "Tài liệu phải có phần tử <title> để hỗ trợ điều hướng"
+    },
+    "duplicate-id-active": {
+      "description": "Đảm bảo mọi giá trị thuộc tính id của các phần tử tương tác là duy nhất",
+      "help": "ID của các phần tử tương tác phải là duy nhất"
+    },
+    "duplicate-id-aria": {
+      "description": "Đảm bảo mọi giá trị thuộc tính id dùng trong ARIA và trong nhãn là duy nhất",
+      "help": "ID dùng trong ARIA và nhãn phải là duy nhất"
+    },
+    "duplicate-id": {
+      "description": "Đảm bảo mọi giá trị thuộc tính id là duy nhất",
+      "help": "Giá trị thuộc tính id phải là duy nhất"
+    },
+    "empty-heading": {
+      "description": "Đảm bảo các tiêu đề có văn bản có thể nhận biết",
+      "help": "Tiêu đề không nên để trống"
+    },
+    "empty-table-header": {
+      "description": "Đảm bảo các tiêu đề bảng có văn bản có thể nhận biết",
+      "help": "Văn bản tiêu đề bảng không nên để trống"
+    },
+    "focus-order-semantics": {
+      "description": "Đảm bảo các phần tử trong thứ tự tiêu điểm có vai trò phù hợp với nội dung tương tác",
+      "help": "Các phần tử trong thứ tự tiêu điểm nên có vai trò phù hợp"
+    },
+    "form-field-multiple-labels": {
+      "description": "Đảm bảo trường biểu mẫu không có nhiều phần tử label",
+      "help": "Trường biểu mẫu không được có nhiều phần tử label"
+    },
+    "frame-focusable-content": {
+      "description": "Đảm bảo các phần tử <frame> và <iframe> có nội dung có thể nhận tiêu điểm không có tabindex=-1",
+      "help": "Khung có nội dung có thể nhận tiêu điểm không được có tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Đảm bảo các phần tử <iframe> và <frame> có chứa tập lệnh axe-core",
+      "help": "Khung nên được kiểm tra bằng axe-core"
+    },
+    "frame-title-unique": {
+      "description": "Đảm bảo các phần tử <iframe> và <frame> có thuộc tính title duy nhất",
+      "help": "Khung phải có thuộc tính title duy nhất"
+    },
+    "frame-title": {
+      "description": "Đảm bảo các phần tử <iframe> và <frame> có tên truy cập được",
+      "help": "Khung phải có tên truy cập được"
+    },
+    "heading-order": {
+      "description": "Đảm bảo thứ tự các tiêu đề đúng về mặt ngữ nghĩa",
+      "help": "Cấp tiêu đề chỉ nên tăng mỗi lần một bậc"
+    },
+    "hidden-content": {
+      "description": "Thông báo cho người dùng về nội dung bị ẩn.",
+      "help": "Nội dung bị ẩn trên trang nên được phân tích"
+    },
+    "html-has-lang": {
+      "description": "Đảm bảo mọi tài liệu HTML có thuộc tính lang",
+      "help": "Phần tử <html> phải có thuộc tính lang"
+    },
+    "html-lang-valid": {
+      "description": "Đảm bảo thuộc tính lang của phần tử <html> có giá trị hợp lệ",
+      "help": "Phần tử <html> phải có giá trị hợp lệ cho thuộc tính lang"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Đảm bảo các phần tử HTML có cả thuộc tính lang và xml:lang hợp lệ thống nhất về ngôn ngữ cơ sở của trang",
+      "help": "Phần tử HTML có lang và xml:lang phải có cùng ngôn ngữ cơ sở"
+    },
+    "identical-links-same-purpose": {
+      "description": "Đảm bảo các liên kết có cùng tên truy cập được phục vụ mục đích tương tự nhau",
+      "help": "Các liên kết cùng tên phải có mục đích tương tự nhau"
+    },
+    "image-alt": {
+      "description": "Đảm bảo các phần tử <img> có văn bản thay thế hoặc có vai trò none hay presentation",
+      "help": "Hình ảnh phải có văn bản thay thế"
+    },
+    "image-redundant-alt": {
+      "description": "Đảm bảo văn bản thay thế của hình ảnh không bị lặp lại dưới dạng văn bản",
+      "help": "Văn bản thay thế của hình ảnh không nên bị lặp lại dưới dạng văn bản"
+    },
+    "input-button-name": {
+      "description": "Đảm bảo các nút input có văn bản có thể nhận biết",
+      "help": "Các nút input phải có văn bản có thể nhận biết"
+    },
+    "input-image-alt": {
+      "description": "Đảm bảo các phần tử <input type=\"image\"> có văn bản thay thế",
+      "help": "Nút hình ảnh phải có văn bản thay thế"
+    },
+    "label-content-name-mismatch": {
+      "description": "Đảm bảo các phần tử được gắn nhãn qua nội dung của chúng có văn bản hiển thị là một phần của tên truy cập được",
+      "help": "Văn bản hiển thị của phần tử phải là một phần của tên truy cập được"
+    },
+    "label-title-only": {
+      "description": "Đảm bảo mọi phần tử biểu mẫu có nhãn hiển thị và không chỉ được gắn nhãn bằng nhãn ẩn, thuộc tính title hoặc aria-describedby",
+      "help": "Phần tử biểu mẫu nên có nhãn hiển thị"
+    },
+    "label": {
+      "description": "Đảm bảo mọi phần tử biểu mẫu đều có nhãn",
+      "help": "Phần tử biểu mẫu phải có nhãn"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Đảm bảo vùng mốc banner nằm ở cấp cao nhất",
+      "help": "Vùng mốc banner không nên nằm trong một vùng mốc khác"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Đảm bảo vùng mốc complementary hoặc aside nằm ở cấp cao nhất",
+      "help": "Aside không nên nằm trong một vùng mốc khác"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Đảm bảo vùng mốc contentinfo nằm ở cấp cao nhất",
+      "help": "Vùng mốc contentinfo không nên nằm trong một vùng mốc khác"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Đảm bảo vùng mốc main nằm ở cấp cao nhất",
+      "help": "Vùng mốc main không nên nằm trong một vùng mốc khác"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Đảm bảo tài liệu có tối đa một vùng mốc banner",
+      "help": "Tài liệu không nên có nhiều hơn một vùng mốc banner"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Đảm bảo tài liệu có tối đa một vùng mốc contentinfo",
+      "help": "Tài liệu không nên có nhiều hơn một vùng mốc contentinfo"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Đảm bảo tài liệu có tối đa một vùng mốc main",
+      "help": "Tài liệu không nên có nhiều hơn một vùng mốc main"
+    },
+    "landmark-one-main": {
+      "description": "Đảm bảo tài liệu có một vùng mốc main",
+      "help": "Tài liệu nên có một vùng mốc main"
+    },
+    "landmark-unique": {
+      "description": "Đảm bảo các vùng mốc (landmark) là duy nhất",
+      "help": "Các vùng mốc nên có vai trò hoặc tổ hợp vai trò/nhãn/title (tức là tên truy cập được) duy nhất"
+    },
+    "link-in-text-block": {
+      "description": "Đảm bảo liên kết được phân biệt với văn bản xung quanh theo cách không phụ thuộc vào màu sắc",
+      "help": "Liên kết phải phân biệt được mà không cần dựa vào màu sắc"
+    },
+    "link-name": {
+      "description": "Đảm bảo các liên kết có văn bản có thể nhận biết",
+      "help": "Liên kết phải có văn bản có thể nhận biết"
+    },
+    "list": {
+      "description": "Đảm bảo danh sách có cấu trúc đúng",
+      "help": "<ul> và <ol> chỉ được chứa trực tiếp các phần tử <li>, <script> hoặc <template>"
+    },
+    "listitem": {
+      "description": "Đảm bảo các phần tử <li> được dùng đúng ngữ nghĩa",
+      "help": "Các phần tử <li> phải nằm trong một <ul> hoặc <ol>"
+    },
+    "marquee": {
+      "description": "Đảm bảo không dùng các phần tử <marquee>",
+      "help": "Các phần tử <marquee> đã lỗi thời và không được dùng"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Đảm bảo <meta http-equiv=\"refresh\"> không được dùng để làm mới trang có độ trễ",
+      "help": "Không được dùng làm mới trang có độ trễ"
+    },
+    "meta-refresh": {
+      "description": "Đảm bảo <meta http-equiv=\"refresh\"> không được dùng để làm mới trang có độ trễ",
+      "help": "Không được dùng làm mới trang có độ trễ dưới 20 giờ"
+    },
+    "meta-viewport-large": {
+      "description": "Đảm bảo <meta name=\"viewport\"> cho phép phóng to ở mức đáng kể",
+      "help": "Người dùng nên có thể thu phóng và phóng to văn bản lên đến 500%"
+    },
+    "meta-viewport": {
+      "description": "Đảm bảo <meta name=\"viewport\"> không tắt việc phóng to văn bản và thu phóng",
+      "help": "Không được tắt việc thu phóng và phóng to"
+    },
+    "nested-interactive": {
+      "description": "Đảm bảo các điều khiển tương tác không lồng nhau vì chúng không phải lúc nào cũng được trình đọc màn hình đọc ra hoặc có thể gây lỗi tiêu điểm cho công nghệ hỗ trợ",
+      "help": "Các điều khiển tương tác không được lồng nhau"
+    },
+    "no-autoplay-audio": {
+      "description": "Đảm bảo các phần tử <video> hoặc <audio> không tự động phát âm thanh quá 3 giây mà không có cơ chế điều khiển để dừng hoặc tắt tiếng",
+      "help": "Các phần tử <video> hoặc <audio> không được tự động phát"
+    },
+    "object-alt": {
+      "description": "Đảm bảo các phần tử <object> có văn bản thay thế",
+      "help": "Các phần tử <object> phải có văn bản thay thế"
+    },
+    "p-as-heading": {
+      "description": "Đảm bảo không dùng chữ đậm, chữ nghiêng và cỡ chữ để định kiểu phần tử <p> thành tiêu đề",
+      "help": "Không được dùng phần tử <p> đã định kiểu làm tiêu đề"
+    },
+    "page-has-heading-one": {
+      "description": "Đảm bảo trang, hoặc ít nhất một khung của trang, chứa một tiêu đề cấp một",
+      "help": "Trang nên chứa một tiêu đề cấp một"
+    },
+    "presentation-role-conflict": {
+      "description": "Đảm bảo các phần tử được đánh dấu là trình bày không có thuộc tính ARIA toàn cục hay tabindex để mọi trình đọc màn hình đều bỏ qua chúng",
+      "help": "Các phần tử được đánh dấu là trình bày nên được bỏ qua một cách nhất quán"
+    },
+    "region": {
+      "description": "Đảm bảo mọi nội dung trang đều nằm trong các vùng mốc (landmark)",
+      "help": "Mọi nội dung trang nên nằm trong các vùng mốc"
+    },
+    "role-img-alt": {
+      "description": "Đảm bảo các phần tử [role=\"img\"] và [role=\"image\"] có văn bản thay thế",
+      "help": "Các phần tử [role=\"img\"] và [role=\"image\"] phải có văn bản thay thế"
+    },
+    "scope-attr-valid": {
+      "description": "Đảm bảo thuộc tính scope được dùng đúng cách trên bảng",
+      "help": "Thuộc tính scope nên được dùng đúng cách"
+    },
+    "scrollable-region-focusable": {
+      "description": "Đảm bảo các phần tử có nội dung cuộn được có thể truy cập bằng bàn phím trong Safari",
+      "help": "Vùng cuộn được phải truy cập được bằng bàn phím"
+    },
+    "select-name": {
+      "description": "Đảm bảo phần tử select có tên truy cập được",
+      "help": "Phần tử select phải có tên truy cập được"
+    },
+    "server-side-image-map": {
+      "description": "Đảm bảo không dùng bản đồ ảnh phía máy chủ",
+      "help": "Không được dùng bản đồ ảnh phía máy chủ"
+    },
+    "skip-link": {
+      "description": "Đảm bảo mọi liên kết bỏ qua đều có đích có thể nhận tiêu điểm",
+      "help": "Đích của liên kết bỏ qua nên tồn tại và có thể nhận tiêu điểm"
+    },
+    "summary-name": {
+      "description": "Đảm bảo các phần tử summary có văn bản có thể nhận biết",
+      "help": "Các phần tử summary phải có văn bản có thể nhận biết"
+    },
+    "svg-img-alt": {
+      "description": "Đảm bảo các phần tử <svg> có vai trò img, image, graphics-document hoặc graphics-symbol có văn bản truy cập được",
+      "help": "Các phần tử <svg> có vai trò img hoặc image phải có văn bản thay thế"
+    },
+    "tabindex": {
+      "description": "Đảm bảo giá trị thuộc tính tabindex không lớn hơn 0",
+      "help": "Phần tử không nên có tabindex lớn hơn 0"
+    },
+    "table-duplicate-name": {
+      "description": "Đảm bảo phần tử <caption> không chứa văn bản giống với thuộc tính summary",
+      "help": "Bảng không nên có summary và chú thích giống nhau"
+    },
+    "table-fake-caption": {
+      "description": "Đảm bảo các bảng có chú thích dùng phần tử <caption>.",
+      "help": "Không được dùng ô dữ liệu hoặc ô tiêu đề để làm chú thích cho bảng dữ liệu."
+    },
+    "target-size": {
+      "description": "Đảm bảo các vùng chạm có kích thước và khoảng cách đủ lớn",
+      "help": "Mọi vùng chạm phải có kích thước 24px hoặc chừa đủ khoảng trống"
+    },
+    "td-has-header": {
+      "description": "Đảm bảo mỗi ô dữ liệu không rỗng trong một <table> lớn hơn 3 x 3 có một hoặc nhiều tiêu đề bảng",
+      "help": "Các phần tử <td> không rỗng trong <table> lớn phải có tiêu đề bảng liên kết"
+    },
+    "td-headers-attr": {
+      "description": "Đảm bảo mỗi ô trong bảng dùng thuộc tính headers chỉ tham chiếu đến các phần tử <th> khác trong bảng đó",
+      "help": "Thuộc tính headers của ô bảng phải tham chiếu đến các phần tử <th> khác trong cùng bảng"
+    },
+    "th-has-data-cells": {
+      "description": "Đảm bảo các phần tử <th> và các phần tử có role=columnheader/rowheader có ô dữ liệu mà chúng mô tả",
+      "help": "Tiêu đề bảng trong bảng dữ liệu phải tham chiếu đến ô dữ liệu"
+    },
+    "valid-lang": {
+      "description": "Đảm bảo các thuộc tính lang có giá trị hợp lệ",
+      "help": "Thuộc tính lang phải có giá trị hợp lệ"
+    },
+    "video-caption": {
+      "description": "Đảm bảo các phần tử <video> có phụ đề",
+      "help": "Các phần tử <video> phải có phụ đề"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Không dùng vai trò trừu tượng",
+      "fail": {
+        "singular": "Không thể dùng trực tiếp vai trò trừu tượng: ${data.values}",
+        "plural": "Không thể dùng trực tiếp các vai trò trừu tượng: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "Các thuộc tính ARIA được phép dùng cho phần tử này",
+      "fail": {
+        "singular": "Thuộc tính ARIA không được phép dùng trên phần tử ${data.nodeName}: ${data.values}",
+        "plural": "Các thuộc tính ARIA không được phép dùng trên phần tử ${data.nodeName}: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "Các thuộc tính ARIA được dùng đúng cho vai trò đã khai báo",
+      "fail": {
+        "singular": "Thuộc tính ARIA không được phép: ${data.values}",
+        "plural": "Các thuộc tính ARIA không được phép: ${data.values}",
+        "caseSensitive": "Các thuộc tính ARIA sau có giá trị phân biệt chữ hoa chữ thường và phải viết thường: ${data.values}"
+      },
+      "incomplete": {
+        "default": "Kiểm tra xem có vấn đề gì không nếu thuộc tính ARIA bị bỏ qua trên phần tử này: ${data.values}",
+        "caseSensitive": "Các thuộc tính ARIA sau có giá trị phân biệt chữ hoa chữ thường mà công nghệ hỗ trợ có thể xử lý không đúng: ${data.values}"
+      }
+    },
+    "aria-allowed-role": {
+      "pass": "Vai trò ARIA được phép dùng cho phần tử này",
+      "fail": {
+        "singular": "Vai trò ARIA ${data.values} không được phép dùng cho phần tử này",
+        "plural": "Các vai trò ARIA ${data.values} không được phép dùng cho phần tử này"
+      },
+      "incomplete": {
+        "singular": "Phải gỡ bỏ vai trò ARIA ${data.values} khi phần tử được hiển thị, vì vai trò này không được phép dùng cho phần tử",
+        "plural": "Phải gỡ bỏ các vai trò ARIA ${data.values} khi phần tử được hiển thị, vì các vai trò này không được phép dùng cho phần tử"
+      }
+    },
+    "aria-busy": {
+      "pass": "Phần tử có thuộc tính aria-busy",
+      "fail": "Phần tử dùng aria-busy=\"true\" trong khi đang hiển thị chỉ báo đang tải"
+    },
+    "aria-conditional-attr": {
+      "pass": "Thuộc tính ARIA được phép dùng",
+      "fail": {
+        "checkbox": "Hãy gỡ bỏ aria-checked hoặc đặt thành \"${data.checkState}\" để khớp với trạng thái thực của hộp kiểm",
+        "radio": "Hãy gỡ bỏ aria-checked hoặc đặt thành \"${data.checkState}\" để khớp với trạng thái thực của nút radio",
+        "rowSingular": "Thuộc tính này được hỗ trợ với các hàng treegrid, nhưng không với ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "Các thuộc tính này được hỗ trợ với các hàng treegrid, nhưng không với ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage tồn tại và tham chiếu đến các phần tử hiển thị với trình đọc màn hình, dùng một kỹ thuật aria-errormessage được hỗ trợ",
+      "fail": {
+        "singular": "Giá trị aria-errormessage `${data.values}` phải dùng một kỹ thuật để thông báo nội dung lỗi (ví dụ: aria-live, aria-describedby, role=alert, v.v.)",
+        "plural": "Các giá trị aria-errormessage `${data.values}` phải dùng một kỹ thuật để thông báo nội dung lỗi (ví dụ: aria-live, aria-describedby, role=alert, v.v.)",
+        "unsupported": "Nhiều ID trong aria-errormessage chưa được hỗ trợ rộng rãi trong các công nghệ hỗ trợ",
+        "hidden": "Giá trị aria-errormessage `${data.values}` không được tham chiếu đến phần tử bị ẩn"
+      },
+      "incomplete": {
+        "singular": "Đảm bảo giá trị aria-errormessage `${data.values}` tham chiếu đến một phần tử có tồn tại",
+        "plural": "Đảm bảo các giá trị aria-errormessage `${data.values}` tham chiếu đến các phần tử có tồn tại",
+        "idrefs": "Không thể xác định phần tử aria-errormessage có tồn tại trên trang hay không: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Không có thuộc tính aria-hidden trên phần thân tài liệu",
+      "fail": "aria-hidden=true không nên xuất hiện trên phần thân tài liệu"
+    },
+    "aria-level": {
+      "pass": "Các giá trị aria-level hợp lệ",
+      "incomplete": "Giá trị aria-level lớn hơn 6 không được hỗ trợ trên mọi tổ hợp trình đọc màn hình và trình duyệt"
+    },
+    "aria-no-deprecated-attr": {
+      "pass": "Không dùng thuộc tính ARIA đã lỗi thời",
+      "incomplete": {
+        "singular": "Thuộc tính đã lỗi thời và không nên dùng: ${data.values}",
+        "plural": "Các thuộc tính đã lỗi thời và không nên dùng: ${data.values}"
+      }
+    },
+    "aria-prohibited-attr": {
+      "pass": "Thuộc tính ARIA được phép dùng",
+      "fail": {
+        "hasRolePlural": "Không thể dùng các thuộc tính ${data.prohibited} với vai trò \"${data.role}\".",
+        "hasRoleSingular": "Không thể dùng thuộc tính ${data.prohibited} với vai trò \"${data.role}\".",
+        "noRolePlural": "Không thể dùng các thuộc tính ${data.prohibited} trên phần tử \"${data.nodeName}\" không có thuộc tính role hợp lệ.",
+        "noRoleSingular": "Không thể dùng thuộc tính ${data.prohibited} trên phần tử \"${data.nodeName}\" không có thuộc tính role hợp lệ."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Thuộc tính ${data.prohibited} chưa được hỗ trợ tốt với vai trò \"${data.role}\".",
+        "hasRolePlural": "Các thuộc tính ${data.prohibited} chưa được hỗ trợ tốt với vai trò \"${data.role}\".",
+        "noRoleSingular": "Thuộc tính ${data.prohibited} chưa được hỗ trợ tốt trên phần tử \"${data.nodeName}\" không có thuộc tính role hợp lệ.",
+        "noRolePlural": "Các thuộc tính ${data.prohibited} chưa được hỗ trợ tốt trên phần tử \"${data.nodeName}\" không có thuộc tính role hợp lệ.",
+        "visibleLabelSingular": "Thuộc tính ${data.prohibited} chưa được hỗ trợ tốt, nhưng các phần tử được aria-labelledby tham chiếu đang hiển thị trên trang. Hãy xác minh rằng nhãn này không cần thiết.",
+        "visibleLabelPlural": "Các thuộc tính ${data.prohibited} chưa được hỗ trợ tốt, nhưng các phần tử được aria-labelledby tham chiếu đang hiển thị trên trang. Hãy xác minh rằng các nhãn này không cần thiết.",
+        "unresolvedLabel": "Thuộc tính ${data.prohibited} chưa được hỗ trợ tốt và không tham chiếu đến phần tử nào có tồn tại. Hãy xác minh rằng nhãn này không cần thiết."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Có đủ mọi thuộc tính ARIA bắt buộc",
+      "fail": {
+        "singular": "Thiếu thuộc tính ARIA bắt buộc: ${data.values}",
+        "plural": "Thiếu các thuộc tính ARIA bắt buộc: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Có đủ các phần tử con ARIA bắt buộc",
+        "aria-busy": "Phần tử có thuộc tính aria-busy, vì vậy được phép bỏ qua các phần tử con bắt buộc"
+      },
+      "fail": {
+        "singular": "Thiếu vai trò con ARIA bắt buộc: ${data.values}",
+        "plural": "Thiếu các vai trò con ARIA bắt buộc: ${data.values}",
+        "unallowed": "Phần tử có các phần tử con không được phép: ${data.values}",
+        "unallowedPresentational": "Phần tử có các phần tử con mang tính trình bày không thể bị bỏ qua do ${data.values}",
+        "aria-busy-fail": "Phần tử có các phần tử con không được phép: ${data.values}; aria-busy=\"true\" không cho phép các phần tử con có vai trò không được phép"
+      },
+      "incomplete": {
+        "singular": "Cần thêm vai trò con ARIA: ${data.values}",
+        "plural": "Cần thêm các vai trò con ARIA: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Có vai trò cha ARIA bắt buộc",
+      "fail": {
+        "singular": "Thiếu vai trò cha ARIA bắt buộc: ${data.values}",
+        "plural": "Thiếu các vai trò cha ARIA bắt buộc: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription được dùng trên một vai trò ngữ nghĩa được hỗ trợ",
+      "incomplete": "Kiểm tra xem aria-roledescription có được các trình đọc màn hình được hỗ trợ đọc ra hay không",
+      "fail": "Hãy gán cho phần tử một vai trò hỗ trợ aria-roledescription"
+    },
+    "aria-unsupported-attr": {
+      "pass": "Thuộc tính ARIA được hỗ trợ",
+      "fail": "Thuộc tính ARIA chưa được hỗ trợ rộng rãi trong trình đọc màn hình và công nghệ hỗ trợ: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "Các giá trị thuộc tính ARIA hợp lệ",
+      "fail": {
+        "singular": "Giá trị thuộc tính ARIA không hợp lệ: ${data.values}",
+        "plural": "Các giá trị thuộc tính ARIA không hợp lệ: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ID phần tử trong thuộc tính ARIA không tồn tại trên trang: ${data.needsReview}",
+        "noIdShadow": "ID phần tử trong thuộc tính ARIA không tồn tại trên trang hoặc là phần tử con cháu của một cây shadow DOM khác: ${data.needsReview}",
+        "ariaCurrent": "Giá trị thuộc tính ARIA không hợp lệ và sẽ được xử lý như \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Không thể xác định ID phần tử trong thuộc tính ARIA có tồn tại trên trang hay không: ${data.needsReview}",
+        "empty": "Giá trị thuộc tính ARIA bị bỏ qua khi để trống: ${data.needsReview}",
+        "controlsWithinPopup": "Không thể xác định ID được aria-controls tham chiếu có tồn tại trên trang hay không khi dùng aria-haspopup: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "Tên thuộc tính ARIA hợp lệ",
+      "fail": {
+        "singular": "Tên thuộc tính ARIA không hợp lệ: ${data.values}",
+        "plural": "Các tên thuộc tính ARIA không hợp lệ: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel được dùng trên phần tử có văn bản truy cập được",
+      "fail": "aria-braillelabel được dùng trên phần tử không có văn bản truy cập được",
+      "incomplete": "Không thể tính toán văn bản truy cập được"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription được dùng trên phần tử có aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription được dùng trên phần tử không có aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription được dùng trên phần tử có aria-roledescription rỗng"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "Vai trò ARIA chưa lỗi thời",
+      "fail": "Vai trò được dùng đã lỗi thời: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Chỉ dùng một giá trị vai trò",
+      "fail": "Chỉ dùng một giá trị vai trò, vì các trình duyệt cũ không hỗ trợ vai trò dự phòng",
+      "incomplete": "Chỉ dùng vai trò 'presentation' hoặc 'none' vì chúng đồng nghĩa với nhau."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Phần tử có thuộc tính ARIA toàn cục: ${data.values}",
+        "plural": "Phần tử có các thuộc tính ARIA toàn cục: ${data.values}"
+      },
+      "fail": "Phần tử không có thuộc tính ARIA toàn cục"
+    },
+    "has-widget-role": {
+      "pass": "Phần tử có vai trò widget.",
+      "fail": "Phần tử không có vai trò widget."
+    },
+    "invalidrole": {
+      "pass": "Vai trò ARIA hợp lệ",
+      "fail": {
+        "singular": "Vai trò phải là một trong các vai trò ARIA hợp lệ: ${data.values}",
+        "plural": "Các vai trò phải là vai trò ARIA hợp lệ: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Phần tử có thể nhận tiêu điểm.",
+      "fail": "Phần tử không thể nhận tiêu điểm."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "<label> và tên truy cập được khớp với nhau",
+      "incomplete": "Kiểm tra xem <label> có cần là một phần của tên trường ARIA ${data} hay không"
+    },
+    "unsupportedrole": {
+      "pass": "Vai trò ARIA được hỗ trợ",
+      "fail": "Vai trò được dùng chưa được hỗ trợ rộng rãi trong trình đọc màn hình và công nghệ hỗ trợ: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Phần tử có ngữ nghĩa hợp lệ cho một phần tử trong thứ tự tiêu điểm.",
+      "fail": "Phần tử có ngữ nghĩa không hợp lệ cho một phần tử trong thứ tự tiêu điểm."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Phần tử có độ tương phản màu đủ, đạt ${data.contrastRatio}",
+      "fail": {
+        "default": "Phần tử có độ tương phản màu không đủ, chỉ đạt ${data.contrastRatio} (màu tiền cảnh: ${data.fgColor}, màu nền: ${data.bgColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Phần tử có độ tương phản màu không đủ giữa màu tiền cảnh và màu bóng, chỉ đạt ${data.contrastRatio} (màu tiền cảnh: ${data.fgColor}, màu text-shadow: ${data.shadowColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Phần tử có độ tương phản màu không đủ giữa màu bóng và màu nền, chỉ đạt ${data.contrastRatio} (màu text-shadow: ${data.shadowColor}, màu nền: ${data.bgColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Không thể xác định tỷ lệ tương phản",
+        "bgImage": "Không thể xác định màu nền của phần tử do có ảnh nền",
+        "bgGradient": "Không thể xác định màu nền của phần tử do có nền chuyển sắc",
+        "imgNode": "Không thể xác định màu nền của phần tử vì phần tử chứa một phần tử hình ảnh",
+        "bgOverlap": "Không thể xác định màu nền của phần tử vì phần tử bị một phần tử khác chồng lên",
+        "fgAlpha": "Không thể xác định màu tiền cảnh của phần tử do độ trong suốt alpha",
+        "elmPartiallyObscured": "Không thể xác định màu nền của phần tử vì phần tử bị một phần tử khác che khuất một phần",
+        "elmPartiallyObscuring": "Không thể xác định màu nền của phần tử vì phần tử chồng lên một phần các phần tử khác",
+        "outsideViewport": "Không thể xác định màu nền của phần tử vì phần tử nằm ngoài khung nhìn",
+        "equalRatio": "Phần tử có tỷ lệ tương phản 1:1 với nền",
+        "shortTextContent": "Nội dung phần tử quá ngắn để xác định đó có phải là nội dung văn bản thực sự hay không",
+        "emptyValue": "Phần tử không có giá trị; hãy kiểm tra độ tương phản màu sau khi nhập một giá trị",
+        "nonBmp": "Nội dung phần tử chỉ chứa ký tự không phải văn bản",
+        "pseudoContent": "Không thể xác định màu nền của phần tử do có phần tử giả",
+        "colorParse": "Không thể phân tích chuỗi màu ${data.colorParse}"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Phần tử có độ tương phản màu đủ, đạt ${data.contrastRatio}",
+        "hidden": "Phần tử bị ẩn"
+      },
+      "fail": {
+        "default": "Phần tử có độ tương phản màu không đủ, chỉ đạt ${data.contrastRatio} (màu tiền cảnh: ${data.fgColor}, màu nền: ${data.bgColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Phần tử có độ tương phản màu không đủ giữa màu tiền cảnh và màu bóng, chỉ đạt ${data.contrastRatio} (màu tiền cảnh: ${data.fgColor}, màu text-shadow: ${data.shadowColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Phần tử có độ tương phản màu không đủ giữa màu bóng và màu nền, chỉ đạt ${data.contrastRatio} (màu text-shadow: ${data.shadowColor}, màu nền: ${data.bgColor}, cỡ chữ: ${data.fontSize}, độ đậm chữ: ${data.fontWeight}). Tỷ lệ tương phản yêu cầu là ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Không thể xác định tỷ lệ tương phản",
+        "bgImage": "Không thể xác định màu nền của phần tử do có ảnh nền",
+        "bgGradient": "Không thể xác định màu nền của phần tử do có nền chuyển sắc",
+        "imgNode": "Không thể xác định màu nền của phần tử vì phần tử chứa một phần tử hình ảnh",
+        "bgOverlap": "Không thể xác định màu nền của phần tử vì phần tử bị một phần tử khác chồng lên",
+        "complexTextShadows": "Không thể xác định độ tương phản của phần tử vì phần tử dùng bóng chữ phức tạp",
+        "fgAlpha": "Không thể xác định màu tiền cảnh của phần tử do độ trong suốt alpha",
+        "elmPartiallyObscured": "Không thể xác định màu nền của phần tử vì phần tử bị một phần tử khác che khuất một phần",
+        "elmPartiallyObscuring": "Không thể xác định màu nền của phần tử vì phần tử chồng lên một phần các phần tử khác",
+        "outsideViewport": "Không thể xác định màu nền của phần tử vì phần tử nằm ngoài khung nhìn",
+        "equalRatio": "Phần tử có tỷ lệ tương phản 1:1 với nền",
+        "shortTextContent": "Nội dung phần tử quá ngắn để xác định đó có phải là nội dung văn bản thực sự hay không",
+        "emptyValue": "Phần tử không có giá trị; hãy kiểm tra độ tương phản màu sau khi nhập một giá trị",
+        "nonBmp": "Nội dung phần tử chỉ chứa ký tự không phải văn bản",
+        "pseudoContent": "Không thể xác định màu nền của phần tử do có phần tử giả",
+        "colorParse": "Không thể phân tích chuỗi màu ${data.colorParse}"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Liên kết có thể phân biệt với văn bản xung quanh nhờ định kiểu trực quan",
+      "incomplete": {
+        "default": "Kiểm tra xem liên kết có cần định kiểu để phân biệt với văn bản gần đó hay không",
+        "pseudoContent": "Kiểm tra xem kiểu của phần tử giả trong liên kết có đủ để phân biệt với văn bản xung quanh hay không"
+      },
+      "fail": "Liên kết không có định kiểu (chẳng hạn gạch chân) để phân biệt với văn bản xung quanh"
+    },
+    "link-in-text-block": {
+      "pass": "Liên kết có thể phân biệt với văn bản xung quanh bằng cách nào đó ngoài màu sắc",
+      "fail": {
+        "fgContrast": "Liên kết có độ tương phản màu không đủ so với văn bản xung quanh, chỉ đạt ${data.contrastRatio}:1. (Độ tương phản tối thiểu là ${data.requiredContrastRatio}:1, văn bản liên kết: ${data.nodeColor}, văn bản xung quanh: ${data.parentColor})",
+        "bgContrast": "Nền liên kết có độ tương phản màu không đủ, chỉ đạt ${data.contrastRatio} (Độ tương phản tối thiểu là ${data.requiredContrastRatio}:1, màu nền liên kết: ${data.nodeBackgroundColor}, màu nền xung quanh: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Không thể xác định tỷ lệ tương phản tiền cảnh của phần tử",
+        "bgContrast": "Không thể xác định tỷ lệ tương phản nền của phần tử",
+        "bgImage": "Không thể xác định tỷ lệ tương phản của phần tử do có ảnh nền",
+        "bgGradient": "Không thể xác định tỷ lệ tương phản của phần tử do có nền chuyển sắc",
+        "imgNode": "Không thể xác định tỷ lệ tương phản của phần tử vì phần tử chứa một phần tử hình ảnh",
+        "bgOverlap": "Không thể xác định tỷ lệ tương phản của phần tử do các phần tử chồng lên nhau"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "Giá trị autocomplete nằm trên một phần tử phù hợp",
+      "fail": "Giá trị autocomplete không phù hợp với loại input này"
+    },
+    "autocomplete-valid": {
+      "pass": "Thuộc tính autocomplete có định dạng đúng",
+      "fail": "Thuộc tính autocomplete có định dạng sai",
+      "incomplete": "Thuộc tính autocomplete có giá trị không chuẩn. Hãy kiểm tra xem có thể dùng một giá trị chuẩn nào thay thế không."
+    },
+    "accesskeys": {
+      "pass": "Giá trị thuộc tính accesskey là duy nhất",
+      "fail": "Tài liệu có nhiều phần tử dùng cùng một accesskey"
+    },
+    "focusable-content": {
+      "pass": "Phần tử chứa các phần tử có thể nhận tiêu điểm",
+      "incomplete": "Kiểm tra xem các phần tử có tabindex âm có thể nhận tiêu điểm bàn phím để cuộn vùng này hay không",
+      "fail": "Phần tử nên có nội dung có thể nhận tiêu điểm"
+    },
+    "focusable-disabled": {
+      "pass": "Không có phần tử nào có thể nhận tiêu điểm bên trong phần tử",
+      "incomplete": "Kiểm tra xem các phần tử có thể nhận tiêu điểm có lập tức di chuyển chỉ báo tiêu điểm hay không",
+      "fail": "Nội dung có thể nhận tiêu điểm nên bị vô hiệu hóa, bị gỡ bỏ khỏi DOM hoặc không bị ẩn bằng aria-hidden"
+    },
+    "focusable-element": {
+      "pass": "Phần tử có thể nhận tiêu điểm",
+      "fail": "Phần tử nên có thể nhận tiêu điểm"
+    },
+    "focusable-modal-open": {
+      "pass": "Không có phần tử nào có thể nhận tiêu điểm khi hộp thoại modal đang mở",
+      "incomplete": "Kiểm tra để đảm bảo các phần tử có thể nhận tiêu điểm không truy cập được bằng phím Tab ở trạng thái hiện tại"
+    },
+    "focusable-no-name": {
+      "pass": "Phần tử không nằm trong thứ tự Tab hoặc có văn bản truy cập được",
+      "fail": "Phần tử nằm trong thứ tự Tab và không có văn bản truy cập được",
+      "incomplete": "Không thể xác định phần tử có tên truy cập được hay không"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Không có phần tử nào có thể nhận tiêu điểm bên trong phần tử",
+      "incomplete": "Kiểm tra xem các phần tử có thể nhận tiêu điểm có lập tức di chuyển chỉ báo tiêu điểm hay không",
+      "fail": "Nội dung có thể nhận tiêu điểm nên có tabindex=\"-1\", bị gỡ bỏ khỏi DOM hoặc không bị ẩn bằng aria-hidden"
+    },
+    "frame-focusable-content": {
+      "pass": "Phần tử không có phần tử con cháu nào có thể nhận tiêu điểm",
+      "fail": "Phần tử có phần tử con cháu có thể nhận tiêu điểm",
+      "incomplete": "Không thể xác định phần tử có phần tử con cháu hay không"
+    },
+    "landmark-is-top-level": {
+      "pass": "Vùng mốc ${data.role} nằm ở cấp cao nhất.",
+      "fail": "Vùng mốc ${data.role} nằm trong một vùng mốc khác."
+    },
+    "no-focusable-content": {
+      "pass": "Phần tử không có phần tử con cháu nào có thể nhận tiêu điểm",
+      "fail": {
+        "default": "Phần tử có phần tử con cháu có thể nhận tiêu điểm. Hãy chuyển chúng ra ngoài phần tử hoặc gỡ bỏ chúng.",
+        "notHidden": "Dùng tabindex âm trên một phần tử bên trong điều khiển tương tác không ngăn được công nghệ hỗ trợ đặt tiêu điểm vào phần tử đó (kể cả khi có aria-hidden=\"true\")"
+      },
+      "incomplete": "Không thể xác định phần tử có phần tử con cháu hay không"
+    },
+    "page-has-heading-one": {
+      "pass": "Trang có ít nhất một tiêu đề cấp một",
+      "fail": "Trang phải có một tiêu đề cấp một"
+    },
+    "page-has-main": {
+      "pass": "Tài liệu có ít nhất một vùng mốc main",
+      "fail": "Tài liệu không có vùng mốc main"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Tài liệu không có nhiều hơn một vùng mốc banner",
+      "fail": "Tài liệu có nhiều hơn một vùng mốc banner"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Tài liệu không có nhiều hơn một vùng mốc contentinfo",
+      "fail": "Tài liệu có nhiều hơn một vùng mốc contentinfo"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Tài liệu không có nhiều hơn một vùng mốc main",
+      "fail": "Tài liệu có nhiều hơn một vùng mốc main"
+    },
+    "tabindex": {
+      "pass": "Phần tử không có tabindex lớn hơn 0",
+      "fail": "Phần tử có tabindex lớn hơn 0"
+    },
+    "alt-space-value": {
+      "pass": "Phần tử có giá trị thuộc tính alt hợp lệ",
+      "fail": "Phần tử có thuộc tính alt chỉ chứa một ký tự khoảng trắng, ký tự này không bị mọi trình đọc màn hình bỏ qua"
+    },
+    "duplicate-img-label": {
+      "pass": "Phần tử không lặp lại văn bản có sẵn trong văn bản alt của <img>",
+      "fail": "Phần tử chứa phần tử <img> có văn bản alt trùng với văn bản có sẵn"
+    },
+    "explicit-label": {
+      "pass": "Phần tử có <label> tường minh",
+      "fail": "Phần tử không có <label> tường minh",
+      "incomplete": "Không thể xác định phần tử biểu mẫu có <label> tường minh hay không"
+    },
+    "help-same-as-label": {
+      "pass": "Văn bản trợ giúp (title hoặc aria-describedby) không trùng với văn bản nhãn",
+      "fail": "Văn bản trợ giúp (title hoặc aria-describedby) giống với văn bản nhãn"
+    },
+    "hidden-explicit-label": {
+      "pass": "Phần tử biểu mẫu có <label> tường minh đang hiển thị",
+      "fail": "Phần tử biểu mẫu có <label> tường minh bị ẩn",
+      "incomplete": "Không thể xác định phần tử biểu mẫu có <label> tường minh bị ẩn hay không"
+    },
+    "implicit-label": {
+      "pass": "Phần tử có <label> ngầm định (bao quanh)",
+      "fail": "Phần tử không có <label> ngầm định (bao quanh)",
+      "incomplete": "Không thể xác định phần tử biểu mẫu có <label> ngầm định (bao quanh) hay không"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Phần tử chứa văn bản hiển thị là một phần của tên truy cập được",
+      "fail": "Văn bản bên trong phần tử không có trong tên truy cập được",
+      "incomplete": {
+        "default": "Không thể xác định văn bản hiển thị có phải là một phần của tên truy cập được hay không",
+        "valueText": "Văn bản bên trong phần tử có thể là văn bản giá trị thay vì nhãn"
+      }
+    },
+    "multiple-label": {
+      "pass": "Trường biểu mẫu không có nhiều phần tử label",
+      "incomplete": "Nhiều phần tử label chưa được hỗ trợ rộng rãi trong các công nghệ hỗ trợ. Hãy đảm bảo nhãn đầu tiên chứa mọi thông tin cần thiết."
+    },
+    "title-only": {
+      "pass": "Phần tử biểu mẫu không chỉ dùng thuộc tính title làm nhãn",
+      "fail": "Chỉ dùng title để tạo nhãn cho phần tử biểu mẫu"
+    },
+    "landmark-is-unique": {
+      "pass": "Các vùng mốc phải có vai trò hoặc tổ hợp vai trò/nhãn/title (tức là tên truy cập được) duy nhất",
+      "fail": "Vùng mốc phải có aria-label, aria-labelledby hoặc title duy nhất để có thể phân biệt các vùng mốc"
+    },
+    "has-lang": {
+      "pass": "Phần tử <html> có thuộc tính lang",
+      "fail": {
+        "noXHTML": "Thuộc tính xml:lang không hợp lệ trên trang HTML, hãy dùng thuộc tính lang.",
+        "noLang": "Phần tử <html> không có thuộc tính lang"
+      }
+    },
+    "valid-lang": {
+      "pass": "Giá trị thuộc tính lang có trong danh sách ngôn ngữ hợp lệ",
+      "fail": "Giá trị thuộc tính lang không có trong danh sách ngôn ngữ hợp lệ"
+    },
+    "xml-lang-mismatch": {
+      "pass": "Thuộc tính lang và xml:lang có cùng ngôn ngữ cơ sở",
+      "fail": "Thuộc tính lang và xml:lang không có cùng ngôn ngữ cơ sở"
+    },
+    "dlitem": {
+      "pass": "Mục danh sách mô tả có phần tử cha <dl>",
+      "fail": "Mục danh sách mô tả không có phần tử cha <dl>"
+    },
+    "listitem": {
+      "pass": "Mục danh sách có phần tử cha <ul>, <ol> hoặc role=\"list\"",
+      "fail": {
+        "default": "Mục danh sách không có phần tử cha <ul> hoặc <ol>. Hãy đảm bảo <li> là phần tử con trực tiếp của <ul> hoặc <ol>, hoặc phần tử cha có role=\"list\".",
+        "roleNotValid": "Phần tử cha của mục danh sách có vai trò không phải role=\"list\". Hãy đảm bảo phần tử cha có role=\"list\", hoặc chuyển <li> vào trong <ul> hoặc <ol>."
+      },
+      "incomplete": "Không thể xác định mục danh sách có phần tử cha <ul>, <ol> hoặc role=\"list\" hay không"
+    },
+    "only-dlitems": {
+      "pass": "Phần tử dl chỉ có các phần tử con trực tiếp được phép bên trong: phần tử <dt>, <dd> hoặc <div>",
+      "fail": "Phần tử dl có các phần tử con trực tiếp không được phép: ${data.values}",
+      "incomplete": "Không thể xác định phần tử dl có chỉ chứa các phần tử con trực tiếp được phép hay không"
+    },
+    "only-listitems": {
+      "pass": "Phần tử danh sách chỉ có các phần tử con trực tiếp được phép bên trong phần tử <li>",
+      "fail": "Phần tử danh sách có các phần tử con trực tiếp không được phép: ${data.values}",
+      "incomplete": "Không thể xác định phần tử danh sách có chỉ chứa các phần tử con trực tiếp được phép hay không"
+    },
+    "structured-dlitems": {
+      "pass": "Khi không rỗng, phần tử có cả phần tử <dt> và <dd>",
+      "fail": "Khi không rỗng, phần tử không có ít nhất một phần tử <dt> theo sau là ít nhất một phần tử <dd>"
+    },
+    "caption": {
+      "pass": "Phần tử đa phương tiện có track phụ đề",
+      "incomplete": "Kiểm tra xem phần tử có phụ đề hay không"
+    },
+    "frame-tested": {
+      "pass": "iframe đã được kiểm tra bằng axe-core",
+      "fail": "Không thể kiểm tra iframe bằng axe-core",
+      "incomplete": "iframe vẫn cần được kiểm tra bằng axe-core"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> hoặc <audio> không phát âm thanh quá thời lượng cho phép hoặc có cơ chế điều khiển",
+      "fail": "<video> hoặc <audio> phát âm thanh quá thời lượng cho phép và không có cơ chế điều khiển",
+      "incomplete": "Kiểm tra để đảm bảo <video> hoặc <audio> không phát âm thanh quá thời lượng cho phép hoặc có cung cấp cơ chế điều khiển"
+    },
+    "css-orientation-lock": {
+      "pass": "Nội dung hiển thị có thể thao tác và không có khóa hướng",
+      "fail": "Khóa hướng CSS được áp dụng và khiến nội dung hiển thị không thể thao tác",
+      "incomplete": "Không thể xác định khóa hướng CSS"
+    },
+    "meta-viewport-large": {
+      "pass": "Thẻ <meta> không ngăn việc thu phóng đáng kể trên thiết bị di động",
+      "fail": "Thẻ <meta> giới hạn việc thu phóng trên thiết bị di động"
+    },
+    "meta-viewport": {
+      "pass": "Thẻ <meta> không tắt tính năng thu phóng trên thiết bị di động",
+      "fail": "${data} trên thẻ <meta> tắt tính năng thu phóng trên thiết bị di động"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Vùng chạm có đủ khoảng trống với các vùng lân cận gần nhất. Vùng nhấp an toàn có đường kính ${data.closestOffset}px, đạt mức tối thiểu ${data.minOffset}px.",
+        "large": "Vùng chạm vượt xa kích thước tối thiểu ${data.minOffset}px."
+      },
+      "fail": "Vùng chạm không có đủ khoảng trống với các vùng lân cận gần nhất. Vùng nhấp an toàn có đường kính ${data.closestOffset}px thay vì tối thiểu ${data.minOffset}px.",
+      "incomplete": {
+        "default": "Phần tử có tabindex âm không có đủ khoảng trống với các vùng lân cận gần nhất. Vùng nhấp an toàn có đường kính ${data.closestOffset}px thay vì tối thiểu ${data.minOffset}px. Đây có phải là vùng chạm không?",
+        "nonTabbableNeighbor": "Vùng chạm không có đủ khoảng trống với các vùng lân cận gần nhất. Vùng nhấp an toàn có đường kính ${data.closestOffset}px thay vì tối thiểu ${data.minOffset}px. Phần tử lân cận có phải là vùng chạm không?",
+        "tooManyRects": "Không thể lấy kích thước vùng chạm vì có quá nhiều phần tử chồng lên nhau"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Điều khiển có kích thước đủ lớn (${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px)",
+        "obscured": "Điều khiển bị bỏ qua vì bị che khuất hoàn toàn nên không thể nhấp",
+        "large": "Vùng chạm vượt xa kích thước tối thiểu ${data.minSize}px."
+      },
+      "fail": {
+        "default": "Vùng chạm có kích thước không đủ (${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px)",
+        "partiallyObscured": "Vùng chạm có kích thước không đủ vì bị che khuất một phần (khoảng trống nhỏ nhất là ${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px)"
+      },
+      "incomplete": {
+        "default": "Phần tử có tabindex âm có kích thước không đủ (${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px). Đây có phải là vùng chạm không?",
+        "contentOverflow": "Không thể xác định chính xác kích thước phần tử do nội dung bị tràn",
+        "partiallyObscured": "Phần tử có tabindex âm có kích thước không đủ vì bị che khuất một phần (khoảng trống nhỏ nhất là ${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px). Đây có phải là vùng chạm không?",
+        "partiallyObscuredNonTabbable": "Vùng chạm có kích thước không đủ vì bị một phần tử lân cận có tabindex âm che khuất một phần (khoảng trống nhỏ nhất là ${data.width}px x ${data.height}px, tối thiểu phải là ${data.minSize}px x ${data.minSize}px). Phần tử lân cận có phải là vùng chạm không?",
+        "tooManyRects": "Không thể lấy kích thước vùng chạm vì có quá nhiều phần tử chồng lên nhau"
+      }
+    },
+    "header-present": {
+      "pass": "Trang có tiêu đề",
+      "fail": "Trang không có tiêu đề"
+    },
+    "heading-order": {
+      "pass": "Thứ tự tiêu đề hợp lệ",
+      "fail": "Thứ tự tiêu đề không hợp lệ",
+      "incomplete": "Không thể xác định tiêu đề trước đó"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Không có liên kết nào khác cùng tên mà dẫn đến URL khác",
+      "incomplete": "Kiểm tra xem các liên kết có cùng mục đích, hoặc được cố ý để mơ hồ, hay không."
+    },
+    "internal-link-present": {
+      "pass": "Đã tìm thấy liên kết bỏ qua hợp lệ",
+      "fail": "Không tìm thấy liên kết bỏ qua hợp lệ"
+    },
+    "landmark": {
+      "pass": "Trang có vùng mốc",
+      "fail": "Trang không có vùng mốc"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "Thẻ <meta> không làm mới trang ngay lập tức",
+      "fail": "Thẻ <meta> buộc làm mới trang theo thời gian"
+    },
+    "meta-refresh": {
+      "pass": "Thẻ <meta> không làm mới trang ngay lập tức",
+      "fail": "Thẻ <meta> buộc làm mới trang theo thời gian (dưới 20 giờ)"
+    },
+    "p-as-heading": {
+      "pass": "Các phần tử <p> không được định kiểu thành tiêu đề",
+      "fail": "Nên dùng phần tử tiêu đề thay vì phần tử <p> đã định kiểu",
+      "incomplete": "Không thể xác định các phần tử <p> có được định kiểu thành tiêu đề hay không"
+    },
+    "region": {
+      "pass": "Mọi nội dung trang đều nằm trong các vùng mốc",
+      "fail": "Một số nội dung trang không nằm trong vùng mốc"
+    },
+    "skip-link": {
+      "pass": "Đích của liên kết bỏ qua có tồn tại",
+      "incomplete": "Đích của liên kết bỏ qua nên hiển thị khi được kích hoạt",
+      "fail": "Không có đích cho liên kết bỏ qua"
+    },
+    "unique-frame-title": {
+      "pass": "Thuộc tính title của phần tử là duy nhất",
+      "fail": "Thuộc tính title của phần tử không duy nhất"
+    },
+    "duplicate-id-active": {
+      "pass": "Tài liệu không có phần tử tương tác nào dùng chung thuộc tính id",
+      "fail": "Tài liệu có các phần tử tương tác dùng cùng thuộc tính id: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Tài liệu không có phần tử nào được ARIA hoặc nhãn tham chiếu mà dùng chung thuộc tính id",
+      "fail": "Tài liệu có nhiều phần tử được ARIA tham chiếu dùng cùng thuộc tính id: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Tài liệu không có phần tử tĩnh nào dùng chung thuộc tính id",
+      "fail": "Tài liệu có nhiều phần tử tĩnh dùng cùng thuộc tính id: ${data}"
+    },
+    "aria-label": {
+      "pass": "Thuộc tính aria-label tồn tại và không rỗng",
+      "fail": "Thuộc tính aria-label không tồn tại hoặc rỗng"
+    },
+    "aria-labelledby": {
+      "pass": "Thuộc tính aria-labelledby tồn tại và tham chiếu đến các phần tử hiển thị với trình đọc màn hình",
+      "fail": "Thuộc tính aria-labelledby không tồn tại, tham chiếu đến phần tử không tồn tại hoặc tham chiếu đến phần tử rỗng",
+      "incomplete": "Đảm bảo aria-labelledby tham chiếu đến một phần tử có tồn tại"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Không có kiểu nội tuyến nào dùng '!important' ảnh hưởng đến khoảng cách văn bản",
+      "fail": {
+        "singular": "Hãy gỡ bỏ '!important' khỏi kiểu nội tuyến ${data.values}, vì hầu hết trình duyệt không hỗ trợ ghi đè kiểu này",
+        "plural": "Hãy gỡ bỏ '!important' khỏi các kiểu nội tuyến ${data.values}, vì hầu hết trình duyệt không hỗ trợ ghi đè các kiểu này"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Phần tử có văn bản bên trong hiển thị với trình đọc màn hình",
+      "fail": "Phần tử không có văn bản bên trong hiển thị với trình đọc màn hình",
+      "incomplete": "Không thể xác định phần tử có phần tử con hay không"
+    },
+    "doc-has-title": {
+      "pass": "Tài liệu có phần tử <title> không rỗng",
+      "fail": "Tài liệu không có phần tử <title> không rỗng"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "Axe đã gặp lỗi; hãy kiểm tra thủ công trang này để tìm loại vấn đề này"
+    },
+    "exists": {
+      "pass": "Phần tử không tồn tại",
+      "incomplete": "Phần tử tồn tại"
+    },
+    "has-alt": {
+      "pass": "Phần tử có thuộc tính alt",
+      "fail": "Phần tử không có thuộc tính alt"
+    },
+    "has-visible-text": {
+      "pass": "Phần tử có văn bản hiển thị với trình đọc màn hình",
+      "fail": "Phần tử không có văn bản hiển thị với trình đọc màn hình",
+      "incomplete": "Không thể xác định phần tử có phần tử con hay không"
+    },
+    "important-letter-spacing": {
+      "pass": "letter-spacing trong thuộc tính style không được đặt !important hoặc đạt mức tối thiểu",
+      "fail": {
+        "default": "letter-spacing trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em)",
+        "omitted": "letter-spacing trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em). Số phần tử có văn bản bị ảnh hưởng nhiều hơn số phần tử liên quan được liệt kê"
+      },
+      "incomplete": "Không thể xác định letter-spacing trong thuộc tính style có đạt mức tối thiểu hay không"
+    },
+    "important-line-height": {
+      "pass": "line-height trong thuộc tính style không được đặt !important hoặc đạt mức tối thiểu",
+      "fail": {
+        "default": "line-height trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em)",
+        "omitted": "line-height trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em). Số phần tử có văn bản bị ảnh hưởng nhiều hơn số phần tử liên quan được liệt kê"
+      },
+      "incomplete": "Không thể xác định line-height trong thuộc tính style có đạt mức tối thiểu hay không"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing trong thuộc tính style không được đặt !important hoặc đạt mức tối thiểu",
+      "fail": {
+        "default": "word-spacing trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em)",
+        "omitted": "word-spacing trong thuộc tính style không được dùng !important, hoặc phải đạt ${data.minValue}em (hiện tại ${data.value}em). Số phần tử có văn bản bị ảnh hưởng nhiều hơn số phần tử liên quan được liệt kê"
+      },
+      "incomplete": "Không thể xác định word-spacing trong thuộc tính style có đạt mức tối thiểu hay không"
+    },
+    "is-on-screen": {
+      "pass": "Phần tử không hiển thị",
+      "fail": "Phần tử đang hiển thị"
+    },
+    "non-empty-alt": {
+      "pass": "Phần tử có thuộc tính alt không rỗng",
+      "fail": {
+        "noAttr": "Phần tử không có thuộc tính alt",
+        "emptyAttr": "Phần tử có thuộc tính alt rỗng"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Phần tử không có thuộc tính value",
+        "has-label": "Phần tử có thuộc tính value không rỗng"
+      },
+      "fail": "Phần tử có thuộc tính value và thuộc tính value rỗng"
+    },
+    "non-empty-placeholder": {
+      "pass": "Phần tử có thuộc tính placeholder",
+      "fail": {
+        "noAttr": "Phần tử không có thuộc tính placeholder",
+        "emptyAttr": "Phần tử có thuộc tính placeholder rỗng"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Phần tử có thuộc tính title",
+      "fail": {
+        "noAttr": "Phần tử không có thuộc tính title",
+        "emptyAttr": "Phần tử có thuộc tính title rỗng"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Phần tử có thuộc tính value không rỗng",
+      "fail": {
+        "noAttr": "Phần tử không có thuộc tính value",
+        "emptyAttr": "Phần tử có thuộc tính value rỗng"
+      }
+    },
+    "presentational-role": {
+      "pass": "Ngữ nghĩa mặc định của phần tử đã được ghi đè bằng role=\"${data.role}\"",
+      "fail": {
+        "default": "Ngữ nghĩa mặc định của phần tử chưa được ghi đè bằng role=\"none\" hoặc role=\"presentation\"",
+        "globalAria": "Vai trò của phần tử không mang tính trình bày vì phần tử có thuộc tính ARIA toàn cục",
+        "focusable": "Vai trò của phần tử không mang tính trình bày vì phần tử có thể nhận tiêu điểm",
+        "both": "Vai trò của phần tử không mang tính trình bày vì phần tử có thuộc tính ARIA toàn cục và có thể nhận tiêu điểm",
+        "iframe": "Việc dùng thuộc tính \"title\" trên phần tử ${data.nodeName} có vai trò trình bày hoạt động không nhất quán giữa các trình đọc màn hình"
+      }
+    },
+    "role-none": {
+      "pass": "Ngữ nghĩa mặc định của phần tử đã được ghi đè bằng role=\"none\"",
+      "fail": "Ngữ nghĩa mặc định của phần tử chưa được ghi đè bằng role=\"none\""
+    },
+    "role-presentation": {
+      "pass": "Ngữ nghĩa mặc định của phần tử đã được ghi đè bằng role=\"presentation\"",
+      "fail": "Ngữ nghĩa mặc định của phần tử chưa được ghi đè bằng role=\"presentation\""
+    },
+    "svg-non-empty-title": {
+      "pass": "Phần tử có một phần tử con là title",
+      "fail": {
+        "noTitle": "Phần tử không có phần tử con nào là title",
+        "emptyTitle": "Phần tử con title bị rỗng"
+      },
+      "incomplete": "Không thể xác định phần tử có phần tử con là title hay không"
+    },
+    "caption-faked": {
+      "pass": "Hàng đầu tiên của bảng không được dùng làm chú thích",
+      "fail": "Phần tử con đầu tiên của bảng nên là chú thích thay vì một ô bảng"
+    },
+    "html5-scope": {
+      "pass": "Thuộc tính scope chỉ được dùng trên phần tử tiêu đề bảng (<th>)",
+      "fail": "Trong HTML 5, thuộc tính scope chỉ được dùng trên phần tử tiêu đề bảng (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "Nội dung của thuộc tính summary và <caption> không trùng lặp",
+      "fail": "Nội dung của thuộc tính summary và phần tử <caption> giống hệt nhau",
+      "incomplete": "Không thể xác định phần tử <table> có chú thích hay không"
+    },
+    "scope-value": {
+      "pass": "Thuộc tính scope được dùng đúng cách",
+      "fail": "Giá trị của thuộc tính scope chỉ có thể là 'row' hoặc 'col'"
+    },
+    "td-has-header": {
+      "pass": "Mọi ô dữ liệu không rỗng đều có tiêu đề bảng",
+      "fail": "Một số ô dữ liệu không rỗng không có tiêu đề bảng"
+    },
+    "td-headers-attr": {
+      "pass": "Thuộc tính headers chỉ được dùng để tham chiếu đến các ô tiêu đề khác trong bảng",
+      "incomplete": "Thuộc tính headers rỗng",
+      "fail": {
+        "cell-header-not-in-table": "Thuộc tính headers không chỉ được dùng để tham chiếu đến các ô tiêu đề khác trong bảng",
+        "cell-header-not-th": "Thuộc tính headers phải tham chiếu đến ô tiêu đề, không phải ô dữ liệu",
+        "header-refs-self": "Phần tử có thuộc tính headers tham chiếu đến chính nó"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Mọi ô tiêu đề bảng đều tham chiếu đến ô dữ liệu",
+      "incomplete": "Ô dữ liệu của bảng bị thiếu hoặc rỗng"
+    },
+    "hidden-content": {
+      "pass": "Mọi nội dung trên trang đã được phân tích.",
+      "fail": "Đã xảy ra sự cố khi phân tích nội dung trên trang này.",
+      "incomplete": "Có nội dung bị ẩn trên trang chưa được phân tích. Bạn cần làm cho nội dung này hiển thị để phân tích nó."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Sửa một trong các lỗi sau:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Sửa tất cả các lỗi sau:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe không xác định được nguyên nhân. Đến lúc mở trình kiểm tra phần tử rồi!"
+}
