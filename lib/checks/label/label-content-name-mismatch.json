@@ -4,6 +4,7 @@
   "options": {
     "pixelThreshold": 0.1,
     "occurrenceThreshold": 3,
+    "excludeRoles": ["group"],
     "valueTextRoles": [
       "switch",
       "checkbox",
