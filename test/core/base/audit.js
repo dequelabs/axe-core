@@ -617,6 +617,35 @@ describe('Audit', () => {
       );
     });
 
+    it('should pass preloaded assets to checks with matching nodes', done => {
+      const root = fixtureSetup('<input>');
+      audit = new Audit();
+      audit.addRule({
+        id: 'needs-assets',
+        selector: 'input',
+        preload: true,
+        any: ['needs-assets-check']
+      });
+      audit.addCheck({
+        id: 'needs-assets-check',
+        evaluate(node, options, vNode, context) {
+          return Array.isArray(context.cssom);
+        }
+      });
+
+      audit.run(
+        { include: [root] },
+        { preload: { assets: ['cssom'] } },
+        results => {
+          assert.lengthOf(results, 1);
+          assert.lengthOf(results[0].nodes, 1);
+          assert.isTrue(results[0].nodes[0].any[0].result);
+          done();
+        },
+        done
+      );
+    });
+
     it('should ensure audit.run recieves preload options', done => {
       fixture.innerHTML = '<input aria-label="yo" type="text">';
 
