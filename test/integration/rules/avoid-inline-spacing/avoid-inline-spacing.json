@@ -1,7 +1,15 @@
 {
   "description": "avoid-inline-spacing tests",
   "rule": "avoid-inline-spacing",
-  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]],
+  "violations": [
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"],
+    ["#fail4"],
+    ["#fail5"],
+    ["#fail6"],
+    ["#fail7"]
+  ],
   "passes": [
     ["#pass1"],
     ["#pass2"],
@@ -19,6 +27,9 @@
     ["#pass14"],
     ["#pass15"],
     ["#pass16"],
-    ["#pass17"]
+    ["#pass17"],
+    ["#pass18"],
+    ["#pass19"],
+    ["#pass20"]
   ]
 }
