@@ -106,6 +106,31 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0]), 'Hello');
     });
 
+    ['', 'background-color: transparent;'].forEach(background => {
+      it(`should exclude clipped text without background paint: ${background || 'none'}`, () => {
+        fixture.innerHTML = `<span style="color: transparent; background-clip: text; ${background}">Hello</span>`;
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(visibleVirtual(tree[0]), '');
+      });
+    });
+
+    it('should include text painted by a clipped background color', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; background-color: black; background-clip: text">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Hello');
+    });
+
+    ['text-shadow: 0 0 0 black', '-webkit-text-stroke: 1px black'].forEach(
+      paint => {
+        it(`should include clipped text painted by ${paint}`, () => {
+          fixture.innerHTML = `<span style="color: transparent; background-clip: text; ${paint}">Hello</span>`;
+          const tree = axe.utils.getFlattenedTree(fixture);
+          assert.equal(visibleVirtual(tree[0]), 'Hello');
+        });
+      }
+    );
+
     it('should include SVG text painted by its fill', () => {
       fixture.innerHTML = html`
         <svg width="200" height="40">
@@ -220,6 +245,22 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0]), 'Download specification');
     });
 
+    ['color', '-webkit-text-fill-color'].forEach(property => {
+      it(`should keep a word separator with transparent ${property}`, () => {
+        fixture.innerHTML = `<span>Hello</span><span style="${property}: transparent"> </span><span>world</span>`;
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(visibleVirtual(tree[0]), 'Hello world');
+      });
+    });
+
+    ['display: none', 'visibility: hidden'].forEach(style => {
+      it(`should exclude a transparent word separator with ${style}`, () => {
+        fixture.innerHTML = `<span>Hello</span><span style="color: transparent; ${style}"> </span><span>world</span>`;
+        const tree = axe.utils.getFlattenedTree(fixture);
+        assert.equal(visibleVirtual(tree[0]), 'Helloworld');
+      });
+    });
+
     it('should keep whitespace at the edge of a child element', () => {
       fixture.innerHTML = '<a><span>Hello </span><span>world</span></a>';
       const tree = axe.utils.getFlattenedTree(fixture);
@@ -236,6 +277,13 @@ describe('text.visible', () => {
   });
 
   describe('screen reader', () => {
+    it('should include clipped text without background paint for screen readers', () => {
+      fixture.innerHTML =
+        '<span style="color: transparent; background-clip: text">Hello</span>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Hello');
+    });
+
     it('should include transparent text for screen readers and accessible names', () => {
       fixture.innerHTML = '<button style="color: transparent">Hello</button>';
       const tree = axe.testUtils.flatTreeSetup(fixture);

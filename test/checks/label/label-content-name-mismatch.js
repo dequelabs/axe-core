@@ -39,6 +39,13 @@ describe('label-content-name-mismatch tests', () => {
     });
   });
 
+  it('matches a label with a transparent word separator', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="Hello world"><span>Hello</span><span style="color: transparent"> </span><span>world</span></button>'
+    );
+    assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+  });
+
   it('ignores a transparent sizer behind an overlaid label', () => {
     const vNode = queryFixture(html`
       <style>
