@@ -156,6 +156,30 @@ describe('Rule', () => {
         assert.isFunction(Rule.prototype.run);
       });
 
+      describe('with fake timers', () => {
+        let clock;
+
+        afterEach(() => {
+          clock.restore();
+        });
+
+        it('should resolve when fake timers are installed', done => {
+          const div = document.createElement('div');
+          fixture.appendChild(div);
+          const rule = new Rule({ matches: () => [] });
+          clock = sinon.useFakeTimers();
+
+          rule.run(
+            {
+              include: [axe.utils.getFlattenedTree(div)[0]]
+            },
+            {},
+            () => done(),
+            isNotCalled
+          );
+        });
+      });
+
       it('should run #matches', done => {
         const div = document.createElement('div');
         fixture.appendChild(div);
