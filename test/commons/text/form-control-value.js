@@ -290,6 +290,13 @@ describe('text.formControlValue', () => {
       assert.equal(ariaTextboxValue(target), 'span h1');
     });
 
+    it('separates the text of adjacent block elements', () => {
+      const target = queryFixture(
+        '<div id="target" role="textbox"><p>foo</p><p>bar</p></div>'
+      );
+      assert.equal(ariaTextboxValue(target), 'foo bar');
+    });
+
     it('does not return HTML or comments', () => {
       const target = queryFixture(html`
         <div id="target" role="textbox">
