@@ -408,6 +408,98 @@ describe('color.getBackgroundColor', () => {
     );
   });
 
+  describe('with multiline text over different elements', () => {
+    // each line of #target sits over a different column, but the
+    // footer hides the columns, so they don't affect the background
+    function setup(footerStyle) {
+      fixture.innerHTML = html`
+        <div style="position: relative; display: flex; width: 400px">
+          <div style="width: 200px; height: 100px; background: #f00"></div>
+          <div style="width: 200px; height: 100px; background: #fff"></div>
+          <div
+            id="footer"
+            style="position: absolute; top: 0; left: 0; width: 400px; ${footerStyle}"
+          >
+            <p style="margin: 0; color: #fff">
+              <span style="display: inline-block; width: 250px"></span
+              ><span id="target">abc<br />abc</span>
+            </p>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      return document.getElementById('target');
+    }
+
+    it('returns the color of an opaque element that covers every line', () => {
+      const target = setup('background: #000');
+      const bgNodes = [];
+      const actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+      assert.isNotNull(actual);
+      assertColorsClose(actual, new axe.commons.color.Color(0, 0, 0, 1));
+      assert.include(bgNodes, document.getElementById('footer'));
+    });
+
+    it('returns null when the covering element has a semi-transparent background', () => {
+      const target = setup('background: rgba(0, 0, 0, 0.5)');
+      const actual = axe.commons.color.getBackgroundColor(target, []);
+      assert.isNull(actual);
+      assert.equal(
+        axe.commons.color.incompleteData.get('bgColor'),
+        'elmPartiallyObscuring'
+      );
+    });
+
+    it('returns null when the covering element has opacity', () => {
+      const target = setup('background: #000; opacity: 0.9');
+      const actual = axe.commons.color.getBackgroundColor(target, []);
+      assert.isNull(actual);
+      assert.equal(
+        axe.commons.color.incompleteData.get('bgColor'),
+        'elmPartiallyObscuring'
+      );
+    });
+
+    it('returns null when the covering element blends with what is below it', () => {
+      const target = setup('background: #000; mix-blend-mode: difference');
+      const actual = axe.commons.color.getBackgroundColor(target, []);
+      assert.isNull(actual);
+      assert.equal(
+        axe.commons.color.incompleteData.get('bgColor'),
+        'elmPartiallyObscuring'
+      );
+    });
+
+    it('returns null when an ancestor stacking context has opacity', () => {
+      fixture.innerHTML = html`
+        <div style="position: relative; display: flex; width: 400px">
+          <div style="width: 200px; height: 100px; background: #f00"></div>
+          <div style="width: 200px; height: 100px; background: #fff"></div>
+          <div
+            style="position: absolute; top: 0; left: 0; width: 400px; opacity: 0.9"
+          >
+            <div style="background: #000">
+              <p style="margin: 0; color: #fff">
+                <span style="display: inline-block; width: 250px"></span
+                ><span id="target">abc<br />abc</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const actual = axe.commons.color.getBackgroundColor(
+        document.getElementById('target'),
+        []
+      );
+      assert.isNull(actual);
+      assert.equal(
+        axe.commons.color.incompleteData.get('bgColor'),
+        'elmPartiallyObscuring'
+      );
+    });
+  });
+
   it('should return an actual if an absolutely positioned element does not cover background', () => {
     fixture.innerHTML = html`
       <div style="background-color:black; height:20px; position:relative;">
