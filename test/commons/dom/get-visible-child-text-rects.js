@@ -59,7 +59,7 @@ describe('dom.getVisibleChildTextRects', () => {
   it('filters out the rect of white space hanging at the end of a wrapped pre-wrap line', () => {
     // "Hello world" fills the line exactly, so the space after it hangs
     fixtureSetup(html`
-      <div style="width: 11ch; font: 10px/1 monospace">
+      <div style="width: 11.5ch; font: 10px/1 monospace">
         <span id="target" style="white-space: pre-wrap">Hello world hello</span>
       </div>
     `);
