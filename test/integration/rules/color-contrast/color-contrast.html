@@ -580,3 +580,17 @@ Hello world</textarea>
   value="hello"
   style="background: #fff; color: #eee"
 />
+
+<!-- multiline text over different columns, hidden by an opaque element -->
+<div style="position: relative; display: flex; width: 400px">
+  <div style="width: 200px; height: 100px; background: #f00"></div>
+  <div style="width: 200px; height: 100px; background: #fff"></div>
+  <div
+    style="position: absolute; top: 0; left: 0; width: 400px; background: #000"
+  >
+    <p style="margin: 0; color: #fff">
+      <span style="display: inline-block; width: 250px"></span
+      ><span id="pass31">abc<br />abc</span>
+    </p>
+  </div>
+</div>
