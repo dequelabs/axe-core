@@ -56,6 +56,33 @@ describe('dom.getVisibleChildTextRects', () => {
     assert.deepEqual(actual, [node.getBoundingClientRect()]);
   });
 
+  it('filters out the rect of white space hanging at the end of a wrapped pre-wrap line', () => {
+    fixtureSetup(html`
+      <div style="width: 100px">
+        <span id="target" style="white-space: pre-wrap">Hello world hello</span>
+      </div>
+    `);
+    const node = fixture.querySelector('#target');
+    const rects = getClientRects(node);
+    // the hanging space gets its own rect past the end of the first line
+    assert.lengthOf(rects, 3);
+
+    const actual = getVisibleChildTextRects(node);
+    assertRectsEqual(actual, [rects[0], rects[2]]);
+  });
+
+  it('keeps the rects of white space when white space collapses', () => {
+    fixtureSetup(html`
+      <div style="width: 100px">
+        <span id="target">Hello world hello</span>
+      </div>
+    `);
+    const node = fixture.querySelector('#target');
+    const actual = getVisibleChildTextRects(node);
+
+    assertRectsEqual(actual, getClientRects(node));
+  });
+
   it('changes rect size based on overflow of parent', () => {
     fixtureSetup(html`
       <div style="overflow: hidden; width: 10px;">

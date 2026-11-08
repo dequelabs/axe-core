@@ -314,6 +314,28 @@
   <span id="pass30" style="font-weight: lighter">This is a pass</span>
 </div>
 
+<!-- pre-wrap text whose hanging line-end space sits outside its background -->
+<div style="position: relative; display: flex; width: 400px">
+  <div style="width: 200px; height: 100px; background: #f00"></div>
+  <div style="width: 200px; height: 100px; background: #fff"></div>
+  <div
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      background: #000;
+      color: #fff;
+    "
+  >
+    <p style="margin: 0; text-align: right">
+      <span id="pass32" style="white-space: pre-wrap"
+        >A long span that wraps to a second line of text.</span
+      >
+    </p>
+  </div>
+</div>
+
 <p
   style="
     text-overflow: ellipsis;
