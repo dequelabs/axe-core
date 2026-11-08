@@ -270,5 +270,72 @@ describe('dom.isOffscreen', () => {
       );
       assert.isTrue(isOffscreen(vNode));
     });
+
+    it('should not detect elements below the viewport that can be scrolled into view in a fixed scroll region', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target">Offscreen?</div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should not detect elements in a scroll region nested in a fixed element', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0">
+          <div style="height: 100%; overflow: auto">
+            <div style="height: 200vh"></div>
+            <div id="target">Offscreen?</div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should detect elements in a fixed scroll region that is offscreen', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; top: 100vh; height: 50px; overflow: auto">
+          <div style="height: 200px"></div>
+          <div id="target">Offscreen?</div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the left edge in a fixed scroll region', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target" style="position: absolute; left: -9999px">
+            Offscreen?
+          </div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the right edge in a fixed scroll region on RTL documents', () => {
+      document.body.style.direction = 'rtl';
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target" style="position: absolute; left: 200vw">
+            Offscreen?
+          </div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect fixed elements below the viewport in a fixed scroll region', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target" style="position: fixed; top: 100vh">Offscreen?</div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
   });
 });
