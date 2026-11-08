@@ -30,6 +30,65 @@ describe('color.getForegroundColor', () => {
     assertSameColor(fgColor, new Color(0, 0, 128));
   });
 
+  describe('with filter: brightness()', () => {
+    it('applies the brightness of the element', () => {
+      const target = queryFixture(
+        '<div id="target" style="color: rgb(241 241 241); filter: brightness(0%)">Hello World</div>'
+      ).actualNode;
+      const fgColor = getForegroundColor(target);
+      assertSameColor(fgColor, new Color(0, 0, 0));
+    });
+
+    it('applies the brightness of an ancestor stacking context', () => {
+      const target = queryFixture(html`
+        <div style="filter: brightness(0.5)">
+          <p id="target" style="color: rgb(200 100 20)">Hello World</p>
+        </div>
+      `).actualNode;
+      const fgColor = getForegroundColor(target);
+      assertSameColor(fgColor, new Color(100, 50, 10), 1);
+    });
+
+    it('multiplies nested brightness filters and clamps the result', () => {
+      const target = queryFixture(html`
+        <div style="filter: brightness(2)">
+          <p
+            id="target"
+            style="color: rgb(20 100 200); filter: brightness(200%)"
+          >
+            Hello World
+          </p>
+        </div>
+      `).actualNode;
+      const fgColor = getForegroundColor(target);
+      assertSameColor(fgColor, new Color(80, 255, 255), 1);
+    });
+
+    it('applies brightness before the opacity of the same element', () => {
+      const target = queryFixture(html`
+        <div style="background-color: rgb(0 0 0)">
+          <p
+            id="target"
+            style="color: rgb(100 100 100); filter: brightness(2); opacity: 0.5"
+          >
+            Hello World
+          </p>
+        </div>
+      `).actualNode;
+      const fgColor = getForegroundColor(target);
+      // brightness: 200, then half of it over black
+      assertSameColor(fgColor, new Color(100, 100, 100), 1);
+    });
+
+    it('ignores filters that use other functions', () => {
+      const target = queryFixture(
+        '<div id="target" style="color: rgb(0 0 128); filter: brightness(0) blur(1px)">Hello World</div>'
+      ).actualNode;
+      const fgColor = getForegroundColor(target);
+      assertSameColor(fgColor, new Color(0, 0, 128));
+    });
+  });
+
   it('returns the CSS color from inside of Shadow DOM', () => {
     const target = queryShadowFixture(
       '<div id="shadow" style="height: 40px; width: 30px; background-color: red;"></div>',
