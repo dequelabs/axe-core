@@ -970,10 +970,21 @@ describe('dom.getElementStack', () => {
     });
   });
 
+  it('should return html after an element with a negative z-index', () => {
+    fixture.innerHTML = html`
+      <div id="target" style="position: relative; z-index: -1">Hello</div>
+    `;
+    axe.testUtils.flatTreeSetup(document.documentElement);
+    const target = fixture.querySelector('#target');
+    const stack = getElementStack(target).map(node => node.id || node.nodeName);
+    assert.equal(stack.at(-1), 'HTML');
+  });
+
   describe('negative z-index on body', () => {
-    const origBodyStyle = document.body.style.cssText;
+    let origBodyStyle;
 
     beforeEach(() => {
+      origBodyStyle = document.body.style.cssText;
       document.body.style.position = 'relative';
       document.body.style.zIndex = '-1';
     });
