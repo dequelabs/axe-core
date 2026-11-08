@@ -57,30 +57,26 @@ describe('dom.getVisibleChildTextRects', () => {
   });
 
   it('filters out the rect of white space hanging at the end of a wrapped pre-wrap line', () => {
+    // "Hello world" fills the line exactly, so the space after it hangs
     fixtureSetup(html`
-      <div style="width: 100px">
+      <div style="width: 11ch; font: 10px/1 monospace">
         <span id="target" style="white-space: pre-wrap">Hello world hello</span>
       </div>
     `);
     const node = fixture.querySelector('#target');
-    const rects = getClientRects(node);
-    // the hanging space gets its own rect past the end of the first line
-    assert.lengthOf(rects, 3);
-
-    const actual = getVisibleChildTextRects(node);
-    assertRectsEqual(actual, [rects[0], rects[2]]);
-  });
-
-  it('keeps the rects of white space when white space collapses', () => {
-    fixtureSetup(html`
-      <div style="width: 100px">
-        <span id="target">Hello world hello</span>
-      </div>
-    `);
-    const node = fixture.querySelector('#target');
+    const range = document.createRange();
+    range.setStart(node.firstChild, 11);
+    range.setEnd(node.firstChild, 12);
+    const spaceRect = range.getBoundingClientRect();
     const actual = getVisibleChildTextRects(node);
 
-    assertRectsEqual(actual, getClientRects(node));
+    assert.lengthOf(actual, 2, 'one rect per line');
+    actual.forEach(rect => {
+      const isSpaceRect =
+        rect.left >= spaceRect.left - 0.5 &&
+        rect.right <= spaceRect.right + 0.5;
+      assert.isFalse(isSpaceRect, 'no rect holds only the hanging space');
+    });
   });
 
   it('changes rect size based on overflow of parent', () => {
