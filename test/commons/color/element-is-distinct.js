@@ -182,6 +182,15 @@ ${cssLines}
     assert.isFalse(result);
   });
 
+  it('returns false with a box-shadow that only has a negative spread', () => {
+    const elms = getLinkElm({
+      boxShadow: '0 0 0 -3px black inset'
+    });
+
+    const result = elementIsDistinct(elms.link, elms.par);
+    assert.isFalse(result);
+  });
+
   it('returns false with a transparent box-shadow', () => {
     const elms = getLinkElm({
       boxShadow: '0 -1px 0 0 transparent inset'
