@@ -303,6 +303,31 @@ describe('dom.isOffscreen', () => {
       assert.isTrue(isOffscreen(vNode));
     });
 
+    it('should detect elements positioned outside the left edge in a fixed scroll region', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target" style="position: absolute; left: -9999px">
+            Offscreen?
+          </div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+
+    it('should detect elements positioned outside the right edge in a fixed scroll region on RTL documents', () => {
+      document.body.style.direction = 'rtl';
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target" style="position: absolute; left: 200vw">
+            Offscreen?
+          </div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+
     it('should detect fixed elements below the viewport in a fixed scroll region', () => {
       const vNode = queryFixture(html`
         <div style="position: fixed; inset: 0; overflow: auto">
