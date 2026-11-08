@@ -470,6 +470,29 @@ describe('color.getBackgroundColor', () => {
       );
     });
 
+    it('does not throw when a color above the opaque element cannot be parsed', () => {
+      const parseString = axe.commons.color.Color.prototype.parseString;
+      const stub = sinon
+        .stub(axe.commons.color.Color.prototype, 'parseString')
+        .callsFake(function (colorString) {
+          if (colorString === 'rgba(1, 2, 3, 0.5)') {
+            throw new Error('Unable to parse color');
+          }
+          return parseString.call(this, colorString);
+        });
+      try {
+        const target = setup('background: #000');
+        target.parentNode.style.background = 'rgba(1, 2, 3, 0.5)';
+        let stack;
+        assert.doesNotThrow(() => {
+          stack = axe.commons.color.getBackgroundStack(target);
+        });
+        assert.include(stack, document.getElementById('footer'));
+      } finally {
+        stub.restore();
+      }
+    });
+
     it('returns null when an ancestor stacking context has opacity', () => {
       fixture.innerHTML = html`
         <div style="position: relative; display: flex; width: 400px">
