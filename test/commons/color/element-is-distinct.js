@@ -155,6 +155,42 @@ ${cssLines}
     assert.isTrue(result);
   });
 
+  it('returns true with an inset box-shadow used as an underline', () => {
+    const elms = getLinkElm({
+      boxShadow: 'rgb(0, 104, 140) 0px -1px 0px 0px inset'
+    });
+
+    const result = elementIsDistinct(elms.link, elms.par);
+    assert.isTrue(result);
+  });
+
+  it('returns true if any of several box-shadows is visible', () => {
+    const elms = getLinkElm({
+      boxShadow: 'rgba(0, 0, 0, 0) 0px 2px, rgb(0, 0, 0) 0px 1px 0px 0px'
+    });
+
+    const result = elementIsDistinct(elms.link, elms.par);
+    assert.isTrue(result);
+  });
+
+  it('returns false with box-shadow: 0 0 0 0 black', () => {
+    const elms = getLinkElm({
+      boxShadow: '0 0 0 0 black'
+    });
+
+    const result = elementIsDistinct(elms.link, elms.par);
+    assert.isFalse(result);
+  });
+
+  it('returns false with a transparent box-shadow', () => {
+    const elms = getLinkElm({
+      boxShadow: '0 -1px 0 0 transparent inset'
+    });
+
+    const result = elementIsDistinct(elms.link, elms.par);
+    assert.isFalse(result);
+  });
+
   it('returns true if font-weight is different', () => {
     const elms = getLinkElm(
       {
