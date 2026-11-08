@@ -53,6 +53,25 @@ describe('color-contrast', () => {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
+  it('should use the background of ancestors of a scroll region that is not visible', () => {
+    const params = checkSetup(html`
+      <div style="background-color: black; height: 100px">
+        <div
+          style="overflow: auto; height: 40px; visibility: hidden; background-color: white"
+        >
+          <div
+            id="target"
+            style="height: 100px; visibility: visible; color: #777"
+          >
+            My text
+          </div>
+        </div>
+      </div>
+    `);
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   it('should return true for hidden element', () => {
     const params = checkSetup(html`
       <div

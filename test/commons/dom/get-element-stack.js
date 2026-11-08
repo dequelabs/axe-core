@@ -968,5 +968,40 @@ describe('dom.getElementStack', () => {
       const stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
+
+    it('should return stack of a visible child of a scroll region that is not visible', () => {
+      fixture.innerHTML = html`
+        <main id="1">
+          <div id="2" style="overflow:auto;height:40px;visibility:hidden">
+            <div id="3" style="height:100px;visibility:visible">
+              <p id="target">Hello World</p>
+            </div>
+          </div>
+        </main>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '1', 'fixture']);
+    });
+
+    it('should return stack of a child of an offscreen scroll region', () => {
+      fixture.innerHTML = html`
+        <main id="1" style="height:100px">
+          <div
+            id="2"
+            style="overflow:auto;position:absolute;top:0;left:-500px;width:100px;height:40px"
+          >
+            <div id="3" style="position:relative;left:500px;height:100px">
+              <p id="target">Hello World</p>
+            </div>
+          </div>
+        </main>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#target');
+      const stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '1', 'fixture']);
+    });
   });
 });
