@@ -55,6 +55,30 @@ describe('color.getBackgroundColor', () => {
     assert.deepEqual(bgNodes, [parent]);
   });
 
+  it('should apply a brightness filter to the background', () => {
+    fixture.innerHTML = html`
+      <div style="background-color: rgb(200 100 20); filter: brightness(0.5)">
+        <p id="target">Hello World</p>
+      </div>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    assertColorsClose(actual, new axe.commons.color.Color(100, 50, 10, 1), 1);
+  });
+
+  it('should not apply a brightness filter to the background behind the element', () => {
+    fixture.innerHTML = html`
+      <div style="background-color: rgb(200 100 20)">
+        <p id="target" style="filter: brightness(0.5)">Hello World</p>
+      </div>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    assertColorsClose(actual, new axe.commons.color.Color(200, 100, 20, 1), 1);
+  });
+
   it('should return the blended color if it is transparent and positioned', () => {
     fixture.innerHTML = html`
       <div
