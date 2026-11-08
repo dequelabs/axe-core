@@ -251,4 +251,55 @@ describe('page-no-duplicate', () => {
       );
     });
   });
+  // https://github.com/dequelabs/axe-core/issues/5485
+  describe('nested document or application', () => {
+    const options = { selector: 'main:not([role]), [role=main]' };
+
+    it('should return true if the other element is in a nested document or application', () => {
+      for (const role of ['document', 'application']) {
+        const params = checkSetup(
+          html`<main id="target"></main>
+            <div role="${role}"><main></main></div>`,
+          options
+        );
+        assert.isTrue(check.evaluate.apply(checkContext, params), role);
+        assert.lengthOf(checkContext._relatedNodes, 0, role);
+        checkContext.reset();
+      }
+    });
+
+    it('should return false if there are two elements in the same nested document', () => {
+      const params = checkSetup(
+        html`<main></main>
+          <div role="document">
+            <main id="target"></main>
+            <div role="main" id="dup"></div>
+          </div>`,
+        options
+      );
+      assert.isFalse(check.evaluate.apply(checkContext, params));
+      assert.deepEqual(
+        checkContext._relatedNodes,
+        Array.from(fixture.querySelectorAll('#dup'))
+      );
+    });
+
+    it('should check the first element of each document scope', () => {
+      const params = checkSetup(
+        html`<main id="target"></main>
+          <div role="application"><main id="nested"></main></div>`,
+        options
+      );
+      assert.isTrue(check.evaluate.apply(checkContext, params));
+
+      const nested = axe.utils.getNodeFromTree(
+        fixture.querySelector('#nested')
+      );
+      checkContext.reset();
+      assert.isTrue(
+        check.evaluate.call(checkContext, nested.actualNode, options, nested)
+      );
+      assert.notEqual(checkContext._data, 'ignored');
+    });
+  });
 });
