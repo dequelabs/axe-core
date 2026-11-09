@@ -484,7 +484,8 @@
       "incomplete": {
         "singular": "Ensure aria-errormessage value `${data.values}` references an existing element",
         "plural": "Ensure aria-errormessage values `${data.values}` reference existing elements",
-        "idrefs": "Unable to determine if aria-errormessage element exists on the page: ${data.values}"
+        "idrefs": "Unable to determine if aria-errormessage element exists on the page: ${data.values}",
+        "emptyLiveRegion": "Ensure aria-errormessage value `${data.values}` is announced by a live region on the page"
       }
     },
     "aria-hidden-body": {

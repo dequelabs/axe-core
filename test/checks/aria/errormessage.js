@@ -393,6 +393,108 @@ describe('aria-errormessage', () => {
     );
   });
 
+  describe('with a live region elsewhere on the page', () => {
+    // The message can be announced through a separate live region, such as
+    // an error summary that is updated on submit (see #4911)
+    it('should return true if a live region on the page has content', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div role="status">The form has 1 error</div>
+      `);
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return true if an aria-live=polite region on the page has content', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div aria-live="polite"><p>The form has 1 error</p></div>
+      `);
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return true if an implicit live region on the page has content', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <output>The form has 1 error</output>
+      `);
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return undefined if the live regions on the page are empty', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div role="alert"></div>
+        <div aria-live="assertive"><span aria-hidden="true">hidden</span></div>
+      `);
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'emptyLiveRegion',
+        values: ['plain']
+      });
+    });
+
+    it('should return false if the only live region is hidden', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div role="status" aria-hidden="true">The form has 1 error</div>
+        <div aria-live="polite" style="display: none">The form has 1 error</div>
+      `);
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return false if aria-live=off turns off the live region', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div role="status" aria-live="off">The form has 1 error</div>
+      `);
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return false if the errormessage element is hidden', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain" hidden>Enter your name</div>
+        <div role="status">The form has 1 error</div>
+      `);
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.equal(checkContext._data.messageKey, 'hidden');
+    });
+  });
+
   describe('SerialVirtualNode', () => {
     it('should return undefined', () => {
       const vNode = new axe.SerialVirtualNode({
