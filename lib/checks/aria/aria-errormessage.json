@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
+      "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique, or a live region on the page can announce the message",
       "fail": {
         "singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
         "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",

@@ -435,6 +435,23 @@ describe('aria-errormessage', () => {
       );
     });
 
+    it('should return true if a live region in a shadow tree has content', () => {
+      const vNode = queryFixture(html`
+        <input id="target" aria-invalid="true" aria-errormessage="plain" />
+        <div id="plain">Enter your name</div>
+        <div>
+          <template shadowrootmode="open">
+            <div role="status">The form has 1 error</div>
+          </template>
+        </div>
+      `);
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
     it('should return undefined if the live regions on the page are empty', () => {
       const vNode = queryFixture(html`
         <input id="target" aria-invalid="true" aria-errormessage="plain" />
