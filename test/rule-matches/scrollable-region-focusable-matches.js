@@ -91,6 +91,42 @@ describe('scrollable-region-focusable-matches', () => {
     assert.isFalse(actual);
   });
 
+  it('returns false when element is a visually hidden 1px scroll region', () => {
+    const target = queryFixture(html`
+      <button>
+        <span aria-hidden="true">☕</span>
+        <span
+          id="target"
+          style="position: absolute; width: 1px; height: 1px; overflow-x: hidden"
+        >
+          Coffee
+        </span>
+      </button>
+    `);
+    const actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when element has no width', () => {
+    const target = queryFixture(html`
+      <div id="target" style="width: 0; height: 200px; overflow: auto">
+        <div style="height: 2000px">Content</div>
+      </div>
+    `);
+    const actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when a small scroll region can show part of its content', () => {
+    const target = queryFixture(html`
+      <div id="target" style="width: 20px; height: 20px; overflow: auto">
+        <div style="height: 2000px">Content</div>
+      </div>
+    `);
+    const actual = rule.matches(target.actualNode, target);
+    assert.isTrue(actual);
+  });
+
   it('returns false when element has combobox ancestor', () => {
     const target = queryFixture(
       '<div role="combobox"><ul id="target" role="listbox" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
