@@ -14,8 +14,8 @@
   ],
   "actIds": ["bc4a75", "ff89c9"],
   "metadata": {
-    "description": "Ensure elements with an ARIA role that require child roles contain them",
-    "help": "Certain ARIA roles must contain particular children"
+    "description": "Ensure elements with an ARIA role that require child roles contain them and no disallowed children",
+    "help": "Certain ARIA roles must contain particular children and no disallowed children"
   },
   "all": [],
   "any": ["aria-required-children"],
