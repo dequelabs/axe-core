@@ -117,6 +117,26 @@ describe('scrollable-region-focusable-matches', () => {
     assert.isFalse(actual);
   });
 
+  it('returns false when element is 1px high', () => {
+    const target = queryFixture(html`
+      <div id="target" style="width: 300px; height: 1px; overflow-y: auto">
+        <div style="height: 2000px">Content</div>
+      </div>
+    `);
+    const actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when element is 2px wide and high', () => {
+    const target = queryFixture(html`
+      <div id="target" style="width: 2px; height: 2px; overflow: auto">
+        <div style="height: 2000px; width: 2000px">Content</div>
+      </div>
+    `);
+    const actual = rule.matches(target.actualNode, target);
+    assert.isTrue(actual);
+  });
+
   it('returns true when a small scroll region can show part of its content', () => {
     const target = queryFixture(html`
       <div id="target" style="width: 20px; height: 20px; overflow: auto">
