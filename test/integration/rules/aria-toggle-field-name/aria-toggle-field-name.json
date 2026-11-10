@@ -7,7 +7,8 @@
     ["#pass3"],
     ["#pass4"],
     ["#pass5"],
-    ["#pass6"]
+    ["#pass6"],
+    ["#summary-checkbox-pass"]
   ],
   "violations": [
     ["#fail1"],
@@ -15,7 +16,8 @@
     ["#fail3"],
     ["#fail4"],
     ["#fail5"],
-    ["#fail6"]
+    ["#fail6"],
+    ["#summary-checkbox-fail"]
   ],
   "incomplete": [["#canttell1"], ["#canttell2"]]
 }

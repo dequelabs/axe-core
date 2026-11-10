@@ -52,6 +52,13 @@
   foo
   <div id="pass6" role="textbox" aria-labelledby="foo"></div>
 </label>
+<details>
+  <summary
+    id="summary-textbox-pass"
+    role="textbox"
+    aria-label="Search details"
+  ></summary>
+</details>
 
 <!-- FAIL -->
 <!-- aria-label with empty text string -->
@@ -100,6 +107,9 @@
   foo
   <div id="fail10" role="textbox"></div>
 </label>
+<details>
+  <summary id="summary-textbox-fail" role="textbox"></summary>
+</details>
 
 <!-- INAPPLICABLE -->
 <input id="inapplicable2" />

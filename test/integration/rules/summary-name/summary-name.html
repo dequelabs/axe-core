@@ -1,3 +1,16 @@
+<style>
+  #marker-only-fail::marker,
+  #marker-text-pass::marker {
+    content: 'Disclosure';
+  }
+  #title-no-marker-pass {
+    list-style: none;
+  }
+  #title-no-marker-pass::marker {
+    content: none;
+  }
+</style>
+
 <details>
   <summary id="empty-fail"></summary>
   Hello world
@@ -56,13 +69,94 @@
 </details>
 
 <details>
-  <summary id="heading-role-fail" role="heading"></summary>
-  Conflict resolution gets this to be ignored
+  <summary id="heading-role-ignored" role="heading"></summary>
+  An explicit semantic role excludes this summary from summary-name
 </details>
 
 <details>
-  <summary id="button-role-fail" role="button"></summary>
+  <summary id="button-role-ignored" role="button"></summary>
   Hello world
+</details>
+
+<details>
+  <summary id="checkbox-role-ignored" role="checkbox"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="fallback-button-role-ignored" role="invalid button"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="dpub-role-ignored" role="doc-abstract"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary
+    id="fallback-dpub-role-ignored"
+    role="invalid doc-abstract"
+  ></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="invalid-role-fail" role="invalid"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="abstract-role-fail" role="command"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="empty-role-fail" role=""></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="fallback-none-role-fail" role="invalid none button"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="presentation-role-pass" role="presentation">
+    Opening times
+  </summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="none-role-pass" role="none">Opening times</summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="marker-only-fail"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="marker-text-pass">Opening times</summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="title-no-marker-pass" title="Opening times"></summary>
+  Hello world
+</details>
+
+<details>
+  <summary id="whitespace-title-fail" title="   "></summary>
+  Hello world
+</details>
+
+<details>
+  <p>Hello world</p>
+  <summary id="first-summary-pass">Opening times</summary>
+  <summary id="later-summary-ignored"></summary>
 </details>
 
 <!-- Invalid naming methods -->

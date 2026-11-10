@@ -57,6 +57,47 @@ describe('no-naming-method-matches', () => {
     assert.isFalse(actual);
   });
 
+  ['button', 'checkbox', 'textbox'].forEach(role => {
+    it(`returns true for a summary with role="${role}"`, () => {
+      const vNode = queryFixture(html`
+        <details>
+          <summary id="target" role="${role}"></summary>
+        </details>
+      `);
+      assert.isTrue(rule.matches(null, vNode));
+    });
+  });
+
+  ['none', 'presentation', 'invalid', 'command', ''].forEach(role => {
+    it(`returns false for a summary with role="${role}"`, () => {
+      const vNode = queryFixture(html`
+        <details>
+          <summary id="target" role="${role}"></summary>
+        </details>
+      `);
+      assert.isFalse(rule.matches(null, vNode));
+    });
+  });
+
+  it('returns false for a summary combobox with a child input', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="combobox"><input type="text" /></summary>
+      </details>
+    `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
+  it('returns false for a summary listbox popup of a combobox', () => {
+    const vNode = queryFixture(html`
+      <div role="combobox" aria-controls="target"></div>
+      <details>
+        <summary id="target" role="listbox"></summary>
+      </details>
+    `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
   it('returns false for INPUT of type `BUTTON`, `SUBMIT` or `RESET`', () => {
     ['button', 'submit', 'reset'].forEach(type => {
       const vNode = queryFixture(
