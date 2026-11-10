@@ -8,7 +8,7 @@ describe('object-is-loaded-matches', () => {
     fixture.innerHTML = markup;
     await new Promise(r => setTimeout(r, delay));
     const tree = axe.setup();
-    return axe.utils.querySelectorAll(tree, '#target')[0];
+    return axe.commons.dom.query(tree, '#target')[0];
   }
 
   before(() => {

@@ -75,7 +75,7 @@ describe('page-no-duplicate', () => {
         .attachShadow({ mode: 'open' });
       shadow.innerHTML = '<main></main>';
       axe.testUtils.fixtureSetup(div);
-      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const vNode = axe.commons.dom.query(axe._tree, '#target')[0];
 
       assert.isFalse(
         check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
@@ -96,7 +96,7 @@ describe('page-no-duplicate', () => {
         .attachShadow({ mode: 'open' });
       shadow.innerHTML = '<main></main>';
       axe.testUtils.fixtureSetup(div);
-      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const vNode = axe.commons.dom.query(axe._tree, '#target')[0];
 
       assert.isTrue(
         check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
@@ -171,7 +171,7 @@ describe('page-no-duplicate', () => {
       div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
         '<footer></footer>';
       axe.testUtils.fixtureSetup(div);
-      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const vNode = axe.commons.dom.query(axe._tree, '#target')[0];
 
       assert.isTrue(
         check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
@@ -244,7 +244,7 @@ describe('page-no-duplicate', () => {
       div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
         '<footer></footer>';
       axe.testUtils.fixtureSetup(div);
-      const vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+      const vNode = axe.commons.dom.query(axe._tree, '#target')[0];
 
       assert.isTrue(
         check.evaluate.call(checkContext, vNode.actualNode, options, vNode)

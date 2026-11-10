@@ -189,7 +189,7 @@ describe('aria-conditional-attr', () => {
           checked
         />`;
         const root = axe.setup(fixture);
-        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+        const vNode = axe.commons.dom.query(root, 'input')[0];
 
         assert.isTrue(
           ariaConditionalCheck.call(checkContext, null, null, vNode)
@@ -201,7 +201,7 @@ describe('aria-conditional-attr', () => {
         fixture.innerHTML = html`<input type="checkbox" aria-checked="true" />`;
         fixture.firstChild.click(); // set checked state
         const root = axe.setup(fixture);
-        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+        const vNode = axe.commons.dom.query(root, 'input')[0];
 
         assert.isTrue(
           ariaConditionalCheck.call(checkContext, null, null, vNode)
@@ -267,7 +267,7 @@ describe('aria-conditional-attr', () => {
         fixture.innerHTML = markup;
         fixture.querySelector('input').indeterminate = true;
         const root = axe.setup(fixture);
-        return axe.utils.querySelectorAll(root, 'input')[0];
+        return axe.commons.dom.query(root, 'input')[0];
       }
 
       it('returns true for aria-checked="mixed"', () => {
@@ -320,7 +320,7 @@ describe('aria-conditional-attr', () => {
       it('returns true for aria-checked="true" on a [checked] radio', () => {
         fixture.innerHTML = `<input type="radio" aria-checked="true" checked>`;
         const root = axe.setup(fixture);
-        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+        const vNode = axe.commons.dom.query(root, 'input')[0];
 
         assert.isTrue(
           ariaConditionalCheck.call(checkContext, null, null, vNode)
@@ -332,7 +332,7 @@ describe('aria-conditional-attr', () => {
         fixture.innerHTML = `<input type="radio" aria-checked="true">`;
         fixture.firstChild.click(); // set checked state
         const root = axe.setup(fixture);
-        const vNode = axe.utils.querySelectorAll(root, 'input')[0];
+        const vNode = axe.commons.dom.query(root, 'input')[0];
 
         assert.isTrue(
           ariaConditionalCheck.call(checkContext, null, null, vNode)

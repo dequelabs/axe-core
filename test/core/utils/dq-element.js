@@ -196,7 +196,7 @@ describe('DqElement', () => {
       const tree = fixtureSetup(
         '<main id="main"></main><iframe id="iframe"></iframe>'
       );
-      const main = axe.utils.querySelectorAll(tree, 'main')[0];
+      const main = axe.commons.dom.query(tree, 'main')[0];
       const mainSpec = {
         selector: ['#main'],
         ancestry: ['html > body > main'],
@@ -204,7 +204,7 @@ describe('DqElement', () => {
       };
       dqMain = new DqElement(main, {}, mainSpec);
 
-      const iframe = axe.utils.querySelectorAll(tree, 'iframe')[0];
+      const iframe = axe.commons.dom.query(tree, 'iframe')[0];
       const iframeSpec = {
         selector: ['#iframe'],
         ancestry: ['html > body > iframe'],

@@ -10,21 +10,21 @@ describe('landmark-has-body-context', () => {
   it('returns true for elements with a role', () => {
     fixtureSetup('<main><footer role="contentinfo"></footer></main>');
 
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+    const vNode = axe.commons.dom.query(axe._tree[0], 'footer')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 
   it('returns true for elements not contained in a landmark', () => {
     fixtureSetup('<div><footer role="contentinfo"></footer></div>');
 
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+    const vNode = axe.commons.dom.query(axe._tree[0], 'footer')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 
   it('returns false for elements contained in a landmark', () => {
     fixtureSetup('<main><footer></footer></main>');
 
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+    const vNode = axe.commons.dom.query(axe._tree[0], 'footer')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -39,7 +39,7 @@ describe('landmark-has-body-context', () => {
       shadow.innerHTML = '<footer></footer>';
 
       fixtureSetup(article);
-      const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+      const vNode = axe.commons.dom.query(axe._tree[0], 'footer')[0];
       assert.isFalse(rule.matches(vNode.actualNode, vNode));
     }
   );

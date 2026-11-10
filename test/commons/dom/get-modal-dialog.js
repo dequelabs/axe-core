@@ -8,7 +8,7 @@ describe('dom.getModalDialog', () => {
     fixture.innerHTML = html` <dialog id="target"><span>Hello</span></dialog> `;
     document.querySelector('#target').showModal();
     const tree = flatTreeSetup(fixture);
-    const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+    const vNode = axe.commons.dom.query(tree, '#target')[0];
 
     assert.equal(getModalDialog(), vNode);
   });
@@ -98,7 +98,7 @@ describe('dom.getModalDialog', () => {
       `;
       document.querySelector('#target').showModal();
       const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+      const vNode = axe.commons.dom.query(tree, '#target')[0];
 
       assert.equal(getModalDialog(), vNode);
     });
@@ -140,7 +140,7 @@ describe('dom.getModalDialog', () => {
       document.querySelector('#scroll-target').scrollIntoView();
       document.querySelector('#target').showModal();
       const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+      const vNode = axe.commons.dom.query(tree, '#target')[0];
 
       assert.equal(getModalDialog(), vNode);
     });
@@ -158,7 +158,7 @@ describe('dom.getModalDialog', () => {
       `;
       document.querySelector('#target').showModal();
       const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+      const vNode = axe.commons.dom.query(tree, '#target')[0];
 
       assert.equal(getModalDialog(), vNode);
     });
@@ -178,7 +178,7 @@ describe('dom.getModalDialog', () => {
       `;
       document.querySelector('#target').showModal();
       const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+      const vNode = axe.commons.dom.query(tree, '#target')[0];
 
       assert.equal(getModalDialog(), vNode);
     });

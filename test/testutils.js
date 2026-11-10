@@ -595,7 +595,7 @@ const declarativeShadowDOMRegex =
    */
   function findTarget(rootNode, target, options = {}) {
     if (!options.shadow) {
-      return axe.utils.querySelectorAll(rootNode, target)[0];
+      return axe.commons.dom.query(rootNode, target)[0];
     }
 
     // find target in deepest to shallowest root order first

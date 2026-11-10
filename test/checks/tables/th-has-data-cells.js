@@ -269,7 +269,7 @@ describe('th-has-data-cells', () => {
     `;
 
     axe.testUtils.flatTreeSetup(fixture);
-    const node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
+    const node = axe.commons.dom.query(axe._tree, 'table')[0].actualNode;
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('th-has-data-cells')

@@ -28,7 +28,7 @@ describe('text.nativeTextAlternative', () => {
 
   it('returns `` when the node is not an element', () => {
     fixtureSetup('foo bar baz');
-    const fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
+    const fixture = axe.commons.dom.query(axe._tree[0], '#fixture')[0];
     assert.equal(fixture.children[0].actualNode.nodeType, 3);
     assert.equal(nativeTextAlternative(fixture.children[0]), '');
   });

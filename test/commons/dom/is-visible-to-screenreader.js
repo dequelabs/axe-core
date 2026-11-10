@@ -195,7 +195,7 @@ describe('dom.isVisibleToScreenReaders', () => {
     fixture.innerHTML = '<div></div>';
     makeShadowTreeHidden(fixture.firstChild);
     tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    node = axe.utils.querySelectorAll(tree, 'input')[0];
+    node = axe.commons.dom.query(tree, 'input')[0];
     assert.isTrue(isVisibleToScreenReaders(node));
   });
 
@@ -206,7 +206,7 @@ describe('dom.isVisibleToScreenReaders', () => {
     fixture.innerHTML = '<div style="display:none"></div>';
     makeShadowTreeHidden(fixture.firstChild);
     tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    node = axe.utils.querySelectorAll(tree, 'input')[0];
+    node = axe.commons.dom.query(tree, 'input')[0];
     assert.isFalse(isVisibleToScreenReaders(node));
   });
 
@@ -226,7 +226,7 @@ describe('dom.isVisibleToScreenReaders', () => {
     fixture.innerHTML = '<div><p><a>hello</a></p></div>';
     makeShadowTree(fixture.firstChild);
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const vNode = axe.utils.querySelectorAll(tree, 'a')[0];
+    const vNode = axe.commons.dom.query(tree, 'a')[0];
     assert.isFalse(isVisibleToScreenReaders(vNode));
   });
 

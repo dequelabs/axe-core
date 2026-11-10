@@ -5,15 +5,15 @@ describe('axe.utils.contains', () => {
 
   it('is true when the first node is an ancestor', () => {
     const tree = fixtureSetup(html`<section><img /></section>`);
-    const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
-    const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+    const node1 = axe.commons.dom.query(tree, 'section')[0];
+    const node2 = axe.commons.dom.query(tree, 'img')[0];
     assert.isTrue(axe.utils.contains(node1, node2));
   });
 
   it('is false when the first node is a descendant', () => {
     const tree = fixtureSetup(html`<section><img /></section>`);
-    const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
-    const node2 = axe.utils.querySelectorAll(tree, 'section')[0];
+    const node1 = axe.commons.dom.query(tree, 'img')[0];
+    const node2 = axe.commons.dom.query(tree, 'section')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
   });
 
@@ -22,15 +22,15 @@ describe('axe.utils.contains', () => {
       html`<section></section>
         <img />`
     );
-    const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
-    const node2 = axe.utils.querySelectorAll(tree, 'section')[0];
+    const node1 = axe.commons.dom.query(tree, 'img')[0];
+    const node2 = axe.commons.dom.query(tree, 'section')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
     assert.isFalse(axe.utils.contains(node2, node1));
   });
 
   it('is true when the passed the same node', () => {
     const tree = fixtureSetup(html`<img />`);
-    const node = axe.utils.querySelectorAll(tree, 'img')[0];
+    const node = axe.commons.dom.query(tree, 'img')[0];
     assert.isTrue(axe.utils.contains(node, node));
   });
 
@@ -39,8 +39,8 @@ describe('axe.utils.contains', () => {
       html`<section><input /></section>
         <img />`
     );
-    const node1 = axe.utils.querySelectorAll(tree, 'input')[0];
-    const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+    const node1 = axe.commons.dom.query(tree, 'input')[0];
+    const node2 = axe.commons.dom.query(tree, 'img')[0];
     assert.isFalse(axe.utils.contains(node1, node2));
     assert.isFalse(axe.utils.contains(node2, node1));
   });
@@ -83,8 +83,8 @@ describe('axe.utils.contains', () => {
         html`<section><img /></section>`
       );
       const tree = axe.setup(fixture);
-      const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
-      const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+      const node1 = axe.commons.dom.query(tree, 'section')[0];
+      const node2 = axe.commons.dom.query(tree, 'img')[0];
       assert.isTrue(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));
     });
@@ -96,8 +96,8 @@ describe('axe.utils.contains', () => {
         html`<div><img /></div>`
       );
       const tree = axe.setup(fixture);
-      const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
-      const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+      const node1 = axe.commons.dom.query(tree, 'section')[0];
+      const node2 = axe.commons.dom.query(tree, 'img')[0];
       assert.isTrue(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));
     });
@@ -111,8 +111,8 @@ describe('axe.utils.contains', () => {
         html`<div><img /></div>`
       );
       const tree = axe.setup(fixture);
-      const node1 = axe.utils.querySelectorAll(tree, 'main')[0];
-      const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+      const node1 = axe.commons.dom.query(tree, 'main')[0];
+      const node2 = axe.commons.dom.query(tree, 'img')[0];
       assert.isTrue(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));
     });
@@ -129,8 +129,8 @@ describe('axe.utils.contains', () => {
         html`<input />`
       );
       const tree = axe.setup(fixture);
-      const node1 = axe.utils.querySelectorAll(tree, 'img')[0];
-      const node2 = axe.utils.querySelectorAll(tree, 'input')[0];
+      const node1 = axe.commons.dom.query(tree, 'img')[0];
+      const node2 = axe.commons.dom.query(tree, 'input')[0];
 
       assert.isFalse(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));
@@ -143,8 +143,8 @@ describe('axe.utils.contains', () => {
         html`<section><slot /></section>`
       );
       const tree = axe.setup(fixture);
-      const node1 = axe.utils.querySelectorAll(tree, 'section')[0];
-      const node2 = axe.utils.querySelectorAll(tree, 'img')[0];
+      const node1 = axe.commons.dom.query(tree, 'section')[0];
+      const node2 = axe.commons.dom.query(tree, 'img')[0];
 
       assert.isTrue(axe.utils.contains(node1, node2));
       assert.isFalse(axe.utils.contains(node2, node1));

@@ -18,7 +18,7 @@ describe('text.formControlValue', () => {
     const target = queryFixture(html`
       <div id="target" role="textbox" value="foo">bar</div>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree, '#fixture')[0];
+    const vNode = axe.commons.dom.query(axe._tree, '#fixture')[0];
     assert.equal(formControlValue(target, { startNode: vNode }), 'bar');
   });
 
@@ -184,7 +184,7 @@ describe('text.formControlValue', () => {
       `);
       fixture.querySelector('#target').value = 'bar';
       const rootNode = axe.setup(fixture);
-      const target = axe.utils.querySelectorAll(rootNode, '#target')[0];
+      const target = axe.commons.dom.query(rootNode, '#target')[0];
       assert.equal(nativeSelectValue(target), 'baz');
     });
 

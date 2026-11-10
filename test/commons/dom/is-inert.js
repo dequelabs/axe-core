@@ -55,7 +55,7 @@ describe('dom.isInert', () => {
     `;
     document.querySelector('#modal').showModal();
     const tree = flatTreeSetup(fixture);
-    const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+    const vNode = axe.commons.dom.query(tree, '#target')[0];
 
     assert.isTrue(isInert(vNode));
   });
@@ -64,7 +64,7 @@ describe('dom.isInert', () => {
     fixture.innerHTML = html` <dialog id="target"><span>Hello</span></dialog> `;
     document.querySelector('#target').showModal();
     const tree = flatTreeSetup(fixture);
-    const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+    const vNode = axe.commons.dom.query(tree, '#target')[0];
 
     assert.isFalse(isInert(vNode));
   });
@@ -75,7 +75,7 @@ describe('dom.isInert', () => {
     `;
     document.querySelector('#modal').showModal();
     const tree = flatTreeSetup(fixture);
-    const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+    const vNode = axe.commons.dom.query(tree, '#target')[0];
 
     assert.isFalse(isInert(vNode));
   });
@@ -98,7 +98,7 @@ describe('dom.isInert', () => {
       `;
       document.querySelector('#modal').showModal();
       const tree = flatTreeSetup(fixture);
-      const vNode = axe.utils.querySelectorAll(tree, '#target')[0];
+      const vNode = axe.commons.dom.query(tree, '#target')[0];
 
       assert.isFalse(isInert(vNode, { isAncestor: true }));
     });
