@@ -314,6 +314,20 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, 'div tr > td h1'));
     });
 
+    it('returns true if ancestor hierarchical matches when parent does not', () => {
+      const virtualNode = queryFixture(
+        '<div><span><span><p id="target"></p></span></span></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div > span p'));
+    });
+
+    it('returns true if great ancestor hierarchical matches when parent does not', () => {
+      const virtualNode = queryFixture(
+        '<div><span><span><span><span><span><p id="target"></p></span></span></span></span></span></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div > span p'));
+    });
+
     it('returns false if parent selector does not match', () => {
       const virtualNode = queryFixture('<div><h1 id="target">foo</h1></div>');
       assert.isFalse(matches(virtualNode, 'span > h1'));
