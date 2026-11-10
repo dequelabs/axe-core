@@ -1,5 +1,3 @@
-const { html } = axe.testUtils;
-
 function setShadowId(vNode, shadowId) {
   vNode.shadowId = shadowId;
   for (var i = 0; i < vNode.children.length; i++) {
@@ -8,56 +6,54 @@ function setShadowId(vNode, shadowId) {
 }
 
 function getTestDom() {
-  const htmlEl = document.createElement('html');
-  htmlEl.innerHTML = html`
-    <body>
-      <div class="first" data-a11yhero="faulkner">
-        <ul>
-          <li class="breaking"></li>
-          <li class="breaking"></li>
-        </ul>
-      </div>
-      <div id="one"></div>
-      <div class="second third">
-        <ul>
-          <li role="tab" id="one"></li>
-          <li role="button" id="one"></li>
-        </ul>
-      </div>
-      <span class="fourth">
-        <span>
-          <span>
-            <span></span>
-            <span></span>
-          </span>
-        </span>
-      </span>
-    </body>
-  `;
+  const html = document.createElement('html');
+  html.innerHTML =
+    '<body>' +
+    '<div class="first" data-a11yhero="faulkner">' +
+    '<ul>' +
+    '<li class="breaking"></li>' +
+    '<li class="breaking"></li>' +
+    '</ul>' +
+    '</div>' +
+    '<div id="one"></div>' +
+    '<div class="second third">' +
+    '<ul>' +
+    '<li role="tab" id="one"></li>' +
+    '<li role="button" id="one"></li>' +
+    '</ul>' +
+    '</div>' +
+    '<span class="fourth">' +
+    '<span>' +
+    '<span>' +
+    '<span></span>' +
+    '<span></span>' +
+    '</span>' +
+    '</span>' +
+    '</span>' +
+    '</body>';
 
   // remove the head node
-  const head = htmlEl.querySelector('head');
+  const head = html.querySelector('head');
   if (head) {
     head.parentNode.removeChild(head);
   }
 
-  const tree = axe.utils.getFlattenedTree(htmlEl);
+  const tree = axe.utils.getFlattenedTree(html);
 
   // setup shadowIds for testing
-  const first = axe.utils.getNodeFromTree(htmlEl.querySelector('.first'));
-  const second = axe.utils.getNodeFromTree(htmlEl.querySelector('.second'));
-  const button = axe.utils.getNodeFromTree(
-    htmlEl.querySelector('[role="button"]')
-  );
+  const first = axe.utils.getNodeFromTree(html.querySelector('.first'));
+  const second = axe.utils.getNodeFromTree(html.querySelector('.second'));
   setShadowId(first, 'a');
   setShadowId(second, 'b');
-  setShadowId(button, 'c');
+  axe.utils.getNodeFromTree(html.querySelector('[role="button"]')).shadowId =
+    'c';
 
   return tree;
 }
 
 describe('axe.utils.querySelectorAllFilter', () => {
   let dom;
+  afterEach(() => {});
 
   const tests = ['without cache', 'with cache'];
   for (var i = 0; i < tests.length; i++) {
@@ -70,11 +66,11 @@ describe('axe.utils.querySelectorAllFilter', () => {
           dom = getTestDom();
 
           // prove we're using the DOM by deleting the cache
-          delete dom[0]._selectorMap;
+          delete dom[0]._selectorCache;
         });
 
         it('should not have a primed cache', () => {
-          assert.isUndefined(dom[0]._selectorMap);
+          assert.isUndefined(dom[0]._selectorCache);
         });
       } else {
         beforeEach(() => {
@@ -157,11 +153,10 @@ describe('axe.utils.querySelectorAllFilter', () => {
           assert.equal(result.length, 1);
         });
         it('should find nodes using id, within a shadow DOM', () => {
-          const vNode = axe.utils.getNodeFromTree(
-            dom[0].actualNode.querySelector('.second')
+          const result = axe.utils.querySelectorAllFilter(
+            dom[0].children[0].children[2],
+            '#one'
           );
-
-          const result = axe.utils.querySelectorAllFilter(vNode, '#one');
           assert.equal(result.length, 1);
         });
       }
