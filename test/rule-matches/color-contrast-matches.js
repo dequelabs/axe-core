@@ -447,6 +447,68 @@ describe('color-contrast-matches', () => {
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should preserve an implicit label for an enabled button', () => {
+    fixture.innerHTML = html`
+      <label id="hint"
+        ><button type="button"></button><span>Search</span></label
+      >
+      <textarea aria-describedby="hint" disabled></textarea>
+    `;
+    const target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should exempt only the exact description when its ID has nonbreaking spaces', () => {
+    fixture.innerHTML = html`
+      <p id="long&#160;&#160;hint">Help text</p>
+      <p id="hint">Other text</p>
+      <textarea aria-describedby="long&#160;&#160;hint" disabled></textarea>
+    `;
+    const [description, unrelated] = fixture.querySelectorAll('p');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(
+      rule.matches(description, axe.utils.getNodeFromTree(description))
+    );
+    assert.isTrue(
+      rule.matches(unrelated, axe.utils.getNodeFromTree(unrelated))
+    );
+  });
+
+  (shadowSupport && 'ariaDescribedByElements' in window.Element.prototype
+    ? it
+    : xit)(
+    'should preserve a description shared by a reflected reference across a shadow boundary',
+    () => {
+      const target = axe.testUtils.queryFixture(html`
+        <p id="target">Help text</p>
+        <textarea aria-describedby="target" disabled></textarea>
+        <div id="host">
+          <template shadowrootmode="open">
+            <input />
+          </template>
+        </div>
+      `);
+      const control = fixture
+        .querySelector('#host')
+        .shadowRoot.querySelector('input');
+      control.ariaDescribedByElements = [target.actualNode];
+      assert.isTrue(rule.matches(target.actualNode, target));
+    }
+  );
+
+  it('should preserve a description for an enabled control in the first legend', () => {
+    fixture.innerHTML = html`
+      <p id="hint">Help text</p>
+      <fieldset disabled>
+        <legend><input type="checkbox" aria-describedby="hint" /></legend>
+      </fieldset>
+    `;
+    const target = fixture.querySelector('#hint');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   it('should not match when inputs are disabled by an ancestor - aria-labelledby', () => {
     fixture.innerHTML = html`
       <div id="t1">Test</div>

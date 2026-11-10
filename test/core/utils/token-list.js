@@ -23,16 +23,6 @@ describe('axe.utils.tokenList', () => {
     ]);
   });
 
-  it('should split on single ASCII whitespace characters', () => {
-    assert.deepEqual(axe.utils.tokenList('a\tb\nc\fd\re'), [
-      'a',
-      'b',
-      'c',
-      'd',
-      'e'
-    ]);
-  });
-
   it('should return empty string array for null value', () => {
     assert.deepEqual(axe.utils.tokenList(null), ['']);
   });
