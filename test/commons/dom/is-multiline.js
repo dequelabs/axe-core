@@ -141,6 +141,105 @@ describe('dom.isMultiline', () => {
     assert.isFalse(isMultiline(fixture.firstElementChild));
   });
 
+  it('returns false for a label positioned just above the line', () => {
+    fixture.innerHTML = html`
+      <p
+        style="position: relative; font-size: 20px; line-height: 16px; white-space: nowrap"
+      >
+        <span style="position: absolute; top: -16px; left: 220px">Label</span
+        >The quick brown fox
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines next to a positioned label', () => {
+    fixture.innerHTML = html`
+      <p
+        style="position: relative; font-size: 20px; line-height: 20px; width: 150px"
+      >
+        <span style="position: absolute; top: -19px; left: 120px">Label</span>
+        The quick brown fox jumps over
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines in a positioned element', () => {
+    fixture.innerHTML = html`
+      <p style="position: relative; font-size: 20px; line-height: 20px">
+        <span style="position: absolute; width: 150px">
+          The quick brown fox jumps over
+        </span>
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.querySelector('span')));
+  });
+
+  it('returns true for lines next to a tall positioned tooltip', () => {
+    fixture.innerHTML = html`
+      <p style="position: relative; font: 16px/1.2 Arial">
+        <span
+          style="position: absolute; top: -1em; left: 8em; width: 5em; font-size: 2em; line-height: 1"
+          >Tooltip text that wraps</span
+        >first line<br />second line
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for positioned text with display: contents', () => {
+    fixture.innerHTML = html`
+      <p style="font: 16px/0.8 Arial; width: 9em">
+        Intro
+        <span style="position: absolute; display: contents"
+          >text in a contents wrapper that wraps across lines</span
+        >
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a float with lines of its own', () => {
+    fixture.innerHTML = html`
+      <p style="font: 16px/1 Arial; white-space: nowrap">
+        Price 100 zł<span style="float: left; width: 5em; white-space: normal"
+          >Free shipping over 200</span
+        >
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for an inline-block with lines of its own', () => {
+    fixture.innerHTML = html`
+      <p style="font: 14px/0.6 'Times New Roman'">
+        <span style="display: inline-block; width: 4em"
+          >Two line button text</span
+        >
+        The quick brown fox
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a label slotted into a positioned element', () => {
+    const vNode = axe.testUtils.queryFixture(html`
+      <div
+        id="target"
+        style="position: relative; font: 14px/0.8 Arial; white-space: nowrap"
+      >
+        <template shadowrootmode="open">
+          <span style="position: absolute; left: 0; top: -0.95em"
+            ><slot name="tip"></slot></span
+          ><slot></slot>
+        </template>
+        <span slot="tip">Label</span>Some text here
+      </div>
+    `);
+    assert.isFalse(isMultiline(vNode.actualNode));
+  });
+
   it('returns false for an inline-block raised with a margin', () => {
     fixture.innerHTML = html`
       <p style="font-size: 16px; line-height: 1.2">
