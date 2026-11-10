@@ -14,11 +14,14 @@ describe('frame-tested-pass test', () => {
   });
 
   describe('passes', () => {
-    it('should find 1', () => {
-      assert.lengthOf(results.passes[0].nodes, 1);
+    it('should find 3', () => {
+      assert.lengthOf(results.passes[0].nodes, 3);
     });
-    it('should find first iframe', () => {
-      assert.deepEqual(results.passes[0].nodes[0].target, ['#pass']);
+    it('should find the iframes and the frame', () => {
+      assert.deepEqual(
+        results.passes[0].nodes.map(node => node.target),
+        [['#pass'], ['#frameset'], ['#frameset', '#pass']]
+      );
     });
   });
 
