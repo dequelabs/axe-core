@@ -380,6 +380,73 @@ describe('color-contrast-matches', () => {
     assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
   });
 
+  it('should not match text inside a description used only by a disabled control', () => {
+    fixture.innerHTML = html`
+      <p id="hint"><span>Help text</span></p>
+      <textarea aria-describedby="before hint after" disabled></textarea>
+    `;
+    const target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should match a label shared with an enabled control as a description', () => {
+    fixture.innerHTML = html`
+      <p id="hint">Help text</p>
+      <input aria-labelledby="hint" disabled />
+      <input aria-describedby="hint" />
+    `;
+    const target = fixture.querySelector('p');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should match text inside an element whose duplicate ID is not the resolved description', () => {
+    fixture.innerHTML = html`
+      <p id="hint">Help text</p>
+      <p id="hint"><span>Other text</span></p>
+      <textarea aria-describedby="hint" disabled></textarea>
+    `;
+    const target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should match text inside an enabled link in a description of a disabled control', () => {
+    fixture.innerHTML = html`
+      <p id="hint">
+        Help text <a href="#guide"><span>Guide</span></a>
+      </p>
+      <textarea aria-describedby="hint" disabled></textarea>
+    `;
+    const target = fixture.querySelector('span');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should match a description shared with an enabled control using tab-separated IDs', () => {
+    fixture.innerHTML = html`
+      <p id="hint">Help text</p>
+      <p id="other">More help</p>
+      <input aria-describedby="hint" disabled />
+      <input aria-describedby="hint&#9;other" />
+    `;
+    const target = fixture.querySelector('#hint');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
+  it('should match an enabled input label also used as a disabled input description', () => {
+    fixture.innerHTML = html`
+      <label id="hint" for="enabled">Help text</label>
+      <input id="enabled" />
+      <input aria-describedby="hint" disabled />
+    `;
+    const target = fixture.querySelector('label');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+  });
+
   it('should not match when inputs are disabled by an ancestor - aria-labelledby', () => {
     fixture.innerHTML = html`
       <div id="t1">Test</div>
