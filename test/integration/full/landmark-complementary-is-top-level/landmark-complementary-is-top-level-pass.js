@@ -25,8 +25,8 @@ describe('landmark-complementary-is-top-level test pass', () => {
   });
 
   describe('passes', () => {
-    it('should find 5', () => {
-      assert.lengthOf(results.passes[0].nodes, 5);
+    it('should find 6', () => {
+      assert.lengthOf(results.passes[0].nodes, 6);
     });
   });
 
