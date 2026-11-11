@@ -134,7 +134,7 @@ function abstractroleEvaluate(node, options, virtualNode) {
 ```javascript
 // Use Virtual Node for attribute access and property reads
 function myCheck(node, options, virtualNode) {
-  const role = virtualNode.attr('role'); // Cached attribute access
+  const label = virtualNode.attr('aria-label'); // Cached attribute access
   const nodeName = virtualNode.props.nodeName;
 
   // Only access real node when you need DOM APIs
