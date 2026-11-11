@@ -142,7 +142,7 @@
     "clone": "^2.1.2",
     "colorjs.io": "0.7.1",
     "commit-and-tag-version": "^13.1.0",
-    "conventional-commits-parser": "^5.0.0",
+    "conventional-commits-parser": "^7.1.4",
     "core-js": "^3.27.1",
     "core-js-pure": "^3.27.1",
     "css-selector-parser": "^1.4.1",
