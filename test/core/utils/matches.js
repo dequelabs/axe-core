@@ -1,12 +1,7 @@
 describe('utils.matches', () => {
   const matches = axe.utils.matches;
-  const fixture = document.querySelector('#fixture');
   const queryFixture = axe.testUtils.queryFixture;
   const convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
-
-  afterEach(() => {
-    fixture.innerHTML = '';
-  });
 
   describe('tag', () => {
     it('returns true if tag matches', () => {
