@@ -1,0 +1,13 @@
+{
+  "description": "aria-radiogroup-name test",
+  "rule": "aria-radiogroup-name",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+  "incomplete": [
+    ["#incomplete1"],
+    ["#incomplete2"],
+    ["#incomplete3"],
+    ["#incomplete4"],
+    ["#incomplete5"]
+  ],
+  "violations": []
+}
