@@ -72,8 +72,7 @@ function getCommits(branch) {
     const hash = commit.substring(0, 8);
     const msg = commit.substring(commit.indexOf('\n\n')).trim();
 
-    const parser = new CommitParser();
-    const { type, scope, subject, merge, notes } = parser.parse(msg, {
+    const parser = new CommitParser({
       // parse merge commits
       mergePattern: /^Merge pull request #(\d+) from (.*)$/,
       mergeCorrespondence: ['id', 'source'],
@@ -81,6 +80,7 @@ function getCommits(branch) {
       // allow comma in scope
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\*, ]*)\))?\: (.*)$/
     });
+    const { type, scope, subject, merge, notes } = parser.parse(msg);
 
     const isBreakingChange = notes.some(
       note => note.title === 'BREAKING CHANGE'
