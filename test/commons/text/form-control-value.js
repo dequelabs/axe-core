@@ -97,8 +97,8 @@ describe('text.formControlValue', () => {
             />`;
         }, '')
       );
-      axe.utils
-        .querySelectorAll(axe._tree[0], '#fixture input')
+      axe.commons.dom
+        .queryDom(axe._tree[0], '#fixture input')
         .forEach(target => {
           const expected = formData[getNodeType(target.actualNode)];
           assert.isDefined(expected);
@@ -124,8 +124,8 @@ describe('text.formControlValue', () => {
         <input type="submit" value="foo" />
         <input type="color" value="#000000" />
       `);
-      axe.utils
-        .querySelectorAll(axe._tree[0], '#fixture input')
+      axe.commons.dom
+        .queryDom(axe._tree[0], '#fixture input')
         .forEach(target => {
           // Safari and IE11 do not support the color input type
           // and thus treat them as text inputs. ignore fallback
