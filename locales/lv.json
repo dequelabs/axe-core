@@ -1,0 +1,1183 @@
+{
+  "lang": "lv",
+  "rules": {
+    "accesskeys": {
+      "description": "Pārbauda, vai katra atribūta accesskey vērtība ir unikāla",
+      "help": "Atribūta accesskey vērtībai vajadzētu būt unikālai"
+    },
+    "area-alt": {
+      "description": "Pārbauda, vai attēlu karšu elementiem <area> ir alternatīvais teksts",
+      "help": "Aktīviem elementiem <area> jābūt alternatīvajam tekstam"
+    },
+    "aria-allowed-attr": {
+      "description": "Pārbauda, vai elementa loma atbalsta tā ARIA atribūtus",
+      "help": "Elementiem jāizmanto tikai atbalstīti ARIA atribūti"
+    },
+    "aria-allowed-role": {
+      "description": "Pārbauda, vai atribūtam role ir elementam piemērota vērtība",
+      "help": "ARIA lomai vajadzētu būt piemērotai elementam"
+    },
+    "aria-braille-equivalent": {
+      "description": "Pārbauda, vai atribūtiem aria-braillelabel un aria-brailleroledescription ir ekvivalents, kas nav Braila rakstā",
+      "help": "Atribūtiem aria-braille jābūt ekvivalentam, kas nav Braila rakstā"
+    },
+    "aria-command-name": {
+      "description": "Pārbauda, vai katrai ARIA pogai, saitei un izvēlnes vienumam ir piekļūstams nosaukums",
+      "help": "ARIA komandām jābūt piekļūstamam nosaukumam"
+    },
+    "aria-conditional-attr": {
+      "description": "Pārbauda, vai ARIA atribūti tiek lietoti tā, kā aprakstīts elementa lomas specifikācijā",
+      "help": "ARIA atribūti jālieto tā, kā noteikts elementa lomai"
+    },
+    "aria-deprecated-role": {
+      "description": "Pārbauda, vai elementi neizmanto novecojušas lomas",
+      "help": "Novecojušas ARIA lomas nedrīkst izmantot"
+    },
+    "aria-dialog-name": {
+      "description": "Pārbauda, vai katram ARIA dialog un alertdialog mezglam ir piekļūstams nosaukums",
+      "help": "ARIA dialog un alertdialog mezgliem vajadzētu būt piekļūstamam nosaukumam"
+    },
+    "aria-hidden-body": {
+      "description": "Pārbauda, vai dokumenta elementam body nav norādīts aria-hidden=\"true\".",
+      "help": "Dokumenta elementam body nedrīkst būt norādīts aria-hidden=\"true\""
+    },
+    "aria-hidden-focus": {
+      "description": "Pārbauda, vai aria-hidden elementi nav fokusējami un nesatur fokusējamus elementus",
+      "help": "ARIA paslēpts elements nedrīkst būt fokusējams vai saturēt fokusējamus elementus"
+    },
+    "aria-input-field-name": {
+      "description": "Pārbauda, vai katram ARIA ievades laukam ir piekļūstams nosaukums",
+      "help": "ARIA ievades laukiem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-meter-name": {
+      "description": "Pārbauda, vai katram ARIA meter mezglam ir piekļūstams nosaukums",
+      "help": "ARIA meter mezgliem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-progressbar-name": {
+      "description": "Pārbauda, vai katram ARIA progressbar mezglam ir piekļūstams nosaukums",
+      "help": "ARIA progressbar mezgliem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-prohibited-attr": {
+      "description": "Pārbauda, vai ARIA atribūti nav aizliegti elementa lomai",
+      "help": "Elementiem jāizmanto tikai atļauti ARIA atribūti"
+    },
+    "aria-required-attr": {
+      "description": "Pārbauda, vai elementiem ar ARIA lomām ir visi obligātie ARIA atribūti",
+      "help": "Obligātajiem ARIA atribūtiem jābūt norādītiem"
+    },
+    "aria-required-children": {
+      "description": "Pārbauda, vai elementi ar ARIA lomu, kurai nepieciešamas pakārtotas lomas, tās satur",
+      "help": "Noteiktām ARIA lomām jāsatur konkrēti pakārtotie elementi"
+    },
+    "aria-required-parent": {
+      "description": "Pārbauda, vai elementi ar ARIA lomu, kurai nepieciešamas vecāklomas, atrodas tajās",
+      "help": "Noteiktām ARIA lomām jāatrodas konkrētos vecākelementos"
+    },
+    "aria-roledescription": {
+      "description": "Pārbauda, vai aria-roledescription tiek lietots tikai elementiem ar netiešu vai tiešu lomu",
+      "help": "Atribūtam aria-roledescription jābūt uz elementiem ar semantisku lomu"
+    },
+    "aria-roles": {
+      "description": "Pārbauda, vai visiem elementiem ar atribūtu role ir derīga vērtība",
+      "help": "Izmantotajām ARIA lomām jāatbilst derīgām vērtībām"
+    },
+    "aria-tab-name": {
+      "description": "Pārbauda, vai katram ARIA tab mezglam ir piekļūstams nosaukums",
+      "help": "ARIA tab mezgliem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-text": {
+      "description": "Pārbauda, vai role=\"text\" tiek lietots elementiem bez fokusējamiem pēctečiem",
+      "help": "Elementam ar \"role=text\" nevajadzētu būt fokusējamiem pēctečiem"
+    },
+    "aria-toggle-field-name": {
+      "description": "Pārbauda, vai katram ARIA pārslēdzamajam laukam ir piekļūstams nosaukums",
+      "help": "ARIA pārslēdzamajiem laukiem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-tooltip-name": {
+      "description": "Pārbauda, vai katram ARIA tooltip mezglam ir piekļūstams nosaukums",
+      "help": "ARIA tooltip mezgliem jābūt piekļūstamam nosaukumam"
+    },
+    "aria-treeitem-name": {
+      "description": "Pārbauda, vai katram ARIA treeitem mezglam ir piekļūstams nosaukums",
+      "help": "ARIA treeitem mezgliem vajadzētu būt piekļūstamam nosaukumam"
+    },
+    "aria-valid-attr-value": {
+      "description": "Pārbauda, vai visiem ARIA atribūtiem ir derīgas vērtības",
+      "help": "ARIA atribūtiem jāatbilst derīgām vērtībām"
+    },
+    "aria-valid-attr": {
+      "description": "Pārbauda, vai atribūti, kas sākas ar aria-, ir derīgi ARIA atribūti",
+      "help": "ARIA atribūtiem jāatbilst derīgiem nosaukumiem"
+    },
+    "audio-caption": {
+      "description": "Pārbauda, vai elementiem <audio> ir subtitri",
+      "help": "Elementiem <audio> jābūt subtitru celiņam"
+    },
+    "autocomplete-valid": {
+      "description": "Pārbauda, vai atribūts autocomplete ir pareizs un piemērots veidlapas laukam",
+      "help": "Atribūts autocomplete jālieto pareizi"
+    },
+    "avoid-inline-spacing": {
+      "description": "Pārbauda, vai teksta atstarpes, kas iestatītas ar atribūtu style, var pielāgot ar pielāgotām stilu lapām",
+      "help": "Iekļautajām teksta atstarpēm jābūt pielāgojamām ar pielāgotām stilu lapām"
+    },
+    "blink": {
+      "description": "Pārbauda, vai netiek izmantoti elementi <blink>",
+      "help": "Elementi <blink> ir novecojuši, un tos nedrīkst izmantot"
+    },
+    "button-name": {
+      "description": "Pārbauda, vai pogām ir uztverams teksts",
+      "help": "Pogām jābūt uztveramam tekstam"
+    },
+    "bypass": {
+      "description": "Pārbauda, vai katrā lapā ir vismaz viens mehānisms, ar kuru lietotājs var apiet navigāciju un pāriet tieši uz saturu",
+      "help": "Lapā jābūt iespējai apiet atkārtotus blokus"
+    },
+    "color-contrast-enhanced": {
+      "description": "Pārbauda, vai priekšplāna un fona krāsu kontrasts atbilst WCAG 2 AAA paaugstinātā kontrasta sliekšņiem",
+      "help": "Elementiem jāatbilst paaugstinātā krāsu kontrasta sliekšņiem"
+    },
+    "color-contrast": {
+      "description": "Pārbauda, vai priekšplāna un fona krāsu kontrasts atbilst WCAG 2 AA minimālā kontrasta sliekšņiem",
+      "help": "Elementiem jāatbilst minimālā krāsu kontrasta sliekšņiem"
+    },
+    "css-orientation-lock": {
+      "description": "Pārbauda, vai saturs nav piesaistīts konkrētai ekrāna orientācijai un ir lietojams visās ekrāna orientācijās",
+      "help": "CSS mediju vaicājumi nedrīkst bloķēt ekrāna orientāciju"
+    },
+    "definition-list": {
+      "description": "Pārbauda, vai elementi <dl> ir pareizi strukturēti",
+      "help": "Elementi <dl> drīkst tieši saturēt tikai pareizi sakārtotas <dt> un <dd> grupas, elementus <script>, <template> vai <div>"
+    },
+    "dlitem": {
+      "description": "Pārbauda, vai elementi <dt> un <dd> atrodas elementā <dl>",
+      "help": "Elementiem <dt> un <dd> jāatrodas elementā <dl>"
+    },
+    "document-title": {
+      "description": "Pārbauda, vai katrā HTML dokumentā ir elements <title>, kas nav tukšs",
+      "help": "Dokumentiem jābūt elementam <title>, lai atvieglotu navigāciju"
+    },
+    "duplicate-id-active": {
+      "description": "Pārbauda, vai katra aktīvo elementu atribūta id vērtība ir unikāla",
+      "help": "Aktīvo elementu ID jābūt unikāliem"
+    },
+    "duplicate-id-aria": {
+      "description": "Pārbauda, vai katra atribūta id vērtība, kas izmantota ARIA un etiķetēs, ir unikāla",
+      "help": "ARIA un etiķetēs izmantotajiem ID jābūt unikāliem"
+    },
+    "duplicate-id": {
+      "description": "Pārbauda, vai katra atribūta id vērtība ir unikāla",
+      "help": "Atribūta id vērtībai jābūt unikālai"
+    },
+    "empty-heading": {
+      "description": "Pārbauda, vai virsrakstiem ir uztverams teksts",
+      "help": "Virsrakstiem nevajadzētu būt tukšiem"
+    },
+    "empty-table-header": {
+      "description": "Pārbauda, vai tabulu galvenēm ir uztverams teksts",
+      "help": "Tabulas galvenes tekstam nevajadzētu būt tukšam"
+    },
+    "focus-order-semantics": {
+      "description": "Pārbauda, vai elementiem fokusa secībā ir interaktīvam saturam piemērota loma",
+      "help": "Elementiem fokusa secībā vajadzētu būt piemērotai lomai"
+    },
+    "form-field-multiple-labels": {
+      "description": "Pārbauda, vai veidlapas laukam nav vairāku elementu label",
+      "help": "Veidlapas laukam nedrīkst būt vairāki elementi label"
+    },
+    "frame-focusable-content": {
+      "description": "Pārbauda, vai elementiem <frame> un <iframe> ar fokusējamu saturu nav tabindex=-1",
+      "help": "Ietvariem ar fokusējamu saturu nedrīkst būt tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Pārbauda, vai elementi <iframe> un <frame> satur axe-core skriptu",
+      "help": "Ietvarus vajadzētu testēt ar axe-core"
+    },
+    "frame-title-unique": {
+      "description": "Pārbauda, vai elementiem <iframe> un <frame> ir unikāls atribūts title",
+      "help": "Ietvariem jābūt unikālam atribūtam title"
+    },
+    "frame-title": {
+      "description": "Pārbauda, vai elementiem <iframe> un <frame> ir piekļūstams nosaukums",
+      "help": "Ietvariem jābūt piekļūstamam nosaukumam"
+    },
+    "heading-order": {
+      "description": "Pārbauda, vai virsrakstu secība ir semantiski pareiza",
+      "help": "Virsrakstu līmeņiem vajadzētu palielināties tikai par vienu"
+    },
+    "hidden-content": {
+      "description": "Informē lietotājus par paslēptu saturu.",
+      "help": "Lapā paslēpto saturu vajadzētu analizēt"
+    },
+    "html-has-lang": {
+      "description": "Pārbauda, vai katram HTML dokumentam ir atribūts lang",
+      "help": "Elementam <html> jābūt atribūtam lang"
+    },
+    "html-lang-valid": {
+      "description": "Pārbauda, vai elementa <html> atribūtam lang ir derīga vērtība",
+      "help": "Elementa <html> atribūtam lang jābūt derīgai vērtībai"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Pārbauda, vai HTML elementiem, kuriem ir gan derīgs lang, gan xml:lang atribūts, sakrīt lapas pamatvaloda",
+      "help": "HTML elementiem ar lang un xml:lang jābūt vienai un tai pašai pamatvalodai"
+    },
+    "identical-links-same-purpose": {
+      "description": "Pārbauda, vai saitēm ar vienādu piekļūstamo nosaukumu ir līdzīgs mērķis",
+      "help": "Saitēm ar vienādu nosaukumu jābūt līdzīgam mērķim"
+    },
+    "image-alt": {
+      "description": "Pārbauda, vai elementiem <img> ir alternatīvais teksts vai loma none vai presentation",
+      "help": "Attēliem jābūt alternatīvajam tekstam"
+    },
+    "image-redundant-alt": {
+      "description": "Pārbauda, vai attēla alternatīva netiek atkārtota kā teksts",
+      "help": "Attēlu alternatīvo tekstu nevajadzētu atkārtot kā tekstu"
+    },
+    "input-button-name": {
+      "description": "Pārbauda, vai ievades pogām ir uztverams teksts",
+      "help": "Ievades pogām jābūt uztveramam tekstam"
+    },
+    "input-image-alt": {
+      "description": "Pārbauda, vai elementiem <input type=\"image\"> ir alternatīvais teksts",
+      "help": "Attēlu pogām jābūt alternatīvajam tekstam"
+    },
+    "label-content-name-mismatch": {
+      "description": "Pārbauda, vai elementiem, kas nosaukti pēc sava satura, redzamais teksts ir daļa no piekļūstamā nosaukuma",
+      "help": "Elementu redzamajam tekstam jābūt daļai no to piekļūstamā nosaukuma"
+    },
+    "label-title-only": {
+      "description": "Pārbauda, vai katram veidlapas elementam ir redzama etiķete un tas nav apzīmēts tikai ar paslēptām etiķetēm vai atribūtiem title vai aria-describedby",
+      "help": "Veidlapas elementiem vajadzētu būt redzamai etiķetei"
+    },
+    "label": {
+      "description": "Pārbauda, vai katram veidlapas elementam ir etiķete",
+      "help": "Veidlapas elementiem jābūt etiķetēm"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Pārbauda, vai orientieris banner atrodas augšējā līmenī",
+      "help": "Orientierim banner nevajadzētu atrasties citā orientierī"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Pārbauda, vai orientieris complementary jeb aside atrodas augšējā līmenī",
+      "help": "Elementam aside nevajadzētu atrasties citā orientierī"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Pārbauda, vai orientieris contentinfo atrodas augšējā līmenī",
+      "help": "Orientierim contentinfo nevajadzētu atrasties citā orientierī"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Pārbauda, vai orientieris main atrodas augšējā līmenī",
+      "help": "Orientierim main nevajadzētu atrasties citā orientierī"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Pārbauda, vai dokumentā ir ne vairāk kā viens orientieris banner",
+      "help": "Dokumentā nevajadzētu būt vairāk nekā vienam orientierim banner"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Pārbauda, vai dokumentā ir ne vairāk kā viens orientieris contentinfo",
+      "help": "Dokumentā nevajadzētu būt vairāk nekā vienam orientierim contentinfo"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Pārbauda, vai dokumentā ir ne vairāk kā viens orientieris main",
+      "help": "Dokumentā nevajadzētu būt vairāk nekā vienam orientierim main"
+    },
+    "landmark-one-main": {
+      "description": "Pārbauda, vai dokumentā ir orientieris main",
+      "help": "Dokumentā vajadzētu būt vienam orientierim main"
+    },
+    "landmark-unique": {
+      "description": "Pārbauda, vai orientieri ir unikāli",
+      "help": "Orientieriem vajadzētu būt unikālai lomai vai lomas/etiķetes/title (t. i., piekļūstamā nosaukuma) kombinācijai"
+    },
+    "link-in-text-block": {
+      "description": "Pārbauda, vai saites atšķiras no apkārtējā teksta tā, lai nebūtu jāpaļaujas tikai uz krāsu",
+      "help": "Saitēm jābūt atšķiramām, nepaļaujoties uz krāsu"
+    },
+    "link-name": {
+      "description": "Pārbauda, vai saitēm ir uztverams teksts",
+      "help": "Saitēm jābūt uztveramam tekstam"
+    },
+    "list": {
+      "description": "Pārbauda, vai saraksti ir pareizi strukturēti",
+      "help": "Elementi <ul> un <ol> drīkst tieši saturēt tikai elementus <li>, <script> vai <template>"
+    },
+    "listitem": {
+      "description": "Pārbauda, vai elementi <li> tiek lietoti semantiski",
+      "help": "Elementiem <li> jāatrodas elementā <ul> vai <ol>"
+    },
+    "marquee": {
+      "description": "Pārbauda, vai netiek izmantoti elementi <marquee>",
+      "help": "Elementi <marquee> ir novecojuši, un tos nedrīkst izmantot"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Pārbauda, vai <meta http-equiv=\"refresh\"> netiek izmantots aizkavētai atsvaidzināšanai",
+      "help": "Aizkavētu atsvaidzināšanu nedrīkst izmantot"
+    },
+    "meta-refresh": {
+      "description": "Pārbauda, vai <meta http-equiv=\"refresh\"> netiek izmantots aizkavētai atsvaidzināšanai",
+      "help": "Aizkavētu atsvaidzināšanu, kas īsāka par 20 stundām, nedrīkst izmantot"
+    },
+    "meta-viewport-large": {
+      "description": "Pārbauda, vai <meta name=\"viewport\"> ļauj ievērojami mērogot",
+      "help": "Lietotājiem vajadzētu būt iespējai tuvināt un mērogot tekstu līdz 500%"
+    },
+    "meta-viewport": {
+      "description": "Pārbauda, vai <meta name=\"viewport\"> neatspējo teksta mērogošanu un tuvināšanu",
+      "help": "Tuvināšanu un mērogošanu nedrīkst atspējot"
+    },
+    "nested-interactive": {
+      "description": "Pārbauda, vai interaktīvās vadīklas nav ligzdotas, jo ekrāna lasītāji tās ne vienmēr nolasa un tās var radīt fokusa problēmas palīgtehnoloģijām",
+      "help": "Interaktīvās vadīklas nedrīkst būt ligzdotas"
+    },
+    "no-autoplay-audio": {
+      "description": "Pārbauda, vai elementi <video> vai <audio> automātiski neatskaņo skaņu ilgāk par 3 sekundēm bez vadības mehānisma, ar ko skaņu apturēt vai izslēgt",
+      "help": "Elementi <video> vai <audio> nedrīkst atskaņoties automātiski"
+    },
+    "object-alt": {
+      "description": "Pārbauda, vai elementiem <object> ir alternatīvais teksts",
+      "help": "Elementiem <object> jābūt alternatīvajam tekstam"
+    },
+    "p-as-heading": {
+      "description": "Pārbauda, vai treknraksts, slīpraksts un fonta lielums netiek izmantots, lai elementus <p> noformētu kā virsrakstu",
+      "help": "Noformētus elementus <p> nedrīkst izmantot kā virsrakstus"
+    },
+    "page-has-heading-one": {
+      "description": "Pārbauda, vai lapā vai vismaz vienā no tās ietvariem ir pirmā līmeņa virsraksts",
+      "help": "Lapā vajadzētu būt pirmā līmeņa virsrakstam"
+    },
+    "presentation-role-conflict": {
+      "description": "Pārbauda, vai elementiem, kas atzīmēti kā prezentācijas, nav globālu ARIA atribūtu vai tabindex, lai visi ekrāna lasītāji tos ignorētu",
+      "help": "Elementus, kas atzīmēti kā prezentācijas, vajadzētu konsekventi ignorēt"
+    },
+    "region": {
+      "description": "Pārbauda, vai viss lapas saturs atrodas orientieros",
+      "help": "Visam lapas saturam vajadzētu atrasties orientieros"
+    },
+    "role-img-alt": {
+      "description": "Pārbauda, vai elementiem [role=\"img\"] un [role=\"image\"] ir alternatīvais teksts",
+      "help": "Elementiem [role=\"img\"] un [role=\"image\"] jābūt alternatīvajam tekstam"
+    },
+    "scope-attr-valid": {
+      "description": "Pārbauda, vai atribūts scope tabulās tiek lietots pareizi",
+      "help": "Atribūtu scope vajadzētu lietot pareizi"
+    },
+    "scrollable-region-focusable": {
+      "description": "Pārbauda, vai elementi ar ritināmu saturu pārlūkā Safari ir pieejami ar tastatūru",
+      "help": "Ritināmam apgabalam jābūt pieejamam ar tastatūru"
+    },
+    "select-name": {
+      "description": "Pārbauda, vai elementam select ir piekļūstams nosaukums",
+      "help": "Elementam select jābūt piekļūstamam nosaukumam"
+    },
+    "server-side-image-map": {
+      "description": "Pārbauda, vai netiek izmantotas servera puses attēlu kartes",
+      "help": "Servera puses attēlu kartes nedrīkst izmantot"
+    },
+    "skip-link": {
+      "description": "Pārbauda, vai visām izlaišanas saitēm ir fokusējams mērķis",
+      "help": "Izlaišanas saites mērķim vajadzētu eksistēt un būt fokusējamam"
+    },
+    "summary-name": {
+      "description": "Pārbauda, vai elementiem summary ir uztverams teksts",
+      "help": "Elementiem summary jābūt uztveramam tekstam"
+    },
+    "svg-img-alt": {
+      "description": "Pārbauda, vai elementiem <svg> ar lomu img, image, graphics-document vai graphics-symbol ir piekļūstams teksts",
+      "help": "Elementiem <svg> ar lomu img vai image jābūt alternatīvajam tekstam"
+    },
+    "tabindex": {
+      "description": "Pārbauda, vai atribūta tabindex vērtības nav lielākas par 0",
+      "help": "Elementiem nevajadzētu būt tabindex, kas lielāks par nulli"
+    },
+    "table-duplicate-name": {
+      "description": "Pārbauda, vai elements <caption> nesatur to pašu tekstu, ko atribūts summary",
+      "help": "Tabulām nevajadzētu būt vienādam summary un caption"
+    },
+    "table-fake-caption": {
+      "description": "Pārbauda, vai tabulas ar parakstu izmanto elementu <caption>.",
+      "help": "Datu vai galvenes šūnas nedrīkst izmantot, lai datu tabulai piešķirtu parakstu."
+    },
+    "target-size": {
+      "description": "Pārbauda, vai skāriena mērķiem ir pietiekams izmērs un atstarpe",
+      "help": "Visiem skāriena mērķiem jābūt 24 px lieliem vai ar pietiekamu atstarpi"
+    },
+    "td-has-header": {
+      "description": "Pārbauda, vai katrai netukšai datu šūnai tabulā <table>, kas lielāka par 3 x 3, ir viena vai vairākas tabulas galvenes",
+      "help": "Netukšiem elementiem <td> lielākās tabulās <table> jābūt saistītai tabulas galvenei"
+    },
+    "td-headers-attr": {
+      "description": "Pārbauda, vai katra šūna tabulā, kas izmanto atribūtu headers, atsaucas tikai uz citiem šīs tabulas elementiem <th>",
+      "help": "Tabulas šūnu atribūtiem headers jāatsaucas uz citiem tās pašas tabulas elementiem <th>"
+    },
+    "th-has-data-cells": {
+      "description": "Pārbauda, vai elementiem <th> un elementiem ar role=columnheader/rowheader ir datu šūnas, kuras tie apraksta",
+      "help": "Datu tabulas galvenēm jāatsaucas uz datu šūnām"
+    },
+    "valid-lang": {
+      "description": "Pārbauda, vai atribūtiem lang ir derīgas vērtības",
+      "help": "Atribūtam lang jābūt derīgai vērtībai"
+    },
+    "video-caption": {
+      "description": "Pārbauda, vai elementiem <video> ir subtitri",
+      "help": "Elementiem <video> jābūt subtitriem"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstraktās lomas netiek izmantotas",
+      "fail": {
+        "singular": "Abstrakto lomu nedrīkst izmantot tieši: ${data.values}",
+        "plural": "Abstraktās lomas nedrīkst izmantot tieši: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "ARIA atribūti ir atļauti šim elementam",
+      "fail": {
+        "singular": "ARIA atribūts nav atļauts elementiem ${data.nodeName}: ${data.values}",
+        "plural": "ARIA atribūti nav atļauti elementiem ${data.nodeName}: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "ARIA atribūti ir lietoti pareizi norādītajai lomai",
+      "fail": {
+        "singular": "ARIA atribūts nav atļauts: ${data.values}",
+        "plural": "ARIA atribūti nav atļauti: ${data.values}",
+        "caseSensitive": "Šo ARIA atribūtu vērtības ir reģistrjutīgas, un tām jābūt rakstītām ar mazajiem burtiem: ${data.values}"
+      },
+      "incomplete": {
+        "default": "Pārbaudiet, vai nav problēmu, ja šajā elementā ARIA atribūts tiek ignorēts: ${data.values}",
+        "caseSensitive": "Šo ARIA atribūtu vērtības ir reģistrjutīgas, un palīgtehnoloģijas tās var apstrādāt nepareizi: ${data.values}"
+      }
+    },
+    "aria-allowed-role": {
+      "pass": "ARIA loma ir atļauta norādītajam elementam",
+      "fail": {
+        "singular": "ARIA loma ${data.values} nav atļauta norādītajam elementam",
+        "plural": "ARIA lomas ${data.values} nav atļautas norādītajam elementam"
+      },
+      "incomplete": {
+        "singular": "ARIA loma ${data.values} jānoņem, kad elements kļūst redzams, jo tā nav atļauta šim elementam",
+        "plural": "ARIA lomas ${data.values} jānoņem, kad elements kļūst redzams, jo tās nav atļautas šim elementam"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elementam ir atribūts aria-busy",
+      "fail": "Elements izmanto aria-busy=\"true\", rādot ielādes indikatoru"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA atribūts ir atļauts",
+      "fail": {
+        "checkbox": "Noņemiet aria-checked vai iestatiet to uz \"${data.checkState}\", lai tas atbilstu īstā izvēles rūtiņas stāvoklim",
+        "radio": "Noņemiet aria-checked vai iestatiet to uz \"${data.checkState}\", lai tas atbilstu īstā radiopogas stāvoklim",
+        "rowSingular": "Šis atribūts tiek atbalstīts treegrid rindām, bet ne ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "Šie atribūti tiek atbalstīti treegrid rindām, bet ne ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage ir norādīts un atsaucas uz elementiem, kas ir redzami ekrāna lasītājiem un izmanto atbalstītu aria-errormessage paņēmienu",
+      "fail": {
+        "singular": "aria-errormessage vērtībai `${data.values}` jāizmanto paņēmiens, lai ziņojums tiktu paziņots (piem., aria-live, aria-describedby, role=alert utt.)",
+        "plural": "aria-errormessage vērtībām `${data.values}` jāizmanto paņēmiens, lai ziņojums tiktu paziņots (piem., aria-live, aria-describedby, role=alert utt.)",
+        "unsupported": "Vairāku ID lietošanu atribūtā aria-errormessage palīgtehnoloģijas atbalsta ne visur",
+        "hidden": "aria-errormessage vērtība `${data.values}` nedrīkst atsaukties uz paslēptu elementu"
+      },
+      "incomplete": {
+        "singular": "Pārliecinieties, ka aria-errormessage vērtība `${data.values}` atsaucas uz esošu elementu",
+        "plural": "Pārliecinieties, ka aria-errormessage vērtības `${data.values}` atsaucas uz esošiem elementiem",
+        "idrefs": "Nevar noteikt, vai lapā pastāv aria-errormessage elements: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Dokumenta elementam body nav atribūta aria-hidden",
+      "fail": "Dokumenta elementam body nedrīkst būt norādīts aria-hidden=true"
+    },
+    "aria-level": {
+      "pass": "aria-level vērtības ir derīgas",
+      "incomplete": "aria-level vērtības, kas lielākas par 6, netiek atbalstītas visās ekrāna lasītāju un pārlūku kombinācijās"
+    },
+    "aria-no-deprecated-attr": {
+      "pass": "Novecojuši ARIA atribūti netiek izmantoti",
+      "incomplete": {
+        "singular": "Atribūts ir novecojis, un to nevajadzētu izmantot: ${data.values}",
+        "plural": "Atribūti ir novecojuši, un tos nevajadzētu izmantot: ${data.values}"
+      }
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA atribūts ir atļauts",
+      "fail": {
+        "hasRolePlural": "Atribūtus ${data.prohibited} nedrīkst lietot ar lomu \"${data.role}\".",
+        "hasRoleSingular": "Atribūtu ${data.prohibited} nedrīkst lietot ar lomu \"${data.role}\".",
+        "noRolePlural": "Atribūtus ${data.prohibited} nedrīkst lietot elementiem \"${data.nodeName}\" bez derīga atribūta role.",
+        "noRoleSingular": "Atribūtu ${data.prohibited} nedrīkst lietot elementiem \"${data.nodeName}\" bez derīga atribūta role."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Atribūts ${data.prohibited} ar lomu \"${data.role}\" tiek atbalstīts slikti.",
+        "hasRolePlural": "Atribūti ${data.prohibited} ar lomu \"${data.role}\" tiek atbalstīti slikti.",
+        "noRoleSingular": "Atribūts ${data.prohibited} tiek atbalstīts slikti elementiem \"${data.nodeName}\" bez derīga atribūta role.",
+        "noRolePlural": "Atribūti ${data.prohibited} tiek atbalstīti slikti elementiem \"${data.nodeName}\" bez derīga atribūta role.",
+        "visibleLabelSingular": "Atribūts ${data.prohibited} tiek atbalstīts slikti, taču elementi, uz kuriem atsaucas aria-labelledby, lapā ir redzami. Pārbaudiet, vai etiķete nav nepieciešama.",
+        "visibleLabelPlural": "Atribūti ${data.prohibited} tiek atbalstīti slikti, taču elementi, uz kuriem atsaucas aria-labelledby, lapā ir redzami. Pārbaudiet, vai etiķetes nav nepieciešamas.",
+        "unresolvedLabel": "Atribūts ${data.prohibited} tiek atbalstīts slikti un neatsaucas uz esošu elementu. Pārbaudiet, vai etiķete nav nepieciešama."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Visi obligātie ARIA atribūti ir norādīti",
+      "fail": {
+        "singular": "Nav norādīts obligātais ARIA atribūts: ${data.values}",
+        "plural": "Nav norādīti obligātie ARIA atribūti: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Obligātie ARIA pakārtotie elementi ir klāt",
+        "aria-busy": "Elementam ir atribūts aria-busy, tāpēc obligātos pakārtotos elementus drīkst izlaist"
+      },
+      "fail": {
+        "singular": "Nav obligātās pakārtotās ARIA lomas: ${data.values}",
+        "plural": "Nav obligāto pakārtoto ARIA lomu: ${data.values}",
+        "unallowed": "Elementam ir pakārtoti elementi, kas nav atļauti: ${data.values}",
+        "unallowedPresentational": "Elementam ir prezentācijas pakārtoti elementi, kurus nevar ignorēt: ${data.values}",
+        "aria-busy-fail": "Elementam ir pakārtoti elementi, kas nav atļauti: ${data.values}; aria-busy=\"true\" neatļauj pakārtotos elementus ar lomām, kas nav atļautas"
+      },
+      "incomplete": {
+        "singular": "Tiek gaidīts, ka tiks pievienota pakārtotā ARIA loma: ${data.values}",
+        "plural": "Tiek gaidīts, ka tiks pievienotas pakārtotās ARIA lomas: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Obligātā vecāka ARIA loma ir klāt",
+      "fail": {
+        "singular": "Nav obligātās vecāka ARIA lomas: ${data.values}",
+        "plural": "Nav obligāto vecāku ARIA lomu: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription tiek lietots atbalstītai semantiskai lomai",
+      "incomplete": "Pārbaudiet, vai atbalstīti ekrāna lasītāji paziņo aria-roledescription",
+      "fail": "Piešķiriet elementam lomu, kas atbalsta aria-roledescription"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA atribūts tiek atbalstīts",
+      "fail": "ARIA atribūts netiek plaši atbalstīts ekrāna lasītājos un palīgtehnoloģijās: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA atribūtu vērtības ir derīgas",
+      "fail": {
+        "singular": "Nederīga ARIA atribūta vērtība: ${data.values}",
+        "plural": "Nederīgas ARIA atribūtu vērtības: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA atribūta norādītā elementa ID lapā nepastāv: ${data.needsReview}",
+        "noIdShadow": "ARIA atribūta norādītā elementa ID lapā nepastāv vai atrodas citā shadow DOM kokā: ${data.needsReview}",
+        "ariaCurrent": "ARIA atribūta vērtība ir nederīga, un tā tiks traktēta kā \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Nevar noteikt, vai ARIA atribūta norādītā elementa ID pastāv lapā: ${data.needsReview}",
+        "empty": "Tukša ARIA atribūta vērtība tiek ignorēta: ${data.needsReview}",
+        "controlsWithinPopup": "Nevar noteikt, vai aria-controls norādītais ID pastāv lapā, ja tiek lietots aria-haspopup: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA atribūta nosaukums ir derīgs",
+      "fail": {
+        "singular": "Nederīgs ARIA atribūta nosaukums: ${data.values}",
+        "plural": "Nederīgi ARIA atribūtu nosaukumi: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel tiek lietots elementam ar piekļūstamu tekstu",
+      "fail": "aria-braillelabel tiek lietots elementam bez piekļūstama teksta",
+      "incomplete": "Nevar aprēķināt piekļūstamo tekstu"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription tiek lietots elementam ar aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription tiek lietots elementam bez aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription tiek lietots elementam ar tukšu aria-roledescription"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA loma nav novecojusi",
+      "fail": "Izmantotā loma ir novecojusi: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Izmantota tikai viena lomas vērtība",
+      "fail": "Izmantojiet tikai vienu lomas vērtību, jo rezerves lomas vecākos pārlūkos netiek atbalstītas",
+      "incomplete": "Izmantojiet tikai lomu 'presentation' vai 'none', jo tās ir sinonīmi."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elementam ir globāls ARIA atribūts: ${data.values}",
+        "plural": "Elementam ir globāli ARIA atribūti: ${data.values}"
+      },
+      "fail": "Elementam nav globāla ARIA atribūta"
+    },
+    "has-widget-role": {
+      "pass": "Elementam ir logrīka loma.",
+      "fail": "Elementam nav logrīka lomas."
+    },
+    "invalidrole": {
+      "pass": "ARIA loma ir derīga",
+      "fail": {
+        "singular": "Lomai jābūt vienai no derīgajām ARIA lomām: ${data.values}",
+        "plural": "Lomām jābūt derīgām ARIA lomām: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Elements ir fokusējams.",
+      "fail": "Elements nav fokusējams."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "Nav neatbilstības starp <label> un piekļūstamo nosaukumu",
+      "incomplete": "Pārbaudiet, vai <label> nav jābūt daļai no ARIA lauka ${data} nosaukuma"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA loma tiek atbalstīta",
+      "fail": "Izmantotā loma netiek plaši atbalstīta ekrāna lasītājos un palīgtehnoloģijās: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Elementam ir derīga semantika elementam fokusa secībā.",
+      "fail": "Elementam ir nederīga semantika elementam fokusa secībā."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elementam ir pietiekams krāsu kontrasts: ${data.contrastRatio}",
+      "fail": {
+        "default": "Elementam ir nepietiekams krāsu kontrasts: ${data.contrastRatio} (priekšplāna krāsa: ${data.fgColor}, fona krāsa: ${data.bgColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementam ir nepietiekams krāsu kontrasts ${data.contrastRatio} starp priekšplāna un ēnas krāsu (priekšplāna krāsa: ${data.fgColor}, text-shadow krāsa: ${data.shadowColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementam ir nepietiekams krāsu kontrasts ${data.contrastRatio} starp ēnas un fona krāsu (text-shadow krāsa: ${data.shadowColor}, fona krāsa: ${data.bgColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Nevar noteikt kontrasta koeficientu",
+        "bgImage": "Elementa fona krāsu nevarēja noteikt fona attēla dēļ",
+        "bgGradient": "Elementa fona krāsu nevarēja noteikt fona gradienta dēļ",
+        "imgNode": "Elementa fona krāsu nevarēja noteikt, jo elements satur attēla mezglu",
+        "bgOverlap": "Elementa fona krāsu nevarēja noteikt, jo to pārklāj cits elements",
+        "fgAlpha": "Elementa priekšplāna krāsu nevarēja noteikt alfa caurspīdīguma dēļ",
+        "elmPartiallyObscured": "Elementa fona krāsu nevarēja noteikt, jo to daļēji aizsedz cits elements",
+        "elmPartiallyObscuring": "Elementa fona krāsu nevarēja noteikt, jo tas daļēji pārklāj citus elementus",
+        "outsideViewport": "Elementa fona krāsu nevarēja noteikt, jo tas atrodas ārpus skatvietas",
+        "equalRatio": "Elementam ir kontrasta koeficients 1:1 ar fonu",
+        "shortTextContent": "Elementa saturs ir pārāk īss, lai noteiktu, vai tas ir īsts teksts",
+        "emptyValue": "Elementam nav vērtības; pārbaudiet krāsu kontrastu, ievadot vērtību",
+        "nonBmp": "Elementa saturs ietver tikai rakstzīmes, kas nav teksts",
+        "pseudoContent": "Elementa fona krāsu nevarēja noteikt pseidoelementa dēļ",
+        "colorParse": "Nevarēja apstrādāt krāsas virkni ${data.colorParse}"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elementam ir pietiekams krāsu kontrasts: ${data.contrastRatio}",
+        "hidden": "Elements ir paslēpts"
+      },
+      "fail": {
+        "default": "Elementam ir nepietiekams krāsu kontrasts: ${data.contrastRatio} (priekšplāna krāsa: ${data.fgColor}, fona krāsa: ${data.bgColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementam ir nepietiekams krāsu kontrasts ${data.contrastRatio} starp priekšplāna un ēnas krāsu (priekšplāna krāsa: ${data.fgColor}, text-shadow krāsa: ${data.shadowColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementam ir nepietiekams krāsu kontrasts ${data.contrastRatio} starp ēnas un fona krāsu (text-shadow krāsa: ${data.shadowColor}, fona krāsa: ${data.bgColor}, fonta izmērs: ${data.fontSize}, fonta biezums: ${data.fontWeight}). Prasītais kontrasta koeficients: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Nevar noteikt kontrasta koeficientu",
+        "bgImage": "Elementa fona krāsu nevarēja noteikt fona attēla dēļ",
+        "bgGradient": "Elementa fona krāsu nevarēja noteikt fona gradienta dēļ",
+        "imgNode": "Elementa fona krāsu nevarēja noteikt, jo elements satur attēla mezglu",
+        "bgOverlap": "Elementa fona krāsu nevarēja noteikt, jo to pārklāj cits elements",
+        "complexTextShadows": "Elementa kontrastu nevarēja noteikt, jo tas izmanto sarežģītas teksta ēnas",
+        "fgAlpha": "Elementa priekšplāna krāsu nevarēja noteikt alfa caurspīdīguma dēļ",
+        "elmPartiallyObscured": "Elementa fona krāsu nevarēja noteikt, jo to daļēji aizsedz cits elements",
+        "elmPartiallyObscuring": "Elementa fona krāsu nevarēja noteikt, jo tas daļēji pārklāj citus elementus",
+        "outsideViewport": "Elementa fona krāsu nevarēja noteikt, jo tas atrodas ārpus skatvietas",
+        "equalRatio": "Elementam ir kontrasta koeficients 1:1 ar fonu",
+        "shortTextContent": "Elementa saturs ir pārāk īss, lai noteiktu, vai tas ir īsts teksts",
+        "emptyValue": "Elementam nav vērtības; pārbaudiet krāsu kontrastu, ievadot vērtību",
+        "nonBmp": "Elementa saturs ietver tikai rakstzīmes, kas nav teksts",
+        "pseudoContent": "Elementa fona krāsu nevarēja noteikt pseidoelementa dēļ",
+        "colorParse": "Nevarēja apstrādāt krāsas virkni ${data.colorParse}"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Saites var atšķirt no apkārtējā teksta pēc vizuālā noformējuma",
+      "incomplete": {
+        "default": "Pārbaudiet, vai saitei ir nepieciešams noformējums, lai to atšķirtu no tuvumā esošā teksta",
+        "pseudoContent": "Pārbaudiet, vai saites pseidostila pietiek, lai to atšķirtu no apkārtējā teksta"
+      },
+      "fail": "Saitei nav noformējuma (piemēram, pasvītrojuma), kas to atšķirtu no apkārtējā teksta"
+    },
+    "link-in-text-block": {
+      "pass": "Saites var atšķirt no apkārtējā teksta ar citiem līdzekļiem, ne tikai ar krāsu",
+      "fail": {
+        "fgContrast": "Saitei ir nepietiekams krāsu kontrasts ${data.contrastRatio}:1 ar apkārtējo tekstu. (Minimālais kontrasts ir ${data.requiredContrastRatio}:1, saites teksts: ${data.nodeColor}, apkārtējais teksts: ${data.parentColor})",
+        "bgContrast": "Saites fonam ir nepietiekams krāsu kontrasts ${data.contrastRatio} (minimālais kontrasts ir ${data.requiredContrastRatio}:1, saites fona krāsa: ${data.nodeBackgroundColor}, apkārtējā fona krāsa: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elementa priekšplāna kontrasta koeficientu nevarēja noteikt",
+        "bgContrast": "Elementa fona kontrasta koeficientu nevarēja noteikt",
+        "bgImage": "Elementa kontrasta koeficientu nevarēja noteikt fona attēla dēļ",
+        "bgGradient": "Elementa kontrasta koeficientu nevarēja noteikt fona gradienta dēļ",
+        "imgNode": "Elementa kontrasta koeficientu nevarēja noteikt, jo elements satur attēla mezglu",
+        "bgOverlap": "Elementa kontrasta koeficientu nevarēja noteikt elementu pārklāšanās dēļ"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "Autocomplete vērtība ir norādīta piemērotam elementam",
+      "fail": "Autocomplete vērtība nav piemērota šāda veida ievadlaukam"
+    },
+    "autocomplete-valid": {
+      "pass": "Atribūts autocomplete ir pareizi noformēts",
+      "fail": "Atribūts autocomplete ir noformēts nepareizi",
+      "incomplete": "Atribūtam autocomplete ir nestandarta vērtība. Pārbaudiet, vai tās vietā nevar izmantot kādu standarta vērtību."
+    },
+    "accesskeys": {
+      "pass": "Atribūta accesskey vērtība ir unikāla",
+      "fail": "Dokumentā ir vairāki elementi ar vienādu accesskey"
+    },
+    "focusable-content": {
+      "pass": "Elements satur fokusējamus elementus",
+      "incomplete": "Pārbaudiet, vai elementi ar negatīvu tabindex var saņemt tastatūras fokusu, lai apgabalu varētu ritināt",
+      "fail": "Elementam vajadzētu saturēt fokusējamu saturu"
+    },
+    "focusable-disabled": {
+      "pass": "Elementā nav fokusējamu elementu",
+      "incomplete": "Pārbaudiet, vai fokusējamie elementi uzreiz pārvieto fokusa indikatoru",
+      "fail": "Fokusējamais saturs ir jāatspējo, jānoņem no DOM vai nedrīkst būt paslēpts ar aria-hidden"
+    },
+    "focusable-element": {
+      "pass": "Elements ir fokusējams",
+      "fail": "Elementam vajadzētu būt fokusējamam"
+    },
+    "focusable-modal-open": {
+      "pass": "Kamēr ir atvērts modālais logs, fokusējamu elementu nav",
+      "incomplete": "Pārbaudiet, vai fokusējamie elementi pašreizējā stāvoklī nav sasniedzami ar tabulēšanas taustiņu"
+    },
+    "focusable-no-name": {
+      "pass": "Elements nav tabulēšanas secībā vai tam ir piekļūstams teksts",
+      "fail": "Elements ir tabulēšanas secībā un tam nav piekļūstama teksta",
+      "incomplete": "Nevar noteikt, vai elementam ir piekļūstams nosaukums"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Elementā nav fokusējamu elementu",
+      "incomplete": "Pārbaudiet, vai fokusējamie elementi uzreiz pārvieto fokusa indikatoru",
+      "fail": "Fokusējamam saturam jābūt ar tabindex=\"-1\", jābūt noņemtam no DOM vai nedrīkst būt paslēptam ar aria-hidden"
+    },
+    "frame-focusable-content": {
+      "pass": "Elementam nav fokusējamu pēcteču",
+      "fail": "Elementam ir fokusējami pēcteči",
+      "incomplete": "Nevarēja noteikt, vai elementam ir pēcteči"
+    },
+    "landmark-is-top-level": {
+      "pass": "Orientieris ${data.role} atrodas augšējā līmenī.",
+      "fail": "Orientieris ${data.role} atrodas citā orientierī."
+    },
+    "no-focusable-content": {
+      "pass": "Elementam nav fokusējamu pēcteču",
+      "fail": {
+        "default": "Elementam ir fokusējami pēcteči. Pārvietojiet tos ārpus elementa vai noņemiet.",
+        "notHidden": "Negatīva tabindex lietošana elementam interaktīvas vadīklas iekšpusē neliedz palīgtehnoloģijām tam piešķirt fokusu (pat ar aria-hidden=\"true\")"
+      },
+      "incomplete": "Nevarēja noteikt, vai elementam ir pēcteči"
+    },
+    "page-has-heading-one": {
+      "pass": "Lapā ir vismaz viens pirmā līmeņa virsraksts",
+      "fail": "Lapā jābūt pirmā līmeņa virsrakstam"
+    },
+    "page-has-main": {
+      "pass": "Dokumentā ir vismaz viens orientieris main",
+      "fail": "Dokumentā nav orientiera main"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Dokumentā nav vairāk par vienu orientieri banner",
+      "fail": "Dokumentā ir vairāk nekā viens orientieris banner"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Dokumentā nav vairāk par vienu orientieri contentinfo",
+      "fail": "Dokumentā ir vairāk nekā viens orientieris contentinfo"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Dokumentā nav vairāk par vienu orientieri main",
+      "fail": "Dokumentā ir vairāk nekā viens orientieris main"
+    },
+    "tabindex": {
+      "pass": "Elementam nav tabindex, kas lielāks par 0",
+      "fail": "Elementam ir tabindex, kas lielāks par 0"
+    },
+    "alt-space-value": {
+      "pass": "Elementam ir derīga atribūta alt vērtība",
+      "fail": "Elementam ir atribūts alt, kas satur tikai atstarpi, un ne visi ekrāna lasītāji to ignorē"
+    },
+    "duplicate-img-label": {
+      "pass": "Elements neatkārto esošo tekstu elementa <img> alternatīvajā tekstā",
+      "fail": "Elements satur elementu <img> ar alternatīvo tekstu, kas dublē esošo tekstu"
+    },
+    "explicit-label": {
+      "pass": "Elementam ir tiešs elements <label>",
+      "fail": "Elementam nav tieša elementa <label>",
+      "incomplete": "Nevar noteikt, vai veidlapas elementam ir tiešs elements <label>"
+    },
+    "help-same-as-label": {
+      "pass": "Palīdzības teksts (title vai aria-describedby) neatkārto etiķetes tekstu",
+      "fail": "Palīdzības teksts (title vai aria-describedby) ir tāds pats kā etiķetes teksts"
+    },
+    "hidden-explicit-label": {
+      "pass": "Veidlapas elementam ir redzams tiešs elements <label>",
+      "fail": "Veidlapas elementam ir tiešs elements <label>, kas ir paslēpts",
+      "incomplete": "Nevar noteikt, vai veidlapas elementam ir paslēpts tiešs elements <label>"
+    },
+    "implicit-label": {
+      "pass": "Elementam ir netiešs (ietverts) elements <label>",
+      "fail": "Elementam nav netieša (ietverta) elementa <label>",
+      "incomplete": "Nevar noteikt, vai veidlapas elementam ir netiešs (ietverts) elements <label>"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elements satur redzamu tekstu kā daļu no sava piekļūstamā nosaukuma",
+      "fail": "Elementa iekšpusē esošais teksts nav iekļauts piekļūstamajā nosaukumā",
+      "incomplete": {
+        "default": "Nevar noteikt, vai redzamais teksts ir daļa no piekļūstamā nosaukuma",
+        "valueText": "Elementa iekšpusē esošais teksts var būt vērtības teksts, nevis etiķete"
+      }
+    },
+    "multiple-label": {
+      "pass": "Veidlapas laukam nav vairāku elementu label",
+      "incomplete": "Vairāku elementu label lietošana palīgtehnoloģijās netiek plaši atbalstīta. Pārliecinieties, ka pirmajā etiķetē ir visa nepieciešamā informācija."
+    },
+    "title-only": {
+      "pass": "Veidlapas elements savai etiķetei neizmanto tikai atribūtu title",
+      "fail": "Veidlapas elementa etiķetes veidošanai izmantots tikai title"
+    },
+    "landmark-is-unique": {
+      "pass": "Orientieriem jābūt unikālai lomai vai lomas/etiķetes/title (t. i., piekļūstamā nosaukuma) kombinācijai",
+      "fail": "Orientierim jābūt unikālam aria-label, aria-labelledby vai title, lai orientierus varētu atšķirt"
+    },
+    "has-lang": {
+      "pass": "Elementam <html> ir atribūts lang",
+      "fail": {
+        "noXHTML": "Atribūts xml:lang HTML lapās nav derīgs, izmantojiet atribūtu lang.",
+        "noLang": "Elementam <html> nav atribūta lang"
+      }
+    },
+    "valid-lang": {
+      "pass": "Atribūta lang vērtība ir iekļauta derīgo valodu sarakstā",
+      "fail": "Atribūta lang vērtība nav iekļauta derīgo valodu sarakstā"
+    },
+    "xml-lang-mismatch": {
+      "pass": "Atribūtiem lang un xml:lang ir viena un tā pati pamatvaloda",
+      "fail": "Atribūtiem lang un xml:lang nav viena un tā pati pamatvaloda"
+    },
+    "dlitem": {
+      "pass": "Apraksta saraksta vienumam ir vecākelements <dl>",
+      "fail": "Apraksta saraksta vienumam nav vecākelementa <dl>"
+    },
+    "listitem": {
+      "pass": "Saraksta vienumam ir vecākelements <ul>, <ol> vai role=\"list\"",
+      "fail": {
+        "default": "Saraksta vienumam nav vecākelementa <ul> vai <ol>. Pārliecinieties, ka <li> ir tiešs elementa <ul> vai <ol> pakārtotais elements vai ka vecākelementam ir role=\"list\".",
+        "roleNotValid": "Saraksta vienuma vecākelementam ir loma, kas nav role=\"list\". Pārliecinieties, ka vecākelementam ir role=\"list\", vai pārvietojiet <li> elementā <ul> vai <ol>."
+      },
+      "incomplete": "Nevar noteikt, vai saraksta vienumam ir vecākelements <ul>, <ol> vai role=\"list\""
+    },
+    "only-dlitems": {
+      "pass": "Elementam dl ir tikai tādi tiešie pakārtotie elementi, kas tajā ir atļauti: <dt>, <dd> vai <div>",
+      "fail": "Elementam dl ir tieši pakārtoti elementi, kas nav atļauti: ${data.values}",
+      "incomplete": "Nevar noteikt, vai elementam dl ir tikai atļauti tiešie pakārtotie elementi"
+    },
+    "only-listitems": {
+      "pass": "Saraksta elementam ir tikai tādi tiešie pakārtotie elementi, kas tajā ir atļauti: <li>",
+      "fail": "Saraksta elementam ir tieši pakārtoti elementi, kas nav atļauti: ${data.values}",
+      "incomplete": "Nevar noteikt, vai saraksta elementam ir tikai atļauti tiešie pakārtotie elementi"
+    },
+    "structured-dlitems": {
+      "pass": "Ja elements nav tukšs, tam ir gan <dt>, gan <dd> elementi",
+      "fail": "Ja elements nav tukšs, tam nav vismaz viena elementa <dt>, kam seko vismaz viens elements <dd>"
+    },
+    "caption": {
+      "pass": "Multivides elementam ir subtitru celiņš",
+      "incomplete": "Pārbaudiet, vai elementam ir pieejami subtitri"
+    },
+    "frame-tested": {
+      "pass": "Iframe tika pārbaudīts ar axe-core",
+      "fail": "Iframe nevarēja pārbaudīt ar axe-core",
+      "incomplete": "Iframe vēl jāpārbauda ar axe-core"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> vai <audio> neatskaņo skaņu ilgāk par atļauto laiku vai tam ir vadības mehānisms",
+      "fail": "<video> vai <audio> atskaņo skaņu ilgāk par atļauto laiku un tam nav vadības mehānisma",
+      "incomplete": "Pārbaudiet, vai <video> vai <audio> neatskaņo skaņu ilgāk par atļauto laiku vai nodrošina vadības mehānismu"
+    },
+    "css-orientation-lock": {
+      "pass": "Attēlojums ir lietojams, un orientācijas bloķēšanas nav",
+      "fail": "Tiek lietota CSS orientācijas bloķēšana, un attēlojums kļūst nelietojams",
+      "incomplete": "Nevar noteikt, vai ir CSS orientācijas bloķēšana"
+    },
+    "meta-viewport-large": {
+      "pass": "Tags <meta> neliedz ievērojami tuvināt mobilajās ierīcēs",
+      "fail": "Tags <meta> ierobežo tuvināšanu mobilajās ierīcēs"
+    },
+    "meta-viewport": {
+      "pass": "Tags <meta> neatspējo tuvināšanu mobilajās ierīcēs",
+      "fail": "${data} tagā <meta> atspējo tuvināšanu mobilajās ierīcēs"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Mērķim ir pietiekama atstarpe līdz tuvākajiem kaimiņiem. Drošās noklikšķināmās vietas diametrs ir ${data.closestOffset} px, kas ir vismaz ${data.minOffset} px.",
+        "large": "Mērķis ievērojami pārsniedz minimālo izmēru ${data.minOffset} px."
+      },
+      "fail": "Mērķim ir nepietiekama atstarpe līdz tuvākajiem kaimiņiem. Drošās noklikšķināmās vietas diametrs ir ${data.closestOffset} px, nevis vismaz ${data.minOffset} px.",
+      "incomplete": {
+        "default": "Elementam ar negatīvu tabindex ir nepietiekama atstarpe līdz tuvākajiem kaimiņiem. Drošās noklikšķināmās vietas diametrs ir ${data.closestOffset} px, nevis vismaz ${data.minOffset} px. Vai tas ir mērķis?",
+        "nonTabbableNeighbor": "Mērķim ir nepietiekama atstarpe līdz tuvākajiem kaimiņiem. Drošās noklikšķināmās vietas diametrs ir ${data.closestOffset} px, nevis vismaz ${data.minOffset} px. Vai kaimiņš ir mērķis?",
+        "tooManyRects": "Mērķa izmēru nevarēja noteikt, jo ir pārāk daudz pārklājošos elementu"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Vadīklai ir pietiekams izmērs (${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px)",
+        "obscured": "Vadīkla tiek ignorēta, jo tā ir pilnībā aizsegta un tādēļ nav noklikšķināma",
+        "large": "Mērķis ievērojami pārsniedz minimālo izmēru ${data.minSize} px."
+      },
+      "fail": {
+        "default": "Mērķim ir nepietiekams izmērs (${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px)",
+        "partiallyObscured": "Mērķim ir nepietiekams izmērs, jo tas ir daļēji aizsegts (mazākā platība ir ${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px)"
+      },
+      "incomplete": {
+        "default": "Elementam ar negatīvu tabindex ir nepietiekams izmērs (${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px). Vai tas ir mērķis?",
+        "contentOverflow": "Elementa izmēru nevarēja precīzi noteikt satura pārpildes dēļ",
+        "partiallyObscured": "Elementam ar negatīvu tabindex ir nepietiekams izmērs, jo tas ir daļēji aizsegts (mazākā platība ir ${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px). Vai tas ir mērķis?",
+        "partiallyObscuredNonTabbable": "Mērķim ir nepietiekams izmērs, jo to daļēji aizsedz kaimiņš ar negatīvu tabindex (mazākā platība ir ${data.width} px × ${data.height} px, jābūt vismaz ${data.minSize} px × ${data.minSize} px). Vai kaimiņš ir mērķis?",
+        "tooManyRects": "Mērķa izmēru nevarēja noteikt, jo ir pārāk daudz pārklājošos elementu"
+      }
+    },
+    "header-present": {
+      "pass": "Lapā ir virsraksts",
+      "fail": "Lapā nav virsraksta"
+    },
+    "heading-order": {
+      "pass": "Virsrakstu secība ir derīga",
+      "fail": "Virsrakstu secība ir nederīga",
+      "incomplete": "Nevar noteikt iepriekšējo virsrakstu"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Nav citu saišu ar tādu pašu nosaukumu, kas ved uz citu URL",
+      "incomplete": "Pārbaudiet, vai saitēm ir viens un tas pats mērķis vai tās ir apzināti neviennozīmīgas."
+    },
+    "internal-link-present": {
+      "pass": "Atrasta derīga izlaišanas saite",
+      "fail": "Derīga izlaišanas saite nav atrasta"
+    },
+    "landmark": {
+      "pass": "Lapā ir orientiera apgabals",
+      "fail": "Lapā nav orientiera apgabala"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "Tags <meta> neatsvaidzina lapu nekavējoties",
+      "fail": "Tags <meta> piespiedu kārtā atsvaidzina lapu pēc laika"
+    },
+    "meta-refresh": {
+      "pass": "Tags <meta> neatsvaidzina lapu nekavējoties",
+      "fail": "Tags <meta> piespiedu kārtā atsvaidzina lapu pēc laika (mazāk nekā 20 stundas)"
+    },
+    "p-as-heading": {
+      "pass": "Elementi <p> nav noformēti kā virsraksti",
+      "fail": "Noformēto elementu <p> vietā jāizmanto virsrakstu elementi",
+      "incomplete": "Nevar noteikt, vai elementi <p> ir noformēti kā virsraksti"
+    },
+    "region": {
+      "pass": "Viss lapas saturs atrodas orientieros",
+      "fail": "Daļa lapas satura neatrodas orientieros"
+    },
+    "skip-link": {
+      "pass": "Izlaišanas saites mērķis eksistē",
+      "incomplete": "Izlaišanas saites mērķim jākļūst redzamam pēc aktivizēšanas",
+      "fail": "Nav izlaišanas saites mērķa"
+    },
+    "unique-frame-title": {
+      "pass": "Elementa atribūts title ir unikāls",
+      "fail": "Elementa atribūts title nav unikāls"
+    },
+    "duplicate-id-active": {
+      "pass": "Dokumentā nav aktīvu elementu ar vienādu atribūtu id",
+      "fail": "Dokumentā ir aktīvi elementi ar vienādu atribūtu id: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Dokumentā nav elementu, uz kuriem atsaucas ARIA vai etiķetes un kuriem ir vienāds atribūts id",
+      "fail": "Dokumentā ir vairāki elementi, uz kuriem atsaucas ARIA un kuriem ir vienāds atribūts id: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Dokumentā nav statisku elementu ar vienādu atribūtu id",
+      "fail": "Dokumentā ir vairāki statiski elementi ar vienādu atribūtu id: ${data}"
+    },
+    "aria-label": {
+      "pass": "Atribūts aria-label eksistē un nav tukšs",
+      "fail": "Atribūts aria-label neeksistē vai ir tukšs"
+    },
+    "aria-labelledby": {
+      "pass": "Atribūts aria-labelledby eksistē un atsaucas uz elementiem, kas ir redzami ekrāna lasītājiem",
+      "fail": "Atribūts aria-labelledby neeksistē, atsaucas uz neesošiem elementiem vai atsaucas uz tukšiem elementiem",
+      "incomplete": "Pārliecinieties, ka aria-labelledby atsaucas uz esošu elementu"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Nav norādīti iekļautie stili ar '!important', kas ietekmē teksta atstarpes",
+      "fail": {
+        "singular": "Noņemiet '!important' no iekļautā stila ${data.values}, jo tā ignorēšanu lielākā daļa pārlūku neatbalsta",
+        "plural": "Noņemiet '!important' no iekļautajiem stiliem ${data.values}, jo to ignorēšanu lielākā daļa pārlūku neatbalsta"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elementam ir iekšējs teksts, kas ir redzams ekrāna lasītājiem",
+      "fail": "Elementam nav iekšēja teksta, kas ir redzams ekrāna lasītājiem",
+      "incomplete": "Nevar noteikt, vai elementam ir pakārtoti elementi"
+    },
+    "doc-has-title": {
+      "pass": "Dokumentā ir elements <title>, kas nav tukšs",
+      "fail": "Dokumentā nav elementa <title>, kas nav tukšs"
+    },
+    "error-occurred": {
+      "pass": "|||",
+      "incomplete": "Axe saskārās ar kļūdu; pārbaudiet lapu manuāli attiecībā uz šāda veida problēmu"
+    },
+    "exists": {
+      "pass": "Elements neeksistē",
+      "incomplete": "Elements eksistē"
+    },
+    "has-alt": {
+      "pass": "Elementam ir atribūts alt",
+      "fail": "Elementam nav atribūta alt"
+    },
+    "has-visible-text": {
+      "pass": "Elementam ir teksts, kas ir redzams ekrāna lasītājiem",
+      "fail": "Elementam nav teksta, kas ir redzams ekrāna lasītājiem",
+      "incomplete": "Nevar noteikt, vai elementam ir pakārtoti elementi"
+    },
+    "important-letter-spacing": {
+      "pass": "Atribūtā style letter-spacing nav iestatīts ar !important vai atbilst minimumam",
+      "fail": {
+        "default": "letter-spacing atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em)",
+        "omitted": "letter-spacing atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em). Skarti vairāk elementu ar tekstu, nekā norādīts saistīto mezglu sarakstā"
+      },
+      "incomplete": "Nevar noteikt, vai letter-spacing atribūtā style atbilst minimumam"
+    },
+    "important-line-height": {
+      "pass": "line-height atribūtā style nav iestatīts ar !important vai atbilst minimumam",
+      "fail": {
+        "default": "line-height atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em)",
+        "omitted": "line-height atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em). Skarti vairāk elementu ar tekstu, nekā norādīts saistīto mezglu sarakstā"
+      },
+      "incomplete": "Nevar noteikt, vai line-height atribūtā style atbilst minimumam"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing atribūtā style nav iestatīts ar !important vai atbilst minimumam",
+      "fail": {
+        "default": "word-spacing atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em)",
+        "omitted": "word-spacing atribūtā style nedrīkst izmantot !important vai tam jābūt ${data.minValue}em (pašlaik ${data.value}em). Skarti vairāk elementu ar tekstu, nekā norādīts saistīto mezglu sarakstā"
+      },
+      "incomplete": "Nevar noteikt, vai word-spacing atribūtā style atbilst minimumam"
+    },
+    "is-on-screen": {
+      "pass": "Elements nav redzams",
+      "fail": "Elements ir redzams"
+    },
+    "non-empty-alt": {
+      "pass": "Elementam ir atribūts alt, kas nav tukšs",
+      "fail": {
+        "noAttr": "Elementam nav atribūta alt",
+        "emptyAttr": "Elementam ir tukšs atribūts alt"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elementam nav atribūta value",
+        "has-label": "Elementam ir atribūts value, kas nav tukšs"
+      },
+      "fail": "Elementam ir atribūts value, un tas ir tukšs"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elementam ir atribūts placeholder",
+      "fail": {
+        "noAttr": "Elementam nav atribūta placeholder",
+        "emptyAttr": "Elementam ir tukšs atribūts placeholder"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elementam ir atribūts title",
+      "fail": {
+        "noAttr": "Elementam nav atribūta title",
+        "emptyAttr": "Elementam ir tukšs atribūts title"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elementam ir atribūts value, kas nav tukšs",
+      "fail": {
+        "noAttr": "Elementam nav atribūta value",
+        "emptyAttr": "Elementam ir tukšs atribūts value"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elementa noklusējuma semantika tika aizstāta ar role=\"${data.role}\"",
+      "fail": {
+        "default": "Elementa noklusējuma semantika netika aizstāta ar role=\"none\" vai role=\"presentation\"",
+        "globalAria": "Elementa loma nav prezentācijas, jo tam ir globāls ARIA atribūts",
+        "focusable": "Elementa loma nav prezentācijas, jo tas ir fokusējams",
+        "both": "Elementa loma nav prezentācijas, jo tam ir globāls ARIA atribūts un tas ir fokusējams",
+        "iframe": "Atribūta \"title\" lietošana elementam ${data.nodeName} ar prezentācijas lomu dažādos ekrāna lasītājos darbojas atšķirīgi"
+      }
+    },
+    "role-none": {
+      "pass": "Elementa noklusējuma semantika tika aizstāta ar role=\"none\"",
+      "fail": "Elementa noklusējuma semantika netika aizstāta ar role=\"none\""
+    },
+    "role-presentation": {
+      "pass": "Elementa noklusējuma semantika tika aizstāta ar role=\"presentation\"",
+      "fail": "Elementa noklusējuma semantika netika aizstāta ar role=\"presentation\""
+    },
+    "svg-non-empty-title": {
+      "pass": "Elementam ir pakārtots elements title",
+      "fail": {
+        "noTitle": "Elementam nav pakārtota elementa title",
+        "emptyTitle": "Elementa pakārtotais title ir tukšs"
+      },
+      "incomplete": "Nevar noteikt, vai elementam ir pakārtots elements title"
+    },
+    "caption-faked": {
+      "pass": "Tabulas pirmā rinda netiek izmantota kā paraksts",
+      "fail": "Tabulas pirmajam pakārtotajam elementam jābūt caption, nevis tabulas šūnai"
+    },
+    "html5-scope": {
+      "pass": "Atribūts scope tiek lietots tikai tabulas galvenes elementiem (<th>)",
+      "fail": "HTML 5 atribūtus scope drīkst lietot tikai tabulas galvenes elementiem (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "Atribūta summary saturs un <caption> nav dublēti",
+      "fail": "Atribūta summary saturs un elements <caption> ir identiski",
+      "incomplete": "Nevar noteikt, vai elementam <table> ir paraksts"
+    },
+    "scope-value": {
+      "pass": "Atribūts scope tiek lietots pareizi",
+      "fail": "Atribūta scope vērtība drīkst būt tikai 'row' vai 'col'"
+    },
+    "td-has-header": {
+      "pass": "Visām datu šūnām, kas nav tukšas, ir tabulas galvenes",
+      "fail": "Dažām datu šūnām, kas nav tukšas, nav tabulas galveņu"
+    },
+    "td-headers-attr": {
+      "pass": "Atribūts headers tiek izmantots tikai atsaucei uz citām galvenes šūnām tajā pašā tabulā",
+      "incomplete": "Atribūts headers ir tukšs",
+      "fail": {
+        "cell-header-not-in-table": "Atribūts headers netiek izmantots tikai atsaucei uz citām galvenes šūnām tajā pašā tabulā",
+        "cell-header-not-th": "Atribūtam headers jāatsaucas uz galvenes šūnām, nevis datu šūnām",
+        "header-refs-self": "Elements ar atribūtu headers atsaucas uz sevi"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Visas tabulas galvenes šūnas atsaucas uz datu šūnām",
+      "incomplete": "Tabulas datu šūnu nav vai tās ir tukšas"
+    },
+    "hidden-content": {
+      "pass": "Viss lapas saturs ir analizēts.",
+      "fail": "Analizējot šīs lapas saturu, radās problēmas.",
+      "incomplete": "Lapā ir paslēpts saturs, kas netika analizēts. Lai to analizētu, jāaktivizē tā attēlošana."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Labojiet jebkuru no šiem:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Labojiet visus šos:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe nevarēja noteikt iemeslu. Laiks atvērt elementu inspektoru!"
+}
