@@ -453,7 +453,7 @@ describe('dom.isVisible', () => {
       fixture.innerHTML = '<div><a>hello</a></div>';
       makeShadowTree(fixture.firstChild);
       const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const el = axe.commons.dom.query(tree, 'a')[0];
+      const el = axe.commons.dom.queryDom(tree, 'a')[0];
       assert.isTrue(axe.commons.dom.isVisible(el.actualNode));
     });
     it('should correctly handle hidden slotted elements', () => {
@@ -472,7 +472,7 @@ describe('dom.isVisible', () => {
       fixture.innerHTML = '<div><p><a>hello</a></p></div>';
       makeShadowTree(fixture.firstChild);
       const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const el = axe.commons.dom.query(tree, 'a')[0];
+      const el = axe.commons.dom.queryDom(tree, 'a')[0];
       assert.isFalse(axe.commons.dom.isVisible(el.actualNode));
     });
     it('should return false if element is visually hidden using position absolute, overflow hidden, and a very small height', () => {

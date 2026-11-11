@@ -9,7 +9,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target">	</div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.commons.dom.query(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -17,48 +17,60 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target"> <span></span> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.commons.dom.query(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
   it('is true if the element has non-empty text', () => {
     fixture.innerHTML = '<div id="target"> text </div>';
     tree = axe.utils.getFlattenedTree(fixture);
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '#target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
+    );
   });
 
   it('is true if the element has an aria label', () => {
     fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
     tree = axe.utils.getFlattenedTree(fixture);
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '#target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
+    );
   });
 
   it('is false if the element has an aria label but `ignoreAria=true`', () => {
     fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.commons.dom.query(tree, '#target')[0], true, true)
+      hasContentVirtual(
+        axe.commons.dom.queryDom(tree, '#target')[0],
+        true,
+        true
+      )
     );
   });
 
   it('is true if the element contains visual content', () => {
     fixture.innerHTML = '<div id="target"> <img src=""> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '#target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
+    );
   });
 
   it('is true if the element contains a node with a aria-label', () => {
     fixture.innerHTML =
       '<div id="target"> <span aria-label="my-label"></span> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '#target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
+    );
   });
 
   it('is false if the element does not show text', () => {
     fixture.innerHTML = '<style id="target"> #foo { color: green } </style>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.commons.dom.query(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -78,7 +90,7 @@ describe('dom.hasContentVirtual', () => {
     tree = axe.utils.getFlattenedTree(fixture);
 
     assert.isFalse(
-      hasContentVirtual(axe.commons.dom.query(tree, '#target')[0], true)
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0], true)
     );
   });
 
@@ -90,7 +102,9 @@ describe('dom.hasContentVirtual', () => {
     shadow.innerHTML = 'Some text';
     tree = axe.utils.getFlattenedTree(fixture);
 
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '#target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
+    );
   });
 
   (shadowSupport ? it : xit)('looks at the slots in a shadow tree', () => {
@@ -101,6 +115,8 @@ describe('dom.hasContentVirtual', () => {
     shadow.innerHTML = '<div class="target"><slot></slot></div>';
     tree = axe.utils.getFlattenedTree(fixture);
 
-    assert.isTrue(hasContentVirtual(axe.commons.dom.query(tree, '.target')[0]));
+    assert.isTrue(
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '.target')[0])
+    );
   });
 });

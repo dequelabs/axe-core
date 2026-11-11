@@ -212,7 +212,7 @@ describe('scrollable-region-focusable-matches', () => {
         '<p id="target" style="width: 12em; height: 2em; border: dotted;">Sed.</p>';
       root.appendChild(slotted);
       const tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
-      const target = axe.commons.dom.query(tree, 'p')[0];
+      const target = axe.commons.dom.queryDom(tree, 'p')[0];
       const actual = rule.matches(target.actualNode, target);
       assert.isFalse(actual);
     });
@@ -226,7 +226,7 @@ describe('scrollable-region-focusable-matches', () => {
         '<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: auto;">This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence.</p>';
       root.appendChild(slotted);
       const tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
-      const target = axe.commons.dom.query(tree, 'p')[0];
+      const target = axe.commons.dom.queryDom(tree, 'p')[0];
       const actual = rule.matches(target.actualNode, target);
       assert.isTrue(actual);
     });

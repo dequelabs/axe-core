@@ -158,7 +158,10 @@ describe('aria-required-children', () => {
     );
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
-    const unallowed = axe.commons.dom.query(axe._tree, '[role="tabpanel"]')[0];
+    const unallowed = axe.commons.dom.queryDom(
+      axe._tree,
+      '[role="tabpanel"]'
+    )[0];
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
       values: '[role=tabpanel]'
@@ -172,7 +175,7 @@ describe('aria-required-children', () => {
     );
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
-    const unallowed = axe.commons.dom.query(
+    const unallowed = axe.commons.dom.queryDom(
       axe._tree,
       '[aria-live="polite"]'
     )[0];
@@ -189,7 +192,7 @@ describe('aria-required-children', () => {
     );
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
-    const unallowed = axe.commons.dom.query(axe._tree, '[tabindex="0"]')[0];
+    const unallowed = axe.commons.dom.queryDom(axe._tree, '[tabindex="0"]')[0];
     assert.deepEqual(checkContext._data, {
       messageKey: 'unallowed',
       values: 'div[tabindex]'
@@ -207,7 +210,7 @@ describe('aria-required-children', () => {
     `);
     assert.isFalse(requiredChildrenCheck.apply(checkContext, params));
 
-    const unallowed = axe.commons.dom.query(
+    const unallowed = axe.commons.dom.queryDom(
       axe._tree,
       '[role="presentation"]'
     )[0];

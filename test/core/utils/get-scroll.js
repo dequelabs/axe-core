@@ -122,7 +122,7 @@ describe('axe.utils.getScroll', () => {
         '<p id="target" style="width: 12em; height: 2em; border: dotted;">Sed.</p>';
       root.appendChild(slotted);
       const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const target = axe.commons.dom.query(tree, 'p')[0];
+      const target = axe.commons.dom.queryDom(tree, 'p')[0];
       const actual = axe.utils.getScroll(target.actualNode);
       assert.isUndefined(actual);
     });
@@ -136,7 +136,7 @@ describe('axe.utils.getScroll', () => {
         '<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: auto;">This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence.</p>';
       root.appendChild(slotted);
       const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-      const target = axe.commons.dom.query(tree, 'p')[0];
+      const target = axe.commons.dom.queryDom(tree, 'p')[0];
       const actual = axe.utils.getScroll(target.actualNode);
       assert.isDefined(actual);
       assert.hasAllKeys(actual, ['elm', 'top', 'left']);

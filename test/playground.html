@@ -3,27 +3,59 @@
   <title>Axe Playground</title>
   <!-- The playground is used for quick local host axe-core during development -->
 
-  <main>
-    <h1>Hello World</h1>
-  </main>
+  <main id="main"></main>
+  <div>
+    <div class="foo" id="host">
+      <template shadowrootmode="open">
+        <button><slot></slot></button>
+        <button id="in-shadow"></button>
+      </template>
+      <span>hello</span>
+    </div>
+  </div>
 
   <script src="/axe.js"></script>
   <script src="/test/testutils.js"></script>
   <script>
-    axe.testUtils.awaitNestedLoad(
-      window,
-      () => {
-        axe.run(
-          {
-            runOnly: 'color-contrast',
-            elementRef: true
-          },
-          (err, results) => {
-            console.log(err || results);
-          }
-        );
-      },
-      err => console.error(err)
-    );
+    main.innerHTML =
+      '<body>' +
+      '<div class="first" data-a11yhero="faulkner">' +
+      '<ul>' +
+      '<li class="breaking"></li>' +
+      '<li class="breaking"></li>' +
+      '</ul>' +
+      '</div>' +
+      '<div id="one"></div>' +
+      '<div class="second third">' +
+      '<ul>' +
+      '<li role="tab" id="one"></li>' +
+      '<li role="button" id="one"></li>' +
+      '</ul>' +
+      '</div>' +
+      '<span class="fourth">' +
+      '<span>' +
+      '<span>' +
+      '<span></span>' +
+      '<span></span>' +
+      '</span>' +
+      '</span>' +
+      '</span>' +
+      '</body>';
+
+    // axe.testUtils.awaitNestedLoad(
+    //   window,
+    //   () => {
+    //     axe.run(
+    //       {
+    //         runOnly: 'color-contrast',
+    //         elementRef: true
+    //       },
+    //       (err, results) => {
+    //         console.log(err || results);
+    //       }
+    //     );
+    //   },
+    //   err => console.error(err)
+    // );
   </script>
 </html>

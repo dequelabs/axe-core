@@ -27,7 +27,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
@@ -39,7 +39,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
@@ -55,7 +55,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
@@ -68,7 +68,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
@@ -82,7 +82,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
     });
 
@@ -94,7 +94,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
   });
@@ -104,7 +104,7 @@ describe('text.labelVirtual', () => {
       fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
@@ -112,7 +112,7 @@ describe('text.labelVirtual', () => {
       fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
 
@@ -123,7 +123,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
@@ -133,7 +133,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
   });
@@ -146,7 +146,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
@@ -157,7 +157,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
 
@@ -168,7 +168,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
   });
@@ -180,7 +180,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
     });
 
@@ -190,7 +190,7 @@ describe('text.labelVirtual', () => {
       `;
 
       const tree = axe.testUtils.flatTreeSetup(document.body);
-      const target = axe.commons.dom.query(tree, '#target')[0];
+      const target = axe.commons.dom.queryDom(tree, '#target')[0];
       assert.isNull(axe.commons.text.labelVirtual(target));
     });
   });

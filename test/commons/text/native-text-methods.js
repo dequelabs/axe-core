@@ -8,13 +8,13 @@ describe('text.nativeTextMethods', () => {
     const valueText = nativeTextMethods.valueText;
     it('returns the value of actualNode', () => {
       fixtureSetup('<input value="foo" />');
-      const input = axe.commons.dom.query(axe._tree[0], 'input')[0];
+      const input = axe.commons.dom.queryDom(axe._tree[0], 'input')[0];
       assert.equal(valueText(input), 'foo');
     });
 
     it('returns `` when there is no value', () => {
       fixtureSetup('<input />');
-      const input = axe.commons.dom.query(axe._tree[0], 'input')[0];
+      const input = axe.commons.dom.queryDom(axe._tree[0], 'input')[0];
       assert.equal(valueText(input), '');
     });
   });
@@ -28,7 +28,7 @@ describe('text.nativeTextMethods', () => {
         <input type="reset" />
         <input type="button" />
       `);
-      const inputs = axe.commons.dom.query(axe._tree[0], 'input');
+      const inputs = axe.commons.dom.queryDom(axe._tree[0], 'input');
       assert.equal(buttonDefaultText(inputs[0]), 'Submit');
       assert.equal(buttonDefaultText(inputs[1]), 'Submit');
       assert.equal(buttonDefaultText(inputs[2]), 'Reset');
@@ -37,7 +37,7 @@ describe('text.nativeTextMethods', () => {
 
     it('returns `` when the element is not a button', () => {
       fixtureSetup('<input type="text">');
-      const input = axe.commons.dom.query(axe._tree[0], 'input')[0];
+      const input = axe.commons.dom.queryDom(axe._tree[0], 'input')[0];
       assert.equal(buttonDefaultText(input), '');
     });
 
@@ -48,7 +48,7 @@ describe('text.nativeTextMethods', () => {
         <input type="ResET" />
         <input type="buTTON" />
       `);
-      const inputs = axe.commons.dom.query(axe._tree[0], 'input');
+      const inputs = axe.commons.dom.queryDom(axe._tree[0], 'input');
       assert.equal(buttonDefaultText(inputs[0]), 'Submit');
       assert.equal(buttonDefaultText(inputs[1]), 'Submit');
       assert.equal(buttonDefaultText(inputs[2]), 'Reset');
@@ -60,13 +60,13 @@ describe('text.nativeTextMethods', () => {
     const altText = nativeTextMethods.altText;
     it('returns the alt attribute of actualNode', () => {
       fixtureSetup('<img alt="foo" />');
-      const img = axe.commons.dom.query(axe._tree[0], 'img')[0];
+      const img = axe.commons.dom.queryDom(axe._tree[0], 'img')[0];
       assert.equal(altText(img), 'foo');
     });
 
     it('returns `` when there is no alt', () => {
       fixtureSetup('<img />');
-      const img = axe.commons.dom.query(axe._tree[0], 'img')[0];
+      const img = axe.commons.dom.queryDom(axe._tree[0], 'img')[0];
       assert.equal(altText(img), '');
     });
   });
@@ -80,14 +80,14 @@ describe('text.nativeTextMethods', () => {
           some content
         </figure>
       `);
-      const figure = axe.commons.dom.query(axe._tree[0], 'figure')[0];
+      const figure = axe.commons.dom.queryDom(axe._tree[0], 'figure')[0];
       assert.equal(figureText(figure), 'My caption');
     });
 
     it('returns `` when there is no figcaption', () => {
       const figureText = nativeTextMethods.figureText;
       fixtureSetup(html` <figure>some content</figure> `);
-      const figure = axe.commons.dom.query(axe._tree[0], 'figure')[0];
+      const figure = axe.commons.dom.queryDom(axe._tree[0], 'figure')[0];
       assert.equal(figureText(figure), '');
     });
 
@@ -102,7 +102,7 @@ describe('text.nativeTextMethods', () => {
           some other content
         </figure>
       `);
-      const figure = axe.commons.dom.query(axe._tree[0], '#fig1')[0];
+      const figure = axe.commons.dom.queryDom(axe._tree[0], '#fig1')[0];
       assert.equal(figureText(figure), '');
     });
   });
@@ -123,7 +123,7 @@ describe('text.nativeTextMethods', () => {
           </tr>
         </table>
       `);
-      const table = axe.commons.dom.query(axe._tree[0], 'table')[0];
+      const table = axe.commons.dom.queryDom(axe._tree[0], 'table')[0];
       assert.equal(tableCaptionText(table), 'My caption');
     });
 
@@ -138,7 +138,7 @@ describe('text.nativeTextMethods', () => {
           </tr>
         </table>
       `);
-      const table = axe.commons.dom.query(axe._tree[0], 'table')[0];
+      const table = axe.commons.dom.queryDom(axe._tree[0], 'table')[0];
       assert.equal(tableCaptionText(table), '');
     });
 
@@ -154,7 +154,7 @@ describe('text.nativeTextMethods', () => {
           </th></tr>
         </table>
       `);
-      const table = axe.commons.dom.query(axe._tree[0], '#tbl1')[0];
+      const table = axe.commons.dom.queryDom(axe._tree[0], '#tbl1')[0];
       assert.equal(tableCaptionText(table), '');
     });
   });
@@ -168,14 +168,14 @@ describe('text.nativeTextMethods', () => {
           some content
         </fieldset>
       `);
-      const fieldset = axe.commons.dom.query(axe._tree[0], 'fieldset')[0];
+      const fieldset = axe.commons.dom.queryDom(axe._tree[0], 'fieldset')[0];
       assert.equal(fieldsetLegendText(fieldset), 'My legend');
     });
 
     it('returns `` when there is no legend', () => {
       const fieldsetLegendText = nativeTextMethods.fieldsetLegendText;
       fixtureSetup(html` <fieldset>some content</fieldset> `);
-      const fieldset = axe.commons.dom.query(axe._tree[0], 'fieldset')[0];
+      const fieldset = axe.commons.dom.queryDom(axe._tree[0], 'fieldset')[0];
       assert.equal(fieldsetLegendText(fieldset), '');
     });
 
@@ -190,7 +190,7 @@ describe('text.nativeTextMethods', () => {
           some other content
         </fieldset>
       `);
-      const fieldset = axe.commons.dom.query(axe._tree[0], '#fig1')[0];
+      const fieldset = axe.commons.dom.queryDom(axe._tree[0], '#fig1')[0];
       assert.equal(fieldsetLegendText(fieldset), '');
     });
   });
@@ -204,13 +204,13 @@ describe('text.nativeTextMethods', () => {
           some content
         </svg>
       `);
-      const svg = axe.commons.dom.query(axe._tree[0], 'svg')[0];
+      const svg = axe.commons.dom.queryDom(axe._tree[0], 'svg')[0];
       assert.equal(svgTitleText(svg), 'My title');
     });
 
     it('returns `` when there is no title', () => {
       fixtureSetup(html` <svg>some content</svg> `);
-      const svg = axe.commons.dom.query(axe._tree[0], 'svg')[0];
+      const svg = axe.commons.dom.queryDom(axe._tree[0], 'svg')[0];
       assert.equal(svgTitleText(svg), '');
     });
 
@@ -224,7 +224,7 @@ describe('text.nativeTextMethods', () => {
           some other content
         </svg>
       `);
-      const svg = axe.commons.dom.query(axe._tree[0], '#fig1')[0];
+      const svg = axe.commons.dom.queryDom(axe._tree[0], '#fig1')[0];
       assert.equal(svgTitleText(svg), '');
     });
   });
@@ -240,13 +240,13 @@ describe('text.nativeTextMethods', () => {
     const placeholderText = nativeTextMethods.placeholderText;
     it('returns the placeholder attribute of actualNode', () => {
       fixtureSetup('<input placeholder="foo" />');
-      const input = axe.commons.dom.query(axe._tree[0], 'input')[0];
+      const input = axe.commons.dom.queryDom(axe._tree[0], 'input')[0];
       assert.equal(placeholderText(input), 'foo');
     });
 
     it('returns `` when there is no placeholder', () => {
       fixtureSetup('<input />');
-      const input = axe.commons.dom.query(axe._tree[0], 'input')[0];
+      const input = axe.commons.dom.queryDom(axe._tree[0], 'input')[0];
       assert.equal(placeholderText(input), '');
     });
   });

@@ -11,7 +11,7 @@ describe('aria.getOwnedVirtual', () => {
         <h3>heading 3</h3>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -30,7 +30,7 @@ describe('aria.getOwnedVirtual', () => {
       <h4 id="hdr4">heading 4</h4>
       <h3 id="hdr3">heading 3</h3>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -47,7 +47,7 @@ describe('aria.getOwnedVirtual', () => {
         <div id="foo" role="menuitem">foo</div>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -61,7 +61,7 @@ describe('aria.getOwnedVirtual', () => {
       <div role="listitem" id="a">A</div>
       <div role="listitem" id="b">B</div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -77,7 +77,7 @@ describe('aria.getOwnedVirtual', () => {
         <div role="listitem" id="b">B</div>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -94,7 +94,7 @@ describe('aria.getOwnedVirtual', () => {
         <div role="listitem" id="c">C</div>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -112,7 +112,7 @@ describe('aria.getOwnedVirtual', () => {
         <h3>heading 3</h3>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -130,7 +130,7 @@ describe('aria.getOwnedVirtual', () => {
         <h3>heading 3</h3>
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);
@@ -150,7 +150,7 @@ describe('aria.getOwnedVirtual', () => {
         ${' \t\n'}
       </div>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria.getOwnedVirtual(target);
 
     assert.lengthOf(owned, 5);
@@ -163,7 +163,7 @@ describe('aria.getOwnedVirtual', () => {
 
   it('returns an empty array if there are no owned elements', () => {
     fixtureSetup('<div id="target" aria-owns="nonexisting reference"></div>');
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria.getOwnedVirtual(target);
     assert.lengthOf(owned, 0);
   });
@@ -175,7 +175,7 @@ describe('aria.getOwnedVirtual', () => {
         <h1>heading 1</h1>
       </testutils-element>
     `);
-    const target = axe.commons.dom.query(axe._tree[0], '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree[0], '#target')[0];
     const owned = aria
       .getOwnedVirtual(target)
       .filter(({ props }) => props.nodeType === 1);

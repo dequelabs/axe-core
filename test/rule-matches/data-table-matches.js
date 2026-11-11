@@ -31,7 +31,7 @@ describe('data-table-matches', () => {
       </table>
     `);
 
-    const vNode = axe.commons.dom.query(axe._tree[0], 'table')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'table')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -49,7 +49,7 @@ describe('data-table-matches', () => {
       </table>
     `);
 
-    const vNode = axe.commons.dom.query(axe._tree[0], 'table')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'table')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -70,7 +70,7 @@ describe('data-table-matches', () => {
       </table>
     `);
 
-    const vNode = axe.commons.dom.query(axe._tree[0], 'table')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'table')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 });

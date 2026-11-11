@@ -57,7 +57,7 @@ describe('summary-interactive-matches', () => {
         </details>
       `
     );
-    const vNode = axe.commons.dom.query(vFixture, 'summary')[0];
+    const vNode = axe.commons.dom.queryDom(vFixture, 'summary')[0];
     assert.isFalse(rule.matches(null, vNode));
   });
 

@@ -302,7 +302,7 @@ describe('Context', () => {
       assert.lengthOf(context.include, 1);
       assert.equal(
         context.include[0].actualNode.id,
-        axe.commons.dom.query(flatTree, '#fixture')[0].actualNode.id
+        axe.commons.dom.queryDom(flatTree, '#fixture')[0].actualNode.id
       );
     });
 

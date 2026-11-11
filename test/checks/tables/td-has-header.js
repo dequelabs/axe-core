@@ -316,7 +316,7 @@ describe('td-has-header', () => {
     `;
 
     axe.testUtils.flatTreeSetup(fixture);
-    const node = axe.commons.dom.query(axe._tree, 'table')[0].actualNode;
+    const node = axe.commons.dom.queryDom(axe._tree, 'table')[0].actualNode;
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('td-has-header').call(checkContext, node)
     );
