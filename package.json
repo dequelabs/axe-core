@@ -153,7 +153,7 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-mocha-no-only": "^1.2.0",
     "execa": "5.x",
-    "glob": "^13.0.6",
+    "glob": "^14.0.3",
     "globals": "^17.1.0",
     "html-entities": "^2.4.0",
     "http-server": "^14.1.1",
