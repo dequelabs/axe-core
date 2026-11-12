@@ -53,15 +53,6 @@ describe('dom.isMultiline', () => {
     assert.isTrue(isMultiline(fixture.firstElementChild));
   });
 
-  it('returns true when the next line is a superscript', () => {
-    fixture.innerHTML = html`
-      <p style="font-size: 20px; line-height: 1">
-        first<br /><sup>second</sup>
-      </p>
-    `;
-    assert.isTrue(isMultiline(fixture.firstElementChild));
-  });
-
   it('returns true for two lines with a line-height of 0.5', () => {
     fixture.innerHTML = html`
       <p style="font-size: 20px; line-height: 0.5">first<br />second</p>
@@ -176,9 +167,9 @@ describe('dom.isMultiline', () => {
     assert.isTrue(isMultiline(fixture.querySelector('span')));
   });
 
-  it('returns true for lines next to a tall positioned tooltip', () => {
+  it('returns true for overlapping lines next to a tall positioned tooltip', () => {
     fixture.innerHTML = html`
-      <p style="position: relative; font: 16px/1.2 Arial">
+      <p style="position: relative; font: 16px/0.8 Arial">
         <span
           style="position: absolute; top: -1em; left: 8em; width: 5em; font-size: 2em; line-height: 1"
           >Tooltip text that wraps</span
@@ -195,6 +186,33 @@ describe('dom.isMultiline', () => {
         <span style="position: absolute; display: contents"
           >text in a contents wrapper that wraps across lines</span
         >
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines after a line break at the start', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 150px">
+        <br />The quick brown fox jumps over
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines that break between inline elements', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 120px">
+        Welcome to <b style="white-space: nowrap">Acme Corp</b>
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines in an inline element with position: relative', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 150px">
+        Intro <a style="position: relative">quick brown fox jumps over</a>
       </p>
     `;
     assert.isTrue(isMultiline(fixture.firstElementChild));
@@ -238,6 +256,238 @@ describe('dom.isMultiline', () => {
       </div>
     `);
     assert.isFalse(isMultiline(vNode.actualNode));
+  });
+
+  it('returns false for text moved under the text before it', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/16px Arial; white-space: nowrap">
+        first second
+        <span style="position: relative; top: 16px; left: -90px">note</span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for text moved with a calculated offset', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/16px Arial; white-space: nowrap; height: 16px">
+        first second
+        <span style="position: relative; top: calc(50% + 8px); left: -90px"
+          >note</span
+        >
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for text lowered under the text before it', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/16px Arial; white-space: nowrap">
+        first second
+        <span style="vertical-align: -16px; margin-left: -90px">note</span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a box moved under a box of the same size', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/16px Arial; white-space: nowrap">
+        Team
+        <span style="display: inline-block; width: 24px; height: 24px"></span
+        ><span
+          style="display: inline-block; width: 24px; height: 24px; position: relative; left: -12px; top: 16px"
+        ></span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a superscript above a subscript', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.5 Arial; white-space: nowrap">
+        C<sup>14</sup><sub style="margin-left: -1.1em">6</sub> atom
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for hidden text on more lines', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 220px">
+        Visible
+        <span style="visibility: hidden"
+          >hidden text that wraps onto more lines here</span
+        >
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line in a rotated element', () => {
+    fixture.innerHTML = html`
+      <p
+        style="display: inline-block; font: 20px/20px Arial; white-space: nowrap; padding: 30px 0; transform: rotate(45deg)"
+      >
+        AAAAAAAA<span>AAAAAAAA</span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line with a line-height of 0', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0 Arial; white-space: nowrap">
+        <span dir="rtl"><b>שלום</b> עולם</span> text
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line in a rotated container', () => {
+    fixture.innerHTML = html`
+      <div style="width: 300px; transform: rotate(45deg)">
+        <p style="font: 20px/20px Arial; white-space: nowrap">
+          AAAAAAAA<span>AAAAAAAA</span>
+        </p>
+      </div>
+    `;
+    assert.isFalse(isMultiline(fixture.querySelector('p')));
+  });
+
+  it('returns false for a single line in a rotated square', () => {
+    fixture.innerHTML = html`
+      <div
+        style="box-sizing: border-box; width: 100px; height: 100px; padding-top: 42px; font: 16px/1 Arial; text-align: center; white-space: nowrap; transform: rotate(30deg)"
+      >
+        Read <a href="#">more</a> here
+      </div>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line of mixed direction in a rotated square', () => {
+    fixture.innerHTML = html`
+      <div
+        style="width: 200px; height: 200px; font: 16px/1.2 monospace; white-space: nowrap; transform: rotate(45deg)"
+      >
+        xאבגדהabcdeוזחטי
+      </div>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line with another dominant-baseline', () => {
+    fixture.innerHTML = html`
+      <p
+        style="font: 16px/0.3 Arial; white-space: nowrap; dominant-baseline: text-bottom"
+      >
+        Left <span style="position: relative; left: -10px">two</span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line with another dominant-baseline in it', () => {
+    fixture.innerHTML = html`
+      <p style="font: 16px/0.3 Arial; white-space: nowrap">
+        Left
+        <span style="dominant-baseline: text-bottom">
+          a <span style="position: relative; left: -10px">two</span>
+        </span>
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a single line with an empty line after it', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/16px Arial">Some text<br />&nbsp;</p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for transparent text on more lines', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 220px">
+        Visible
+        <span style="opacity: 0"
+          >hidden text that wraps onto more lines here</span
+        >
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for a canvas with fallback content', () => {
+    fixture.innerHTML = html`
+      <p style="font: 16px/1 Arial">
+        Sales
+        <canvas width="80" height="24"
+          >Sales trend over the last 12 months</canvas
+        >
+        up 3% this year
+      </p>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns false for the fallback content of a canvas', () => {
+    fixture.innerHTML = html`
+      <canvas width="200" height="100" style="font: 16px/1 Arial">
+        Sales by month.
+        <span>January 10, February 12, March 9, April 14, May 11.</span>
+      </canvas>
+    `;
+    assert.isFalse(isMultiline(fixture.firstElementChild));
+    assert.isFalse(isMultiline(fixture.querySelector('span')));
+  });
+
+  it('returns false for text that a slot moves', () => {
+    const vNode = axe.testUtils.queryFixture(html`
+      <p id="target" style="font: 20px/16px Arial; white-space: nowrap">
+        first second
+        <span>
+          <template shadowrootmode="open">
+            <slot
+              style="display: inline; position: relative; top: 16px; left: -90px"
+            ></slot>
+          </template>
+          note
+        </span>
+      </p>
+    `);
+    assert.isFalse(isMultiline(vNode.actualNode));
+  });
+
+  it('returns false for a text node', () => {
+    fixture.innerHTML = html`<p>hello</p>`;
+    assert.isFalse(isMultiline(fixture.firstElementChild.firstChild));
+  });
+
+  it('returns true for overlapping lines of two characters', () => {
+    fixture.innerHTML = html`<p style="font: 20px/0.8 Arial">W.<br />M.</p>`;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines that are centered', () => {
+    fixture.innerHTML = html`
+      <p style="font: 20px/0.8 Arial; width: 200px; text-align: center">
+        The quick brown fox jumps over
+      </p>
+    `;
+    assert.isTrue(isMultiline(fixture.firstElementChild));
+  });
+
+  it('returns true for overlapping lines in a container with perspective', () => {
+    fixture.innerHTML = html`
+      <div style="transform: perspective(800px)">
+        <p style="font: 20px/0.8 Arial; width: 200px">
+          The quick brown fox jumps over
+        </p>
+      </div>
+    `;
+    assert.isTrue(isMultiline(fixture.querySelector('p')));
   });
 
   it('returns false for an inline-block raised with a margin', () => {
