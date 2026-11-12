@@ -1,6 +1,6 @@
 describe('dom.queryDom', () => {
   const { html, injectIntoFixture } = axe.testUtils;
-  const queryDom = axe.commons.dom.queryDomDom;
+  const queryDom = axe.commons.dom.queryDom;
   let dom;
 
   function setShadowId(vNode, shadowId) {
@@ -14,17 +14,17 @@ describe('dom.queryDom', () => {
     const fixture = injectIntoFixture(
       html`
         <section>
-          <div class="first" data-a11yhero="faulkner">
+          <div class="first" data-shadow-id="a" data-a11yhero="faulkner">
             <ul>
               <li class="breaking"></li>
               <li class="breaking"></li>
             </ul>
           </div>
           <div id="one"></div>
-          <div class="second third">
+          <div class="second third" data-shadow-id="b">
             <ul>
               <li role="tab" id="one"></li>
-              <li role="button" id="one"></li>
+              <li role="button" data-shadow-id="c" id="one"></li>
             </ul>
           </div>
           <span class="fourth">
@@ -38,7 +38,7 @@ describe('dom.queryDom', () => {
           <main class="fifth" id="shadow">
             <template shadowrootmode="open">
               <button><slot></slot></button>
-              <buttond id="in-shadow"></buttond>
+              <button id="in-shadow"></button>
             </template>
             <span></span>
           </main>
@@ -50,14 +50,12 @@ describe('dom.queryDom', () => {
     const tree = axe.utils.getFlattenedTree(fixture.firstElementChild);
 
     // setup shadowIds for testing
-    const first = axe.utils.getNodeFromTree(fixture.querySelector('.first'));
-    const second = axe.utils.getNodeFromTree(fixture.querySelector('.second'));
-    const button = axe.utils.getNodeFromTree(
-      fixture.querySelector('[role="button"]')
-    );
-    setShadowId(first, 'a');
-    setShadowId(second, 'b');
-    setShadowId(button, 'c');
+    fixture.querySelectorAll('[data-shadow-id]').forEach(node => {
+      setShadowId(
+        axe.utils.getNodeFromTree(node),
+        node.getAttribute('data-shadow-id')
+      );
+    });
 
     return tree;
   }
