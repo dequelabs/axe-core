@@ -386,7 +386,7 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, 'div div #target'));
     });
 
-    it('returns isTrue for id of light DOM element', () => {
+    it('returns true for id of light DOM element', () => {
       const virtualNode = queryFixture(
         '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
       );
