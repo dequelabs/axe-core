@@ -34,8 +34,6 @@ updates:
         versions: ['>=9.0.0']
       - dependency-name: 'chai'
         versions: ['>=5.0.0']
-      - dependency-name: 'conventional-commits-parser'
-        versions: ['>=6.0.0']
       - dependency-name: 'chokidar'
         versions: ['>=5.0.0']
       # Prevent Webpack error caused by v0.11+ of esbuild

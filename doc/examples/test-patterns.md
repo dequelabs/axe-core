@@ -45,15 +45,22 @@ describe('aria-allowed-attr', function () {
 
 ## Shadow DOM Test
 
+Only add a Shadow DOM test when the result depends on something across the shadow boundary — here, the host's style decides whether content inside its shadow tree is hidden:
+
 ```javascript
-it('should work with Shadow DOM', function () {
-  const vNode = queryShadowFixture(
-    '<div id="host"></div>',
-    '<div role="button" id="target">Test</div>'
-  );
-  // Test your function against the shadow DOM content
+it('should treat shadow content as hidden when its host is hidden', function () {
+  const vNode = queryFixture(html`
+    <div id="shadow" style="display:none">
+      <template shadowrootmode="open">
+        <p id="target">Hidden</p>
+      </template>
+    </div>
+  `);
+  assert.isTrue(axe.commons.dom.isHiddenForEveryone(vNode));
 });
 ```
+
+If the target and everything that decides the result are in the same shadow root (e.g. a `<th>` and its `<table>` both inside the shadow tree), the test is no different from a light DOM test — don't add it.
 
 ## Integration Test — Rule
 

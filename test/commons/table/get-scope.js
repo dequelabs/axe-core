@@ -138,6 +138,26 @@ describe('table.getScope', () => {
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
+    it('returns `colgroup` with explicit colgroup scope on TH', () => {
+      fixture.innerHTML = html`
+        <table>
+          <tr>
+            <td></td>
+            <th id="target" scope="colgroup">1</th>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>ok</td>
+            <td></td>
+          </tr>
+        </table>
+      `;
+
+      const target = $id('target');
+      fixtureSetup();
+      assert.equal(axe.commons.table.getScope(target), 'colgroup');
+    });
+
     it('returns `col` with explicit col scope on TD', () => {
       fixture.innerHTML = html`
         <table>
@@ -272,6 +292,26 @@ describe('table.getScope', () => {
       const target = $id('target');
       fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
+    });
+
+    it('returns `rowgroup` with explicit rowgroup scope on TH', () => {
+      fixture.innerHTML = html`
+        <table>
+          <tr>
+            <td></td>
+            <th>1</th>
+          </tr>
+          <tr>
+            <th id="target" scope="rowgroup">2</th>
+            <td>ok</td>
+            <td></td>
+          </tr>
+        </table>
+      `;
+
+      const target = $id('target');
+      fixtureSetup();
+      assert.equal(axe.commons.table.getScope(target), 'rowgroup');
     });
 
     it('returns `row` with explicit row scope on TD', () => {

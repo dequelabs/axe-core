@@ -127,6 +127,17 @@ describe('aria-valid-attr-value', () => {
     });
   });
 
+  it('should pass on aria-controls with aria-haspopup when the element is in the DOM', () => {
+    const vNode = queryFixture(html`
+      <button id="target" aria-controls="test" aria-haspopup="true">
+        Button
+      </button>
+      <div id="test">Popup</div>
+    `);
+    assert.isTrue(validAttrValueCheck.call(checkContext, null, null, vNode));
+    assert.isNull(checkContext._data);
+  });
+
   it('should pass on aria-owns and aria-expanded=false when the element is not in the DOM', () => {
     const vNode = queryFixture(
       '<button id="target" aria-owns="test" aria-expanded="false">Button</button>'
