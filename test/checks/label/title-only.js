@@ -79,6 +79,47 @@ describe('title-only', () => {
     );
   });
 
+  // https://github.com/dequelabs/axe-core/issues/5014
+  // A visible label is only needed when the form control itself is visible.
+  it('should return false if the element is visually hidden', () => {
+    const params = checkSetup(html`
+      <div
+        id="label"
+        style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0)"
+      >
+        Upload a file
+      </div>
+      <span id="hint">Max 5 MB</span>
+      <input
+        type="file"
+        id="target"
+        aria-labelledby="label"
+        aria-describedby="hint"
+        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0"
+      />
+    `);
+    assert.isFalse(checkEvaluate.apply(null, params));
+  });
+
+  it('should return true if the element is visible and its label is visually hidden', () => {
+    const params = checkSetup(html`
+      <div
+        id="label"
+        style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0)"
+      >
+        Upload a file
+      </div>
+      <span id="hint">Max 5 MB</span>
+      <input
+        type="file"
+        id="target"
+        aria-labelledby="label"
+        aria-describedby="hint"
+      />
+    `);
+    assert.isTrue(checkEvaluate.apply(null, params));
+  });
+
   describe('ElementInternals', () => {
     it('should return true if an element only has elementInternals aria-describedby', () => {
       const params = checkSetup(html`
