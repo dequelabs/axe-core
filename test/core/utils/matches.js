@@ -344,6 +344,13 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, '#host h1'));
     });
 
+    it('returns true for id outside shadow DOM selecting shadow DOM when a duplicate ID exists inside shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<div id="host"><template shadowrootmode="open"><div id="host"><h1 id="target">foo</h1></div></template></div>'
+      );
+      assert.isTrue(matches(virtualNode, '#host h1'));
+    });
+
     it('returns true for light DOM element', () => {
       const virtualNode = queryFixture(
         '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
