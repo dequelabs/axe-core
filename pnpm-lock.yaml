@@ -49,7 +49,7 @@ importers:
         version: 4.0.3
       chromedriver:
         specifier: latest
-        version: 156.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 157.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       clean-jsdoc-theme:
         specifier: ^4.2.17
         version: 4.3.2(jsdoc@4.0.5)
@@ -61,10 +61,10 @@ importers:
         version: 0.7.1(patch_hash=4100ea523d6ae085136708406c6d4f04983456dc3a936bb571c145676e23a71e)
       commit-and-tag-version:
         specifier: ^13.1.0
-        version: 13.3.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0)
+        version: 13.3.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)
       conventional-commits-parser:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^7.1.4
+        version: 7.1.4
       core-js:
         specifier: ^3.27.1
         version: 3.51.0
@@ -1305,10 +1305,6 @@ packages:
     engines: {node: '>=22.0.0'}
     hasBin: true
 
-  JSONStream@1.3.5:
-    resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
-    hasBin: true
-
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -1652,8 +1648,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@156.0.1:
-    resolution: {integrity: sha512-4W/2SBw2ELUnlNXC/qOQq3H1f80K78x25+qPJwIYFT2CDiU4wt1J3tZQWAlhPMl4fB4nvv5F7ODLk4Ef5wJreA==}
+  chromedriver@157.0.0:
+    resolution: {integrity: sha512-IwYuey+2f+yczWMxei84oF2MMKbrrDU+G4AQT95fXLG3rURvB7pemRgZWDLVZHDMV6g5eDPKE0TT9s6Lw45Kbg==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -1790,13 +1786,8 @@ packages:
     resolution: {integrity: sha512-cs+LadpH7Kpw0M3k8wurk+sOVVDAENA0iK4OBOrkL94j5lEVYRJ4j3zd2bhY9qgzyrPqthdcYT3axzRN7AliMg==}
     engines: {node: '>=22'}
 
-  conventional-commits-parser@5.0.0:
-    resolution: {integrity: sha512-ZPMl0ZJbw74iS9LuX9YIAiW8pfM5p3yh2o/NbXHbkFuZzY5jvdi5jFycEOkmBW5H5I7nA+D6f3UcsCLP2vvSEA==}
-    engines: {node: '>=16'}
-    hasBin: true
-
-  conventional-commits-parser@7.1.3:
-    resolution: {integrity: sha512-Q9oWm1o9uy/oEsZQIraoFMZ4RuPD+79KgwWj6mJVP356tazolCB0piRLZ5Kz9te9p027uSEcUW+Gu44Eh+X79g==}
+  conventional-commits-parser@7.1.4:
+    resolution: {integrity: sha512-TW3PZHi6hwF4cyu7KKc4kNqD1cgg8AkkK5ge9+zsEfpjaSXOeeIQyNWBr7kx5hR2wFuKVmr0be37RzcpmACQIA==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2732,10 +2723,6 @@ packages:
     resolution: {integrity: sha512-9gGx6GTtCQM73BgmHQXfDmLtfjjTUDSyoxTCbp5WtoixAhfgsDirWIcVQ/IHpvI5Vgd5i/J5F7B9cN/WlVbC/w==}
     engines: {node: '>= 0.4'}
 
-  is-text-path@2.0.0:
-    resolution: {integrity: sha512-+oDTluR6WEjdXEJMnC2z6A4FRwFoYuvShVVEGsS7ewc0UTi2QtAKMDJuL4BDEVt+5T7MjFo12RP8ghOM75oKJw==}
-    engines: {node: '>=8'}
-
   is-typed-array@1.1.15:
     resolution: {integrity: sha512-p3EcsicXjit7SaskXHs1hA91QxgTw46Fv6EFKKGS5DRFLD8yKnohjF3hxoju94b/OcMZoQukzpPpBE9uLVKzgQ==}
     engines: {node: '>= 0.4'}
@@ -2851,10 +2838,6 @@ packages:
 
   jsonfile@6.2.1:
     resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
-
-  jsonparse@1.3.1:
-    resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
-    engines: {'0': node >= 0.2.0}
 
   jszip@3.10.2:
     resolution: {integrity: sha512-3l+rb15IOWtUhU0H5MFqES/T6Kh7abYwjosBey/vD6hDt8zoEffkSC5Ws5SGtgVw3gBx2NEbhTeSW1+kWkpyTQ==}
@@ -3012,10 +2995,6 @@ packages:
   memorystream@0.3.1:
     resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
     engines: {node: '>= 0.10.0'}
-
-  meow@12.1.1:
-    resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
-    engines: {node: '>=16.10'}
 
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -3712,10 +3691,6 @@ packages:
   spdx-license-ids@3.0.23:
     resolution: {integrity: sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw==}
 
-  split2@4.2.0:
-    resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
-    engines: {node: '>= 10.x'}
-
   sri-toolbox@0.2.0:
     resolution: {integrity: sha512-DQIMWCAr/M7phwo+d3bEfXwSBEwuaJL+SJx9cuqt1Ty7K96ZFoHpYnSbhrQZEr0+0/GtmpKECP8X/R4RyeTAfw==}
     engines: {node: '>= 0.10.4'}
@@ -3832,10 +3807,6 @@ packages:
 
   text-decoder@1.2.7:
     resolution: {integrity: sha512-vlLytXkeP4xvEq2otHeJfSQIRyWxo/oZGEbXrtEEF9Hnmrdly59sUbzZ/QgyWuLYHctCHxFF4tRQZNQ9k60ExQ==}
-
-  text-extensions@2.4.0:
-    resolution: {integrity: sha512-te/NtwBwfiNRLf9Ijqx3T0nlqZiQ2XrrtBvu+cLL8ZRrGkO0NHTug8MYFKyoSrv/sHTaSKfilUkizV6XhxMJ3g==}
-    engines: {node: '>=8'}
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
@@ -4926,23 +4897,23 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@conventional-changelog/git-client@3.1.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0)':
+  '@conventional-changelog/git-client@3.1.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)':
     dependencies:
       '@simple-libs/child-process-utils': 2.0.0
       '@simple-libs/stream-utils': 2.0.0
       semver: 7.8.5
     optionalDependencies:
       conventional-commits-filter: 6.0.1
-      conventional-commits-parser: 5.0.0
+      conventional-commits-parser: 7.1.4
 
-  '@conventional-changelog/git-client@3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)':
+  '@conventional-changelog/git-client@3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)':
     dependencies:
       '@simple-libs/child-process-utils': 2.0.0
       '@simple-libs/stream-utils': 2.0.0
       verkit: 0.5.0
     optionalDependencies:
       conventional-commits-filter: 6.0.1
-      conventional-commits-parser: 7.1.3
+      conventional-commits-parser: 7.1.4
 
   '@conventional-changelog/template@1.4.0': {}
 
@@ -5608,11 +5579,6 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  JSONStream@1.3.5:
-    dependencies:
-      jsonparse: 1.3.1
-      through: 2.3.8
-
   accepts@1.3.8:
     dependencies:
       mime-types: 2.1.35
@@ -5956,7 +5922,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@156.0.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  chromedriver@157.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@testim/chrome-version': 1.1.4
       adm-zip: 0.6.1
@@ -6056,9 +6022,9 @@ snapshots:
 
   commander@9.5.0: {}
 
-  commit-and-tag-version@13.3.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0):
+  commit-and-tag-version@13.3.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4):
     dependencies:
-      '@conventional-changelog/git-client': 3.1.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@5.0.0)
+      '@conventional-changelog/git-client': 3.1.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)
       '@conventional-changelog/template': 1.4.0
       chalk: 6.0.1
       conventional-changelog: 8.1.0(conventional-commits-filter@6.0.1)
@@ -6108,38 +6074,31 @@ snapshots:
 
   conventional-changelog@8.1.0(conventional-commits-filter@6.0.1):
     dependencies:
-      '@conventional-changelog/git-client': 3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)
+      '@conventional-changelog/git-client': 3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)
       '@simple-libs/hosted-git-info': 2.0.0
       '@simple-libs/normalize-package-data': 1.0.0
       argue-cli: 3.2.0
       conventional-changelog-preset-loader: 6.0.1
       conventional-changelog-writer: 9.3.0
-      conventional-commits-parser: 7.1.3
+      conventional-commits-parser: 7.1.4
       fd-package-json: 2.0.0
     transitivePeerDependencies:
       - conventional-commits-filter
 
   conventional-commits-filter@6.0.1: {}
 
-  conventional-commits-parser@5.0.0:
-    dependencies:
-      JSONStream: 1.3.5
-      is-text-path: 2.0.0
-      meow: 12.1.1
-      split2: 4.2.0
-
-  conventional-commits-parser@7.1.3:
+  conventional-commits-parser@7.1.4:
     dependencies:
       '@simple-libs/stream-utils': 2.0.0
       argue-cli: 3.2.0
 
   conventional-recommended-bump@12.1.0:
     dependencies:
-      '@conventional-changelog/git-client': 3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)
+      '@conventional-changelog/git-client': 3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.4)
       argue-cli: 3.2.0
       conventional-changelog-preset-loader: 6.0.1
       conventional-commits-filter: 6.0.1
-      conventional-commits-parser: 7.1.3
+      conventional-commits-parser: 7.1.4
 
   convert-source-map@2.0.0: {}
 
@@ -7192,10 +7151,6 @@ snapshots:
       has-symbols: 1.1.0
       safe-regex-test: 1.1.0
 
-  is-text-path@2.0.0:
-    dependencies:
-      text-extensions: 2.4.0
-
   is-typed-array@1.1.15:
     dependencies:
       which-typed-array: 1.1.22
@@ -7330,8 +7285,6 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
-
-  jsonparse@1.3.1: {}
 
   jszip@3.10.2:
     dependencies:
@@ -7538,8 +7491,6 @@ snapshots:
       timers-ext: 0.1.8
 
   memorystream@0.3.1: {}
-
-  meow@12.1.1: {}
 
   merge-stream@2.0.0: {}
 
@@ -8317,8 +8268,6 @@ snapshots:
 
   spdx-license-ids@3.0.23: {}
 
-  split2@4.2.0: {}
-
   sri-toolbox@0.2.0: {}
 
   start-server-and-test@3.0.13(supports-color@8.1.1):
@@ -8482,8 +8431,6 @@ snapshots:
       b4a: 1.8.1
     transitivePeerDependencies:
       - react-native-b4a
-
-  text-extensions@2.4.0: {}
 
   through@2.3.8: {}
 
