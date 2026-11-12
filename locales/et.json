@@ -1,0 +1,1183 @@
+{
+  "lang": "et",
+  "rules": {
+    "accesskeys": {
+      "description": "Kontrollib, et iga accesskey atribuudi väärtus on unikaalne",
+      "help": "accesskey atribuudi väärtus peab olema unikaalne"
+    },
+    "area-alt": {
+      "description": "Kontrollib, et pildikaartide <area> elementidel on alternatiivtekst",
+      "help": "Aktiivsetel <area> elementidel peab olema alternatiivtekst"
+    },
+    "aria-allowed-attr": {
+      "description": "Kontrollib, et elemendi roll toetab selle ARIA atribuute",
+      "help": "Elemendid tohivad kasutada ainult toetatud ARIA atribuute"
+    },
+    "aria-allowed-role": {
+      "description": "Kontrollib, et role atribuudil on elemendile sobiv väärtus",
+      "help": "ARIA roll peaks elemendile sobima"
+    },
+    "aria-braille-equivalent": {
+      "description": "Kontrollib, et aria-braillelabel ja aria-brailleroledescription'il on mitte-punktkirjalik vaste",
+      "help": "aria-braille atribuutidel peab olema mitte-punktkirjalik vaste"
+    },
+    "aria-command-name": {
+      "description": "Kontrollib, et igal ARIA nupul, lingil ja menuitem'il on ligipääsetav nimi",
+      "help": "ARIA käskudel peab olema ligipääsetav nimi"
+    },
+    "aria-conditional-attr": {
+      "description": "Kontrollib, et ARIA atribuute kasutatakse nii, nagu on elemendi rolli spetsifikatsioonis kirjeldatud",
+      "help": "ARIA atribuute tuleb kasutada nii, nagu on elemendi rolli jaoks määratud"
+    },
+    "aria-deprecated-role": {
+      "description": "Kontrollib, et elemendid ei kasuta aegunud rolle",
+      "help": "Aegunud ARIA rolle ei tohi kasutada"
+    },
+    "aria-dialog-name": {
+      "description": "Kontrollib, et igal ARIA dialog- ja alertdialog-sõlmel on ligipääsetav nimi",
+      "help": "ARIA dialog- ja alertdialog-sõlmedel peaks olema ligipääsetav nimi"
+    },
+    "aria-hidden-body": {
+      "description": "Kontrollib, et dokumendi body elemendil ei ole aria-hidden=\"true\"",
+      "help": "Dokumendi body elemendil ei tohi olla aria-hidden=\"true\""
+    },
+    "aria-hidden-focus": {
+      "description": "Kontrollib, et aria-hidden elemendid ei ole fokuseeritavad ega sisalda fokuseeritavaid elemente",
+      "help": "ARIA-peidetud elemendid ei tohi olla fokuseeritavad ega sisaldada fokuseeritavaid elemente"
+    },
+    "aria-input-field-name": {
+      "description": "Kontrollib, et igal ARIA sisestusväljal on ligipääsetav nimi",
+      "help": "ARIA sisestusväljadel peab olema ligipääsetav nimi"
+    },
+    "aria-meter-name": {
+      "description": "Kontrollib, et igal ARIA meter-sõlmel on ligipääsetav nimi",
+      "help": "ARIA meter-sõlmedel peab olema ligipääsetav nimi"
+    },
+    "aria-progressbar-name": {
+      "description": "Kontrollib, et igal ARIA progressbar-sõlmel on ligipääsetav nimi",
+      "help": "ARIA progressbar-sõlmedel peab olema ligipääsetav nimi"
+    },
+    "aria-prohibited-attr": {
+      "description": "Kontrollib, et ARIA atribuudid ei ole elemendi rolli jaoks keelatud",
+      "help": "Elemendid tohivad kasutada ainult lubatud ARIA atribuute"
+    },
+    "aria-required-attr": {
+      "description": "Kontrollib, et ARIA rollidega elementidel on kõik kohustuslikud ARIA atribuudid",
+      "help": "Kohustuslikud ARIA atribuudid peavad olema olemas"
+    },
+    "aria-required-children": {
+      "description": "Kontrollib, et ARIA rolliga elementidel, mis nõuavad alamrolle, need olemas on",
+      "help": "Teatud ARIA rollid peavad sisaldama kindlaid alamelemente"
+    },
+    "aria-required-parent": {
+      "description": "Kontrollib, et ARIA rolliga elemendid, mis nõuavad ülemrolle, asuvad nende sees",
+      "help": "Teatud ARIA rollid peavad asuma kindlate ülemelementide sees"
+    },
+    "aria-roledescription": {
+      "description": "Kontrollib, et aria-roledescription'i kasutatakse ainult implitsiitse või eksplitsiitse rolliga elementidel",
+      "help": "aria-roledescription peab olema semantilise rolliga elementidel"
+    },
+    "aria-roles": {
+      "description": "Kontrollib, et kõik role atribuudiga elemendid kasutavad kehtivat väärtust",
+      "help": "Kasutatavad ARIA rollid peavad vastama kehtivatele väärtustele"
+    },
+    "aria-tab-name": {
+      "description": "Kontrollib, et igal ARIA tab-sõlmel on ligipääsetav nimi",
+      "help": "ARIA tab-sõlmedel peab olema ligipääsetav nimi"
+    },
+    "aria-text": {
+      "description": "Kontrollib, et role=\"text\" kasutatakse elementidel, millel pole fokuseeritavaid järglasi",
+      "help": "\"role=text\" ei tohiks sisaldada fokuseeritavaid järglasi"
+    },
+    "aria-toggle-field-name": {
+      "description": "Kontrollib, et igal ARIA lülitusväljal on ligipääsetav nimi",
+      "help": "ARIA lülitusväljadel peab olema ligipääsetav nimi"
+    },
+    "aria-tooltip-name": {
+      "description": "Kontrollib, et igal ARIA tooltip-sõlmel on ligipääsetav nimi",
+      "help": "ARIA tooltip-sõlmedel peab olema ligipääsetav nimi"
+    },
+    "aria-treeitem-name": {
+      "description": "Kontrollib, et igal ARIA treeitem-sõlmel on ligipääsetav nimi",
+      "help": "ARIA treeitem-sõlmedel peaks olema ligipääsetav nimi"
+    },
+    "aria-valid-attr-value": {
+      "description": "Kontrollib, et kõigi ARIA atribuutide väärtused on kehtivad",
+      "help": "ARIA atribuudid peavad vastama kehtivatele väärtustele"
+    },
+    "aria-valid-attr": {
+      "description": "Kontrollib, et aria- algusega atribuudid on kehtivad ARIA atribuudid",
+      "help": "ARIA atribuudid peavad vastama kehtivatele nimedele"
+    },
+    "audio-caption": {
+      "description": "Kontrollib, et <audio> elementidel on subtiitrid",
+      "help": "<audio> elementidel peab olema subtiitrite rada"
+    },
+    "autocomplete-valid": {
+      "description": "Kontrollib, et autocomplete atribuut on õige ja vormiväljale sobiv",
+      "help": "autocomplete atribuuti tuleb kasutada õigesti"
+    },
+    "avoid-inline-spacing": {
+      "description": "Kontrollib, et style atribuutidega määratud tekstivahesid saab kohandatud stiililehtedega muuta",
+      "help": "Reasisest tekstivahet peab saama kohandatud stiililehtedega muuta"
+    },
+    "blink": {
+      "description": "Kontrollib, et <blink> elemente ei kasutata",
+      "help": "<blink> elemendid on aegunud ja neid ei tohi kasutada"
+    },
+    "button-name": {
+      "description": "Kontrollib, et nuppudel on arusaadav tekst",
+      "help": "Nuppudel peab olema arusaadav tekst"
+    },
+    "bypass": {
+      "description": "Kontrollib, et igal lehel on vähemalt üks mehhanism navigatsiooni vahelejätmiseks ja otse sisu juurde liikumiseks",
+      "help": "Lehel peab olema võimalus korduvaid plokke vahele jätta"
+    },
+    "color-contrast-enhanced": {
+      "description": "Kontrollib, et esiplaani ja tausta värvide kontrast vastab WCAG 2 AAA täiustatud kontrastsuhte piiridele",
+      "help": "Elemendid peavad vastama täiustatud värvikontrasti suhte piiridele"
+    },
+    "color-contrast": {
+      "description": "Kontrollib, et esiplaani ja tausta värvide kontrast vastab WCAG 2 AA minimaalse kontrastsuhte piiridele",
+      "help": "Elemendid peavad vastama minimaalse värvikontrasti suhte piiridele"
+    },
+    "css-orientation-lock": {
+      "description": "Kontrollib, et sisu ei ole lukustatud kindlale ekraani orientatsioonile ning on kasutatav kõigis orientatsioonides",
+      "help": "CSS-i meediapäringud ei tohi ekraani orientatsiooni lukustada"
+    },
+    "definition-list": {
+      "description": "Kontrollib, et <dl> elemendid on õigesti üles ehitatud",
+      "help": "<dl> elemendid tohivad otseselt sisaldada ainult õiges järjekorras <dt>- ja <dd>-rühmi ning <script>-, <template>- või <div>-elemente"
+    },
+    "dlitem": {
+      "description": "Kontrollib, et <dt> ja <dd> elemendid asuvad <dl> sees",
+      "help": "<dt> ja <dd> elemendid peavad asuma <dl> sees"
+    },
+    "document-title": {
+      "description": "Kontrollib, et igas HTML-dokumendis on mittetühi <title> element",
+      "help": "Dokumentidel peab navigeerimise hõlbustamiseks olema <title> element"
+    },
+    "duplicate-id-active": {
+      "description": "Kontrollib, et iga aktiivse elemendi id atribuudi väärtus on unikaalne",
+      "help": "Aktiivsete elementide ID-d peavad olema unikaalsed"
+    },
+    "duplicate-id-aria": {
+      "description": "Kontrollib, et iga ARIA-s ja siltides kasutatav id atribuudi väärtus on unikaalne",
+      "help": "ARIA-s ja siltides kasutatavad ID-d peavad olema unikaalsed"
+    },
+    "duplicate-id": {
+      "description": "Kontrollib, et iga id atribuudi väärtus on unikaalne",
+      "help": "id atribuudi väärtus peab olema unikaalne"
+    },
+    "empty-heading": {
+      "description": "Kontrollib, et pealkirjadel on arusaadav tekst",
+      "help": "Pealkirjad ei tohiks olla tühjad"
+    },
+    "empty-table-header": {
+      "description": "Kontrollib, et tabeli päistel on arusaadav tekst",
+      "help": "Tabeli päise tekst ei tohiks olla tühi"
+    },
+    "focus-order-semantics": {
+      "description": "Kontrollib, et fookusjärjekorras olevatel elementidel on interaktiivsele sisule sobiv roll",
+      "help": "Fookusjärjekorras olevatel elementidel peaks olema sobiv roll"
+    },
+    "form-field-multiple-labels": {
+      "description": "Kontrollib, et vormiväljal ei ole mitut label elementi",
+      "help": "Vormiväljal ei tohi olla mitut label elementi"
+    },
+    "frame-focusable-content": {
+      "description": "Kontrollib, et fokuseeritava sisuga <frame> ja <iframe> elementidel ei ole tabindex=-1",
+      "help": "Fokuseeritava sisuga raamidel ei tohi olla tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Kontrollib, et <iframe> ja <frame> elemendid sisaldavad axe-core skripti",
+      "help": "Raame tuleks testida axe-core'iga"
+    },
+    "frame-title-unique": {
+      "description": "Kontrollib, et <iframe> ja <frame> elementidel on unikaalne title atribuut",
+      "help": "Raamidel peab olema unikaalne title atribuut"
+    },
+    "frame-title": {
+      "description": "Kontrollib, et <iframe> ja <frame> elementidel on ligipääsetav nimi",
+      "help": "Raamidel peab olema ligipääsetav nimi"
+    },
+    "heading-order": {
+      "description": "Kontrollib, et pealkirjade järjekord on semantiliselt õige",
+      "help": "Pealkirjade tasemed peaksid suurenema ainult ühe võrra"
+    },
+    "hidden-content": {
+      "description": "Teavitab kasutajaid peidetud sisust.",
+      "help": "Lehel olevat peidetud sisu tuleks analüüsida"
+    },
+    "html-has-lang": {
+      "description": "Kontrollib, et igal HTML-dokumendil on lang atribuut",
+      "help": "<html> elemendil peab olema lang atribuut"
+    },
+    "html-lang-valid": {
+      "description": "Kontrollib, et <html> elemendi lang atribuudil on kehtiv väärtus",
+      "help": "<html> elemendi lang atribuudil peab olema kehtiv väärtus"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Kontrollib, et kehtivate lang ja xml:lang atribuutidega HTML-elemendid on lehe põhikeele osas ühel nõul",
+      "help": "lang ja xml:lang atribuutidega HTML-elementidel peab olema sama põhikeel"
+    },
+    "identical-links-same-purpose": {
+      "description": "Kontrollib, et sama ligipääsetava nimega lingid täidavad sarnast eesmärki",
+      "help": "Sama nimega linkidel peab olema sarnane eesmärk"
+    },
+    "image-alt": {
+      "description": "Kontrollib, et <img> elementidel on alternatiivtekst või roll none või presentation",
+      "help": "Piltidel peab olema alternatiivtekst"
+    },
+    "image-redundant-alt": {
+      "description": "Kontrollib, et pildi alternatiivteksti ei korrata tekstina",
+      "help": "Piltide alternatiivteksti ei tohiks tekstina korrata"
+    },
+    "input-button-name": {
+      "description": "Kontrollib, et sisestusnuppudel on arusaadav tekst",
+      "help": "Sisestusnuppudel peab olema arusaadav tekst"
+    },
+    "input-image-alt": {
+      "description": "Kontrollib, et <input type=\"image\"> elementidel on alternatiivtekst",
+      "help": "Pildinuppudel peab olema alternatiivtekst"
+    },
+    "label-content-name-mismatch": {
+      "description": "Kontrollib, et sisu järgi sildistatud elementide nähtav tekst on osa nende ligipääsetavast nimest",
+      "help": "Elementide nähtav tekst peab olema osa nende ligipääsetavast nimest"
+    },
+    "label-title-only": {
+      "description": "Kontrollib, et igal vormielemendil on nähtav silt ning seda ei ole sildistatud ainult peidetud siltide või title- või aria-describedby-atribuutidega",
+      "help": "Vormielementidel peaks olema nähtav silt"
+    },
+    "label": {
+      "description": "Kontrollib, et igal vormielemendil on silt",
+      "help": "Vormielementidel peavad olema sildid"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Kontrollib, et banner-orientiir on ülemisel tasemel",
+      "help": "Banner-orientiir ei tohiks asuda teise orientiiri sees"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Kontrollib, et complementary-orientiir või aside on ülemisel tasemel",
+      "help": "Aside ei tohiks asuda teise orientiiri sees"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Kontrollib, et contentinfo-orientiir on ülemisel tasemel",
+      "help": "Contentinfo-orientiir ei tohiks asuda teise orientiiri sees"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Kontrollib, et main-orientiir on ülemisel tasemel",
+      "help": "Main-orientiir ei tohiks asuda teise orientiiri sees"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Kontrollib, et dokumendis on kõige rohkem üks banner-orientiir",
+      "help": "Dokumendis ei tohiks olla rohkem kui ühte banner-orientiiri"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Kontrollib, et dokumendis on kõige rohkem üks contentinfo-orientiir",
+      "help": "Dokumendis ei tohiks olla rohkem kui ühte contentinfo-orientiiri"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Kontrollib, et dokumendis on kõige rohkem üks main-orientiir",
+      "help": "Dokumendis ei tohiks olla rohkem kui ühte main-orientiiri"
+    },
+    "landmark-one-main": {
+      "description": "Kontrollib, et dokumendis on main-orientiir",
+      "help": "Dokumendis peaks olema üks main-orientiir"
+    },
+    "landmark-unique": {
+      "description": "Kontrollib, et orientiirid on unikaalsed",
+      "help": "Orientiiridel peaks olema unikaalne roll või rolli/sildi/title (st ligipääsetava nime) kombinatsioon"
+    },
+    "link-in-text-block": {
+      "description": "Kontrollib, et lingid eristuvad ümbritsevast tekstist muul viisil kui ainult värvi abil",
+      "help": "Lingid peavad olema eristatavad ilma värvile tuginemata"
+    },
+    "link-name": {
+      "description": "Kontrollib, et linkidel on arusaadav tekst",
+      "help": "Linkidel peab olema arusaadav tekst"
+    },
+    "list": {
+      "description": "Kontrollib, et loendid on õigesti üles ehitatud",
+      "help": "<ul> ja <ol> tohivad otseselt sisaldada ainult <li>-, <script>- või <template>-elemente"
+    },
+    "listitem": {
+      "description": "Kontrollib, et <li> elemente kasutatakse semantiliselt",
+      "help": "<li> elemendid peavad asuma <ul> või <ol> sees"
+    },
+    "marquee": {
+      "description": "Kontrollib, et <marquee> elemente ei kasutata",
+      "help": "<marquee> elemendid on aegunud ja neid ei tohi kasutada"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Kontrollib, et <meta http-equiv=\"refresh\">'i ei kasutata viivitusega värskendamiseks",
+      "help": "Viivitusega värskendust ei tohi kasutada"
+    },
+    "meta-refresh": {
+      "description": "Kontrollib, et <meta http-equiv=\"refresh\">'i ei kasutata viivitusega värskendamiseks",
+      "help": "Alla 20 tunni pikkust viivitusega värskendust ei tohi kasutada"
+    },
+    "meta-viewport-large": {
+      "description": "Kontrollib, et <meta name=\"viewport\"> võimaldab märkimisväärset skaleerimist",
+      "help": "Kasutajad peaksid saama teksti suumida ja skaleerida kuni 500%-ni"
+    },
+    "meta-viewport": {
+      "description": "Kontrollib, et <meta name=\"viewport\"> ei keela teksti skaleerimist ega suumimist",
+      "help": "Suumimist ja skaleerimist ei tohi keelata"
+    },
+    "nested-interactive": {
+      "description": "Kontrollib, et interaktiivseid juhtelemente ei pesastata üksteise sisse, sest ekraanilugejad ei teata neist alati või need võivad põhjustada abitehnoloogiatele fookuseprobleeme",
+      "help": "Interaktiivseid juhtelemente ei tohi pesastada"
+    },
+    "no-autoplay-audio": {
+      "description": "Kontrollib, et <video> või <audio> elemendid ei esita heli automaatselt kauem kui 3 sekundit ilma heli peatamise või vaigistamise juhtelemendita",
+      "help": "<video> või <audio> elemendid ei tohi automaatselt esitada"
+    },
+    "object-alt": {
+      "description": "Kontrollib, et <object> elementidel on alternatiivtekst",
+      "help": "<object> elementidel peab olema alternatiivtekst"
+    },
+    "p-as-heading": {
+      "description": "Kontrollib, et paksu ja kursiivteksti ning kirjasuurust ei kasutata <p> elementide kujundamiseks pealkirjadena",
+      "help": "Kujundatud <p> elemente ei tohi pealkirjadena kasutada"
+    },
+    "page-has-heading-one": {
+      "description": "Kontrollib, et lehel või vähemalt ühel selle raamil on esimese taseme pealkiri",
+      "help": "Lehel peaks olema esimese taseme pealkiri"
+    },
+    "presentation-role-conflict": {
+      "description": "Kontrollib, et esitluslikuna märgitud elementidel ei ole globaalseid ARIA atribuute ega tabindex'it, et kõik ekraanilugejad neid eirataks",
+      "help": "Esitluslikuna märgitud elemente peaks järjepidevalt eirama"
+    },
+    "region": {
+      "description": "Kontrollib, et kogu lehe sisu asub orientiiride sees",
+      "help": "Kogu lehe sisu peaks asuma orientiiride sees"
+    },
+    "role-img-alt": {
+      "description": "Kontrollib, et [role=\"img\"] ja [role=\"image\"] elementidel on alternatiivtekst",
+      "help": "[role=\"img\"] ja [role=\"image\"] elementidel peab olema alternatiivtekst"
+    },
+    "scope-attr-valid": {
+      "description": "Kontrollib, et scope atribuuti kasutatakse tabelites õigesti",
+      "help": "scope atribuuti peaks kasutama õigesti"
+    },
+    "scrollable-region-focusable": {
+      "description": "Kontrollib, et keritava sisuga elemendid on Safaris klaviatuuriga ligipääsetavad",
+      "help": "Keritav ala peab olema klaviatuuriga ligipääsetav"
+    },
+    "select-name": {
+      "description": "Kontrollib, et select-elemendil on ligipääsetav nimi",
+      "help": "Select-elemendil peab olema ligipääsetav nimi"
+    },
+    "server-side-image-map": {
+      "description": "Kontrollib, et serveripoolseid pildikaarte ei kasutata",
+      "help": "Serveripoolseid pildikaarte ei tohi kasutada"
+    },
+    "skip-link": {
+      "description": "Kontrollib, et kõigil vahelejätmislinkidel on fokuseeritav sihtmärk",
+      "help": "Vahelejätmislingi sihtmärk peaks olema olemas ja fokuseeritav"
+    },
+    "summary-name": {
+      "description": "Kontrollib, et summary-elementidel on arusaadav tekst",
+      "help": "Summary-elementidel peab olema arusaadav tekst"
+    },
+    "svg-img-alt": {
+      "description": "Kontrollib, et rolliga img, image, graphics-document või graphics-symbol <svg> elementidel on ligipääsetav tekst",
+      "help": "Rolliga img või image <svg> elementidel peab olema alternatiivtekst"
+    },
+    "tabindex": {
+      "description": "Kontrollib, et tabindex atribuudi väärtused ei ole suuremad kui 0",
+      "help": "Elementidel ei tohiks olla nullist suuremat tabindex'it"
+    },
+    "table-duplicate-name": {
+      "description": "Kontrollib, et <caption> element ei sisalda sama teksti nagu summary atribuut",
+      "help": "Tabelitel ei tohiks olla sama summary ja caption"
+    },
+    "table-fake-caption": {
+      "description": "Kontrollib, et pealkirjaga tabelid kasutavad <caption> elementi.",
+      "help": "Andme- või päiserakke ei tohi kasutada andmetabeli pealkirjana"
+    },
+    "target-size": {
+      "description": "Kontrollib, et puutesihtmärgid on piisava suurusega ja neil on piisavalt ruumi",
+      "help": "Kõik puutesihtmärgid peavad olema 24 px suurused või jätma piisavalt ruumi"
+    },
+    "td-has-header": {
+      "description": "Kontrollib, et iga mittetühi andmerakk üle 3 × 3 suuruses <table>-is on seotud vähemalt ühe tabeli päisega",
+      "help": "Mittetühjadel <td> elementidel suuremas <table>-is peab olema seotud tabeli päis"
+    },
+    "td-headers-attr": {
+      "description": "Kontrollib, et iga headers atribuuti kasutav tabelirakk viitab ainult sama tabeli teistele <th> elementidele",
+      "help": "Tabeliraku headers atribuudid peavad viitama sama tabeli teistele <th> elementidele"
+    },
+    "th-has-data-cells": {
+      "description": "Kontrollib, et <th> elementidel ja role=columnheader/rowheader elementidel on andmerakud, mida nad kirjeldavad",
+      "help": "Andmetabeli päised peavad viitama andmetele"
+    },
+    "valid-lang": {
+      "description": "Kontrollib, et lang atribuutidel on kehtivad väärtused",
+      "help": "lang atribuudil peab olema kehtiv väärtus"
+    },
+    "video-caption": {
+      "description": "Kontrollib, et <video> elementidel on subtiitrid",
+      "help": "<video> elementidel peavad olema subtiitrid"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstraktseid rolle ei kasutata",
+      "fail": {
+        "singular": "Abstraktset rolli ei saa otse kasutada: ${data.values}",
+        "plural": "Abstraktseid rolle ei saa otse kasutada: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "ARIA atribuudid on sellele elemendile lubatud",
+      "fail": {
+        "singular": "ARIA atribuut ei ole ${data.nodeName} elementidel lubatud: ${data.values}",
+        "plural": "ARIA atribuudid ei ole ${data.nodeName} elementidel lubatud: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "ARIA atribuute kasutatakse määratud rolli jaoks õigesti",
+      "fail": {
+        "singular": "ARIA atribuut ei ole lubatud: ${data.values}",
+        "plural": "ARIA atribuudid ei ole lubatud: ${data.values}",
+        "caseSensitive": "Nende ARIA atribuutide väärtused on tõstutundlikud ja peavad olema väiketähtedega: ${data.values}"
+      },
+      "incomplete": {
+        "default": "Kontrollige, et probleeme ei teki, kui ARIA atribuuti sellel elemendil eiratakse: ${data.values}",
+        "caseSensitive": "Nende ARIA atribuutide väärtused on tõstutundlikud ja abitehnoloogiad ei pruugi neid õigesti käsitleda: ${data.values}"
+      }
+    },
+    "aria-allowed-role": {
+      "pass": "ARIA roll on antud elemendile lubatud",
+      "fail": {
+        "singular": "ARIA roll ${data.values} ei ole antud elemendile lubatud",
+        "plural": "ARIA rollid ${data.values} ei ole antud elemendile lubatud"
+      },
+      "incomplete": {
+        "singular": "ARIA roll ${data.values} tuleb eemaldada, kui element muutub nähtavaks, sest see ei ole elemendile lubatud",
+        "plural": "ARIA rollid ${data.values} tuleb eemaldada, kui element muutub nähtavaks, sest need ei ole elemendile lubatud"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elemendil on aria-busy atribuut",
+      "fail": "Element kasutab aria-busy=\"true\", kuni laadimisindikaatorit näidatakse"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA atribuut on lubatud",
+      "fail": {
+        "checkbox": "Eemaldage aria-checked või määrake selle väärtuseks \"${data.checkState}\", et see vastaks märkeruudu tegelikule olekule",
+        "radio": "Eemaldage aria-checked või määrake selle väärtuseks \"${data.checkState}\", et see vastaks raadionupu tegelikule olekule",
+        "rowSingular": "See atribuut on treegrid ridadel toetatud, kuid mitte ${data.ownerRole} puhul: ${data.invalidAttrs}",
+        "rowPlural": "Need atribuudid on treegrid ridadel toetatud, kuid mitte ${data.ownerRole} puhul: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage on olemas ja viitab ekraanilugejatele nähtavatele elementidele, mis kasutavad toetatud aria-errormessage tehnikat",
+      "fail": {
+        "singular": "aria-errormessage väärtus `${data.values}` peab kasutama sõnumi teatamise tehnikat (nt aria-live, aria-describedby, role=alert jne)",
+        "plural": "aria-errormessage väärtused `${data.values}` peavad kasutama sõnumi teatamise tehnikat (nt aria-live, aria-describedby, role=alert jne)",
+        "unsupported": "Mitme ID kasutamist aria-errormessage'is ei toeta abitehnoloogiad laialdaselt",
+        "hidden": "aria-errormessage väärtus `${data.values}` ei tohi viidata peidetud elemendile"
+      },
+      "incomplete": {
+        "singular": "Veenduge, et aria-errormessage väärtus `${data.values}` viitab olemasolevale elemendile",
+        "plural": "Veenduge, et aria-errormessage väärtused `${data.values}` viitavad olemasolevatele elementidele",
+        "idrefs": "Ei õnnestunud kindlaks teha, kas aria-errormessage element lehel eksisteerib: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Dokumendi body elemendil ei ole aria-hidden atribuuti",
+      "fail": "aria-hidden=true ei tohiks olla dokumendi body elemendil"
+    },
+    "aria-level": {
+      "pass": "aria-level väärtused on kehtivad",
+      "incomplete": "aria-level väärtusi üle 6 ei toeta kõik ekraanilugejate ja brauserite kombinatsioonid"
+    },
+    "aria-no-deprecated-attr": {
+      "pass": "Aegunud ARIA atribuute ei kasutata",
+      "incomplete": {
+        "singular": "Atribuut on aegunud ja seda ei tohiks kasutada: ${data.values}",
+        "plural": "Atribuudid on aegunud ja neid ei tohiks kasutada: ${data.values}"
+      }
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA atribuut on lubatud",
+      "fail": {
+        "hasRolePlural": "Atribuute ${data.prohibited} ei saa rolliga \"${data.role}\" kasutada.",
+        "hasRoleSingular": "Atribuuti ${data.prohibited} ei saa rolliga \"${data.role}\" kasutada.",
+        "noRolePlural": "Atribuute ${data.prohibited} ei saa kasutada \"${data.nodeName}\" elementidel, millel puudub kehtiv role atribuut.",
+        "noRoleSingular": "Atribuuti ${data.prohibited} ei saa kasutada \"${data.nodeName}\" elementidel, millel puudub kehtiv role atribuut."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Atribuut ${data.prohibited} ei ole rolliga \"${data.role}\" hästi toetatud.",
+        "hasRolePlural": "Atribuudid ${data.prohibited} ei ole rolliga \"${data.role}\" hästi toetatud.",
+        "noRoleSingular": "Atribuut ${data.prohibited} ei ole \"${data.nodeName}\" elementidel, millel puudub kehtiv role atribuut, hästi toetatud.",
+        "noRolePlural": "Atribuudid ${data.prohibited} ei ole \"${data.nodeName}\" elementidel, millel puudub kehtiv role atribuut, hästi toetatud.",
+        "visibleLabelSingular": "Atribuut ${data.prohibited} ei ole hästi toetatud, kuid aria-labelledby viidatud elemendid on lehel nähtavad. Kontrollige, et silt pole vajalik.",
+        "visibleLabelPlural": "Atribuudid ${data.prohibited} ei ole hästi toetatud, kuid aria-labelledby viidatud elemendid on lehel nähtavad. Kontrollige, et sildid pole vajalikud.",
+        "unresolvedLabel": "Atribuut ${data.prohibited} ei ole hästi toetatud ega viita olemasolevale elemendile. Kontrollige, et silt pole vajalik."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Kõik kohustuslikud ARIA atribuudid on olemas",
+      "fail": {
+        "singular": "Kohustuslik ARIA atribuut puudub: ${data.values}",
+        "plural": "Kohustuslikud ARIA atribuudid puuduvad: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Kohustuslikud ARIA alamelemendid on olemas",
+        "aria-busy": "Elemendil on aria-busy atribuut, seega võib kohustuslikud alamelemendid ära jätta"
+      },
+      "fail": {
+        "singular": "Kohustuslik ARIA alamroll puudub: ${data.values}",
+        "plural": "Kohustuslikud ARIA alamrollid puuduvad: ${data.values}",
+        "unallowed": "Elemendil on alamelemente, mis ei ole lubatud: ${data.values}",
+        "unallowedPresentational": "Elemendil on esitluslikke alamelemente, mida ei saa eirata põhjusel ${data.values}",
+        "aria-busy-fail": "Elemendil on alamelemente, mis ei ole lubatud: ${data.values}; aria-busy=\"true\" ei luba alamelemente keelatud rollidega"
+      },
+      "incomplete": {
+        "singular": "Oodatakse ARIA alamrolli lisamist: ${data.values}",
+        "plural": "Oodatakse ARIA alamrollide lisamist: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Kohustuslik ARIA ülemroll on olemas",
+      "fail": {
+        "singular": "Kohustuslik ARIA ülemroll puudub: ${data.values}",
+        "plural": "Kohustuslikud ARIA ülemrollid puuduvad: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription'i kasutatakse toetatud semantilisel rollil",
+      "incomplete": "Kontrollige, kas toetatud ekraanilugejad teatavad aria-roledescription'i",
+      "fail": "Andke elemendile roll, mis toetab aria-roledescription'i"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA atribuuti toetatakse",
+      "fail": "ARIA atribuuti ei toeta laialdaselt ekraanilugejad ega abitehnoloogiad: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA atribuutide väärtused on kehtivad",
+      "fail": {
+        "singular": "Kehtetu ARIA atribuudi väärtus: ${data.values}",
+        "plural": "Kehtetud ARIA atribuutide väärtused: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA atribuudis viidatud elemendi ID-d lehel ei ole: ${data.needsReview}",
+        "noIdShadow": "ARIA atribuudis viidatud elemendi ID-d lehel ei ole või see on teise shadow DOM-i puu järglane: ${data.needsReview}",
+        "ariaCurrent": "ARIA atribuudi väärtus on kehtetu ja seda käsitletakse kui \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Ei õnnestunud kindlaks teha, kas ARIA atribuudis viidatud elemendi ID lehel eksisteerib: ${data.needsReview}",
+        "empty": "Tühja ARIA atribuudi väärtust eiratakse: ${data.needsReview}",
+        "controlsWithinPopup": "Ei õnnestunud kindlaks teha, kas aria-controls viidatud ID lehel eksisteerib, kui kasutatakse aria-haspopup'i: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA atribuudi nimi on kehtiv",
+      "fail": {
+        "singular": "Kehtetu ARIA atribuudi nimi: ${data.values}",
+        "plural": "Kehtetud ARIA atribuutide nimed: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel'it kasutatakse elemendil, millel on ligipääsetav tekst",
+      "fail": "aria-braillelabel'it kasutatakse elemendil, millel puudub ligipääsetav tekst",
+      "incomplete": "Ligipääsetavat teksti ei õnnestunud arvutada"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription'it kasutatakse elemendil, millel on aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription'it kasutatakse elemendil, millel puudub aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription'it kasutatakse elemendil, millel on tühi aria-roledescription"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA roll ei ole aegunud",
+      "fail": "Kasutatav roll on aegunud: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Kasutatakse ainult ühte rolli väärtust",
+      "fail": "Kasutage ainult ühte rolli väärtust, sest varurolle vanemad brauserid ei toeta",
+      "incomplete": "Kasutage ainult rolli 'presentation' või 'none', sest need on sünonüümid."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elemendil on globaalne ARIA atribuut: ${data.values}",
+        "plural": "Elemendil on globaalsed ARIA atribuudid: ${data.values}"
+      },
+      "fail": "Elemendil puudub globaalne ARIA atribuut"
+    },
+    "has-widget-role": {
+      "pass": "Elemendil on vidina roll.",
+      "fail": "Elemendil puudub vidina roll."
+    },
+    "invalidrole": {
+      "pass": "ARIA roll on kehtiv",
+      "fail": {
+        "singular": "Roll peab olema üks kehtivatest ARIA rollidest: ${data.values}",
+        "plural": "Rollid peavad olema kehtivad ARIA rollid: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Element on fokuseeritav.",
+      "fail": "Element ei ole fokuseeritav."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "<label>'i ja ligipääsetava nime vahel ei ole lahknevust",
+      "incomplete": "Kontrollige, kas <label> ei peaks olema ARIA välja ${data} nime osa"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA rolli toetatakse",
+      "fail": "Kasutatavat rolli ei toeta laialdaselt ekraanilugejad ega abitehnoloogiad: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Elemendil on fookusjärjekorras oleva elemendi jaoks sobiv semantika.",
+      "fail": "Elemendil on fookusjärjekorras oleva elemendi jaoks sobimatu semantika."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elemendil on piisav värvikontrast: ${data.contrastRatio}",
+      "fail": {
+        "default": "Elemendil on ebapiisav värvikontrast: ${data.contrastRatio} (esiplaani värv: ${data.fgColor}, taustavärv: ${data.bgColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elemendil on ebapiisav värvikontrast ${data.contrastRatio} esiplaani ja varju värvi vahel (esiplaani värv: ${data.fgColor}, text-shadow värv: ${data.shadowColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elemendil on ebapiisav värvikontrast ${data.contrastRatio} varju ja taustavärvi vahel (text-shadow värv: ${data.shadowColor}, taustavärv: ${data.bgColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrastsuhet ei õnnestunud kindlaks teha",
+        "bgImage": "Elemendi taustavärvi ei õnnestunud taustapildi tõttu kindlaks teha",
+        "bgGradient": "Elemendi taustavärvi ei õnnestunud tausta üleminekuvärvi tõttu kindlaks teha",
+        "imgNode": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest element sisaldab pildisõlme",
+        "bgOverlap": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest seda katab teine element",
+        "fgAlpha": "Elemendi esiplaani värvi ei õnnestunud alfa läbipaistvuse tõttu kindlaks teha",
+        "elmPartiallyObscured": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest seda katab osaliselt teine element",
+        "elmPartiallyObscuring": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest see katab osaliselt teisi elemente",
+        "outsideViewport": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest see asub vaateala taga",
+        "equalRatio": "Elemendi kontrastsuhe taustaga on 1:1",
+        "shortTextContent": "Elemendi sisu on liiga lühike, et kindlaks teha, kas see on tegelik tekst",
+        "emptyValue": "Elemendil puudub väärtus; kontrollige värvikontrasti pärast väärtuse sisestamist",
+        "nonBmp": "Elemendi sisu sisaldab ainult mitte-tekstimärke",
+        "pseudoContent": "Elemendi taustavärvi ei õnnestunud pseudoelemendi tõttu kindlaks teha",
+        "colorParse": "Värvistringi ${data.colorParse} ei õnnestunud parsida"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elemendil on piisav värvikontrast: ${data.contrastRatio}",
+        "hidden": "Element on peidetud"
+      },
+      "fail": {
+        "default": "Elemendil on ebapiisav värvikontrast: ${data.contrastRatio} (esiplaani värv: ${data.fgColor}, taustavärv: ${data.bgColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elemendil on ebapiisav värvikontrast ${data.contrastRatio} esiplaani ja varju värvi vahel (esiplaani värv: ${data.fgColor}, text-shadow värv: ${data.shadowColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elemendil on ebapiisav värvikontrast ${data.contrastRatio} varju ja taustavärvi vahel (text-shadow värv: ${data.shadowColor}, taustavärv: ${data.bgColor}, kirjasuurus: ${data.fontSize}, kirjakaal: ${data.fontWeight}). Oodatav kontrastsuhe: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Kontrastsuhet ei õnnestunud kindlaks teha",
+        "bgImage": "Elemendi taustavärvi ei õnnestunud taustapildi tõttu kindlaks teha",
+        "bgGradient": "Elemendi taustavärvi ei õnnestunud tausta üleminekuvärvi tõttu kindlaks teha",
+        "imgNode": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest element sisaldab pildisõlme",
+        "bgOverlap": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest seda katab teine element",
+        "complexTextShadows": "Elemendi kontrasti ei õnnestunud kindlaks teha, sest see kasutab keerukaid tekstivarje",
+        "fgAlpha": "Elemendi esiplaani värvi ei õnnestunud alfa läbipaistvuse tõttu kindlaks teha",
+        "elmPartiallyObscured": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest seda katab osaliselt teine element",
+        "elmPartiallyObscuring": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest see katab osaliselt teisi elemente",
+        "outsideViewport": "Elemendi taustavärvi ei õnnestunud kindlaks teha, sest see asub vaateala taga",
+        "equalRatio": "Elemendi kontrastsuhe taustaga on 1:1",
+        "shortTextContent": "Elemendi sisu on liiga lühike, et kindlaks teha, kas see on tegelik tekst",
+        "emptyValue": "Elemendil puudub väärtus; kontrollige värvikontrasti pärast väärtuse sisestamist",
+        "nonBmp": "Elemendi sisu sisaldab ainult mitte-tekstimärke",
+        "pseudoContent": "Elemendi taustavärvi ei õnnestunud pseudoelemendi tõttu kindlaks teha",
+        "colorParse": "Värvistringi ${data.colorParse} ei õnnestunud parsida"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Linke saab ümbritsevast tekstist eristada visuaalse kujundusega",
+      "incomplete": {
+        "default": "Kontrollige, kas link vajab kujundust, et see läheduses olevast tekstist eristuks",
+        "pseudoContent": "Kontrollige, kas lingi pseudostiilist piisab, et see ümbritsevast tekstist eristuks"
+      },
+      "fail": "Lingil puudub kujundus (nt allajoonimine), mis eristaks selle ümbritsevast tekstist"
+    },
+    "link-in-text-block": {
+      "pass": "Linke saab ümbritsevast tekstist eristada muul viisil kui ainult värvi abil",
+      "fail": {
+        "fgContrast": "Lingil on ümbritseva tekstiga ebapiisav värvikontrast ${data.contrastRatio}:1. (Minimaalne kontrast on ${data.requiredContrastRatio}:1, lingi tekst: ${data.nodeColor}, ümbritsev tekst: ${data.parentColor})",
+        "bgContrast": "Lingi taustal on ebapiisav värvikontrast ${data.contrastRatio} (minimaalne kontrast on ${data.requiredContrastRatio}:1, lingi taustavärv: ${data.nodeBackgroundColor}, ümbritsev taustavärv: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elemendi esiplaani kontrastsuhet ei õnnestunud kindlaks teha",
+        "bgContrast": "Elemendi tausta kontrastsuhet ei õnnestunud kindlaks teha",
+        "bgImage": "Elemendi kontrastsuhet ei õnnestunud taustapildi tõttu kindlaks teha",
+        "bgGradient": "Elemendi kontrastsuhet ei õnnestunud tausta üleminekuvärvi tõttu kindlaks teha",
+        "imgNode": "Elemendi kontrastsuhet ei õnnestunud kindlaks teha, sest element sisaldab pildisõlme",
+        "bgOverlap": "Elemendi kontrastsuhet ei õnnestunud elementide kattumise tõttu kindlaks teha"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "autocomplete väärtus on määratud sobivale elemendile",
+      "fail": "autocomplete väärtus ei sobi seda tüüpi sisestusväljale"
+    },
+    "autocomplete-valid": {
+      "pass": "autocomplete atribuut on õigesti vormindatud",
+      "fail": "autocomplete atribuut on valesti vormindatud",
+      "incomplete": "autocomplete atribuudil on mittestandardne väärtus. Kontrollige, kas selle asemel saab kasutada standardset väärtust."
+    },
+    "accesskeys": {
+      "pass": "accesskey atribuudi väärtus on unikaalne",
+      "fail": "Dokumendis on mitu sama accesskey'ga elementi"
+    },
+    "focusable-content": {
+      "pass": "Element sisaldab fokuseeritavaid elemente",
+      "incomplete": "Kontrollige, et negatiivse tabindex'iga elemendid saavad klaviatuuri fookuse, et ala saaks kerida",
+      "fail": "Elemendil peaks olema fokuseeritavat sisu"
+    },
+    "focusable-disabled": {
+      "pass": "Elemendi sees ei ole fokuseeritavaid elemente",
+      "incomplete": "Kontrollige, kas fokuseeritavad elemendid liigutavad fookusindikaatori kohe",
+      "fail": "Fokuseeritav sisu tuleb keelata, DOM-ist eemaldada või mitte peita aria-hidden'iga"
+    },
+    "focusable-element": {
+      "pass": "Element on fokuseeritav",
+      "fail": "Element peaks olema fokuseeritav"
+    },
+    "focusable-modal-open": {
+      "pass": "Kui modaalaken on avatud, fokuseeritavaid elemente ei ole",
+      "incomplete": "Kontrollige, et fokuseeritavad elemendid ei ole praeguses olekus Tab-klahviga ligipääsetavad"
+    },
+    "focusable-no-name": {
+      "pass": "Element ei ole Tab-järjekorras või sellel on ligipääsetav tekst",
+      "fail": "Element on Tab-järjekorras ja sellel puudub ligipääsetav tekst",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on ligipääsetav nimi"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Elemendi sees ei ole fokuseeritavaid elemente",
+      "incomplete": "Kontrollige, kas fokuseeritavad elemendid liigutavad fookusindikaatori kohe",
+      "fail": "Fokuseeritaval sisul peab olema tabindex=\"-1\", see tuleb DOM-ist eemaldada või mitte peita aria-hidden'iga"
+    },
+    "frame-focusable-content": {
+      "pass": "Elemendil ei ole fokuseeritavaid järglasi",
+      "fail": "Elemendil on fokuseeritavaid järglasi",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on järglasi"
+    },
+    "landmark-is-top-level": {
+      "pass": "Orientiir ${data.role} on ülemisel tasemel.",
+      "fail": "Orientiir ${data.role} asub teise orientiiri sees."
+    },
+    "no-focusable-content": {
+      "pass": "Elemendil ei ole fokuseeritavaid järglasi",
+      "fail": {
+        "default": "Elemendil on fokuseeritavaid järglasi. Viige need elemendist välja või eemaldage.",
+        "notHidden": "Negatiivse tabindex'i kasutamine interaktiivse juhtelemendi sees oleval elemendil ei takista abitehnoloogiatel elemendile fookust andmast (isegi aria-hidden=\"true\" korral)"
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on järglasi"
+    },
+    "page-has-heading-one": {
+      "pass": "Lehel on vähemalt üks esimese taseme pealkiri",
+      "fail": "Lehel peab olema esimese taseme pealkiri"
+    },
+    "page-has-main": {
+      "pass": "Dokumendis on vähemalt üks main-orientiir",
+      "fail": "Dokumendis puudub main-orientiir"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Dokumendis ei ole rohkem kui ühte banner-orientiiri",
+      "fail": "Dokumendis on rohkem kui üks banner-orientiir"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Dokumendis ei ole rohkem kui ühte contentinfo-orientiiri",
+      "fail": "Dokumendis on rohkem kui üks contentinfo-orientiir"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Dokumendis ei ole rohkem kui ühte main-orientiiri",
+      "fail": "Dokumendis on rohkem kui üks main-orientiir"
+    },
+    "tabindex": {
+      "pass": "Elemendil ei ole 0-st suuremat tabindex'it",
+      "fail": "Elemendil on 0-st suurem tabindex"
+    },
+    "alt-space-value": {
+      "pass": "Elemendil on kehtiv alt atribuudi väärtus",
+      "fail": "Elemendi alt atribuut sisaldab ainult tühikumärki, mida kõik ekraanilugejad ei ignoreeri"
+    },
+    "duplicate-img-label": {
+      "pass": "Element ei korda olemasolevat teksti <img> alternatiivtekstis",
+      "fail": "Element sisaldab <img> elementi alternatiivtekstiga, mis dubleerib olemasolevat teksti"
+    },
+    "explicit-label": {
+      "pass": "Elemendil on selgesõnaline <label>",
+      "fail": "Elemendil puudub selgesõnaline <label>",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas vormielemendil on selgesõnaline <label>"
+    },
+    "help-same-as-label": {
+      "pass": "Abitekst (title või aria-describedby) ei dubleeri sildi teksti",
+      "fail": "Abitekst (title või aria-describedby) on sama mis sildi tekst"
+    },
+    "hidden-explicit-label": {
+      "pass": "Vormielemendil on nähtav selgesõnaline <label>",
+      "fail": "Vormielemendil on selgesõnaline <label>, mis on peidetud",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas vormielemendil on peidetud selgesõnaline <label>"
+    },
+    "implicit-label": {
+      "pass": "Elemendil on implitsiitne (ümbritsev) <label>",
+      "fail": "Elemendil puudub implitsiitne (ümbritsev) <label>",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas vormielemendil on implitsiitne (ümbritsev) <label>"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elemendil on nähtav tekst oma ligipääsetava nime osana",
+      "fail": "Elemendi sees olev tekst ei ole ligipääsetavasse nimesse kaasatud",
+      "incomplete": {
+        "default": "Ei õnnestunud kindlaks teha, kas nähtav tekst on ligipääsetava nime osa",
+        "valueText": "Elemendi sees olev tekst võib olla väärtuse tekst, mitte silt"
+      }
+    },
+    "multiple-label": {
+      "pass": "Vormiväljal ei ole mitut label elementi",
+      "incomplete": "Mitut label elementi ei toeta abitehnoloogiad laialdaselt. Veenduge, et esimene silt sisaldab kogu vajalikku teavet."
+    },
+    "title-only": {
+      "pass": "Vormielement ei kasuta oma sildina ainult title atribuuti",
+      "fail": "Vormielemendi sildi loomiseks on kasutatud ainult title'it"
+    },
+    "landmark-is-unique": {
+      "pass": "Orientiiridel peab olema unikaalne roll või rolli/sildi/title (st ligipääsetava nime) kombinatsioon",
+      "fail": "Orientiiril peab olema unikaalne aria-label, aria-labelledby või title, et orientiire saaks eristada"
+    },
+    "has-lang": {
+      "pass": "<html> elemendil on lang atribuut",
+      "fail": {
+        "noXHTML": "xml:lang atribuut ei kehti HTML-lehtedel, kasutage lang atribuuti.",
+        "noLang": "<html> elemendil puudub lang atribuut"
+      }
+    },
+    "valid-lang": {
+      "pass": "lang atribuudi väärtus on kehtivate keelte loendis",
+      "fail": "lang atribuudi väärtust ei ole kehtivate keelte loendis"
+    },
+    "xml-lang-mismatch": {
+      "pass": "lang ja xml:lang atribuutidel on sama põhikeel",
+      "fail": "lang ja xml:lang atribuutidel ei ole sama põhikeel"
+    },
+    "dlitem": {
+      "pass": "Kirjelduste loendi elemendil on ülemelement <dl>",
+      "fail": "Kirjelduste loendi elemendil puudub ülemelement <dl>"
+    },
+    "listitem": {
+      "pass": "Loendi elemendil on ülemelement <ul>, <ol> või role=\"list\"",
+      "fail": {
+        "default": "Loendi elemendil puudub ülemelement <ul> või <ol>. Veenduge, et <li> on <ul> või <ol> vahetu alamelement või et ülemelemendil on role=\"list\".",
+        "roleNotValid": "Loendi elemendi ülemelemendil on roll, mis ei ole role=\"list\". Veenduge, et ülemelemendil on role=\"list\", või viige <li> <ul> või <ol> sisse."
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas loendi elemendil on ülemelement <ul>, <ol> või role=\"list\""
+    },
+    "only-dlitems": {
+      "pass": "dl elemendil on ainult vahetud alamelemendid, mis on selles lubatud: <dt>, <dd> või <div>",
+      "fail": "dl elemendil on vahetuid alamelemente, mis ei ole lubatud: ${data.values}",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas dl elemendil on ainult lubatud vahetud alamelemendid"
+    },
+    "only-listitems": {
+      "pass": "Loendi elemendil on ainult vahetud alamelemendid, mis on selles lubatud: <li>",
+      "fail": "Loendi elemendil on vahetuid alamelemente, mis ei ole lubatud: ${data.values}",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas loendi elemendil on ainult lubatud vahetud alamelemendid"
+    },
+    "structured-dlitems": {
+      "pass": "Kui element ei ole tühi, on sellel nii <dt>- kui ka <dd>-elemente",
+      "fail": "Kui element ei ole tühi, puudub sellel vähemalt üks <dt> element, millele järgneks vähemalt üks <dd> element"
+    },
+    "caption": {
+      "pass": "Multimeediaelemendil on subtiitrite rada",
+      "incomplete": "Kontrollige, kas elemendil on subtiitrid saadaval"
+    },
+    "frame-tested": {
+      "pass": "Iframe testiti axe-core'iga",
+      "fail": "Iframe'i ei õnnestunud axe-core'iga testida",
+      "incomplete": "Iframe tuleb veel axe-core'iga testida"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> või <audio> ei esita heli kauem kui lubatud aeg või sellel on juhtimismehhanism",
+      "fail": "<video> või <audio> esitab heli kauem kui lubatud aeg ja sellel puudub juhtimismehhanism",
+      "incomplete": "Kontrollige, et <video> või <audio> ei esita heli kauem kui lubatud aeg või pakub juhtimismehhanismi"
+    },
+    "css-orientation-lock": {
+      "pass": "Kuva on kasutatav ja orientatsioonilukku ei ole",
+      "fail": "Rakendatud on CSS-i orientatsioonilukk, mis muudab kuva kasutamatuks",
+      "incomplete": "CSS-i orientatsioonilukku ei õnnestunud kindlaks teha"
+    },
+    "meta-viewport-large": {
+      "pass": "<meta> silt ei takista mobiilseadmetes märkimisväärset suumimist",
+      "fail": "<meta> silt piirab mobiilseadmetes suumimist"
+    },
+    "meta-viewport": {
+      "pass": "<meta> silt ei keela mobiilseadmetes suumimist",
+      "fail": "${data} <meta> sildis keelab mobiilseadmetes suumimise"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Sihtmärgil on lähimate naabriteni piisavalt ruumi. Ohutu klõpsatava ala läbimõõt on ${data.closestOffset} px, mis on vähemalt ${data.minOffset} px.",
+        "large": "Sihtmärk ületab oluliselt minimaalset suurust ${data.minOffset} px."
+      },
+      "fail": "Sihtmärgil ei ole lähimate naabriteni piisavalt ruumi. Ohutu klõpsatava ala läbimõõt on ${data.closestOffset} px, mitte vähemalt ${data.minOffset} px.",
+      "incomplete": {
+        "default": "Negatiivse tabindex'iga elemendil ei ole lähimate naabriteni piisavalt ruumi. Ohutu klõpsatava ala läbimõõt on ${data.closestOffset} px, mitte vähemalt ${data.minOffset} px. Kas see on sihtmärk?",
+        "nonTabbableNeighbor": "Sihtmärgil ei ole lähimate naabriteni piisavalt ruumi. Ohutu klõpsatava ala läbimõõt on ${data.closestOffset} px, mitte vähemalt ${data.minOffset} px. Kas naaber on sihtmärk?",
+        "tooManyRects": "Sihtmärgi suurust ei õnnestunud kindlaks teha, sest kattuvaid elemente on liiga palju"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Juhtelement on piisava suurusega (${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px)",
+        "obscured": "Juhtelementi eiratakse, sest see on täielikult kaetud ja seega mitteklõpsatav",
+        "large": "Sihtmärk ületab oluliselt minimaalset suurust ${data.minSize} px."
+      },
+      "fail": {
+        "default": "Sihtmärk on ebapiisava suurusega (${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px)",
+        "partiallyObscured": "Sihtmärk on ebapiisava suurusega, sest see on osaliselt kaetud (väikseim ala on ${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px)"
+      },
+      "incomplete": {
+        "default": "Negatiivse tabindex'iga element on ebapiisava suurusega (${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px). Kas see on sihtmärk?",
+        "contentOverflow": "Elemendi suurust ei õnnestunud sisu ülevoolu tõttu täpselt kindlaks teha",
+        "partiallyObscured": "Negatiivse tabindex'iga element on ebapiisava suurusega, sest see on osaliselt kaetud (väikseim ala on ${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px). Kas see on sihtmärk?",
+        "partiallyObscuredNonTabbable": "Sihtmärk on ebapiisava suurusega, sest seda katab osaliselt negatiivse tabindex'iga naaber (väikseim ala on ${data.width} px × ${data.height} px, peab olema vähemalt ${data.minSize} px × ${data.minSize} px). Kas naaber on sihtmärk?",
+        "tooManyRects": "Sihtmärgi suurust ei õnnestunud kindlaks teha, sest kattuvaid elemente on liiga palju"
+      }
+    },
+    "header-present": {
+      "pass": "Lehel on pealkiri",
+      "fail": "Lehel puudub pealkiri"
+    },
+    "heading-order": {
+      "pass": "Pealkirjade järjekord on kehtiv",
+      "fail": "Pealkirjade järjekord on kehtetu",
+      "incomplete": "Eelmist pealkirja ei õnnestunud kindlaks teha"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Teisi sama nimega linke, mis viiksid teisele URL-ile, ei ole",
+      "incomplete": "Kontrollige, kas lingid on sama eesmärgiga või tahtlikult mitmetähenduslikud."
+    },
+    "internal-link-present": {
+      "pass": "Leiti kehtiv vahelejätmislink",
+      "fail": "Kehtivat vahelejätmislinki ei leitud"
+    },
+    "landmark": {
+      "pass": "Lehel on orientiirala",
+      "fail": "Lehel puudub orientiirala"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta> silt ei värskenda lehte kohe",
+      "fail": "<meta> silt sunnib lehte ajastatult värskendama"
+    },
+    "meta-refresh": {
+      "pass": "<meta> silt ei värskenda lehte kohe",
+      "fail": "<meta> silt sunnib lehte ajastatult värskendama (vähem kui 20 tunni pärast)"
+    },
+    "p-as-heading": {
+      "pass": "<p> elemente ei ole pealkirjadena kujundatud",
+      "fail": "Kujundatud <p> elementide asemel tuleks kasutada pealkirjaelemente",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas <p> elemendid on pealkirjadena kujundatud"
+    },
+    "region": {
+      "pass": "Kogu lehe sisu asub orientiiride sees",
+      "fail": "Osa lehe sisust ei asu orientiiride sees"
+    },
+    "skip-link": {
+      "pass": "Vahelejätmislingi sihtmärk on olemas",
+      "incomplete": "Vahelejätmislingi sihtmärk peab aktiveerimisel nähtavaks muutuma",
+      "fail": "Vahelejätmislingi sihtmärk puudub"
+    },
+    "unique-frame-title": {
+      "pass": "Elemendi title atribuut on unikaalne",
+      "fail": "Elemendi title atribuut ei ole unikaalne"
+    },
+    "duplicate-id-active": {
+      "pass": "Dokumendis ei ole aktiivseid elemente sama id atribuudiga",
+      "fail": "Dokumendis on aktiivseid elemente sama id atribuudiga: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Dokumendis ei ole ARIA või siltidega viidatud elemente sama id atribuudiga",
+      "fail": "Dokumendis on mitu ARIA-ga viidatud elementi sama id atribuudiga: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Dokumendis ei ole staatilisi elemente sama id atribuudiga",
+      "fail": "Dokumendis on mitu staatilist elementi sama id atribuudiga: ${data}"
+    },
+    "aria-label": {
+      "pass": "aria-label atribuut on olemas ja ei ole tühi",
+      "fail": "aria-label atribuuti ei ole või see on tühi"
+    },
+    "aria-labelledby": {
+      "pass": "aria-labelledby atribuut on olemas ja viitab ekraanilugejatele nähtavatele elementidele",
+      "fail": "aria-labelledby atribuuti ei ole, see viitab olematutele elementidele või viitab tühjadele elementidele",
+      "incomplete": "Veenduge, et aria-labelledby viitab olemasolevale elemendile"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Tekstivahesid mõjutavaid reasiseseid stiile märkusega '!important' ei ole määratud",
+      "fail": {
+        "singular": "Eemaldage '!important' reasisesest stiilist ${data.values}, sest enamik brausereid ei toeta selle tühistamist",
+        "plural": "Eemaldage '!important' reasisestest stiilidest ${data.values}, sest enamik brausereid ei toeta nende tühistamist"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elemendil on sisetekst, mis on ekraanilugejatele nähtav",
+      "fail": "Elemendil puudub sisetekst, mis oleks ekraanilugejatele nähtav",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on alamelemente"
+    },
+    "doc-has-title": {
+      "pass": "Dokumendis on mittetühi <title> element",
+      "fail": "Dokumendis puudub mittetühi <title> element"
+    },
+    "error-occurred": {
+      "pass": "",
+      "incomplete": "Axe puutus kokku veaga; kontrollige lehte selle probleemi osas käsitsi"
+    },
+    "exists": {
+      "pass": "Elementi ei ole",
+      "incomplete": "Element on olemas"
+    },
+    "has-alt": {
+      "pass": "Elemendil on alt atribuut",
+      "fail": "Elemendil puudub alt atribuut"
+    },
+    "has-visible-text": {
+      "pass": "Elemendil on tekst, mis on ekraanilugejatele nähtav",
+      "fail": "Elemendil puudub tekst, mis oleks ekraanilugejatele nähtav",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on alamelemente"
+    },
+    "important-letter-spacing": {
+      "pass": "letter-spacing style atribuudis ei ole määratud märkusega !important või vastab miinimumile",
+      "fail": {
+        "default": "letter-spacing style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em)",
+        "omitted": "letter-spacing style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em). Mõjutatud on rohkem tekstiga elemente, kui seotud sõlmede loendis on nimetatud"
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas letter-spacing style atribuudis vastab miinimumile"
+    },
+    "important-line-height": {
+      "pass": "line-height style atribuudis ei ole määratud märkusega !important või vastab miinimumile",
+      "fail": {
+        "default": "line-height style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em)",
+        "omitted": "line-height style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em). Mõjutatud on rohkem tekstiga elemente, kui seotud sõlmede loendis on nimetatud"
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas line-height style atribuudis vastab miinimumile"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing style atribuudis ei ole määratud märkusega !important või vastab miinimumile",
+      "fail": {
+        "default": "word-spacing style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em)",
+        "omitted": "word-spacing style atribuudis ei tohi kasutada !important'it või peab olema ${data.minValue}em (praegu ${data.value}em). Mõjutatud on rohkem tekstiga elemente, kui seotud sõlmede loendis on nimetatud"
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas word-spacing style atribuudis vastab miinimumile"
+    },
+    "is-on-screen": {
+      "pass": "Element ei ole nähtav",
+      "fail": "Element on nähtav"
+    },
+    "non-empty-alt": {
+      "pass": "Elemendil on mittetühi alt atribuut",
+      "fail": {
+        "noAttr": "Elemendil puudub alt atribuut",
+        "emptyAttr": "Elemendil on tühi alt atribuut"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elemendil puudub value atribuut",
+        "has-label": "Elemendil on mittetühi value atribuut"
+      },
+      "fail": "Elemendil on value atribuut ja see on tühi"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elemendil on placeholder atribuut",
+      "fail": {
+        "noAttr": "Elemendil puudub placeholder atribuut",
+        "emptyAttr": "Elemendil on tühi placeholder atribuut"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elemendil on title atribuut",
+      "fail": {
+        "noAttr": "Elemendil puudub title atribuut",
+        "emptyAttr": "Elemendil on tühi title atribuut"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elemendil on mittetühi value atribuut",
+      "fail": {
+        "noAttr": "Elemendil puudub value atribuut",
+        "emptyAttr": "Elemendil on tühi value atribuut"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elemendi vaikesemantika on tühistatud role=\"${data.role}\"-ga",
+      "fail": {
+        "default": "Elemendi vaikesemantikat ei ole tühistatud role=\"none\" või role=\"presentation\"-ga",
+        "globalAria": "Elemendi roll ei ole esitluslik, sest sellel on globaalne ARIA atribuut",
+        "focusable": "Elemendi roll ei ole esitluslik, sest see on fokuseeritav",
+        "both": "Elemendi roll ei ole esitluslik, sest sellel on globaalne ARIA atribuut ja see on fokuseeritav",
+        "iframe": "\"title\" atribuudi kasutamine esitusliku rolliga ${data.nodeName} elemendil käitub eri ekraanilugejates ebajärjepidevalt"
+      }
+    },
+    "role-none": {
+      "pass": "Elemendi vaikesemantika on tühistatud role=\"none\"-ga",
+      "fail": "Elemendi vaikesemantikat ei ole tühistatud role=\"none\"-ga"
+    },
+    "role-presentation": {
+      "pass": "Elemendi vaikesemantika on tühistatud role=\"presentation\"-iga",
+      "fail": "Elemendi vaikesemantikat ei ole tühistatud role=\"presentation\"-iga"
+    },
+    "svg-non-empty-title": {
+      "pass": "Elemendil on alamelement title",
+      "fail": {
+        "noTitle": "Elemendil puudub alamelement title",
+        "emptyTitle": "Elemendi alamelement title on tühi"
+      },
+      "incomplete": "Ei õnnestunud kindlaks teha, kas elemendil on alamelement title"
+    },
+    "caption-faked": {
+      "pass": "Tabeli esimest rida ei kasutata pealkirjana",
+      "fail": "Tabeli esimene alamelement peaks olema caption, mitte tabeli rakk"
+    },
+    "html5-scope": {
+      "pass": "scope atribuuti kasutatakse ainult tabeli päiseelementidel (<th>)",
+      "fail": "HTML 5-s võib scope atribuute kasutada ainult tabeli päiseelementidel (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "summary atribuudi sisu ja <caption> ei dubleeri teineteist",
+      "fail": "summary atribuudi sisu ja <caption> element on identsed",
+      "incomplete": "Ei õnnestunud kindlaks teha, kas <table> elemendil on pealkiri"
+    },
+    "scope-value": {
+      "pass": "scope atribuuti kasutatakse õigesti",
+      "fail": "scope atribuudi väärtus võib olla ainult 'row' või 'col'"
+    },
+    "td-has-header": {
+      "pass": "Kõigil mittetühjadel andmerakkudel on tabeli päised",
+      "fail": "Mõnel mittetühjal andmerakul puuduvad tabeli päised"
+    },
+    "td-headers-attr": {
+      "pass": "headers atribuuti kasutatakse ainult viitamiseks sama tabeli teistele päiserakkudele",
+      "incomplete": "headers atribuut on tühi",
+      "fail": {
+        "cell-header-not-in-table": "headers atribuuti kasutatakse mitte ainult viitamiseks sama tabeli teistele päiserakkudele",
+        "cell-header-not-th": "headers atribuut peab viitama päiserakkudele, mitte andmerakkudele",
+        "header-refs-self": "headers atribuudiga element viitab iseendale"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Kõik tabeli päiserakud viitavad andmerakkudele",
+      "incomplete": "Tabeli andmerakke ei ole või need on tühjad"
+    },
+    "hidden-content": {
+      "pass": "Kogu lehe sisu on analüüsitud.",
+      "fail": "Selle lehe sisu analüüsimisel tekkis probleeme.",
+      "incomplete": "Lehel on peidetud sisu, mida ei analüüsitud. Selle analüüsimiseks peate sisu kuvamise esile kutsuma."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Parandage mõni järgmistest:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Parandage kõik järgmised:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe ei suutnud põhjust kindlaks teha. On aeg elemendiinspektor lahti teha!"
+}
