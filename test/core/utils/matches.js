@@ -361,6 +361,38 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, 'main #host h1'));
     });
 
+    it('returns true for id inside shadow DOM when crossing shadow DOM boundary', () => {
+      const virtualNode = queryFixture(
+        '<div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div>'
+      );
+      assert.isTrue(matches(virtualNode, '#host #target'));
+      assert.isTrue(matches(virtualNode, 'div #target'));
+    });
+
+    it('returns true for id inside shadow DOM when crossing shadow DOM boundary at any level', () => {
+      const virtualNode = queryFixture(html`
+        <div id="host">
+          <template shadowrootmode="open">
+            <div id="host2">
+              <template shadowrootmode="open">
+                <h1 id="target"></h1>
+              </template>
+            </div>
+          </template>
+        </div>
+      `);
+      assert.isTrue(matches(virtualNode, '#host #host2 h1'));
+      assert.isTrue(matches(virtualNode, 'div #host2 h1'));
+      assert.isTrue(matches(virtualNode, 'div div #target'));
+    });
+
+    it('returns isTrue for id of light DOM element', () => {
+      const virtualNode = queryFixture(
+        '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div #target'));
+    });
+
     it('returns true for light DOM element', () => {
       const virtualNode = queryFixture(
         '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
@@ -406,38 +438,6 @@ describe('utils.matches', () => {
         '<main><div><span><span><p id="target"></p></span></span></div></main>'
       );
       assert.isFalse(matches(virtualNode, 'main > div > span > p'));
-    });
-
-    it('returns true for id inside shadow DOM when crossing shadow DOM boundary', () => {
-      const virtualNode = queryFixture(
-        '<div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div>'
-      );
-      assert.isTrue(matches(virtualNode, '#host #target'));
-      assert.isTrue(matches(virtualNode, 'div #target'));
-    });
-
-    it('returns true for id inside shadow DOM when crossing shadow DOM boundary at any level', () => {
-      const virtualNode = queryFixture(html`
-        <div id="host">
-          <template shadowrootmode="open">
-            <div id="host2">
-              <template shadowrootmode="open">
-                <h1 id="target"></h1>
-              </template>
-            </div>
-          </template>
-        </div>
-      `);
-      assert.isTrue(matches(virtualNode, '#host #host2 h1'));
-      assert.isTrue(matches(virtualNode, 'div #host2 h1'));
-      assert.isTrue(matches(virtualNode, 'div div #target'));
-    });
-
-    it('returns isTrue for id of light DOM element', () => {
-      const virtualNode = queryFixture(
-        '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
-      );
-      assert.isTrue(matches(virtualNode, 'div #target'));
     });
 
     it('throws error if combinator is not implemented', () => {
