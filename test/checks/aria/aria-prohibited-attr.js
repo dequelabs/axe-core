@@ -121,6 +121,80 @@ describe('aria-prohibited-attr', () => {
     });
   });
 
+  describe('elements without an href', () => {
+    it('should use the noHref message for an anchor (singular)', () => {
+      const params = checkSetup('<a id="target" aria-label="foo"></a>');
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'a',
+        role: null,
+        messageKey: 'noHrefSingular',
+        prohibited: ['aria-label']
+      });
+    });
+
+    it('should use the noHref message for an anchor (plural)', () => {
+      // labelledby does not resolve, so AccName uses aria-label
+      const params = checkSetup(
+        '<a id="target" aria-label="foo" aria-labelledby="foo"></a>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'a',
+        role: null,
+        messageKey: 'noHrefPlural',
+        prohibited: ['aria-label', 'aria-labelledby']
+      });
+    });
+
+    it('should return undefined with the noHref message for an anchor with text content', () => {
+      const params = checkSetup('<a id="target" aria-label="foo">Contents</a>');
+      assert.isUndefined(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'a',
+        role: null,
+        messageKey: 'noHrefSingular',
+        prohibited: ['aria-label']
+      });
+    });
+
+    it('should use the noHref message for an area', () => {
+      const params = checkSetup(
+        '<map name="map"><area id="target" aria-label="foo" /></map>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.deepEqual(checkContext._data, {
+        nodeName: 'area',
+        role: null,
+        messageKey: 'noHrefSingular',
+        prohibited: ['aria-label']
+      });
+    });
+
+    it('should use the noHref message for an anchor with an invalid role', () => {
+      const params = checkSetup(
+        '<a id="target" role="foo" aria-label="foo"></a>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.messageKey, 'noHrefSingular');
+    });
+
+    it('should use the hasRole message for an anchor with a prohibiting role', () => {
+      const params = checkSetup(
+        '<a id="target" role="code" aria-label="foo"></a>'
+      );
+      assert.isTrue(checkEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.messageKey, 'hasRoleSingular');
+    });
+
+    it('should return false for an anchor with an href', () => {
+      const params = checkSetup(
+        '<a id="target" href="#" aria-label="foo"></a>'
+      );
+      assert.isFalse(checkEvaluate.apply(checkContext, params));
+    });
+  });
+
   it('should return false if all attributes are allowed', () => {
     const params = checkSetup(
       '<div id="target" role="button" aria-label="foo" aria-labelledby="foo">Contents</div>'
