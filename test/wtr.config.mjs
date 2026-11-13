@@ -228,6 +228,14 @@ const testRunnerHtml = testFramework => /* html */ `
     <title>axe-core tests</title>
     <!-- Baseline stylesheet so tests that count document.styleSheets see at least one sheet -->
     <style>/* axe-core test baseline */</style>
+
+    <!-- Fix Mocha styles -->
+    <style>
+      #mocha-stats .progress-ring {
+        height: 0;
+      }
+    </style>
+
   </head>
   <body>
     <div id="fixture"></div>

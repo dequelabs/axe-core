@@ -1,12 +1,7 @@
 describe('utils.matches', () => {
   const matches = axe.utils.matches;
-  const fixture = document.querySelector('#fixture');
-  const queryFixture = axe.testUtils.queryFixture;
+  const { queryFixture, html } = axe.testUtils;
   const convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
-
-  afterEach(() => {
-    fixture.innerHTML = '';
-  });
 
   describe('tag', () => {
     it('returns true if tag matches', () => {
@@ -153,6 +148,13 @@ describe('utils.matches', () => {
   describe('id', () => {
     it('returns true if id matches', () => {
       const virtualNode = queryFixture('<h1 id="target">foo</h1>');
+      assert.isTrue(matches(virtualNode, '#target'));
+    });
+
+    it('returns true for id inside shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div>'
+      );
       assert.isTrue(matches(virtualNode, '#target'));
     });
 
@@ -314,9 +316,95 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, 'div tr > td h1'));
     });
 
+    it('returns true if ancestor hierarchical matches when parent does not', () => {
+      const virtualNode = queryFixture(
+        '<div><span><span><p id="target"></p></span></span></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div > span p'));
+    });
+
+    it('returns true if great ancestor hierarchical matches when parent does not', () => {
+      const virtualNode = queryFixture(
+        '<div><span><span><span><span><span><p id="target"></p></span></span></span></span></span></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div > span p'));
+    });
+
+    it('returns true if multiple direct child selectors match after an ancestor selector', () => {
+      const virtualNode = queryFixture(
+        '<main><div><span><span><span><p id="target"></p></span></span></span></div></main>'
+      );
+      assert.isTrue(matches(virtualNode, 'main div > span > span p'));
+    });
+
+    it('returns true for id outside shadow DOM selecting shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div>'
+      );
+      assert.isTrue(matches(virtualNode, '#host h1'));
+    });
+
+    it('returns true for id outside shadow DOM selecting shadow DOM when a duplicate ID exists inside shadow DOM', () => {
+      const virtualNode = queryFixture(html`
+        <main>
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="host">
+                <h1 id="target">foo</h1>
+              </div>
+            </template>
+          </div>
+        </main>
+      `);
+      assert.isTrue(matches(virtualNode, '#host h1'));
+      assert.isTrue(matches(virtualNode, 'main > #host h1'));
+      assert.isTrue(matches(virtualNode, 'main #host h1'));
+    });
+
+    it('returns true for id inside shadow DOM when crossing shadow DOM boundary', () => {
+      const virtualNode = queryFixture(
+        '<div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div>'
+      );
+      assert.isTrue(matches(virtualNode, '#host #target'));
+      assert.isTrue(matches(virtualNode, 'div #target'));
+    });
+
+    it('returns true for id inside shadow DOM when crossing shadow DOM boundary at any level', () => {
+      const virtualNode = queryFixture(html`
+        <div id="host">
+          <template shadowrootmode="open">
+            <div id="host2">
+              <template shadowrootmode="open">
+                <h1 id="target"></h1>
+              </template>
+            </div>
+          </template>
+        </div>
+      `);
+      assert.isTrue(matches(virtualNode, '#host #host2 h1'));
+      assert.isTrue(matches(virtualNode, 'div #host2 h1'));
+      assert.isTrue(matches(virtualNode, 'div div #target'));
+    });
+
+    it('returns true for id of light DOM element', () => {
+      const virtualNode = queryFixture(
+        '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div #target'));
+    });
+
+    it('returns true for light DOM element', () => {
+      const virtualNode = queryFixture(
+        '<div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div>'
+      );
+      assert.isTrue(matches(virtualNode, 'div h1'));
+    });
+
     it('returns false if parent selector does not match', () => {
-      const virtualNode = queryFixture('<div><h1 id="target">foo</h1></div>');
-      assert.isFalse(matches(virtualNode, 'span > h1'));
+      const virtualNode = queryFixture(
+        '<p><div><h1 id="target">foo</h1></div></p>'
+      );
+      assert.isFalse(matches(virtualNode, 'p > h1'));
     });
 
     it('returns false if nested parent selector does not match', () => {
@@ -343,6 +431,13 @@ describe('utils.matches', () => {
         '<div><table><tr><td><h1 id="target">foo</h1></td></tr></table></div>'
       );
       assert.isFalse(matches(virtualNode, 'div span > td h1'));
+    });
+
+    it('returns false if multiple direct children do not match', () => {
+      const virtualNode = queryFixture(
+        '<main><div><span><span><p id="target"></p></span></span></div></main>'
+      );
+      assert.isFalse(matches(virtualNode, 'main > div > span > p'));
     });
 
     it('throws error if combinator is not implemented', () => {

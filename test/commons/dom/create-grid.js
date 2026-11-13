@@ -167,7 +167,8 @@ describe('create-grid', () => {
         '<div style="position: fixed; top: -1em; min-height: 2em">off screen</div>'
       );
       createGrid();
-      const position = findPositions(fixture._grid, fixture.children[0]);
+      const vNode = fixture.children[0];
+      const position = findPositions(vNode._grid, vNode);
       assert.deepEqual(position, [
         { col: 0, row: -1 },
         { col: 0, row: 0 }
@@ -328,6 +329,367 @@ describe('create-grid', () => {
       `);
       createGrid();
       assert.equal(vNode._grid.container?.props.id, 'overflow');
+    });
+  });
+
+  const scrollerStyle = 'overflow: auto; height: 50px; width: 100px;';
+  const absStyle =
+    'position: absolute; top: 0; left: 0; width: 20px; height: 20px;';
+  const fixedStyle =
+    'position: fixed; top: 0; left: 0; width: 20px; height: 20px;';
+  const getVNode = id => axe.utils.getNodeFromTree(document.getElementById(id));
+
+  describe('inherited grids', () => {
+    it('uses the grid of an ancestor when the parent is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 0"><span id="zero-height-child">x</span></div>
+          <div style="display: contents">
+            <span id="contents-child">x</span>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      for (const id of ['zero-height-child', 'contents-child']) {
+        assert.isTrue(getVNode(id)._grid === subGrid, `${id} in subgrid`);
+      }
+    });
+
+    it('adds shadow DOM and slotted descendants to the subgrid of their scroll region', () => {
+      fixtureSetup(
+        html`
+          <div id="scroller" style="${scrollerStyle}">
+            <div id="host">
+              <template shadowrootmode="open">
+                <div>
+                  <slot></slot>
+                  <p id="shadow-child">x</p>
+                </div>
+              </template>
+              <span id="slotted">x</span>
+            </div>
+            <div style="height: 200px"></div>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      const shadowChild = axe.utils.getNodeFromTree(
+        document
+          .getElementById('host')
+          .shadowRoot.getElementById('shadow-child')
+      );
+      assert.isTrue(shadowChild._grid === subGrid, 'shadow child in subgrid');
+      assert.isTrue(
+        getVNode('slotted')._grid === subGrid,
+        'slotted in subgrid'
+      );
+    });
+
+    it('uses the grid of the DOM parent when the tree is rooted below html', () => {
+      const root = document.documentElement;
+      root.style.height = '5000px';
+      root.style.overflowY = 'scroll';
+      const { fixture: fixtureNode } = axe.testUtils;
+      fixtureNode.innerHTML = '<span id="child">x</span>';
+      axe.testUtils.flatTreeSetup(fixtureNode);
+      createGrid();
+      const htmlSubGrid = axe.utils.getNodeFromTree(root)._subGrid;
+      assert.isDefined(htmlSubGrid);
+      assert.isTrue(getVNode('child')._grid === htmlSubGrid);
+    });
+  });
+
+  describe('absolutely positioned elements', () => {
+    it('adds an absolute element to the grid of its containing block', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const target = getVNode('target');
+      assert.isTrue(
+        target._grid === getVNode('positioned')._grid,
+        'in containing block grid'
+      );
+      assert.isEmpty(findPositions(getVNode('scroller')._subGrid, target));
+    });
+
+    it('adds the descendants of an absolute element to its containing block, even when the absolute element is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div style="position: absolute; top: 0; width: 0; height: 0">
+                <span id="child">x</span>
+                <div><div id="nested-abs" style="${absStyle}"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const grid = getVNode('positioned')._grid;
+      assert.isTrue(getVNode('child')._grid === grid, 'child');
+      assert.isTrue(getVNode('nested-abs')._grid === grid, 'nested absolute');
+    });
+
+    it('adds an absolute element to the grid of an ancestor when its containing block is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="position: relative; height: 0">
+            <div id="target" style="${absStyle}"></div>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(
+        getVNode('target')._grid === getVNode('scroller')._subGrid,
+        'subgrid'
+      );
+    });
+
+    it('adds an absolute element without a containing block ancestor to the root grid', () => {
+      fixture = fixtureSetup(html`
+        <div style="${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="target" style="${absStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('target')._grid === fixture._grid, 'root grid');
+    });
+
+    it('keeps an absolute element in the subgrid when the scroll region is its containing block', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div id="scroller" style="position: relative; ${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(
+        getVNode('target')._grid === getVNode('scroller')._subGrid,
+        'subgrid'
+      );
+    });
+
+    function setupContainingBlock(style) {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px; ${style}">
+              <div id="target" style="${absStyle}"></div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      return getVNode('target')._grid;
+    }
+
+    [
+      'transform: translateZ(0)',
+      'translate: 1px',
+      'perspective: 100px',
+      'filter: blur(0px)',
+      'backdrop-filter: blur(0px)',
+      'transform-style: preserve-3d',
+      'contain: paint',
+      'contain: layout style',
+      'content-visibility: auto',
+      'will-change: opacity, transform',
+      'will-change: position'
+    ].forEach(style => {
+      it(`treats an element with ${style} as a containing block`, () => {
+        const grid = setupContainingBlock(style);
+        assert.isTrue(grid === getVNode('scroller')._subGrid, 'subgrid');
+      });
+    });
+
+    ['opacity: 0.5', 'contain: size', 'will-change: opacity'].forEach(style => {
+      it(`does not treat an element with ${style} as a containing block`, () => {
+        const grid = setupContainingBlock(style);
+        assert.isTrue(grid === getVNode('positioned')._grid, 'outer grid');
+      });
+    });
+
+    it('adds a scroll region inside an absolute element to the grid of its containing block', () => {
+      fixtureSetup(html`
+        <div id="positioned" style="position: relative">
+          <div style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div style="${absStyle}">
+                <div id="inner-scroller" style="overflow: auto; height: 20px">
+                  <div style="height: 100px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const { container } = getVNode('inner-scroller')._subGrid;
+      assert.isTrue(
+        container._grid === getVNode('positioned')._grid,
+        'subgrid container in containing block grid'
+      );
+    });
+
+    it('finds the containing block of an absolute element across a shadow boundary', () => {
+      fixtureSetup(
+        html`
+          <div id="positioned" style="position: relative">
+            <div style="${scrollerStyle}">
+              <div id="host">
+                <template shadowrootmode="open">
+                  <div id="target" style="${absStyle}"></div>
+                </template>
+              </div>
+              <div style="height: 200px"></div>
+            </div>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const target = axe.utils.getNodeFromTree(
+        document.getElementById('host').shadowRoot.getElementById('target')
+      );
+      assert.isTrue(
+        target._grid === getVNode('positioned')._grid,
+        'in containing block grid'
+      );
+    });
+
+    it('keeps position: relative elements in the subgrid', () => {
+      fixtureSetup(html`
+        <div style="position: relative">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px">
+              <div id="relative" style="position: relative">x</div>
+            </div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(
+        getVNode('relative')._grid === getVNode('scroller')._subGrid,
+        'subgrid'
+      );
+    });
+  });
+
+  describe('fixed position elements', () => {
+    const getRootGrid = () =>
+      axe.utils.getNodeFromTree(document.documentElement)._grid;
+
+    it('adds a fixed element and its descendants to a grid separate from the root grid', () => {
+      fixtureSetup(html`
+        <div id="target" style="${fixedStyle}">
+          <span id="child">x</span>
+        </div>
+      `);
+      createGrid();
+      const grid = getVNode('target')._grid;
+      assert.isDefined(grid);
+      assert.isTrue(grid !== getRootGrid(), 'not the root grid');
+      assert.isTrue(grid.container._grid === getRootGrid(), 'container');
+      assert.isTrue(getVNode('child')._grid === grid, 'child');
+    });
+
+    it('adds fixed elements inside and outside a shadow tree to the same grid', () => {
+      fixtureSetup(
+        html`
+          <div id="outside" style="${fixedStyle}"></div>
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="inside" style="${fixedStyle}"></div>
+            </template>
+          </div>
+        `,
+        { shadow: true }
+      );
+      createGrid();
+      const inside = axe.utils.getNodeFromTree(
+        document.getElementById('host').shadowRoot.getElementById('inside')
+      );
+      assert.isTrue(inside._grid === getVNode('outside')._grid);
+    });
+
+    it('adds fixed elements inside and outside a scroll region to the same grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div style="position: relative; ${scrollerStyle}">
+          <div style="height: 200px">
+            <div id="inside" style="${fixedStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('inside')._grid === getVNode('outside')._grid);
+    });
+
+    it('adds a fixed element under a transformed ancestor to the fixed grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div id="scroller" style="${scrollerStyle}">
+          <div style="height: 200px; transform: translateZ(0)">
+            <div id="inside" style="${fixedStyle}"></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      assert.isTrue(getVNode('inside')._grid === getVNode('outside')._grid);
+    });
+
+    it('adds the descendants of a fixed element to the fixed grid, even when the fixed element is not in the grid', () => {
+      fixtureSetup(html`
+        <div id="outside" style="${fixedStyle}"></div>
+        <div style="${scrollerStyle}">
+          <div style="position: fixed; top: 0; width: 0; height: 0">
+            <span id="child">x</span>
+            <div><div id="nested-abs" style="${absStyle}"></div></div>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      createGrid();
+      const grid = getVNode('outside')._grid;
+      assert.isTrue(getVNode('child')._grid === grid, 'child');
+      assert.isTrue(getVNode('nested-abs')._grid === grid, 'nested absolute');
+    });
+
+    it('adds a scroll region inside a fixed element to the fixed grid', () => {
+      fixtureSetup(html`
+        <div id="target" style="position: fixed; top: 0">
+          <div id="scroller" style="${scrollerStyle}">
+            <div style="height: 200px"><span id="child">x</span></div>
+          </div>
+        </div>
+      `);
+      createGrid();
+      const subGrid = getVNode('scroller')._subGrid;
+      assert.isTrue(getVNode('child')._grid === subGrid, 'child in subgrid');
+      const grid = getVNode('target')._grid;
+      assert.isTrue(grid !== getRootGrid(), 'not the root grid');
+      assert.isTrue(
+        subGrid.container._grid === grid,
+        'container in fixed grid'
+      );
     });
   });
 });
