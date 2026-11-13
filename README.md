@@ -20,6 +20,8 @@ With axe-core, you can find **on average 57% of WCAG issues automatically**. Add
 
 To catch bugs earlier in the development cycle we recommend using the [axe-linter vscode extension](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). To improve test coverage even further we recommend the [intelligent guided tests](https://www.youtube.com/watch?v=AtsX0dPCG_4&feature=youtu.be&ab_channel=DequeSystems) in the [axe Extension](https://www.deque.com/axe/browser-extensions/).
 
+If you build with an AI coding agent, the [Axe MCP Server](https://docs.deque.com/devtools-server/4.0.0/en/axe-mcp-server) gives your agent the official axe-core rules to scan with as it works. It's free to use, built by the team that maintains axe-core. Paid tiers extend it with advanced rules, automated Intelligent Guided Tests, and shared configuration across teams and organizations.
+
 ## Getting started
 
 First download the package:
