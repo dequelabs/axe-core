@@ -1,6 +1,6 @@
 describe('utils.matches', () => {
   const matches = axe.utils.matches;
-  const { queryFixture, html } = axe.testUtils;
+  const { queryFixture, html, fixture } = axe.testUtils;
   const convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
 
   describe('tag', () => {
@@ -344,7 +344,7 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, '#host h1'));
     });
 
-    it('returns true for id outside shadow DOM selecting shadow DOM when a duplicate ID exists inside shadow DOM', () => {
+    it('returns true for id outside shadow DOM selecting shadow DOM when a duplicate id exists inside shadow DOM', () => {
       const virtualNode = queryFixture(html`
         <main>
           <div id="host">
@@ -402,7 +402,7 @@ describe('utils.matches', () => {
 
     it('returns false if parent selector does not match', () => {
       const virtualNode = queryFixture(
-        '<p><div><h1 id="target">foo</h1></div></p>'
+        '<section><div><h1 id="target">foo</h1></div></section>'
       );
       assert.isFalse(matches(virtualNode, 'p > h1'));
     });
@@ -448,6 +448,128 @@ describe('utils.matches', () => {
       assert.throws(() => {
         matches(virtualNode, 'div ~ h1');
       });
+    });
+  });
+
+  describe('anchor', () => {
+    it('returns true when selector matches descendant of anchor', () => {
+      const virtualNode = queryFixture(
+        '<section><div><span><h1 id="target">foo</h1></span></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('div'));
+      assert.isTrue(matches(virtualNode, 'span h1', anchor));
+    });
+
+    it('returns true when selector would match the anchor', () => {
+      const virtualNode = queryFixture(
+        '<section><div><span><h1 id="target">foo</h1></span></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('div'));
+      assert.isTrue(matches(virtualNode, 'div h1', anchor));
+    });
+
+    it('returns true for id selector in same shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<section><div><span><h1 id="target">foo</h1></span</div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(
+        fixture.querySelector('section')
+      );
+      assert.isTrue(matches(virtualNode, 'div #target', anchor));
+    });
+
+    it('returns true for id outside shadow DOM selecting shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<main><div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div></main>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('main'));
+      assert.isTrue(matches(virtualNode, '#host h1', anchor));
+    });
+
+    it('returns true for id outside shadow DOM selecting shadow DOM when a duplicate id exists inside shadow DOM', () => {
+      const virtualNode = queryFixture(html`
+        <main>
+          <div>
+            <div id="host">
+              <template shadowrootmode="open">
+                <div id="host">
+                  <h1 id="target">foo</h1>
+                </div>
+              </template>
+            </div>
+          </div>
+        </main>
+      `);
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('main'));
+      assert.isTrue(matches(virtualNode, '#host h1', anchor));
+      assert.isTrue(matches(virtualNode, 'div > #host h1', anchor));
+      assert.isTrue(matches(virtualNode, 'div #host h1', anchor));
+    });
+
+    it('returns false when selector would match ancestor of anchor', () => {
+      const virtualNode = queryFixture(
+        '<section><div><span><h1 id="target">foo</h1></span></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('div'));
+      assert.isFalse(matches(virtualNode, 'section h1', anchor));
+    });
+
+    it('returns false for id selector in different shadow DOM', () => {
+      const virtualNode = queryFixture(
+        '<section><div><template shadowrootmode="open"><h1 id="target">foo</h1></template></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(
+        fixture.querySelector('section')
+      );
+      assert.isFalse(matches(virtualNode, 'div #target', anchor));
+    });
+
+    it('returns false for id inside shadow DOM when crossing shadow DOM boundary', () => {
+      const virtualNode = queryFixture(
+        '<main><div id="host"><template shadowrootmode="open"><h1 id="target">foo</h1></template></div></main>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('main'));
+      assert.isFalse(matches(virtualNode, '#host #target', anchor));
+      assert.isFalse(matches(virtualNode, 'div #target', anchor));
+    });
+
+    it('returns false for id inside shadow DOM when crossing shadow DOM boundary at any level', () => {
+      const virtualNode = queryFixture(html`
+        <main>
+          <div id="host">
+            <template shadowrootmode="open">
+              <div id="host2">
+                <template shadowrootmode="open">
+                  <h1 id="target"></h1>
+                </template>
+              </div>
+            </template>
+          </div>
+        </main>
+      `);
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('main'));
+      assert.isFalse(matches(virtualNode, '#host #host2 h1', anchor));
+      assert.isFalse(matches(virtualNode, 'div #host2 h1', anchor));
+      assert.isFalse(matches(virtualNode, 'div div #target', anchor));
+    });
+
+    it('returns false for id of light DOM element', () => {
+      // this is because we add the light DOM element to the shadow DOM element and assign it a shadowID
+      const virtualNode = queryFixture(
+        '<main><div><template shadowrootmode="open"><slot></slot></template><h1 id="target">foo</h1></div></main>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('main'));
+      assert.isFalse(matches(virtualNode, 'div #target', anchor));
+    });
+
+    it('returns false for id in shadow DOM using pseudo selector', () => {
+      const virtualNode = queryFixture(
+        '<section><div><template shadowrootmode="open"><h1 id="target">foo</h1></template></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(
+        fixture.querySelector('section')
+      );
+      assert.isFalse(matches(virtualNode, 'div :is(#target)', anchor));
     });
   });
 

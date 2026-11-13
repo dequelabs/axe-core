@@ -79,7 +79,7 @@ describe('axe.utils.isHidden', () => {
     fixture.innerHTML = '<div></div>';
     makeShadowTreeHidden(fixture.firstChild);
     tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    node = axe.utils.querySelectorAll(tree, 'input')[0];
+    node = axe.commons.dom.queryDom(tree, 'input')[0];
     assert.isFalse(axe.utils.isHidden(node.actualNode));
   });
 
@@ -90,7 +90,7 @@ describe('axe.utils.isHidden', () => {
     fixture.innerHTML = '<div style="display:none"></div>';
     makeShadowTreeHidden(fixture.firstChild);
     tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    node = axe.utils.querySelectorAll(tree, 'input')[0];
+    node = axe.commons.dom.queryDom(tree, 'input')[0];
     assert.isTrue(axe.utils.isHidden(node.actualNode));
   });
 
@@ -110,7 +110,7 @@ describe('axe.utils.isHidden', () => {
     fixture.innerHTML = '<div><p><a>hello</a></p></div>';
     makeShadowTree(fixture.firstChild);
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.isTrue(axe.utils.isHidden(el.actualNode));
   });
 });

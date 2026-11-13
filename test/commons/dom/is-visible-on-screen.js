@@ -399,7 +399,7 @@ describe('dom.isVisibleOnScreen', () => {
     fixture.innerHTML = '<div><a>hello</a></div>';
     makeShadowTree(fixture.firstChild);
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.isTrue(isVisibleOnScreen(el.actualNode));
   });
   it('should correctly handle hidden slotted elements', () => {
@@ -418,7 +418,7 @@ describe('dom.isVisibleOnScreen', () => {
     fixture.innerHTML = '<div><p><a>hello</a></p></div>';
     makeShadowTree(fixture.firstChild);
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.isFalse(isVisibleOnScreen(el.actualNode));
   });
 
