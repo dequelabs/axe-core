@@ -174,6 +174,11 @@ describe('dom.queryDom', () => {
         assert.equal(result.length, 0);
       });
 
+      it('should NOT find node across shadow DOM boundary using pseudo selector and id', () => {
+        const result = queryDom(dom, ':is(#in-shadow)');
+        assert.equal(result.length, 0);
+      });
+
       it('should find nodes using attribute', () => {
         const result = queryDom(dom, '[role]');
         assert.equal(result.length, 2);
