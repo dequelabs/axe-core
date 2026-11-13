@@ -175,6 +175,18 @@ describe('text.formControlValue', () => {
       assert.equal(nativeSelectValue(target), 'baz');
     });
 
+    ['color', '-webkit-text-fill-color'].forEach(property => {
+      it(`returns the selected option text with transparent ${property}`, () => {
+        const target = queryFixture(html`
+          <select id="target">
+            <option>foo</option>
+            <option selected style="${property}: transparent">baz</option>
+          </select>
+        `);
+        assert.equal(nativeSelectValue(target), 'baz');
+      });
+    });
+
     it('returns the selected option text after selection', () => {
       injectIntoFixture(html`
         <select id="target">
