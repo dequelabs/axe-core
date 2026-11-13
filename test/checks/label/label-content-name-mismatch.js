@@ -515,4 +515,90 @@ describe('label-content-name-mismatch tests', () => {
       assert.isFalse(actual);
     });
   });
+
+  describe('label-content-name-exact', () => {
+    const exactEvaluate = axe.testUtils.getCheckEvaluate(
+      'label-content-name-exact'
+    );
+
+    it('returns true when the visible text is the whole accessible name', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Next Page">next page</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns false when the accessible name adds words after the visible text', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Next Page in the list">Next Page</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the accessible name adds words before the visible text', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Go to next page">Next Page</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isFalse(actual);
+    });
+
+    it('ignores parenthesised content in the accessible name', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="Next page (opens in a new tab)">Next page</a>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('ignores punctuation and case', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="next, PAGE!">Next page</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true when the visible text has no words left to compare', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Settings">(beta)</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true when the accessible name does not contain the visible text', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="OK">Next</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('returns true for a value text role whose visible text is outside its accessible name', () => {
+      const vNode = queryFixture(
+        '<div id="labelForSwitch">Notifications</div>' +
+          '<div id="target" role="switch" aria-labelledby="labelForSwitch">' +
+          '<span>[On]</span><span>Off</span></div>'
+      );
+      const actual = exactEvaluate.call(
+        checkContext,
+        vNode.actualNode,
+        options,
+        vNode
+      );
+      assert.isTrue(actual);
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns undefined (needs review) when the visible text is only an emoji', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Favorite">⭐</button>'
+      );
+      const actual = exactEvaluate(vNode.actualNode, options, vNode);
+      assert.isUndefined(actual);
+    });
+  });
 });
