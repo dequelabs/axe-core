@@ -59,6 +59,18 @@
         </a>
       </div>
     </div>
+    <div id="scroll-region">
+      <template shadowrootmode="open">
+        <div style="height: 200px; overflow: auto"><slot></slot></div>
+        <button style="height: 32px">Action</button>
+      </template>
+      <div style="padding-top: 190px">
+        <input
+          aria-label="Below the fold"
+          style="box-sizing: border-box; height: 28px"
+        />
+      </div>
+    </div>
     <script src="/test/testutils.js"></script>
     <script src="shadow-dom.js"></script>
     <script src="/test/integration/adapter.js"></script>
