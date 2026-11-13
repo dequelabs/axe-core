@@ -1361,4 +1361,63 @@ describe('color.getBackgroundColor', () => {
       assertColorsClose(actual, expected);
     });
   });
+
+  it('returns the page background for SVG text with no shapes behind it', () => {
+    fixture.innerHTML = html`
+      <div style="background-color: #000000;">
+        <svg width="200" height="50">
+          <text id="target" x="10" y="30" fill="#ffffff">Hello</text>
+        </svg>
+      </div>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    const expected = new axe.commons.color.Color(0, 0, 0, 1);
+    assertColorsClose(actual, expected);
+  });
+
+  it("returns the svg element's own background color", () => {
+    fixture.innerHTML = html`
+      <svg width="200" height="50" style="background-color: #008000;">
+        <text id="target" x="10" y="30" fill="#ffffff">Hello</text>
+      </svg>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    const expected = new axe.commons.color.Color(0, 128, 0, 1);
+    assertColorsClose(actual, expected);
+  });
+
+  it('returns null and sets imgNode when a painted shape overlaps SVG text', () => {
+    fixture.innerHTML = html`
+      <svg width="200" height="50">
+        <rect x="0" y="0" width="200" height="50" fill="#000000"></rect>
+        <text id="target" x="10" y="30" fill="#ffffff">Hello</text>
+      </svg>
+    `;
+    const target = fixture.querySelector('#target');
+    const svg = fixture.querySelector('svg');
+    const bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    assert.isNull(actual);
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
+    assert.deepEqual(bgNodes, [svg]);
+  });
+
+  it('ignores a painted shape that does not overlap the SVG text', () => {
+    fixture.innerHTML = html`
+      <svg width="400" height="50">
+        <rect x="300" y="0" width="50" height="50" fill="#000000"></rect>
+        <text id="target" x="10" y="30" fill="#949494">Hello</text>
+      </svg>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    const expected = new axe.commons.color.Color(255, 255, 255, 1);
+    assertColorsClose(actual, expected);
+  });
 });

@@ -258,4 +258,44 @@ describe('color.getForegroundColor', () => {
       assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
     });
   });
+
+  it('returns the fill of SVG text, not its color property', () => {
+    const target = queryFixture(
+      '<svg width="200" height="50">' +
+        '<text id="target" x="10" y="30" fill="rgb(148 148 148)">Hello</text>' +
+        '</svg>'
+    ).actualNode;
+    const fgColor = getForegroundColor(target);
+    assertSameColor(fgColor, new Color(148, 148, 148));
+  });
+
+  it('returns the fill of an SVG tspan', () => {
+    queryFixture(
+      '<svg width="200" height="50">' +
+        '<text id="target" x="10" y="30" fill="rgb(255 255 255)">' +
+        '<tspan id="span" fill="rgb(0 0 128)">Hello</tspan>' +
+        '</text>' +
+        '</svg>'
+    );
+    const fgColor = getForegroundColor(document.getElementById('span'));
+    assertSameColor(fgColor, new Color(0, 0, 128));
+  });
+
+  it('blends a semi-transparent SVG fill with the background', () => {
+    const target = queryFixture(
+      '<svg width="200" height="50" style="background-color: rgb(0 0 0)">' +
+        '<text id="target" x="10" y="30" fill="rgba(255, 255, 255, 0.5)">Hello</text>' +
+        '</svg>'
+    ).actualNode;
+    const fgColor = getForegroundColor(target);
+    assertSameColor(fgColor, new Color(128, 128, 128), 1);
+  });
+
+  it('does not read fill for HTML elements', () => {
+    const target = queryFixture(
+      '<div id="target" style="fill: rgb(255 0 0); color: rgb(0 0 128)">Hello</div>'
+    ).actualNode;
+    const fgColor = getForegroundColor(target);
+    assertSameColor(fgColor, new Color(0, 0, 128));
+  });
 });
