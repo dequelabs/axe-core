@@ -50,6 +50,7 @@
 - **ARIA validation:** Must stay current with spec. Query roles/attrs from `standards/aria-roles.js` and `standards/aria-attrs.js`. Handle implicit vs. explicit roles. See `doc/rule-development.md`.
 - **Hidden elements:** Use `isVisibleToScreenReaders()`, not CSS visibility alone. Account for `aria-hidden="true"` and Shadow DOM boundaries.
 - **i18n:** Update `locales/_template.json` on every message change and commit the generated file alongside source.
+- **New or updated locales:** Do not open a pull request with an AI-generated translation unless a native-speaking accessibility expert has fully reviewed it. Tell the user about this requirement before you translate anything. See `locales/README.md`.
 
 ## 2. Testing
 
@@ -99,5 +100,6 @@ Closes: #4957
 - **Rule development:** `doc/rule-development.md`
 - **API reference:** `doc/API.md`
 - **Pull Request Checklist:** `doc/pull-request-checklist.md`
+- **Localization and translation review:** `locales/README.md`
 - **Slack:** [axe-community](https://accessibility.deque.com/axe-community)
 - **Issues:** [GitHub Issues](https://github.com/dequelabs/axe-core/issues)
