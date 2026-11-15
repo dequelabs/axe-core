@@ -77,4 +77,59 @@ describe('landmark-is-unique-after', () => {
     ];
     assert.deepEqual(result, expectedResult);
   });
+
+  it('should not fail labelled landmarks with identical content', () => {
+    const data = {
+      role: 'navigation',
+      accessibleText: 'search results',
+      contentHash: 'abc'
+    };
+    const result = checks['landmark-is-unique'].after([
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, data)
+    ]);
+
+    assert.deepEqual(result, [
+      createResultWithProvidedRelatedNodes(true, data, []),
+      createResultWithProvidedRelatedNodes(true, data, [])
+    ]);
+  });
+
+  it('should fail labelled landmarks when any of them has different content', () => {
+    const data = {
+      role: 'navigation',
+      accessibleText: 'search results',
+      contentHash: 'abc'
+    };
+    const otherData = Object.assign({}, data, { contentHash: 'xyz' });
+    const result = checks['landmark-is-unique'].after([
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, otherData)
+    ]);
+
+    assert.deepEqual(result, [
+      createResultWithProvidedRelatedNodes(false, data, [
+        createResult(true, data),
+        createResult(true, otherData)
+      ])
+    ]);
+  });
+
+  it('should fail landmarks without a content hash', () => {
+    const data = {
+      role: 'navigation',
+      accessibleText: 'search results'
+    };
+    const result = checks['landmark-is-unique'].after([
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, data)
+    ]);
+
+    assert.deepEqual(result, [
+      createResultWithProvidedRelatedNodes(false, data, [
+        createResult(true, data)
+      ])
+    ]);
+  });
 });

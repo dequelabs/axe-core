@@ -14,6 +14,8 @@
     ["#pass-aside-aria-label-2"],
     ["#pass-aside-aria-labelledby-1"],
     ["#pass-aside-aria-labelledby-2"],
-    ["#pass-footer"]
+    ["#pass-footer"],
+    ["#pass-nav-identical-content-1"],
+    ["#pass-nav-identical-content-2"]
   ]
 }
