@@ -180,4 +180,54 @@ describe('focusable-not-tabbable', () => {
     );
     assert.isUndefined(check.evaluate.apply(checkContext, params));
   });
+
+  it('returns undefined when control is an empty, visually hidden focus guard', () => {
+    const params = checkSetup(html`
+      <span
+        id="target"
+        aria-hidden="true"
+        tabindex="0"
+        data-floating-ui-focus-guard
+        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: fixed; white-space: nowrap; width: 1px; top: 0px; left: 0px;"
+      ></span>
+    `);
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns undefined when control is an empty, clipped focus guard larger than 1px', () => {
+    const params = checkSetup(html`
+      <span
+        id="target"
+        aria-hidden="true"
+        tabindex="0"
+        style="position: absolute; width: 20px; height: 20px; clip: rect(0px, 0px, 0px, 0px)"
+      ></span>
+    `);
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns false when a visually hidden control has content', () => {
+    const params = checkSetup(html`
+      <div aria-hidden="true" id="target">
+        <a
+          href="/"
+          style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px)"
+          >Skip link</a
+        >
+      </div>
+    `);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns false when an empty control is visible', () => {
+    const params = checkSetup(html`
+      <div
+        id="target"
+        aria-hidden="true"
+        tabindex="0"
+        style="width: 20px; height: 20px"
+      ></div>
+    `);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+  });
 });
