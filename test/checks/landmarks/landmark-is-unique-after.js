@@ -132,4 +132,43 @@ describe('landmark-is-unique-after', () => {
       ])
     ]);
   });
+
+  it('should not fail three or more labelled landmarks with identical content', () => {
+    const data = {
+      role: 'navigation',
+      accessibleText: 'search results',
+      contentHash: 'abc'
+    };
+    const result = checks['landmark-is-unique'].after([
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, data),
+      createResultWithSameRelatedNodes(true, data)
+    ]);
+
+    assert.deepEqual(result, [
+      createResultWithProvidedRelatedNodes(true, data, []),
+      createResultWithProvidedRelatedNodes(true, data, []),
+      createResultWithProvidedRelatedNodes(true, data, [])
+    ]);
+  });
+
+  it('should keep the order of results', () => {
+    const navData = {
+      role: 'navigation',
+      accessibleText: 'search results',
+      contentHash: 'abc'
+    };
+    const mainData = { role: 'main', accessibleText: null };
+    const result = checks['landmark-is-unique'].after([
+      createResultWithSameRelatedNodes(true, navData),
+      createResultWithSameRelatedNodes(true, mainData),
+      createResultWithSameRelatedNodes(true, navData)
+    ]);
+
+    assert.deepEqual(result, [
+      createResultWithProvidedRelatedNodes(true, navData, []),
+      createResultWithProvidedRelatedNodes(true, mainData, []),
+      createResultWithProvidedRelatedNodes(true, navData, [])
+    ]);
+  });
 });
