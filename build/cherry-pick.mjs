@@ -2,9 +2,10 @@
 
 import { execSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { CommitParser } from 'conventional-commits-parser';
 
 const require = createRequire(import.meta.url);
-const conventionalCommitsParser = require('conventional-commits-parser');
+
 const chalk = require('chalk');
 const { version } = require('../package.json');
 
@@ -71,15 +72,15 @@ function getCommits(branch) {
     const hash = commit.substring(0, 8);
     const msg = commit.substring(commit.indexOf('\n\n')).trim();
 
-    const { type, scope, subject, merge, notes } =
-      conventionalCommitsParser.sync(msg, {
-        // parse merge commits
-        mergePattern: /^Merge pull request #(\d+) from (.*)$/,
-        mergeCorrespondence: ['id', 'source'],
+    const parser = new CommitParser({
+      // parse merge commits
+      mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+      mergeCorrespondence: ['id', 'source'],
 
-        // allow comma in scope
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\*, ]*)\))?\: (.*)$/
-      });
+      // allow comma in scope
+      headerPattern: /^(\w*)(?:\(([\w\$\.\-\*, ]*)\))?\: (.*)$/
+    });
+    const { type, scope, subject, merge, notes } = parser.parse(msg);
 
     const isBreakingChange = notes.some(
       note => note.title === 'BREAKING CHANGE'

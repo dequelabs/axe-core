@@ -175,6 +175,15 @@
       .mr4 {
         margin-right: 24px;
       }
+      .ml-n9 {
+        margin-left: -54px;
+      }
+      .ml-n8 {
+        margin-left: -48px;
+      }
+      .ml-n7 {
+        margin-left: -42px;
+      }
       .ml-n6 {
         margin-left: -36px;
       }
@@ -255,6 +264,10 @@
       }
       .mb6 {
         margin-bottom: 36px;
+      }
+      .z2 {
+        position: relative;
+        z-index: 2 !important;
       }
     </style>
 
@@ -405,121 +418,101 @@
     <p>Example G1 - G3 pass, the outer element of G4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w6 ml4">
-          <span class="passed h4 w4 mt1 ml-n4"></span>
-        </span>
+        <span class="passed h6 w6"></span>
+        <span class="passed h4 w4 mt1"></span>
       </div>
       <div>
-        <span class="passed h6 w6 ml3">
-          <span class="passed h4 w4 mt1 ml-n3"></span>
-        </span>
+        <span class="passed h6 w6"></span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="passed h6 w6 ml2">
-          <span class="passed h4 w4 mt1 ml-n2"></span>
-        </span>
+        <span class="passed h6 w6"></span>
+        <span class="passed h4 w4 mt1 ml-n2"></span>
       </div>
       <div>
-        <span class="failed h6 w6 ml1">
-          <span class="passed h4 w4 mt1 ml-n1"></span>
-        </span>
+        <span class="failed h6 w6"></span>
+        <span class="passed h4 w4 mt1 ml-n3"></span>
       </div>
     </section>
 
     <p>Example H1 and H2 pass, the outer element of H3 and H4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w10">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10"></span>
+        <span class="passed h4 w4 mt1 ml-n5"></span>
       </div>
       <div>
-        <span class="passed h6 w10">
-          <span class="passed h4 w4 mt1 ml2"></span>
-        </span>
+        <span class="passed h6 w10"></span>
+        <span class="passed h4 w4 mt1 ml-n6"></span>
       </div>
       <div>
-        <span class="failed h6 w10">
-          <span class="passed h4 w4 mt1 ml3"></span>
-        </span>
+        <span class="failed h6 w10"></span>
+        <span class="passed h4 w4 mt1 ml-n7"></span>
       </div>
       <div>
-        <span class="failed h6 w10">
-          <span class="passed h4 w4 mt1 ml1"></span>
-          <span class="passed h4 w4 mt1"></span>
-        </span>
+        <span class="failed h6 w10"></span>
+        <span class="passed h4 w4 mt1 ml-n9"></span>
+        <span class="passed h4 w4 mt1"></span>
       </div>
     </section>
 
     <p>Example I1 and I2 pass, I3 and I4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h4 w6 ml6">
-          <span class="passed h2 w6 mt1 ml-n6"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w6 mt1"></span>
       </div>
       <div>
-        <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 mt1 ml-n5"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w6 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="failed h4 w6 ml2">
-          <span class="failed h2 w6 mt1 ml-n2"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w6 mt1 ml-n4"></span>
       </div>
       <div>
-        <span class="failed h4 w6">
-          <span class="failed h2 w6 mt1"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w6 mt1 ml-n6"></span>
       </div>
     </section>
 
     <p>Example J1 and J2 pass, J3 and J4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h4 w6 ml6">
-          <span class="passed h2 w6 ml-n6"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w6"></span>
       </div>
       <div>
-        <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 ml-n5"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w6 ml-n1"></span>
       </div>
       <div>
-        <span class="failed h4 w6 ml2">
-          <span class="failed h2 w6 ml-n2"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w6 ml-n4"></span>
       </div>
       <div>
-        <span class="failed h4 w6">
-          <span class="failed h2 w6"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w6 ml-n6"></span>
       </div>
     </section>
 
     <p>Example K1 and K2 pass, K3 and K4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h4 w6 ml4">
-          <span class="passed h2 w5 mt1 ml-n5"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w5 mt1"></span>
       </div>
       <div>
-        <span class="passed h4 w6 ml4">
-          <span class="passed h2 w6 mt1 ml-n5"></span>
-        </span>
+        <span class="passed h4 w6"></span>
+        <span class="passed h2 w6 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="failed h4 w6 ml4">
-          <span class="failed h2 w7 mt1 ml-n4"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w7 mt1 ml-n3"></span>
       </div>
       <div>
-        <span class="failed h4 w6 ml4">
-          <span class="failed h2 w8 mt1 ml-n5"></span>
-        </span>
+        <span class="failed h4 w6"></span>
+        <span class="failed h2 w8 mt1 ml-n3"></span>
       </div>
     </section>
 
@@ -552,76 +545,64 @@
     <p>Example M1 - M3 pass, the outer element of M4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w6 ml3 rnd-50">
-          <span class="passed h4 w4 mt1 ml-n3"></span>
-        </span>
+        <span class="passed h6 w6 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="passed h6 w6 ml2 rnd-50">
-          <span class="passed h4 w4 mt1 ml-n2"></span>
-        </span>
+        <span class="passed h6 w6 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n2"></span>
       </div>
       <div>
-        <span class="failed h6 w6 ml1 rnd-50">
-          <span class="passed h4 w4 mt1 ml-n1"></span>
-        </span>
+        <span class="failed h6 w6 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n3"></span>
       </div>
       <div>
-        <span class="failed h6 w6 ml1 rnd-50">
-          <span class="failed h2 w2 mt2 ml1"></span>
-        </span>
+        <span class="failed h6 w6 rnd-50"></span>
+        <span class="failed h2 w2 mt2 ml-n3"></span>
       </div>
     </section>
 
     <p>Example N1 - N3 pass, the outer element of N4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w10 rnd-50">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n5"></span>
       </div>
       <div>
-        <span class="passed h6 w10 rnd-50">
-          <span class="passed h4 w4 mt1 ml2"></span>
-        </span>
+        <span class="passed h6 w10 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n6"></span>
       </div>
       <div>
-        <span class="failed h6 w10 rnd-50">
-          <span class="passed h4 w4 mt1 ml3"></span>
-        </span>
+        <span class="failed h6 w10 rnd-50"></span>
+        <span class="passed h4 w4 mt1 ml-n7"></span>
       </div>
       <div>
         <!-- this should technically fail the target-size rule if we were implementing the size based on the largest inscribed square -->
-        <span class="passed h6 w10 rnd-50">
-          <span class="failed h2 w2 mt2 ml4"></span>
-        </span>
+        <span class="passed h6 w10 rnd-50"></span>
+        <span class="failed h2 w2 mt2 ml-n6"></span>
       </div>
     </section>
 
     <p>Example O1 and O2 pass, the inner element of O3 and O4 fail.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w6 ml4">
-          <span class="passed h4 w4 mt1 ml-n4"></span>
-        </span>
+        <span class="passed h4 w4 mt1"></span>
+        <span class="passed h6 w6"></span>
         <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="passed h6 w6 ml3">
-          <span class="passed h4 w4 mt1 ml-n3"></span>
-        </span>
+        <span class="passed h4 w4 mt1 z2"></span>
+        <span class="passed h6 w6 ml-n1"></span>
         <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="failed h6 w6 ml2">
-          <span class="passed h4 w4 mt1 ml-n2"></span>
-        </span>
+        <span class="passed h4 w4 mt1 z2"></span>
+        <span class="failed h6 w6 ml-n2"></span>
         <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
       <div>
-        <span class="failed h6 w6 ml1">
-          <span class="passed h4 w4 mt1 ml-n1"></span>
-        </span>
+        <span class="passed h4 w4 mt1 z2"></span>
+        <span class="failed h6 w6 ml-n3"></span>
         <span class="passed h4 w4 mt1 ml-n1"></span>
       </div>
     </section>
@@ -629,25 +610,21 @@
     <p>Example P.</p>
     <section class="sample">
       <div>
-        <span class="passed h6 w10 rnd-0-25">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10 rnd-0-25"></span>
+        <span class="passed h4 w4 mt1 ml-n9"></span>
       </div>
       <div>
-        <span class="passed h6 w10 rnd-0-50">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10 rnd-0-50"></span>
+        <span class="passed h4 w4 mt1 ml-n9"></span>
       </div>
       <div>
-        <span class="passed h6 w10 rnd-0-75">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10 rnd-0-75"></span>
+        <span class="passed h4 w4 mt1 ml-n9"></span>
       </div>
       <div>
         <!-- this should technically fail the target-size rule if we were implementing the size based on the largest inscribed square -->
-        <span class="passed h6 w10 rnd-0-100">
-          <span class="passed h4 w4 mt1 ml1"></span>
-        </span>
+        <span class="passed h6 w10 rnd-0-100"></span>
+        <span class="passed h4 w4 mt1 ml-n9"></span>
       </div>
     </section>
 
