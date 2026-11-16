@@ -20,7 +20,8 @@
     ["#incomplete2"],
     ["#incomplete3"],
     ["#incomplete4"],
-    ["#incomplete5"]
+    ["#incomplete5"],
+    ["#incomplete6"]
   ],
   "violations": [
     ["#fail1"],
