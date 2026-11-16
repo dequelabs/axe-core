@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.14.1](https://github.com/dequelabs/axe-core/compare/v4.14.0...v4.14.1) (2026-11-12)
+
+### Bug Fixes
+
+- **aria-valid-attr-value:** don't review aria-controls when the popup exists ([#5408](https://github.com/dequelabs/axe-core/issues/5408)) ([cfd2ea6](https://github.com/dequelabs/axe-core/commit/cfd2ea6004e681a97eaca8bedd3add1c7219c8e9)), closes [#4861](https://github.com/dequelabs/axe-core/issues/4861), references [#4861](https://github.com/dequelabs/axe-core/issues/4861)
+- **create-grid:** add absolute elements to the grid of their nearest positioned ancestor ([#5472](https://github.com/dequelabs/axe-core/issues/5472)) ([f86d978](https://github.com/dequelabs/axe-core/commit/f86d97816094e342bb63044a11d713c4beb7b89c)), references [#4799](https://github.com/dequelabs/axe-core/issues/4799)
+- **create-grid:** add fixed elements to a grid of their own ([#5490](https://github.com/dequelabs/axe-core/issues/5490)) ([6b52b84](https://github.com/dequelabs/axe-core/commit/6b52b841461bd23345970b91ec75fdaff6bad31a)), closes [#4799](https://github.com/dequelabs/axe-core/issues/4799) [#4799](https://github.com/dequelabs/axe-core/issues/4799), references [#5472](https://github.com/dequelabs/axe-core/issues/5472) [#3720](https://github.com/dequelabs/axe-core/issues/3720)
+- **empty-table-header:** pass headers in presentational tables ([#5403](https://github.com/dequelabs/axe-core/issues/5403)) ([811df26](https://github.com/dequelabs/axe-core/commit/811df267d8684ea46a9d4d1fcb2a10c9327f3d30)), closes [#3817](https://github.com/dequelabs/axe-core/issues/3817), references [#3817](https://github.com/dequelabs/axe-core/issues/3817)
+- **frame-messenger:** release reply handlers for unanswered frame commands ([#5447](https://github.com/dequelabs/axe-core/issues/5447)) ([7e287a6](https://github.com/dequelabs/axe-core/commit/7e287a6ab8ac547eb63c0b8ca513a223eca16772)), closes [#4746](https://github.com/dequelabs/axe-core/issues/4746)
+- **get-scope:** treat colgroup and rowgroup scopes as column and row headers ([#5399](https://github.com/dequelabs/axe-core/issues/5399)) ([33ca40a](https://github.com/dequelabs/axe-core/commit/33ca40a7b06abd99e353ac3f3434ef63fbf490ff)), closes [#3967](https://github.com/dequelabs/axe-core/issues/3967), references [#3967](https://github.com/dequelabs/axe-core/issues/3967)
+- **link-in-text-block:** ignore non-visible elements ([#5444](https://github.com/dequelabs/axe-core/issues/5444)) ([f574690](https://github.com/dequelabs/axe-core/commit/f574690138d3956c43a6ba9449089da4f403742f)), closes [#3739](https://github.com/dequelabs/axe-core/issues/3739)
+- **meta-viewport-scale:** report violation for invalid user-scalable and maximum-scale values ([#5448](https://github.com/dequelabs/axe-core/issues/5448)) ([44f5b6c](https://github.com/dequelabs/axe-core/commit/44f5b6c5ef14bb02659bf3a47f6ef04d83dd2faa))
+- **run-virtual-rule:** run the after methods of the rule's checks ([#5401](https://github.com/dequelabs/axe-core/issues/5401)) ([6b97165](https://github.com/dequelabs/axe-core/commit/6b97165ead6da308348946fc45aaa29488e7bc61)), closes [#4037](https://github.com/dequelabs/axe-core/issues/4037), references [#4037](https://github.com/dequelabs/axe-core/issues/4037)
+- **target-size:** ignore widget that is the only child of another widget ([#5492](https://github.com/dequelabs/axe-core/issues/5492)) ([cf9d7a1](https://github.com/dequelabs/axe-core/commit/cf9d7a19c592734bc56f50452780655529996353))
+- **utils/matches:** correctly match complex direct descendant and descendant selectors ([#5544](https://github.com/dequelabs/axe-core/issues/5544)) ([710234b](https://github.com/dequelabs/axe-core/commit/710234bb466d561f7ce8f50ad309660c2ee8fef5))
+- **heading-order:** add the previous heading to the related nodes ([#5405](https://github.com/dequelabs/axe-core/issues/5405)) ([29819d5](https://github.com/dequelabs/axe-core/commit/29819d50ca42e9bfd7312ba9678daa399b84b257)), closes [#3748](https://github.com/dequelabs/axe-core/issues/3748), references [#3748](https://github.com/dequelabs/axe-core/issues/3748)
+
 ## [4.14.0](https://github.com/dequelabs/axe-core/compare/v4.13.0...v4.14.0) (2026-10-05)
 
 ### Features
