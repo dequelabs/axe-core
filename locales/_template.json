@@ -66,8 +66,8 @@
       "help": "Required ARIA attributes must be provided"
     },
     "aria-required-children": {
-      "description": "Ensure elements with an ARIA role that require child roles contain them",
-      "help": "Certain ARIA roles must contain particular children"
+      "description": "Ensure elements with an ARIA role that require child roles contain them and no disallowed children",
+      "help": "Certain ARIA roles must contain particular children and no disallowed children"
     },
     "aria-required-parent": {
       "description": "Ensure elements with an ARIA role that require parent roles are contained by them",
