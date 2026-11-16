@@ -1,0 +1,5 @@
+{
+  "description": "aria-valid-attr-value aria-errormessage live region tests",
+  "rule": "aria-valid-attr-value",
+  "passes": [["#pass1"]]
+}

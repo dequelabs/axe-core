@@ -1,0 +1,5 @@
+{
+  "description": "aria-valid-attr-value aria-errormessage tests",
+  "rule": "aria-valid-attr-value",
+  "violations": [["#violation35"]]
+}
