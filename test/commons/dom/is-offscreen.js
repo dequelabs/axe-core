@@ -271,4 +271,71 @@ describe('dom.isOffscreen', () => {
       assert.isTrue(isOffscreen(vNode));
     });
   });
+
+  describe('inside a position: fixed ancestor', () => {
+    it('should not detect elements below the scrollport of a vertical scroller', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0">
+          <div style="height: 100px; overflow: auto">
+            <div style="height: 200vh"></div>
+            <div id="target">Offscreen?</div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should not detect elements right of the scrollport of a horizontal scroller', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0">
+          <div style="width: 100px; overflow-x: auto">
+            <div style="width: 300vw; height: 20px; position: relative">
+              <span id="target" style="position: absolute; left: 200vw">
+                Offscreen?
+              </span>
+            </div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should not detect elements below the scrollport when the fixed ancestor scrolls', () => {
+      const vNode = queryFixture(html`
+        <div style="position: fixed; inset: 0; overflow: auto">
+          <div style="height: 200vh"></div>
+          <div id="target">Offscreen?</div>
+        </div>
+      `);
+      assert.isFalse(isOffscreen(vNode));
+    });
+
+    it('should detect shadow DOM elements below the viewport with no scroller in between', () => {
+      fixtureSetup(html`
+        <div style="position: fixed; inset: 0">
+          <div style="height: 100vh"></div>
+          <div id="host"></div>
+        </div>
+      `);
+      const shadow = fixture
+        .querySelector('#host')
+        .attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<div id="target">Offscreen?</div>';
+      flatTreeSetup(fixture);
+
+      assert.isTrue(isOffscreen(shadow.querySelector('#target')));
+    });
+
+    it('should detect fixed elements below the viewport that scroll themselves', () => {
+      const vNode = queryFixture(html`
+        <div
+          id="target"
+          style="position: fixed; top: 100vh; height: 20px; overflow: auto"
+        >
+          <div style="height: 200px"></div>
+        </div>
+      `);
+      assert.isTrue(isOffscreen(vNode));
+    });
+  });
 });
