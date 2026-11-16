@@ -55,6 +55,22 @@ describe('color.getBackgroundColor', () => {
     assert.deepEqual(bgNodes, [parent]);
   });
 
+  it('should return the background color when body has a negative z-index', () => {
+    const origBodyStyle = document.body.style.cssText;
+    document.body.style.position = 'relative';
+    document.body.style.zIndex = '-1';
+    try {
+      fixture.innerHTML = html`<div id="target">Hello World</div>`;
+      const target = fixture.querySelector('#target');
+      axe.testUtils.flatTreeSetup(document.documentElement);
+      const actual = axe.commons.color.getBackgroundColor(target, []);
+      // html sorted above body made this incomplete (bgOverlap)
+      assertColorsClose(actual, new axe.commons.color.Color(255, 255, 255, 1));
+    } finally {
+      document.body.style.cssText = origBodyStyle;
+    }
+  });
+
   it('should return the blended color if it is transparent and positioned', () => {
     fixture.innerHTML = html`
       <div
