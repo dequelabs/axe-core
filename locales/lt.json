@@ -1,0 +1,1183 @@
+{
+  "lang": "lt",
+  "rules": {
+    "accesskeys": {
+      "description": "Patikrina, ar kiekvienos accesskey atributo reikšmė yra unikali",
+      "help": "accesskey atributo reikšmė turi būti unikali"
+    },
+    "area-alt": {
+      "description": "Patikrina, ar vaizdų žemėlapių <area> elementai turi alternatyvųjį tekstą",
+      "help": "Aktyvūs <area> elementai turi turėti alternatyvųjį tekstą"
+    },
+    "aria-allowed-attr": {
+      "description": "Patikrina, ar elemento vaidmuo palaiko jo ARIA atributus",
+      "help": "Elementai turi naudoti tik palaikomus ARIA atributus"
+    },
+    "aria-allowed-role": {
+      "description": "Patikrina, ar role atributas turi elementui tinkamą reikšmę",
+      "help": "ARIA vaidmuo turėtų būti tinkamas elementui"
+    },
+    "aria-braille-equivalent": {
+      "description": "Patikrina, ar aria-braillelabel ir aria-brailleroledescription turi ne Brailio ekvivalentą",
+      "help": "aria-braille atributai turi turėti ne Brailio ekvivalentą"
+    },
+    "aria-command-name": {
+      "description": "Patikrina, ar kiekvienas ARIA mygtukas, saitas ir menuitem turi prieinamą pavadinimą",
+      "help": "ARIA komandos turi turėti prieinamą pavadinimą"
+    },
+    "aria-conditional-attr": {
+      "description": "Patikrina, ar ARIA atributai naudojami taip, kaip aprašyta elemento vaidmens specifikacijoje",
+      "help": "ARIA atributai turi būti naudojami taip, kaip nurodyta elemento vaidmeniui"
+    },
+    "aria-deprecated-role": {
+      "description": "Patikrina, ar elementai nenaudoja pasenusių vaidmenų",
+      "help": "Pasenusių ARIA vaidmenų naudoti negalima"
+    },
+    "aria-dialog-name": {
+      "description": "Patikrina, ar kiekvienas ARIA dialog ir alertdialog mazgas turi prieinamą pavadinimą",
+      "help": "ARIA dialog ir alertdialog mazgai turėtų turėti prieinamą pavadinimą"
+    },
+    "aria-hidden-body": {
+      "description": "Patikrina, ar aria-hidden=\"true\" nėra dokumento elemente body",
+      "help": "aria-hidden=\"true\" negali būti dokumento elemente body"
+    },
+    "aria-hidden-focus": {
+      "description": "Patikrina, ar aria-hidden elementai nėra fokusuojami ir neturi fokusuojamų elementų",
+      "help": "ARIA paslėpti elementai negali būti fokusuojami ar turėti fokusuojamų elementų"
+    },
+    "aria-input-field-name": {
+      "description": "Patikrina, ar kiekvienas ARIA įvesties laukas turi prieinamą pavadinimą",
+      "help": "ARIA įvesties laukai turi turėti prieinamą pavadinimą"
+    },
+    "aria-meter-name": {
+      "description": "Patikrina, ar kiekvienas ARIA meter mazgas turi prieinamą pavadinimą",
+      "help": "ARIA meter mazgai turi turėti prieinamą pavadinimą"
+    },
+    "aria-progressbar-name": {
+      "description": "Patikrina, ar kiekvienas ARIA progressbar mazgas turi prieinamą pavadinimą",
+      "help": "ARIA progressbar mazgai turi turėti prieinamą pavadinimą"
+    },
+    "aria-prohibited-attr": {
+      "description": "Patikrina, ar ARIA atributai nėra draudžiami elemento vaidmeniui",
+      "help": "Elementai turi naudoti tik leidžiamus ARIA atributus"
+    },
+    "aria-required-attr": {
+      "description": "Patikrina, ar elementai su ARIA vaidmenimis turi visus privalomus ARIA atributus",
+      "help": "Turi būti nurodyti privalomi ARIA atributai"
+    },
+    "aria-required-children": {
+      "description": "Patikrina, ar elementai su ARIA vaidmeniu, kuriam reikalingi vaikiniai vaidmenys, juos turi",
+      "help": "Tam tikri ARIA vaidmenys privalo turėti konkrečius vaikinius elementus"
+    },
+    "aria-required-parent": {
+      "description": "Patikrina, ar elementai su ARIA vaidmeniu, kuriam reikalingi tėviniai vaidmenys, yra jų viduje",
+      "help": "Tam tikri ARIA vaidmenys privalo būti konkrečių tėvinių elementų viduje"
+    },
+    "aria-roledescription": {
+      "description": "Patikrina, ar aria-roledescription naudojamas tik elementuose su numanomu ar aiškiu vaidmeniu",
+      "help": "aria-roledescription turi būti elementuose su semantiniu vaidmeniu"
+    },
+    "aria-roles": {
+      "description": "Patikrina, ar visi elementai su role atributu naudoja galiojančią reikšmę",
+      "help": "Naudojami ARIA vaidmenys turi atitikti galiojančias reikšmes"
+    },
+    "aria-tab-name": {
+      "description": "Patikrina, ar kiekvienas ARIA tab mazgas turi prieinamą pavadinimą",
+      "help": "ARIA tab mazgai turi turėti prieinamą pavadinimą"
+    },
+    "aria-text": {
+      "description": "Patikrina, ar role=\"text\" naudojamas elementuose be fokusuojamų palikuonių",
+      "help": "\"role=text\" neturėtų turėti fokusuojamų palikuonių"
+    },
+    "aria-toggle-field-name": {
+      "description": "Patikrina, ar kiekvienas ARIA perjungiamas laukas turi prieinamą pavadinimą",
+      "help": "ARIA perjungiami laukai turi turėti prieinamą pavadinimą"
+    },
+    "aria-tooltip-name": {
+      "description": "Patikrina, ar kiekvienas ARIA tooltip mazgas turi prieinamą pavadinimą",
+      "help": "ARIA tooltip mazgai turi turėti prieinamą pavadinimą"
+    },
+    "aria-treeitem-name": {
+      "description": "Patikrina, ar kiekvienas ARIA treeitem mazgas turi prieinamą pavadinimą",
+      "help": "ARIA treeitem mazgai turėtų turėti prieinamą pavadinimą"
+    },
+    "aria-valid-attr-value": {
+      "description": "Patikrina, ar visų ARIA atributų reikšmės galioja",
+      "help": "ARIA atributai turi atitikti galiojančias reikšmes"
+    },
+    "aria-valid-attr": {
+      "description": "Patikrina, ar atributai, prasidedantys aria-, yra galiojantys ARIA atributai",
+      "help": "ARIA atributai turi atitikti galiojančius pavadinimus"
+    },
+    "audio-caption": {
+      "description": "Patikrina, ar <audio> elementai turi subtitrus",
+      "help": "<audio> elementai turi turėti subtitrų takelį"
+    },
+    "autocomplete-valid": {
+      "description": "Patikrina, ar autocomplete atributas yra teisingas ir tinkamas formos laukui",
+      "help": "autocomplete atributas turi būti naudojamas teisingai"
+    },
+    "avoid-inline-spacing": {
+      "description": "Patikrina, ar teksto tarpus, nustatytą per style atributus, galima keisti pasirinktinėmis stilių lentelėmis",
+      "help": "Įterpto teksto tarpus turi būti galima keisti pasirinktinėmis stilių lentelėmis"
+    },
+    "blink": {
+      "description": "Patikrina, ar nenaudojami <blink> elementai",
+      "help": "<blink> elementai yra pasenę ir jų naudoti negalima"
+    },
+    "button-name": {
+      "description": "Patikrina, ar mygtukai turi aiškiai suprantamą tekstą",
+      "help": "Mygtukai turi turėti aiškiai suprantamą tekstą"
+    },
+    "bypass": {
+      "description": "Patikrina, ar kiekviename puslapyje yra bent vienas mechanizmas, leidžiantis praleisti navigaciją ir pereiti tiesiai prie turinio",
+      "help": "Puslapyje turi būti priemonė praleisti pasikartojančius blokus"
+    },
+    "color-contrast-enhanced": {
+      "description": "Patikrina, ar priekinio plano ir fono spalvų kontrastas atitinka WCAG 2 AAA padidintojo kontrasto santykio slenksčius",
+      "help": "Elementai turi atitikti padidintojo spalvų kontrasto santykio slenksčius"
+    },
+    "color-contrast": {
+      "description": "Patikrina, ar priekinio plano ir fono spalvų kontrastas atitinka WCAG 2 AA minimalaus kontrasto santykio slenksčius",
+      "help": "Elementai turi atitikti minimalaus spalvų kontrasto santykio slenksčius"
+    },
+    "css-orientation-lock": {
+      "description": "Patikrina, ar turinys nėra užrakintas konkrečiai ekrano orientacijai ir ar jis veikia visose orientacijose",
+      "help": "CSS medijos užklausos negali užrakinti ekrano orientacijos"
+    },
+    "definition-list": {
+      "description": "Patikrina, ar <dl> elementai tinkamai struktūrizuoti",
+      "help": "<dl> elementuose tiesiogiai gali būti tik tinkamai išdėstytos <dt> ir <dd> grupės, <script>, <template> arba <div> elementai"
+    },
+    "dlitem": {
+      "description": "Patikrina, ar <dt> ir <dd> elementai yra <dl> viduje",
+      "help": "<dt> ir <dd> elementai turi būti <dl> viduje"
+    },
+    "document-title": {
+      "description": "Patikrina, ar kiekviename HTML dokumente yra netuščias <title> elementas",
+      "help": "Dokumentai turi turėti <title> elementą, padedantį naviguoti"
+    },
+    "duplicate-id-active": {
+      "description": "Patikrina, ar kiekvieno aktyvaus elemento id atributo reikšmė yra unikali",
+      "help": "Aktyvių elementų ID turi būti unikalūs"
+    },
+    "duplicate-id-aria": {
+      "description": "Patikrina, ar kiekviena id atributo reikšmė, naudojama ARIA ir etiketėse, yra unikali",
+      "help": "ARIA ir etiketėse naudojami ID turi būti unikalūs"
+    },
+    "duplicate-id": {
+      "description": "Patikrina, ar kiekviena id atributo reikšmė yra unikali",
+      "help": "id atributo reikšmė turi būti unikali"
+    },
+    "empty-heading": {
+      "description": "Patikrina, ar antraštės turi aiškiai suprantamą tekstą",
+      "help": "Antraštės neturėtų būti tuščios"
+    },
+    "empty-table-header": {
+      "description": "Patikrina, ar lentelės antraštės turi aiškiai suprantamą tekstą",
+      "help": "Lentelės antraštės tekstas neturėtų būti tuščias"
+    },
+    "focus-order-semantics": {
+      "description": "Patikrina, ar fokuso eilėje esantys elementai turi interaktyviam turiniui tinkamą vaidmenį",
+      "help": "Fokuso eilėje esantys elementai turėtų turėti tinkamą vaidmenį"
+    },
+    "form-field-multiple-labels": {
+      "description": "Patikrina, ar formos laukas neturi kelių label elementų",
+      "help": "Formos laukas negali turėti kelių label elementų"
+    },
+    "frame-focusable-content": {
+      "description": "Patikrina, ar <frame> ir <iframe> elementai su fokusuojamu turiniu neturi tabindex=-1",
+      "help": "Kadrai su fokusuojamu turiniu negali turėti tabindex=-1"
+    },
+    "frame-tested": {
+      "description": "Patikrina, ar <iframe> ir <frame> elementuose yra axe-core scenarijus",
+      "help": "Kadrai turėtų būti tikrinami su axe-core"
+    },
+    "frame-title-unique": {
+      "description": "Patikrina, ar <iframe> ir <frame> elementai turi unikalų title atributą",
+      "help": "Kadrai turi turėti unikalų title atributą"
+    },
+    "frame-title": {
+      "description": "Patikrina, ar <iframe> ir <frame> elementai turi prieinamą pavadinimą",
+      "help": "Kadrai turi turėti prieinamą pavadinimą"
+    },
+    "heading-order": {
+      "description": "Patikrina, ar antraščių tvarka yra semantiškai teisinga",
+      "help": "Antraščių lygiai turėtų didėti tik po vienetą"
+    },
+    "hidden-content": {
+      "description": "Informuoja naudotojus apie paslėptą turinį.",
+      "help": "Puslapyje paslėptą turinį reikėtų išanalizuoti"
+    },
+    "html-has-lang": {
+      "description": "Patikrina, ar kiekvienas HTML dokumentas turi lang atributą",
+      "help": "<html> elementas turi turėti lang atributą"
+    },
+    "html-lang-valid": {
+      "description": "Patikrina, ar <html> elemento lang atributas turi galiojančią reikšmę",
+      "help": "<html> elemento lang atributas turi turėti galiojančią reikšmę"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "Patikrina, ar HTML elementai su galiojančiais lang ir xml:lang atributais sutampa dėl puslapio pagrindinės kalbos",
+      "help": "HTML elementų su lang ir xml:lang pagrindinė kalba turi sutapti"
+    },
+    "identical-links-same-purpose": {
+      "description": "Patikrina, ar saitai su tuo pačiu prieinamu pavadinimu atlieka panašią paskirtį",
+      "help": "Saitai su tuo pačiu pavadinimu turi turėti panašią paskirtį"
+    },
+    "image-alt": {
+      "description": "Patikrina, ar <img> elementai turi alternatyvųjį tekstą arba vaidmenį none ar presentation",
+      "help": "Paveikslėliai turi turėti alternatyvųjį tekstą"
+    },
+    "image-redundant-alt": {
+      "description": "Patikrina, ar paveikslėlio alternatyvusis tekstas nekartojamas kaip tekstas",
+      "help": "Paveikslėlių alternatyvusis tekstas neturėtų būti kartojamas kaip tekstas"
+    },
+    "input-button-name": {
+      "description": "Patikrina, ar įvesties mygtukai turi aiškiai suprantamą tekstą",
+      "help": "Įvesties mygtukai turi turėti aiškiai suprantamą tekstą"
+    },
+    "input-image-alt": {
+      "description": "Patikrina, ar <input type=\"image\"> elementai turi alternatyvųjį tekstą",
+      "help": "Paveikslėlių mygtukai turi turėti alternatyvųjį tekstą"
+    },
+    "label-content-name-mismatch": {
+      "description": "Patikrina, ar elementų, pažymėtų pagal jų turinį, matomas tekstas yra jų prieinamo pavadinimo dalis",
+      "help": "Elementų matomas tekstas turi būti jų prieinamo pavadinimo dalis"
+    },
+    "label-title-only": {
+      "description": "Patikrina, ar kiekvienas formos elementas turi matomą etiketę ir nėra pažymėtas vien paslėptomis etiketėmis ar title arba aria-describedby atributais",
+      "help": "Formos elementai turėtų turėti matomą etiketę"
+    },
+    "label": {
+      "description": "Patikrina, ar kiekvienas formos elementas turi etiketę",
+      "help": "Formos elementai turi turėti etiketes"
+    },
+    "landmark-banner-is-top-level": {
+      "description": "Patikrina, ar banner orientyras yra aukščiausiame lygyje",
+      "help": "Banner orientyras neturėtų būti kito orientyro viduje"
+    },
+    "landmark-complementary-is-top-level": {
+      "description": "Patikrina, ar complementary orientyras arba aside yra aukščiausiame lygyje",
+      "help": "Aside neturėtų būti kito orientyro viduje"
+    },
+    "landmark-contentinfo-is-top-level": {
+      "description": "Patikrina, ar contentinfo orientyras yra aukščiausiame lygyje",
+      "help": "Contentinfo orientyras neturėtų būti kito orientyro viduje"
+    },
+    "landmark-main-is-top-level": {
+      "description": "Patikrina, ar main orientyras yra aukščiausiame lygyje",
+      "help": "Main orientyras neturėtų būti kito orientyro viduje"
+    },
+    "landmark-no-duplicate-banner": {
+      "description": "Patikrina, ar dokumente yra ne daugiau kaip vienas banner orientyras",
+      "help": "Dokumente neturėtų būti daugiau nei vieno banner orientyro"
+    },
+    "landmark-no-duplicate-contentinfo": {
+      "description": "Patikrina, ar dokumente yra ne daugiau kaip vienas contentinfo orientyras",
+      "help": "Dokumente neturėtų būti daugiau nei vieno contentinfo orientyro"
+    },
+    "landmark-no-duplicate-main": {
+      "description": "Patikrina, ar dokumente yra ne daugiau kaip vienas main orientyras",
+      "help": "Dokumente neturėtų būti daugiau nei vieno main orientyro"
+    },
+    "landmark-one-main": {
+      "description": "Patikrina, ar dokumente yra main orientyras",
+      "help": "Dokumente turėtų būti vienas main orientyras"
+    },
+    "landmark-unique": {
+      "description": "Patikrina, ar orientyrai yra unikalūs",
+      "help": "Orientyrai turėtų turėti unikalų vaidmenį arba vaidmens/etiketės/title (t. y. prieinamo pavadinimo) derinį"
+    },
+    "link-in-text-block": {
+      "description": "Patikrina, ar saitai nuo aplinkinio teksto išsiskiria ne tik spalva",
+      "help": "Saitai turi būti atskiriami nesiremiant vien spalva"
+    },
+    "link-name": {
+      "description": "Patikrina, ar saitai turi aiškiai suprantamą tekstą",
+      "help": "Saitai turi turėti aiškiai suprantamą tekstą"
+    },
+    "list": {
+      "description": "Patikrina, ar sąrašai tinkamai struktūrizuoti",
+      "help": "<ul> ir <ol> tiesiogiai gali turėti tik <li>, <script> arba <template> elementus"
+    },
+    "listitem": {
+      "description": "Patikrina, ar <li> elementai naudojami semantiškai",
+      "help": "<li> elementai turi būti <ul> arba <ol> viduje"
+    },
+    "marquee": {
+      "description": "Patikrina, ar nenaudojami <marquee> elementai",
+      "help": "<marquee> elementai yra pasenę ir jų naudoti negalima"
+    },
+    "meta-refresh-no-exceptions": {
+      "description": "Patikrina, ar <meta http-equiv=\"refresh\"> nenaudojamas atidėtam atnaujinimui",
+      "help": "Atidėto atnaujinimo naudoti negalima"
+    },
+    "meta-refresh": {
+      "description": "Patikrina, ar <meta http-equiv=\"refresh\"> nenaudojamas atidėtam atnaujinimui",
+      "help": "Atidėto atnaujinimo, trumpesnio nei 20 valandų, naudoti negalima"
+    },
+    "meta-viewport-large": {
+      "description": "Patikrina, ar <meta name=\"viewport\"> leidžia gerokai keisti mastelį",
+      "help": "Naudotojai turėtų galėti priartinti ir keisti teksto mastelį iki 500 %"
+    },
+    "meta-viewport": {
+      "description": "Patikrina, ar <meta name=\"viewport\"> neišjungia teksto mastelio keitimo ir artinimo",
+      "help": "Artinimo ir mastelio keitimo išjungti negalima"
+    },
+    "nested-interactive": {
+      "description": "Patikrina, ar interaktyvūs valdikliai nėra įdėti vienas į kitą, nes ekrano skaitytuvai jų ne visada paskelbia arba jie gali sukelti fokuso problemų pagalbinėms technologijoms",
+      "help": "Interaktyvių valdiklių įdėti vieną į kitą negalima"
+    },
+    "no-autoplay-audio": {
+      "description": "Patikrina, ar <video> ar <audio> elementai negroja garso automatiškai ilgiau nei 3 sekundes be valdymo priemonės garsui sustabdyti ar nutildyti",
+      "help": "<video> ar <audio> elementai negali groti automatiškai"
+    },
+    "object-alt": {
+      "description": "Patikrina, ar <object> elementai turi alternatyvųjį tekstą",
+      "help": "<object> elementai turi turėti alternatyvųjį tekstą"
+    },
+    "p-as-heading": {
+      "description": "Patikrina, ar pusjuodis ir kursyvas tekstas bei šrifto dydis nenaudojami <p> elementams stilizuoti kaip antraštėms",
+      "help": "Stilizuotų <p> elementų negalima naudoti kaip antraščių"
+    },
+    "page-has-heading-one": {
+      "description": "Patikrina, ar puslapyje arba bent viename jo kadre yra pirmo lygio antraštė",
+      "help": "Puslapyje turėtų būti pirmo lygio antraštė"
+    },
+    "presentation-role-conflict": {
+      "description": "Patikrina, ar elementai, pažymėti kaip pateikimo, neturi visuotinių ARIA atributų ar tabindex, kad visi ekrano skaitytuvai juos ignoruotų",
+      "help": "Elementai, pažymėti kaip pateikimo, turėtų būti nuosekliai ignoruojami"
+    },
+    "region": {
+      "description": "Patikrina, ar visas puslapio turinys yra orientyrų viduje",
+      "help": "Visas puslapio turinys turėtų būti orientyrų viduje"
+    },
+    "role-img-alt": {
+      "description": "Patikrina, ar [role=\"img\"] ir [role=\"image\"] elementai turi alternatyvųjį tekstą",
+      "help": "[role=\"img\"] ir [role=\"image\"] elementai turi turėti alternatyvųjį tekstą"
+    },
+    "scope-attr-valid": {
+      "description": "Patikrina, ar scope atributas lentelėse naudojamas teisingai",
+      "help": "scope atributas turėtų būti naudojamas teisingai"
+    },
+    "scrollable-region-focusable": {
+      "description": "Patikrina, ar elementai su slenkamu turiniu pasiekiami klaviatūra Safari naršyklėje",
+      "help": "Slenkama sritis turi būti pasiekiama klaviatūra"
+    },
+    "select-name": {
+      "description": "Patikrina, ar select elementas turi prieinamą pavadinimą",
+      "help": "Select elementas turi turėti prieinamą pavadinimą"
+    },
+    "server-side-image-map": {
+      "description": "Patikrina, ar nenaudojami serverio pusės vaizdų žemėlapiai",
+      "help": "Serverio pusės vaizdų žemėlapių naudoti negalima"
+    },
+    "skip-link": {
+      "description": "Patikrina, ar visų praleidimo saitų paskirtis yra fokusuojama",
+      "help": "Praleidimo saito paskirtis turėtų egzistuoti ir būti fokusuojama"
+    },
+    "summary-name": {
+      "description": "Patikrina, ar summary elementai turi aiškiai suprantamą tekstą",
+      "help": "Summary elementai turi turėti aiškiai suprantamą tekstą"
+    },
+    "svg-img-alt": {
+      "description": "Patikrina, ar <svg> elementai su img, image, graphics-document ar graphics-symbol vaidmeniu turi prieinamą tekstą",
+      "help": "<svg> elementai su img ar image vaidmeniu turi turėti alternatyvųjį tekstą"
+    },
+    "tabindex": {
+      "description": "Patikrina, ar tabindex atributo reikšmės nėra didesnės nei 0",
+      "help": "Elementai neturėtų turėti tabindex, didesnio už nulį"
+    },
+    "table-duplicate-name": {
+      "description": "Patikrina, ar <caption> elementas neturi to paties teksto kaip summary atributas",
+      "help": "Lentelės neturėtų turėti to paties summary ir caption"
+    },
+    "table-fake-caption": {
+      "description": "Patikrina, ar lentelės su pavadinimu naudoja <caption> elementą.",
+      "help": "Duomenų ar antraštės langelių negalima naudoti duomenų lentelės pavadinimui"
+    },
+    "target-size": {
+      "description": "Patikrina, ar lietimo taikiniai yra pakankamo dydžio ir turi pakankamai vietos",
+      "help": "Visi lietimo taikiniai turi būti 24 px dydžio arba palikti pakankamai vietos"
+    },
+    "td-has-header": {
+      "description": "Patikrina, ar kiekvienas netuščias duomenų langelis didesnėje nei 3 × 3 <table> lentelėje turi vieną ar daugiau lentelės antraščių",
+      "help": "Netušti <td> elementai didesnėje <table> lentelėje turi turėti susietą lentelės antraštę"
+    },
+    "td-headers-attr": {
+      "description": "Patikrina, ar kiekvienas lentelės langelis, naudojantis headers atributą, nurodo tik kitus <th> elementus toje pačioje lentelėje",
+      "help": "Lentelės langelių headers atributai turi nurodyti kitus <th> elementus toje pačioje lentelėje"
+    },
+    "th-has-data-cells": {
+      "description": "Patikrina, ar <th> elementai ir elementai su role=columnheader/rowheader turi duomenų langelius, kuriuos jie aprašo",
+      "help": "Duomenų lentelės antraštės turi nurodyti duomenų langelius"
+    },
+    "valid-lang": {
+      "description": "Patikrina, ar lang atributai turi galiojančias reikšmes",
+      "help": "lang atributas turi turėti galiojančią reikšmę"
+    },
+    "video-caption": {
+      "description": "Patikrina, ar <video> elementai turi subtitrus",
+      "help": "<video> elementai turi turėti subtitrus"
+    }
+  },
+  "checks": {
+    "abstractrole": {
+      "pass": "Abstrakčių vaidmenų nenaudojama",
+      "fail": {
+        "singular": "Abstraktaus vaidmens tiesiogiai naudoti negalima: ${data.values}",
+        "plural": "Abstrakčių vaidmenų tiesiogiai naudoti negalima: ${data.values}"
+      }
+    },
+    "aria-allowed-attr-elm": {
+      "pass": "ARIA atributai šiam elementui leidžiami",
+      "fail": {
+        "singular": "ARIA atributas neleidžiamas ${data.nodeName} elementuose: ${data.values}",
+        "plural": "ARIA atributai neleidžiami ${data.nodeName} elementuose: ${data.values}"
+      }
+    },
+    "aria-allowed-attr": {
+      "pass": "ARIA atributai naudojami teisingai nurodytam vaidmeniui",
+      "fail": {
+        "singular": "ARIA atributas neleidžiamas: ${data.values}",
+        "plural": "ARIA atributai neleidžiami: ${data.values}",
+        "caseSensitive": "Šių ARIA atributų reikšmės priklauso nuo raidžių registro ir turi būti rašomos mažosiomis raidėmis: ${data.values}"
+      },
+      "incomplete": {
+        "default": "Patikrinkite, ar nekyla problemų, kai šiame elemente ARIA atributas ignoruojamas: ${data.values}",
+        "caseSensitive": "Šių ARIA atributų reikšmės priklauso nuo raidžių registro, todėl pagalbinės technologijos gali jas apdoroti neteisingai: ${data.values}"
+      }
+    },
+    "aria-allowed-role": {
+      "pass": "ARIA vaidmuo šiam elementui leidžiamas",
+      "fail": {
+        "singular": "ARIA vaidmuo ${data.values} šiam elementui neleidžiamas",
+        "plural": "ARIA vaidmenys ${data.values} šiam elementui neleidžiami"
+      },
+      "incomplete": {
+        "singular": "ARIA vaidmenį ${data.values} reikia pašalinti, kai elementas tampa matomas, nes jis šiam elementui neleidžiamas",
+        "plural": "ARIA vaidmenis ${data.values} reikia pašalinti, kai elementas tampa matomas, nes jie šiam elementui neleidžiami"
+      }
+    },
+    "aria-busy": {
+      "pass": "Elementas turi aria-busy atributą",
+      "fail": "Elementas naudoja aria-busy=\"true\", kol rodomas įkėlimo indikatorius"
+    },
+    "aria-conditional-attr": {
+      "pass": "ARIA atributas leidžiamas",
+      "fail": {
+        "checkbox": "Pašalinkite aria-checked arba nustatykite jį į \"${data.checkState}\", kad atitiktų tikrąją žymimojo langelio būseną",
+        "radio": "Pašalinkite aria-checked arba nustatykite jį į \"${data.checkState}\", kad atitiktų tikrąją radijo mygtuko būseną",
+        "rowSingular": "Šis atributas palaikomas treegrid eilutėms, bet ne ${data.ownerRole}: ${data.invalidAttrs}",
+        "rowPlural": "Šie atributai palaikomi treegrid eilutėms, bet ne ${data.ownerRole}: ${data.invalidAttrs}"
+      }
+    },
+    "aria-errormessage": {
+      "pass": "aria-errormessage egzistuoja ir nurodo elementus, matomus ekrano skaitytuvams, kurie naudoja palaikomą aria-errormessage techniką",
+      "fail": {
+        "singular": "aria-errormessage reikšmei `${data.values}` reikia naudoti techniką pranešimui paskelbti (pvz., aria-live, aria-describedby, role=alert ir pan.)",
+        "plural": "aria-errormessage reikšmėms `${data.values}` reikia naudoti techniką pranešimui paskelbti (pvz., aria-live, aria-describedby, role=alert ir pan.)",
+        "unsupported": "Kelių ID naudojimas aria-errormessage nėra plačiai palaikomas pagalbinėse technologijose",
+        "hidden": "aria-errormessage reikšmė `${data.values}` negali nurodyti paslėpto elemento"
+      },
+      "incomplete": {
+        "singular": "Įsitikinkite, kad aria-errormessage reikšmė `${data.values}` nurodo esamą elementą",
+        "plural": "Įsitikinkite, kad aria-errormessage reikšmės `${data.values}` nurodo esamus elementus",
+        "idrefs": "Nepavyko nustatyti, ar aria-errormessage elementas egzistuoja puslapyje: ${data.values}"
+      }
+    },
+    "aria-hidden-body": {
+      "pass": "Dokumento elemente body nėra aria-hidden atributo",
+      "fail": "aria-hidden=true neturėtų būti dokumento elemente body"
+    },
+    "aria-level": {
+      "pass": "aria-level reikšmės galioja",
+      "incomplete": "aria-level reikšmės, didesnės nei 6, nepalaikomos visuose ekrano skaitytuvų ir naršyklių deriniuose"
+    },
+    "aria-no-deprecated-attr": {
+      "pass": "Pasenusių ARIA atributų nenaudojama",
+      "incomplete": {
+        "singular": "Atributas pasenęs ir jo naudoti nereikėtų: ${data.values}",
+        "plural": "Atributai pasenę ir jų naudoti nereikėtų: ${data.values}"
+      }
+    },
+    "aria-prohibited-attr": {
+      "pass": "ARIA atributas leidžiamas",
+      "fail": {
+        "hasRolePlural": "Atributų ${data.prohibited} negalima naudoti su vaidmeniu \"${data.role}\".",
+        "hasRoleSingular": "Atributo ${data.prohibited} negalima naudoti su vaidmeniu \"${data.role}\".",
+        "noRolePlural": "Atributų ${data.prohibited} negalima naudoti \"${data.nodeName}\" elementuose be galiojančio role atributo.",
+        "noRoleSingular": "Atributo ${data.prohibited} negalima naudoti \"${data.nodeName}\" elementuose be galiojančio role atributo."
+      },
+      "incomplete": {
+        "hasRoleSingular": "Atributas ${data.prohibited} blogai palaikomas su vaidmeniu \"${data.role}\".",
+        "hasRolePlural": "Atributai ${data.prohibited} blogai palaikomi su vaidmeniu \"${data.role}\".",
+        "noRoleSingular": "Atributas ${data.prohibited} blogai palaikomas \"${data.nodeName}\" elementuose be galiojančio role atributo.",
+        "noRolePlural": "Atributai ${data.prohibited} blogai palaikomi \"${data.nodeName}\" elementuose be galiojančio role atributo.",
+        "visibleLabelSingular": "Atributas ${data.prohibited} blogai palaikomas, tačiau aria-labelledby nurodyti elementai puslapyje yra matomi. Patikrinkite, ar etiketė nebūtina.",
+        "visibleLabelPlural": "Atributai ${data.prohibited} blogai palaikomi, tačiau aria-labelledby nurodyti elementai puslapyje yra matomi. Patikrinkite, ar etiketės nebūtinos.",
+        "unresolvedLabel": "Atributas ${data.prohibited} blogai palaikomas ir nenurodo esamo elemento. Patikrinkite, ar etiketė nebūtina."
+      }
+    },
+    "aria-required-attr": {
+      "pass": "Nurodyti visi privalomi ARIA atributai",
+      "fail": {
+        "singular": "Nenurodytas privalomas ARIA atributas: ${data.values}",
+        "plural": "Nenurodyti privalomi ARIA atributai: ${data.values}"
+      }
+    },
+    "aria-required-children": {
+      "pass": {
+        "default": "Privalomi ARIA vaikiniai elementai yra",
+        "aria-busy": "Elementas turi aria-busy atributą, todėl privalomų vaikinių elementų galima nenurodyti"
+      },
+      "fail": {
+        "singular": "Nėra privalomo vaikinio ARIA vaidmens: ${data.values}",
+        "plural": "Nėra privalomų vaikinių ARIA vaidmenų: ${data.values}",
+        "unallowed": "Elementas turi vaikinių elementų, kurie neleidžiami: ${data.values}",
+        "unallowedPresentational": "Elementas turi pateikimo vaikinių elementų, kurių negalima ignoruoti dėl ${data.values}",
+        "aria-busy-fail": "Elementas turi vaikinių elementų, kurie neleidžiami: ${data.values}; aria-busy=\"true\" neleidžia vaikinių elementų su neleidžiamais vaidmenimis"
+      },
+      "incomplete": {
+        "singular": "Tikimasi, kad bus pridėtas vaikinis ARIA vaidmuo: ${data.values}",
+        "plural": "Tikimasi, kad bus pridėti vaikiniai ARIA vaidmenys: ${data.values}"
+      }
+    },
+    "aria-required-parent": {
+      "pass": "Privalomas tėvinis ARIA vaidmuo yra",
+      "fail": {
+        "singular": "Nėra privalomo tėvinio ARIA vaidmens: ${data.values}",
+        "plural": "Nėra privalomų tėvinių ARIA vaidmenų: ${data.values}"
+      }
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescription naudojamas palaikomam semantiniam vaidmeniui",
+      "incomplete": "Patikrinkite, ar palaikomi ekrano skaitytuvai paskelbia aria-roledescription",
+      "fail": "Suteikite elementui vaidmenį, kuris palaiko aria-roledescription"
+    },
+    "aria-unsupported-attr": {
+      "pass": "ARIA atributas palaikomas",
+      "fail": "ARIA atributas nėra plačiai palaikomas ekrano skaitytuvuose ir pagalbinėse technologijose: ${data.values}"
+    },
+    "aria-valid-attr-value": {
+      "pass": "ARIA atributų reikšmės galioja",
+      "fail": {
+        "singular": "Negaliojanti ARIA atributo reikšmė: ${data.values}",
+        "plural": "Negaliojančios ARIA atributų reikšmės: ${data.values}"
+      },
+      "incomplete": {
+        "noId": "ARIA atributo nurodyto elemento ID puslapyje nėra: ${data.needsReview}",
+        "noIdShadow": "ARIA atributo nurodyto elemento ID puslapyje nėra arba jis yra kito shadow DOM medžio palikuonis: ${data.needsReview}",
+        "ariaCurrent": "ARIA atributo reikšmė negalioja ir bus traktuojama kaip \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Nepavyko nustatyti, ar ARIA atributo nurodyto elemento ID egzistuoja puslapyje: ${data.needsReview}",
+        "empty": "Tuščia ARIA atributo reikšmė ignoruojama: ${data.needsReview}",
+        "controlsWithinPopup": "Nepavyko nustatyti, ar aria-controls nurodytas ID egzistuoja puslapyje, kai naudojamas aria-haspopup: ${data.needsReview}"
+      }
+    },
+    "aria-valid-attr": {
+      "pass": "ARIA atributo pavadinimas galioja",
+      "fail": {
+        "singular": "Negaliojantis ARIA atributo pavadinimas: ${data.values}",
+        "plural": "Negaliojantys ARIA atributų pavadinimai: ${data.values}"
+      }
+    },
+    "braille-label-equivalent": {
+      "pass": "aria-braillelabel naudojamas elemente su prieinamu tekstu",
+      "fail": "aria-braillelabel naudojamas elemente be prieinamo teksto",
+      "incomplete": "Nepavyko apskaičiuoti prieinamo teksto"
+    },
+    "braille-roledescription-equivalent": {
+      "pass": "aria-brailleroledescription naudojamas elemente su aria-roledescription",
+      "fail": {
+        "noRoleDescription": "aria-brailleroledescription naudojamas elemente be aria-roledescription",
+        "emptyRoleDescription": "aria-brailleroledescription naudojamas elemente su tuščiu aria-roledescription"
+      }
+    },
+    "deprecatedrole": {
+      "pass": "ARIA vaidmuo nėra pasenęs",
+      "fail": "Naudojamas vaidmuo yra pasenęs: ${data}"
+    },
+    "fallbackrole": {
+      "pass": "Naudojama tik viena vaidmens reikšmė",
+      "fail": "Naudokite tik vieną vaidmens reikšmę, nes atsarginiai vaidmenys senesnėse naršyklėse nepalaikomi",
+      "incomplete": "Naudokite tik vaidmenį 'presentation' arba 'none', nes jie yra sinonimai."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "Elementas turi visuotinį ARIA atributą: ${data.values}",
+        "plural": "Elementas turi visuotinius ARIA atributus: ${data.values}"
+      },
+      "fail": "Elementas neturi visuotinio ARIA atributo"
+    },
+    "has-widget-role": {
+      "pass": "Elementas turi valdiklio vaidmenį.",
+      "fail": "Elementas neturi valdiklio vaidmens."
+    },
+    "invalidrole": {
+      "pass": "ARIA vaidmuo galioja",
+      "fail": {
+        "singular": "Vaidmuo turi būti vienas iš galiojančių ARIA vaidmenų: ${data.values}",
+        "plural": "Vaidmenys turi būti galiojantys ARIA vaidmenys: ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "Elementas yra fokusuojamas.",
+      "fail": "Elementas nėra fokusuojamas."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "Nėra neatitikimo tarp <label> ir prieinamo pavadinimo",
+      "incomplete": "Patikrinkite, ar <label> neturi būti ARIA lauko ${data} pavadinimo dalimi"
+    },
+    "unsupportedrole": {
+      "pass": "ARIA vaidmuo palaikomas",
+      "fail": "Naudojamas vaidmuo nėra plačiai palaikomas ekrano skaitytuvuose ir pagalbinėse technologijose: ${data}"
+    },
+    "valid-scrollable-semantics": {
+      "pass": "Elementas turi tinkamą semantiką fokuso eilėje esančiam elementui.",
+      "fail": "Elementas turi netinkamą semantiką fokuso eilėje esančiam elementui."
+    },
+    "color-contrast-enhanced": {
+      "pass": "Elementas turi pakankamą spalvų kontrastą: ${data.contrastRatio}",
+      "fail": {
+        "default": "Elementas turi nepakankamą spalvų kontrastą: ${data.contrastRatio} (priekinio plano spalva: ${data.fgColor}, fono spalva: ${data.bgColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementas turi nepakankamą spalvų kontrastą ${data.contrastRatio} tarp priekinio plano ir šešėlio spalvos (priekinio plano spalva: ${data.fgColor}, text-shadow spalva: ${data.shadowColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementas turi nepakankamą spalvų kontrastą ${data.contrastRatio} tarp šešėlio ir fono spalvos (text-shadow spalva: ${data.shadowColor}, fono spalva: ${data.bgColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Nepavyko nustatyti kontrasto santykio",
+        "bgImage": "Elemento fono spalvos nepavyko nustatyti dėl fono paveikslėlio",
+        "bgGradient": "Elemento fono spalvos nepavyko nustatyti dėl fono gradiento",
+        "imgNode": "Elemento fono spalvos nepavyko nustatyti, nes elementas turi paveikslėlio mazgą",
+        "bgOverlap": "Elemento fono spalvos nepavyko nustatyti, nes jį dengia kitas elementas",
+        "fgAlpha": "Elemento priekinio plano spalvos nepavyko nustatyti dėl alfa skaidrumo",
+        "elmPartiallyObscured": "Elemento fono spalvos nepavyko nustatyti, nes jį iš dalies dengia kitas elementas",
+        "elmPartiallyObscuring": "Elemento fono spalvos nepavyko nustatyti, nes jis iš dalies dengia kitus elementus",
+        "outsideViewport": "Elemento fono spalvos nepavyko nustatyti, nes jis yra už matymo srities ribų",
+        "equalRatio": "Elemento kontrasto santykis su fonu yra 1:1",
+        "shortTextContent": "Elemento turinys per trumpas, kad būtų galima nustatyti, ar tai tikras tekstas",
+        "emptyValue": "Elementas neturi reikšmės; patikrinkite spalvų kontrastą įvedę reikšmę",
+        "nonBmp": "Elemento turinyje yra tik ne teksto simbolių",
+        "pseudoContent": "Elemento fono spalvos nepavyko nustatyti dėl pseudoelemento",
+        "colorParse": "Nepavyko išanalizuoti spalvos eilutės ${data.colorParse}"
+      }
+    },
+    "color-contrast": {
+      "pass": {
+        "default": "Elementas turi pakankamą spalvų kontrastą: ${data.contrastRatio}",
+        "hidden": "Elementas paslėptas"
+      },
+      "fail": {
+        "default": "Elementas turi nepakankamą spalvų kontrastą: ${data.contrastRatio} (priekinio plano spalva: ${data.fgColor}, fono spalva: ${data.bgColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "Elementas turi nepakankamą spalvų kontrastą ${data.contrastRatio} tarp priekinio plano ir šešėlio spalvos (priekinio plano spalva: ${data.fgColor}, text-shadow spalva: ${data.shadowColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "Elementas turi nepakankamą spalvų kontrastą ${data.contrastRatio} tarp šešėlio ir fono spalvos (text-shadow spalva: ${data.shadowColor}, fono spalva: ${data.bgColor}, šrifto dydis: ${data.fontSize}, šrifto storis: ${data.fontWeight}). Reikalaujamas kontrasto santykis: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Nepavyko nustatyti kontrasto santykio",
+        "bgImage": "Elemento fono spalvos nepavyko nustatyti dėl fono paveikslėlio",
+        "bgGradient": "Elemento fono spalvos nepavyko nustatyti dėl fono gradiento",
+        "imgNode": "Elemento fono spalvos nepavyko nustatyti, nes elementas turi paveikslėlio mazgą",
+        "bgOverlap": "Elemento fono spalvos nepavyko nustatyti, nes jį dengia kitas elementas",
+        "complexTextShadows": "Elemento kontrasto nepavyko nustatyti, nes jis naudoja sudėtingus teksto šešėlius",
+        "fgAlpha": "Elemento priekinio plano spalvos nepavyko nustatyti dėl alfa skaidrumo",
+        "elmPartiallyObscured": "Elemento fono spalvos nepavyko nustatyti, nes jį iš dalies dengia kitas elementas",
+        "elmPartiallyObscuring": "Elemento fono spalvos nepavyko nustatyti, nes jis iš dalies dengia kitus elementus",
+        "outsideViewport": "Elemento fono spalvos nepavyko nustatyti, nes jis yra už matymo srities ribų",
+        "equalRatio": "Elemento kontrasto santykis su fonu yra 1:1",
+        "shortTextContent": "Elemento turinys per trumpas, kad būtų galima nustatyti, ar tai tikras tekstas",
+        "emptyValue": "Elementas neturi reikšmės; patikrinkite spalvų kontrastą įvedę reikšmę",
+        "nonBmp": "Elemento turinyje yra tik ne teksto simbolių",
+        "pseudoContent": "Elemento fono spalvos nepavyko nustatyti dėl pseudoelemento",
+        "colorParse": "Nepavyko išanalizuoti spalvos eilutės ${data.colorParse}"
+      }
+    },
+    "link-in-text-block-style": {
+      "pass": "Saitus nuo aplinkinio teksto galima atskirti vizualiniu apipavidalinimu",
+      "incomplete": {
+        "default": "Patikrinkite, ar saitui reikia apipavidalinimo, kad jis išsiskirtų iš netoliese esančio teksto",
+        "pseudoContent": "Patikrinkite, ar saito pseudostiliaus pakanka, kad jis išsiskirtų iš aplinkinio teksto"
+      },
+      "fail": "Saitas neturi apipavidalinimo (pvz., pabraukimo), kuris jį atskirtų nuo aplinkinio teksto"
+    },
+    "link-in-text-block": {
+      "pass": "Saitus nuo aplinkinio teksto galima atskirti ne tik spalva",
+      "fail": {
+        "fgContrast": "Saitas turi nepakankamą spalvų kontrastą ${data.contrastRatio}:1 su aplinkiniu tekstu. (Minimalus kontrastas yra ${data.requiredContrastRatio}:1, saito tekstas: ${data.nodeColor}, aplinkinis tekstas: ${data.parentColor})",
+        "bgContrast": "Saito fonas turi nepakankamą spalvų kontrastą ${data.contrastRatio} (minimalus kontrastas yra ${data.requiredContrastRatio}:1, saito fono spalva: ${data.nodeBackgroundColor}, aplinkinio fono spalva: ${data.parentBackgroundColor})"
+      },
+      "incomplete": {
+        "default": "Elemento priekinio plano kontrasto santykio nepavyko nustatyti",
+        "bgContrast": "Elemento fono kontrasto santykio nepavyko nustatyti",
+        "bgImage": "Elemento kontrasto santykio nepavyko nustatyti dėl fono paveikslėlio",
+        "bgGradient": "Elemento kontrasto santykio nepavyko nustatyti dėl fono gradiento",
+        "imgNode": "Elemento kontrasto santykio nepavyko nustatyti, nes elementas turi paveikslėlio mazgą",
+        "bgOverlap": "Elemento kontrasto santykio nepavyko nustatyti dėl elementų persidengimo"
+      }
+    },
+    "autocomplete-appropriate": {
+      "pass": "Autocomplete reikšmė nurodyta tinkamam elementui",
+      "fail": "Autocomplete reikšmė netinka šio tipo įvesties laukui"
+    },
+    "autocomplete-valid": {
+      "pass": "autocomplete atributas suformuotas teisingai",
+      "fail": "autocomplete atributas suformuotas neteisingai",
+      "incomplete": "autocomplete atributas turi nestandartinę reikšmę. Patikrinkite, ar vietoj jos negalima naudoti standartinės reikšmės."
+    },
+    "accesskeys": {
+      "pass": "accesskey atributo reikšmė yra unikali",
+      "fail": "Dokumente yra keli elementai su tuo pačiu accesskey"
+    },
+    "focusable-content": {
+      "pass": "Elementas turi fokusuojamų elementų",
+      "incomplete": "Patikrinkite, ar elementai su neigiamu tabindex gali gauti klaviatūros fokusą, kad sritį būtų galima slinkti",
+      "fail": "Elementas turėtų turėti fokusuojamo turinio"
+    },
+    "focusable-disabled": {
+      "pass": "Elemente nėra fokusuojamų elementų",
+      "incomplete": "Patikrinkite, ar fokusuojami elementai iškart perkelia fokuso indikatorių",
+      "fail": "Fokusuojamas turinys turi būti išjungtas, pašalintas iš DOM arba nepaslėptas su aria-hidden"
+    },
+    "focusable-element": {
+      "pass": "Elementas yra fokusuojamas",
+      "fail": "Elementas turėtų būti fokusuojamas"
+    },
+    "focusable-modal-open": {
+      "pass": "Kol atidarytas modalinis langas, fokusuojamų elementų nėra",
+      "incomplete": "Patikrinkite, ar fokusuojami elementai esamoje būsenoje nepasiekiami tabuliavimo klavišu"
+    },
+    "focusable-no-name": {
+      "pass": "Elementas nėra tabuliavimo eilėje arba turi prieinamą tekstą",
+      "fail": "Elementas yra tabuliavimo eilėje ir neturi prieinamo teksto",
+      "incomplete": "Nepavyko nustatyti, ar elementas turi prieinamą pavadinimą"
+    },
+    "focusable-not-tabbable": {
+      "pass": "Elemente nėra fokusuojamų elementų",
+      "incomplete": "Patikrinkite, ar fokusuojami elementai iškart perkelia fokuso indikatorių",
+      "fail": "Fokusuojamas turinys turi turėti tabindex=\"-1\", būti pašalintas iš DOM arba nepaslėptas su aria-hidden"
+    },
+    "frame-focusable-content": {
+      "pass": "Elementas neturi fokusuojamų palikuonių",
+      "fail": "Elementas turi fokusuojamų palikuonių",
+      "incomplete": "Nepavyko nustatyti, ar elementas turi palikuonių"
+    },
+    "landmark-is-top-level": {
+      "pass": "Orientyras ${data.role} yra aukščiausiame lygyje.",
+      "fail": "Orientyras ${data.role} yra kito orientyro viduje."
+    },
+    "no-focusable-content": {
+      "pass": "Elementas neturi fokusuojamų palikuonių",
+      "fail": {
+        "default": "Elementas turi fokusuojamų palikuonių. Perkelkite juos už elemento ribų arba pašalinkite.",
+        "notHidden": "Neigiamo tabindex naudojimas elemente interaktyvaus valdiklio viduje nesuteikia pagalbinėms technologijoms kliūčių fokusuoti elementą (net su aria-hidden=\"true\")"
+      },
+      "incomplete": "Nepavyko nustatyti, ar elementas turi palikuonių"
+    },
+    "page-has-heading-one": {
+      "pass": "Puslapyje yra bent viena pirmo lygio antraštė",
+      "fail": "Puslapyje turi būti pirmo lygio antraštė"
+    },
+    "page-has-main": {
+      "pass": "Dokumente yra bent vienas main orientyras",
+      "fail": "Dokumente nėra main orientyro"
+    },
+    "page-no-duplicate-banner": {
+      "pass": "Dokumente nėra daugiau nei vieno banner orientyro",
+      "fail": "Dokumente yra daugiau nei vienas banner orientyras"
+    },
+    "page-no-duplicate-contentinfo": {
+      "pass": "Dokumente nėra daugiau nei vieno contentinfo orientyro",
+      "fail": "Dokumente yra daugiau nei vienas contentinfo orientyras"
+    },
+    "page-no-duplicate-main": {
+      "pass": "Dokumente nėra daugiau nei vieno main orientyro",
+      "fail": "Dokumente yra daugiau nei vienas main orientyras"
+    },
+    "tabindex": {
+      "pass": "Elementas neturi tabindex, didesnio už 0",
+      "fail": "Elementas turi tabindex, didesnį už 0"
+    },
+    "alt-space-value": {
+      "pass": "Elementas turi galiojančią alt atributo reikšmę",
+      "fail": "Elementas turi alt atributą, kuriame yra tik tarpo simbolis, kurio ne visi ekrano skaitytuvai ignoruoja"
+    },
+    "duplicate-img-label": {
+      "pass": "Elementas nekartoja esamo teksto <img> alternatyviajame tekste",
+      "fail": "Elementas turi <img> elementą su alternatyviuoju tekstu, kuris kartoja esamą tekstą"
+    },
+    "explicit-label": {
+      "pass": "Elementas turi aiškią <label>",
+      "fail": "Elementas neturi aiškios <label>",
+      "incomplete": "Nepavyko nustatyti, ar formos elementas turi aiškią <label>"
+    },
+    "help-same-as-label": {
+      "pass": "Pagalbos tekstas (title arba aria-describedby) nekartoja etiketės teksto",
+      "fail": "Pagalbos tekstas (title arba aria-describedby) sutampa su etiketės tekstu"
+    },
+    "hidden-explicit-label": {
+      "pass": "Formos elementas turi matomą aiškią <label>",
+      "fail": "Formos elementas turi aiškią <label>, kuri paslėpta",
+      "incomplete": "Nepavyko nustatyti, ar formos elementas turi paslėptą aiškią <label>"
+    },
+    "implicit-label": {
+      "pass": "Elementas turi numanomą (apgaubiančią) <label>",
+      "fail": "Elementas neturi numanomos (apgaubiančios) <label>",
+      "incomplete": "Nepavyko nustatyti, ar formos elementas turi numanomą (apgaubiančią) <label>"
+    },
+    "label-content-name-mismatch": {
+      "pass": "Elementas turi matomą tekstą kaip savo prieinamo pavadinimo dalį",
+      "fail": "Elemento viduje esantis tekstas neįtrauktas į prieinamą pavadinimą",
+      "incomplete": {
+        "default": "Nepavyko nustatyti, ar matomas tekstas yra prieinamo pavadinimo dalis",
+        "valueText": "Elemento viduje esantis tekstas gali būti reikšmės tekstas, o ne etiketė"
+      }
+    },
+    "multiple-label": {
+      "pass": "Formos laukas neturi kelių label elementų",
+      "incomplete": "Keli label elementai nėra plačiai palaikomi pagalbinėse technologijose. Įsitikinkite, kad pirmoji etiketė turi visą reikiamą informaciją."
+    },
+    "title-only": {
+      "pass": "Formos elementas savo etiketei nenaudoja vien title atributo",
+      "fail": "Formos elemento etiketei sudaryti naudotas tik title"
+    },
+    "landmark-is-unique": {
+      "pass": "Orientyrai turi turėti unikalų vaidmenį arba vaidmens/etiketės/title (t. y. prieinamo pavadinimo) derinį",
+      "fail": "Orientyras turi turėti unikalų aria-label, aria-labelledby arba title, kad orientyrus būtų galima atskirti"
+    },
+    "has-lang": {
+      "pass": "<html> elementas turi lang atributą",
+      "fail": {
+        "noXHTML": "xml:lang atributas HTML puslapiuose negalioja, naudokite lang atributą.",
+        "noLang": "<html> elementas neturi lang atributo"
+      }
+    },
+    "valid-lang": {
+      "pass": "lang atributo reikšmė įtraukta į galiojančių kalbų sąrašą",
+      "fail": "lang atributo reikšmės nėra galiojančių kalbų sąraše"
+    },
+    "xml-lang-mismatch": {
+      "pass": "lang ir xml:lang atributai turi tą pačią pagrindinę kalbą",
+      "fail": "lang ir xml:lang atributai neturi tos pačios pagrindinės kalbos"
+    },
+    "dlitem": {
+      "pass": "Aprašymų sąrašo elementas turi tėvinį <dl> elementą",
+      "fail": "Aprašymų sąrašo elementas neturi tėvinio <dl> elemento"
+    },
+    "listitem": {
+      "pass": "Sąrašo elementas turi tėvinį <ul>, <ol> arba role=\"list\" elementą",
+      "fail": {
+        "default": "Sąrašo elementas neturi tėvinio <ul> ar <ol> elemento. Įsitikinkite, kad <li> yra tiesioginis <ul> ar <ol> vaikas arba kad tėvinis elementas turi role=\"list\".",
+        "roleNotValid": "Sąrašo elemento tėvinis elementas turi vaidmenį, kuris nėra role=\"list\". Įsitikinkite, kad tėvinis elementas turi role=\"list\", arba perkelkite <li> į <ul> ar <ol>."
+      },
+      "incomplete": "Nepavyko nustatyti, ar sąrašo elementas turi tėvinį <ul>, <ol> arba role=\"list\" elementą"
+    },
+    "only-dlitems": {
+      "pass": "dl elementas turi tik tiesioginius vaikinius elementus, kurie jame leidžiami: <dt>, <dd> arba <div>",
+      "fail": "dl elementas turi tiesioginių vaikinių elementų, kurie neleidžiami: ${data.values}",
+      "incomplete": "Nepavyko nustatyti, ar dl elementas turi tik leidžiamus tiesioginius vaikinius elementus"
+    },
+    "only-listitems": {
+      "pass": "Sąrašo elementas turi tik tiesioginius vaikinius elementus, kurie jame leidžiami: <li>",
+      "fail": "Sąrašo elementas turi tiesioginių vaikinių elementų, kurie neleidžiami: ${data.values}",
+      "incomplete": "Nepavyko nustatyti, ar sąrašo elementas turi tik leidžiamus tiesioginius vaikinius elementus"
+    },
+    "structured-dlitems": {
+      "pass": "Jei elementas netuščias, jis turi ir <dt>, ir <dd> elementų",
+      "fail": "Jei elementas netuščias, jis neturi bent vieno <dt> elemento, po kurio eitų bent vienas <dd> elementas"
+    },
+    "caption": {
+      "pass": "Multimedijos elementas turi subtitrų takelį",
+      "incomplete": "Patikrinkite, ar elementui yra subtitrų"
+    },
+    "frame-tested": {
+      "pass": "Iframe buvo patikrintas su axe-core",
+      "fail": "Iframe nepavyko patikrinti su axe-core",
+      "incomplete": "Iframe dar reikia patikrinti su axe-core"
+    },
+    "no-autoplay-audio": {
+      "pass": "<video> ar <audio> negroja garso ilgiau nei leidžiama trukmė arba turi valdymo mechanizmą",
+      "fail": "<video> ar <audio> groja garsą ilgiau nei leidžiama trukmė ir neturi valdymo mechanizmo",
+      "incomplete": "Patikrinkite, ar <video> ar <audio> negroja garso ilgiau nei leidžiama trukmė arba turi valdymo mechanizmą"
+    },
+    "css-orientation-lock": {
+      "pass": "Ekranas veikia, o orientacijos užrakto nėra",
+      "fail": "Taikomas CSS orientacijos užraktas, dėl kurio ekranas tampa neveikiantis",
+      "incomplete": "Nepavyko nustatyti, ar yra CSS orientacijos užraktas"
+    },
+    "meta-viewport-large": {
+      "pass": "<meta> žymė netrukdo ženkliai artinti mobiliuosiuose įrenginiuose",
+      "fail": "<meta> žymė riboja artinimą mobiliuosiuose įrenginiuose"
+    },
+    "meta-viewport": {
+      "pass": "<meta> žymė neišjungia artinimo mobiliuosiuose įrenginiuose",
+      "fail": "${data} <meta> žymėje išjungia artinimą mobiliuosiuose įrenginiuose"
+    },
+    "target-offset": {
+      "pass": {
+        "default": "Taikinys turi pakankamai vietos iki artimiausių kaimynų. Saugios spustelėjimo erdvės skersmuo yra ${data.closestOffset} px, o tai ne mažiau kaip ${data.minOffset} px.",
+        "large": "Taikinys gerokai viršija minimalų ${data.minOffset} px dydį."
+      },
+      "fail": "Taikinys neturi pakankamai vietos iki artimiausių kaimynų. Saugios spustelėjimo erdvės skersmuo yra ${data.closestOffset} px, o ne bent ${data.minOffset} px.",
+      "incomplete": {
+        "default": "Elementas su neigiamu tabindex neturi pakankamai vietos iki artimiausių kaimynų. Saugios spustelėjimo erdvės skersmuo yra ${data.closestOffset} px, o ne bent ${data.minOffset} px. Ar tai taikinys?",
+        "nonTabbableNeighbor": "Taikinys neturi pakankamai vietos iki artimiausių kaimynų. Saugios spustelėjimo erdvės skersmuo yra ${data.closestOffset} px, o ne bent ${data.minOffset} px. Ar kaimynas yra taikinys?",
+        "tooManyRects": "Taikinio dydžio nepavyko nustatyti, nes yra per daug persidengiančių elementų"
+      }
+    },
+    "target-size": {
+      "pass": {
+        "default": "Valdiklis yra pakankamo dydžio (${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px)",
+        "obscured": "Valdiklis ignoruojamas, nes jis visiškai uždengtas ir todėl nespustelėjamas",
+        "large": "Taikinys gerokai viršija minimalų ${data.minSize} px dydį."
+      },
+      "fail": {
+        "default": "Taikinys yra nepakankamo dydžio (${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px)",
+        "partiallyObscured": "Taikinys yra nepakankamo dydžio, nes jis iš dalies uždengtas (mažiausia erdvė yra ${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px)"
+      },
+      "incomplete": {
+        "default": "Elementas su neigiamu tabindex yra nepakankamo dydžio (${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px). Ar tai taikinys?",
+        "contentOverflow": "Elemento dydžio nepavyko tiksliai nustatyti dėl perpildyto turinio",
+        "partiallyObscured": "Elementas su neigiamu tabindex yra nepakankamo dydžio, nes jis iš dalies uždengtas (mažiausia erdvė yra ${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px). Ar tai taikinys?",
+        "partiallyObscuredNonTabbable": "Taikinys yra nepakankamo dydžio, nes jį iš dalies uždengia kaimynas su neigiamu tabindex (mažiausia erdvė yra ${data.width} px × ${data.height} px, turi būti ne mažiau kaip ${data.minSize} px × ${data.minSize} px). Ar kaimynas yra taikinys?",
+        "tooManyRects": "Taikinio dydžio nepavyko nustatyti, nes yra per daug persidengiančių elementų"
+      }
+    },
+    "header-present": {
+      "pass": "Puslapyje yra antraštė",
+      "fail": "Puslapyje nėra antraštės"
+    },
+    "heading-order": {
+      "pass": "Antraščių tvarka galioja",
+      "fail": "Antraščių tvarka negalioja",
+      "incomplete": "Nepavyko nustatyti ankstesnės antraštės"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Nėra kitų saitų su tuo pačiu pavadinimu, kurie veda į kitą URL",
+      "incomplete": "Patikrinkite, ar saitai turi tą patį tikslą arba yra tyčia dviprasmiški."
+    },
+    "internal-link-present": {
+      "pass": "Rastas galiojantis praleidimo saitas",
+      "fail": "Galiojančio praleidimo saito nerasta"
+    },
+    "landmark": {
+      "pass": "Puslapyje yra orientyro sritis",
+      "fail": "Puslapyje nėra orientyro srities"
+    },
+    "meta-refresh-no-exceptions": {
+      "pass": "<meta> žymė neatnaujina puslapio nedelsiant",
+      "fail": "<meta> žymė priverstinai atnaujina puslapį pagal laikmatį"
+    },
+    "meta-refresh": {
+      "pass": "<meta> žymė neatnaujina puslapio nedelsiant",
+      "fail": "<meta> žymė priverstinai atnaujina puslapį pagal laikmatį (mažiau nei per 20 valandų)"
+    },
+    "p-as-heading": {
+      "pass": "<p> elementai nėra stilizuoti kaip antraštės",
+      "fail": "Vietoj stilizuotų <p> elementų reikėtų naudoti antraščių elementus",
+      "incomplete": "Nepavyko nustatyti, ar <p> elementai stilizuoti kaip antraštės"
+    },
+    "region": {
+      "pass": "Visas puslapio turinys yra orientyrų viduje",
+      "fail": "Dalis puslapio turinio nėra orientyrų viduje"
+    },
+    "skip-link": {
+      "pass": "Praleidimo saito paskirtis egzistuoja",
+      "incomplete": "Praleidimo saito paskirtis turi tapti matoma aktyvavus",
+      "fail": "Nėra praleidimo saito paskirties"
+    },
+    "unique-frame-title": {
+      "pass": "Elemento title atributas yra unikalus",
+      "fail": "Elemento title atributas nėra unikalus"
+    },
+    "duplicate-id-active": {
+      "pass": "Dokumente nėra aktyvių elementų su tuo pačiu id atributu",
+      "fail": "Dokumente yra aktyvių elementų su tuo pačiu id atributu: ${data}"
+    },
+    "duplicate-id-aria": {
+      "pass": "Dokumente nėra elementų, į kuriuos nurodoma ARIA ar etiketėmis ir kurie turi tą patį id atributą",
+      "fail": "Dokumente yra keli elementai, į kuriuos nurodoma ARIA ir kurie turi tą patį id atributą: ${data}"
+    },
+    "duplicate-id": {
+      "pass": "Dokumente nėra statinių elementų su tuo pačiu id atributu",
+      "fail": "Dokumente yra keli statiniai elementai su tuo pačiu id atributu: ${data}"
+    },
+    "aria-label": {
+      "pass": "aria-label atributas egzistuoja ir nėra tuščias",
+      "fail": "aria-label atributo nėra arba jis tuščias"
+    },
+    "aria-labelledby": {
+      "pass": "aria-labelledby atributas egzistuoja ir nurodo elementus, matomus ekrano skaitytuvams",
+      "fail": "aria-labelledby atributo nėra, jis nurodo neegzistuojančius elementus arba nurodo tuščius elementus",
+      "incomplete": "Įsitikinkite, kad aria-labelledby nurodo esamą elementą"
+    },
+    "avoid-inline-spacing": {
+      "pass": "Nenurodyta įterptųjų stilių su '!important', kurie veiktų teksto tarpus",
+      "fail": {
+        "singular": "Pašalinkite '!important' iš įterptojo stiliaus ${data.values}, nes daugelis naršyklių nepalaiko jo nepaisymo",
+        "plural": "Pašalinkite '!important' iš įterptųjų stilių ${data.values}, nes daugelis naršyklių nepalaiko jų nepaisymo"
+      }
+    },
+    "button-has-visible-text": {
+      "pass": "Elementas turi vidinį tekstą, matomą ekrano skaitytuvams",
+      "fail": "Elementas neturi vidinio teksto, matomo ekrano skaitytuvams",
+      "incomplete": "Nepavyko nustatyti, ar elementas turi vaikinių elementų"
+    },
+    "doc-has-title": {
+      "pass": "Dokumente yra netuščias <title> elementas",
+      "fail": "Dokumente nėra netuščio <title> elemento"
+    },
+    "error-occurred": {
+      "pass": "|||",
+      "incomplete": "Axe susidūrė su klaida; patikrinkite puslapį dėl šio tipo problemos rankiniu būdu"
+    },
+    "exists": {
+      "pass": "Elemento nėra",
+      "incomplete": "Elementas yra"
+    },
+    "has-alt": {
+      "pass": "Elementas turi alt atributą",
+      "fail": "Elementas neturi alt atributo"
+    },
+    "has-visible-text": {
+      "pass": "Elementas turi tekstą, matomą ekrano skaitytuvams",
+      "fail": "Elementas neturi teksto, matomo ekrano skaitytuvams",
+      "incomplete": "Nepavyko nustatyti, ar elementas turi vaikinių elementų"
+    },
+    "important-letter-spacing": {
+      "pass": "letter-spacing style atribute nenustatytas su !important arba atitinka minimumą",
+      "fail": {
+        "default": "letter-spacing style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em)",
+        "omitted": "letter-spacing style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em). Paveikta daugiau elementų su tekstu, nei nurodyta susijusių mazgų sąraše"
+      },
+      "incomplete": "Nepavyko nustatyti, ar letter-spacing style atribute atitinka minimumą"
+    },
+    "important-line-height": {
+      "pass": "line-height style atribute nenustatytas su !important arba atitinka minimumą",
+      "fail": {
+        "default": "line-height style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em)",
+        "omitted": "line-height style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em). Paveikta daugiau elementų su tekstu, nei nurodyta susijusių mazgų sąraše"
+      },
+      "incomplete": "Nepavyko nustatyti, ar line-height style atribute atitinka minimumą"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing style atribute nenustatytas su !important arba atitinka minimumą",
+      "fail": {
+        "default": "word-spacing style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em)",
+        "omitted": "word-spacing style atribute neturi naudoti !important arba turi būti ${data.minValue}em (dabar ${data.value}em). Paveikta daugiau elementų su tekstu, nei nurodyta susijusių mazgų sąraše"
+      },
+      "incomplete": "Nepavyko nustatyti, ar word-spacing style atribute atitinka minimumą"
+    },
+    "is-on-screen": {
+      "pass": "Elementas nematomas",
+      "fail": "Elementas matomas"
+    },
+    "non-empty-alt": {
+      "pass": "Elementas turi netuščią alt atributą",
+      "fail": {
+        "noAttr": "Elementas neturi alt atributo",
+        "emptyAttr": "Elementas turi tuščią alt atributą"
+      }
+    },
+    "non-empty-if-present": {
+      "pass": {
+        "default": "Elementas neturi value atributo",
+        "has-label": "Elementas turi netuščią value atributą"
+      },
+      "fail": "Elementas turi value atributą, ir jis tuščias"
+    },
+    "non-empty-placeholder": {
+      "pass": "Elementas turi placeholder atributą",
+      "fail": {
+        "noAttr": "Elementas neturi placeholder atributo",
+        "emptyAttr": "Elementas turi tuščią placeholder atributą"
+      }
+    },
+    "non-empty-title": {
+      "pass": "Elementas turi title atributą",
+      "fail": {
+        "noAttr": "Elementas neturi title atributo",
+        "emptyAttr": "Elementas turi tuščią title atributą"
+      }
+    },
+    "non-empty-value": {
+      "pass": "Elementas turi netuščią value atributą",
+      "fail": {
+        "noAttr": "Elementas neturi value atributo",
+        "emptyAttr": "Elementas turi tuščią value atributą"
+      }
+    },
+    "presentational-role": {
+      "pass": "Elemento numatytoji semantika pakeista su role=\"${data.role}\"",
+      "fail": {
+        "default": "Elemento numatytoji semantika nepakeista su role=\"none\" ar role=\"presentation\"",
+        "globalAria": "Elemento vaidmuo nėra pateikimo, nes jis turi visuotinį ARIA atributą",
+        "focusable": "Elemento vaidmuo nėra pateikimo, nes jis fokusuojamas",
+        "both": "Elemento vaidmuo nėra pateikimo, nes jis turi visuotinį ARIA atributą ir yra fokusuojamas",
+        "iframe": "\"title\" atributo naudojimas ${data.nodeName} elemente su pateikimo vaidmeniu skirtinguose ekrano skaitytuvuose veikia nevienodai"
+      }
+    },
+    "role-none": {
+      "pass": "Elemento numatytoji semantika pakeista su role=\"none\"",
+      "fail": "Elemento numatytoji semantika nepakeista su role=\"none\""
+    },
+    "role-presentation": {
+      "pass": "Elemento numatytoji semantika pakeista su role=\"presentation\"",
+      "fail": "Elemento numatytoji semantika nepakeista su role=\"presentation\""
+    },
+    "svg-non-empty-title": {
+      "pass": "Elementas turi vaikinį elementą title",
+      "fail": {
+        "noTitle": "Elementas neturi vaikinio elemento title",
+        "emptyTitle": "Elemento vaikinis title yra tuščias"
+      },
+      "incomplete": "Nepavyko nustatyti, ar elementas turi vaikinį elementą title"
+    },
+    "caption-faked": {
+      "pass": "Pirmoji lentelės eilutė nenaudojama kaip pavadinimas",
+      "fail": "Pirmasis lentelės vaikinis elementas turėtų būti caption, o ne lentelės langelis"
+    },
+    "html5-scope": {
+      "pass": "scope atributas naudojamas tik lentelės antraščių elementuose (<th>)",
+      "fail": "HTML 5 scope atributus galima naudoti tik lentelės antraščių elementuose (<th>)"
+    },
+    "same-caption-summary": {
+      "pass": "summary atributo turinys ir <caption> nesikartoja",
+      "fail": "summary atributo turinys ir <caption> elementas yra identiški",
+      "incomplete": "Nepavyko nustatyti, ar <table> elementas turi pavadinimą"
+    },
+    "scope-value": {
+      "pass": "scope atributas naudojamas teisingai",
+      "fail": "scope atributo reikšmė gali būti tik 'row' arba 'col'"
+    },
+    "td-has-header": {
+      "pass": "Visi netušti duomenų langeliai turi lentelės antraštes",
+      "fail": "Kai kurie netušti duomenų langeliai neturi lentelės antraščių"
+    },
+    "td-headers-attr": {
+      "pass": "headers atributas naudojamas tik nurodyti kitus antraščių langelius toje pačioje lentelėje",
+      "incomplete": "headers atributas tuščias",
+      "fail": {
+        "cell-header-not-in-table": "headers atributas naudojamas ne tik nurodyti kitus antraščių langelius toje pačioje lentelėje",
+        "cell-header-not-th": "headers atributas turi nurodyti antraščių langelius, o ne duomenų langelius",
+        "header-refs-self": "Elementas su headers atributu nurodo pats save"
+      }
+    },
+    "th-has-data-cells": {
+      "pass": "Visi lentelės antraščių langeliai nurodo duomenų langelius",
+      "incomplete": "Lentelės duomenų langelių nėra arba jie tušti"
+    },
+    "hidden-content": {
+      "pass": "Visas puslapio turinys išanalizuotas.",
+      "fail": "Analizuojant šio puslapio turinį kilo problemų.",
+      "incomplete": "Puslapyje yra paslėpto turinio, kuris nebuvo išanalizuotas. Norėdami jį išanalizuoti, turėsite iškviesti jo rodymą."
+    }
+  },
+  "failureSummaries": {
+    "any": {
+      "failureMessage": "Pataisykite bet kurį iš šių dalykų:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "none": {
+      "failureMessage": "Pataisykite visus šiuos dalykus:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  },
+  "incompleteFallbackMessage": "axe nepavyko nustatyti priežasties. Metas atidaryti elementų inspektorių!"
+}
