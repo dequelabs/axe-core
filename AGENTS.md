@@ -56,7 +56,7 @@
 - **Structure:** Mirror `lib/` exactly under `test/`. File `lib/commons/text/sanitize.js` → `test/commons/text/sanitize.js`.
 - **Checks:** Use `axe.testUtils.MockCheckContext()`. Only reset `checkContext` in `afterEach` — `fixture` and `axe._tree` are auto-cleared.
 - **Integration tests:** All rule changes require an HTML + JSON pair. Use `test/integration/rules/<rule-name>/` for mocha-hosted tests or `test/integration/full/<rule-name>/` when the rule requires a full HTML page. JSON selectors must use axe array format (`["#id"]`; iframes: `["iframe", "#id"]`). Also update or create virtual-rules tests where appropriate.
-- **Shadow DOM:** Every relevant check/rule must include an open Shadow DOM test case using `queryShadowFixture`.
+- **Shadow DOM:** Add a Shadow DOM test only when the behavior under test crosses a shadow boundary: something on the host (or above it) affects a node inside the shadow tree, or vice versa (slotted content, idrefs resolving across roots). If the target and everything that decides the result are in the same root, a shadow test exercises nothing new, so leave it out. Use declarative Shadow DOM; see the Shadow DOM example in `doc/examples/test-patterns.md`.
 - **Logging:** Do not commit `console.log` statements.
 
 ## 3. Build & Commits

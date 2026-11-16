@@ -122,6 +122,22 @@ this should not effect their outcome -->
   <button id="pass17">x</button>
 </div>
 
+<p>
+  <a id="pass26" href="#" style="padding: 0.2em 0.5em">
+    <button id="pass-only-widget-child">Click me</button>
+  </a>
+</p>
+
+<p>
+  <a id="pass27" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        <button id="pass-nested-only-widget-child">Click me</button>
+      </span>
+    </span>
+  </a>
+</p>
+
 <!-- Failed examples -->
 <p>
   <button id="fail1">x</button>
@@ -312,6 +328,93 @@ this should not effect their outcome -->
     style="display: inline-block; width: 16px; height: 16px"
     >b</a
   >
+</p>
+
+<!-- The absolute target is positioned against the paragraph, not the scroll region -->
+<p style="position: relative">
+  <button id="fail-abs-neighbour" style="padding: 0">A</button>
+  <span
+    style="display: inline-block; width: 40px; height: 20px; overflow: auto"
+  >
+    <span style="display: inline-block; width: 10px; height: 100px"></span>
+    <button
+      id="fail-abs-escaped"
+      style="position: absolute; top: 0; left: 18px; padding: 0"
+    >
+      B
+    </button>
+  </span>
+</p>
+
+<p>
+  <a id="fail8" href="#" style="padding: 0.2em 0.5em">
+    x
+    <button id="fail-not-only-widget-child">Click me</button>
+  </a>
+</p>
+
+<p>
+  <a id="fail9" href="#" style="padding: 0.2em 0.5em">
+    <span>
+      <span>
+        x
+        <button id="fail-nested-not-only-widget-child">Click me</button>
+      </span>
+    </span>
+  </a>
+</p>
+
+<p>
+  <a id="fail10" href="#">
+    <button id="fail-size-widget-child" style="width: 10px; height: 10px">
+      x
+    </button>
+  </a>
+  <button id="pass-widget-child-neighbor" style="margin-left: -6px">
+    hello
+  </button>
+</p>
+
+<!-- Fixed targets are positioned against the viewport, not the scroll region.
+An absolute target would stay inside the positioned scroll region -->
+<p>
+  <button
+    id="fail-fixed-outside"
+    style="
+      position: fixed;
+      top: 0;
+      right: 40px;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+    "
+  >
+    A
+  </button>
+  <span
+    style="
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      overflow: auto;
+    "
+  >
+    <span style="display: inline-block; width: 10px; height: 100px"></span>
+    <button
+      id="fail-fixed-inside"
+      style="
+        position: fixed;
+        top: 0;
+        right: 18px;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+      "
+    >
+      B
+    </button>
+  </span>
 </p>
 
 <!-- Inapplicable -->
