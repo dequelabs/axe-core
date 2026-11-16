@@ -468,6 +468,14 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, 'div h1', anchor));
     });
 
+    it('returns true when selector would match ancestor of anchor', () => {
+      const virtualNode = queryFixture(
+        '<section><div><span><h1 id="target">foo</h1></span></div></section>'
+      );
+      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('div'));
+      assert.isTrue(matches(virtualNode, 'section h1', anchor));
+    });
+
     it('returns true for id selector in same shadow DOM', () => {
       const virtualNode = queryFixture(
         '<section><div><span><h1 id="target">foo</h1></span</div></section>'
@@ -504,14 +512,6 @@ describe('utils.matches', () => {
       assert.isTrue(matches(virtualNode, '#host h1', anchor));
       assert.isTrue(matches(virtualNode, 'div > #host h1', anchor));
       assert.isTrue(matches(virtualNode, 'div #host h1', anchor));
-    });
-
-    it('returns false when selector would match ancestor of anchor', () => {
-      const virtualNode = queryFixture(
-        '<section><div><span><h1 id="target">foo</h1></span></div></section>'
-      );
-      const anchor = axe.utils.getNodeFromTree(fixture.querySelector('div'));
-      assert.isFalse(matches(virtualNode, 'section h1', anchor));
     });
 
     it('returns false for id selector in different shadow DOM', () => {
