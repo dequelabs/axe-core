@@ -8,7 +8,8 @@
     ["#violation4"],
     ["#violation5"],
     ["#violation6"],
-    ["#violation7"]
+    ["#violation7"],
+    ["#violation8"]
   ],
   "passes": [
     ["#pass1"],
@@ -16,6 +17,7 @@
     ["#pass3"],
     ["#pass4"],
     ["#pass5"],
-    ["#pass6"]
+    ["#pass6"],
+    ["#pass7"]
   ]
 }

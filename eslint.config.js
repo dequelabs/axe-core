@@ -298,6 +298,7 @@ module.exports = [
       // these are files with known uses of virtual node that are legacy before this rule was enforced
       'lib/core/utils/closest.js',
       'lib/core/utils/contains.js',
+      'lib/core/utils/matches.js',
       'lib/core/utils/query-selector-all-filter.js',
       'lib/core/utils/selector-cache.js',
       // this will create a virtual node if one doesn't exist already in order to truncate the html output properly

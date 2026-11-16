@@ -53,63 +53,63 @@ describe('visually-sort', () => {
   */
 
   it('sorts a higher stack before a lower stack', () => {
-    const vNodeA = querySelectorAll(root, '#1')[0];
-    const vNodeB = querySelectorAll(root, '#4')[0];
+    const vNodeA = querySelectorAll(root, '[id="1"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="4"]')[0];
 
     assert.isBelow(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts a lower stack after a higher stack', () => {
-    const vNodeA = querySelectorAll(root, '#4')[0];
-    const vNodeB = querySelectorAll(root, '#1')[0];
+    const vNodeA = querySelectorAll(root, '[id="4"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="1"]')[0];
 
     assert.isAbove(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts a child stack before a parent stack', () => {
-    const vNodeA = querySelectorAll(root, '#6')[0];
-    const vNodeB = querySelectorAll(root, '#4')[0];
+    const vNodeA = querySelectorAll(root, '[id="6"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="4"]')[0];
 
     assert.isBelow(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts a parent stack after a child stack', () => {
-    const vNodeA = querySelectorAll(root, '#4')[0];
-    const vNodeB = querySelectorAll(root, '#6')[0];
+    const vNodeA = querySelectorAll(root, '[id="4"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="6"]')[0];
 
     assert.isAbove(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts a child of a higher stack before a child of a lower stack', () => {
-    const vNodeA = querySelectorAll(root, '#3')[0];
-    const vNodeB = querySelectorAll(root, '#7')[0];
+    const vNodeA = querySelectorAll(root, '[id="3"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="7"]')[0];
 
     assert.isBelow(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts a child of a lower stack after a child of a higher stack', () => {
-    const vNodeA = querySelectorAll(root, '#7')[0];
-    const vNodeB = querySelectorAll(root, '#3')[0];
+    const vNodeA = querySelectorAll(root, '[id="7"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="3"]')[0];
 
     assert.isAbove(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts elements by tree order when in the same stack', () => {
-    const vNodeA = querySelectorAll(root, '#8')[0];
-    const vNodeB = querySelectorAll(root, '#10')[0];
+    const vNodeA = querySelectorAll(root, '[id="8"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="10"]')[0];
 
     assert.isAbove(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts floated elements before other elements of the same stack', () => {
-    const vNodeA = querySelectorAll(root, '#7')[0];
-    const vNodeB = querySelectorAll(root, '#8')[0];
+    const vNodeA = querySelectorAll(root, '[id="7"]')[0];
+    const vNodeB = querySelectorAll(root, '[id="8"]')[0];
 
     assert.isBelow(visuallySort(vNodeA, vNodeB), 0);
   });
 
   it('sorts shadow DOM elements by tree order when in the same stack', () => {
-    const vNodeA = querySelectorAll(root, '#8')[0];
+    const vNodeA = querySelectorAll(root, '[id="8"]')[0];
     const vNodeB = querySelectorAll(root, '#shadow-host')[0].children[0];
 
     assert.isAbove(visuallySort(vNodeA, vNodeB), 0);
