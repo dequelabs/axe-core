@@ -66,6 +66,25 @@
 >
 <button id="pass19" aria-label="hola">¿Hola?</button>
 <button id="pass17" aria-label="model ABC123">Ｍｏｄｅｌ ＡＢＣ１２３</button>
+<ul role="tree" aria-label="Files">
+  <li
+    id="pass20"
+    role="treeitem"
+    aria-label="Documents"
+    aria-expanded="true"
+    aria-selected="false"
+  >
+    <span>Documents</span>
+    <ul role="group">
+      <li id="pass21" role="treeitem" aria-label="Report" aria-selected="false">
+        <span>Report</span>
+      </li>
+      <li id="pass22" role="treeitem" aria-label="Notes" aria-selected="false">
+        <span>Notes</span>
+      </li>
+    </ul>
+  </li>
+</ul>
 
 <!-- Fail -->
 <div id="fail1" role="link" aria-label="OK">Next</div>
@@ -90,6 +109,18 @@
 <a id="fail9" href="#" aria-label="deque labs are great">
   deque <span class="visually-hidden">labs</span> are great
 </a>
+<ul role="tree" aria-label="Folders">
+  <li id="fail10" role="treeitem" aria-label="Folders" aria-expanded="true">
+    <span>Documents</span>
+    <ul role="group">
+      <!-- nested child item of #fail10; it passes -->
+      <li id="pass23" role="treeitem" aria-label="Report">Report</li>
+    </ul>
+  </li>
+</ul>
+<ul role="tree" aria-label="Files">
+  <li id="fail11" role="treeitem" aria-label="Report">Quarterly summary</li>
+</ul>
 
 <!-- incomplete -->
 <button id="incomplete1" aria-label="comet">☄️</button>
