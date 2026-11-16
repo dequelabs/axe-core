@@ -78,13 +78,13 @@ describe('findNearbyElms', () => {
     });
 
     it('skips fixed position neighbors when not fixed', () => {
-      const n3 = axe.utils.querySelectorAll(fixture, '#n3')[0];
+      const n3 = axe.commons.dom.queryDom(fixture, '#n3')[0];
       const nearbyElms = findNearbyElms(n3);
       assert.deepEqual(getIds(nearbyElms), ['n4']);
     });
 
     it('includes only fixed position neighbors when fixed', () => {
-      const n1 = axe.utils.querySelectorAll(fixture, '#n1')[0];
+      const n1 = axe.commons.dom.queryDom(fixture, '#n1')[0];
       const nearbyElms = findNearbyElms(n1);
       assert.deepEqual(getIds(nearbyElms), ['n0', 'n2']);
     });
@@ -104,7 +104,7 @@ describe('findNearbyElms', () => {
           html +
           `</div>`
       );
-      return axe.utils.querySelectorAll(fixture, '#target')[0];
+      return axe.commons.dom.queryDom(fixture, '#target')[0];
     }
 
     it('returns elements further than margin by default', () => {

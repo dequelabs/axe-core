@@ -9,7 +9,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target">	</div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -17,7 +17,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target"> <span></span> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -25,7 +25,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target"> text </div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -33,7 +33,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -42,7 +42,7 @@ describe('dom.hasContentVirtual', () => {
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
       hasContentVirtual(
-        axe.utils.querySelectorAll(tree, '#target')[0],
+        axe.commons.dom.queryDom(tree, '#target')[0],
         true,
         true
       )
@@ -53,7 +53,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<div id="target"> <img src=""> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -62,7 +62,7 @@ describe('dom.hasContentVirtual', () => {
       '<div id="target"> <span aria-label="my-label"></span> </div>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -70,7 +70,7 @@ describe('dom.hasContentVirtual', () => {
     fixture.innerHTML = '<style id="target"> #foo { color: green } </style>';
     tree = axe.utils.getFlattenedTree(fixture);
     assert.isFalse(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -90,7 +90,7 @@ describe('dom.hasContentVirtual', () => {
     tree = axe.utils.getFlattenedTree(fixture);
 
     assert.isFalse(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0], true)
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0], true)
     );
   });
 
@@ -103,7 +103,7 @@ describe('dom.hasContentVirtual', () => {
     tree = axe.utils.getFlattenedTree(fixture);
 
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '#target')[0])
     );
   });
 
@@ -116,7 +116,7 @@ describe('dom.hasContentVirtual', () => {
     tree = axe.utils.getFlattenedTree(fixture);
 
     assert.isTrue(
-      hasContentVirtual(axe.utils.querySelectorAll(tree, '.target')[0])
+      hasContentVirtual(axe.commons.dom.queryDom(tree, '.target')[0])
     );
   });
 });

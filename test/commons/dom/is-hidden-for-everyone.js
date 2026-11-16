@@ -326,7 +326,7 @@ describe('dom.isHiddenForEveryone', () => {
     fixture.innerHTML = '<div></div>';
     makeShadowTree(fixture.firstChild, 'display:none;', '');
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const vNode = axe.commons.dom.queryDom(tree, 'p')[0];
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
@@ -335,7 +335,7 @@ describe('dom.isHiddenForEveryone', () => {
     fixture.innerHTML = '<div></div>';
     makeShadowTree(fixture.firstChild, 'visibility:hidden', '');
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const vNode = axe.commons.dom.queryDom(tree, 'p')[0];
     const actual = isHiddenForEveryone(vNode);
     assert.isTrue(actual);
   });
@@ -348,7 +348,7 @@ describe('dom.isHiddenForEveryone', () => {
       'visibility:visible'
     );
     const tree = axe.utils.getFlattenedTree(fixture.firstChild);
-    const vNode = axe.utils.querySelectorAll(tree, 'p')[0];
+    const vNode = axe.commons.dom.queryDom(tree, 'p')[0];
     const actual = isHiddenForEveryone(vNode);
     assert.isFalse(actual);
   });

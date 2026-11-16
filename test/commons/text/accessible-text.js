@@ -37,8 +37,8 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const rule2a = axe.utils.querySelectorAll(axe._tree, '#rule2a')[0];
-    const rule2c = axe.utils.querySelectorAll(axe._tree, '#rule2c')[0];
+    const rule2a = axe.commons.dom.queryDom(axe._tree, '#rule2a')[0];
+    const rule2c = axe.commons.dom.queryDom(axe._tree, '#rule2c')[0];
 
     assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'File');
     assert.equal(axe.commons.text.accessibleTextVirtual(rule2c), 'New');
@@ -71,8 +71,8 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
-    const rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
+    const rule2a = axe.commons.dom.queryDom(axe._tree, '#beep')[0];
+    const rule2b = axe.commons.dom.queryDom(axe._tree, '#flash')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'Beep');
     assert.equal(
       axe.commons.text.accessibleTextVirtual(rule2b),
@@ -99,7 +99,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is a label'
@@ -125,7 +125,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'ARIA Label This is a label'
@@ -144,7 +144,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is a hidden secret'
@@ -157,7 +157,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#lbl1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#lbl1')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target, {
         includeHidden: false
@@ -186,7 +186,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
   });
 
@@ -203,7 +203,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'Alt text goes here'
@@ -223,7 +223,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'Alt text goes here'
@@ -243,7 +243,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
   });
 
@@ -259,7 +259,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HTML Label');
   });
 
@@ -282,7 +282,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2label')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is This is a label of italics'
@@ -308,7 +308,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2label')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is This is a label of'
@@ -334,7 +334,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2label')[0];
     // Chrome 114: "This is the value of "
     // Firefox 115: "This is ARIA Label the value everything"
     // Safari 16.5: This is the value This is a label of everything
@@ -351,7 +351,7 @@ describe('text.accessibleTextVirtual', () => {
       </div>
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'My form input'
@@ -366,7 +366,7 @@ describe('text.accessibleTextVirtual', () => {
       <label for="tb1">My form input</label>
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'My form input'
@@ -392,7 +392,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2label')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is This is a label of everything'
@@ -418,7 +418,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     // Chrome 114: This is the value of everything
     // Firefox 115: This is ARIA Label the value of everything
     // Safari 16.5: THis is This is a label of everything
@@ -440,7 +440,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This is of everything'
@@ -460,7 +460,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     // Chrome 114: "This is the value of everything"
     // Firefox 115: "This is the value of everything"
     // Safari 16.5: "This is This is a label of everything"
@@ -487,7 +487,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     // Chrome 114: "This is first third of everything"
     // Firefox 115: "This is of everything"
     // Safari 16.5: "This is first third of everything"
@@ -510,7 +510,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     // Chrome 114: "This is the value of everything"
     // Firefox 115: "This is the value of everything"
     // Safari 16.5: "This is This is a label of everything"
@@ -538,7 +538,7 @@ describe('text.accessibleTextVirtual', () => {
       <input type="text" id="t2" aria-labelledby="t2label" />`;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t2')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'This not a span is the value of everything'
@@ -556,7 +556,7 @@ describe('text.accessibleTextVirtual', () => {
       <input id="target" type="text" />
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     // Chrome 114: "Chosen"
     // Firefox 115: "Chosen"
     // Safari 16.5: "Chosen"
@@ -575,7 +575,7 @@ describe('text.accessibleTextVirtual', () => {
       <input id="target" type="text" />
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     // Chrome 114: "Chosen"
     // Firefox 115: "Chosen"
     // Safari 16.5: "Chosen"
@@ -596,7 +596,7 @@ describe('text.accessibleTextVirtual', () => {
       </label>
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
   });
 
@@ -611,7 +611,7 @@ describe('text.accessibleTextVirtual', () => {
       <input aria-labelledby="select" type="text" id="target" />
     `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#target')[0];
     // Chrome 114: "Chosen"
     // Firefox 115: "Chosen"
     // Safari 16.5: "Chosen"
@@ -624,7 +624,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -632,7 +632,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <a href="#" role="presentation">Hello</a> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -640,21 +640,21 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <button role="presentation">Hello</button> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
   it('should give text even for role=presentation on summary', () => {
     fixture.innerHTML = html` <summary role="presentation">Hello</summary> `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'summary')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
   it('shoud properly fall back to title', () => {
     fixture.innerHTML = html` <a href="#" role="none" title="Hello"></a> `;
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -662,7 +662,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <a href="#" role="none">Hello</a> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -670,7 +670,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <button role="none">Hello</button> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -678,7 +678,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <summary role="none">Hello</summary> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'summary')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
   });
 
@@ -686,7 +686,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <a href="#">Hello<span>World</span></a> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HelloWorld');
   });
 
@@ -699,7 +699,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
   });
 
@@ -708,7 +708,7 @@ describe('text.accessibleTextVirtual', () => {
       '<a href="#"><script> const ajiasdf = true; </script></a>';
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
   });
 
@@ -716,7 +716,7 @@ describe('text.accessibleTextVirtual', () => {
     fixture.innerHTML = html` <label><input type="button" /></label> `;
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
   });
 
@@ -725,7 +725,7 @@ describe('text.accessibleTextVirtual', () => {
       '<button aria-label=" " aria-labelledby=" ">Hello World</button>';
     axe.testUtils.flatTreeSetup(fixture);
 
-    const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
   });
 
@@ -743,7 +743,7 @@ describe('text.accessibleTextVirtual', () => {
           '<button id="target">Hello World<span style="font-family: \'Material Icons\'">delete</span></button>';
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
         try {
           assert.equal(
             axe.commons.text.accessibleTextVirtual(target, {
@@ -785,7 +785,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
 
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
   });
 
@@ -798,7 +798,7 @@ describe('text.accessibleTextVirtual', () => {
     shadow.innerHTML = '<input type="text" id="t1" title="I will be king">';
 
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'I will be king'
@@ -815,7 +815,7 @@ describe('text.accessibleTextVirtual', () => {
     shadow.innerHTML = '<slot></slot>';
 
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'you will be queen'
@@ -834,7 +834,7 @@ describe('text.accessibleTextVirtual', () => {
     `;
 
     axe.testUtils.flatTreeSetup(fixture);
-    const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+    const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
     assert.equal(
       axe.commons.text.accessibleTextVirtual(target),
       'Fallback content heroes'
@@ -852,7 +852,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -866,7 +866,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -875,7 +875,7 @@ describe('text.accessibleTextVirtual', () => {
         '<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -884,7 +884,7 @@ describe('text.accessibleTextVirtual', () => {
         '<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -897,7 +897,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -910,7 +910,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.appendChild(node);
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'figure')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
   });
@@ -924,7 +924,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'img')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -935,7 +935,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <img aria-label="Hello World" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'img')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -946,7 +946,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <img alt="Hello World" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'img')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -957,7 +957,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <img title="Hello World" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'img')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -970,7 +970,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="button" value="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -978,7 +978,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="reset" value="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -986,7 +986,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="submit" value="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -994,7 +994,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="submit" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         target.actualNode.value || 'Submit'
@@ -1005,7 +1005,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="reset" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       const defaultText = axe.commons.text.accessibleTextVirtual(target);
       assert.isString(defaultText);
       assert.equal(defaultText, target.actualNode.value || 'Reset');
@@ -1015,7 +1015,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="button" title="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
     });
 
@@ -1023,7 +1023,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="reset" title="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       // IE does not use title; but will use default value instead
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
@@ -1035,7 +1035,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="submit" title="Hello" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       // Again, default value takes precedence over title
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
@@ -1053,7 +1053,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1064,7 +1064,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <table aria-label="Hello World"></table> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1076,7 +1076,7 @@ describe('text.accessibleTextVirtual', () => {
         '<table><caption>Hello World</caption><tr><td>Stuff</td></tr></table>';
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1087,7 +1087,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <table title="Hello World"></table> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1098,7 +1098,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <table summary="Hello World"></table> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1114,7 +1114,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'table')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1135,7 +1135,7 @@ describe('text.accessibleTextVirtual', () => {
         `;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1150,7 +1150,7 @@ describe('text.accessibleTextVirtual', () => {
         fixture.innerHTML = html`<input ${t} aria-label="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1167,7 +1167,7 @@ describe('text.accessibleTextVirtual', () => {
         /></label>`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1183,7 +1183,7 @@ describe('text.accessibleTextVirtual', () => {
           ><input ${t} id="t1" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1200,7 +1200,7 @@ describe('text.accessibleTextVirtual', () => {
         /></label>`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1215,7 +1215,7 @@ describe('text.accessibleTextVirtual', () => {
         fixture.innerHTML = html`<input ${t} placeholder="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1230,7 +1230,7 @@ describe('text.accessibleTextVirtual', () => {
         fixture.innerHTML = html`<input ${t} title="Hello World" />`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Hello World',
@@ -1245,7 +1245,7 @@ describe('text.accessibleTextVirtual', () => {
         fixture.innerHTML = html`<input ${t} />`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
         assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
       });
     });
@@ -1260,7 +1260,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1273,7 +1273,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1286,7 +1286,7 @@ describe('text.accessibleTextVirtual', () => {
       </label>`;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1298,7 +1298,7 @@ describe('text.accessibleTextVirtual', () => {
         ><textarea id="t1"></textarea>`;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1311,7 +1311,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1322,7 +1322,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <textarea title="Hello World"></textarea> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1333,7 +1333,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <textarea></textarea> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'textarea')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
     });
   });
@@ -1347,7 +1347,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1360,7 +1360,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1371,7 +1371,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="image" alt="Hello World" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1382,7 +1382,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="image" title="Hello World" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1393,7 +1393,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <input type="image" /> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'input')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Submit');
     });
   });
@@ -1407,7 +1407,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1418,7 +1418,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <a aria-label="Hello World"></a> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1433,7 +1433,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1444,7 +1444,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <a title="Hello World"></a> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1455,7 +1455,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <a></a> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
     });
 
@@ -1471,7 +1471,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'a')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Descriptive Link Text'
@@ -1488,7 +1488,7 @@ describe('text.accessibleTextVirtual', () => {
       `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1499,7 +1499,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <button aria-label="Hello World"></button> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1511,7 +1511,7 @@ describe('text.accessibleTextVirtual', () => {
         '<button><span>Hello<span> World</span></span></button>';
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1522,7 +1522,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <button title="Hello World"></button> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
       assert.equal(
         axe.commons.text.accessibleTextVirtual(target),
         'Hello World'
@@ -1533,7 +1533,7 @@ describe('text.accessibleTextVirtual', () => {
       fixture.innerHTML = html` <button></button> `;
       axe.testUtils.flatTreeSetup(fixture);
 
-      const target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+      const target = axe.commons.dom.queryDom(axe._tree, 'button')[0];
       assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
     });
   });
@@ -1621,7 +1621,7 @@ describe('text.accessibleTextVirtual', () => {
         fixture.innerHTML = `<${tag}></${tag}>`;
         axe.testUtils.flatTreeSetup(fixture);
 
-        const target = axe.utils.querySelectorAll(axe._tree, tag)[0];
+        const target = axe.commons.dom.queryDom(axe._tree, tag)[0];
         assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
       });
     });
@@ -1646,7 +1646,7 @@ describe('text.accessibleTextVirtual', () => {
       tags.forEach(tag => {
         fixture.innerHTML = html`<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id">content</${tag}>`;
         axe.testUtils.flatTreeSetup(fixture);
-        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
         assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
       });
     });
@@ -1661,7 +1661,7 @@ describe('text.accessibleTextVirtual', () => {
   </div>
 `;
         axe.testUtils.flatTreeSetup(fixture);
-        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
         assert.equal(
           axe.commons.text.accessibleTextVirtual(target),
           'Expected label',
@@ -1674,7 +1674,7 @@ describe('text.accessibleTextVirtual', () => {
       tags.forEach(tag => {
         fixture.innerHTML = html`<div id="t1" aria-labelledby="el-id"></div><${tag} id="el-id" aria-label="aria-label"></${tag}>`;
         axe.testUtils.flatTreeSetup(fixture);
-        const target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+        const target = axe.commons.dom.queryDom(axe._tree, '#t1')[0];
         assert.equal(axe.commons.text.accessibleTextVirtual(target), '', tag);
       });
     });
