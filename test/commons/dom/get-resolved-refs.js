@@ -75,6 +75,17 @@ describe('dom.getResolvedRefs', () => {
     assert.deepEqual(getResolvedRefs(vNode, 'aria-cats'), expected);
   });
 
+  it('should split ASCII whitespace and preserve nonbreaking spaces within IDs', () => {
+    const vNode = queryFixture(html`
+      <div aria-cats="two&#9;non&#160;&#160;breaking" id="target"></div>
+      <div id="two"></div>
+      <div id="non&#160;&#160;breaking"></div>
+    `);
+
+    const ids = getResolvedRefs(vNode, 'aria-cats').map(ref => ref?.props.id);
+    assert.deepEqual(ids, ['two', 'non\u00a0\u00a0breaking']);
+  });
+
   it('should work with idrefs property', () => {
     const vNode = queryFixture(html`
       <div id="target"></div>

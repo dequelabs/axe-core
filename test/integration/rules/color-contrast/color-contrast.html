@@ -116,6 +116,16 @@
 <input id="disabled1" disabled />
 <div id="disabled2">Hello</div>
 <input aria-labelledby="disabled2" disabled />
+<p id="disabled-description" style="background: #fff; color: #aaa">Help text</p>
+<textarea aria-describedby="disabled-description" disabled></textarea>
+<p id="shared-description" style="background: #fff; color: #aaa">
+  Shared help text
+</p>
+<input aria-describedby="shared-description" disabled />
+<input
+  id="enabled-control-with-description"
+  aria-describedby="shared-description"
+/>
 <div
   id="disabled3"
   style="background: #000; color: #000"
