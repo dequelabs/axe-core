@@ -1,0 +1,13 @@
+{
+  "id": "label-content-name-exact",
+  "impact": "moderate",
+  "matches": "label-content-name-mismatch-matches",
+  "tags": ["cat.semantics", "best-practice"],
+  "metadata": {
+    "description": "Ensure that elements labelled through their content have an accessible name that matches their visible text",
+    "help": "Accessible name should match the visible text of the element"
+  },
+  "all": [],
+  "any": ["label-content-name-exact"],
+  "none": []
+}
