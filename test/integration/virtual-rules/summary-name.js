@@ -69,6 +69,54 @@ describe('summary-name virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  [
+    'button',
+    'heading',
+    'checkbox',
+    'doc-abstract',
+    'invalid button',
+    'invalid doc-abstract',
+    'command button'
+  ].forEach(role => {
+    it(`is inapplicable with role="${role}"`, () => {
+      const vSummary = new axe.SerialVirtualNode({
+        nodeName: 'summary',
+        attributes: { role }
+      });
+      vSummary.children = [];
+      appendSerialChild(vDetails, vSummary);
+
+      const results = axe.runVirtualRule('summary-name', vSummary);
+      assert.lengthOf(results.passes, 0);
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 0);
+    });
+  });
+
+  [
+    'none',
+    'presentation',
+    'invalid none button',
+    'command presentation button',
+    'invalid',
+    'command',
+    ''
+  ].forEach(role => {
+    it(`fails without a name with role="${role}"`, () => {
+      const vSummary = new axe.SerialVirtualNode({
+        nodeName: 'summary',
+        attributes: { role }
+      });
+      vSummary.children = [];
+      appendSerialChild(vDetails, vSummary);
+
+      const results = axe.runVirtualRule('summary-name', vSummary);
+      assert.lengthOf(results.passes, 0);
+      assert.lengthOf(results.violations, 1);
+      assert.lengthOf(results.incomplete, 0);
+    });
+  });
+
   it('incompletes with aria-labelledby', () => {
     const vSummary = new axe.SerialVirtualNode({
       nodeName: 'summary',

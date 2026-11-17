@@ -12,6 +12,16 @@ describe('summary-interactive-matches', () => {
     assert.isTrue(rule.matches(null, vNode));
   });
 
+  it('is true for the first summary after another element', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <p>Details</p>
+        <summary id="target">Summary</summary>
+      </details>
+    `);
+    assert.isTrue(rule.matches(null, vNode));
+  });
+
   it('is false for summary without a details parent', () => {
     const vNode = queryFixture(html`
       <summary id="target">Summary</summary>
@@ -61,7 +71,7 @@ describe('summary-interactive-matches', () => {
     assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('is true even if summary has role=none', () => {
+  it('is true when focusability overrides role=none', () => {
     const vNode = queryFixture(html`
       <details>
         <summary id="target" role="none">Summary</summary>
@@ -71,24 +81,91 @@ describe('summary-interactive-matches', () => {
     assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('is true the element has a widget role', () => {
+  it('is true when tabindex=-1 retains a presentational role conflict', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="presentation" tabindex="-1">Summary</summary>
+      </details>
+    `);
+    assert.isTrue(rule.matches(null, vNode));
+  });
+
+  it('is false when a presentational role has no conflict', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="presentation" inert>Summary</summary>
+      </details>
+    `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
+  it('is false when the element has an explicit button role', () => {
     const vNode = queryFixture(html`
       <details>
         <summary id="target" role="button">Summary</summary>
         text
       </details>
     `);
-    assert.isTrue(rule.matches(null, vNode));
+    assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('is true the element has a non-interactive role', () => {
+  it('is false when the element has an explicit heading role', () => {
     const vNode = queryFixture(html`
       <details>
         <summary id="target" role="heading">Summary</summary>
         text
       </details>
     `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
+  ['', 'not-a-valid-role', 'command'].forEach(role => {
+    it(`is true when role="${role}" provides no valid semantic role`, () => {
+      const vNode = queryFixture(html`
+        <details>
+          <summary id="target" role="${role}">Summary</summary>
+        </details>
+      `);
+      assert.isTrue(rule.matches(null, vNode));
+    });
+  });
+
+  it('is false for a valid role after an invalid token', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="not-a-valid-role button">Summary</summary>
+      </details>
+    `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
+  it('uses the first valid role when it is presentational', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="none heading">Summary</summary>
+      </details>
+    `);
     assert.isTrue(rule.matches(null, vNode));
+  });
+
+  it('uses the first valid role before a presentational fallback', () => {
+    const vNode = queryFixture(html`
+      <details>
+        <summary id="target" role="heading none">Summary</summary>
+      </details>
+    `);
+    assert.isFalse(rule.matches(null, vNode));
+  });
+
+  ['doc-abstract', 'not-a-valid-role doc-abstract'].forEach(role => {
+    it(`is false for the valid DPUB role in role="${role}"`, () => {
+      const vNode = queryFixture(html`
+        <details>
+          <summary id="target" role="${role}">Summary</summary>
+        </details>
+      `);
+      assert.isFalse(rule.matches(null, vNode));
+    });
   });
 
   it('is true even if summary has tabindex=-1', () => {
