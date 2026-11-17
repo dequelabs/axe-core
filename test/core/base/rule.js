@@ -40,9 +40,17 @@ describe('Rule', () => {
 
         assert.lengthOf(nodes, 1);
         assert.equal(nodes[0].actualNode, node);
+      });
 
-        node.id = 'bananas';
-        nodes = rule.gather({
+      it('should not gather nodes that do not match the selector', () => {
+        const node = document.createElement('div');
+        node.id = 'monkeys';
+        fixture.appendChild(node);
+
+        const rule = new Rule({
+          selector: '#bananas'
+        });
+        let nodes = rule.gather({
           include: [axe.utils.getFlattenedTree(fixture)[0]],
           exclude: [],
           frames: []
