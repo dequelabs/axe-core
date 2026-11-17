@@ -117,4 +117,28 @@ describe('frame-title virtual-rule', () => {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should pass for title on a frame', () => {
+    const results = axe.runVirtualRule('frame-title', {
+      nodeName: 'frame',
+      attributes: {
+        title: 'foobar'
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for a frame without title', () => {
+    const results = axe.runVirtualRule('frame-title', {
+      nodeName: 'frame',
+      attributes: {}
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
