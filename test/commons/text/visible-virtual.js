@@ -189,10 +189,26 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0]), '漢kan字ji');
     });
 
-    it('should not separate the text of phrasing elements displayed as blocks', () => {
+    it('should separate the text of phrasing elements displayed as blocks', () => {
       fixture.innerHTML =
         '<a><span style="display: block">Product</span>' +
         '<span style="display: block">Details</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details');
+    });
+
+    it('should separate the text of flex items in a column', () => {
+      fixture.innerHTML =
+        '<a style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Keyboard Requires vision');
+    });
+
+    it('should not separate the text of non-phrasing elements displayed as flow-root', () => {
+      fixture.innerHTML =
+        '<a><div style="display: flow-root">Product</div>' +
+        '<div style="display: flow-root">Details</div></a>';
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0]), 'ProductDetails');
     });
@@ -365,10 +381,26 @@ describe('text.visible', () => {
       assert.equal(visibleVirtual(tree[0], true), 'ACT');
     });
 
-    it('should not separate the text of phrasing elements displayed as blocks', () => {
+    it('should separate the text of phrasing elements displayed as blocks', () => {
       fixture.innerHTML =
         '<a><span style="display: block">Product</span>' +
         '<span style="display: block">Details</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Product Details');
+    });
+
+    it('should separate the text of flex items in a column', () => {
+      fixture.innerHTML =
+        '<a style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Keyboard Requires vision');
+    });
+
+    it('should not separate the text of non-phrasing elements displayed as flow-root', () => {
+      fixture.innerHTML =
+        '<a><div style="display: flow-root">Product</div>' +
+        '<div style="display: flow-root">Details</div></a>';
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0], true), 'ProductDetails');
     });

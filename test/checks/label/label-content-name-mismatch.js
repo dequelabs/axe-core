@@ -279,6 +279,36 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('returns true when the items of a flex column are the accessible name (`aria-label`)', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="Keyboard Requires vision"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when the items of a flex column are the accessible name (`aria-labelledby`)', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-labelledby="target"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when the items of a flex column are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="KeyboardRequires vision"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
   it('returns true when adjacent block elements in shadow DOM are the accessible name', () => {
     const vNode = queryShadowFixture(
       '<a id="target" href="#" aria-label="Product details"><span id="shadow"></span></a>',
