@@ -422,6 +422,52 @@ describe('dom.visibility-methods', () => {
       `);
       assert.isFalse(overflowHidden(vNode));
     });
+
+    it('should return false for ancestor with "overflow:hidden" and ancestor in-between uses "position:absolute"', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden;">
+          <div style="position: absolute; top: 500px;">
+            <div id="target">Hello world</div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(overflowHidden(vNode));
+    });
+
+    it('should return true for ancestor with "overflow:hidden; position:relative" and ancestor in-between uses "position:absolute"', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; height: 50px; position: relative">
+          <div style="position: absolute; top: 500px;">
+            <div id="target">Hello world</div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return true for ancestor with "overflow:hidden" and ancestor in-between uses "position:absolute" inside "position:relative"', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; height: 50px;">
+          <div style="position: relative">
+            <div style="position: absolute; top: 500px;">
+              <div id="target">Hello world</div>
+            </div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return false for ancestor with "overflow:hidden; position:relative" and ancestor in-between uses "position:fixed"', () => {
+      const vNode = queryFixture(html`
+        <div style="overflow: hidden; width: 50px; position: relative">
+          <div style="position: fixed; left: 100px;">
+            <div id="target">Hello world</div>
+          </div>
+        </div>
+      `);
+      assert.isFalse(overflowHidden(vNode));
+    });
   });
 
   describe('clipHidden', () => {
