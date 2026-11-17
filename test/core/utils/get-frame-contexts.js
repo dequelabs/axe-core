@@ -83,6 +83,129 @@ describe('utils.getFrameContexts', () => {
     });
   });
 
+  describe('modal dialogs', () => {
+    it('skips frames blocked by showModal()', () => {
+      fixture.innerHTML = html`
+        <iframe tabindex="-1"></iframe>
+        <dialog><button>Close</button></dialog>
+      `;
+      fixture.querySelector('dialog').showModal();
+
+      assert.equal(getFrameContexts().length, 0);
+    });
+
+    it('includes frames inside the active modal dialog', () => {
+      fixture.innerHTML = html`
+        <dialog><iframe tabindex="-1"></iframe></dialog>
+      `;
+      fixture.querySelector('dialog').showModal();
+
+      const contexts = getFrameContexts();
+      assert.lengthOf(contexts, 1);
+      assert.isFalse(contexts[0].frameContext.focusable);
+    });
+
+    it('includes frames outside a dialog opened with show()', () => {
+      fixture.innerHTML = html`
+        <iframe tabindex="-1"></iframe>
+        <dialog><button>Close</button></dialog>
+      `;
+      fixture.querySelector('dialog').show();
+
+      assert.lengthOf(getFrameContexts(), 1);
+    });
+
+    it('includes frames outside a dialog with the open attribute', () => {
+      fixture.innerHTML = html`
+        <iframe tabindex="-1"></iframe>
+        <dialog open><button>Close</button></dialog>
+      `;
+
+      assert.lengthOf(getFrameContexts(), 1);
+    });
+
+    it('includes frames again after closing a modal without changing tabindex', () => {
+      fixture.innerHTML = html`
+        <iframe tabindex="-1"></iframe>
+        <dialog><button>Close</button></dialog>
+      `;
+      const dialog = fixture.querySelector('dialog');
+      dialog.showModal();
+      getFrameContexts();
+      dialog.close();
+
+      const contexts = getFrameContexts();
+      assert.lengthOf(contexts, 1);
+      assert.isFalse(contexts[0].frameContext.focusable);
+    });
+
+    it('skips explicitly inert frames', () => {
+      fixture.innerHTML = '<iframe inert tabindex="-1"></iframe>';
+
+      assert.isEmpty(getFrameContexts());
+    });
+
+    it('includes only the topmost modal frames regardless of DOM order', () => {
+      fixture.innerHTML = html`
+        <dialog id="first"><iframe id="first-frame"></iframe></dialog>
+        <dialog id="second"><iframe id="second-frame"></iframe></dialog>
+      `;
+      const first = fixture.querySelector('#first');
+      const second = fixture.querySelector('#second');
+      second.showModal();
+      first.showModal();
+
+      const topmost = getFrameContexts();
+      assert.equal(topmost.length, 1);
+      assert.deepEqual(
+        topmost[0].frameSelector,
+        axe.utils.getAncestry(fixture.querySelector('#first-frame'))
+      );
+
+      first.close();
+      const remaining = getFrameContexts();
+      assert.equal(remaining.length, 1);
+      assert.deepEqual(
+        remaining[0].frameSelector,
+        axe.utils.getAncestry(fixture.querySelector('#second-frame'))
+      );
+    });
+
+    it('skips frames blocked by a modal dialog in a shadow root', () => {
+      fixture.setHTMLUnsafe(html`
+        <iframe tabindex="-1"></iframe>
+        <div id="host">
+          <template shadowrootmode="open">
+            <dialog><button>Close</button></dialog>
+          </template>
+        </div>
+      `);
+      fixture
+        .querySelector('#host')
+        .shadowRoot.querySelector('dialog')
+        .showModal();
+
+      assert.equal(getFrameContexts().length, 0);
+    });
+
+    it('includes shadow frames that are flat tree descendants of the active modal', () => {
+      fixture.setHTMLUnsafe(html`
+        <dialog>
+          <div>
+            <template shadowrootmode="open">
+              <iframe tabindex="-1"></iframe>
+            </template>
+          </div>
+        </dialog>
+      `);
+      fixture.querySelector('dialog').showModal();
+
+      const contexts = getFrameContexts();
+      assert.lengthOf(contexts, 1);
+      assert.isFalse(contexts[0].frameContext.focusable);
+    });
+  });
+
   describe('include / exclude', () => {
     it('returns a `frameContext` for each included frame', () => {
       fixture.innerHTML = html`

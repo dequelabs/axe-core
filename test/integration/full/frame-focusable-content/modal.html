@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>frame-focusable-content modal dialogs</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/node_modules/mocha/mocha.css" />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({ timeout: 10000, ui: 'bdd' });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <template id="modal-fixture">
+      <iframe
+        id="background-frame"
+        title="Background links"
+        tabindex="-1"
+        src="frames/focusable.html"
+      ></iframe>
+      <iframe
+        id="sibling-frame"
+        title="Sibling links"
+        tabindex="-1"
+        src="frames/focusable.html"
+      ></iframe>
+      <dialog id="first-modal" aria-label="First modal">
+        <button autofocus>Close</button>
+        <iframe
+          id="first-modal-frame"
+          title="First modal links"
+          tabindex="-1"
+          src="frames/focusable.html"
+        ></iframe>
+      </dialog>
+      <dialog id="second-modal" aria-label="Second modal">
+        <button autofocus>Close</button>
+        <iframe
+          id="second-modal-frame"
+          title="Second modal links"
+          tabindex="-1"
+          src="frames/focusable.html"
+        ></iframe>
+      </dialog>
+    </template>
+    <div id="modal-host">
+      <template shadowrootmode="open">
+        <dialog aria-label="Shadow modal"><button>Close</button></dialog>
+      </template>
+    </div>
+    <div id="fixture"></div>
+    <div id="mocha"></div>
+    <script src="/test/testutils.js"></script>
+    <script src="modal.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
