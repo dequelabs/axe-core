@@ -22,7 +22,7 @@ describe('landmark-banner-is-top-level test pass', () => {
 
   describe('passes', () => {
     it('should find 3', () => {
-      assert.lengthOf(results.passes[0].nodes, 2);
+      assert.lengthOf(results.passes[0].nodes, 3);
     });
   });
 

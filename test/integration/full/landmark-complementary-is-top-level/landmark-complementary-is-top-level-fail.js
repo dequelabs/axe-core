@@ -23,8 +23,8 @@ describe('landmark-complementary-is-top-level test fail', () => {
       assert.lengthOf(results.violations, 1);
     });
 
-    it('should find 2 nodes', () => {
-      assert.lengthOf(results.violations[0].nodes, 2);
+    it('should find 3 nodes', () => {
+      assert.lengthOf(results.violations[0].nodes, 3);
     });
   });
 
