@@ -72,6 +72,43 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  it('returns true when a visually hidden element separates the visible text', () => {
+    const vNode = queryFixture(
+      '<label id="uploadLabel">Upload a file</label>' +
+        '<button id="target" type="button" aria-labelledby="uploadLabel uploadComma target">' +
+        '<span style="display: block;">No file chosen</span>' +
+        '<span id="uploadComma" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">, </span>' +
+        '<span style="display: block;">Choose file</span>' +
+        '</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when a visually hidden element separates the visible text (`aria-label`)', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="Download, specification">' +
+        '<span>Download</span>' +
+        '<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">, </span>' +
+        '<span>specification</span>' +
+        '</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when a visually hidden element separates text that is not in the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="Send message">' +
+        '<span>Sub</span>' +
+        '<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">, </span>' +
+        '<span>mit</span>' +
+        '</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
   it('returns false when visible text doesn’t match accessible name', () => {
     const vNode = queryFixture(
       '<div id="target" role="link" aria-label="OK">Next</div>'
@@ -199,6 +236,83 @@ describe('label-content-name-mismatch tests', () => {
   it('returns true when text contains <br/>', () => {
     const vNode = queryFixture(
       '<button id="target" aria-label="button label">button<br>label</button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when adjacent block elements are the accessible name (`aria-labelledby`)', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-labelledby="content">' +
+        '<div id="content"><p>Product</p><p>Details</p></div></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when adjacent block elements are the accessible name (`aria-label`)', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="Product details">' +
+        '<h3>Product</h3><p>Details</p></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when adjacent block elements are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="ProductDetails">' +
+        '<p>Product</p><p>Details</p></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when block elements displayed inline are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<a id="target" href="#" aria-label="ACT">' +
+        '<div style="display: inline">A</div>' +
+        '<div style="display: inline">C</div>' +
+        '<div style="display: inline">T</div></a>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when the items of a flex column are the accessible name (`aria-label`)', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="Keyboard Requires vision"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns true when the items of a flex column are the accessible name (`aria-labelledby`)', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-labelledby="target"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when the items of a flex column are joined in the accessible name', () => {
+    const vNode = queryFixture(
+      '<button id="target" aria-label="KeyboardRequires vision"' +
+        ' style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const actual = checkEvaluate(vNode.actualNode, options, vNode);
+    assert.isFalse(actual);
+  });
+
+  it('returns true when adjacent block elements in shadow DOM are the accessible name', () => {
+    const vNode = queryShadowFixture(
+      '<a id="target" href="#" aria-label="Product details"><span id="shadow"></span></a>',
+      '<p>Product</p><p>Details</p>'
     );
     const actual = checkEvaluate(vNode.actualNode, options, vNode);
     assert.isTrue(actual);

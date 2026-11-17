@@ -146,6 +146,168 @@ describe('text.visible', () => {
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0]), 'Hello Hi');
     });
+
+    it('should separate the text of adjacent block elements', () => {
+      fixture.innerHTML = '<a><p>Product</p><p>Details</p></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details');
+    });
+
+    it('should separate the text of a block element from inline text', () => {
+      fixture.innerHTML = '<a><span>Product</span><div>Details</div>Page</a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details Page');
+    });
+
+    it('should separate the text of nested block elements', () => {
+      fixture.innerHTML =
+        '<a><div><h3>Product</h3></div><span><p>Details</p></span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details');
+    });
+
+    it('should separate the text of list items and table cells', () => {
+      fixture.innerHTML =
+        '<ul><li>Product</li><li>Details</li></ul>' +
+        '<table><tr><td>Product</td><td>Details</td></tr></table>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details Product Details');
+    });
+
+    it('should not separate the text of block elements displayed inline', () => {
+      fixture.innerHTML =
+        '<a><div style="display: inline">A</div>' +
+        '<div style="display: inline-block">C</div>' +
+        '<div style="display: contents">T</div></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'ACT');
+    });
+
+    it('should not separate the text of ruby annotations', () => {
+      fixture.innerHTML = '<a><ruby>漢<rt>kan</rt>字<rt>ji</rt></ruby></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), '漢kan字ji');
+    });
+
+    it('should separate the text of phrasing elements displayed as blocks', () => {
+      fixture.innerHTML =
+        '<a><span style="display: block">Product</span>' +
+        '<span style="display: block">Details</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details');
+    });
+
+    it('should separate the text of flex items in a column', () => {
+      fixture.innerHTML =
+        '<a style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Keyboard Requires vision');
+    });
+
+    it('should not separate the text of non-phrasing elements displayed as flow-root', () => {
+      fixture.innerHTML =
+        '<a><div style="display: flow-root">Product</div>' +
+        '<div style="display: flow-root">Details</div></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'ProductDetails');
+    });
+
+    it('should not separate text around a block element with no visible text', () => {
+      fixture.innerHTML =
+        '<a><span>Product</span><div></div>' +
+        '<div style="display: none">Hidden</div><span>Details</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'ProductDetails');
+    });
+
+    it('should separate the text of block elements with hidden siblings', () => {
+      fixture.innerHTML =
+        '<a><p>Product</p><p style="visibility: hidden">Hidden</p>' +
+        '<p>Details</p></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Product Details');
+    });
+
+    it('should separate the text of block elements in shadow DOM', () => {
+      const vNode = axe.testUtils.queryShadowFixture(
+        '<a id="target"><span id="shadow"></span></a>',
+        '<p>Product</p><p>Details</p>'
+      );
+      assert.equal(visibleVirtual(vNode), 'Product Details');
+    });
+
+    it('should separate the text of slotted block elements', () => {
+      const vNode = axe.testUtils.queryShadowFixture(
+        '<a id="target"><span id="shadow"><p>Product</p><p>Details</p></span></a>',
+        '<span><slot></slot></span>'
+      );
+      assert.equal(visibleVirtual(vNode), 'Product Details');
+    });
+
+    it('should separate the text of block elements without an actual node', () => {
+      const link = new axe.SerialVirtualNode({ nodeName: 'a' });
+      link.children = ['Product', 'Details'].map(word => {
+        const paragraph = new axe.SerialVirtualNode({ nodeName: 'p' });
+        const text = new axe.SerialVirtualNode({
+          nodeName: '#text',
+          nodeType: 3,
+          nodeValue: word
+        });
+        paragraph.parent = link;
+        paragraph.children = [text];
+        text.parent = paragraph;
+        return paragraph;
+      });
+      assert.equal(visibleVirtual(link), 'Product Details');
+    });
+
+    it('should not separate the text of block elements when not recursing', () => {
+      fixture.innerHTML = 'Product<p>Hidden</p>Details';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], false, true), 'ProductDetails');
+    });
+
+    it('should keep a visually hidden element as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span>' +
+        '<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">, </span>' +
+        '<span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download specification');
+    });
+
+    it('should keep an element with visibility: hidden as a word separator', () => {
+      fixture.innerHTML =
+        '<a><span>Download</span><span style="visibility: hidden;">the</span>' +
+        '<span>specification</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download specification');
+    });
+
+    it('should not separate words with an element that is not rendered', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span><span style="display: none;">the</span>' +
+        '<span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
+
+    it('should not separate words with an element that has no width', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span>' +
+        '<span style="display: inline-block; width: 0; overflow: hidden;">the</span>' +
+        '<span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
+
+    it('should not separate words with an element that is visible', () => {
+      fixture.innerHTML =
+        '<a><span>Down</span><span></span><span>load</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0]), 'Download');
+    });
   });
 
   describe('screen reader', () => {
@@ -202,6 +364,52 @@ describe('text.visible', () => {
         '<span>     \n \n &nbsp; \nHi</span>';
       const tree = axe.utils.getFlattenedTree(fixture);
       assert.equal(visibleVirtual(tree[0], true), 'Hello Hi');
+    });
+
+    it('should separate the text of adjacent block elements', () => {
+      fixture.innerHTML = '<a><p>Product</p><p>Details</p></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Product Details');
+    });
+
+    it('should not separate the text of block elements displayed inline', () => {
+      fixture.innerHTML =
+        '<a><div style="display: inline">A</div>' +
+        '<div style="display: inline-block">C</div>' +
+        '<div style="display: contents">T</div></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'ACT');
+    });
+
+    it('should separate the text of phrasing elements displayed as blocks', () => {
+      fixture.innerHTML =
+        '<a><span style="display: block">Product</span>' +
+        '<span style="display: block">Details</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Product Details');
+    });
+
+    it('should separate the text of flex items in a column', () => {
+      fixture.innerHTML =
+        '<a style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Keyboard Requires vision');
+    });
+
+    it('should not separate the text of non-phrasing elements displayed as flow-root', () => {
+      fixture.innerHTML =
+        '<a><div style="display: flow-root">Product</div>' +
+        '<div style="display: flow-root">Details</div></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'ProductDetails');
+    });
+
+    it('should separate the text of block elements around aria-hidden content', () => {
+      fixture.innerHTML =
+        '<a><p>Product</p><p aria-hidden="true">Hidden</p><p>Details</p></a>';
+      const tree = axe.utils.getFlattenedTree(fixture);
+      assert.equal(visibleVirtual(tree[0], true), 'Product Details');
     });
 
     it('should ignore script and style tags', () => {

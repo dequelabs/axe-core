@@ -61,6 +61,20 @@ describe('duplicate-img-label', () => {
     );
   });
 
+  it('should return true if img and adjacent block elements have the same text', () => {
+    fixture.innerHTML =
+      '<button><img id="target" alt="Plain text"><p>Plain</p><p>text</p></button>';
+    const node = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    assert.isTrue(
+      axe.testUtils.getCheckEvaluate('duplicate-img-label')(
+        node,
+        undefined,
+        axe.utils.getNodeFromTree(node)
+      )
+    );
+  });
+
   it('should return true if img has ARIA label with the same text', () => {
     fixture.innerHTML =
       '<button><img id="target" aria-label="Plain text">Plain text</button>';

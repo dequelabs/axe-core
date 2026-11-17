@@ -32,6 +32,34 @@ describe('text.subtreeText', () => {
     assert.equal(subtreeText(fixture), 'foobarbazfizzbuzz');
   });
 
+  it('adds spacing around phrasing elements displayed as blocks', () => {
+    fixtureSetup(
+      '<span style="display: block">foo</span>' +
+        '<b style="display: list-item">bar</b>' +
+        '<i style="display: table-cell">baz</i>'
+    );
+    const fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
+    assert.equal(subtreeText(fixture), 'foo bar baz ');
+  });
+
+  it('adds spacing around the items of a flex column', () => {
+    fixtureSetup(
+      '<button style="display: flex; flex-direction: column">' +
+        '<span>Keyboard</span><span>Requires vision</span></button>'
+    );
+    const button = axe.utils.querySelectorAll(axe._tree[0], 'button')[0];
+    assert.equal(subtreeText(button), 'Keyboard Requires vision ');
+  });
+
+  it('does not add spacing around phrasing elements displayed inline-block', () => {
+    fixtureSetup(
+      '<span style="display: inline-block">foo</span>' +
+        '<span style="display: inline-flex">bar</span>'
+    );
+    const fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
+    assert.equal(subtreeText(fixture), 'foobar');
+  });
+
   it('returns `` for embedded content', () => {
     const fixture = fixtureSetup(
       `<video>foo</video>` +
