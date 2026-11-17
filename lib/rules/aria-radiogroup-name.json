@@ -1,0 +1,15 @@
+{
+  "id": "aria-radiogroup-name",
+  "impact": "moderate",
+  "selector": "[role=\"radiogroup\"]",
+  "matches": "no-naming-method-matches",
+  "reviewOnFail": true,
+  "tags": ["cat.aria", "best-practice"],
+  "metadata": {
+    "description": "Ensure every ARIA radiogroup node has an accessible name",
+    "help": "ARIA radiogroup nodes should have an accessible name"
+  },
+  "all": [],
+  "any": ["aria-label", "aria-labelledby", "non-empty-title"],
+  "none": []
+}
