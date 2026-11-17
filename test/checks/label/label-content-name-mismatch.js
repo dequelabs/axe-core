@@ -55,6 +55,122 @@ describe('label-content-name-mismatch tests', () => {
     assert.isTrue(actual);
   });
 
+  describe('Turkish and Azerbaijani casing', () => {
+    ['tr', 'tr-TR', 'TR', 'az', 'az-Latn-AZ'].forEach(lang => {
+      it(`matches dotted capital I in ${lang}`, () => {
+        const vNode = queryFixture(
+          `<button id="target" lang="${lang}" aria-label="Verilerimi indir">İndir</button>`
+        );
+        assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+      });
+    });
+
+    it('uses the language inherited from an ancestor', () => {
+      const vNode = queryFixture(
+        '<div lang="tr"><button id="target" aria-label="Verilerimi indir">İndir</button></div>'
+      );
+      assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+
+    it('matches dotless I according to the inherited language', () => {
+      const vNode = queryFixture(
+        '<div lang="tr"><button id="target" aria-label="ışık ayarları">IŞIK</button></div>'
+      );
+      assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+
+    it('preserves the distinction between dotted and dotless I', () => {
+      const vNode = queryFixture(
+        '<button id="target" lang="tr" aria-label="ışık">işik</button>'
+      );
+      assert.isFalse(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+
+    it('preserves existing matches for Latin acronyms in Turkish', () => {
+      const vNode = queryFixture(
+        '<button id="target" lang="tr" aria-label="iban kopyala">IBAN</button>'
+      );
+      assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+
+    it('supports the decomposed spelling of capital dotted I', () => {
+      const vNode = queryFixture(
+        '<button id="target" lang="tr" aria-label="indir">I\u0307ndir</button>'
+      );
+      assert.isTrue(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+
+    ['', 'en', 'not_a_language'].forEach(lang => {
+      it(`does not inherit Turkish through lang="${lang}"`, () => {
+        const vNode = queryFixture(
+          `<div lang="tr"><button id="target" lang="${lang}" aria-label="Verilerimi indir">İndir</button></div>`
+        );
+        assert.isFalse(checkEvaluate(vNode.actualNode, options, vNode));
+      });
+    });
+
+    it('inherits the host language inside a shadow tree', () => {
+      const args = axe.testUtils.checkSetup(html`
+        <div lang="tr">
+          <template shadowrootmode="open">
+            <button id="target" aria-label="Verilerimi indir">İndir</button>
+          </template>
+        </div>
+      `);
+      assert.isTrue(checkEvaluate(...args));
+    });
+
+    it('uses a shadow descendant language override', () => {
+      const args = axe.testUtils.checkSetup(html`
+        <div lang="tr">
+          <template shadowrootmode="open">
+            <button id="target" lang="en" aria-label="Verilerimi indir">
+              İndir
+            </button>
+          </template>
+        </div>
+      `);
+      assert.isFalse(checkEvaluate(...args));
+    });
+
+    it('inherits the light DOM language for a slotted button', () => {
+      const args = axe.testUtils.checkSetup(html`
+        <div lang="tr">
+          <template shadowrootmode="open">
+            <div lang="en"><slot></slot></div>
+          </template>
+          <button id="target" aria-label="Verilerimi indir">İndir</button>
+        </div>
+      `);
+      const host = document.querySelector('#fixture > div');
+      assert.exists(host.shadowRoot);
+      assert.exists(args[0].assignedSlot);
+      assert.isTrue(checkEvaluate(...args));
+    });
+
+    it('does not inherit Turkish from a slot ancestor', () => {
+      const args = axe.testUtils.checkSetup(html`
+        <div lang="en">
+          <template shadowrootmode="open">
+            <div lang="tr"><slot></slot></div>
+          </template>
+          <button id="target" aria-label="Verilerimi indir">İndir</button>
+        </div>
+      `);
+      const host = document.querySelector('#fixture > div');
+      assert.exists(host.shadowRoot);
+      assert.exists(args[0].assignedSlot);
+      assert.isFalse(checkEvaluate(...args));
+    });
+
+    it('does not remove accents from non-Turkic labels', () => {
+      const vNode = queryFixture(
+        '<button id="target" lang="fr" aria-label="resume">résumé</button>'
+      );
+      assert.isFalse(checkEvaluate(vNode.actualNode, options, vNode));
+    });
+  });
+
   it('returns true when visible text and accessible name (`aria-labelledby`) matches (character insensitive & text sanitized)', () => {
     const vNode = queryFixture(html`
       <div id="target" aria-labelledby="yourLabel">UNTIL THE VeRy EnD</div>
