@@ -437,7 +437,7 @@ describe('label-content-name-mismatch tests', () => {
       assert.isTrue(actual);
     });
 
-    it('correctly casefolds non-English characters', () => {
+    it('correctly casefolds Turkish İ character', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="Verilerimi indir">İndir</button>'
       );
