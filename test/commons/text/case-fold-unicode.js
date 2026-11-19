@@ -32,39 +32,30 @@ describe('text.caseFoldUnicode', () => {
 
   it('normalizes for compatibility equivalence (example 19)', () => {
     assert.equal(caseFoldUnicode('㎒'), caseFoldUnicode('mhz'));
-
     assert.equal(caseFoldUnicode('℃́'), caseFoldUnicode('°ć'));
-
     assert.equal(caseFoldUnicode('Ϊ́'), caseFoldUnicode('ΐ'));
   });
 
   it('handles Greek subscripted iota (example 23)', () => {
     assert.equal(caseFoldUnicode('ᾌ'), caseFoldUnicode('ἄι'));
-
     assert.equal(caseFoldUnicode('ᾌ'), caseFoldUnicode('ἄι'));
-
     assert.equal(caseFoldUnicode('ᾌ'), caseFoldUnicode('ἄι'));
   });
 
   it('handles Turkish language folding (example 9)', () => {
     assert.equal(caseFoldUnicode('I'), caseFoldUnicode('ı'));
-
     assert.equal(caseFoldUnicode('İ'), caseFoldUnicode('i'));
-
     assert.equal(caseFoldUnicode('DİYARBAKIR'), caseFoldUnicode('diyarbakır'));
   });
 
   it('handles ASCII case folding (example 25)', () => {
     assert.equal(caseFoldUnicode('hello'), caseFoldUnicode('hello'));
-
     assert.equal(caseFoldUnicode('Hello'), caseFoldUnicode('hello'));
-
     assert.equal(caseFoldUnicode('HELLO'), caseFoldUnicode('hello'));
-
     assert.equal(caseFoldUnicode('hElLo'), caseFoldUnicode('hello'));
   });
 
-  it('handles English language folding', () => {
+  it('handles English language folding of the letter I', () => {
     assert.equal(caseFoldUnicode('TITAN'), caseFoldUnicode('titan'));
   });
 });
