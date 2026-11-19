@@ -436,6 +436,14 @@ describe('label-content-name-mismatch tests', () => {
       const actual = checkEvaluate(vNode.actualNode, options, vNode);
       assert.isTrue(actual);
     });
+
+    it('correctly casefolds Turkish İ character', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="Verilerimi indir">İndir</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
   });
 
   describe('options.valueTextRoles', () => {
