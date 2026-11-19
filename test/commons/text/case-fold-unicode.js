@@ -63,4 +63,8 @@ describe('text.caseFoldUnicode', () => {
 
     assert.equal(caseFoldUnicode('hElLo'), caseFoldUnicode('hello'));
   });
+
+  it('handles English language folding', () => {
+    assert.equal(caseFoldUnicode('TITAN'), caseFoldUnicode('titan'));
+  });
 });
