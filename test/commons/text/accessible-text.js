@@ -3022,6 +3022,23 @@ describe('text.accessibleTextVirtual', () => {
       assert.equal(accessibleText(target), 'Flash the screen 1 times.');
     });
 
+    it("includes a transparent selected option in another control's label", () => {
+      fixture.innerHTML = html`
+        <input type="checkbox" id="test" />
+        <label for="test"
+          >Flash the screen
+          <select size="1">
+            <option selected style="color: transparent">1</option>
+            <option>2</option>
+          </select>
+          times.
+        </label>
+      `;
+      axe.testUtils.flatTreeSetup(fixture);
+      const target = fixture.querySelector('#test');
+      assert.equal(accessibleText(target), 'Flash the screen 1 times.');
+    });
+
     it('passes test 101', () => {
       fixture.innerHTML = html`
         <input type="checkbox" id="test" />
