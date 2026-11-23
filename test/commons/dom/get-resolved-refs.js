@@ -243,6 +243,39 @@ describe('dom.getResolvedRefs', () => {
     assert.deepEqual(getResolvedRefs(vNode, 'aria-labelledby'), expected);
   });
 
+  it('should not read the idrefs property when the attribute has a value', () => {
+    // reading the property crashes Firefox 159, so a getter that throws stands in for it
+    customElements.define(
+      'aria-throwing-refs-elm',
+      class AriaThrowingRefsElm extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        get ariaLabelledByElements() {
+          throw new Error('ariaLabelledByElements should not be read');
+        }
+        set ariaLabelledByElements(foo) {}
+      }
+    );
+
+    const vNode = queryFixture(html`
+      <aria-throwing-refs-elm
+        aria-labelledby="target1 target2"
+        id="target"
+      ></aria-throwing-refs-elm>
+      <div id="target1"></div>
+      <div id="target2"></div>
+    `);
+
+    const expected = [
+      getNodeFromTree(document.getElementById('target1')),
+      getNodeFromTree(document.getElementById('target2'))
+    ];
+
+    assert.deepEqual(getResolvedRefs(vNode, 'aria-labelledby'), expected);
+  });
+
   describe('options.self=false', () => {
     it('should remove self id references from attribute', () => {
       const vNode = queryFixture(html`
