@@ -75,7 +75,7 @@ describe('dom.findUp', () => {
       fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
       makeShadowTree(fixture.querySelector('div'));
       const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
-      const el = axe.utils.querySelectorAll(tree, 'a')[0];
+      const el = axe.commons.dom.queryDom(tree, 'a')[0];
       assert.equal(
         axe.commons.dom.findUp(el.actualNode, 'label'),
         fixture.firstElementChild
@@ -99,7 +99,7 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<label><div></div></label>';
     makeShadowTree(fixture.querySelector('div'));
     const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
       fixture.firstElementChild
@@ -137,7 +137,7 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
     makeShadowTree(fixture.querySelector('div'));
     const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
       fixture.firstElementChild
@@ -162,8 +162,8 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
     makeShadowTree(fixture.querySelector('div'));
     const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
-    const target = axe.utils.querySelectorAll(tree, '.target')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
+    const target = axe.commons.dom.queryDom(tree, '.target')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'div'),
       target.actualNode
@@ -186,7 +186,7 @@ describe('dom.findUp', () => {
     fixture.innerHTML = '<label><div></div></label>';
     makeShadowTree(fixture.querySelector('div'));
     const tree = axe.testUtils.flatTreeSetup(fixture.firstElementChild);
-    const el = axe.utils.querySelectorAll(tree, 'a')[0];
+    const el = axe.commons.dom.queryDom(tree, 'a')[0];
     assert.equal(
       axe.commons.dom.findUp(el.actualNode, 'label'),
       fixture.firstElementChild

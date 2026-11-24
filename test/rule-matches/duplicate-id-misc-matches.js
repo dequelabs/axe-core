@@ -19,19 +19,19 @@ describe('duplicate-id-misc matches', () => {
 
   it('returns true if the ID is of an inactive non-referenced element', () => {
     fixtureSetup('<div id="foo"></div>');
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'div[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'div[id=foo]')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 
   it('returns true if the ID is of an inactive non-referenced element with a duplicate', () => {
     fixtureSetup('<div id="foo"></div><span id="foo"></span>');
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'span[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'span[id=foo]')[0];
     assert.isTrue(rule.matches(vNode.actualNode, vNode));
   });
 
   it('returns false if the ID is of an active non-referenced element', () => {
     fixtureSetup('<button id="foo"></button>');
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'button[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'button[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -40,7 +40,7 @@ describe('duplicate-id-misc matches', () => {
       <div id="foo"></div>
       <button id="foo"></button>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'div[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'div[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -49,7 +49,7 @@ describe('duplicate-id-misc matches', () => {
       <div id="foo"></div>
       <div aria-labelledby="foo"></div>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'div[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'div[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -59,7 +59,7 @@ describe('duplicate-id-misc matches', () => {
       <div aria-labelledby="foo"></div>
       <span id="foo"></span>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'span[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'span[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -68,7 +68,7 @@ describe('duplicate-id-misc matches', () => {
       <button id="foo"></button>
       <div aria-labelledby="foo"></div>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'button[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'button[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 
@@ -78,7 +78,7 @@ describe('duplicate-id-misc matches', () => {
       <div aria-labelledby="foo"></div>
       <span id="foo"></span>
     `);
-    const vNode = axe.utils.querySelectorAll(axe._tree[0], 'span[id=foo]')[0];
+    const vNode = axe.commons.dom.queryDom(axe._tree[0], 'span[id=foo]')[0];
     assert.isFalse(rule.matches(vNode.actualNode, vNode));
   });
 });

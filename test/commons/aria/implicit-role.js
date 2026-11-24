@@ -562,9 +562,8 @@ describe('aria.implicitRole', () => {
 
     it('returns null for element without internals', () => {
       const vNode = queryFixture(
-        '<testutils-element id="target"></testutils-element>'
+        '<no-internals-element id="target"></no-internals-element>'
       );
-      delete vNode.actualNode._internals;
       assert.isNull(implicitRole(vNode));
     });
 

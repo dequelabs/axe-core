@@ -2,8 +2,7 @@ describe('color.stackingContext', () => {
   const html = axe.testUtils.html;
   const { Color, getStackingContext, stackingContextToColor } =
     axe.commons.color;
-  const { getElementStack } = axe.commons.dom;
-  const { querySelectorAll } = axe.utils;
+  const { getElementStack, queryDom } = axe.commons.dom;
   const { queryFixture } = axe.testUtils;
   const fixture = document.querySelector('#fixture');
 
@@ -54,7 +53,7 @@ describe('color.stackingContext', () => {
 
       assert.deepEqual(stackingContext, [
         {
-          vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          vNode: queryDom(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
@@ -62,7 +61,7 @@ describe('color.stackingContext', () => {
           descendants: []
         },
         {
-          vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
+          vNode: queryDom(axe._tree[0], '#elm2')[0],
           ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
@@ -93,14 +92,14 @@ describe('color.stackingContext', () => {
 
       assert.deepEqual(stackingContext, [
         {
-          vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          vNode: queryDom(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: [
             {
-              vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
+              vNode: queryDom(axe._tree[0], '#elm2')[0],
               ancestor: stackingContext[0],
               opacity: 1,
               bgColor: new Color(0, 0, 0, 0),
@@ -153,7 +152,7 @@ describe('color.stackingContext', () => {
       assert.lengthOf(elmStack, 1);
       assert.deepEqual(stackingContext, [
         {
-          vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
+          vNode: queryDom(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 0.8,
           bgColor: new Color(0, 0, 0, 0),
