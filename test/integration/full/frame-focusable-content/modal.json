@@ -1,0 +1,22 @@
+{
+  "description": "frame-focusable-content modal dialogs",
+  "rule": "frame-focusable-content",
+  "inapplicable": {
+    "violations": [],
+    "passes": [],
+    "incomplete": [],
+    "inapplicable": ["frame-focusable-content"]
+  },
+  "background": {
+    "violations": [
+      ["#background-frame", "#frame-content"],
+      ["#sibling-frame", "#frame-content"]
+    ]
+  },
+  "first-modal": {
+    "violations": [["#first-modal-frame", "#frame-content"]]
+  },
+  "second-modal": {
+    "violations": [["#second-modal-frame", "#frame-content"]]
+  }
+}
