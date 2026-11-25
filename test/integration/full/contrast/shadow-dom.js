@@ -17,6 +17,15 @@ describe('color-contrast shadow dom test', () => {
           <div style="color:#666; position:absolute;">Text</div>
         </div>
       `;
+
+      const slotShadow = document
+        .querySelector('#slotFixture')
+        .attachShadow({ mode: 'open' });
+      slotShadow.innerHTML = html`
+        <button style="background-color:black;color:white;">
+          <slot style="display:inline-block;"></slot>
+        </button>
+      `;
     }
   });
 
@@ -34,6 +43,23 @@ describe('color-contrast shadow dom test', () => {
             '#000000'
           );
           assert.lengthOf(results.incomplete, 0);
+          done();
+        }
+      );
+    });
+  });
+
+  describe('passes', () => {
+    // @see https://github.com/dequelabs/axe-core/issues/4468
+    it('should find text slotted into a slot with a box', done => {
+      axe.run(
+        '#slotFixture',
+        { runOnly: { type: 'rule', values: ['color-contrast'] } },
+        (err, results) => {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 0);
+          assert.lengthOf(results.incomplete, 0);
+          assert.lengthOf(results.passes, 1);
           done();
         }
       );
