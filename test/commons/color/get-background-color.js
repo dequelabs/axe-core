@@ -287,6 +287,52 @@ describe('color.getBackgroundColor', () => {
     assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
   });
 
+  it('should return null if the background uses mask-image', () => {
+    fixture.innerHTML = html`
+      <div
+        id="parent"
+        style="position: relative; height: 40px; width: 300px; background-color: #262626;"
+      >
+        <div
+          id="stripe"
+          style="position: absolute; inset: 0; background-color: #2fb344;
+          mask-image: linear-gradient(to right, #000 3px, transparent 3px);
+          -webkit-mask-image: linear-gradient(to right, #000 3px, transparent 3px);"
+        ></div>
+        <p id="target" style="position: relative; margin: 0; color: #e5e5e5;">
+          Service is operational.
+        </p>
+      </div>
+    `;
+    const target = fixture.querySelector('#target');
+    const stripe = fixture.querySelector('#stripe');
+    const bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    assert.isNull(actual);
+    assert.deepEqual(bgNodes, [stripe]);
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgMask');
+  });
+
+  it('should ignore mask-image on elements without a background', () => {
+    fixture.innerHTML = html`
+      <div style="height: 40px; width: 300px; background-color: #262626;">
+        <div
+          id="target"
+          style="color: #e5e5e5;
+          mask-image: linear-gradient(#000, #000);
+          -webkit-mask-image: linear-gradient(#000, #000);"
+        >
+          Hello
+        </div>
+      </div>
+    `;
+    const target = fixture.querySelector('#target');
+    axe.testUtils.flatTreeSetup(fixture);
+    const actual = axe.commons.color.getBackgroundColor(target);
+    assert.deepEqual(actual, new axe.commons.color.Color(38, 38, 38, 1));
+  });
+
   it('should return null if something non-opaque is obscuring it', () => {
     fixture.innerHTML = html`
       <div style="width:100%; height: 100px; background: #000"></div>
