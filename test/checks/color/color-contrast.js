@@ -345,6 +345,23 @@ describe('color-contrast', () => {
     assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     assert.isUndefined(checkContext._data.bgColor);
     assert.equal(checkContext._data.messageKey, 'bgGradient');
+  });
+
+  it('should return undefined for elements on a masked background', () => {
+    const params = checkSetup(html`
+      <div style="position: relative; background: #262626; color: #e5e5e5;">
+        <div
+          style="position: absolute; inset: 0; background: #2fb344;
+          mask-image: linear-gradient(to right, #000 3px, transparent 3px);
+          -webkit-mask-image: linear-gradient(to right, #000 3px, transparent 3px);"
+        ></div>
+        <p id="target" style="position: relative;">Text 3</p>
+      </div>
+    `);
+
+    assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+    assert.isUndefined(checkContext._data.bgColor);
+    assert.equal(checkContext._data.messageKey, 'bgMask');
     assert.equal(checkContext._data.contrastRatio, 0);
   });
 

@@ -35,6 +35,7 @@
         "default": "Unable to determine contrast ratio",
         "bgImage": "Element's background color could not be determined due to a background image",
         "bgGradient": "Element's background color could not be determined due to a background gradient",
+        "bgMask": "Element's background color could not be determined because of a CSS mask",
         "imgNode": "Element's background color could not be determined because element contains an image node",
         "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
         "fgAlpha": "Element's foreground color could not be determined because of alpha transparency",

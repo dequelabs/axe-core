@@ -580,3 +580,19 @@ Hello world</textarea>
   value="hello"
   style="background: #fff; color: #eee"
 />
+
+<!-- masked background: the visible part of the background can't be determined -->
+<div style="position: relative; background: #262626; color: #e5e5e5">
+  <div
+    style="
+      position: absolute;
+      inset: 0;
+      background: #2fb344;
+      mask-image: linear-gradient(to right, #000 3px, transparent 3px);
+      -webkit-mask-image: linear-gradient(to right, #000 3px, transparent 3px);
+    "
+  ></div>
+  <p id="canttell27" style="position: relative; margin: 0">
+    Service is operational.
+  </p>
+</div>
