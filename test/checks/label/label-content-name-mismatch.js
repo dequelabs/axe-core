@@ -413,6 +413,32 @@ describe('label-content-name-mismatch tests', () => {
       });
     });
 
+    ['™', '℠', '℡', '№', '℃', 'ⓐ', '₨'].forEach(symbol => {
+      it(`ignores ${symbol} even though NFKD turns it into letters`, () => {
+        const vNode = queryFixture(
+          `<button id="target" aria-label="acme widget">Acme Widget${symbol}</button>`
+        );
+        const actual = checkEvaluate(vNode.actualNode, options, vNode);
+        assert.isTrue(actual);
+      });
+    });
+
+    it('ignores ™ in an aria-hidden superscript', () => {
+      const vNode = queryFixture(
+        '<a id="target" href="#" aria-label="Acme Widget"><em>Acme Widget<sup aria-hidden="true">™</sup></em></a>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
+    it('ignores № before a number', () => {
+      const vNode = queryFixture(
+        '<button id="target" aria-label="order 5">Order №5</button>'
+      );
+      const actual = checkEvaluate(vNode.actualNode, options, vNode);
+      assert.isTrue(actual);
+    });
+
     it('keeps numbers that are outside the basic digits', () => {
       const vNode = queryFixture(
         '<button id="target" aria-label="items">⓫ items</button>'
