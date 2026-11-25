@@ -123,6 +123,13 @@ describe('text.accessibleDescription', () => {
       `);
       assert.equal(accessibleDescription(target), '');
     });
+
+    it('returns an empty string when the title is the same as the name', () => {
+      const target = queryFixture(html`
+        <input id="target" aria-label="Hello world" title="Hello world" />
+      `);
+      assert.equal(accessibleDescription(target), '');
+    });
   });
 
   describe('ElementInternals', () => {
