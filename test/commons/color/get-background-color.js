@@ -1041,6 +1041,52 @@ describe('color.getBackgroundColor', () => {
     assert.deepEqual(actual, expected);
   });
 
+  it('finds colors for text slotted into a slot with a box', () => {
+    // @see https://github.com/dequelabs/axe-core/issues/4468
+    fixture.innerHTML = '<span id="container">Slotted</span>';
+    const container = fixture.querySelector('#container');
+    const shadow = container.attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<button id="shadowTarget" style="background: black;"><slot style="display: inline-block;"></slot></button>';
+    axe.testUtils.flatTreeSetup(fixture);
+
+    const target = shadow.querySelector('#shadowTarget');
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    const expected = new axe.commons.color.Color(0, 0, 0, 1);
+    assert.deepEqual(actual, expected);
+  });
+
+  it('includes the background of a slot with a box', () => {
+    fixture.innerHTML = '<span id="container">Slotted</span>';
+    const container = fixture.querySelector('#container');
+    const shadow = container.attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<button id="shadowTarget" style="background: black; padding: 0; border: 0;"><slot style="display: block; background: #f00;"></slot></button>';
+    axe.testUtils.flatTreeSetup(fixture);
+
+    const target = shadow.querySelector('#shadowTarget');
+    const bgNodes = [];
+    const actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    const expected = new axe.commons.color.Color(255, 0, 0, 1);
+    assert.deepEqual(actual, expected);
+    assert.deepEqual(bgNodes, [shadow.querySelector('slot')]);
+  });
+
+  it('returns null for a slot with a box that is not inside the element', () => {
+    fixture.innerHTML = '<span id="container">Slotted</span>';
+    const container = fixture.querySelector('#container');
+    const shadow = container.attachShadow({ mode: 'open' });
+    shadow.innerHTML =
+      '<button id="shadowTarget">Text</button>' +
+      '<slot style="display: block; position: absolute; top: 0; left: 0; width: 300px; height: 100px;"></slot>';
+    axe.testUtils.flatTreeSetup(fixture);
+
+    const target = shadow.querySelector('#shadowTarget');
+    const actual = axe.commons.color.getBackgroundColor(target, []);
+    assert.isNull(actual);
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+  });
+
   it('should count an implicit label as a background element inside shadow dom', () => {
     fixture.innerHTML = '<div id="container"></div>';
     const container = fixture.querySelector('#container');
