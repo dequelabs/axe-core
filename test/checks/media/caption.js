@@ -1,14 +1,15 @@
 describe('caption', () => {
-  const fixture = document.getElementById('fixture');
+  const checkEvaluate = axe.testUtils.getCheckEvaluate('caption');
   const checkSetup = axe.testUtils.checkSetup;
+  const checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(() => {
-    fixture.innerHTML = '';
+    checkContext.reset();
   });
 
   it('should return undefined if there is no track element', () => {
     const checkArgs = checkSetup('<audio></audio>', 'audio');
-    assert.isUndefined(checks.caption.evaluate.apply(null, checkArgs));
+    assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('should return undefined if there is no kind=captions attribute', () => {
@@ -16,7 +17,7 @@ describe('caption', () => {
       '<audio><track kind=descriptions></audio>',
       'audio'
     );
-    assert.isUndefined(checks.caption.evaluate.apply(null, checkArgs));
+    assert.isUndefined(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('should pass if there is a kind=captions attribute', () => {
@@ -24,7 +25,7 @@ describe('caption', () => {
       '<audio><track kind=captions></audio>',
       'audio'
     );
-    assert.isFalse(checks.caption.evaluate.apply(null, checkArgs));
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });
 
   it('should get track from composed tree', () => {
@@ -34,6 +35,6 @@ describe('caption', () => {
     shadow.innerHTML = '<audio><slot></slot></audio>';
 
     const checkArgs = checkSetup(node, {}, 'audio');
-    assert.isFalse(checks.caption.evaluate.apply(null, checkArgs));
+    assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
   });
 });
