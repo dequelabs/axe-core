@@ -20,9 +20,25 @@ describe('focusable-element tests', () => {
     assert.isTrue(actual);
   });
 
-  it('returns false when element made not focusable by tabindex', () => {
+  it('returns undefined when element is removed from the tab order by tabindex', () => {
     const params = checkSetup(
       '<input id="target" type="checkbox" tabindex="-1">'
+    );
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isUndefined(actual);
+  });
+
+  it('returns undefined when element is made programmatically focusable by a negative tabindex', () => {
+    const params = checkSetup(
+      '<ul id="target" tabindex="-1"><li>I hold some text</li></ul>'
+    );
+    const actual = check.evaluate.apply(checkContext, params);
+    assert.isUndefined(actual);
+  });
+
+  it('returns false when element with a negative tabindex is disabled', () => {
+    const params = checkSetup(
+      '<input id="target" type="checkbox" tabindex="-1" disabled>'
     );
     const actual = check.evaluate.apply(checkContext, params);
     assert.isFalse(actual);

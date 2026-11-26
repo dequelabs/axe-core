@@ -27,6 +27,25 @@
   <textarea tabindex="-1"></textarea>
 </div>
 
+<ul
+  id="incomplete4"
+  role="menu"
+  tabindex="-1"
+  aria-activedescendant="incomplete4-item1"
+  style="height: 20px; overflow-y: auto"
+>
+  <li id="incomplete4-item1" role="menuitem">Keyboards</li>
+  <li role="menuitem">Mice</li>
+  <li role="menuitem">Monitors</li>
+</ul>
+
+<input aria-activedescendant="incomplete5-option2" aria-label="Search" />
+<div id="incomplete5" style="height: 20px; overflow-y: auto">
+  <div id="incomplete5-option1">Keyboards</div>
+  <div id="incomplete5-option2">Mice</div>
+  <div id="incomplete5-option3">Monitors</div>
+</div>
+
 <!-- fail -->
 <div id="fail1" style="width: 300px; overflow-y: auto">
   <p style="width: 600px">Contents</p>
@@ -55,6 +74,14 @@
     doloremque laudantium.
   </p>
   <button tabindex="-1" disabled>Disabled</button>
+</div>
+
+<div aria-activedescendant="fail5-text" aria-label="Not focusable"></div>
+<div id="fail5" style="width: 300px; overflow-y: auto">
+  <p id="fail5-text" style="width: 600px">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+    doloremque laudantium.
+  </p>
 </div>
 
 <!-- inapplicable -->

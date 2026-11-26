@@ -5,7 +5,10 @@
     "impact": "serious",
     "messages": {
       "pass": "Element contains focusable elements",
-      "incomplete": "Check that elements with a negative tabindex can receive keyboard focus so the region can be scrolled",
+      "incomplete": {
+        "default": "Check that elements with a negative tabindex can receive keyboard focus so the region can be scrolled",
+        "activedescendant": "Check that the element with aria-activedescendant scrolls the region so its active descendant is visible"
+      },
       "fail": "Element should have focusable content"
     }
   }

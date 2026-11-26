@@ -157,6 +157,131 @@ describe('focusable-content tests', () => {
     assert.isTrue(actual);
   });
 
+  describe('aria-activedescendant', () => {
+    it('returns undefined when a focusable element references content with aria-activedescendant', () => {
+      const params = checkSetup(html`
+        <input id="related1" aria-activedescendant="opt2" />
+        <div id="target">
+          <div id="opt1">Apple</div>
+          <div id="opt2">Banana</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.deepEqual(relatedNodeIds(), ['related1']);
+      assert.deepEqual(checkContext._data, { messageKey: 'activedescendant' });
+    });
+
+    it('returns undefined when a nested active descendant is referenced', () => {
+      const params = checkSetup(html`
+        <div id="related1" tabindex="-1" aria-activedescendant="opt1"></div>
+        <div id="target">
+          <ul>
+            <li><span id="opt1">Apple</span></li>
+          </ul>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.deepEqual(relatedNodeIds(), ['related1']);
+    });
+
+    it('returns false when the element with aria-activedescendant is not focusable', () => {
+      const params = checkSetup(html`
+        <div aria-activedescendant="opt1"></div>
+        <div id="target">
+          <div id="opt1">Apple</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the element with aria-activedescendant is disabled', () => {
+      const params = checkSetup(html`
+        <input disabled aria-activedescendant="opt1" />
+        <div id="target">
+          <div id="opt1">Apple</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the active descendant is outside the element', () => {
+      const params = checkSetup(html`
+        <input aria-activedescendant="opt1" />
+        <div id="opt1">Apple</div>
+        <div id="target">
+          <div>Banana</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the active descendant does not exist', () => {
+      const params = checkSetup(html`
+        <input aria-activedescendant="missing" />
+        <div id="target">
+          <div>Banana</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('returns false when the active descendant is the element itself', () => {
+      const params = checkSetup(html`
+        <input aria-activedescendant="target" />
+        <div id="target">
+          <div>Banana</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('ignores aria-activedescendant on the element itself', () => {
+      const params = checkSetup(html`
+        <div id="target" tabindex="-1" aria-activedescendant="opt1">
+          <div id="opt1">Apple</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isFalse(actual);
+    });
+
+    it('uses the negative tabindex message when content also has a negative tabindex', () => {
+      const params = checkSetup(html`
+        <input aria-activedescendant="opt1" />
+        <div id="target">
+          <div id="opt1">Apple</div>
+          <button id="related1" tabindex="-1">Banana</button>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.deepEqual(relatedNodeIds(), ['related1']);
+      assert.isNull(checkContext._data);
+    });
+
+    it('returns undefined when the active descendant is slotted into a shadow tree', () => {
+      const params = checkSetup(html`
+        <input id="related1" aria-activedescendant="opt1" />
+        <div>
+          <template shadowrootmode="open">
+            <div id="target"><slot></slot></div>
+          </template>
+          <div id="opt1">Apple</div>
+        </div>
+      `);
+      const actual = check.evaluate.apply(checkContext, params);
+      assert.isUndefined(actual);
+      assert.deepEqual(relatedNodeIds(), ['related1']);
+    });
+  });
+
   describe('shadowDOM - focusable content', () => {
     it('returns true when content element can be focused', () => {
       const params = checkSetup(html`
