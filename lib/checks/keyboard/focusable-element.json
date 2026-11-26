@@ -5,6 +5,7 @@
     "impact": "serious",
     "messages": {
       "pass": "Element is focusable",
+      "incomplete": "Check that the element can receive keyboard focus so it can be scrolled",
       "fail": "Element should be focusable"
     }
   }
