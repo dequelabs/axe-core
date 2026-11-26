@@ -969,4 +969,39 @@ describe('dom.getElementStack', () => {
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
   });
+
+  it('should return html after an element with a negative z-index', () => {
+    fixture.innerHTML = html`
+      <div id="target" style="position: relative; z-index: -1">Hello</div>
+    `;
+    axe.testUtils.flatTreeSetup(document.documentElement);
+    const target = fixture.querySelector('#target');
+    const stack = getElementStack(target).map(node => node.id || node.nodeName);
+    assert.equal(stack.at(-1), 'HTML');
+  });
+
+  describe('negative z-index on body', () => {
+    let origBodyStyle;
+
+    beforeEach(() => {
+      origBodyStyle = document.body.style.cssText;
+      document.body.style.position = 'relative';
+      document.body.style.zIndex = '-1';
+    });
+
+    afterEach(() => {
+      document.body.style.cssText = origBodyStyle;
+    });
+
+    it('should return html as the last element', () => {
+      fixture.innerHTML = html`<div id="target">Hello World</div>`;
+      axe.testUtils.flatTreeSetup(document.documentElement);
+      const target = fixture.querySelector('#target');
+      const stack = getElementStack(target).map(
+        node => node.id || node.nodeName
+      );
+      // html is the root element, nothing is ever painted below it
+      assert.deepEqual(stack, ['target', 'fixture', 'BODY', 'HTML']);
+    });
+  });
 });
