@@ -34,6 +34,7 @@ describe('color.stackingContext', () => {
           vNode,
           ancestor: undefined,
           opacity: 1,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: []
@@ -57,6 +58,7 @@ describe('color.stackingContext', () => {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 1,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: []
@@ -65,6 +67,7 @@ describe('color.stackingContext', () => {
           vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
           ancestor: undefined,
           opacity: 1,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: []
@@ -73,6 +76,7 @@ describe('color.stackingContext', () => {
           vNode,
           ancestor: undefined,
           opacity: 1,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: []
@@ -96,6 +100,7 @@ describe('color.stackingContext', () => {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 1,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: [
@@ -103,6 +108,7 @@ describe('color.stackingContext', () => {
               vNode: querySelectorAll(axe._tree[0], '#elm2')[0],
               ancestor: stackingContext[0],
               opacity: 1,
+              brightness: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
               descendants: []
@@ -111,6 +117,7 @@ describe('color.stackingContext', () => {
               vNode,
               ancestor: stackingContext[0],
               opacity: 1,
+              brightness: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
               descendants: []
@@ -132,6 +139,7 @@ describe('color.stackingContext', () => {
           vNode,
           ancestor: undefined,
           opacity: 0.8,
+          brightness: 1,
           bgColor: new Color(255, 0, 0, 0.5),
           blendMode: 'difference',
           descendants: []
@@ -156,6 +164,7 @@ describe('color.stackingContext', () => {
           vNode: querySelectorAll(axe._tree[0], '#elm1')[0],
           ancestor: undefined,
           opacity: 0.8,
+          brightness: 1,
           bgColor: new Color(0, 0, 0, 0),
           blendMode: 'normal',
           descendants: [
@@ -163,6 +172,7 @@ describe('color.stackingContext', () => {
               vNode,
               ancestor: stackingContext[0],
               opacity: 1,
+              brightness: 1,
               bgColor: new Color(0, 0, 0, 0),
               blendMode: 'normal',
               descendants: []
@@ -177,6 +187,7 @@ describe('color.stackingContext', () => {
     it('reduces a context to a color', () => {
       const context = {
         opacity: 1,
+        brightness: 1,
         bgColor: new Color(255, 128, 0, 1),
         blendMode: 'normal',
         descendants: []
@@ -191,11 +202,13 @@ describe('color.stackingContext', () => {
     it('reduces a nested context to a color', () => {
       const context = {
         opacity: 1,
+        brightness: 1,
         bgColor: new Color(255, 128, 0, 1),
         blendMode: 'normal',
         descendants: [
           {
             opacity: 1,
+            brightness: 1,
             bgColor: new Color(0, 255, 128, 0.5),
             blendMode: 'normal',
             descendants: []
@@ -212,11 +225,13 @@ describe('color.stackingContext', () => {
     it('applies opacity after blending', () => {
       const context = {
         opacity: 0.8,
+        brightness: 1,
         bgColor: new Color(255, 128, 0, 1),
         blendMode: 'normal',
         descendants: [
           {
             opacity: 1,
+            brightness: 1,
             bgColor: new Color(0, 255, 128, 0.5),
             blendMode: 'normal',
             descendants: []
@@ -233,17 +248,20 @@ describe('color.stackingContext', () => {
     it('applies mix-blend-mode from a sibling context', () => {
       const context = {
         opacity: 1,
+        brightness: 1,
         bgColor: new Color(0, 0, 0, 0),
         blendMode: 'normal',
         descendants: [
           {
             opacity: 1,
+            brightness: 1,
             bgColor: new Color(255, 128, 0, 1),
             blendMode: 'normal',
             descendants: []
           },
           {
             opacity: 1,
+            brightness: 1,
             bgColor: new Color(0, 255, 128, 0.5),
             blendMode: 'difference',
             descendants: []
@@ -260,11 +278,13 @@ describe('color.stackingContext', () => {
     it('applies mix-blend-mode from a nested context', () => {
       const context = {
         opacity: 1,
+        brightness: 1,
         bgColor: new Color(255, 128, 0, 1),
         blendMode: 'normal',
         descendants: [
           {
             opacity: 1,
+            brightness: 1,
             bgColor: new Color(0, 255, 128, 0.5),
             blendMode: 'difference',
             descendants: []
@@ -276,6 +296,59 @@ describe('color.stackingContext', () => {
         color: new Color(255, 128, 64, 1),
         blendMode: 'normal'
       });
+    });
+  });
+
+  describe('filter: brightness()', () => {
+    it('stores the brightness of a filter', () => {
+      const vNode = queryFixture(
+        '<div id="target" style="filter: brightness(0.5) brightness(50%)">Hello World</div>'
+      );
+      const elmStack = getElementStack(vNode.actualNode).slice(0, -1);
+      const [context] = getStackingContext(vNode.actualNode, elmStack);
+      assert.equal(context.brightness, 0.25);
+    });
+
+    it('defaults an omitted amount to 1', () => {
+      const vNode = queryFixture(
+        '<div id="target" style="filter: brightness()">Hello World</div>'
+      );
+      const elmStack = getElementStack(vNode.actualNode).slice(0, -1);
+      const [context] = getStackingContext(vNode.actualNode, elmStack);
+      assert.equal(context.brightness, 1);
+    });
+
+    it('ignores a filter that uses other functions', () => {
+      const vNode = queryFixture(
+        '<div id="target" style="filter: brightness(0.5) url(#x)">Hello World</div>'
+      );
+      const elmStack = getElementStack(vNode.actualNode).slice(0, -1);
+      const [context] = getStackingContext(vNode.actualNode, elmStack);
+      assert.equal(context.brightness, 1);
+    });
+
+    it('applies brightness to the color of a context and clamps it', () => {
+      const color = stackingContextToColor({
+        bgColor: new Color(20, 100, 200, 1),
+        opacity: 1,
+        brightness: 2,
+        descendants: []
+      }).color;
+      assert.deepEqual(
+        [color.red, color.green, color.blue, color.alpha],
+        [40, 200, 255, 1]
+      );
+    });
+
+    it('does not change the background color of the context', () => {
+      const bgColor = new Color(20, 100, 200, 1);
+      stackingContextToColor({
+        bgColor,
+        opacity: 1,
+        brightness: 0.5,
+        descendants: []
+      });
+      assert.equal(bgColor.red, 20);
     });
   });
 });

@@ -314,6 +314,18 @@
   <span id="pass30" style="font-weight: lighter">This is a pass</span>
 </div>
 
+<!-- filter: brightness() changes the rendered colors -->
+<div style="background: #fff">
+  <p id="pass33" style="color: #f1f1f1; filter: brightness(0%)">
+    Near-white text darkened to black
+  </p>
+  <div style="filter: brightness(0.5)">
+    <p id="fail17" style="background: #595959; color: #fff">
+      White text on gray, both darkened
+    </p>
+  </div>
+</div>
+
 <p
   style="
     text-overflow: ellipsis;
