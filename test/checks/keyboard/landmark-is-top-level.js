@@ -81,4 +81,22 @@ describe('landmark-is-top-level', () => {
     assert.isTrue(check.evaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, { role: 'main' });
   });
+  // https://github.com/dequelabs/axe-core/issues/5485
+  it('should return true if the landmark is top level in a nested document or application', () => {
+    for (const role of ['document', 'application']) {
+      const params = checkSetup(
+        `<main><div role="${role}"><div role="banner" id="target"></div></div></main>`
+      );
+      axe.utils.getFlattenedTree(document.documentElement);
+      assert.isTrue(check.evaluate.apply(checkContext, params), role);
+    }
+  });
+
+  it('should return false if the landmark is in another landmark of a nested document', () => {
+    const params = checkSetup(
+      '<div role="document"><nav><div role="banner" id="target"></div></nav></div>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+  });
 });
