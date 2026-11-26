@@ -1,0 +1,5 @@
+{
+  "description": "aria-valid-attr-value aria-errormessage empty live region tests",
+  "rule": "aria-valid-attr-value",
+  "incomplete": [["#incomplete1"]]
+}
