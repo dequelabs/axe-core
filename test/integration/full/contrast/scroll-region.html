@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" style="overflow: hidden">
+  <head>
+    <meta charset="utf-8" />
+    <title>Contrast with a scrolling body</title>
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({ ui: 'bdd', timeout: 10000 });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body style="height: 100vh; overflow: auto; margin: 0">
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: #000;
+      "
+    ></div>
+    <p id="target" style="position: relative; color: #fff; margin: 10px">
+      White text on a black background
+    </p>
+    <div style="height: 3000px"></div>
+    <div id="mocha"></div>
+    <script src="/test/integration/no-ui-reporter.js"></script>
+    <script src="scroll-region.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
