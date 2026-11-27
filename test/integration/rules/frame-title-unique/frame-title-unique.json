@@ -1,6 +1,16 @@
 {
   "description": "frame-title-unique test",
   "rule": "frame-title-unique",
-  "incomplete": [["#incomplete1"], ["#incomplete2"]],
-  "passes": [["#ignore1", "#pass1"], ["#pass2"]]
+  "incomplete": [
+    ["#incomplete1"],
+    ["#incomplete2"],
+    ["#pass3", "#incomplete3"],
+    ["#pass3", "#incomplete4"]
+  ],
+  "passes": [
+    ["#ignore1", "#pass1"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass3", "#pass4"]
+  ]
 }
