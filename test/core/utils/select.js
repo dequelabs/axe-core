@@ -2,7 +2,7 @@ describe('axe.utils.select', () => {
   const html = axe.testUtils.html;
   const $id = id => document.getElementById(id);
   const { Context } = axe._thisWillBeDeletedDoNotUse.base;
-  const { fixtureSetup } = axe.testUtils;
+  const { fixture, fixtureSetup } = axe.testUtils;
 
   it('should be a function', () => {
     assert.isFunction(axe.utils.select);
@@ -141,14 +141,15 @@ describe('axe.utils.select', () => {
       </div>
     `);
 
-    axe._selectCache = [
-      {
-        selector: '.bananas',
-        result: 'fruit bat'
-      }
-    ];
-    const context = new Context([['#zero']], axe._tree);
+    let context = new Context([['#zero']], axe._tree);
+    axe.utils.select('.bananas', context);
+    const expected = [$id('target1'), $id('target2')];
+    fixture.innerHTML = '';
+
     const result = axe.utils.select('.bananas', context);
-    assert.equal(result, 'fruit bat');
+    assert.deepEqual(
+      result.map(n => n.actualNode),
+      expected
+    );
   });
 });
