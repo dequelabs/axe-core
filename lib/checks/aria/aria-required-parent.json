@@ -10,7 +10,8 @@
       "pass": "Required ARIA parent role present",
       "fail": {
         "singular": "Required ARIA parent role not present: ${data.values}",
-        "plural": "Required ARIA parents role not present: ${data.values}"
+        "plural": "Required ARIA parents role not present: ${data.values}",
+        "presentationalConflict": "Required ARIA parent role not present: ${data.values}; the presentational role of an ancestor is ignored because of [${data.attr}]"
       }
     }
   }
