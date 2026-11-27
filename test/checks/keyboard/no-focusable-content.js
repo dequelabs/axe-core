@@ -1,6 +1,7 @@
 describe('no-focusable-content tests', () => {
   const html = axe.testUtils.html;
   const queryFixture = axe.testUtils.queryFixture;
+  const queryShadowFixture = axe.testUtils.queryShadowFixture;
   const noFocusableContent = axe.testUtils.getCheckEvaluate(
     'no-focusable-content'
   );
@@ -29,12 +30,24 @@ describe('no-focusable-content tests', () => {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true if element has content which is focusable (tabindex=0) and does not have a widget role', () => {
+  it('should return false if element has content which is focusable (tabindex=0) and does not have a widget role', () => {
     const params = checkSetup(
       '<button id="target"><span tabindex="0">Hello</span></button>'
     );
 
-    assert.isTrue(noFocusableContent.apply(checkContext, params));
+    assert.isFalse(noFocusableContent.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, null);
+    assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
+  });
+
+  it('should return false if element has content which is natively focusable and does not have a widget role', () => {
+    const params = checkSetup(
+      '<button id="target"><details>Hello</details></button>'
+    );
+
+    assert.isFalse(noFocusableContent.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, null);
+    assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
   });
 
   it('should return true if element has content which has negative tabindex and non-widget role', () => {
@@ -122,13 +135,29 @@ describe('no-focusable-content tests', () => {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true on nested span with tabindex=0 (focusable, does not have a widget role)', () => {
+  it('should return false on nested span with tabindex=0 (focusable, does not have a widget role)', () => {
     const vNode = queryFixture(html`
       <span id="target" role="text">
         some text
         <span tabIndex="0">anyone is able to focus this</span>
       </span>
     `);
+    assert.isFalse(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return false on span with tabindex=0 in shadow DOM', () => {
+    const vNode = queryShadowFixture(
+      '<div id="shadow"></div>',
+      '<button id="target"><span tabindex="0">Hello</span></button>'
+    );
+    assert.isFalse(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return true on span with negative tabindex in shadow DOM', () => {
+    const vNode = queryShadowFixture(
+      '<div id="shadow"></div>',
+      '<button id="target"><span tabindex="-1">Hello</span></button>'
+    );
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 });
