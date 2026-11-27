@@ -1,0 +1,39 @@
+<!-- PASS -->
+<div id="pass1" role="radiogroup" aria-label="Size">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<div id="pass2" role="radiogroup" title="Size">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<span id="radiogroup-label">Size</span>
+<div id="pass3" role="radiogroup" aria-labelledby="radiogroup-label">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+
+<!-- INCOMPLETE -->
+<div id="incomplete1" role="radiogroup">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<div id="incomplete2" role="radiogroup" aria-labelledby="non-existent">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<div id="empty-label"></div>
+<div id="incomplete3" role="radiogroup" aria-labelledby="empty-label">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<div id="incomplete4" role="radiogroup" aria-label=" ">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
+<ul id="incomplete5" role="radiogroup">
+  <li role="radio" aria-checked="true">Small</li>
+</ul>
+
+<!-- INAPPLICABLE -->
+<fieldset id="inapplicable1" role="radiogroup">
+  <legend>Size</legend>
+  <input type="radio" name="size" id="small" />
+  <label for="small">Small</label>
+</fieldset>
+<div id="inapplicable2">
+  <div role="radio" aria-checked="true">Small</div>
+</div>
