@@ -1,0 +1,7 @@
+{
+  "description": "color contrast over partially intersecting layers behind opaque backgrounds",
+  "rule": "color-contrast",
+  "passes": [["#opaque-pass"]],
+  "violations": [["#opaque-fail"]],
+  "incomplete": [["#transparent-incomplete"], ["#overlay-incomplete"]]
+}

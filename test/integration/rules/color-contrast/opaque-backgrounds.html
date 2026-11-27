@@ -1,0 +1,79 @@
+<style>
+  .opaque-example {
+    position: relative;
+    height: 180px;
+    width: 358px;
+    font: 16px/24px Arial;
+  }
+  .hidden-layer {
+    position: absolute;
+    left: 154px;
+    top: 48px;
+    width: 50px;
+    height: 20px;
+    background: red;
+  }
+  .opaque-panel {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    padding: 24px;
+    border: 0;
+    width: 358px;
+    box-sizing: border-box;
+    background: #142442;
+    color: white;
+  }
+  .opaque-panel p {
+    margin: 0;
+    background: #142442;
+  }
+</style>
+<div class="opaque-example">
+  <div class="hidden-layer"></div>
+  <dialog open class="opaque-panel">
+    <p id="opaque-pass">
+      Pin the named city. Drag the map to pan or drag your pin to adjust it.
+      Arrow keys move the pin; hold Shift for finer adjustment.
+    </p>
+  </dialog>
+</div>
+<div class="opaque-example">
+  <div class="hidden-layer"></div>
+  <dialog open class="opaque-panel">
+    <p id="opaque-fail" style="color: #243452">
+      Pin the named city. Drag the map to pan or drag your pin to adjust it.
+      Arrow keys move the pin; hold Shift for finer adjustment.
+    </p>
+  </dialog>
+</div>
+<div class="opaque-example">
+  <div class="hidden-layer"></div>
+  <dialog open class="opaque-panel" style="background: transparent">
+    <p id="transparent-incomplete" style="background: transparent">
+      Pin the named city. Drag the map to pan or drag your pin to adjust it.
+      Arrow keys move the pin; hold Shift for finer adjustment.
+    </p>
+  </dialog>
+</div>
+<div class="opaque-example">
+  <div class="hidden-layer"></div>
+  <dialog open class="opaque-panel" style="overflow: hidden">
+    <p id="overlay-incomplete">
+      Pin the named city. Drag the map to pan or drag your pin to adjust it.
+      Arrow keys move the pin; hold Shift for finer adjustment.
+    </p>
+    <div
+      style="
+        position: absolute;
+        z-index: 10;
+        left: 30px;
+        top: 40px;
+        width: 200px;
+        height: 20px;
+        background: gray;
+        pointer-events: none;
+      "
+    ></div>
+  </dialog>
+</div>
