@@ -1575,4 +1575,62 @@ x
       });
     });
   });
+
+  describe('svg text', () => {
+    it('fails text whose fill does not contrast with the page', () => {
+      const params = checkSetup(html`
+        <svg width="200" height="50">
+          <text id="target" x="10" y="30" fill="#949494" font-size="14">
+            Hello
+          </text>
+        </svg>
+      `);
+
+      assert.isFalse(contrastEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.fgColor, '#949494');
+      assert.equal(checkContext._data.bgColor, '#ffffff');
+    });
+
+    it('passes text whose fill contrasts with the page', () => {
+      const params = checkSetup(html`
+        <svg width="200" height="50">
+          <text id="target" x="10" y="30" fill="#000000" font-size="14">
+            Hello
+          </text>
+        </svg>
+      `);
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.fgColor, '#000000');
+    });
+
+    it('reads the background through the svg element', () => {
+      const params = checkSetup(html`
+        <div style="background-color: #000000;">
+          <svg width="200" height="50">
+            <text id="target" x="10" y="30" fill="#ffffff" font-size="14">
+              Hello
+            </text>
+          </svg>
+        </div>
+      `);
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.bgColor, '#000000');
+    });
+
+    it('is incomplete when a painted shape sits behind the text', () => {
+      const params = checkSetup(html`
+        <svg width="200" height="50">
+          <rect x="0" y="0" width="200" height="50" fill="#000000"></rect>
+          <text id="target" x="10" y="30" fill="#ffffff" font-size="14">
+            Hello
+          </text>
+        </svg>
+      `);
+
+      assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+      assert.equal(checkContext._data.messageKey, 'imgNode');
+    });
+  });
 });
